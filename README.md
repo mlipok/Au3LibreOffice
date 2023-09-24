@@ -1,4 +1,4 @@
-# Au3Libre
+# Au3LibreOffice
 AutoIt UDF for Libre Office API/SDK
 
 This UDF was first made public here:
