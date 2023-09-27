@@ -38595,103 +38595,11 @@ EndFunc   ;==>_LOWriter_TableWidth
 ; Name ..........: __LOWriter_UnitConvert
 
 ; Name ..........: __LOWriter_VarsAreDefault
-; Description ...: Tests whether all input parameters are equal to Default keyword.
-; Syntax ........: __LOWriter_VarsAreDefault($vVar1[, $vVar2 = Default[, $vVar3 = Default[, $vVar4 = Default[, $vVar5 = Default[, $vVar6 = Default[, $vVar7 = Default[, $vVar8 = Default]]]]]]])
-; Parameters ....: $vVar1               - a variant value.
-;                  $vVar2               - [optional] a variant value. Default is Default.
-;                  $vVar3               - [optional] a variant value. Default is Default.
-;                  $vVar4               - [optional] a variant value. Default is Default.
-;                  $vVar5               - [optional] a variant value. Default is Default.
-;                  $vVar6               - [optional] a variant value. Default is Default.
-;                  $vVar7               - [optional] a variant value. Default is Default.
-;                  $vVar8               - [optional] a variant value. Default is Default.
-; Return values .: Success: Boolean
-;				   Failure: False
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = If All parameters are Equal to Default, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
-	Local $bAllDefault1, $bAllDefault2
-	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? True : False
-	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? True : False
-	Return ($bAllDefault1 And $bAllDefault2) ? True : False
-EndFunc   ;==>__LOWriter_VarsAreDefault
 
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_VarsAreNull
-; Description ...: Tests whether all input parameters are equal to Null keyword.
-; Syntax ........: __LOWriter_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null]]]]]]]]]]])
-; Parameters ....: $vVar1               - a variant value.
-;                  $vVar2               - [optional] a variant value. Default is Null.
-;                  $vVar3               - [optional] a variant value. Default is Null.
-;                  $vVar4               - [optional] a variant value. Default is Null.
-;                  $vVar5               - [optional] a variant value. Default is Null.
-;                  $vVar6               - [optional] a variant value. Default is Null.
-;                  $vVar7               - [optional] a variant value. Default is Null.
-;                  $vVar8               - [optional] a variant value. Default is Null.
-;                  $vVar9               - [optional] a variant value. Default is Null.
-;                  $vVar10              - [optional] a variant value. Default is Null.
-;                  $vVar11              - [optional] a variant value. Default is Null.
-;                  $vVar12              - [optional] a variant value. Default is Null.
-; Return values .:   Success: Boolean
-;				   Failure: False
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = If All parameters are Equal to Null, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
-	Local $bAllNull1, $bAllNull2, $bAllNull3
-	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? True : False
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? True : False
-	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? True : False
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? True : False
-	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? True : False
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? True : False
-EndFunc   ;==>__LOWriter_VarsAreNull
 
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_VersionCheck
-; Description ...: Test if the currently installed LibreOffice version is high enough to support a certain function.
-; Syntax ........: __LOWriter_VersionCheck($fRequiredVersion)
-; Parameters ....: $fRequiredVersion            - a floating point value. The version of LibreOffice required.
-; Return values .: Success: Boolean.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $fRequiredVersion not a Number.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error retrieving Current LO Version.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If the Current LO version is higher than or equal to the
-;				   +	required version, then the return is True, else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_VersionCheck($fRequiredVersion)
-	Local Static $sCurrentVersion = _LOWriter_VersionGet(True, False)
-	If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, False)
-	Local Static $fCurrentVersion = Number($sCurrentVersion)
 
-	If Not IsNumber($fRequiredVersion) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, False)
-
-	Return SetError($__LOW_STATUS_SUCCESS, 1, ($fCurrentVersion >= $fRequiredVersion) ? True : False)
-EndFunc   ;==>__LOWriter_VersionCheck
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ViewCursorMove
 ; Description ...: For ViewCursor related movements.
 ; Syntax ........: __LOWriter_ViewCursorMove(Byref $oCursor, $iMove, $iCount[, $bSelect = False])
