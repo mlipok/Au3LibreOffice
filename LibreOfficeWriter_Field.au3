@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -880,7 +880,7 @@ EndFunc   ;==>_LOWriter_FieldCondTextInsert
 ;				   +								condition is evaluated as True or not.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FieldCondTextInsert, _LOWriter_FieldsGetList
@@ -1209,7 +1209,7 @@ EndFunc   ;==>_LOWriter_FieldDateTimeModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:  _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList
+; Related .......: _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3602,7 +3602,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
@@ -5407,10 +5407,10 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Sender Data Type Constants:  $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
+; Sender Data Type Constants: $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
 ;								$LOW_FIELD_USER_DATA_FIRST_NAME(1), The field shows the first name.
 ;								$LOW_FIELD_USER_DATA_NAME(2), The field shows the name.
 ;								$LOW_FIELD_USER_DATA_SHORTCUT(3), The field shows the initials.
@@ -5571,7 +5571,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sMasterFieldName    - a string value. The Set Variable Master Field name to create.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.

@@ -16,7 +16,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -858,7 +858,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -905,7 +905,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sParStyle           - a string value. The Name of the New Paragraph Style to Create.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1549,7 +1549,7 @@ EndFunc   ;==>_LOWriter_ParStyleIndent
 ;				   +						formatting of all paragraphs using this style is automatically updated.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre
 ;				   +						4.0 and up Only.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
@@ -2281,7 +2281,7 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;				   +								returned Array will contain 5 elements, because $bAddSpace is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note:  $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
+; Remarks .......: Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
 ;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
 ;						so that each line is the same height.
 ;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
@@ -2455,7 +2455,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See
 ;				   +						Autoit Function)) that you want the decimal tab to use as a decimal separator. Can
 ;				   +						only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
-; Return values .:  Success: Integer.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.

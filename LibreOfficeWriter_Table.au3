@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -428,7 +428,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -492,7 +492,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before
+; Remarks .......: Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before
 ;					$iPgNumOffSet can be set.
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
@@ -901,7 +901,7 @@ EndFunc   ;==>_LOWriter_TableCreate
 ;				   +				TextTable Object for further Table manipulation functions.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  $oTable can be either set to a Table object, or Null Keyword with $oCursor set to a Cursor object,
+; Remarks .......: $oTable can be either set to a Table object, or Null Keyword with $oCursor set to a Cursor object,
 ;					$oCursor can be either set to a cursor object currently located in a Table (such as a ViewCursor)/ or a
 ;					Text-TableCursor (Not a TableCursor, but a TextCursor already in a Table). $sCellName can be left blank,
 ;					which will place the TextTableCursor at the first cell (Typically "A1") if $oTable is called with an Object,
@@ -1454,7 +1454,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableInsert
-; Description ...:  Inserts the Table Object into a document.
+; Description ...: Inserts the Table Object into a document.
 ; Syntax ........: _LOWriter_TableInsert(Byref $oDoc, Byref $oCursor, Byref $oTable[, $bHeading = False])
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
@@ -2268,7 +2268,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ;					$LOW_COLOR_GREEN(43315),
 ;					$LOW_COLOR_LIME(8508442),
 ;					$LOW_COLOR_BROWN(9127187).
-; Related .......:  _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
 ;					_LOWriter_ConvertColorFromLong,	_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
 ; Link ..........:

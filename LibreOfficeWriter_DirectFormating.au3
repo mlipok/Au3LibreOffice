@@ -15,7 +15,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -120,7 +120,7 @@
 ;				   +								to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -202,7 +202,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;				   +							MicroMeters.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of
 ;				   +						border padding, on all sides.
-; Return values .:  Success: Integer or Array.
+; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
@@ -232,7 +232,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;				   +								to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -451,7 +451,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -647,7 +647,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ;				   +								to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -849,7 +849,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
 ;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
 ;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-; Color Constants:  $LOW_COLOR_BLACK(0),
+; Color Constants: $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -929,7 +929,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ;				   +								were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -1239,7 +1239,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;				   +								were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -1649,7 +1649,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;				   +						transparent or not. True = visible.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of
 ;				   +						Background color.
-; Return values .:  Success: Integer or Array.
+; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
@@ -1944,7 +1944,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;				   +							skip a parameter, set it to Null.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of
 ;				   +						the Paragraph Border, Width, Style and Color.
-; Return values .:  Success: Integer or Array.
+; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
@@ -2110,7 +2110,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
 ;					 To "Turn Off" Borders, set them to 0
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -2482,7 +2482,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;				   +								were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
 ;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
 ;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
 ;						instead.
@@ -2839,7 +2839,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iAbovePar,
 ;					$iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
-;					Note:  $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
+;					Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
 ;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
 ;						so that each line is the same height.
 ;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
@@ -2926,7 +2926,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See
 ;				   +						Autoit Function)) that you want the decimal tab to use as a decimal separator. Can
 ;				   +						only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
-; Return values .:  Success: Integer.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection parameter not an Object.
@@ -3060,7 +3060,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ; Parameters ....: $oSelection             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
 ;				   +						or retrieval functions, Or A Paragraph Object/Object Section returned from
 ;				   +						_LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-; Return values .:  Success: Array
+; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection parameter not an Object.

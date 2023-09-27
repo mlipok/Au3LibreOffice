@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -244,7 +244,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 ; Modified ......:
 ; Remarks .......: If the cursor used to insert a Bookmark has text selected, the Bookmark will envelope the text, else the
 ;					Bookmark will be inserted at a single point.
-;					A Bookmark name cannot contain the following characters:  / \ @ : * ? " ; , . #
+;					A Bookmark name cannot contain the following characters: / \ @ : * ? " ; , . #
 ;					If the document already contains a Bookmark by the same name, Libre Office adds a digit after the name, such
 ;					as Bookmark 1, Bookmark 2 etc.
 ; Related .......: _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
@@ -304,7 +304,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;					A Bookmark name cannot contain the following characters:  / \ @ : * ? " ; , . #
+;					A Bookmark name cannot contain the following characters: / \ @ : * ? " ; , . #
 ;					If the document already contains a Bookmark by the same name, Libre Office adds a digit after the name, such
 ;					as Bookmark 1, Bookmark 2 etc.
 ; Related .......: _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkDelete
@@ -772,9 +772,9 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;				   +								Table's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Note: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to
+; Remarks .......: Note: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to
 ;					restore the ViewCursor to its former position.
-; Related .......:   _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
 ; Link ..........:
@@ -869,11 +869,9 @@ EndFunc   ;==>_LOWriter_DocConvertTextToTable
 ; Name ..........: _LOWriter_DocCreate
 ; Description ...: Open a new Libre Office Writer Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOWriter_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: 		$bForceNew		- [optional] a boolean value. Default is True. Whether to force opening a new Writer
-;				   +						Document instead of checking for a usable blank.
-;					   	$bHidden		- [optional] a boolean value. Default is False. If True opens the new document
-;				   +						invisible or changes the existing document to invisible.
-; Return values .:  Success: Object
+; Parameters ....: 		$bForceNew		- [optional] a boolean value. Default is True. Whether to force opening a new Writer Document instead of checking for a usable blank.
+;					   	$bHidden		- [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $bForceNew not a Boolean.
@@ -1431,7 +1429,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $atFindFormat        - [in/out] an array of structs. An Array of formatting properties created from _LOWriter_FindFormat* functions to search for,
 ;				   +						call with an empty array to skip. Array will not be modified.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1788,7 +1786,7 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;				   @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  If more than one parameter is set to true, an array is returned with the requested objects in the order that
+; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that
 ;					the True parameters are listed. Else the requested object is returned.
 ;					Note: If same content on left and right and first pages is active for the requested page style, you only
 ;					need to use the $bFooter parameter, the others are only for when same content on first page or same content
@@ -2010,7 +2008,7 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sModifiedBy         - [optional] a string value. Default is Null. Set the name of the last user who modified the document.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display, created previously by _LOWriter_DateStructCreate.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2350,7 +2348,7 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ; Parameters ....: $oObj             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
 ;				   +						or retrieval functions with Data selected, Or A Paragraph Object returned from
 ;				   +						_LOWriter_ParObjCreateList function.
-; Return values .:  Success: String
+; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
@@ -2390,7 +2388,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 ; Description ...: Retrieve the ViewCursor Object from a Document.
 ; Syntax ........: _LOWriter_DocGetViewCursor(Byref $oDoc)
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2423,7 +2421,7 @@ EndFunc   ;==>_LOWriter_DocGetViewCursor
 ; Syntax ........: _LOWriter_DocHasFrameName(Byref $oDoc, $sFrameName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFrameName          - a string value. The Frame name to search for.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2624,7 +2622,7 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  $sLinkAddress        - a string value. A URL/Link.
 ;                  $bInsertAtViewCursor - [optional] a boolean value. Default is False. See Remarks
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, overwrites any data selected by the $oCursor.
-; Return values .:  Success: 1.
+; Return values .: Success: 1.
 ;				    Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				    --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc variable not an Object.
@@ -3444,7 +3442,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Paper Orientation Constants: $LOW_PAPER_PORTRAIT(0),
@@ -3806,7 +3804,7 @@ EndFunc   ;==>_LOWriter_DocPrintSizeSettings
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocRedo
-; Description ...:  Perform one Redo action for a document.
+; Description ...: Perform one Redo action for a document.
 ; Syntax ........: _LOWriter_DocRedo(Byref $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1
@@ -3841,7 +3839,7 @@ EndFunc   ;==>_LOWriter_DocRedo
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocRedoCurActionTitle
-; Description ...:  Retrieve the current Redo action Title.
+; Description ...: Retrieve the current Redo action Title.
 ; Syntax ........: _LOWriter_DocRedoCurActionTitle(Byref $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: String
@@ -4018,7 +4016,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any
 ;				   +						Set to an empty array[0] to skip. Array will not be modified. Not results with.
 ;				   +						Recommended for use with regular expressions, see remarks.
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.

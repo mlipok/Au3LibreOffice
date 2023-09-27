@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -47,7 +47,7 @@
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sNumStyle           - a string value. The Name of the New Numbering Style to Create.
-; Return values .:   Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -412,7 +412,7 @@ EndFunc   ;==>_LOWriter_NumStyleCustomize
 ;				   +					DocCreate function.
 ;                  $oNumStyle           - [in/out] an object. A Numbering Style object returned by previous NumStyle Create or
 ;				   +						Object Retrieval function.
-; Return values .:   Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -465,7 +465,7 @@ EndFunc   ;==>_LOWriter_NumStyleDelete
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sNumStyle           - a string value. a Numbering Style name to search for.
-; Return values .:  Success: Boolean.
+; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -543,7 +543,7 @@ EndFunc   ;==>_LOWriter_NumStyleGetObj
 ;                  $sNewNumStyleName    - [optional] a string value. Default is Null. The new name to set $sNumStyle page
 ;				   +						style to.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI.
-; Return values .:   Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
@@ -567,7 +567,7 @@ EndFunc   ;==>_LOWriter_NumStyleGetObj
 ;				   +								1 element because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj
@@ -633,7 +633,7 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  $iIndent             - [optional] an integer value. Default is Null. Enter the distance from the left page
 ;				   +									margin to the start of all lines in the numbered paragraph that follow
 ;				   +									the first line. Set in Micrometers.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -665,7 +665,7 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;				   +								settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  This function should work just fine as the others do for modifying styles, but for setting Numbering Style
+; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style
 ;						settings, it would seem that the Array of Setting Objects passed by Autoit is not recognized as an
 ;						appropriate array/Sequence by LibreOffice, and consequently causes a
 ;						com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more
