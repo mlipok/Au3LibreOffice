@@ -11,7 +11,47 @@
 ; #CURRENT# =====================================================================================================================
 ; ===============================================================================================================================
 
-;Cursor Data Related Constants
+; Sleep Divisor
+Global Const $__LOWCONST_SLEEP_DIV = 15 ; Lower this number for more frequent sleeps in applicable functions, raise it for less.
+; Set to 0 for no pause in a loop.
+
+#Tidy_ILC_Pos=50
+; Error Codes
+Global Enum _
+		$__LOW_STATUS_SUCCESS = 0, _             ; 0
+		$__LOW_STATUS_INPUT_ERROR, _             ; 1
+		$__LOW_STATUS_INIT_ERROR, _              ; 2
+		$__LOW_STATUS_PROCESSING_ERROR, _        ; 3
+		$__LOW_STATUS_PROP_SETTING_ERROR, _      ; 4
+		$__LOW_STATUS_DOC_ERROR, _               ; 5
+		$__LOW_STATUS_PRINTER_RELATED_ERROR, _   ; 6
+		$__LOW_STATUS_VER_ERROR                  ; 7
+
+; Conversion Constants.
+Global Enum _
+		$__LOWCONST_CONVERT_TWIPS_CM, _          ; 0
+		$__LOWCONST_CONVERT_TWIPS_INCH, _        ; 1
+		$__LOWCONST_CONVERT_TWIPS_UM, _          ; 2
+		$__LOWCONST_CONVERT_MM_UM, _             ; 3
+		$__LOWCONST_CONVERT_UM_MM, _             ; 4
+		$__LOWCONST_CONVERT_CM_UM, _             ; 5
+		$__LOWCONST_CONVERT_UM_CM, _             ; 6
+		$__LOWCONST_CONVERT_INCH_UM, _           ; 7
+		$__LOWCONST_CONVERT_UM_INCH, _           ; 8
+		$__LOWCONST_CONVERT_PT_UM, _             ; 9
+		$__LOWCONST_CONVERT_UM_PT                ; 10
+
+; Fill Style Type Constants
+Global Enum _
+		$__LOWCONST_FILL_STYLE_OFF, _            ; 0
+		$__LOWCONST_FILL_STYLE_SOLID, _          ; 1
+		$__LOWCONST_FILL_STYLE_GRADIENT, _       ; 2
+		$__LOWCONST_FILL_STYLE_HATCH, _          ; 3
+		$__LOWCONST_FILL_STYLE_BITMAP            ; 4
+
+#Tidy_ILC_Pos=0
+
+; Cursor Data Related Constants
 Global Const _
 		$LOW_CURDATA_BODY_TEXT = 1, _
 		$LOW_CURDATA_FRAME = 2, _
@@ -20,7 +60,7 @@ Global Const _
 		$LOW_CURDATA_ENDNOTE = 5, _
 		$LOW_CURDATA_HEADER_FOOTER = 6
 
-;Cursor Type Related Constants
+; Cursor Type Related Constants
 Global Const _
 		$LOW_CURTYPE_TEXT_CURSOR = 1, _
 		$LOW_CURTYPE_TABLE_CURSOR = 2, _
@@ -28,25 +68,25 @@ Global Const _
 		$LOW_CURTYPE_PARAGRAPH = 4, _
 		$LOW_CURTYPE_TEXT_PORTION = 5
 
-;Path Convert Constants.
+; Path Convert Constants.
 Global Const _
 		$LOW_PATHCONV_AUTO_RETURN = 0, _
 		$LOW_PATHCONV_OFFICE_RETURN = 1, _
 		$LOW_PATHCONV_PCPATH_RETURN = 2
 
-;Printer Duplex Constants.
+; Printer Duplex Constants.
 Global Const _
 		$LOW_DUPLEX_UNKNOWN = 0, _
 		$LOW_DUPLEX_OFF = 1, _
 		$LOW_DUPLEX_LONG = 2, _
 		$LOW_DUPLEX_SHORT = 3
 
-;Printer Paper Orientation Constants.
+; Printer Paper Orientation Constants.
 Global Const _
 		$LOW_PAPER_PORTRAIT = 0, _
 		$LOW_PAPER_LANDSCAPE = 1
 
-;Paper Size Constants.
+; Paper Size Constants.
 Global Const _
 		$LOW_PAPER_A3 = 0, _
 		$LOW_PAPER_A4 = 1, _
@@ -58,14 +98,14 @@ Global Const _
 		$LOW_PAPER_TABLOID = 7, _
 		$LOW_PAPER_USER_DEFINED = 8
 
-;LO Print Comments Constants.
+; LO Print Comments Constants.
 Global Const _
 		$LOW_PRINT_NOTES_NONE = 0, _
 		$LOW_PRINT_NOTES_ONLY = 1, _
 		$LOW_PRINT_NOTES_END = 2, _
 		$LOW_PRINT_NOTES_NEXT_PAGE = 3
 
-;LO ViewCursor Movement Constants.
+; LO ViewCursor Movement Constants.
 Global Enum _
 		$LOW_VIEWCUR_GO_DOWN, _
 		$LOW_VIEWCUR_GO_UP, _
@@ -85,7 +125,7 @@ Global Enum _
 		$LOW_VIEWCUR_GOTO_START, _
 		$LOW_VIEWCUR_GOTO_END
 
-;LO TextCursor Movement Constants.
+; LO TextCursor Movement Constants.
 Global Enum _
 		$LOW_TEXTCUR_COLLAPSE_TO_START, _
 		$LOW_TEXTCUR_COLLAPSE_TO_END, _
@@ -106,7 +146,7 @@ Global Enum _
 		$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, _
 		$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH
 
-;LO TableCursor Movement Constants.
+; LO TableCursor Movement Constants.
 Global Enum _
 		$LOW_TABLECUR_GO_LEFT, _
 		$LOW_TABLECUR_GO_RIGHT, _
@@ -115,7 +155,7 @@ Global Enum _
 		$LOW_TABLECUR_GOTO_START, _
 		$LOW_TABLECUR_GOTO_END
 
-;Break Type
+; Break Type
 Global Const _
 		$LOW_BREAK_NONE = 0, _
 		$LOW_BREAK_COLUMN_BEFORE = 1, _
@@ -125,7 +165,7 @@ Global Const _
 		$LOW_BREAK_PAGE_AFTER = 5, _
 		$LOW_BREAK_PAGE_BOTH = 6
 
-;Horizontal Orientation
+; Horizontal Orientation
 Global Const _
 		$LOW_ORIENT_HORI_NONE = 0, _
 		$LOW_ORIENT_HORI_RIGHT = 1, _
@@ -134,7 +174,7 @@ Global Const _
 		$LOW_ORIENT_HORI_FULL = 6, _
 		$LOW_ORIENT_HORI_LEFT_AND_WIDTH = 7
 
-;Color in Long Color Format
+; Color in Long Color Format
 Global Const _
 		$LOW_COLOR_OFF = -1, _
 		$LOW_COLOR_BLACK = 0, _
@@ -156,7 +196,7 @@ Global Const _
 		$LOW_COLOR_LIME = 8508442, _
 		$LOW_COLOR_BROWN = 9127187
 
-;Border Style
+; Border Style
 Global Const _
 		$LOW_BORDERSTYLE_NONE = 0x7FFF, _
 		$LOW_BORDERSTYLE_SOLID = 0, _
@@ -178,7 +218,7 @@ Global Const _
 		$LOW_BORDERSTYLE_DASH_DOT = 16, _
 		$LOW_BORDERSTYLE_DASH_DOT_DOT = 17
 
-;Border Width
+; Border Width
 Global Const _
 		$LOW_BORDERWIDTH_HAIRLINE = 2, _
 		$LOW_BORDERWIDTH_VERY_THIN = 18, _
@@ -187,7 +227,7 @@ Global Const _
 		$LOW_BORDERWIDTH_THICK = 79, _
 		$LOW_BORDERWIDTH_EXTRA_THICK = 159
 
-;Vertical Orientation
+; Vertical Orientation
 Global Const _
 		$LOW_ORIENT_VERT_NONE = 0, _
 		$LOW_ORIENT_VERT_TOP = 1, _
@@ -200,7 +240,7 @@ Global Const _
 		$LOW_ORIENT_VERT_LINE_CENTER = 8, _
 		$LOW_ORIENT_VERT_LINE_BOTTOM = 9
 
-;Tab Alignment
+; Tab Alignment
 Global Const _
 		$LOW_TAB_ALIGN_LEFT = 0, _
 		$LOW_TAB_ALIGN_CENTER = 1, _
@@ -208,7 +248,7 @@ Global Const _
 		$LOW_TAB_ALIGN_DECIMAL = 3, _
 		$LOW_TAB_ALIGN_DEFAULT = 4
 
-;Underline/Overline
+; Underline/Overline
 Global Const _
 		$LOW_UNDERLINE_NONE = 0, _
 		$LOW_UNDERLINE_SINGLE = 1, _
@@ -230,7 +270,7 @@ Global Const _
 		$LOW_UNDERLINE_BOLD_DASH_DOT_DOT = 17, _
 		$LOW_UNDERLINE_BOLD_WAVE = 18
 
-;Strikeout
+; Strikeout
 Global Const _
 		$LOW_STRIKEOUT_NONE = 0, _
 		$LOW_STRIKEOUT_SINGLE = 1, _
@@ -240,13 +280,13 @@ Global Const _
 		$LOW_STRIKEOUT_SLASH = 5, _
 		$LOW_STRIKEOUT_X = 6
 
-;Relief
+; Relief
 Global Const _
 		$LOW_RELIEF_NONE = 0, _
 		$LOW_RELIEF_EMBOSSED = 1, _
 		$LOW_RELIEF_ENGRAVED = 2
 
-;Case
+; Case
 Global Const _
 		$LOW_CASEMAP_NONE = 0, _
 		$LOW_CASEMAP_UPPER = 1, _
@@ -254,7 +294,7 @@ Global Const _
 		$LOW_CASEMAP_TITLE = 3, _
 		$LOW_CASEMAP_SM_CAPS = 4
 
-;Shadow
+; Shadow
 Global Const _
 		$LOW_SHADOW_NONE = 0, _
 		$LOW_SHADOW_TOP_LEFT = 1, _
@@ -262,7 +302,7 @@ Global Const _
 		$LOW_SHADOW_BOTTOM_LEFT = 3, _
 		$LOW_SHADOW_BOTTOM_RIGHT = 4
 
-;Posture/Italic
+; Posture/Italic
 Global Const _
 		$LOW_POSTURE_NONE = 0, _
 		$LOW_POSTURE_OBLIQUE = 1, _
@@ -271,7 +311,7 @@ Global Const _
 		$LOW_POSTURE_REV_OBLIQUE = 4, _
 		$LOW_POSTURE_REV_ITALIC = 5
 
-;Weight/Bold
+; Weight/Bold
 Global Const _
 		$LOW_WEIGHT_DONT_KNOW = 0, _
 		$LOW_WEIGHT_THIN = 50, _
@@ -284,7 +324,7 @@ Global Const _
 		$LOW_WEIGHT_ULTRA_BOLD = 175, _
 		$LOW_WEIGHT_BLACK = 200
 
-;Outline
+; Outline
 Global Const _
 		$LOW_OUTLINE_BODY = 0, _
 		$LOW_OUTLINE_LEVEL_1 = 1, _
@@ -298,14 +338,14 @@ Global Const _
 		$LOW_OUTLINE_LEVEL_9 = 9, _
 		$LOW_OUTLINE_LEVEL_10 = 10
 
-;Line Spacing
+; Line Spacing
 Global Const _
 		$LOW_LINE_SPC_MODE_PROP = 0, _
 		$LOW_LINE_SPC_MODE_MIN = 1, _
 		$LOW_LINE_SPC_MODE_LEADING = 2, _
 		$LOW_LINE_SPC_MODE_FIX = 3
 
-;Paragraph Horizontal Align
+; Paragraph Horizontal Align
 Global Const _
 		$LOW_PAR_ALIGN_HOR_LEFT = 0, _
 		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _
@@ -313,7 +353,7 @@ Global Const _
 		$LOW_PAR_ALIGN_HOR_CENTER = 3, _
 		$LOW_PAR_ALIGN_HOR_STRETCH = 4 ;HoriAlign 4 does nothing??
 
-;Paragraph Vertical Align
+; Paragraph Vertical Align
 Global Const _
 		$LOW_PAR_ALIGN_VERT_AUTO = 0, _
 		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _
@@ -321,13 +361,13 @@ Global Const _
 		$LOW_PAR_ALIGN_VERT_CENTER = 3, _
 		$LOW_PAR_ALIGN_VERT_BOTTOM = 4
 
-;Paragraph Last Line Alignment
+; Paragraph Last Line Alignment
 Global Const _
 		$LOW_PAR_LAST_LINE_START = 0, _
 		$LOW_PAR_LAST_LINE_JUSTIFIED = 2, _
 		$LOW_PAR_LAST_LINE_CENTER = 3
 
-;Text Direction
+; Text Direction
 Global Const _
 		$LOW_TXT_DIR_LR_TB = 0, _
 		$LOW_TXT_DIR_RL_TB = 1, _
@@ -336,7 +376,7 @@ Global Const _
 		$LOW_TXT_DIR_CONTEXT = 4, _
 		$LOW_TXT_DIR_BT_LR = 5
 
-;Control Character
+; Control Character
 Global Const _
 		$LOW_CON_CHAR_PAR_BREAK = 0, _
 		$LOW_CON_CHAR_LINE_BREAK = 1, _
@@ -345,14 +385,14 @@ Global Const _
 		$LOW_CON_CHAR_HARD_SPACE = 4, _
 		$LOW_CON_CHAR_APPEND_PAR = 5
 
-;Cell Type
+; Cell Type
 Global Const _
 		$LOW_CELL_TYPE_EMPTY = 0, _
 		$LOW_CELL_TYPE_VALUE = 1, _
 		$LOW_CELL_TYPE_TEXT = 2, _
 		$LOW_CELL_TYPE_FORMULA = 3
 
-;Paper Width in uM
+; Paper Width in uM
 Global Const _
 		$LOW_PAPER_WIDTH_A6 = 10490, _
 		$LOW_PAPER_WIDTH_A5 = 14808, _
@@ -384,7 +424,7 @@ Global Const _
 		$LOW_PAPER_WIDTH_12ENVELOPE = 12065, _
 		$LOW_PAPER_WIDTH_JAP_POSTCARD = 10008
 
-;Paper Height in uM
+; Paper Height in uM
 Global Const _
 		$LOW_PAPER_HEIGHT_A6 = 14808, _
 		$LOW_PAPER_HEIGHT_A5 = 21006, _
@@ -416,7 +456,7 @@ Global Const _
 		$LOW_PAPER_HEIGHT_12ENVELOPE = 27940, _
 		$LOW_PAPER_HEIGHT_JAP_POSTCARD = 14808
 
-;Gradient Names
+; Gradient Names
 Global Const _
 		$LOW_GRAD_NAME_PASTEL_BOUQUET = "Pastel Bouquet", _
 		$LOW_GRAD_NAME_PASTEL_DREAM = "Pastel Dream", _
@@ -434,14 +474,14 @@ Global Const _
 		$LOW_GRAD_NAME_PRESENT = "Present", _
 		$LOW_GRAD_NAME_MAHOGANY = "Mahogany"
 
-;Page Layout
+; Page Layout
 Global Const _
 		$LOW_PAGE_LAYOUT_ALL = 0, _
 		$LOW_PAGE_LAYOUT_LEFT = 1, _
 		$LOW_PAGE_LAYOUT_RIGHT = 2, _
 		$LOW_PAGE_LAYOUT_MIRRORED = 3
 
-;Numbering Style Type
+; Numbering Style Type
 Global Const _
 		$LOW_NUM_STYLE_CHARS_UPPER_LETTER = 0, _
 		$LOW_NUM_STYLE_CHARS_LOWER_LETTER = 1, _
@@ -516,26 +556,26 @@ Global Const _
 		$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO = 70, _
 		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71
 
-;Line Style
+; Line Style
 Global Const _
 		$LOW_LINE_STYLE_NONE = 0, _
 		$LOW_LINE_STYLE_SOLID = 1, _
 		$LOW_LINE_STYLE_DOTTED = 2, _
 		$LOW_LINE_STYLE_DASHED = 3
 
-;Vertical Alignment
+; Vertical Alignment
 Global Const _
 		$LOW_ALIGN_VERT_TOP = 0, _
 		$LOW_ALIGN_VERT_MIDDLE = 1, _
 		$LOW_ALIGN_VERT_BOTTOM = 2
 
-;Horizontal Alignment
+; Horizontal Alignment
 Global Const _
 		$LOW_ALIGN_HORI_LEFT = 0, _
 		$LOW_ALIGN_HORI_CENTER = 1, _
 		$LOW_ALIGN_HORI_RIGHT = 2
 
-;Gradient Type
+; Gradient Type
 Global Const _
 		$LOW_GRAD_TYPE_OFF = -1, _
 		$LOW_GRAD_TYPE_LINEAR = 0, _
@@ -545,14 +585,14 @@ Global Const _
 		$LOW_GRAD_TYPE_SQUARE = 4, _
 		$LOW_GRAD_TYPE_RECT = 5
 
-;Follow By
+; Follow By
 Global Const _
 		$LOW_FOLLOW_BY_TABSTOP = 0, _
 		$LOW_FOLLOW_BY_SPACE = 1, _
 		$LOW_FOLLOW_BY_NOTHING = 2, _
 		$LOW_FOLLOW_BY_NEWLINE = 3
 
-;Cursor Status
+; Cursor Status
 Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _
 		$LOW_CURSOR_STAT_IS_START_OF_WORD, _
 		$LOW_CURSOR_STAT_IS_END_OF_WORD, _
@@ -565,7 +605,7 @@ Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _
 		$LOW_CURSOR_STAT_GET_PAGE, _
 		$LOW_CURSOR_STAT_GET_RANGE_NAME
 
-;Relative to
+; Relative to
 Global Const _
 		$LOW_RELATIVE_ROW = -1, _
 		$LOW_RELATIVE_PARAGRAPH = 0, _
@@ -581,7 +621,7 @@ Global Const _
 		$LOW_RELATIVE_PAGE_PRINT_BOTTOM = 10, _
 		$LOW_RELATIVE_PAGE_PRINT_TOP = 11
 
-;Anchor Type
+; Anchor Type
 Global Const _
 		$LOW_ANCHOR_AT_PARAGRAPH = 0, _
 		$LOW_ANCHOR_AS_CHARACTER = 1, _
@@ -589,7 +629,7 @@ Global Const _
 		$LOW_ANCHOR_AT_FRAME = 3, _
 		$LOW_ANCHOR_AT_CHARACTER = 4
 
-;Wrap Type
+; Wrap Type
 Global Const _
 		$LOW_WRAP_MODE_NONE = 0, _
 		$LOW_WRAP_MODE_THROUGH = 1, _
@@ -598,14 +638,14 @@ Global Const _
 		$LOW_WRAP_MODE_LEFT = 4, _
 		$LOW_WRAP_MODE_RIGHT = 5
 
-;Text Adjust
+; Text Adjust
 Global Const _
 		$LOW_TXT_ADJ_VERT_TOP = 0, _
 		$LOW_TXT_ADJ_VERT_CENTER = 1, _
 		$LOW_TXT_ADJ_VERT_BOTTOM = 2, _
 		$LOW_TXT_ADJ_VERT_BLOCK = 3
 
-;Frame Target
+; Frame Target
 Global Const _
 		$LOW_FRAME_TARGET_NONE = "", _
 		$LOW_FRAME_TARGET_TOP = "_top", _
@@ -613,19 +653,19 @@ Global Const _
 		$LOW_FRAME_TARGET_BLANK = "_blank", _
 		$LOW_FRAME_TARGET_SELF = "_self"
 
-;Footnote Count type
+; Footnote Count type
 Global Const _
 		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _
 		$LOW_FOOTNOTE_COUNT_PER_CHAP = 1, _
 		$LOW_FOOTNOTE_COUNT_PER_DOC = 2
 
-;Page Number Type
+; Page Number Type
 Global Const _
 		$LOW_PAGE_NUM_TYPE_PREV = 0, _
 		$LOW_PAGE_NUM_TYPE_CURRENT = 1, _
 		$LOW_PAGE_NUM_TYPE_NEXT = 2
 
-;Field Chapter Display Type
+; Field Chapter Display Type
 Global Const _
 		$LOW_FIELD_CHAP_FRMT_NAME = 0, _
 		$LOW_FIELD_CHAP_FRMT_NUMBER = 1, _
@@ -633,7 +673,7 @@ Global Const _
 		$LOW_FIELD_CHAP_FRMT_NO_PREFIX_SUFFIX = 3, _
 		$LOW_FIELD_CHAP_FRMT_DIGIT = 4
 
-;User Data Field Type
+; User Data Field Type
 Global Const _
 		$LOW_FIELD_USER_DATA_COMPANY = 0, _
 		$LOW_FIELD_USER_DATA_FIRST_NAME = 1, _
@@ -651,7 +691,7 @@ Global Const _
 		$LOW_FIELD_USER_DATA_EMAIL = 13, _
 		$LOW_FIELD_USER_DATA_STATE = 14
 
-;File Name Field Type
+; File Name Field Type
 Global Const _
 		$LOW_FIELD_FILENAME_FULL_PATH = 0, _
 		$LOW_FIELD_FILENAME_PATH = 1, _
@@ -660,7 +700,7 @@ Global Const _
 		$LOW_FIELD_FILENAME_CATEGORY = 4, _
 		$LOW_FIELD_FILENAME_TEMPLATE_NAME = 5
 
-;Format Key Type
+; Format Key Type
 Global Const _
 		$LOW_FORMAT_KEYS_ALL = 0, _
 		$LOW_FORMAT_KEYS_DEFINED = 1, _
@@ -678,7 +718,7 @@ Global Const _
 		$LOW_FORMAT_KEYS_EMPTY = 4096, _
 		$LOW_FORMAT_KEYS_DURATION = 8196
 
-;Reference Field Type
+; Reference Field Type
 Global Const _
 		$LOW_FIELD_REF_TYPE_REF_MARK = 0, _
 		$LOW_FIELD_REF_TYPE_SEQ_FIELD = 1, _
@@ -686,7 +726,7 @@ Global Const _
 		$LOW_FIELD_REF_TYPE_FOOTNOTE = 3, _
 		$LOW_FIELD_REF_TYPE_ENDNOTE = 4
 
-;Type of Reference
+; Type of Reference
 Global Const _
 		$LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED = 0, _
 		$LOW_FIELD_REF_USING_CHAPTER = 1, _
@@ -700,7 +740,7 @@ Global Const _
 		$LOW_FIELD_REF_USING_NUMBER_NO_CONT = 9, _
 		$LOW_FIELD_REF_USING_NUMBER_CONT = 10
 
-;Count Field Type
+; Count Field Type
 Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _
 		$LOW_FIELD_COUNT_TYPE_IMAGES, _
 		$LOW_FIELD_COUNT_TYPE_OBJECTS, _
@@ -709,7 +749,7 @@ Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _
 		$LOW_FIELD_COUNT_TYPE_TABLES, _
 		$LOW_FIELD_COUNT_TYPE_WORDS
 
-;Regular Field Types
+; Regular Field Types
 Global Enum Step *2 _
 		$LOW_FIELD_TYPE_ALL = 1, _
 		$LOW_FIELD_TYPE_COMMENT, _
@@ -743,7 +783,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_TYPE_URL, _
 		$LOW_FIELD_TYPE_WORD_COUNT
 
-;Advanced Field Types
+; Advanced Field Types
 Global Enum Step *2 _
 		$LOW_FIELDADV_TYPE_ALL = 1, _
 		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _
@@ -756,7 +796,7 @@ Global Enum Step *2 _
 		$LOW_FIELDADV_TYPE_INPUT_USER, _
 		$LOW_FIELDADV_TYPE_USER
 
-;Document Information Field Types
+; Document Information Field Types
 Global Enum Step *2 _
 		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _
 		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _
@@ -773,7 +813,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_DOCINFO_TYPE_SUBJECT, _
 		$LOW_FIELD_DOCINFO_TYPE_TITLE
 
-;Placeholder Type
+; Placeholder Type
 Global Const _
 		$LOW_FIELD_PLACEHOLD_TYPE_TEXT = 0, _
 		$LOW_FIELD_PLACEHOLD_TYPE_TABLE = 1, _

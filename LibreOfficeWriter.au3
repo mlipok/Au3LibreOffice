@@ -573,31 +573,6 @@
 ;__LOWriter_ViewCursorMove
 ; ===============================================================================================================================
 
-; #CONSTANTS# ===================================================================================================================
-
-;Sleep Divisor
-Global Const $__LOWCONST_SLEEP_DIV = 15 ; Lower this number for more frequent sleeps in applicable functions, raise it for less.
-;Set to 0 for no pause in a loop.
-
-;Error Codes
-Global Enum $__LOW_STATUS_SUCCESS = 0, _ ; 0
-		$__LOW_STATUS_INPUT_ERROR, _ ;1
-		$__LOW_STATUS_INIT_ERROR, _ ;2
-		$__LOW_STATUS_PROCESSING_ERROR, _ ;3
-		$__LOW_STATUS_PROP_SETTING_ERROR, _ ;4
-		$__LOW_STATUS_DOC_ERROR, _ ;5
-		$__LOW_STATUS_PRINTER_RELATED_ERROR, _ ;6
-		$__LOW_STATUS_VER_ERROR ;7
-
-;Conversion Constants.
-Global Enum $__LOWCONST_CONVERT_TWIPS_CM, $__LOWCONST_CONVERT_TWIPS_INCH, $__LOWCONST_CONVERT_TWIPS_UM, $__LOWCONST_CONVERT_MM_UM, _
-		$__LOWCONST_CONVERT_UM_MM, $__LOWCONST_CONVERT_CM_UM, $__LOWCONST_CONVERT_UM_CM, $__LOWCONST_CONVERT_INCH_UM, $__LOWCONST_CONVERT_UM_INCH, _
-		$__LOWCONST_CONVERT_PT_UM, $__LOWCONST_CONVERT_UM_PT
-
-;Fill Style Type Constants
-Global Const $__LOWCONST_FILL_STYLE_OFF = 0, $__LOWCONST_FILL_STYLE_SOLID = 1, $__LOWCONST_FILL_STYLE_GRADIENT = 2, _
-		$__LOWCONST_FILL_STYLE_HATCH = 3, $__LOWCONST_FILL_STYLE_BITMAP = 4
-; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ;_LOWriter_DocListTableNames                      ; --> _LOWriter_TablesGetNames
@@ -8460,8 +8435,8 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	;Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 	If Not IsObj($oViewCursorBackup) Then
-	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False); If That Failed, create a Backup Cursor at the beginning of the document.
-	If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
+		If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
 	;Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
