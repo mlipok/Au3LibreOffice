@@ -108,7 +108,7 @@ Func _LOWriter_ParObjCopy(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
-	$oObj = $oDoc.CurrentController.getTransferable() ;Copy
+	$oObj = $oDoc.CurrentController.getTransferable() ; Copy
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oObj)
@@ -373,10 +373,10 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 		$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
-		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ;Move and select to End of cell
+		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of cell
 		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 
-		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ;Move and select to End of Table
+		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of Table
 		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 
 	EndIf

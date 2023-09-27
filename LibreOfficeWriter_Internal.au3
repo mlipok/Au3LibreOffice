@@ -140,7 +140,7 @@ Func __LOWriter_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 
 	If Not IsArray($aArray) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bCountInFirst) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If UBound($aArray, $UBOUND_COLUMNS) > 1 Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Too many columns
+	If UBound($aArray, $UBOUND_COLUMNS) > 1 Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Too many columns
 
 	If $bCountInFirst And (UBound($aArray) = 0) Then
 		ReDim $aArray[1]
@@ -186,7 +186,7 @@ Func __LOWriter_AddTo2DArray(ByRef $aArray, $vDataCol1, $vDataCol2, $bCountInFir
 
 	If Not IsArray($aArray) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bCountInFirst) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If UBound($aArray, $UBOUND_COLUMNS) <> 2 Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Too many or too few  columns
+	If UBound($aArray, $UBOUND_COLUMNS) <> 2 Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Too many or too few  columns
 
 	If $bCountInFirst And (UBound($aArray) = 0) Then
 		ReDim $aArray[1][2]
@@ -323,7 +323,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 
 	If Not __LOWriter_VersionCheck(3.4) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;If more than one Boolean is true = error
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
@@ -342,38 +342,38 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 	If Not IsObj($tBL2) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oObj.TopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.TopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.TopBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.TopBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.TopBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.TopBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.TopBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iTop : $oObj.TopBorder.Color() ; copy Color over to new size structure
 		$oObj.TopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oObj.BottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.BottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.BottomBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.BottomBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.BottomBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.BottomBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.BottomBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iBottom : $oObj.BottomBorder.Color() ; copy Color over to new size structure
 		$oObj.BottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oObj.LeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.LeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.LeftBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.LeftBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.LeftBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.LeftBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.LeftBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iLeft : $oObj.LeftBorder.Color() ; copy Color over to new size structure
 		$oObj.LeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oObj.RightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.RightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.RightBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.RightBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.RightBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.RightBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.RightBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iRight : $oObj.RightBorder.Color() ; copy Color over to new size structure
 		$oObj.RightBorder = $tBL2
 	EndIf
 
@@ -428,7 +428,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	Local $tBL2
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;If more than one Boolean is true = error
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 
@@ -449,38 +449,38 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	If Not IsObj($tBL2) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oObj.CharTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.CharTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.CharTopBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.CharTopBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.CharTopBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.CharTopBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.CharTopBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iTop : $oObj.CharTopBorder.Color() ; copy Color over to new size structure
 		$oObj.CharTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oObj.CharBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.CharBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.CharBottomBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.CharBottomBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.CharBottomBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.CharBottomBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.CharBottomBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iBottom : $oObj.CharBottomBorder.Color() ; copy Color over to new size structure
 		$oObj.CharBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oObj.CharLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.CharLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.CharLeftBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.CharLeftBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.CharLeftBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.CharLeftBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.CharLeftBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iLeft : $oObj.CharLeftBorder.Color() ; copy Color over to new size structure
 		$oObj.CharLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oObj.CharRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.CharRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.CharRightBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.CharRightBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.CharRightBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.CharRightBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.CharRightBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iRight : $oObj.CharRightBorder.Color() ; copy Color over to new size structure
 		$oObj.CharRightBorder = $tBL2
 	EndIf
 
@@ -1176,7 +1176,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 		$iError = ($oObj.CharRotation() = $iRotation) ? $iError : BitOR($iError, 1)
 	EndIf
 
-	If ($iScaleWidth <> Null) Then ;can't be less than 1%
+	If ($iScaleWidth <> Null) Then ; can't be less than 1%
 		If Not __LOWriter_IntIsBetween($iScaleWidth, 1, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharScaleWidth = $iScaleWidth
 		$iError = ($oObj.CharScaleWidth() = $iScaleWidth) ? $iError : BitOR($iError, 2)
@@ -1808,7 +1808,7 @@ Func __LOWriter_DirFrmtCheck(ByRef $oSelection, $bCheckSelection = False)
 	; false if it is.
 	If $oSelection.supportsService("com.sun.star.text.TextCursor") Or _
 			$oSelection.supportsService("com.sun.star.text.TextViewCursor") Then
-		If $bCheckSelection Then Return SetError($__LOW_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? False : True) ;If collapsed return false meaning fail.
+		If $bCheckSelection Then Return SetError($__LOW_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? False : True) ; If collapsed return false meaning fail.
 		Return SetError($__LOW_STATUS_SUCCESS, 0, True)
 	EndIf
 	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
@@ -1865,13 +1865,13 @@ Func __LOWriter_FieldCountType($vInput)
 			If $vInput.supportsService($asFieldTypes[$i]) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $i)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
 		Next
-		Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;No Hits
+		Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; No Hits
 
 	ElseIf IsInt($vInput) Then
 		If Not __LOWriter_IntIsBetween($vInput, 0, UBound($asFieldTypes) - 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $asFieldTypes[$vInput])
 	Else
-		Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0) ;Wrong VarType
+		Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0) ; Wrong VarType
 	EndIf
 EndFunc   ;==>__LOWriter_FieldCountType
 
@@ -2148,11 +2148,11 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = Fals
 		$msExportFilters[".xhtml"] = "XHTML Writer File"
 	EndIf
 
-	If StringInStr($sDocSavePath, "file:///") Then ; If L.O. URl Then
+	If StringInStr($sDocSavePath, "file:///") Then ;  If L.O. URl Then
 		$iSlashLocation = StringInStr($sDocSavePath, "/", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, ($iLength - $iDotLocation) + 1)
-	ElseIf StringInStr($sDocSavePath, "\") Then ; Else if PC Path Then
+	ElseIf StringInStr($sDocSavePath, "\") Then ;  Else if PC Path Then
 		$iSlashLocation = StringInStr($sDocSavePath, "\", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, $iLength - $iDotLocation + 1)
@@ -2160,7 +2160,7 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = Fals
 		Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
 
-	If $sFileExtension = $sDocSavePath Then ; If no file extension identified, append .odt extension and return.
+	If $sFileExtension = $sDocSavePath Then ;  If no file extension identified, append .odt extension and return.
 		$sDocSavePath = $sDocSavePath & ".odt"
 		Return SetError($__LOW_STATUS_SUCCESS, 3, "writer8")
 	Else
@@ -2356,7 +2356,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	Local $tBL2
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;If more than one Boolean is true = error
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
@@ -2376,38 +2376,38 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	If Not IsObj($tBL2) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oObj.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.FooterTopBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.FooterTopBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.FooterTopBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.FooterTopBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.FooterTopBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iTop : $oObj.FooterTopBorder.Color() ; copy Color over to new size structure
 		$oObj.FooterTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oObj.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.FooterBottomBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.FooterBottomBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.FooterBottomBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.FooterBottomBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.FooterBottomBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iBottom : $oObj.FooterBottomBorder.Color() ; copy Color over to new size structure
 		$oObj.FooterBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oObj.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.FooterLeftBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.FooterLeftBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.FooterLeftBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.FooterLeftBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.FooterLeftBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iLeft : $oObj.FooterLeftBorder.Color() ; copy Color over to new size structure
 		$oObj.FooterLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oObj.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.FooterRightBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.FooterRightBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.FooterRightBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.FooterRightBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.FooterRightBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iRight : $oObj.FooterRightBorder.Color() ; copy Color over to new size structure
 		$oObj.FooterRightBorder = $tBL2
 	EndIf
 
@@ -2475,22 +2475,22 @@ Func __LOWriter_FrameRelativeSize(ByRef $oDoc, ByRef $oFrameObj, $bRelativeWidth
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If ($bRelativeWidth = True) Then
-		$iPageWidth = $oPageStyle.Width() ;Retrieve total PageStyle width
+		$iPageWidth = $oPageStyle.Width() ; Retrieve total PageStyle width
 		$iPageWidth = $iPageWidth - $oPageStyle.RightMargin()
-		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ;Minus off both margins.
+		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ; Minus off both margins.
 
-		$iFrameWidth = $iPageWidth * ($oFrameObj.RelativeWidth() / 100) ;Times Page width minus margins by relative width percentage.
+		$iFrameWidth = $iPageWidth * ($oFrameObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
 
 		$oFrameObj.Width = $iFrameWidth
 
 	EndIf
 
 	If ($bRelativeHeight = True) Then
-		$iPageHeight = $oPageStyle.Height() ;Retrieve total PageStyle Height
+		$iPageHeight = $oPageStyle.Height() ; Retrieve total PageStyle Height
 		$iPageHeight = $iPageHeight - $oPageStyle.TopMargin()
-		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ;Minus off both margins.
+		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ; Minus off both margins.
 
-		$iFrameHeight = $iPageHeight * ($oFrameObj.RelativeHeight() / 100) ;Times Page Height minus margins by relative Height percentage.
+		$iFrameHeight = $iPageHeight * ($oFrameObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
 
 		$oFrameObj.Height = $iFrameHeight
 	EndIf
@@ -2534,7 +2534,7 @@ Func __LOWriter_GetPrinterSetting(ByRef $oDoc, $sSetting)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
 	Next
 
-	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;No Matches
+	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; No Matches
 EndFunc   ;==>__LOWriter_GetPrinterSetting
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2954,7 +2954,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	Local $aiBorder[4]
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;If more than one Boolean is true = error
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		If $bWid Then
@@ -2974,38 +2974,38 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	If Not IsObj($tBL2) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($oObj.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.HeaderTopBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.HeaderTopBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.HeaderTopBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.HeaderTopBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.HeaderTopBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iTop : $oObj.HeaderTopBorder.Color() ; copy Color over to new size structure
 		$oObj.HeaderTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($oObj.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.HeaderBottomBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.HeaderBottomBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.HeaderBottomBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.HeaderBottomBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.HeaderBottomBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iBottom : $oObj.HeaderBottomBorder.Color() ; copy Color over to new size structure
 		$oObj.HeaderBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($oObj.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.HeaderLeftBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.HeaderLeftBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.HeaderLeftBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.HeaderLeftBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.HeaderLeftBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iLeft : $oObj.HeaderLeftBorder.Color() ; copy Color over to new size structure
 		$oObj.HeaderLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($oObj.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($oObj.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.HeaderRightBorder.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.HeaderRightBorder.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.HeaderRightBorder.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.HeaderRightBorder.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.HeaderRightBorder.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iRight : $oObj.HeaderRightBorder.Color() ; copy Color over to new size structure
 		$oObj.HeaderRightBorder = $tBL2
 	EndIf
 
@@ -3069,7 +3069,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bReturnObject) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If (($oCursor.ImplementationName()) = "SwXTextTableCursor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ;Can't get data type from Table Cursor.
+	If (($oCursor.ImplementationName()) = "SwXTextTableCursor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Can't get data type from Table Cursor.
 
 	Switch $oCursor.Text.getImplementationName()
 		Case "SwXBodyText"
@@ -3136,7 +3136,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 			EndIf
 			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ; no matches
 		Case Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 4, 0) ;unknown data type.
+			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 4, 0) ; unknown data type.
 	EndSwitch
 EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 
@@ -3182,7 +3182,7 @@ Func __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 		Case "SwXTextPortion"
 			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_PORTION)
 		Case Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;unknown Cursor type.
+			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; unknown Cursor type.
 	EndSwitch
 EndFunc   ;==>__LOWriter_Internal_CursorGetType
 
@@ -3622,10 +3622,10 @@ Func __LOWriter_NumStyleListFormat(ByRef $oNumRules, $iLevel, $iSubLevels, $sPre
 	If Not IsInt($iSubLevels) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 
 	$iBeginLevel = ($iLevel = -1) ? 9 : $iLevel ; If Level = -1 (all levels) then set the begin level at 9 (the last level), else at the called level.
-	$iEndLevel = ($iLevel = -1) ? 0 : ($iLevel - $iSubLevels + 1) ;If Level = -1 (all levels) then set the end level at 0 (the first level), else
+	$iEndLevel = ($iLevel = -1) ? 0 : ($iLevel - $iSubLevels + 1) ; If Level = -1 (all levels) then set the end level at 0 (the first level), else
 	; at the called level - any Sublevels.
 
-	If ($iLevel = -1) Then ; If Level = -1 (all levels) cycle through them all, Applying their respective Prefix/Suffix
+	If ($iLevel = -1) Then ;  If Level = -1 (all levels) cycle through them all, Applying their respective Prefix/Suffix
 		For $i = $iBeginLevel To $iEndLevel Step -1
 			$sPrefix = ($sPrefix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $i, "Prefix") : $sPrefix
 			$sSuffix = ($sSuffix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $i, "Suffix") : $sSuffix
@@ -3702,9 +3702,9 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 
 	$iEndLevel = ($iLevel = -1) ? 9 : 0 ;  replace setting value for all levels at once or for one level
 
-	$oScript = __LOWriter_NumStyleCreateScript($oDoc) ;Create my modification Script.
+	$oScript = __LOWriter_NumStyleCreateScript($oDoc) ; Create my modification Script.
 
-	If Not IsObj($oScript) Then ;If creating my Mod. Script fails, open a new document and create a script in there.
+	If Not IsObj($oScript) Then ; If creating my Mod. Script fails, open a new document and create a script in there.
 		$oNumStyleDoc = __LOWriter_NumStyleInitiateDocument()
 		If Not IsObj($oNumStyleDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 		$oScript = $oNumStyleDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.NumStyleModifierDH13.ReplaceByIndex?language=Basic&location=document")
@@ -3730,23 +3730,23 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 							$atNumLevel[$i].Value = ($iLevel = -1) ? $vSettingValue[$j] : $vSettingValue
 
 						Case "Prefix"
-							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ;Test is ListFormat exists, if so modify prefix/Suffix via new method.
+							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ; Test is ListFormat exists, if so modify prefix/Suffix via new method.
 							If (@error = 0) Then
 								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
 								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
 								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
-								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, $vSettingValue, Null) ;Add prefix to ListFormat
+								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, $vSettingValue, Null) ; Add prefix to ListFormat
 								$atNumLevel[$iListFormatIndex].Value = $sListFormat
 							EndIf
 							$atNumLevel[$i].Value = $vSettingValue ;Set Literal Prefix Value, which wont work if "ListFormat" is present.
 
 						Case "Suffix"
-							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ;Test is ListFormat exists, if so modify prefix/Suffix via new method.
+							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ; Test is ListFormat exists, if so modify prefix/Suffix via new method.
 							If (@error = 0) Then
 								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
 								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
 								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
-								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, Null, $vSettingValue) ;Add suffix to ListFormat
+								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, Null, $vSettingValue) ; Add suffix to ListFormat
 								$atNumLevel[$iListFormatIndex].Value = $sListFormat
 							EndIf
 							$atNumLevel[$i].Value = $vSettingValue ;Set Literal Suffix Value, which wont work if "ListFormat" is present.
@@ -5102,7 +5102,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		$tTabStruct.DecimalChar = $iDecChar
 	EndIf
 
-	If ($atTabStops[0].Alignment() = $LOW_TAB_ALIGN_DEFAULT) And (UBound($atTabStops) = 1) Then ;if inserting a  Tabstop for the first time, overwrite the "Default blank TabStop.
+	If ($atTabStops[0].Alignment() = $LOW_TAB_ALIGN_DEFAULT) And (UBound($atTabStops) = 1) Then ; if inserting a  Tabstop for the first time, overwrite the "Default blank TabStop.
 		$atTabStops[0] = $tTabStruct
 		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
 		$atNewTabStops = $oObj.ParaTabStops()
@@ -5111,13 +5111,13 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 	Else
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
-		$aiTabList = __LOWriter_ParTabStopList($oObj) ;Get a list of existing tabstops to compare with
+		$aiTabList = __LOWriter_ParTabStopList($oObj) ; Get a list of existing tabstops to compare with
 		If Not IsArray($aiTabList) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
-		__LOWriter_AddTo1DArray($aiTabList, 0) ;Add a dummy to make Array sizes equal.
+		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
 		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
 
-		$atNewTabStops = $oObj.ParaTabStops() ;now retrieve a new list to find the final Tab Stop position.
+		$atNewTabStops = $oObj.ParaTabStops() ; now retrieve a new list to find the final Tab Stop position.
 		For $i = 0 To UBound($atNewTabStops) - 1
 			If ($atNewTabStops[$i].Position()) <> $aiTabList[$i] Then
 				$iNewPosition = $atNewTabStops[$i].Position()
@@ -5127,7 +5127,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 			EndIf
 		Next
 
-		If Not $bFound Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;didn't find the new TabStop
+		If Not $bFound Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; didn't find the new TabStop
 	EndIf
 
 	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? $iError : BitOR($iError, 1)
@@ -5515,17 +5515,17 @@ Func __LOWriter_RegExpConvert(ByRef $sRegExpString)
 	$iReplacements = @extended ; Capture number of replacements
 	Do
 		$iPos1 = StringInStr($sRegExpStringTemp, "&", $STR_NOCASESENSE, 1, $iPos1 + 1) ; test for & found in string, starting at last found position + 1.
-		If ($iPos1 > 0) Then ; if there is a find, begin testing for backslash.
+		If ($iPos1 > 0) Then ;  if there is a find, begin testing for backslash.
 			$iPos2 = StringInStr($sRegExpStringTemp, "\", $STR_NOCASESENSE, 1, $iPos1 - 1, 1) ; Test for a backslash, if there is one, then the & is not to be replaced.
 			; If there is no backslash, then replace the & with Autoit's accepted back reference, $0
 			If ($iPos2 = 0) Then $sRegExpStringTemp = StringLeft($sRegExpStringTemp, $iPos1 - 1) & "${0}" & StringMid($sRegExpStringTemp, $iPos1 + 1)
 		EndIf
 	Until $iPos1 = 0
 
-	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\n", @CR) ;Replace L.O. keyword for New Par. line for Autoit Carriage return.
-	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\t", @TAB) ;Replace L.O. keyword for Tab for Autoit Tab.
+	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\n", @CR) ; Replace L.O. keyword for New Par. line for Autoit Carriage return.
+	$sRegExpStringTemp = StringReplace($sRegExpStringTemp, "\t", @TAB) ; Replace L.O. keyword for Tab for Autoit Tab.
 
-	If ($iReplacements > 0) Then $sRegExpStringTemp = StringReplace($sRegExpStringTemp, $sBackSlashFlag, "\\") ;Replace the Flag with literal double Backslashes.
+	If ($iReplacements > 0) Then $sRegExpStringTemp = StringReplace($sRegExpStringTemp, $sBackSlashFlag, "\\") ; Replace the Flag with literal double Backslashes.
 
 	$sRegExpString = $sRegExpStringTemp ; Update the Replacement String.
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -5654,56 +5654,56 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	If Not IsObj($tTB2) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
 	If $iTop <> Null Then
-		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $tTB2.TopLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $tTB2.TopLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $tTB2.TopLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iTop : $tTB2.TopLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iTop : $tTB2.TopLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iTop : $tTB2.TopLine.Color() ; copy Color over to new size structure
 		$tTB2.TopLine = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
-		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $tTB2.BottomLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $tTB2.BottomLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $tTB2.BottomLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iBottom : $tTB2.BottomLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iBottom : $tTB2.BottomLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iBottom : $tTB2.BottomLine.Color() ; copy Color over to new size structure
 		$tTB2.BottomLine = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
-		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $tTB2.LeftLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $tTB2.LeftLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $tTB2.LeftLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iLeft : $tTB2.LeftLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iLeft : $tTB2.LeftLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iLeft : $tTB2.LeftLine.Color() ; copy Color over to new size structure
 		$tTB2.LeftLine = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
-		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $tTB2.RightLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $tTB2.RightLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $tTB2.RightLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iRight : $tTB2.RightLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iRight : $tTB2.RightLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iRight : $tTB2.RightLine.Color() ; copy Color over to new size structure
 		$tTB2.RightLine = $tBL2
 	EndIf
 
 	If $iVert <> Null Then
-		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 5, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 		; Vertical Line
-		$tBL2.LineWidth = ($bWid) ? $iVert : $tTB2.VerticalLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iVert : $tTB2.VerticalLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iVert : $tTB2.VerticalLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iVert : $tTB2.VerticalLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iVert : $tTB2.VerticalLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iVert : $tTB2.VerticalLine.Color() ; copy Color over to new size structure
 		$tTB2.VerticalLine = $tBL2
 	EndIf
 
 	If $iHori <> Null Then
-		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 6, 0) ;If Width not set, cant set color or style.
+		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 		; Horizontal Line
-		$tBL2.LineWidth = ($bWid) ? $iHori : $tTB2.HorizontalLine.LineWidth() ;copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iHori : $tTB2.HorizontalLine.LineStyle() ;copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iHori : $tTB2.HorizontalLine.Color() ;copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? $iHori : $tTB2.HorizontalLine.LineWidth() ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? $iHori : $tTB2.HorizontalLine.LineStyle() ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? $iHori : $tTB2.HorizontalLine.Color() ; copy Color over to new size structure
 		$tTB2.HorizontalLine = $tBL2
 	EndIf
 
@@ -5885,7 +5885,7 @@ Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
 	Next
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;Cell not found
+	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; Cell not found
 EndFunc   ;==>__LOWriter_TableHasCellName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -5993,7 +5993,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 	$iRows = $oTable.getRows.getCount()
 	If Not IsInt($iRows) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-	If ($bSplitRows = Null) Then ;Retrieve Split Rows Setting
+	If ($bSplitRows = Null) Then ; Retrieve Split Rows Setting
 
 		; Retrieve the First Row's Split Row setting.
 		$bSplitRowTest = $oTable.getRows.getByIndex(0).IsSplitAllowed()
@@ -6001,10 +6001,10 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 
 		For $i = 1 To $iRows - 1
 
-			If $bSplitRowTest <> ($oTable.getRows.getByIndex($i).IsSplitAllowed()) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ;Table Rows have mixed settings, return 0.
+			If $bSplitRowTest <> ($oTable.getRows.getByIndex($i).IsSplitAllowed()) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ; Table Rows have mixed settings, return 0.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
 		Next
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $bSplitRowTest) ;All Table Rows are set the same as the first Row, return that setting.
+		Return SetError($__LOW_STATUS_SUCCESS, 1, $bSplitRowTest) ; All Table Rows are set the same as the first Row, return that setting.
 
 	Else ;Set Split Rows Setting
 		If Not IsBool($bSplitRows) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)

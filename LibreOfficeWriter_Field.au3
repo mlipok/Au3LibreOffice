@@ -192,7 +192,7 @@ Func _LOWriter_FieldAuthorInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	$oCursor.Text.insertTextContent($oCursor, $oAuthField, $bOverwrite)
 
-	If ($sAuthor <> Null) Then ;Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
+	If ($sAuthor <> Null) Then ; Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
 		If $oAuthField.Content <> $sAuthor And ($oAuthField.IsFixed() = True) Then $oAuthField.Content = $sAuthor
 	EndIf
 
@@ -341,7 +341,7 @@ Func _LOWriter_FieldChapterInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 
 	If ($iLevel <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		$oChapField.Level = ($iLevel - 1) ;Level is 0 Based
+		$oChapField.Level = ($iLevel - 1) ; Level is 0 Based
 	EndIf
 
 	$oCursor.Text.insertTextContent($oCursor, $oChapField, $bOverwrite)
@@ -401,7 +401,7 @@ Func _LOWriter_FieldChapterModify(ByRef $oChapField, $iChapFrmt = Null, $iLevel 
 	If Not IsObj($oChapField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iChapFrmt, $iLevel) Then
-		__LOWriter_ArrayFill($aiChap, $oChapField.ChapterFormat(), ($oChapField.Level() + 1)) ;Level is 0 Based -- Add 1 to make it like L.O. UI
+		__LOWriter_ArrayFill($aiChap, $oChapField.ChapterFormat(), ($oChapField.Level() + 1)) ; Level is 0 Based -- Add 1 to make it like L.O. UI
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiChap)
 	EndIf
 
@@ -413,7 +413,7 @@ Func _LOWriter_FieldChapterModify(ByRef $oChapField, $iChapFrmt = Null, $iLevel 
 
 	If ($iLevel <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-		$oChapField.Level = ($iLevel - 1) ;Level is 0 Based
+		$oChapField.Level = ($iLevel - 1) ; Level is 0 Based
 		$iError = ($oChapField.Level() = ($iLevel - 1)) ? $iError : BitOR($iError, 2)
 	EndIf
 
@@ -954,7 +954,7 @@ Func _LOWriter_FieldCurrentDisplayGet(ByRef $oField)
 
 	If Not IsObj($oField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oField.supportsService("com.sun.star.text.textfield.ConditionalText")) Then ;COnditional Text Fields don't update "CurrentPresentation" setting,
+	If ($oField.supportsService("com.sun.star.text.textfield.ConditionalText")) Then ; COnditional Text Fields don't update "CurrentPresentation" setting,
 		; so acquire the current display based on whether the condition is true or not.
 		$sPresentation = ($oField.IsConditionTrue() = False) ? $oField.TrueContent() : $oField.FalseContent()
 	Else
@@ -1060,7 +1060,7 @@ Func _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 
 	$oCursor.Text.insertTextContent($oCursor, $oDateTimeField, $bOverwrite)
 
-	If ($tDateStruct <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($tDateStruct <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If (__LOWriter_DateStructCompare($oDateTimeField.DateTimeValue(), $tDateStruct) = False) And ($oDateTimeField.IsFixed() = True) Then $oDateTimeField.DateTimeValue = $tDateStruct
 	EndIf
 
@@ -1312,7 +1312,7 @@ Func _LOWriter_FieldDocInfoCommentsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoCommentField, $bOverwrite)
 
-	If ($sComments <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($sComments <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oDocInfoCommentField.Content <> $sComments And ($oDocInfoCommentField.IsFixed() = True) Then $oDocInfoCommentField.Content = $sComments
 	EndIf
 
@@ -1451,7 +1451,7 @@ Func _LOWriter_FieldDocInfoCreateAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverw
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoCreateAuthField, $bOverwrite)
 
-	If ($sAuthor <> Null) Then ;Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
+	If ($sAuthor <> Null) Then ; Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
 		If $oDocInfoCreateAuthField.Author <> $sAuthor And ($oDocInfoCreateAuthField.IsFixed() = True) Then $oDocInfoCreateAuthField.Author = $sAuthor
 	EndIf
 
@@ -1894,7 +1894,7 @@ Func _LOWriter_FieldDocInfoKeywordsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoKeywordField, $bOverwrite)
 
-	If ($sKeywords <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($sKeywords <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oDocInfoKeywordField.Content <> $sKeywords And ($oDocInfoKeywordField.IsFixed() = True) Then $oDocInfoKeywordField.Content = $sKeywords
 	EndIf
 
@@ -2033,7 +2033,7 @@ Func _LOWriter_FieldDocInfoModAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrit
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoModAuthField, $bOverwrite)
 
-	If ($sAuthor <> Null) Then ;Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
+	If ($sAuthor <> Null) Then ; Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
 		If $oDocInfoModAuthField.Author <> $sAuthor And ($oDocInfoModAuthField.IsFixed() = True) Then $oDocInfoModAuthField.Author = $sAuthor
 	EndIf
 
@@ -2325,7 +2325,7 @@ Func _LOWriter_FieldDocInfoPrintAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwr
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoPrintAuthField, $bOverwrite)
 
-	If ($sAuthor <> Null) Then ;Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
+	If ($sAuthor <> Null) Then ; Sometimes Author Disappears upon Insertion, make a check to re-set the Author value.
 		If $oDocInfoPrintAuthField.Author <> $sAuthor And ($oDocInfoPrintAuthField.IsFixed() = True) Then $oDocInfoPrintAuthField.Author = $sAuthor
 	EndIf
 
@@ -2616,7 +2616,7 @@ Func _LOWriter_FieldDocInfoRevNumInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoRevNumField, $bOverwrite)
 
-	If ($iRevNum <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($iRevNum <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oDocInfoRevNumField.Revision <> $iRevNum And ($oDocInfoRevNumField.IsFixed() = True) Then $oDocInfoRevNumField.Revision = $iRevNum
 	EndIf
 
@@ -2755,7 +2755,7 @@ Func _LOWriter_FieldDocInfoSubjectInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrit
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoSubField, $bOverwrite)
 
-	If ($sSubject <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($sSubject <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oDocInfoSubField.Content <> $sSubject And ($oDocInfoSubField.IsFixed() = True) Then $oDocInfoSubField.Content = $sSubject
 	EndIf
 
@@ -2894,7 +2894,7 @@ Func _LOWriter_FieldDocInfoTitleInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite 
 
 	$oCursor.Text.insertTextContent($oCursor, $oDocInfoTitleField, $bOverwrite)
 
-	If ($sTitle <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($sTitle <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oDocInfoTitleField.Content <> $sTitle And ($oDocInfoTitleField.IsFixed() = True) Then $oDocInfoTitleField.Content = $sTitle
 	EndIf
 
@@ -3212,7 +3212,7 @@ Func _LOWriter_FieldFuncHiddenParModify(ByRef $oHidParField, $sCondition = Null)
 	If Not IsObj($oHidParField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sCondition) Then
-		__LOWriter_ArrayFill($avHidPar, $oHidParField.Condition(), ($oHidParField.IsHidden()) ? False : True) ;"IsHidden" Is Backwards
+		__LOWriter_ArrayFill($avHidPar, $oHidParField.Condition(), ($oHidParField.IsHidden()) ? False : True) ; "IsHidden" Is Backwards
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avHidPar)
 	EndIf
 
@@ -3338,7 +3338,7 @@ Func _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField, $sCondition = Null
 	If Not IsObj($oHidTxtField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sCondition, $sText) Then
-		__LOWriter_ArrayFill($avHidPar, $oHidTxtField.Condition(), $oHidTxtField.Content(), ($oHidTxtField.IsHidden()) ? False : True) ;"IsHidden" Is Backwards
+		__LOWriter_ArrayFill($avHidPar, $oHidTxtField.Condition(), $oHidTxtField.Content(), ($oHidTxtField.IsHidden()) ? False : True) ; "IsHidden" Is Backwards
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avHidPar)
 	EndIf
 
@@ -3989,9 +3989,9 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 		$oPageField.SubType = $iPageNumType
 
 		If ($iPageNumType = $LOW_PAGE_NUM_TYPE_PREV) Then
-			$oPageField.Offset = ($oPageField.Offset() - 1) ;If SubType is Set to Prev. Set offset to minus 1 of current value
+			$oPageField.Offset = ($oPageField.Offset() - 1) ; If SubType is Set to Prev. Set offset to minus 1 of current value
 		ElseIf ($iPageNumType = $LOW_PAGE_NUM_TYPE_NEXT) Then
-			$oPageField.Offset = ($oPageField.Offset() + 1) ;If SubType is Set to Next. Set offset to plus 1 of current value
+			$oPageField.Offset = ($oPageField.Offset() + 1) ; If SubType is Set to Next. Set offset to plus 1 of current value
 		EndIf
 	Else
 		$oPageField.SubType = $LOW_PAGE_NUM_TYPE_CURRENT ;If not set, page number Sub Type is auto set to Prev. Instead of current.
@@ -4500,7 +4500,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 			Next
 
 		EndIf
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;Error retrieving ENote Obj
+		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving ENote Obj
 	EndIf
 
 	If ($oEndNote <> Null) Then
@@ -4671,7 +4671,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 			Next
 
 		EndIf
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;Error retrieving FNote Obj
+		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FNote Obj
 	EndIf
 
 	If ($oFootNote <> Null) Then
@@ -5368,7 +5368,7 @@ Func _LOWriter_FieldSenderInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	$oCursor.Text.insertTextContent($oCursor, $oSenderField, $bOverwrite)
 
-	If ($sContent <> Null) Then ;Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
+	If ($sContent <> Null) Then ; Sometimes Content Disappears upon Insertion, make a check to re-set the Content value.
 		If $oSenderField.Content <> $sContent And ($oSenderField.IsFixed() = True) Then $oSenderField.Content = $sContent
 	EndIf
 
@@ -6535,7 +6535,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 		$sFieldType = __LOWriter_FieldCountType($iCountType)
 		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
-		If Not $oCountField.supportsService($sFieldType) Then ;If the Field is already that type, skip this and do nothing.
+		If Not $oCountField.supportsService($sFieldType) Then ; If the Field is already that type, skip this and do nothing.
 
 			$oNewCountField = $oDoc.createInstance($sFieldType)
 			If Not IsObj($oNewCountField) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
@@ -6734,7 +6734,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 
 	If ($oField <> Null) Then
 		If ($oField.getPropertySetInfo.hasPropertyByName("IsFixed") = True) Then
-			If ($oField.IsFixed() = True) And ($bForceUpdate = False) Then Return SetError($__LOW_STATUS_SUCCESS, 1, 1) ;Updating a fixed field, causes its content to be removed.
+			If ($oField.IsFixed() = True) And ($bForceUpdate = False) Then Return SetError($__LOW_STATUS_SUCCESS, 1, 1) ; Updating a fixed field, causes its content to be removed.
 		EndIf
 		$oField.Update()
 		Return SetError($__LOW_STATUS_SUCCESS, 0, 1)

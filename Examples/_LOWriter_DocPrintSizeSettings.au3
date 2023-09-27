@@ -30,7 +30,7 @@ Func Example()
 			"I will now modify the settings and show the result.")
 
 	; Changes the print settings to all false.
-	_LOWriter_DocPrintSizeSettings($oDoc, $LOW_PAPER_TABLOID) ;,False,False,False,False)
+	_LOWriter_DocPrintSizeSettings($oDoc, $LOW_PAPER_TABLOID) ; ,False,False,False,False)
 	If (@error > 0) Then _ERROR("Error setting Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Now retrieve the settings again.

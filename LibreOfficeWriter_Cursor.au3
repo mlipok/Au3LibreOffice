@@ -169,7 +169,7 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
 			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;unknown cursor data type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
 
 EndFunc   ;==>_LOWriter_CursorGetStatus
@@ -389,6 +389,6 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
 		Case Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ;unknown cursor data type.
+			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor data type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorMove

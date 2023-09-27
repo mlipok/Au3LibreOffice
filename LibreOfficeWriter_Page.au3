@@ -315,7 +315,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 		__LOWriter_ArrayFill($avGradient, $oPageStyle.FillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -328,7 +328,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -356,7 +356,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -1041,7 +1041,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If last column is called, there is no spacing value, so return the outter margin, which will be 0.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outter margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
 		Else
@@ -1055,7 +1055,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	If ($bAutoWidth <> Null) Then
 		If Not IsBool($bAutoWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 
-		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then ;If Auto Width not already the same setting, then modify it.
+		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then ; If Auto Width not already the same setting, then modify it.
 
 			If ($bAutoWidth = True) Then
 				; retrieve both outside column inner margin settings to add together for determining AutoWidth value.
@@ -1069,7 +1069,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 			Else ;If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? $oTextColumns.AutomaticDistance() : $iGlobalSpacing
-				$oTextColumns.setColumns($atColumns) ;Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
+				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
 
 			EndIf
 		EndIf
@@ -1083,7 +1083,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 		$oTextColumns.AutomaticDistance = $iGlobalSpacing
 		$oPageStyle.TextColumns = $oTextColumns
 
-		If ($oPageStyle.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
+		If ($oPageStyle.TextColumns.IsAutomatic() = True) Then ; If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
 			; for setting the width internally also.
 			$iError = (__LOWriter_IntIsBetween($oPageStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 		EndIf
@@ -1092,7 +1092,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If the requested column is the last column (furthest right), then set property setting error.
 			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
@@ -1675,7 +1675,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 		__LOWriter_ArrayFill($avGradient, $oPageStyle.FooterFillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.FooterFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -1688,7 +1688,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FooterFillStyle = $__LOWCONST_FILL_STYLE_OFF
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -1716,7 +1716,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -2410,12 +2410,12 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FooterFillTransparenceGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -2436,7 +2436,7 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -2652,7 +2652,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 
 	If ($nThickness <> Null) Then
 		If Not __LOWriter_NumIsBetween($nThickness, 0, 9) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		$nThickness = __LOWriter_UnitConvert($nThickness, $__LOWCONST_CONVERT_PT_UM) ;Convert Thickness from Point to uM
+		$nThickness = __LOWriter_UnitConvert($nThickness, $__LOWCONST_CONVERT_PT_UM) ; Convert Thickness from Point to uM
 		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 		$oPageStyle.FootnoteLineWeight = $nThickness
 		$iError = (__LOWriter_IntIsBetween($oPageStyle.FootnoteLineWeight, $nThickness - 1, $nThickness + 1)) ? $iError : BitOR($iError, 4)
@@ -3117,7 +3117,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 		__LOWriter_ArrayFill($avGradient, $oPageStyle.HeaderFillGradientName(), $tStyleGradient.Style(), _
 				$oPageStyle.HeaderFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -3130,7 +3130,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.HeaderFillStyle = $__LOWCONST_FILL_STYLE_OFF
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -3158,7 +3158,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -3851,12 +3851,12 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.HeaderFillTransparenceGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -3877,7 +3877,7 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -4876,12 +4876,12 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FillTransparenceGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -4902,7 +4902,7 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then

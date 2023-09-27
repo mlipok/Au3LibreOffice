@@ -135,7 +135,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 		$asFonts[$i][0] = $atFonts[$i].Name()
 		$asFonts[$i][1] = $atFonts[$i].StyleName()
 		$asFonts[$i][2] = $atFonts[$i].Weight
-		$asFonts[$i][3] = $atFonts[$i].Slant() ;only 0 or 2?
+		$asFonts[$i][3] = $atFonts[$i].Slant() ; only 0 or 2?
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
 	Next
 
