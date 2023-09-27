@@ -30,6 +30,31 @@
 ;_LOWriter_FontsList
 ; ===============================================================================================================================
 
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FontExists
+; Description ...: Tests whether a Document has a specific font available by name.
+; Syntax ........: _LOWriter_FontExists(Byref $oDoc, $sFontName)
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
+;				   +					DocCreate function.
+;                  $sFontName           - a string value. The Font name to search for.
+; Return values .: Success: Boolean.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sFontName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean  = Success. Returns True if Font is contained in the document, else
+;				   +										False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function may cause a processor usage spike for a moment or two. If you wish to eliminate this, comment
+;						out the current sleep function and place a sleep(10) in its place.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
 Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
