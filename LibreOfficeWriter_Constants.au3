@@ -639,10 +639,10 @@ Global Const _ ; User Data Field Type
 		$LOW_FIELD_USER_DATA_STATE = 14
 
 Global Const _ ; File Name Field Type
-		$LOW_FIELD_FILENAME_FULL_PATH = 0, _
-		$LOW_FIELD_FILENAME_PATH = 1, _
-		$LOW_FIELD_FILENAME_NAME = 2, _
-		$LOW_FIELD_FILENAME_NAME_AND_EXT = 3, _
+		$LOW_FIELD_FILENAME_FULL_PATH = 0, _ ; The content of the URL is completely displayed.
+		$LOW_FIELD_FILENAME_PATH = 1, _ ; Only the path of the file is displayed.
+		$LOW_FIELD_FILENAME_NAME = 2, _ ; Only the name of the file without the file extension is displayed.
+		$LOW_FIELD_FILENAME_NAME_AND_EXT = 3, _ ; The file name including the file extension is displayed.
 		$LOW_FIELD_FILENAME_CATEGORY = 4, _
 		$LOW_FIELD_FILENAME_TEMPLATE_NAME = 5
 

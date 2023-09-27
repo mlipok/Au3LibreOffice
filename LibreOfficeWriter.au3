@@ -15130,13 +15130,9 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ;				   +										File Name Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the
-;						content is set to Fixed = True. For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format
-;							of $LOW_FIELD_FILENAME_NAME.
-;File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
-;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
-;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
-;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
+; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the content is set to Fixed = True.
+;				   For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format of $LOW_FIELD_FILENAME_NAME.
+; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFileNameModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
