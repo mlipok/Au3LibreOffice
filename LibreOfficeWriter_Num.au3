@@ -280,7 +280,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iNumFormat, $iStartAt, $sCharStyle, $iSubLevels, $sSepBefore, $sSepAfter, $bConsecutiveNum, $sBulletFont, $iCharDecimal) Then
-		If ($iLevel = -1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;can only get settings for one level at a time.
+		If ($iLevel = -1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; can only get settings for one level at a time.
 
 		If (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $LOW_NUM_STYLE_CHAR_SPECIAL) Then
 			__LOWriter_ArrayFill($avCustomize, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType"), _
@@ -330,16 +330,16 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 	If ($iSubLevels <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSubLevels, 1, 10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		If ($iLevel = -1) And ($iSubLevels > 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0) ;-1 for $iLevel = 0 = Modify all Num Style levels.
-		If ($iLevel <> -1) And ($iLevel < $iSubLevels) Then SetError($__LOW_STATUS_INPUT_ERROR, 11, 0) ;SubLevel higher than requested level
+		If ($iLevel = -1) And ($iSubLevels > 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0) ; -1 for $iLevel = 0 = Modify all Num Style levels.
+		If ($iLevel <> -1) And ($iLevel < $iSubLevels) Then SetError($__LOW_STATUS_INPUT_ERROR, 11, 0) ; SubLevel higher than requested level
 		$aNumSettings[$iRowCount][0] = "ParentNumbering"
 		$aNumSettings[$iRowCount][1] = $iSubLevels
 		$iRowCount += 1
 
 		; If Document has "ListFormat" setting (Libre 7.2 +), Sub Levels ("ParentNumbering") wont accept a setting without
 		; also setting "List format", which means combining the corresponding "ListFormat"  number values + Prefix & Suffix.
-		__LOWriter_NumStyleRetrieve($oNumRules, 9, "ListFormat") ;Test if "ListFormat" exists in the Numbering Rules.
-		If (@error = 0) Then ; If List Format does exist, modify it.
+		__LOWriter_NumStyleRetrieve($oNumRules, 9, "ListFormat") ; Test if "ListFormat" exists in the Numbering Rules.
+		If (@error = 0) Then ;  If List Format does exist, modify it.
 			$aNumSettings[$iRowCount][0] = "ListFormat"
 			$aNumSettings[$iRowCount][1] = __LOWriter_NumStyleListFormat($oNumRules, $iLevel, $iSubLevels)
 			If (@error = 0) Then $iRowCount += 1 ;If No errors count up, else just let it be overwritten.
@@ -386,7 +386,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 	$oNumStyle.NumberingRules = $oNumRules
 
-	$oNumRules = $oNumStyle.NumberingRules() ;Retrieve Numbering Rules a second time for error checking.
+	$oNumRules = $oNumStyle.NumberingRules() ; Retrieve Numbering Rules a second time for error checking.
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	$iLevel = ($iLevel = -1) ? 9 : $iLevel ;If Level is set to -1 (modify all), set to last level to check the settings.
 
@@ -860,7 +860,7 @@ Func _LOWriter_NumStyleSetLevel(ByRef $oDoc, ByRef $oObj, $iLevel = Null)
 	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not __LOWriter_IntIsBetween($iLevel, 1, 10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
-	If ($iLevel = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ;Plus one to compensate for Levels being 0 Based.
+	If ($iLevel = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ; Plus one to compensate for Levels being 0 Based.
 
 	$iLevel -= 1 ;Level is 0 Based, minus one to compensate.
 
@@ -918,7 +918,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
 		For $i = 0 To $oStyles.getCount() - 1
-			$aStyles[$i] = $oStyles.getByIndex($i).Name() ;DisplayName -- Can't use Display name due to special characters.
+			$aStyles[$i] = $oStyles.getByIndex($i).Name() ; DisplayName -- Can't use Display name due to special characters.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
@@ -930,7 +930,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 
 	For $i = 0 To $oStyles.getCount() - 1
 		If Execute($sExecute) Then
-			$aStyles[$iCount] = $oStyles.getByIndex($i).Name() ;DisplayName
+			$aStyles[$iCount] = $oStyles.getByIndex($i).Name() ; DisplayName
 			$iCount += 1
 		EndIf
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))

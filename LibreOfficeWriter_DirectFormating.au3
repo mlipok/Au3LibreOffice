@@ -168,7 +168,7 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
-		$oSelection.setPropertyToDefault("CharBottomBorder") ;Resetting one truly resets all, but just to be sure, reset all.
+		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
 		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
@@ -381,7 +381,7 @@ Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
-		$oSelection.setPropertyToDefault("CharBottomBorder") ;Resetting one truly resets all, but just to be sure, reset all.
+		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
 		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
@@ -478,7 +478,7 @@ Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
-		$oSelection.setPropertyToDefault("CharBottomBorder") ;Resetting one truly resets all, but just to be sure, reset all.
+		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
 		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
@@ -1301,7 +1301,7 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 
 		If ($iHighlight = Default) Then
 			If __LOWriter_VersionCheck(4.2) Then $oSelection.setPropertyToDefault("CharHighlight")
-			$oSelection.setPropertyToDefault("CharBackColor") ;Both may be used? not sure. Both do the same thing, so reset both to make sure.
+			$oSelection.setPropertyToDefault("CharBackColor") ; Both may be used? not sure. Both do the same thing, so reset both to make sure.
 			$iHighlight = Null
 		EndIf
 
@@ -2345,7 +2345,7 @@ Func _LOWriter_DirFrmtParHyphenation(ByRef $oSelection, $bAutoHyphen = Null, $bH
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
-		$oSelection.setPropertyToDefault("ParaIsHyphenation") ;Resetting one resets all.
+		$oSelection.setPropertyToDefault("ParaIsHyphenation") ; Resetting one resets all.
 		If __LOWriter_VarsAreNull($bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 	EndIf
 
@@ -2427,7 +2427,7 @@ Func _LOWriter_DirFrmtParIndent(ByRef $oSelection, $iBeforeTxt = Null, $iAfterTx
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
-		$oSelection.setPropertyToDefault("ParaLeftMargin") ;Resetting one resets all -- but just in case reset the rest.
+		$oSelection.setPropertyToDefault("ParaLeftMargin") ; Resetting one resets all -- but just in case reset the rest.
 		$oSelection.setPropertyToDefault("ParaRightMargin")
 		$oSelection.setPropertyToDefault("ParaFirstLineIndent")
 		$oSelection.setPropertyToDefault("ParaIsAutoFirstLineIndent")
