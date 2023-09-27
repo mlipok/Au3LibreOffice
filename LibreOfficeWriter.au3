@@ -18,7 +18,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -144,13 +144,13 @@ Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oCell.BackColor = $iBackColor
 		If ($iBackColor = $LOW_COLOR_OFF) Then $oCell.BackTransparent = True
-		$iError = ($oCell.BackColor() = $iBackColor) ? $iError : BitOR($iError, 1) ;Error setting color.
+		$iError = ($oCell.BackColor() = $iBackColor) ? $iError : BitOR($iError, 1) ; Error setting color.
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oCell.BackTransparent = $bBackTransparent
-		$iError = ($oCell.BackTransparent() = $bBackTransparent) ? $iError : BitOR($iError, 2) ;Error setting BackTransparent.
+		$iError = ($oCell.BackTransparent() = $bBackTransparent) ? $iError : BitOR($iError, 2) ; Error setting BackTransparent.
 	EndIf
 
 	Return ($iError = 0) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)
@@ -460,7 +460,7 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -512,7 +512,7 @@ Func _LOWriter_CellCreateTextCursor(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;Can only create a Text Cursor for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only create a Text Cursor for individual cells.
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.Text.createTextCursor())
 EndFunc   ;==>_LOWriter_CellCreateTextCursor
@@ -550,7 +550,7 @@ Func _LOWriter_CellFormula(ByRef $oCell, $sFormula = Null)
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFormula) And Not ($sFormula = Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Can only set/get formula value for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get formula value for individual cells.
 	If ($sFormula = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oCell.getFormula())
 
 	$oCell.setFormula($sFormula)
@@ -588,7 +588,7 @@ Func _LOWriter_CellGetDataType(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;Can only get Data Type for individual cells
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only get Data Type for individual cells
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.getType())
 EndFunc   ;==>_LOWriter_CellGetDataType
@@ -618,7 +618,7 @@ Func _LOWriter_CellGetError(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;Can only get Error for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only get Error for individual cells.
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.getError())
 
@@ -649,7 +649,7 @@ Func _LOWriter_CellGetName(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;Can only get Cell Name for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only get Cell Name for individual cells.
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.CellName())
 EndFunc   ;==>_LOWriter_CellGetName
@@ -687,7 +687,7 @@ Func _LOWriter_CellProtect(ByRef $oCell, $bProtect = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;Can only set individual cell protect property.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only set individual cell protect property.
 	If ($bProtect = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.IsProtected())
 	If Not IsBool($bProtect) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	$oCell.IsProtected = $bProtect
@@ -727,7 +727,7 @@ Func _LOWriter_CellString(ByRef $oCell, $sString = Null)
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sString) And Not ($sString = Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Can only set/get a String for individual cells.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get a String for individual cells.
 
 	If ($sString = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oCell.getString())
 
@@ -770,7 +770,7 @@ Func _LOWriter_CellValue(ByRef $oCell, $nValue = Null)
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsNumber($nValue) And Not ($nValue = Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Can only set/get individual cell values.
+	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get individual cell values.
 
 	If ($nValue = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oCell.getValue())
 
@@ -972,13 +972,13 @@ Func _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ;Unsupported cursor type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oEndNote = $oDoc.createInstance("com.sun.star.text.Endnote")
 			If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;Unknown Cursor type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Unknown Cursor type.
 	EndSwitch
 
 	If ($sLabel <> Null) Then
@@ -1494,13 +1494,13 @@ Func _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, 
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ;Unsupported cursor type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oFootNote = $oDoc.createInstance("com.sun.star.text.Footnote")
 			If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;Unknown Cursor type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Unknown Cursor type.
 	EndSwitch
 
 	If ($sLabel <> Null) Then
@@ -2156,7 +2156,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;				   +						must be added to match the search pattern.
 ;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that
 ;				   +						must be replaced to match the search pattern.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.

@@ -12,7 +12,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -186,7 +186,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 
 	If (@NumParams = 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	Select
-		Case IsInt($iHex) ;Long TO Hex
+		Case IsInt($iHex) ; Long TO Hex
 			$nRed = Int(Mod(($iHex / 65536), 256))
 			$nGreen = Int(Mod(($iHex / 256), 256))
 			$nBlue = Int(Mod($iHex, 256))
@@ -194,7 +194,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$dHex = Hex($nRed, 2) & Hex($nGreen, 2) & Hex($nBlue, 2)
 			Return SetError($__LOW_STATUS_SUCCESS, 1, $dHex)
 
-		Case IsInt($iRGB) ;Long to RGB
+		Case IsInt($iRGB) ; Long to RGB
 			$nRed = Int(Mod(($iRGB / 65536), 256))
 			$nGreen = Int(Mod(($iRGB / 256), 256))
 			$nBlue = Int(Mod($iRGB, 256))
@@ -203,7 +203,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$aiReturn[1] = $nGreen
 			$aiReturn[2] = $nBlue
 			Return SetError($__LOW_STATUS_SUCCESS, 2, $aiReturn)
-		Case IsInt($iHSB) ;Long TO HSB
+		Case IsInt($iHSB) ; Long TO HSB
 
 			$nRed = (Mod(($iHSB / 65536), 256)) / 255
 			$nGreen = (Mod(($iHSB / 256), 256)) / 255
@@ -223,17 +223,17 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			Select
 				Case $nRed = $nGreen = $nBlue ; Red, Green, and BLue are equal.
 					$nHue = 0
-				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ;Red Highest, Blue Lowest
+				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ; Red Highest, Blue Lowest
 					$nHue = (60 * (($nGreen - $nBlue) / ($nRed - $nBlue)))
-				Case ($nRed >= $nBlue) And ($nBlue >= $nGreen) ;Red Highest, Green Lowest
+				Case ($nRed >= $nBlue) And ($nBlue >= $nGreen) ; Red Highest, Green Lowest
 					$nHue = (60 * (6 - (($nBlue - $nGreen) / ($nRed - $nGreen))))
-				Case ($nGreen >= $nRed) And ($nRed >= $nBlue) ;Green Highest, Blue Lowest
+				Case ($nGreen >= $nRed) And ($nRed >= $nBlue) ; Green Highest, Blue Lowest
 					$nHue = (60 * (2 - (($nRed - $nBlue) / ($nGreen - $nBlue))))
-				Case ($nGreen >= $nBlue) And ($nBlue >= $nRed) ;Green Highest, Red Lowest
+				Case ($nGreen >= $nBlue) And ($nBlue >= $nRed) ; Green Highest, Red Lowest
 					$nHue = (60 * (2 + (($nBlue - $nRed) / ($nGreen - $nRed))))
-				Case ($nBlue >= $nGreen) And ($nGreen >= $nRed) ;Blue Highest, Red Lowest
+				Case ($nBlue >= $nGreen) And ($nGreen >= $nRed) ; Blue Highest, Red Lowest
 					$nHue = (60 * (4 - (($nGreen - $nRed) / ($nBlue - $nRed))))
-				Case ($nBlue >= $nRed) And ($nRed >= $nGreen) ;Blue Highest, Green Lowest
+				Case ($nBlue >= $nRed) And ($nRed >= $nGreen) ; Blue Highest, Green Lowest
 					$nHue = (60 * (4 + (($nRed - $nGreen) / ($nBlue - $nGreen))))
 			EndSelect
 
@@ -250,7 +250,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$aiReturn[2] = $nBrightness
 
 			Return SetError($__LOW_STATUS_SUCCESS, 3, $aiReturn)
-		Case IsInt($iCMYK) ;Long to CMYK
+		Case IsInt($iCMYK) ; Long to CMYK
 
 			$nRed = (Mod(($iCMYK / 65536), 256))
 			$nGreen = (Mod(($iCMYK / 256), 256))
@@ -281,7 +281,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$aiReturn[3] = $nBlack
 			Return SetError($__LOW_STATUS_SUCCESS, 4, $aiReturn)
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;no parameters set to an integer
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
 
 EndFunc   ;==>_LOWriter_ConvertColorFromLong
@@ -327,7 +327,7 @@ EndFunc   ;==>_LOWriter_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 = Null) ;RGB = Int, CMYK = Int, HSB = String, Hex = String.
+Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 = Null) ; RGB = Int, CMYK = Int, HSB = String, Hex = String.
 	Local Const $STR_STRIPALL = 8
 	Local $iRed, $iGreen, $iBlue, $iLong, $iHue, $iSaturation, $iBrightness
 	Local $dHex
@@ -336,48 +336,48 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 	If (@NumParams = 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	Switch @NumParams
 		Case 1 ;Hex
-			If Not IsString($vVal1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ;not a string
+			If Not IsString($vVal1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; not a string
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
 
 			; From Hex to RGB
 			If (StringLen($dHex) = 6) Then
-				If StringRegExp($dHex, "[^0-9a-fA-F]") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;$dHex contains non Hex characters.
+				If StringRegExp($dHex, "[^0-9a-fA-F]") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; $dHex contains non Hex characters.
 
 				$iRed = BitAND(BitShift("0x" & $dHex, 16), 0xFF)
 				$iGreen = BitAND(BitShift("0x" & $dHex, 8), 0xFF)
 				$iBlue = BitAND("0x" & $dHex, 0xFF)
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LOW_STATUS_SUCCESS, 1, $iLong) ;Long from Hex
+				Return SetError($__LOW_STATUS_SUCCESS, 1, $iLong) ; Long from Hex
 
 			Else
-				Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ;Wrong length of string.
+				Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
 			EndIf
 
 		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
-			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ;RGB
+			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
 				$iRed = $vVal1
 				$iGreen = $vVal2
 				$iBlue = $vVal3
 
 				; RGB to Long
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LOW_STATUS_SUCCESS, 2, $iLong) ;Long from RGB
+				Return SetError($__LOW_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
 
-			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ;Hue Saturation and Brightness (HSB)
+			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
 
 				; HSB to RGB
 				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)
-				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ;Strip WS so I can check string length in HSB conversion.
+				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ; Strip WS so I can check string length in HSB conversion.
 
 				$iHue = Number($vVal1)
-				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ;String contained more than just digits
+				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
 				$iSaturation = Number($vVal2)
-				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;String contained more than just digits
+				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
 				$iBrightness = Number($vVal3)
-				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0) ;String contained more than just digits
+				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
 
 				$nMaxRGB = ($iBrightness / 100)
 				$nChroma = (($iSaturation / 100) * ($iBrightness / 100))
@@ -419,12 +419,12 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				$iBlue = Round(($iBlue * 255))
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LOW_STATUS_SUCCESS, 3, $iLong) ;Return Long from HSB
+				Return SetError($__LOW_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
 			Else
-				Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0) ;Wrong parameters
+				Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
 		Case 4 ;CMYK
-			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0) ;CMYK not integers.
+			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
 
 			; CMYK to RGB
 			$nCyan = ($vVal1 / 100)
@@ -437,9 +437,9 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 			$iBlue = Round((255 * (1 - $nBlack) * (1 - $nYellow)))
 
 			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-			Return SetError($__LOW_STATUS_SUCCESS, 4, $iLong) ;Long from CMYK
+			Return SetError($__LOW_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0) ;wrong number of Parameters
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
 	EndSwitch
 EndFunc   ;==>_LOWriter_ConvertColorToLong
 
@@ -479,7 +479,7 @@ EndFunc   ;==>_LOWriter_ConvertColorToLong
 ;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nCMillimetersOut is set.  A
 ;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
 ;					measurement parameter.
-; Related .......:  _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -514,7 +514,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 		Return SetError($__LOW_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
-	Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ;NO Unit set.
+	Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
 EndFunc   ;==>_LOWriter_ConvertFromMicrometer
 
 ; #FUNCTION# ====================================================================================================================
@@ -587,7 +587,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 		Return SetError($__LOW_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
-	Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ;NO Unit set.
+	Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
 
 EndFunc   ;==>_LOWriter_ConvertToMicrometer
 
@@ -634,11 +634,11 @@ Func _LOWriter_DateFormatKeyCreate(ByRef $oDoc, $sFormat)
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
-	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $iFormatKey) ;Format already existed
+	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
-	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $iFormatKey) ;Format created
+	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;Failed to create or retrieve Format
+	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOWriter_DateFormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -678,12 +678,12 @@ Func _LOWriter_DateFormatKeyDelete(ByRef $oDoc, $iFormatKey)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Key not found.
+	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ;Key not User Created.
+	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
@@ -697,7 +697,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyDelete
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $iFormatKey          - an integer value. The Date Format Key to check for.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -761,7 +761,7 @@ Func _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ;Failed to retrieve Key
+	If Not IsObj($oFormatKey) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ; Failed to retrieve Key
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOWriter_DateFormatKeyGetString
@@ -1881,7 +1881,7 @@ Func _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat, $iBreakTy
 
 	If ($sPageStyle <> Null) Then
 		If ($sPageStyle = Default) Then
-			__LOWriter_FindFormatDeleteSetting($atFormat, "PageStyleName") ;PageDescName -- Not working?
+			__LOWriter_FindFormatDeleteSetting($atFormat, "PageStyleName") ; PageDescName -- Not working?
 		Else
 			If Not IsString($sPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 			If Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
@@ -2081,7 +2081,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 		EndIf
 	EndIf
 
-	If ($iScaleWidth <> Null) Then ;can't be less than 1%
+	If ($iScaleWidth <> Null) Then ; can't be less than 1%
 		If ($iScaleWidth = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharScaleWidth")
 		Else
@@ -2216,9 +2216,9 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 		If ($iLineSpcMode = Default) Or ($iLineSpcHeight = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "ParaLineSpacing")
 		Else
-			$tLine = __LOWriter_FindFormatRetrieveSetting($atFormat, "ParaLineSpacing") ;Retrieve the ParaLineSpacing Property to modify if it exists.
-			If (@error = 0) And (@extended = 1) Then $tLine = $tLine.Value() ;If retrieval was successful, obtain the Line Space Structure.
-			If Not IsObj($tLine) Then $tLine = __LOWriter_CreateStruct("com.sun.star.style.LineSpacing") ;If retrieval was not successful, then create a new one.
+			$tLine = __LOWriter_FindFormatRetrieveSetting($atFormat, "ParaLineSpacing") ; Retrieve the ParaLineSpacing Property to modify if it exists.
+			If (@error = 0) And (@extended = 1) Then $tLine = $tLine.Value() ; If retrieval was successful, obtain the Line Space Structure.
+			If Not IsObj($tLine) Then $tLine = __LOWriter_CreateStruct("com.sun.star.style.LineSpacing") ; If retrieval was not successful, then create a new one.
 			If Not IsObj($tLine) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 			If ($iLineSpcMode <> Default) And ($iLineSpcMode <> Null) Then
@@ -2538,7 +2538,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sFormat             - a string value. The format String to create.
-; Return values .:  Success: Integer
+; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2574,11 +2574,11 @@ Func _LOWriter_FormatKeyCreate(ByRef $oDoc, $sFormat)
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
-	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $iFormatKey) ;Format already existed
+	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
-	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $iFormatKey) ;Format created
+	If ($iFormatKey > -1) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;Failed to create or retrieve Format
+	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOWriter_FormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -2618,12 +2618,12 @@ Func _LOWriter_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Key not found.
+	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
 	If Not IsObj($oFormats) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ;Key not User Created.
+	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
@@ -2693,16 +2693,16 @@ Func _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOW_FOR
 	If Not IsArray($aiFormatKeys) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
-		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True) ;Doc does contain format Key
+		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True) ; Doc does contain format Key
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
 	Next
 
-	Return SetError($__LOW_STATUS_SUCCESS, 1, False) ;Doc does not contain format Key
+	Return SetError($__LOW_STATUS_SUCCESS, 1, False) ; Doc does not contain format Key
 EndFunc   ;==>_LOWriter_FormatKeyExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyGetString
-; Description ...:  Retrieve a Format Key String.
+; Description ...: Retrieve a Format Key String.
 ; Syntax ........: _LOWriter_FormatKeyGetString(Byref $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
@@ -2734,7 +2734,7 @@ Func _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ;Key not found.
+	If Not IsObj($oFormatKey) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ; Key not found.
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOWriter_FormatKeyGetString
@@ -2886,14 +2886,14 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 
 	$iPathSearch = StringRegExp($sFilePath, "[A-Z]\:\\") ; Search For a Computer Path, as in C:\ etc.
 	$iPartialPCPath = StringInStr($sFilePath, "\") ; Search for partial computer Path containing a backslash.
-	$iFileSearch = StringInStr($sFilePath, "file:///", 0, 1, 1, 9) ;Search for a full Libre path, which begins with File:///
-	$iPartialFilePath = StringInStr($sFilePath, "/") ;Search For a Partial Libre path containing forward slash
+	$iFileSearch = StringInStr($sFilePath, "file:///", 0, 1, 1, 9) ; Search for a full Libre path, which begins with File:///
+	$iPartialFilePath = StringInStr($sFilePath, "/") ; Search For a Partial Libre path containing forward slash
 
 	If ($iReturnMode = $LOW_PATHCONV_AUTO_RETURN) Then
 
-		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ; if file path contains partial or full PC path, set to convert to Libre URL.
+		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ;  if file path contains partial or full PC path, set to convert to Libre URL.
 			$iReturnMode = $LOW_PATHCONV_OFFICE_RETURN
-		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ; if file path contains partial or full Libre URL, set to convert to PC Path.
+		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ;  if file path contains partial or full Libre URL, set to convert to PC Path.
 			$iReturnMode = $LOW_PATHCONV_PCPATH_RETURN
 		Else ; If file path contains neither above. convert to Libre URL
 			$iReturnMode = $LOW_PATHCONV_OFFICE_RETURN

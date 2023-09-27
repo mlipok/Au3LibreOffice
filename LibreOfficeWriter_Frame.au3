@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -316,7 +316,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 		__LOWriter_ArrayFill($avGradient, $oFrame.FillGradientName(), $tStyleGradient.Style(), _
 				$oFrame.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -329,7 +329,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 			$oFrame.FillGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
@@ -358,7 +358,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -413,7 +413,7 @@ EndFunc   ;==>_LOWriter_FrameAreaGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameBorderColor
-; Description ...:  Set or retrieve the Frame Border Line Color. Libre Office Version 3.4 and Up.
+; Description ...: Set or retrieve the Frame Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_FrameBorderColor(Byref $oFrame[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by previous FrameCreate or Object
 ;				   +						Retrieval function.
@@ -501,7 +501,7 @@ EndFunc   ;==>_LOWriter_FrameBorderColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameBorderPadding
-; Description ...:  Set or retrieve the Frame Border Padding settings.
+; Description ...: Set or retrieve the Frame Border Padding settings.
 ; Syntax ........: _LOWriter_FrameBorderPadding(Byref $oFrame[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by previous FrameCreate or Object
 ;				   +						Retrieval function.
@@ -728,7 +728,7 @@ EndFunc   ;==>_LOWriter_FrameBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -898,7 +898,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameColumnSettings
-; Description ...:  Set or retrieve Frame Column count.
+; Description ...: Set or retrieve Frame Column count.
 ; Syntax ........: _LOWriter_FrameColumnSettings(Byref $oFrame[, $iColumns = Null ])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by previous FrameCreate or Object
 ;				   +						Retrieval function.
@@ -1031,7 +1031,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If last column is called, there is no spacing value, so return the outter margin, which will be 0.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outter margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
 		Else
@@ -1057,7 +1057,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 			Else ;If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? $oTextColumns.AutomaticDistance() : $iGlobalSpacing
-				$oTextColumns.setColumns($atColumns) ;Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
+				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
 			EndIf
 		EndIf
 
@@ -1070,7 +1070,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 		$oTextColumns.AutomaticDistance = $iGlobalSpacing
 		$oFrame.TextColumns = $oTextColumns
 
-		If ($oFrame.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
+		If ($oFrame.TextColumns.IsAutomatic() = True) Then ; If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
 			; for setting the width internally also.
 			$iError = (__LOWriter_IntIsBetween($oFrame.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 		EndIf
@@ -1079,7 +1079,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If the requested column is the last column (furthest right), then set property setting error.
 			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
@@ -1268,7 +1268,7 @@ Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	$sFrameName = $oFrame.getName()
 	$oFrame.dispose()
-	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;Document still contains Frame named the same.
+	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Frame named the same.
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FrameDelete
 
@@ -1313,7 +1313,7 @@ EndFunc   ;==>_LOWriter_FrameGetAnchor
 ;				   +					DocCreate function.
 ;                  $oCursor             - [in/out] an object.  A Cursor Object returned from any Cursor Object creation
 ;				   +						Or retrieval functions. Cursor object must be located in a Frame.
-; Return values .: Success:  Object.
+; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1335,7 +1335,7 @@ Func _LOWriter_FrameGetObjByCursor(ByRef $oDoc, ByRef $oCursor)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If (__LOWriter_Internal_CursorGetDataType($oDoc, $oCursor) <> $LOW_CURDATA_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;Cursor not in Frame
+	If (__LOWriter_Internal_CursorGetDataType($oDoc, $oCursor) <> $LOW_CURDATA_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Cursor not in Frame
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.TextFrames.getByName($oCursor.TextFrame.Name))
 EndFunc   ;==>_LOWriter_FrameGetObjByCursor
@@ -1395,7 +1395,7 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ;No matches
+	Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ; No matches
 EndFunc   ;==>_LOWriter_FrameGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1772,7 +1772,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 			ReDim $asShapes[$oShapes.getCount()]
 			For $i = 0 To $oShapes.getCount() - 1
 
-				If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then ;Determin if the Shape is an actual Frame or not.
+				If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then ; Determin if the Shape is an actual Frame or not.
 					If ($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
 							$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then
 						$asShapes[$iCount] = $oShapes.getByIndex($i).Name()
@@ -1931,7 +1931,7 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ;				   +							$LOW_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is
 ;				   +						transparent or not. True = visible.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
@@ -2091,7 +2091,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 ;				   +								settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
@@ -2160,7 +2160,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 		__LOWriter_ArrayFill($avGradient, $oFrameStyle.FillGradientName(), $tStyleGradient.Style(), _
 				$oFrameStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -2173,7 +2173,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 			$oFrameStyle.FillGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
@@ -2202,7 +2202,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -2579,7 +2579,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -2656,7 +2656,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
@@ -2888,7 +2888,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If last column is called, there is no spacing value, so return the outter margin, which will be 0.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outter margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
 		Else
@@ -2914,7 +2914,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 			Else ;If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? $oTextColumns.AutomaticDistance() : $iGlobalSpacing
-				$oTextColumns.setColumns($atColumns) ;Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
+				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
 			EndIf
 
 			$oFrameStyle.TextColumns = $oTextColumns
@@ -2926,7 +2926,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 			$oTextColumns.AutomaticDistance = $iGlobalSpacing
 			$oFrameStyle.TextColumns = $oTextColumns
 
-			If ($oFrameStyle.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
+			If ($oFrameStyle.TextColumns.IsAutomatic() = True) Then ; If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
 				; for setting the width internally also.
 				$iError = (__LOWriter_IntIsBetween($oFrameStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 			EndIf
@@ -2937,7 +2937,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	If ($iSpacing <> Null) Then
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 
-		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
+		If ($iColumn = (UBound($atColumns) - 1)) Then ; If the requested column is the last column (furthest right), then set property setting error.
 			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
@@ -2988,7 +2988,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSize
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sFrameStyle           - a string value. The Name of the New Frame Style to Create.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -3324,7 +3324,7 @@ EndFunc   ;==>_LOWriter_FrameStyleOptions
 ;				   +						formatting of all Frames using this style is automatically updated.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre
 ;				   +						4.0 and up Only.
-; Return values .:   Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
@@ -3595,7 +3595,7 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;					$LOW_COLOR_GREEN(43315),
 ;					$LOW_COLOR_LIME(8508442),
 ;					$LOW_COLOR_BROWN(9127187).
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -3675,10 +3675,10 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 ;				   +								current setting for Transparency in integer format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3764,7 +3764,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;				   +								settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
@@ -3774,7 +3774,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;							$LOW_GRAD_TYPE_ELLIPTICAL(3),
 ;							$LOW_GRAD_TYPE_SQUARE(4),
 ;							$LOW_GRAD_TYPE_RECT(5)
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3796,12 +3796,12 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillTransparenceGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -3822,7 +3822,7 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -4035,7 +4035,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;						match the height of the selection.
 ;					$LOW_ANCHOR_AT_PAGE(2), Anchors the frame to the current page.
 ;					$LOW_ANCHOR_AT_CHARACTER(4), Anchors the frame to a character.
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4057,7 +4057,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
-	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
+	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.HoriOrient = $iHorAlign
 		$iError = ($oFrameStyle.HoriOrient() = $iHorAlign) ? $iError : BitOR($iError, 1)
@@ -4128,7 +4128,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 						$iError = (($oFrameStyle.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrameStyle.VertOrient() = $LOW_ORIENT_VERT_LINE_BOTTOM)) ? $iError : BitOR($iError, 64)
 				EndSwitch
 
-			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ;Paragraph = Baseline setting in L.O. UI
+			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
 				$oFrameStyle.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oFrameStyle.VertOrientRelation() = $iVertRelation)) ? $iError : BitOR($iError, 64)
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
@@ -4201,7 +4201,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;				   +						frame must be.
 ;                  $bKeepRatio          - [optional] a boolean value. Default is Null. Maintains the height and width ratio
 ;				   +						when you change the width or the height setting.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -4242,7 +4242,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;				   +								be in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for
@@ -4251,7 +4251,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;					When Keep Ratio is set to True, setting Width/Height values via this function will not be kept in ratio.
 ; Relative Constants: $LOW_RELATIVE_PARAGRAPH(0), means: text area (excluding margins).
 ;						$LOW_RELATIVE_PAGE(7), means: entire page (including margins).
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -4284,7 +4284,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
-	If ($iWidth <> Null) Then ;Min 51
+	If ($iWidth <> Null) Then ; Min 51
 		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 1)
@@ -4295,7 +4295,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 		$oFrameStyle.RelativeWidth = $iRelativeWidth
 		$iError = ($oFrameStyle.RelativeWidth() = $iRelativeWidth) ? $iError : BitOR($iError, 2)
 
-		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ;If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
+		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ; If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
 			If ($oFrameStyle.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrameStyle, True)
 		EndIf
 	EndIf
@@ -4324,7 +4324,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 		$oFrameStyle.RelativeHeight = $iRelativeHeight
 		$iError = ($oFrameStyle.RelativeHeight() = $iRelativeHeight) ? $iError : BitOR($iError, 32)
 
-		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ;If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
+		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ; If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
 			If ($oFrameStyle.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrameStyle, False, True)
 		EndIf
 	EndIf
@@ -4397,14 +4397,14 @@ EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
+; Wrap Type Constants: $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
 ;						$LOW_WRAP_MODE_THROUGH(1), Places the frame in front of the text.
 ;						$LOW_WRAP_MODE_PARALLEL(2), Wraps text on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_DYNAMIC(3), the same as "Optimal", Automatically wraps text to the left, to the right, or
 ;								on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_LEFT(4), the same as "Before", Wraps text on the left side of the frame.
 ;						$LOW_WRAP_MODE_RIGHT(5), the same as "After", Wraps text on the right side of the frame.
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -4424,7 +4424,7 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 
-		If $oPropInfo.hasPropertyByName("Surround") Then ;Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
+		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oFrameStyle.Surround(), $oFrameStyle.LeftMargin(), $oFrameStyle.RightMargin(), $oFrameStyle.TopMargin(), _
 					$oFrameStyle.BottomMargin())
 		Else
@@ -4511,7 +4511,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrap
 ;					Call any optional parameter with Null keyword to skip it.
 ;					This function may indicate the settings were set successfully when they haven't been if the appropriate
 ;						wrap type, anchor type etc. hasn't been set before hand.
-; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4527,7 +4527,7 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrameStyle.SurroundAnchorOnly(), (($oFrameStyle.Opaque()) ? False : True), _
-				$oFrameStyle.AllowOverlap()) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+				$oFrameStyle.AllowOverlap()) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
@@ -4540,7 +4540,7 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 	If ($bInBackground <> Null) Then
 		If Not IsBool($bInBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.Opaque = (($bInBackground) ? False : True)
-		$iError = ($oFrameStyle.Opaque() = (($bInBackground) ? False : True)) ? $iError : BitOR($iError, 2) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+		$iError = ($oFrameStyle.Opaque() = (($bInBackground) ? False : True)) ? $iError : BitOR($iError, 2) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then
@@ -4554,7 +4554,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameTransparency
-; Description ...:  Set or retrieve Transparency settings for a Frame.
+; Description ...: Set or retrieve Transparency settings for a Frame.
 ; Syntax ........: _LOWriter_FrameTransparency(Byref $oFrame[, $iTransparency = Null])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by previous FrameCreate or Object
 ;				   +					Retrieval function.
@@ -4602,7 +4602,7 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameTransparencyGradient
-; Description ...:  Set or retrieve the Frame transparency gradient settings.
+; Description ...: Set or retrieve the Frame transparency gradient settings.
 ; Syntax ........: _LOWriter_FrameTransparencyGradient(Byref $oDoc, Byref $oFrame[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
@@ -4662,7 +4662,7 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ;				   +								settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
@@ -4693,12 +4693,12 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
 				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillTransparenceGradientName = ""
 			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -4719,7 +4719,7 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		$tGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
@@ -4760,7 +4760,7 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameTypePosition
-; Description ...:  Set or Retrieve Frame Position Settings.
+; Description ...: Set or Retrieve Frame Position Settings.
 ; Syntax ........: _LOWriter_FrameTypePosition(Byref $oFrame[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by previous FrameCreate or Object
 ;				   +						Retrieval function.
@@ -4951,7 +4951,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
-	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
+	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.HoriOrient = $iHorAlign
 		$iError = ($oFrame.HoriOrient() = $iHorAlign) ? $iError : BitOR($iError, 1)
@@ -5022,7 +5022,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 						$iError = (($oFrame.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrame.VertOrient() = $LOW_ORIENT_VERT_LINE_BOTTOM)) ? $iError : BitOR($iError, 64)
 				EndSwitch
 
-			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ;Paragraph = Baseline setting in L.O. UI
+			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
 				$oFrame.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oFrame.VertOrientRelation() = $iVertRelation)) ? $iError : BitOR($iError, 64)
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
@@ -5175,7 +5175,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
-	If ($iWidth <> Null) Then ;Min 51
+	If ($iWidth <> Null) Then ; Min 51
 		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oFrame.Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 1)
@@ -5186,7 +5186,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 		$oFrame.RelativeWidth = $iRelativeWidth
 		$iError = ($oFrame.RelativeWidth() = $iRelativeWidth) ? $iError : BitOR($iError, 2)
 
-		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ;If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
+		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ; If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
 			If ($oFrame.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrame, True)
 		EndIf
 	EndIf
@@ -5215,7 +5215,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 		$oFrame.RelativeHeight = $iRelativeHeight
 		$iError = ($oFrame.RelativeHeight() = $iRelativeHeight) ? $iError : BitOR($iError, 32)
 
-		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ;If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
+		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ; If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
 			If ($oFrame.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrame, False, True)
 		EndIf
 	EndIf
@@ -5287,14 +5287,14 @@ EndFunc   ;==>_LOWriter_FrameTypeSize
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
+; Wrap Type Constants: $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
 ;						$LOW_WRAP_MODE_THROUGH(1), Places the frame in front of the text.
 ;						$LOW_WRAP_MODE_PARALLEL(2), Wraps text on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_DYNAMIC(3), the same as "Optimal", Automatically wraps text to the left, to the right, or
 ;								on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_LEFT(4), the same as "Before", Wraps text on the left side of the frame.
 ;						$LOW_WRAP_MODE_RIGHT(5), the same as "After", Wraps text on the right side of the frame.
-; Related .......:  _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName,
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName,
 ;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -5313,7 +5313,7 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 
-		If $oPropInfo.hasPropertyByName("Surround") Then ;Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
+		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oFrame.Surround(), $oFrame.LeftMargin(), $oFrame.RightMargin(), $oFrame.TopMargin(), _
 					$oFrame.BottomMargin())
 		Else
@@ -5431,7 +5431,7 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 	If ($bInBackground <> Null) Then
 		If Not IsBool($bInBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.Opaque = (($bInBackground) ? False : True)
-		$iError = ($oFrame.Opaque() = (($bInBackground) ? False : True)) ? $iError : BitOR($iError, 2) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+		$iError = ($oFrame.Opaque() = (($bInBackground) ? False : True)) ? $iError : BitOR($iError, 2) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then

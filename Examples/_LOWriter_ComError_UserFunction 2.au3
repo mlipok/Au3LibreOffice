@@ -43,7 +43,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Now I will retrieve the function's name that I set.")
 
 	; Return the currently set User Function and any Parameters by calling the Default keyword in the first parameter.
-	$aReturn = _LOWriter_ComError_UserFunction(Default) ;Since I set parameters, the return will be an Array.
+	$aReturn = _LOWriter_ComError_UserFunction(Default) ; Since I set parameters, the return will be an Array.
 
 	If Not IsArray($aReturn) Then _ERROR("Error retrieving function Array. Error:" & @error & " Extended:" & @extended)
 

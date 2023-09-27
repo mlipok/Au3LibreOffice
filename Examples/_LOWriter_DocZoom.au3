@@ -16,7 +16,7 @@ Func Example()
 	$iReturn = _LOWriter_DocZoom($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve current zoom value. Error:" & @error & " Extended:" & @extended)
 
-	$iZoom = Int($iReturn * .75) ;Set my new zoom value to 75% of the current zoom value.
+	$iZoom = Int($iReturn * .75) ; Set my new zoom value to 75% of the current zoom value.
 
 	; Zoom cannot be less than 20% or greater than 600%, if my value is outside of this, set it to 140%
 	If ($iZoom < 20) Or ($iZoom > 600) Then $iZoom = 140

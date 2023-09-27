@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -102,8 +102,7 @@
 ; Description ...: Selete a Bookmark.
 ; Syntax ........: _LOWriter_DocBookmarkDelete(Byref $oDoc, Byref $oBookmark)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oBookmark           - [in/out] an object. A Bookmark Object from a previous Insert or Retrieve function to
-;				   +					delete.
+;                  $oBookmark           - [in/out] an object. A Bookmark Object from a previous Insert or Retrieve function to delete.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -141,8 +140,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkDelete
 ; Name ..........: _LOWriter_DocBookmarkGetAnchor
 ; Description ...: Retrieve a Bookmark's Anchor cursor Object.
 ; Syntax ........: _LOWriter_DocBookmarkGetAnchor(Byref $oBookmark)
-; Parameters ....: $oBookmark           - [in/out] an object. A Bookmark Object returned from a previous Insert or Retrieve
-;				   +						function.
+; Parameters ....: $oBookmark           - [in/out] an object. A Bookmark Object returned from a previous Insert or Retrieve function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -219,13 +217,10 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 ; Description ...: Insert a Bookmark into a document.
 ; Syntax ........: _LOWriter_DocBookmarkInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sBookmarkName = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the
-;				   +									cursor will be overwritten. If False, content will be inserted to the
-;				   +									left of any selection.
-;                  $sBookmarkName       - [optional] a string value. Default is Null. The Name of the Bookmark to create. See
-;				   +									Remarks.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
+;				   +						If False, content will be inserted to the left of any selection.
+;                  $sBookmarkName       - [optional] a string value. Default is Null. The Name of the Bookmark to create. See Remarks.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -244,7 +239,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 ; Modified ......:
 ; Remarks .......: If the cursor used to insert a Bookmark has text selected, the Bookmark will envelope the text, else the
 ;					Bookmark will be inserted at a single point.
-;					A Bookmark name cannot contain the following characters:  / \ @ : * ? " ; , . #
+;					A Bookmark name cannot contain the following characters: / \ @ : * ? " ; , . #
 ;					If the document already contains a Bookmark by the same name, Libre Office adds a digit after the name, such
 ;					as Bookmark 1, Bookmark 2 etc.
 ; Related .......: _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
@@ -267,7 +262,7 @@ Func _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	If ($sBookmarkName <> Null) Then
 		If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;Invalid Characters in Name.
+		If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Invalid Characters in Name.
 		$oBookmark.Name = $sBookmarkName
 	Else
 		$oBookmark.Name = "Bookmark "
@@ -304,7 +299,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;					A Bookmark name cannot contain the following characters:  / \ @ : * ? " ; , . #
+;					A Bookmark name cannot contain the following characters: / \ @ : * ? " ; , . #
 ;					If the document already contains a Bookmark by the same name, Libre Office adds a digit after the name, such
 ;					as Bookmark 1, Bookmark 2 etc.
 ; Related .......: _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkDelete
@@ -323,7 +318,7 @@ Func _LOWriter_DocBookmarkModify(ByRef $oDoc, ByRef $oBookmark, $sBookmarkName =
 	If __LOWriter_VarsAreNull($sBookmarkName) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oBookmark.Name())
 
 	If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ;Invalid Characters in Name.
+	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Invalid Characters in Name.
 	$oBookmark.Name = $sBookmarkName
 	$iError = ($oBookmark.Name() = $sBookmarkName) ? $iError : BitOR($iError, 1)
 
@@ -409,7 +404,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksList
 ; Name ..........: _LOWriter_DocClose
 ; Description ...: Close an existing Writer Document, returning its save path if applicable.
 ; Syntax ........: _LOWriter_DocClose(Byref $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           		- [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSaveChanges        - [optional] a boolean value. Default is True. If true, saves changes if any were made before closing. See remarks.
 ;                  $sSaveName           - [optional] a string value. Default is "". The file name to save the file as if the file hasn't been saved before. See Remarks.
 ;                  $bDeliverOwnership   - [optional] a boolean value. Default is True. If True, deliver ownership of the document Object from the script to LibreOffice, recommended is True.
@@ -495,12 +490,11 @@ EndFunc   ;==>_LOWriter_DocClose
 ; Name ..........: _LOWriter_DocConnect
 ; Description ...: Connect to an already opened instance of a specified LibreOffice document.
 ; Syntax ........: _LOWriter_DocConnect($sFile[, $bConnectCurrent = False[, $bConnectAll = False]])
-; Parameters ....: $sFile               - a string value. A Full or partial file path, or a full or partial file name. See
-;				   +						remarks. Can be an empty string is $bConnectAll or $bConnectCurrent is True.
-;                  $bConnectCurrent     - [optional] a boolean value. Default is False. If True, returns the currently active, or
-;				   +						last active Document, unless it is not a Text Document.
-;                  $bConnectAll         - [optional] a boolean value. Default is False. If True, returns an array containing all
-;				   +					open Libre Text Documents. See remarks.
+; Parameters ....: $sFile               - a string value. A Full or partial file path, or a full or partial file name. See remarks.
+;				   +						Can be an empty string is $bConnectAll or $bConnectCurrent is True.
+;                  $bConnectCurrent     - [optional] a boolean value. Default is False. If True, returns the currently active,
+;				   +						 or last active Document, unless it is not a Text Document.
+;                  $bConnectAll         - [optional] a boolean value. Default is False. If True, returns an array containing all open Libre Text Documents. See remarks.
 ; -Return values .: Success: Object or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -530,8 +524,8 @@ EndFunc   ;==>_LOWriter_DocClose
 ; Modified ......:
 ; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e:
 ;					C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, Or the full Title with extension,
-;					(i.e: Test.odt), Or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), Or a
-;					partial name (i.e: test, would match Test1.odt, Test2.docx etc.). Partial file path searches and file name
+;					(i.e: Test.odt), Or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.),
+;					or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.). Partial file path searches and file name
 ;					searches, as well as the connect all option, return arrays with three columns per result.
 ;					($aArray[0][3]. each result is stored in a separate row;
 ;				   Row 1, Column 0 contain the Object variable for that document.
@@ -593,25 +587,25 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	EndIf
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
-	If StringInStr($sFile, "\") Then $sFile = _LOWriter_PathConvert($sFile, $LOW_PATHCONV_OFFICE_RETURN) ;Convert to L.O File path.
+	If StringInStr($sFile, "\") Then $sFile = _LOWriter_PathConvert($sFile, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
 	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If StringInStr($sFile, "file:///") Then ;URL/Path and Name search
+	If StringInStr($sFile, "file:///") Then ; URL/Path and Name search
 
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 
-			If ($oDoc.getURL() == $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 3, $oDoc) ;Match
+			If ($oDoc.getURL() == $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 3, $oDoc) ; Match
 		WEnd
-		Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ;no match
+		Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
 
 	Else
-		If Not StringInStr($sFile, "/") And StringInStr($sFile, ".") Then ;Name with extension only search
+		If Not StringInStr($sFile, "/") And StringInStr($sFile, ".") Then ; Name with extension only search
 			While $oEnumDoc.hasMoreElements()
 				$oDoc = $oEnumDoc.nextElement()
-				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 4, $oDoc) ;Match
+				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 4, $oDoc) ; Match
 			WEnd
-			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ;no match
+			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
 		$iCount = 0 ; partial name or partial url search
@@ -646,7 +640,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			EndIf
 
 		Else
-			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ;no match
+			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
 	EndIf
@@ -772,9 +766,9 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;				   +								Table's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Note: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to
+; Remarks .......: Note: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to
 ;					restore the ViewCursor to its former position.
-; Related .......:   _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
 ; Link ..........:
@@ -852,10 +846,10 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 		For $j = 0 To UBound($asTables) - 1
 			If ($asTables[$j] = $oTables.getByIndex($i).Name()) Then ExitLoop
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0)) ;Sleep every x cycles.
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0)) ; Sleep every x cycles.
 		Next
 
-		If ($j = UBound($asTables)) Then ;If No matches in the original table names, then set Table Object and exit loop
+		If ($j = UBound($asTables)) Then ; If No matches in the original table names, then set Table Object and exit loop
 
 			$oTable = $oTables.getByIndex($i)
 			ExitLoop
@@ -869,11 +863,9 @@ EndFunc   ;==>_LOWriter_DocConvertTextToTable
 ; Name ..........: _LOWriter_DocCreate
 ; Description ...: Open a new Libre Office Writer Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOWriter_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: 		$bForceNew		- [optional] a boolean value. Default is True. Whether to force opening a new Writer
-;				   +						Document instead of checking for a usable blank.
-;					   	$bHidden		- [optional] a boolean value. Default is False. If True opens the new document
-;				   +						invisible or changes the existing document to invisible.
-; Return values .:  Success: Object
+; Parameters ....: $bForceNew		- [optional] a boolean value. Default is True. Whether to force opening a new Writer Document instead of checking for a usable blank.
+;				   $bHidden			- [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $bForceNew not a Boolean.
@@ -941,7 +933,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ; Name ..........: _LOWriter_DocCreateTextCursor
 ; Description ...: Create a TextCursor Object for future Textcursor related functional use.
 ; Syntax ........: _LOWriter_DocCreateTextCursor(Byref $oDoc[, $bCreateAtEnd = True[, $bCreateAtViewCursor = False]])
-; Parameters ....: $oDoc			- [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
+; Parameters ....: $oDoc				- [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
 ;                  $bCreateAtEnd		- [optional] a boolean value. Default is True. If true,  creates the new cursor at the end of the Document. Else cursor is created at the beginning.
 ;                  $bCreateAtViewCursor - [optional] a boolean value. Default is False. Create the Text cursor at the document's View Cursor. See Remarks
 ; Return values .: Success: Object.
@@ -1000,7 +992,7 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 		If __LOWriter_IntIsBetween($iCursorType, $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_HEADER_FOOTER) Then
 			$oCursor = $oText.createTextCursorByRange($oViewCursor)
 		Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ;ViewCursor in unknown data type.
+			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; ViewCursor in unknown data type.
 		EndIf
 
 	Else
@@ -1115,8 +1107,7 @@ EndFunc   ;==>_LOWriter_DocDescription
 ; Name ..........: _LOWriter_DocEnumPrinters
 ; Description ...: Enumerates all installed printers, or current default printer.
 ; Syntax ........: _LOWriter_DocEnumPrinters([$bDefaultOnly = False])
-; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the
-;				   +						current default printer. Libre 6.3 and up only.
+; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
 ; Return values .: Success: An array or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1173,11 +1164,11 @@ EndFunc   ;==>_LOWriter_DocEnumPrinters
 ; Name ..........: _LOWriter_DocEnumPrintersAlt
 ; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
 ; Syntax ........: _LOWriter_DocEnumPrintersAlt([$sPrinterName = ""[, $bReturnDefault = False]])
-; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default ""
-;				   +						returns the list of all printers. $sPrinterName can be a part of a printer name like
-;				   +						"HP*". Remember the asterisk (*).
-;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the
-;				   +						current default printer.
+; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list.
+;				   +						Default "" returns the list of all printers.
+;				   +						$sPrinterName can be a part of a printer name like "HP*". Remember the asterisk (*).
+;                  $bReturnDefault      - [optional] a boolean value. Default is False.
+;				   +						If True, returns only the name of the current default printer.
 ; Return values .: Success: Array or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1336,7 +1327,7 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ;				   +					with filtername of "writer8" or if not matched to the list of extensions in this UDF, the .odt extension is used instead,
 ;                  $bOverwrite     - [optional] a boolean value. Default is Null. If True, file will be overwritten.
 ;                  $sPassword      - [optional] a string value. Default is Null. Password String to set for the document.
-;				   +				(Not all file formats can have a Password set). "" (blank string) or Null = No Password.
+;				   +					(Not all file formats can have a Password set). "" (blank string) or Null = No Password.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1382,8 +1373,8 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 	If $bSamePath Then
 		If $oDoc.hasLocation() Then
 			$sOriginalPath = $oDoc.getURL()
-			$sOriginalPath = StringLeft($sOriginalPath, StringInStr($sOriginalPath, "/", 0, -1)) ;Cut the original name off.
-			If StringInStr($sFilePath, "\") Then $sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN) ;Convert to L.O. URL
+			$sOriginalPath = StringLeft($sOriginalPath, StringInStr($sOriginalPath, "/", 0, -1)) ; Cut the original name off.
+			If StringInStr($sFilePath, "\") Then $sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O. URL
 			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 			$sFilePath = $sOriginalPath & $sFilePath ; combine the path with the new name.
 		Else
@@ -1431,7 +1422,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $atFindFormat        - [in/out] an array of structs. An Array of formatting properties created from _LOWriter_FindFormat* functions to search for,
 ;				   +						call with an empty array to skip. Array will not be modified.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1559,7 +1550,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	$oSrchDescript.SearchString = $sSearchString
 
 	If $oRange.Text.supportsService("com.sun.star.text.TextFrame") Then
-		$oRangeAnchor = $oRange.TextFrame.getAnchor() ;If Range is in a TextFrame, convert its position to a range in the document
+		$oRangeAnchor = $oRange.TextFrame.getAnchor() ; If Range is in a TextFrame, convert its position to a range in the document
 	ElseIf $oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 		$oRangeAnchor = $oRange.Text.Anchor()
 	EndIf
@@ -1577,20 +1568,20 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 			$oRangeRegion = $oRange
 
 			If $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
-				$oResultRegion = $oResult.TextFrame.getAnchor() ;If Result is in a TextFrame, convert its position to a range in the document
+				$oResultRegion = $oResult.TextFrame.getAnchor() ; If Result is in a TextFrame, convert its position to a range in the document
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oResultRegion = $oResult.Text.Anchor()
 			EndIf
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") And $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
-				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ; If both Range and Result are in a Text Frame, test if they are in the same one.
+				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
 					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRangeAnchor
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
-				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ; If both Range and Result are in a Text Frame, test if they are in the same one.
+				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
 					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRangeAnchor
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that Foot/Endnote as Region Compare can only compare regions contained in the same Text Object region.
@@ -1640,8 +1631,7 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ;				   @Error 1 @Extended 6 Return 0 = First element in $atFindFormat not an Object.
 ;				   @Error 1 @Extended 7 Return 0 = $oRange not set to Null and not an Object.
 ;				   @Error 1 @Extended 8 Return 0 = $oRange has no data selected.
-;				   @Error 1 @Extended 9 Return 0 = $oLastFind not an Object and not set to Null, or failed to retrieve
-;				   +									starting position from $oRange.
+;				   @Error 1 @Extended 9 Return 0 = $oLastFind not an Object and not set to Null, or failed to retrieve starting position from $oRange.
 ;				   @Error 1 @Extended 10 Return 0 = $oLastFind incorrect Object type.
 ;				   @Error 1 @Extended 11 Return 0 = $bExhaustive not a Boolean.
 ;				   --Success--
@@ -1691,7 +1681,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	If ($oRange.IsCollapsed()) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 
-	If ($oLastFind = Null) Then ;If Last find is not set, then set FindRange to Range beginnign or end, depending on SearchBackwards value.
+	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginnign or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? $oRange.Start() : $oRange.End()
 	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
 		If Not IsObj($oLastFind) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
@@ -1708,40 +1698,40 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	While IsObj($oResult)
 
-		If IsObj($oResult) Then ; If there is a result, test to see if the result is past the selected area.
+		If IsObj($oResult) Then ;  If there is a result, test to see if the result is past the selected area.
 
 			$oRangeRegion = $oRange
 			$oResultRegion = $oResult
 			$oText = $oDoc.Text
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") Then
-				$oRangeRegion = $oRange.TextFrame.getAnchor() ;If Range is in a TextFrame, convert its position to a range in the document
+				$oRangeRegion = $oRange.TextFrame.getAnchor() ; If Range is in a TextFrame, convert its position to a range in the document
 			ElseIf $oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oRangeRegion = $oRange.Text.Anchor()
 			EndIf
 
 			If $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
-				$oResultRegion = $oResult.TextFrame.getAnchor() ;If Result is in a TextFrame, convert its position to a range in the document
+				$oResultRegion = $oResult.TextFrame.getAnchor() ; If Result is in a TextFrame, convert its position to a range in the document
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oResultRegion = $oResult.Text.Anchor()
 			EndIf
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") And $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
-				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ; If both Range and Result are in a Text Frame, test if they are in the same one.
+				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
 					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRange
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
-				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ; If both Range and Result are in a Text Frame, test if they are in the same one.
+				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
 					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRange
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that Foot/Endnote as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
 			EndIf
 
-			If ($oText.compareRegionEnds($oResultRegion, $oRangeRegion) = -1) Then ;If Compare = -1, result is past range.
+			If ($oText.compareRegionEnds($oResultRegion, $oRangeRegion) = -1) Then ; If Compare = -1, result is past range.
 				If ($bExhaustive = False) Then
 					$oResult = Null ;If Result is past the selection set Result to Null, but only if not doing an exhaustive search.
 					ExitLoop
@@ -1765,16 +1755,11 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ; Name ..........: _LOWriter_DocFooterGetTextCursor
 ; Description ...: Create a Text cursor in a Page Style footer for text related functions.
 ; Syntax ........: _LOWriter_DocFooterGetTextCursor(Byref $oPageStyle[, $bFooter = False[, $bFirstPage = False[, $bLeftPage = False[, $bRightPage = False]]]])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by previous PageStyle Create or
-;				   +						Object Retrieval function.
-;                  $bFooter             - [optional] a boolean value. Default is False. If True, creates a text cursor for the
-;				   +						page Footer. See Remarks.
-;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for the
-;				   +						First page Footer. See Remarks.
-;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor for Left
-;				   +						page Footers. See Remarks.
-;                  $bRightPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for right
-;				   +						page Footers. See Remarks.
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by previous PageStyle Create or Object Retrieval function.
+;                  $bFooter             - [optional] a boolean value. Default is False. If True, creates a text cursor for the page Footer. See Remarks.
+;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for the First page Footer. See Remarks.
+;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor for Left page Footers. See Remarks.
+;                  $bRightPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for right page Footers. See Remarks.
 ; Return values .: Success: Object or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1788,7 +1773,7 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;				   @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  If more than one parameter is set to true, an array is returned with the requested objects in the order that
+; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that
 ;					the True parameters are listed. Else the requested object is returned.
 ;					Note: If same content on left and right and first pages is active for the requested page style, you only
 ;					need to use the $bFooter parameter, the others are only for when same content on first page or same content
@@ -2010,7 +1995,7 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sModifiedBy         - [optional] a string value. Default is Null. Set the name of the last user who modified the document.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display, created previously by _LOWriter_DateStructCreate.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2348,9 +2333,9 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ; Description ...: Retrieve the string of text currently selected or contained in a paragraph object.
 ; Syntax ........: _LOWriter_DocGetString(Byref $oObj)
 ; Parameters ....: $oObj             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						or retrieval functions with Data selected, Or A Paragraph Object returned from
-;				   +						_LOWriter_ParObjCreateList function.
-; Return values .:  Success: String
+;				   +					or retrieval functions with Data selected,
+;				   +					or a Paragraph Object returned from _LOWriter_ParObjCreateList function.
+; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
@@ -2390,7 +2375,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 ; Description ...: Retrieve the ViewCursor Object from a Document.
 ; Syntax ........: _LOWriter_DocGetViewCursor(Byref $oDoc)
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2414,7 +2399,7 @@ Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	Return (IsObj($oViewCursor)) ? SetError($__LOW_STATUS_SUCCESS, 0, $oViewCursor) : SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ;Failed to Create ViewCursor
+	Return (IsObj($oViewCursor)) ? SetError($__LOW_STATUS_SUCCESS, 0, $oViewCursor) : SetError($__LOW_STATUS_INIT_ERROR, 1, 0) ; Failed to Create ViewCursor
 EndFunc   ;==>_LOWriter_DocGetViewCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2423,7 +2408,7 @@ EndFunc   ;==>_LOWriter_DocGetViewCursor
 ; Syntax ........: _LOWriter_DocHasFrameName(Byref $oDoc, $sFrameName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFrameName          - a string value. The Frame name to search for.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2473,7 +2458,7 @@ Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_DocHasFrameName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2539,23 +2524,18 @@ Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
 
 	If ($oTables.hasByName($sTableName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_DocHasTableName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHeaderGetTextCursor
 ; Description ...: Create a Text cursor in a Page Style header for text related functions.
 ; Syntax ........: _LOWriter_DocHeaderGetTextCursor(Byref $oPageStyle[, $bHeader = False[, $bFirstPage = False[, $bLeftPage = False[, $bRightPage = False]]]])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by previous PageStyle Create or
-;				   +						Object Retrieval function.
-;                  $bHeader             - [optional] a boolean value. Default is False. If True, creates a text cursor for the
-;				   +						page header. See Remarks.
-;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for the
-;				   +						First page header. See Remarks.
-;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor for Left
-;				   +						page headers. See Remarks.
-;                  $bRightPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for right
-;				   +						page headers. See Remarks.
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by previous PageStyle Create or Object Retrieval function.
+;                  $bHeader             - [optional] a boolean value. Default is False. If True, creates a text cursor for the page header. See Remarks.
+;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for the First page header. See Remarks.
+;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor for Left page headers. See Remarks.
+;                  $bRightPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for right page headers. See Remarks.
 ; Return values .: Success: Object or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2624,7 +2604,7 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  $sLinkAddress        - a string value. A URL/Link.
 ;                  $bInsertAtViewCursor - [optional] a boolean value. Default is False. See Remarks
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, overwrites any data selected by the $oCursor.
-; Return values .:  Success: 1.
+; Return values .: Success: 1.
 ;				    Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				    --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc variable not an Object.
@@ -2683,7 +2663,7 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 		If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 
 		If $bInsertAtViewCursor Or ($iCursorType = $LOW_CURTYPE_VIEW_CURSOR) Then
-			$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True) ;create new Text cursor at ViewCursor
+			$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True) ; create new Text cursor at ViewCursor
 			If Not IsObj($oTextCursor) Or @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 		EndIf
 
@@ -2913,8 +2893,8 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ; Syntax ........: _LOWriter_DocMaximize(Byref $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized,
-;				   +						else if false, document is restored to its previous size and location. If Null,
-;				   +						returns a Boolean indicating if document is currently maximized (True).
+;				   +						else if false, document is restored to its previous size and location.
+;				   +						If Null, returns a Boolean indicating if document is currently maximized (True).
 ; Return values .: Success: 1 or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2988,19 +2968,15 @@ EndFunc   ;==>_LOWriter_DocMinimize
 ; Description ...: Open an existing Writer Document, returning its object identifier.
 ; Syntax ........: _LOWriter_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = False[, $bReadOnly = False[, $sPassword = ""[, $bLoadAsTemplate = False[, $sFilterName = ""]]]]]])
 ; Parameters ....: $sFilePath           - a string value. Full path and filename of the file to be opened.
-;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the
-;				   +						requested document if it is already open. Note: any parameters (Hidden, template
-;				   +						etc., will not be applied when connecting)
+;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the requested document if it is already open.
+;				   +						Note: any parameters (Hidden, template etc., will not be applied when connecting)
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If true, opens the document invisibly.
-;                  $bReadOnly           - [optional] a boolean value. Default is Null. If true, opens the document as
-;				   +						read-only.
-;                  $sPassword           - [optional] a string value. Default is Null. The password that was used to read-protect
-;				   +						the document, if any.
-;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If true, opens the document as a
-;				   +						Template, i.e. an untitled copy of the specified document is made instead of
-;				   +						 modifying the original document.
-;                  $sFilterName         - [optional] a string value. Default is Null. Name of a LibreOffice filter to use to load
-;				   +					the specified document. LibreOffice automatically selects which to use by default.
+;                  $bReadOnly           - [optional] a boolean value. Default is Null. If true, opens the document as read-only.
+;                  $sPassword           - [optional] a string value. Default is Null. The password that was used to read-protect the document, if any.
+;                  $bLoadAsTemplate     - [optional] a boolean value. Default is Null. If true, opens the document as a Template,
+;				   +						i.e. an untitled copy of the specified document is made instead of modifying the original document.
+;                  $sFilterName         - [optional] a string value. Default is Null. Name of a LibreOffice filter to use to load the specified document.
+;				   +						LibreOffice automatically selects which to use by default.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3444,7 +3420,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Paper Orientation Constants: $LOW_PAPER_PORTRAIT(0),
@@ -3539,10 +3515,10 @@ EndFunc   ;==>_LOWriter_DocPrintMiscSettings
 ; Syntax ........: _LOWriter_DocPrintPageSettings(Byref $oDoc[, $bBlackOnly = Null[, $bLeftOnly = Null[, $bRightOnly = Null[, $bBackground = Null[, $bEmptyPages = Null]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bBlackOnly          - [optional] a boolean value. Default is Null. If True, prints all text in black only.
-;                  $bLeftOnly           - [optional] a boolean value. Default is Null. If True, prints only Left(Even) pages. If
-;				   +						both $bLeftOnly and $bRightOnly are false, both Left and Right pages are printed.
-;                  $bRightOnly          - [optional] a boolean value. Default is Null. If True, prints only Right(Odd) pages. If
-;				   +						both $bLeftOnly and $bRightOnly are false, both Left and Right pages are printed.
+;                  $bLeftOnly           - [optional] a boolean value. Default is Null. If True, prints only Left(Even) pages.
+;				   +						If both $bLeftOnly and $bRightOnly are false, both Left and Right pages are printed.
+;                  $bRightOnly          - [optional] a boolean value. Default is Null. If True, prints only Right(Odd) pages.
+;				   +						If both $bLeftOnly and $bRightOnly are false, both Left and Right pages are printed.
 ;                  $bBackground         - [optional] a boolean value. Default is Null. If true, prints colors and objects that are inserted to the background of the page.
 ;                  $bEmptyPages         - [optional] a boolean value. Default is Null. If true, automatically inserted blank pages are printed.
 ; Return values .: Success: 1 or Array.
@@ -3806,7 +3782,7 @@ EndFunc   ;==>_LOWriter_DocPrintSizeSettings
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocRedo
-; Description ...:  Perform one Redo action for a document.
+; Description ...: Perform one Redo action for a document.
 ; Syntax ........: _LOWriter_DocRedo(Byref $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1
@@ -3841,7 +3817,7 @@ EndFunc   ;==>_LOWriter_DocRedo
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocRedoCurActionTitle
-; Description ...:  Retrieve the current Redo action Title.
+; Description ...: Retrieve the current Redo action Title.
 ; Syntax ........: _LOWriter_DocRedoCurActionTitle(Byref $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: String
@@ -4018,7 +3994,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any
 ;				   +						Set to an empty array[0] to skip. Array will not be modified. Not results with.
 ;				   +						Recommended for use with regular expressions, see remarks.
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -4168,7 +4144,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 
 		EndIf
 
-	ElseIf ($oSrchDescript.SearchStyles() = True) And ((UBound($atFindFormat) = 0) And (UBound($atReplaceFormat) = 0)) Then ;If Style Search is active and no formatting is set, then search and replace Paragraph style.
+	ElseIf ($oSrchDescript.SearchStyles() = True) And ((UBound($atFindFormat) = 0) And (UBound($atReplaceFormat) = 0)) Then ; If Style Search is active and no formatting is set, then search and replace Paragraph style.
 		If Not _LOWriter_ParStyleExists($oDoc, $sReplaceString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
 		For $i = 0 To $iResults - 1
 			$aoResults[$i].ParaStyleName = $sReplaceString
@@ -4227,15 +4203,14 @@ EndFunc   ;==>_LOWriter_DocSave
 ; Syntax ........: _LOWriter_DocSaveAs(Byref $oDoc, $sFilePath[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]])
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension.
-;                  $sFilterName         - [optional] a string value. Default is "". Filter name. "" (blank string), Filter is
-;				   +								chosen automatically based on the file extension. If no extension is
-;				   +								present, or if not matched to the list of extensions in this UDF, the .odt
-;				   +								extension is used instead, with the filter name of "writer8".
-;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, the existing file will be
-;				   +								overwritten.
-;                  $sPassword           - [optional] a string value. Default is Null. Sets a password for the document. (Not all
-;				   +								file formats can have a Password set). "" (blank string) = No Password. Null
-;				   +								also sets no password.
+;                  $sFilterName         - [optional] a string value. Default is "". Filter name. "" (blank string),
+;				   +						Filter is chosen automatically based on the file extension.
+;				   +						If no extension is present, or if not matched to the list of extensions in this UDF,
+;				   +						the .odt extension is used instead, with the filter name of "writer8".
+;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, the existing file will be overwritten.
+;                  $sPassword           - [optional] a string value. Default is Null. Sets a password for the document.
+;				   +						(Not all file formats can have a Password set). "" (blank string) = No Password.
+;				   +						Null also sets no password.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4461,8 +4436,7 @@ EndFunc   ;==>_LOWriter_DocUndoIsPossible
 ; Name ..........: _LOWriter_DocViewCursorGetPosition
 ; Description ...: Retrieve View Cursor position in Micrometers.
 ; Syntax ........: _LOWriter_DocViewCursorGetPosition(Byref $oCursor)
-; Parameters ....: $oCursor             - [in/out] an object. A View Cursor Object returned by _LOWriter_DocGetViewCursor
-;				   +						function.
+; Parameters ....: $oCursor             - [in/out] an object. A View Cursor Object returned by _LOWriter_DocGetViewCursor function.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--

@@ -11,7 +11,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -169,7 +169,7 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
 			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ;unknown cursor data type.
+			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
 
 EndFunc   ;==>_LOWriter_CursorGetStatus
@@ -240,7 +240,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ; Modified ......:
 ; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Text Cursor
 ;					also.
-; Related .......:  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor,	_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
 ;					_LOWriter_ParObjSectionsGet, _LOWriter_CursorMove
@@ -389,6 +389,6 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
 		Case Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ;unknown cursor data type.
+			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor data type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorMove
