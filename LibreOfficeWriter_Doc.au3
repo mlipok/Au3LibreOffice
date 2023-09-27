@@ -97,7 +97,6 @@
 ;_LOWriter_DocZoom
 ; ===============================================================================================================================
 
-
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkDelete
 ; Description ...: Selete a Bookmark.
@@ -466,8 +465,6 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 	If Not IsString($sSaveName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bDeliverOwnership) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
-
-
 	If Not $oDoc.hasLocation() And ($bSaveChanges = True) Then
 		$sSavePath = @DesktopDir & "\"
 		If ($sSaveName = "") Or ($sSaveName = " ") Then
@@ -576,7 +573,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-
 
 	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LOW_STATUS_DOC_ERROR, 3, 0) ; no L.O open
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
@@ -1045,7 +1041,6 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 	EndIf
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
-
 
 	Return SetError($__LOW_STATUS_SUCCESS, $iCursorType, $oCursor)
 EndFunc   ;==>_LOWriter_DocCreateTextCursor
@@ -1736,7 +1731,6 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 	EndIf
 
 	If ($oRange.IsCollapsed()) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-
 
 	If ($oLastFind = Null) Then ;If Last find is not set, then set FindRange to Range beginnign or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? $oRange.Start() : $oRange.End()

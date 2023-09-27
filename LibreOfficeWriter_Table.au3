@@ -5,7 +5,7 @@
 #include "LibreOfficeWriter_Helper.au3"
 #include "LibreOfficeWriter_Internal.au3"
 
-#include "LibreOfficeWriter_PageStyle.au3"
+#include "LibreOfficeWriter_Page.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Libre Office Writer (LOWriter)

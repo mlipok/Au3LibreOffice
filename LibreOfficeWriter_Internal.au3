@@ -1861,7 +1861,6 @@ Func __LOWriter_FieldCountType($vInput)
 
 	If IsObj($vInput) Then
 
-
 		For $i = 0 To UBound($asFieldTypes) - 1
 			If $vInput.supportsService($asFieldTypes[$i]) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $i)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)

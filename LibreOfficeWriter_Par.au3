@@ -7,8 +7,8 @@
 
 #include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Cursor.au3"
-#include "LibreOfficeWriter_NumStyle.au3"
-#include "LibreOfficeWriter_PageStyle.au3"
+#include "LibreOfficeWriter_Num.au3"
+#include "LibreOfficeWriter_Page.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Libre Office Writer (LOWriter)
@@ -72,7 +72,6 @@
 ;_LOWriter_ParStyleTxtFlowOpt
 ;_LOWriter_ParStyleUnderLine
 ; ===============================================================================================================================
-
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParObjCopy
