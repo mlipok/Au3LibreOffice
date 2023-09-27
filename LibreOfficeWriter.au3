@@ -2,6 +2,8 @@
 
 #include-once
 #include "LibreOfficeWriterConstants.au3"
+#include "LibreOfficeWriter_Helper.au3"
+#include "LibreOfficeWriter_Internal.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Libre Office Writer (LOWriter)
@@ -59,11 +61,6 @@
 ;_LOWriter_CharStyleSpacing
 ;_LOWriter_CharStyleStrikeOut
 ;_LOWriter_CharStyleUnderLine
-;_LOWriter_ComError_UserFunction
-;_LOWriter_ConvertColorFromLong
-;_LOWriter_ConvertColorToLong
-;_LOWriter_ConvertFromMicrometer
-;_LOWriter_ConvertToMicrometer
 ;_LOWriter_CursorGetDataType
 ;_LOWriter_CursorGetStatus
 ;_LOWriter_CursorGetType
@@ -485,7 +482,6 @@
 ;_LOWriter_TablesGetNames
 ;_LOWriter_TableShadow
 ;_LOWriter_TableWidth
-;_LOWriter_VersionGet
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
