@@ -25,88 +25,88 @@
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-;__LOWriter_AddTo1DArray
-;__LOWriter_AddTo2DArray
-;__LOWriter_AnyAreDefault
-;__LOWriter_ArrayFill
-;__LOWriter_Border
-;__LOWriter_CharBorder
-;__LOWriter_CharBorderPadding
-;__LOWriter_CharEffect
-;__LOWriter_CharFont
-;__LOWriter_CharFontColor
-;__LOWriter_CharOverLine
-;__LOWriter_CharPosition
-;__LOWriter_CharRotateScale
-;__LOWriter_CharShadow
-;__LOWriter_CharSpacing
-;__LOWriter_CharStrikeOut
-;__LOWriter_CharStyleNameToggle
-;__LOWriter_CharUnderLine
-;__LOWriter_CreateStruct
-;__LOWriter_CursorGetText
-;__LOWriter_DateStructCompare
-;__LOWriter_DirFrmtCheck
-;__LOWriter_FieldCountType
-;__LOWriter_FieldsGetList
-;__LOWriter_FieldTypeServices
-;__LOWriter_FilterNameGet
-;__LOWriter_FindFormatAddSetting
-;__LOWriter_FindFormatDeleteSetting
-;__LOWriter_FindFormatRetrieveSetting
-;__LOWriter_FooterBorder
-;__LOWriter_FrameRelativeSize
-;__LOWriter_GetPrinterSetting
-;__LOWriter_GradientNameInsert
-;__LOWriter_GradientPresets
-;__LOWriter_HeaderBorder
-;__LOWriter_Internal_CursorGetDataType
-;__LOWriter_Internal_CursorGetType
-;__LOWriter_InternalComErrorHandler
-;__LOWriter_IntIsBetween
-;__LOWriter_IsCellRange
-;__LOWriter_IsTableInDoc
-;__LOWriter_NumIsBetween
-;__LOWriter_NumStyleCreateScript
-;__LOWriter_NumStyleDeleteScript
-;__LOWriter_NumStyleInitiateDocument
-;__LOWriter_NumStyleListFormat
-;__LOWriter_NumStyleModify
-;__LOWriter_NumStyleRetrieve
-;__LOWriter_PageStyleNameToggle
-;__LOWriter_ParAlignment
-;__LOWriter_ParBackColor
-;__LOWriter_ParBorderPadding
-;__LOWriter_ParDropCaps
-;__LOWriter_ParHasTabStop
-;__LOWriter_ParHyphenation
-;__LOWriter_ParIndent
-;__LOWriter_ParOutLineAndList
-;__LOWriter_ParPageBreak
-;__LOWriter_ParShadow
-;__LOWriter_ParSpace
-;__LOWriter_ParStyleNameToggle
-;__LOWriter_ParTabStopCreate
-;__LOWriter_ParTabStopDelete
-;__LOWriter_ParTabStopList
-;__LOWriter_ParTabStopMod
-;__LOWriter_ParTxtFlowOpt
-;__LOWriter_RegExpConvert
-;__LOWriter_SetPropertyValue
-;__LOWriter_TableBorder
-;__LOWriter_TableCursorMove
-;__LOWriter_TableHasCellName
-;__LOWriter_TableHasColumnRange
-;__LOWriter_TableHasRowRange
-;__LOWriter_TableRowSplitToggle
-;__LOWriter_TextCursorMove
-;__LOWriter_TransparencyGradientConvert
-;__LOWriter_TransparencyGradientNameInsert
-;__LOWriter_UnitConvert
-;__LOWriter_VarsAreDefault
-;__LOWriter_VarsAreNull
-;__LOWriter_VersionCheck
-;__LOWriter_ViewCursorMove
+; __LOWriter_AddTo1DArray
+; __LOWriter_AddTo2DArray
+; __LOWriter_AnyAreDefault
+; __LOWriter_ArrayFill
+; __LOWriter_Border
+; __LOWriter_CharBorder
+; __LOWriter_CharBorderPadding
+; __LOWriter_CharEffect
+; __LOWriter_CharFont
+; __LOWriter_CharFontColor
+; __LOWriter_CharOverLine
+; __LOWriter_CharPosition
+; __LOWriter_CharRotateScale
+; __LOWriter_CharShadow
+; __LOWriter_CharSpacing
+; __LOWriter_CharStrikeOut
+; __LOWriter_CharStyleNameToggle
+; __LOWriter_CharUnderLine
+; __LOWriter_CreateStruct
+; __LOWriter_CursorGetText
+; __LOWriter_DateStructCompare
+; __LOWriter_DirFrmtCheck
+; __LOWriter_FieldCountType
+; __LOWriter_FieldsGetList
+; __LOWriter_FieldTypeServices
+; __LOWriter_FilterNameGet
+; __LOWriter_FindFormatAddSetting
+; __LOWriter_FindFormatDeleteSetting
+; __LOWriter_FindFormatRetrieveSetting
+; __LOWriter_FooterBorder
+; __LOWriter_FrameRelativeSize
+; __LOWriter_GetPrinterSetting
+; __LOWriter_GradientNameInsert
+; __LOWriter_GradientPresets
+; __LOWriter_HeaderBorder
+; __LOWriter_Internal_CursorGetDataType
+; __LOWriter_Internal_CursorGetType
+; __LOWriter_InternalComErrorHandler
+; __LOWriter_IntIsBetween
+; __LOWriter_IsCellRange
+; __LOWriter_IsTableInDoc
+; __LOWriter_NumIsBetween
+; __LOWriter_NumStyleCreateScript
+; __LOWriter_NumStyleDeleteScript
+; __LOWriter_NumStyleInitiateDocument
+; __LOWriter_NumStyleListFormat
+; __LOWriter_NumStyleModify
+; __LOWriter_NumStyleRetrieve
+; __LOWriter_PageStyleNameToggle
+; __LOWriter_ParAlignment
+; __LOWriter_ParBackColor
+; __LOWriter_ParBorderPadding
+; __LOWriter_ParDropCaps
+; __LOWriter_ParHasTabStop
+; __LOWriter_ParHyphenation
+; __LOWriter_ParIndent
+; __LOWriter_ParOutLineAndList
+; __LOWriter_ParPageBreak
+; __LOWriter_ParShadow
+; __LOWriter_ParSpace
+; __LOWriter_ParStyleNameToggle
+; __LOWriter_ParTabStopCreate
+; __LOWriter_ParTabStopDelete
+; __LOWriter_ParTabStopList
+; __LOWriter_ParTabStopMod
+; __LOWriter_ParTxtFlowOpt
+; __LOWriter_RegExpConvert
+; __LOWriter_SetPropertyValue
+; __LOWriter_TableBorder
+; __LOWriter_TableCursorMove
+; __LOWriter_TableHasCellName
+; __LOWriter_TableHasColumnRange
+; __LOWriter_TableHasRowRange
+; __LOWriter_TableRowSplitToggle
+; __LOWriter_TextCursorMove
+; __LOWriter_TransparencyGradientConvert
+; __LOWriter_TransparencyGradientNameInsert
+; __LOWriter_UnitConvert
+; __LOWriter_VarsAreDefault
+; __LOWriter_VarsAreNull
+; __LOWriter_VersionCheck
+; __LOWriter_ViewCursorMove
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -343,7 +343,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.TopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
-		;Top Line
+		; Top Line
 		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.TopBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.TopBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iTop : $oObj.TopBorder.Color() ;copy Color over to new size structure
@@ -352,7 +352,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.BottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
-		;Bottom Line
+		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.BottomBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.BottomBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iBottom : $oObj.BottomBorder.Color() ;copy Color over to new size structure
@@ -361,7 +361,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.LeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
-		;Left Line
+		; Left Line
 		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.LeftBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.LeftBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iLeft : $oObj.LeftBorder.Color() ;copy Color over to new size structure
@@ -370,7 +370,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.RightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
-		;Right Line
+		; Right Line
 		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.RightBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.RightBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iRight : $oObj.RightBorder.Color() ;copy Color over to new size structure
@@ -450,7 +450,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.CharTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
-		;Top Line
+		; Top Line
 		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.CharTopBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.CharTopBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iTop : $oObj.CharTopBorder.Color() ;copy Color over to new size structure
@@ -459,7 +459,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.CharBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
-		;Bottom Line
+		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.CharBottomBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.CharBottomBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iBottom : $oObj.CharBottomBorder.Color() ;copy Color over to new size structure
@@ -468,7 +468,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.CharLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
-		;Left Line
+		; Left Line
 		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.CharLeftBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.CharLeftBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iLeft : $oObj.CharLeftBorder.Color() ;copy Color over to new size structure
@@ -477,7 +477,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.CharRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
-		;Right Line
+		; Right Line
 		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.CharRightBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.CharRightBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iRight : $oObj.CharRightBorder.Color() ;copy Color over to new size structure
@@ -872,11 +872,11 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 
 	If ($iHighlight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		;CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for
-		;setting.
-;~ If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR,2,0)
-;~ $oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-;~ $iError = ($oObj.CharHighlight() = $iHighlight) ? $iError : BitOR($iError,4)
+		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for
+		; setting.
+; ~ If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR,2,0)
+; ~ $oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
+; ~ $iError = ($oObj.CharHighlight() = $iHighlight) ? $iError : BitOR($iError,4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? $iError : BitOR($iError, 4)
 	EndIf
@@ -1077,15 +1077,15 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 
 	If ($bAutoSuper <> Null) Then
 		If Not IsBool($bAutoSuper) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		;If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
+		; If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
 		;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
-		;else set SubScript to 1
+		; else set SubScript to 1
 		$iSuperScript = ($bAutoSuper) ? 14000 : (IsInt($iSuperScript)) ? $iSuperScript : (IsInt($iSubScript) Or ($bAutoSub = True)) ? $iSuperScript : 1
 	EndIf
 
 	If ($bAutoSub <> Null) Then
 		If Not IsBool($bAutoSub) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		;If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
+		; If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 		$iSubScript = ($bAutoSub) ? -14000 : (IsInt($iSubScript)) ? $iSubScript : (IsInt($iSuperScript)) ? $iSubScript : 1
 
@@ -1164,7 +1164,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
-		;rotation set in hundredths (90 deg = 900 etc)so divide by 10.
+		; rotation set in hundredths (90 deg = 900 etc)so divide by 10.
 		__LOWriter_ArrayFill($avRotation, ($oObj.CharRotation() / 10), $oObj.CharScaleWidth())
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avRotation)
 	EndIf
@@ -1183,7 +1183,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 	EndIf
 
 	If ($bRotateFitLine <> Null) Then
-		;works only on Direct Formatting:
+		; works only on Direct Formatting:
 		If Not IsBool($bRotateFitLine) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharRotationIsFitToLine = $bRotateFitLine
 		$iError = ($oObj.CharRotationIsFitToLine() = $bRotateFitLine) ? $iError : BitOR($iError, 4)
@@ -1232,7 +1232,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ;					get the current settings.
 ;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
-;Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
+; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
 ;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
 ;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
 ;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
@@ -1800,12 +1800,12 @@ Func __LOWriter_DirFrmtCheck(ByRef $oSelection, $bCheckSelection = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	;If Object supports Paragraph or TextPortion services, then return True.
+	; If Object supports Paragraph or TextPortion services, then return True.
 	If $oSelection.supportsService("com.sun.star.text.Paragraph") Or _
 			$oSelection.supportsService("com.sun.star.text.TextPortion") Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
 
-	;If Object is a cursor then return true if $bcheckSelection is false. Else test if cursor selection is collapsed, return
-	;false if it is.
+	; If Object is a cursor then return true if $bcheckSelection is false. Else test if cursor selection is collapsed, return
+	; false if it is.
 	If $oSelection.supportsService("com.sun.star.text.TextCursor") Or _
 			$oSelection.supportsService("com.sun.star.text.TextViewCursor") Then
 		If $bCheckSelection Then Return SetError($__LOW_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? False : True) ;If collapsed return false meaning fail.
@@ -1835,7 +1835,7 @@ EndFunc   ;==>__LOWriter_DirFrmtCheck
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
+; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_IMAGES(1), Count field is an Image Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_OBJECTS(2),  Count field is an Object Count type field._
 ;								$LOW_FIELD_COUNT_TYPE_PAGES(3), Count field is a Page Count type field.
@@ -1931,7 +1931,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	Local $avTextFields[50][4]
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	;Skip 2 to match other Funcs.
+	; Skip 2 to match other Funcs.
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -1940,7 +1940,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	$iColumns = ($bFieldType = False) ? ($iColumns - 1) : $iColumns
 	$iColumns = ($bFieldTypeNum = False) ? ($iColumns - 1) : $iColumns
 
-	;If Supported Services Option is False, change the column position of FieldType
+	; If Supported Services Option is False, change the column position of FieldType
 	$iFieldTypeCol = ($bSupportedServices = False) ? ($iFieldTypeCol - 1) : $iFieldTypeCol
 
 	$iFieldTypeNumCol = ($bSupportedServices = False) ? ($iFieldTypeNumCol - 1) : $iFieldTypeNumCol
@@ -2377,7 +2377,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
-		;Top Line
+		; Top Line
 		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.FooterTopBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.FooterTopBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iTop : $oObj.FooterTopBorder.Color() ;copy Color over to new size structure
@@ -2386,7 +2386,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
-		;Bottom Line
+		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.FooterBottomBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.FooterBottomBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iBottom : $oObj.FooterBottomBorder.Color() ;copy Color over to new size structure
@@ -2395,7 +2395,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
-		;Left Line
+		; Left Line
 		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.FooterLeftBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.FooterLeftBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iLeft : $oObj.FooterLeftBorder.Color() ;copy Color over to new size structure
@@ -2404,7 +2404,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
-		;Right Line
+		; Right Line
 		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.FooterRightBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.FooterRightBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iRight : $oObj.FooterRightBorder.Color() ;copy Color over to new size structure
@@ -2595,7 +2595,7 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 	$tNewGradient = __LOWriter_CreateStruct("com.sun.star.awt.Gradient")
 	If Not IsObj($tNewGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	;Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
+	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
 	With $tNewGradient
 		.Style = $tGradient.Style()
 		.XOffset = $tGradient.XOffset()
@@ -2975,7 +2975,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
-		;Top Line
+		; Top Line
 		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.HeaderTopBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.HeaderTopBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iTop : $oObj.HeaderTopBorder.Color() ;copy Color over to new size structure
@@ -2984,7 +2984,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
-		;Bottom Line
+		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.HeaderBottomBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.HeaderBottomBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iBottom : $oObj.HeaderBottomBorder.Color() ;copy Color over to new size structure
@@ -2993,7 +2993,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
-		;Left Line
+		; Left Line
 		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.HeaderLeftBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.HeaderLeftBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iLeft : $oObj.HeaderLeftBorder.Color() ;copy Color over to new size structure
@@ -3002,7 +3002,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
-		;Right Line
+		; Right Line
 		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.HeaderRightBorder.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.HeaderRightBorder.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iRight : $oObj.HeaderRightBorder.Color() ;copy Color over to new size structure
@@ -3047,7 +3047,7 @@ EndFunc   ;==>__LOWriter_HeaderBorder
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of cursor, such as a TextTable, Footnote etc.
-;Cursor Data Type Constants: $LOW_CURDATA_BODY_TEXT(1),
+; Cursor Data Type Constants: $LOW_CURDATA_BODY_TEXT(1),
 ;								$LOW_CURDATA_FRAME(2),
 ;								$LOW_CURDATA_CELL(3),
 ;								$LOW_CURDATA_FOOTNOTE(4),
@@ -3201,7 +3201,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetType
 ; ===============================================================================================================================
 Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 	; If not defined ComError_UserFunction then this function does nothing.
-	;In that case you can only check @error / @extended after suspect functions.
+	; In that case you can only check @error / @extended after suspect functions.
 	Local $avUserFunction = _LOWriter_ComError_UserFunction(Default)
 	Local $vUserFunction, $avUserParams[2] = ["CallArgArray", $oComError]
 
@@ -3457,8 +3457,8 @@ Func __LOWriter_NumStyleCreateScript(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
-	;Retrieving the BasicLibrary.Standard Object fails when using a newly opened document, I found a workaround by updating the
-	;following setting.
+	; Retrieving the BasicLibrary.Standard Object fails when using a newly opened document, I found a workaround by updating the
+	; following setting.
 	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
@@ -3505,8 +3505,8 @@ Func __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
-	;Retrieving the BasicLibrary.Standard Object fails when using a newly opened document, I found a workaround by updating the
-	;following setting.
+	; Retrieving the BasicLibrary.Standard Object fails when using a newly opened document, I found a workaround by updating the
+	; following setting.
 	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
@@ -3623,7 +3623,7 @@ Func __LOWriter_NumStyleListFormat(ByRef $oNumRules, $iLevel, $iSubLevels, $sPre
 
 	$iBeginLevel = ($iLevel = -1) ? 9 : $iLevel ; If Level = -1 (all levels) then set the begin level at 9 (the last level), else at the called level.
 	$iEndLevel = ($iLevel = -1) ? 0 : ($iLevel - $iSubLevels + 1) ;If Level = -1 (all levels) then set the end level at 0 (the first level), else
-	;at the called level - any Sublevels.
+	; at the called level - any Sublevels.
 
 	If ($iLevel = -1) Then ; If Level = -1 (all levels) cycle through them all, Applying their respective Prefix/Suffix
 		For $i = $iBeginLevel To $iEndLevel Step -1
@@ -3733,7 +3733,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ;Test is ListFormat exists, if so modify prefix/Suffix via new method.
 							If (@error = 0) Then
 								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
-								;Get number of Sublevels (ParentNumbering) for formatting ListFormat.
+								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
 								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
 								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, $vSettingValue, Null) ;Add prefix to ListFormat
 								$atNumLevel[$iListFormatIndex].Value = $sListFormat
@@ -3744,7 +3744,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ;Test is ListFormat exists, if so modify prefix/Suffix via new method.
 							If (@error = 0) Then
 								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
-								;Get number of Sublevels (ParentNumbering) for formatting ListFormat.
+								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
 								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
 								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, Null, $vSettingValue) ;Add suffix to ListFormat
 								$atNumLevel[$iListFormatIndex].Value = $sListFormat
@@ -3755,9 +3755,9 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 							$atNumLevel[$i].Value = $vSettingValue
 					EndSwitch
 
-					;$oNumRules.replaceByIndex($iGetLevel, $atNumLevel);This should work but doesn't -- It would seem that the Array passed by
-					;Autoit is not recognized as an appropriate array(or Sequence) by LibreOffice, or perhaps as variable type "Any", which is
-					;what LibreOfficereplace by index is expecting, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error.
+					; $oNumRules.replaceByIndex($iGetLevel, $atNumLevel);This should work but doesn't -- It would seem that the Array passed by
+					; Autoit is not recognized as an appropriate array(or Sequence) by LibreOffice, or perhaps as variable type "Any", which is
+					; what LibreOfficereplace by index is expecting, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error.
 
 					$avParamArray[0] = $oNumRules
 					$avParamArray[1] = $iGetLevel
@@ -4481,7 +4481,7 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avIndent)
 	EndIf
 
-	;Min: -9998989;Max: 17094
+	; Min: -9998989;Max: 17094
 	If ($iBeforeTxt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBeforeTxt, -9998989, 17094) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaLeftMargin = $iBeforeTxt
@@ -4494,7 +4494,7 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 		$iError = (__LOWriter_NumIsBetween(($oObj.ParaRightMargin()), ($iAfterTxt - 1), ($iAfterTxt + 1))) ? $iError : BitOR($iError, 2)
 	EndIf
 
-	;max 17094; min;-57785
+	; max 17094; min;-57785
 	If ($iFirstLine <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFirstLine, -57785, 17094) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaFirstLineIndent = $iFirstLine
@@ -4640,7 +4640,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current
 ;							Paragraph, therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current
@@ -4797,7 +4797,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 	EndIf
 
 	$oObj.ParaShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oObj.ParaShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -5083,7 +5083,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 
 	$tTabStruct.Position = $iPosition
 	$tTabStruct.FillChar = 32
-	;If set to 0 Libre sets fill character to Null instead of setting to None. 32 = None.(Space character)
+	; If set to 0 Libre sets fill character to Null instead of setting to None. 32 = None.(Space character)
 	$tTabStruct.Alignment = 0
 	$tTabStruct.DecimalChar = 0
 
@@ -5517,7 +5517,7 @@ Func __LOWriter_RegExpConvert(ByRef $sRegExpString)
 		$iPos1 = StringInStr($sRegExpStringTemp, "&", $STR_NOCASESENSE, 1, $iPos1 + 1) ; test for & found in string, starting at last found position + 1.
 		If ($iPos1 > 0) Then ; if there is a find, begin testing for backslash.
 			$iPos2 = StringInStr($sRegExpStringTemp, "\", $STR_NOCASESENSE, 1, $iPos1 - 1, 1) ; Test for a backslash, if there is one, then the & is not to be replaced.
-			;If there is no backslash, then replace the & with Autoit's accepted back reference, $0
+			; If there is no backslash, then replace the & with Autoit's accepted back reference, $0
 			If ($iPos2 = 0) Then $sRegExpStringTemp = StringLeft($sRegExpStringTemp, $iPos1 - 1) & "${0}" & StringMid($sRegExpStringTemp, $iPos1 + 1)
 		EndIf
 	Until $iPos1 = 0
@@ -5655,7 +5655,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iTop <> Null Then
 		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ;If Width not set, cant set color or style.
-		;Top Line
+		; Top Line
 		$tBL2.LineWidth = ($bWid) ? $iTop : $tTB2.TopLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iTop : $tTB2.TopLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iTop : $tTB2.TopLine.Color() ;copy Color over to new size structure
@@ -5664,7 +5664,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ;If Width not set, cant set color or style.
-		;Bottom Line
+		; Bottom Line
 		$tBL2.LineWidth = ($bWid) ? $iBottom : $tTB2.BottomLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iBottom : $tTB2.BottomLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iBottom : $tTB2.BottomLine.Color() ;copy Color over to new size structure
@@ -5673,7 +5673,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ;If Width not set, cant set color or style.
-		;Left Line
+		; Left Line
 		$tBL2.LineWidth = ($bWid) ? $iLeft : $tTB2.LeftLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iLeft : $tTB2.LeftLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iLeft : $tTB2.LeftLine.Color() ;copy Color over to new size structure
@@ -5682,7 +5682,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iRight <> Null Then
 		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ;If Width not set, cant set color or style.
-		;Right Line
+		; Right Line
 		$tBL2.LineWidth = ($bWid) ? $iRight : $tTB2.RightLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iRight : $tTB2.RightLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iRight : $tTB2.RightLine.Color() ;copy Color over to new size structure
@@ -5691,7 +5691,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iVert <> Null Then
 		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 5, 0) ;If Width not set, cant set color or style.
-		;Vertical Line
+		; Vertical Line
 		$tBL2.LineWidth = ($bWid) ? $iVert : $tTB2.VerticalLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iVert : $tTB2.VerticalLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iVert : $tTB2.VerticalLine.Color() ;copy Color over to new size structure
@@ -5700,7 +5700,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 
 	If $iHori <> Null Then
 		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 6, 0) ;If Width not set, cant set color or style.
-		;Horizontal Line
+		; Horizontal Line
 		$tBL2.LineWidth = ($bWid) ? $iHori : $tTB2.HorizontalLine.LineWidth() ;copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? $iHori : $tTB2.HorizontalLine.LineStyle() ;copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? $iHori : $tTB2.HorizontalLine.Color() ;copy Color over to new size structure
@@ -5743,7 +5743,7 @@ EndFunc   ;==>__LOWriter_TableBorder
 ;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
 ;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
 ;					you can input a move such as "goRight", 0, False.
-;Cursor Movement Constants:
+; Cursor Movement Constants:
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
 ;					-ViewCursor
 ;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
@@ -5995,7 +5995,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 
 	If ($bSplitRows = Null) Then ;Retrieve Split Rows Setting
 
-		;Retrieve the First Row's Split Row setting.
+		; Retrieve the First Row's Split Row setting.
 		$bSplitRowTest = $oTable.getRows.getByIndex(0).IsSplitAllowed()
 		If Not IsBool($bSplitRowTest) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -6049,7 +6049,7 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
 ;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
 ;					you can input a move such as "goRight", 0, False.
-;Cursor Movement Constants:
+; Cursor Movement Constants:
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
 ;					-ViewCursor
 ;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
@@ -6269,7 +6269,7 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 	$tNewTGradient = __LOWriter_CreateStruct("com.sun.star.awt.Gradient")
 	If Not IsObj($tNewTGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	;Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
+	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
 	With $tNewTGradient
 		.Style = $tTGradient.Style()
 		.XOffset = $tTGradient.XOffset()
@@ -6314,7 +6314,7 @@ EndFunc   ;==>__LOWriter_TransparencyGradientNameInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Return Type Constants: $__LOWCONST_CONVERT_TWIPS_CM, From TWIPS (Twentieth of a Printer Point) To Centimeters.
+; Return Type Constants: $__LOWCONST_CONVERT_TWIPS_CM, From TWIPS (Twentieth of a Printer Point) To Centimeters.
 ;						$__LOWCONST_CONVERT_TWIPS_INCH, From TWIPS (Twentieth of a Printer Point) To Inches.
 ;						$__LOWCONST_CONVERT_TWIPS_UM, From TWIPS(Twentieth of a Printer Point) To Micrometer(100th of a
 ;							millimeter).
@@ -6339,14 +6339,14 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 	Switch $iReturnType
 
 		Case $__LOWCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
-			;1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
-			;1 Inch = 2.54 CM
+			; 1 Inch = 2.54 CM
 			$iCM = Round(Round($iInch * 2.54, 3), 2)
 			Return SetError($__LOW_STATUS_SUCCESS, 1, Number($iCM))
 
 		Case $__LOWCONST_CONVERT_TWIPS_INCH ;TWIPS to Inch
-			;1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LOW_STATUS_SUCCESS, 2, Number($iInch))
@@ -6372,27 +6372,27 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 			Return SetError($__LOW_STATUS_SUCCESS, 6, Number($iCM))
 
 		Case $__LOWCONST_CONVERT_INCH_UM ;Inch to Micrometer
-			;1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
+			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iUM = ($nValue * 2.54) * 1000 ; + .0055
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LOW_STATUS_SUCCESS, 7, Int($iUM))
 
 		Case $__LOWCONST_CONVERT_UM_INCH ;Micrometer to Inch
-			;1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
+			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54 ; + .0055
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LOW_STATUS_SUCCESS, 8, $iInch)
 
 		Case $__LOWCONST_CONVERT_TWIPS_UM ;TWIPS to MicroMeter
-			;1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
+			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)
-			;1 Inch - 25.4 MM; Micrometer = 1/100 MM
+			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
 			$iUM = Round($iInch * 25.4 * 100)
 			Return SetError($__LOW_STATUS_SUCCESS, 9, Int($iUM))
 
 		Case $__LOWCONST_CONVERT_PT_UM
-			;1 pt = 35 uM
+			; 1 pt = 35 uM
 			Return ($nValue = 0) ? SetError($__LOW_STATUS_SUCCESS, 10, 0) : SetError($__LOW_STATUS_SUCCESS, 10, Round(($nValue * 35.2778)))
 
 		Case $__LOWCONST_CONVERT_UM_PT
@@ -6532,7 +6532,7 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
 ;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
 ;					you can input a move such as "goRight", 0, False.
-;Cursor Movement Constants:
+; Cursor Movement Constants:
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
 ;					-ViewCursor
 ;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.

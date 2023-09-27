@@ -7,19 +7,19 @@ Example()
 Func Example()
 	Local $iInch_To_MicroM, $iCM_To_MicroM, $iMM_To_MicroM, $iPt_To_MicroM
 
-	;Convert 1 Inch to Micrometers.
+	; Convert 1 Inch to Micrometers.
 	$iInch_To_MicroM = _LOWriter_ConvertToMicrometer(1)
 	If (@error > 0) Then _ERROR("Failed to convert to Micrometers from Inch. Error:" & @error & " Extended:" & @extended)
 
-	;Convert 2.54 Centimeters to Micrometers.
+	; Convert 2.54 Centimeters to Micrometers.
 	$iCM_To_MicroM = _LOWriter_ConvertToMicrometer(Null, 2.54)
 	If (@error > 0) Then _ERROR("Failed to convert to Micrometers from Centimeter. Error:" & @error & " Extended:" & @extended)
 
-	;Convert 25.40 Millimeters to Micrometers.
+	; Convert 25.40 Millimeters to Micrometers.
 	$iMM_To_MicroM = _LOWriter_ConvertToMicrometer(Null, Null, 25.4)
 	If (@error > 0) Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended)
 
-	;Convert 72 Printer's Points to Micrometers.
+	; Convert 72 Printer's Points to Micrometers.
 	$iPt_To_MicroM = _LOWriter_ConvertToMicrometer(Null, Null, Null, 72)
 	If (@error > 0) Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended)
 

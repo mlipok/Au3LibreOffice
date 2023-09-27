@@ -8,16 +8,16 @@ Func Example()
 	Local $oDoc, $oViewCursor
 	Local $iCursorDataType
 
-	;Create a New, visible, Blank Libre Office Document.
+	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 
 	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the document view cursor to insert text with.
+	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve what type of Data the cursor is presently in.
+	; Retrieve what type of Data the cursor is presently in.
 	$iCursorDataType = _LOWriter_CursorGetDataType($oDoc, $oViewCursor)
 	If (@error > 0) Then _ERROR("Failed to retrieve Cursor Data type. Error:" & @error & " Extended:" & @extended)
 
@@ -49,7 +49,7 @@ Func Example()
 			MsgBox($MB_OK, "", "Something went wrong.")
 	EndSwitch
 
-	;Close the document.
+	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 
 	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Following Error codes returned: Error:" & _

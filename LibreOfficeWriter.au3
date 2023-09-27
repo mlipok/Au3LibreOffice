@@ -33,41 +33,41 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_CellBackColor
-;_LOWriter_CellBorderColor
-;_LOWriter_CellBorderPadding
-;_LOWriter_CellBorderStyle
-;_LOWriter_CellBorderWidth
-;_LOWriter_CellCreateTextCursor
-;_LOWriter_CellFormula
-;_LOWriter_CellGetDataType
-;_LOWriter_CellGetError
-;_LOWriter_CellGetName
-;_LOWriter_CellProtect
-;_LOWriter_CellString
-;_LOWriter_CellValue
-;_LOWriter_CellVertOrient
-;_LOWriter_EndnoteDelete
-;_LOWriter_EndnoteGetAnchor
-;_LOWriter_EndnoteGetTextCursor
-;_LOWriter_EndnoteInsert
-;_LOWriter_EndnoteModifyAnchor
-;_LOWriter_EndnoteSettingsAutoNumber
-;_LOWriter_EndnoteSettingsStyles
-;_LOWriter_EndnotesGetList
-;_LOWriter_FootnoteDelete
-;_LOWriter_FootnoteGetAnchor
-;_LOWriter_FootnoteGetTextCursor
-;_LOWriter_FootnoteInsert
-;_LOWriter_FootnoteModifyAnchor
-;_LOWriter_FootnoteSettingsAutoNumber
-;_LOWriter_FootnoteSettingsContinuation
-;_LOWriter_FootnoteSettingsStyles
-;_LOWriter_FootnotesGetList
-;_LOWriter_SearchDescriptorCreate
-;_LOWriter_SearchDescriptorModify
-;_LOWriter_SearchDescriptorSimilarityModify
-;_LOWriter_ShapesGetNames
+; _LOWriter_CellBackColor
+; _LOWriter_CellBorderColor
+; _LOWriter_CellBorderPadding
+; _LOWriter_CellBorderStyle
+; _LOWriter_CellBorderWidth
+; _LOWriter_CellCreateTextCursor
+; _LOWriter_CellFormula
+; _LOWriter_CellGetDataType
+; _LOWriter_CellGetError
+; _LOWriter_CellGetName
+; _LOWriter_CellProtect
+; _LOWriter_CellString
+; _LOWriter_CellValue
+; _LOWriter_CellVertOrient
+; _LOWriter_EndnoteDelete
+; _LOWriter_EndnoteGetAnchor
+; _LOWriter_EndnoteGetTextCursor
+; _LOWriter_EndnoteInsert
+; _LOWriter_EndnoteModifyAnchor
+; _LOWriter_EndnoteSettingsAutoNumber
+; _LOWriter_EndnoteSettingsStyles
+; _LOWriter_EndnotesGetList
+; _LOWriter_FootnoteDelete
+; _LOWriter_FootnoteGetAnchor
+; _LOWriter_FootnoteGetTextCursor
+; _LOWriter_FootnoteInsert
+; _LOWriter_FootnoteModifyAnchor
+; _LOWriter_FootnoteSettingsAutoNumber
+; _LOWriter_FootnoteSettingsContinuation
+; _LOWriter_FootnoteSettingsStyles
+; _LOWriter_FootnotesGetList
+; _LOWriter_SearchDescriptorCreate
+; _LOWriter_SearchDescriptorModify
+; _LOWriter_SearchDescriptorSimilarityModify
+; _LOWriter_ShapesGetNames
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -815,7 +815,7 @@ Func _LOWriter_CellVertOrient(ByRef $oCell, $iVertOrient = Null)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	;3 = Vert Orient Bottom, 1 = Vert orient Top
+	; 3 = Vert Orient Bottom, 1 = Vert orient Top
 
 	If ($iVertOrient = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.VertOrient())
 	If Not __LOWriter_IntIsBetween($iVertOrient, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
@@ -1027,10 +1027,10 @@ Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
 	If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($sLabel = Null) Then
-		;If Label is blank, return the AutoNumbering Number.
+		; If Label is blank, return the AutoNumbering Number.
 		If ($oEndNote.Label() = "") Then Return SetError($__LOW_STATUS_SUCCESS, 2, $oEndNote.Anchor.String())
 
-		;Else return the Label.
+		; Else return the Label.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $oEndNote.Label())
 
 	EndIf
@@ -1078,7 +1078,7 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -1175,7 +1175,7 @@ Func _LOWriter_EndnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iStar
 		$iError = ($oDoc.EndnoteSettings.NumberingType() = $iNumFormat) ? $iError : BitOR($iError, 1)
 	EndIf
 
-	;0 Based -- Minus 1
+	; 0 Based -- Minus 1
 	If ($iStartAt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStartAt, 1, 9999) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oDoc.EndnoteSettings.StartAt = ($iStartAt - 1)
@@ -1549,10 +1549,10 @@ Func _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote, $sLabel = Null)
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($sLabel = Null) Then
-		;If Label is blank, return the AutoNumbering Number.
+		; If Label is blank, return the AutoNumbering Number.
 		If ($oFootNote.Label() = "") Then Return SetError($__LOW_STATUS_SUCCESS, 2, $oFootNote.Anchor.String())
 
-		;Else return the Label.
+		; Else return the Label.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $oFootNote.Label())
 	EndIf
 
@@ -1609,7 +1609,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -1681,7 +1681,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
 ;	$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-;Counting Type Constants: $LOW_FOOTNOTE_COUNT_PER_PAGE(0), Restarts the numbering of footnotes at the top of each page. This
+; Counting Type Constants: $LOW_FOOTNOTE_COUNT_PER_PAGE(0), Restarts the numbering of footnotes at the top of each page. This
 ;								option is only available if End of Doc is set to False.
 ;							$LOW_FOOTNOTE_COUNT_PER_CHAP(1), Restarts the numbering of footnotes at the beginning of each
 ;								chapter.
@@ -1712,7 +1712,7 @@ Func _LOWriter_FootnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iSta
 		$iError = ($oDoc.FootnoteSettings.NumberingType() = $iNumFormat) ? $iError : BitOR($iError, 1)
 	EndIf
 
-	;0 Based -- Minus 1
+	; 0 Based -- Minus 1
 	If ($iStartAt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStartAt, 1, 9999) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oDoc.FootnoteSettings.StartAt = ($iStartAt - 1)
@@ -2073,7 +2073,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;				   @Error 3 @Extended 1 Return 0 = $bRegExp is set to True while Similarity Search is also set to True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-;;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2173,7 +2173,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;				   +									True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-;;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
 ;				   +								settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:

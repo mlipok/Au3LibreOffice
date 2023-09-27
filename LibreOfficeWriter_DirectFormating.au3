@@ -30,40 +30,40 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_DirFrmtCharBorderColor
-;_LOWriter_DirFrmtCharBorderPadding
-;_LOWriter_DirFrmtCharBorderStyle
-;_LOWriter_DirFrmtCharBorderWidth
-;_LOWriter_DirFrmtCharEffect
-;_LOWriter_DirFrmtCharPosition
-;_LOWriter_DirFrmtCharRotateScale
-;_LOWriter_DirFrmtCharShadow
-;_LOWriter_DirFrmtCharSpacing
-;_LOWriter_DirFrmtClear
-;_LOWriter_DirFrmtFont
-;_LOWriter_DirFrmtFontColor
-;_LOWriter_DirFrmtGetCurStyles
-;_LOWriter_DirFrmtOverLine
-;_LOWriter_DirFrmtParAlignment
-;_LOWriter_DirFrmtParBackColor
-;_LOWriter_DirFrmtParBorderColor
-;_LOWriter_DirFrmtParBorderPadding
-;_LOWriter_DirFrmtParBorderStyle
-;_LOWriter_DirFrmtParBorderWidth
-;_LOWriter_DirFrmtParDropCaps
-;_LOWriter_DirFrmtParHyphenation
-;_LOWriter_DirFrmtParIndent
-;_LOWriter_DirFrmtParOutLineAndList
-;_LOWriter_DirFrmtParPageBreak
-;_LOWriter_DirFrmtParShadow
-;_LOWriter_DirFrmtParSpace
-;_LOWriter_DirFrmtParTabStopCreate
-;_LOWriter_DirFrmtParTabStopDelete
-;_LOWriter_DirFrmtParTabStopList
-;_LOWriter_DirFrmtParTabStopMod
-;_LOWriter_DirFrmtParTxtFlowOpt
-;_LOWriter_DirFrmtStrikeOut
-;_LOWriter_DirFrmtUnderLine
+; _LOWriter_DirFrmtCharBorderColor
+; _LOWriter_DirFrmtCharBorderPadding
+; _LOWriter_DirFrmtCharBorderStyle
+; _LOWriter_DirFrmtCharBorderWidth
+; _LOWriter_DirFrmtCharEffect
+; _LOWriter_DirFrmtCharPosition
+; _LOWriter_DirFrmtCharRotateScale
+; _LOWriter_DirFrmtCharShadow
+; _LOWriter_DirFrmtCharSpacing
+; _LOWriter_DirFrmtClear
+; _LOWriter_DirFrmtFont
+; _LOWriter_DirFrmtFontColor
+; _LOWriter_DirFrmtGetCurStyles
+; _LOWriter_DirFrmtOverLine
+; _LOWriter_DirFrmtParAlignment
+; _LOWriter_DirFrmtParBackColor
+; _LOWriter_DirFrmtParBorderColor
+; _LOWriter_DirFrmtParBorderPadding
+; _LOWriter_DirFrmtParBorderStyle
+; _LOWriter_DirFrmtParBorderWidth
+; _LOWriter_DirFrmtParDropCaps
+; _LOWriter_DirFrmtParHyphenation
+; _LOWriter_DirFrmtParIndent
+; _LOWriter_DirFrmtParOutLineAndList
+; _LOWriter_DirFrmtParPageBreak
+; _LOWriter_DirFrmtParShadow
+; _LOWriter_DirFrmtParSpace
+; _LOWriter_DirFrmtParTabStopCreate
+; _LOWriter_DirFrmtParTabStopDelete
+; _LOWriter_DirFrmtParTabStopList
+; _LOWriter_DirFrmtParTabStopMod
+; _LOWriter_DirFrmtParTxtFlowOpt
+; _LOWriter_DirFrmtStrikeOut
+; _LOWriter_DirFrmtUnderLine
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -261,7 +261,7 @@ Func _LOWriter_DirFrmtCharBorderPadding(ByRef $oSelection, $iAll = Null, $iTop =
 	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
-		;Resetting any one of these settings causes all to reset; reset the "All" setting for quickness.
+		; Resetting any one of these settings causes all to reset; reset the "All" setting for quickness.
 		$oSelection.setPropertyToDefault("CharBorderDistance")
 		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 	EndIf
@@ -844,12 +844,12 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
-;Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
+; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
 ;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
 ;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
 ;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
 ;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-;Color Constants:  $LOW_COLOR_BLACK(0),
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -1050,11 +1050,11 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 
 		Case $LOW_CURTYPE_TEXT_CURSOR, $LOW_CURTYPE_PARAGRAPH, $LOW_CURTYPE_TEXT_PORTION
 
-			;Retrieve the ViewCursor.
+			; Retrieve the ViewCursor.
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
 			If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 
-			;Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+			; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
 			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)
 			If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
@@ -1065,7 +1065,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 
 			$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ResetAttributes", "", 0, $aArray)
 
-			;Restore the ViewCursor to its previous location.
+			; Restore the ViewCursor to its previous location.
 			$oViewCursor.gotoRange($oViewCursorBackup, False)
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
@@ -2616,7 +2616,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
 ;						 though I'm not sure if they will work correctly.
-;Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current
 ;							Paragraph, therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current

@@ -8,27 +8,27 @@ Func Example()
 	Local $oDoc, $oViewCursor
 	Local $sString
 
-	;Create a New, visible, Blank Libre Office Document.
+	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the document view cursor to insert text with.
+	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Insert some text at the Viewcursor.
+	; Insert some text at the Viewcursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate retrieving text from a document.")
 	If (@error > 0) Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	;Move the View Cursor to the start of the document
+	; Move the View Cursor to the start of the document
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
 	If (@error > 0) Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	;Move the View Cursor Right 13 spaces, don't seelect text.
+	; Move the View Cursor Right 13 spaces, don't seelect text.
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 13)
 	If (@error > 0) Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	;Move the View Cursor Right 11 spaces, selecting the word "Demonstrate"
+	; Move the View Cursor Right 11 spaces, selecting the word "Demonstrate"
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 11, True)
 	If (@error > 0) Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
@@ -38,7 +38,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The text selected by the View Cursor was: " & $sString & @CRLF & @CRLF & _
 			"Press ok to close the document.")
 
-	;Close the document.
+	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 

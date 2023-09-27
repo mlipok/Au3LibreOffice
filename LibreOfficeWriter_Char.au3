@@ -28,27 +28,27 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_CharStyleBorderColor
-;_LOWriter_CharStyleBorderPadding
-;_LOWriter_CharStyleBorderStyle
-;_LOWriter_CharStyleBorderWidth
-;_LOWriter_CharStyleCreate
-;_LOWriter_CharStyleDelete
-;_LOWriter_CharStyleEffect
-;_LOWriter_CharStyleExists
-;_LOWriter_CharStyleFont
-;_LOWriter_CharStyleFontColor
-;_LOWriter_CharStyleGetObj
-;_LOWriter_CharStyleOrganizer
-;_LOWriter_CharStyleOverLine
-;_LOWriter_CharStylePosition
-;_LOWriter_CharStyleRotateScale
-;_LOWriter_CharStyleSet
-;_LOWriter_CharStylesGetNames
-;_LOWriter_CharStyleShadow
-;_LOWriter_CharStyleSpacing
-;_LOWriter_CharStyleStrikeOut
-;_LOWriter_CharStyleUnderLine
+; _LOWriter_CharStyleBorderColor
+; _LOWriter_CharStyleBorderPadding
+; _LOWriter_CharStyleBorderStyle
+; _LOWriter_CharStyleBorderWidth
+; _LOWriter_CharStyleCreate
+; _LOWriter_CharStyleDelete
+; _LOWriter_CharStyleEffect
+; _LOWriter_CharStyleExists
+; _LOWriter_CharStyleFont
+; _LOWriter_CharStyleFontColor
+; _LOWriter_CharStyleGetObj
+; _LOWriter_CharStyleOrganizer
+; _LOWriter_CharStyleOverLine
+; _LOWriter_CharStylePosition
+; _LOWriter_CharStyleRotateScale
+; _LOWriter_CharStyleSet
+; _LOWriter_CharStylesGetNames
+; _LOWriter_CharStyleShadow
+; _LOWriter_CharStyleSpacing
+; _LOWriter_CharStyleStrikeOut
+; _LOWriter_CharStyleUnderLine
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -507,7 +507,7 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	If $oCharStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($sReplacementStyle <> "") Then $oCharStyle.setParentStyle($sReplacementStyle)
-	;If User has called a specific style to replace this style, set it to that.
+	; If User has called a specific style to replace this style, set it to that.
 
 	$oCharStyles.removeByName($sCharStyle)
 	Return ($oCharStyles.hasByName($sCharStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -1298,7 +1298,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
-;Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
+; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
 ;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
 ;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
 ;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.

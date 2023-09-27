@@ -28,50 +28,50 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_PageStyleAreaColor
-;_LOWriter_PageStyleAreaGradient
-;_LOWriter_PageStyleBorderColor
-;_LOWriter_PageStyleBorderPadding
-;_LOWriter_PageStyleBorderStyle
-;_LOWriter_PageStyleBorderWidth
-;_LOWriter_PageStyleColumnSeparator
-;_LOWriter_PageStyleColumnSettings
-;_LOWriter_PageStyleColumnSize
-;_LOWriter_PageStyleCreate
-;_LOWriter_PageStyleDelete
-;_LOWriter_PageStyleExists
-;_LOWriter_PageStyleFooter
-;_LOWriter_PageStyleFooterAreaColor
-;_LOWriter_PageStyleFooterAreaGradient
-;_LOWriter_PageStyleFooterBorderColor
-;_LOWriter_PageStyleFooterBorderPadding
-;_LOWriter_PageStyleFooterBorderStyle
-;_LOWriter_PageStyleFooterBorderWidth
-;_LOWriter_PageStyleFooterShadow
-;_LOWriter_PageStyleFooterTransparency
-;_LOWriter_PageStyleFooterTransparencyGradient
-;_LOWriter_PageStyleFootnoteArea
-;_LOWriter_PageStyleFootnoteLine
-;_LOWriter_PageStyleGetObj
-;_LOWriter_PageStyleHeader
-;_LOWriter_PageStyleHeaderAreaColor
-;_LOWriter_PageStyleHeaderAreaGradient
-;_LOWriter_PageStyleHeaderBorderColor
-;_LOWriter_PageStyleHeaderBorderPadding
-;_LOWriter_PageStyleHeaderBorderStyle
-;_LOWriter_PageStyleHeaderBorderWidth
-;_LOWriter_PageStyleHeaderShadow
-;_LOWriter_PageStyleHeaderTransparency
-;_LOWriter_PageStyleHeaderTransparencyGradient
-;_LOWriter_PageStyleLayout
-;_LOWriter_PageStyleMargins
-;_LOWriter_PageStyleOrganizer
-;_LOWriter_PageStylePaperFormat
-;_LOWriter_PageStyleSet
-;_LOWriter_PageStylesGetNames
-;_LOWriter_PageStyleShadow
-;_LOWriter_PageStyleTransparency
-;_LOWriter_PageStyleTransparencyGradient
+; _LOWriter_PageStyleAreaColor
+; _LOWriter_PageStyleAreaGradient
+; _LOWriter_PageStyleBorderColor
+; _LOWriter_PageStyleBorderPadding
+; _LOWriter_PageStyleBorderStyle
+; _LOWriter_PageStyleBorderWidth
+; _LOWriter_PageStyleColumnSeparator
+; _LOWriter_PageStyleColumnSettings
+; _LOWriter_PageStyleColumnSize
+; _LOWriter_PageStyleCreate
+; _LOWriter_PageStyleDelete
+; _LOWriter_PageStyleExists
+; _LOWriter_PageStyleFooter
+; _LOWriter_PageStyleFooterAreaColor
+; _LOWriter_PageStyleFooterAreaGradient
+; _LOWriter_PageStyleFooterBorderColor
+; _LOWriter_PageStyleFooterBorderPadding
+; _LOWriter_PageStyleFooterBorderStyle
+; _LOWriter_PageStyleFooterBorderWidth
+; _LOWriter_PageStyleFooterShadow
+; _LOWriter_PageStyleFooterTransparency
+; _LOWriter_PageStyleFooterTransparencyGradient
+; _LOWriter_PageStyleFootnoteArea
+; _LOWriter_PageStyleFootnoteLine
+; _LOWriter_PageStyleGetObj
+; _LOWriter_PageStyleHeader
+; _LOWriter_PageStyleHeaderAreaColor
+; _LOWriter_PageStyleHeaderAreaGradient
+; _LOWriter_PageStyleHeaderBorderColor
+; _LOWriter_PageStyleHeaderBorderPadding
+; _LOWriter_PageStyleHeaderBorderStyle
+; _LOWriter_PageStyleHeaderBorderWidth
+; _LOWriter_PageStyleHeaderShadow
+; _LOWriter_PageStyleHeaderTransparency
+; _LOWriter_PageStyleHeaderTransparencyGradient
+; _LOWriter_PageStyleLayout
+; _LOWriter_PageStyleMargins
+; _LOWriter_PageStyleOrganizer
+; _LOWriter_PageStylePaperFormat
+; _LOWriter_PageStyleSet
+; _LOWriter_PageStylesGetNames
+; _LOWriter_PageStyleShadow
+; _LOWriter_PageStyleTransparency
+; _LOWriter_PageStyleTransparencyGradient
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -250,7 +250,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-;Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
+; Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
 ;							$LOW_GRAD_NAME_PASTEL_DREAM("Pastel Dream",
 ;							$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch"),
 ;							$LOW_GRAD_NAME_BLANK_W_GRAY("Blank with Gray"),
@@ -265,7 +265,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;							$LOW_GRAD_NAME_SUNSHINE("Sunshine"),
 ;							$LOW_GRAD_NAME_PRESENT("Present"),
 ;							$LOW_GRAD_NAME_MAHOGANY("Mahogany")
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -395,7 +395,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 
 	$oPageStyle.FillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? $iError : ($oPageStyle.FillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
 	$iError = ($iXCenter = Null) ? $iError : ($oPageStyle.FillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
 	$iError = ($iYCenter = Null) ? $iError : ($oPageStyle.FillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
@@ -813,7 +813,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Line Style Constants: $LOW_LINE_STYLE_NONE(0),
+; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
 ;						$LOW_LINE_STYLE_SOLID(1),
 ;						$LOW_LINE_STYLE_DOTTED(2),
 ;						$LOW_LINE_STYLE_DASHED(3)
@@ -835,7 +835,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ;					$LOW_COLOR_GREEN(43315),
 ;					$LOW_COLOR_LIME(8508442),
 ;					$LOW_COLOR_BROWN(9127187).
-;Line Position Constants: $LOW_ALIGN_VERT_TOP(0),
+; Line Position Constants: $LOW_ALIGN_VERT_TOP(0),
 ;							$LOW_ALIGN_VERT_MIDDLE(1),
 ;							$LOW_ALIGN_VERT_BOTTOM(2)
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
@@ -1084,7 +1084,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 		$oPageStyle.TextColumns = $oTextColumns
 
 		If ($oPageStyle.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
-			;for setting the width internally also.
+			; for setting the width internally also.
 			$iError = (__LOWriter_IntIsBetween($oPageStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 		EndIf
 	EndIf
@@ -1093,28 +1093,28 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 
 		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
-			;because spacing can't be set for the last column.
+			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
 		Else
-			;Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
-			;and the next column's left margin to half of the spacing value each.
+			; Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
+			; and the next column's left margin to half of the spacing value each.
 			$iRightMargin = Int($iSpacing / 2)
 			$atColumns[$iColumn].RightMargin = $iRightMargin
 
 			$iLeftMargin = Int($iSpacing - ($iSpacing / 2))
 			$atColumns[$iColumn + 1].LeftMargin = $iLeftMargin
 
-			;Set the settings into the document.
+			; Set the settings into the document.
 			$oTextColumns.setColumns($atColumns)
 			$oPageStyle.TextColumns = $oTextColumns
 
-			;Retrieve Array of columns again for testing.
+			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
 			If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-			;See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
-			;margin, and the next column's left margin.
+			; See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
+			; margin, and the next column's left margin.
 			$iError = (__LOWriter_IntIsBetween($atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $iSpacing - 1, $iSpacing + 1)) ? $iError : BitOR($iError, 4)
 		EndIf
 	EndIf
@@ -1123,11 +1123,11 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$atColumns[$iColumn].Width = $iWidth
 
-		;Set the settings into the document.
+		; Set the settings into the document.
 		$oTextColumns.setColumns($atColumns)
 		$oPageStyle.TextColumns = $oTextColumns
 
-		;Retrieve Array of columns again for testing.
+		; Retrieve Array of columns again for testing.
 		$atColumns = $oPageStyle.TextColumns.Columns()
 		If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? $iError : (__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 8)
@@ -1609,7 +1609,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-;Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
+; Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
 ;							$LOW_GRAD_NAME_PASTEL_DREAM("Pastel Dream",
 ;							$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch"),
 ;							$LOW_GRAD_NAME_BLANK_W_GRAY("Blank with Gray"),
@@ -1624,7 +1624,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;							$LOW_GRAD_NAME_SUNSHINE("Sunshine"),
 ;							$LOW_GRAD_NAME_PRESENT("Present"),
 ;							$LOW_GRAD_NAME_MAHOGANY("Mahogany")
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -1755,7 +1755,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 
 	$oPageStyle.FooterFillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? $iError : ($oPageStyle.FooterFillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
 	$iError = ($iXCenter = Null) ? $iError : ($oPageStyle.FooterFillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
 	$iError = ($iYCenter = Null) ? $iError : ($oPageStyle.FooterFillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
@@ -2248,7 +2248,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	$oPageStyle.FooterShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -2380,7 +2380,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -2591,10 +2591,10 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Line Position Constants: $LOW_ALIGN_HORI_LEFT(0),
+; Line Position Constants: $LOW_ALIGN_HORI_LEFT(0),
 ;							$LOW_ALIGN_HORI_CENTER(1),
 ;							$LOW_ALIGN_HORI_RIGHT(2)
-;Line Style Constants: $LOW_LINE_STYLE_NONE(0),
+; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
 ;						$LOW_LINE_STYLE_SOLID(1),
 ;						$LOW_LINE_STYLE_DOTTED(2),
 ;						$LOW_LINE_STYLE_DASHED(3)
@@ -3051,7 +3051,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-;Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
+; Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
 ;							$LOW_GRAD_NAME_PASTEL_DREAM("Pastel Dream",
 ;							$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch"),
 ;							$LOW_GRAD_NAME_BLANK_W_GRAY("Blank with Gray"),
@@ -3066,7 +3066,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;							$LOW_GRAD_NAME_SUNSHINE("Sunshine"),
 ;							$LOW_GRAD_NAME_PRESENT("Present"),
 ;							$LOW_GRAD_NAME_MAHOGANY("Mahogany")
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -3197,7 +3197,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 
 	$oPageStyle.HeaderFillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? $iError : ($oPageStyle.HeaderFillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
 	$iError = ($iXCenter = Null) ? $iError : ($oPageStyle.HeaderFillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
 	$iError = ($iYCenter = Null) ? $iError : ($oPageStyle.HeaderFillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
@@ -3689,7 +3689,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	EndIf
 
 	$oPageStyle.HeaderShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -3821,7 +3821,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -3983,11 +3983,11 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: I have no way to retrieve possible values for the PaperTray parameter, at least that I can find. You
 ;					may still use it if you know the appropriate value.
-;Page Layout Constants: $LOW_PAGE_LAYOUT_ALL(0),
+; Page Layout Constants: $LOW_PAGE_LAYOUT_ALL(0),
 ;							$LOW_PAGE_LAYOUT_LEFT(1),
 ;							$LOW_PAGE_LAYOUT_RIGHT(2),
 ;							$LOW_PAGE_LAYOUT_MIRRORED(3)
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -4380,7 +4380,7 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Paper Width Constants: $LOW_PAPER_WIDTH_A6(10490),
+; Paper Width Constants: $LOW_PAPER_WIDTH_A6(10490),
 ;							$LOW_PAPER_WIDTH_A5(14808),
 ;							$LOW_PAPER_WIDTH_A4(21006),
 ;							$LW_PAPER_WIDTH_A3(29693),
@@ -4409,7 +4409,7 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ;							$LOW_PAPER_WIDTH_11ENVELOPE(11430),
 ;							$LOW_PAPER_WIDTH_12ENVELOPE(12065),
 ;							$LOW_PAPER_WIDTH_JAP_POSTCARD(10008
-;Paper Height Constants: $LOW_PAPER_HEIGHT_A6(14808),
+; Paper Height Constants: $LOW_PAPER_HEIGHT_A6(14808),
 ;							$LOW_PAPER_HEIGHT_A5(21006),
 ;							$LOW_PAPER_HEIGHT_A4(29693),
 ;							$LOW_PAPER_HEIGHT_A3(42012),
@@ -4474,13 +4474,13 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 		If Not IsBool($bLandscape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 
 		If ($oPageStyle.IsLandscape() = $bLandscape) Then
-			;If $bLandscape called setting is the same as the current setting, do nothing.
+			; If $bLandscape called setting is the same as the current setting, do nothing.
 		Else
-			;Retrieve current settings.
+			; Retrieve current settings.
 			$iHeight = $oPageStyle.Height()
 			$iWidth = $oPageStyle.Width()
 
-			;Switch Width with height, height with width.
+			; Switch Width with height, height with width.
 			$oPageStyle.Height = $iWidth
 			$oPageStyle.Width() = $iHeight
 		EndIf
@@ -4720,7 +4720,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	EndIf
 
 	$oPageStyle.ShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oPageStyle.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -4847,7 +4847,7 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),

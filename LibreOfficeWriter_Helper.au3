@@ -27,38 +27,38 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_ComError_UserFunction
-;_LOWriter_ConvertColorFromLong
-;_LOWriter_ConvertColorToLong
-;_LOWriter_ConvertFromMicrometer
-;_LOWriter_ConvertToMicrometer
-;_LOWriter_DateFormatKeyCreate
-;_LOWriter_DateFormatKeyDelete
-;_LOWriter_DateFormatKeyExists
-;_LOWriter_DateFormatKeyGetString
-;_LOWriter_DateFormatKeyList
-;_LOWriter_DateStructCreate
-;_LOWriter_DateStructModify
-;_LOWriter_FindFormatModifyAlignment
-;_LOWriter_FindFormatModifyEffects
-;_LOWriter_FindFormatModifyFont
-;_LOWriter_FindFormatModifyHyphenation
-;_LOWriter_FindFormatModifyIndent
-;_LOWriter_FindFormatModifyOverline
-;_LOWriter_FindFormatModifyPageBreak
-;_LOWriter_FindFormatModifyPosition
-;_LOWriter_FindFormatModifyRotateScaleSpace
-;_LOWriter_FindFormatModifySpacing
-;_LOWriter_FindFormatModifyStrikeout
-;_LOWriter_FindFormatModifyTxtFlowOpt
-;_LOWriter_FindFormatModifyUnderline
-;_LOWriter_FormatKeyCreate
-;_LOWriter_FormatKeyDelete
-;_LOWriter_FormatKeyExists
-;_LOWriter_FormatKeyGetString
-;_LOWriter_FormatKeyList
-;_LOWriter_PathConvert
-;_LOWriter_VersionGet
+; _LOWriter_ComError_UserFunction
+; _LOWriter_ConvertColorFromLong
+; _LOWriter_ConvertColorToLong
+; _LOWriter_ConvertFromMicrometer
+; _LOWriter_ConvertToMicrometer
+; _LOWriter_DateFormatKeyCreate
+; _LOWriter_DateFormatKeyDelete
+; _LOWriter_DateFormatKeyExists
+; _LOWriter_DateFormatKeyGetString
+; _LOWriter_DateFormatKeyList
+; _LOWriter_DateStructCreate
+; _LOWriter_DateStructModify
+; _LOWriter_FindFormatModifyAlignment
+; _LOWriter_FindFormatModifyEffects
+; _LOWriter_FindFormatModifyFont
+; _LOWriter_FindFormatModifyHyphenation
+; _LOWriter_FindFormatModifyIndent
+; _LOWriter_FindFormatModifyOverline
+; _LOWriter_FindFormatModifyPageBreak
+; _LOWriter_FindFormatModifyPosition
+; _LOWriter_FindFormatModifyRotateScaleSpace
+; _LOWriter_FindFormatModifySpacing
+; _LOWriter_FindFormatModifyStrikeout
+; _LOWriter_FindFormatModifyTxtFlowOpt
+; _LOWriter_FindFormatModifyUnderline
+; _LOWriter_FormatKeyCreate
+; _LOWriter_FormatKeyDelete
+; _LOWriter_FormatKeyExists
+; _LOWriter_FormatKeyGetString
+; _LOWriter_FormatKeyList
+; _LOWriter_PathConvert
+; _LOWriter_VersionGet
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -123,7 +123,7 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 		; just return stored static User Function variable
 		Return $vUserFunction_Static
 	ElseIf IsFunc($vUserFunction) Then
-		;If User called Parameters, then add to array.
+		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
 			$avUserFuncWParams[0] = $vUserFunction
 			For $i = 1 To @NumParams - 1
@@ -136,7 +136,7 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 		EndIf
 		Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 	ElseIf $vUserFunction = Null Then
-		;Clear User Function.
+		; Clear User Function.
 		$vUserFunction_Static = Default
 		Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
 	Else
@@ -209,16 +209,16 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$nGreen = (Mod(($iHSB / 256), 256)) / 255
 			$nBlue = (Mod($iHSB, 256)) / 255
 
-			;get Max RGB Value
+			; get Max RGB Value
 			$nResult = ($nRed > $nGreen) ? $nRed : $nGreen
 			$nMaxRGB = ($nResult > $nBlue) ? $nResult : $nBlue
-			;get Min RGB Value
+			; get Min RGB Value
 			$nResult = ($nRed < $nGreen) ? $nRed : $nGreen
 			$nMinRGB = ($nResult < $nBlue) ? $nResult : $nBlue
 
-			;Determine Brightness
+			; Determine Brightness
 			$nBrightness = $nMaxRGB
-			;Determine Hue
+			; Determine Hue
 			$nHue = 0
 			Select
 				Case $nRed = $nGreen = $nBlue ; Red, Green, and BLue are equal.
@@ -237,7 +237,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 					$nHue = (60 * (4 + (($nRed - $nGreen) / ($nBlue - $nGreen))))
 			EndSelect
 
-			;Determine Saturation
+			; Determine Saturation
 			$nSaturation = ($nMaxRGB = 0) ? 0 : (($nMaxRGB - $nMinRGB) / $nMaxRGB)
 
 			$nHue = ($nHue > 0) ? Round($nHue) : 0
@@ -260,7 +260,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$nGreen = Round(($nGreen / 255), 3)
 			$nBlue = Round(($nBlue / 255), 3)
 
-			;get Max RGB Value
+			; get Max RGB Value
 			$nResult = ($nRed > $nGreen) ? $nRed : $nGreen
 			$nMaxRGB = ($nResult > $nBlue) ? $nResult : $nBlue
 
@@ -340,7 +340,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
 
-			;From Hex to RGB
+			; From Hex to RGB
 			If (StringLen($dHex) = 6) Then
 				If StringRegExp($dHex, "[^0-9a-fA-F]") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ;$dHex contains non Hex characters.
 
@@ -361,13 +361,13 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				$iGreen = $vVal2
 				$iBlue = $vVal3
 
-				;RGB to Long
+				; RGB to Long
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
 				Return SetError($__LOW_STATUS_SUCCESS, 2, $iLong) ;Long from RGB
 
 			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ;Hue Saturation and Brightness (HSB)
 
-				;HSB to RGB
+				; HSB to RGB
 				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)
 				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ;Strip WS so I can check string length in HSB conversion.
@@ -426,7 +426,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 		Case 4 ;CMYK
 			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0) ;CMYK not integers.
 
-			;CMYK to RGB
+			; CMYK to RGB
 			$nCyan = ($vVal1 / 100)
 			$nMagenta = ($vVal2 / 100)
 			$nYellow = ($vVal3 / 100)
@@ -1496,7 +1496,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $oDoc, ByRef $atFormat, $sFontName = N
 			If __LOWriter_VersionCheck(4.2) Then __LOWriter_FindFormatDeleteSetting($atFormat, "CharHighlight")
 		Else
 			If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
-			;CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting.
+			; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharBackColor", $iHighlight))
 			If __LOWriter_VersionCheck(4.2) Then __LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharHighlight", $iHighlight))
 		EndIf
@@ -1650,7 +1650,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 	If Not IsArray($atFormat) Or (UBound($atFormat, $UBOUND_COLUMNS) > 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
-	;Min: -9998989;Max: 17094
+	; Min: -9998989;Max: 17094
 	If ($iBeforeText <> Null) Then
 		If ($iBeforeText = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "ParaLeftMargin")
@@ -1669,7 +1669,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 		EndIf
 	EndIf
 
-	;mx 17094min;-57785
+	; mx 17094min;-57785
 	If ($iFirstLine <> Null) Then
 		If ($iFirstLine = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "ParaFirstLineIndent")
@@ -1844,7 +1844,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyOverline
 ;					Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;					If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local
 ;						$aArray[0])
-;Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current
 ;							Paragraph, therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current
@@ -1964,9 +1964,9 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharEscapement")
 		Else
 			If Not IsBool($bAutoSuper) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-			;If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
+			; If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
 			;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
-			;else set SubScript to 1
+			; else set SubScript to 1
 			$iSuperScript = ($bAutoSuper) ? 14000 : (IsInt($iSuperScript)) ? $iSuperScript : (IsInt($iSubScript) Or ($bAutoSub = True)) ? $iSuperScript : 1
 		EndIf
 	EndIf
@@ -1976,7 +1976,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharEscapement")
 		Else
 			If Not IsBool($bAutoSub) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-			;If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
+			; If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
 			;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 			$iSubScript = ($bAutoSub) ? -14000 : (IsInt($iSubScript)) ? $iSubScript : (IsInt($iSuperScript)) ? $iSubScript : 1
 		EndIf
@@ -2655,7 +2655,7 @@ EndFunc   ;==>_LOWriter_FormatKeyDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Format Key Type Constants: $LOW_FORMAT_KEYS_ALL(0), All number formats.
+; Format Key Type Constants: $LOW_FORMAT_KEYS_ALL(0), All number formats.
 ;							$LOW_FORMAT_KEYS_DEFINED(1), Only user-defined number formats.
 ;							$LOW_FORMAT_KEYS_DATE(2), Date formats.
 ;							$LOW_FORMAT_KEYS_TIME(4), Time formats.
@@ -2772,7 +2772,7 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Format Key Type Constants: $LOW_FORMAT_KEYS_ALL(0), All number formats.
+; Format Key Type Constants: $LOW_FORMAT_KEYS_ALL(0), All number formats.
 ;							$LOW_FORMAT_KEYS_DEFINED(1), Only user-defined number formats.
 ;							$LOW_FORMAT_KEYS_DATE(2), Date formats.
 ;							$LOW_FORMAT_KEYS_TIME(4), Time formats.
@@ -2862,7 +2862,7 @@ EndFunc   ;==>_LOWriter_FormatKeyList
 ;					Basic Programmer's Guide; Page 74
 ;					The user generally should not even need this function, as I have endeavored to convert any URLs to the
 ;						appropriate computer path format and any input computer paths to a Libre Office URL.
-;Path Return Constants: ; $LOW_PATHCONV_AUTO_RETURN(0) = Automatically returns the opposite of the input path, determined by
+; Path Return Constants: ; $LOW_PATHCONV_AUTO_RETURN(0) = Automatically returns the opposite of the input path, determined by
 ;										StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File
 ;										Path).
 ;							$LOW_PATHCONV_OFFICE_RETURN(1) = Returns L.O Office URL, even if the input is already in that

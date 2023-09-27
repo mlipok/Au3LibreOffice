@@ -26,11 +26,11 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_CursorGetDataType
-;_LOWriter_CursorGetStatus
-;_LOWriter_CursorGetType
-;_LOWriter_CursorGoToRange
-;_LOWriter_CursorMove
+; _LOWriter_CursorGetDataType
+; _LOWriter_CursorGetStatus
+; _LOWriter_CursorGetType
+; _LOWriter_CursorGoToRange
+; _LOWriter_CursorMove
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -53,7 +53,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of data a cursor is currently located in, such as a TextTable, Footnote etc.
-;Cursor Data Type Constants: $LOW_CURDATA_BODY_TEXT(1),
+; Cursor Data Type Constants: $LOW_CURDATA_BODY_TEXT(1),
 ;								$LOW_CURDATA_FRAME(2),
 ;								$LOW_CURDATA_CELL(3),
 ;								$LOW_CURDATA_FOOTNOTE(4),
@@ -104,21 +104,21 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Text And View Cursor Status Flag Constants:
+; Text And View Cursor Status Flag Constants:
 ;				$LOW_CURSOR_STAT_IS_COLLAPSED, Returns True if the start and end positions are the same, meaning the cursor has
 ;					nothing selected.
-;Text Cursor Status Flag Constants:
+; Text Cursor Status Flag Constants:
 ;				$LOW_CURSOR_STAT_IS_START_OF_WORD, Returns True if at the start of a word.
 ;				$LOW_CURSOR_STAT_IS_END_OF_WORD, Return True if at the end of a word.
 ;				$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, Returns True if at the start of a sentence.
 ;				$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, Return True if at the end of a sentence.
 ;				$LOW_CURSOR_STAT_IS_START_OF_PAR, True if at the start of a paragraph.
 ;				$LOW_CURSOR_STAT_IS_END_OF_PAR, True if at the End of a paragraph.
-;View Cursor Status Flag Constants:
+; View Cursor Status Flag Constants:
 ;				$LOW_CURSOR_STAT_IS_START_OF_LINE, Returns True if the cursor is at the start of the line.
 ;				$LOW_CURSOR_STAT_IS_END_OF_LINE, Returns True if the cursor is at the end of the line.
 ;				$LOW_CURSOR_STAT_GET_PAGE, Returns the current page as a Integer.
-;Table Cursor Status Flag Constants:
+; Table Cursor Status Flag Constants:
 ;				$LOW_CURSOR_STAT_GET_RANGE_NAME, Returns the cell range selected by this cursor as a string. For example,
 ;					“B3:D5”.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
@@ -191,7 +191,7 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Will also work for Paragraph object and paragraph section objects.
-;Cursor Type Constants: $LOW_CURTYPE_TEXT_CURSOR(1),
+; Cursor Type Constants: $LOW_CURTYPE_TEXT_CURSOR(1),
 ;						$LOW_CURTYPE_TABLE_CURSOR(2),
 ;						$LOW_CURTYPE_VIEW_CURSOR(3),
 ;						$LOW_CURTYPE_PARAGRAPH(4), such as from _LOWriter_ParObjCreateList
@@ -302,7 +302,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
 ;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
 ;					you can input a move such as "goRight", 0, False.
-;Cursor Movement Constants:
+; Cursor Movement Constants:
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
 ;					-ViewCursor
 ;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
