@@ -16,8 +16,7 @@ Global Const $__LOWCONST_SLEEP_DIV = 15 ; Lower this number for more frequent sl
 ; Set to 0 for no pause in a loop.
 
 #Tidy_ILC_Pos=50
-; Error Codes
-Global Enum _
+Global Enum _ ; Error Codes
 		$__LOW_STATUS_SUCCESS = 0, _             ; 0
 		$__LOW_STATUS_INPUT_ERROR, _             ; 1
 		$__LOW_STATUS_INIT_ERROR, _              ; 2
@@ -27,8 +26,7 @@ Global Enum _
 		$__LOW_STATUS_PRINTER_RELATED_ERROR, _   ; 6
 		$__LOW_STATUS_VER_ERROR                  ; 7
 
-; Conversion Constants.
-Global Enum _
+Global Enum _ ; Conversion Constants.
 		$__LOWCONST_CONVERT_TWIPS_CM, _          ; 0
 		$__LOWCONST_CONVERT_TWIPS_INCH, _        ; 1
 		$__LOWCONST_CONVERT_TWIPS_UM, _          ; 2
@@ -41,8 +39,7 @@ Global Enum _
 		$__LOWCONST_CONVERT_PT_UM, _             ; 9
 		$__LOWCONST_CONVERT_UM_PT                ; 10
 
-; Fill Style Type Constants
-Global Enum _
+Global Enum _ ; Fill Style Type Constants
 		$__LOWCONST_FILL_STYLE_OFF, _            ; 0
 		$__LOWCONST_FILL_STYLE_SOLID, _          ; 1
 		$__LOWCONST_FILL_STYLE_GRADIENT, _       ; 2
@@ -98,8 +95,7 @@ Global Const _ ; LO Print Comments Constants.
 		$LOW_PRINT_NOTES_END = 2, _
 		$LOW_PRINT_NOTES_NEXT_PAGE = 3
 
-; LO ViewCursor Movement Constants.
-Global Enum _
+Global Enum _ ; LO ViewCursor Movement Constants.
 		$LOW_VIEWCUR_GO_DOWN, _
 		$LOW_VIEWCUR_GO_UP, _
 		$LOW_VIEWCUR_GO_LEFT, _
@@ -118,8 +114,7 @@ Global Enum _
 		$LOW_VIEWCUR_GOTO_START, _
 		$LOW_VIEWCUR_GOTO_END
 
-; LO TextCursor Movement Constants.
-Global Enum _
+Global Enum _ ; LO TextCursor Movement Constants.
 		$LOW_TEXTCUR_COLLAPSE_TO_START, _
 		$LOW_TEXTCUR_COLLAPSE_TO_END, _
 		$LOW_TEXTCUR_GO_LEFT, _
@@ -139,8 +134,7 @@ Global Enum _
 		$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, _
 		$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH
 
-; LO TableCursor Movement Constants.
-Global Enum _
+Global Enum _ ; LO TableCursor Movement Constants.
 		$LOW_TABLECUR_GO_LEFT, _
 		$LOW_TABLECUR_GO_RIGHT, _
 		$LOW_TABLECUR_GO_UP, _
