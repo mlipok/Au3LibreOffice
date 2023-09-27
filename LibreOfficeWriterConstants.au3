@@ -11,9 +11,10 @@
 ; #CURRENT# =====================================================================================================================
 ; ===============================================================================================================================
 
-; Sleep Divisor
-Global Const $__LOWCONST_SLEEP_DIV = 15 ; Lower this number for more frequent sleeps in applicable functions, raise it for less.
+; Sleep Divisor $__LOWCONST_SLEEP_DIV
+; Lower this number for more frequent sleeps in applicable functions, raise it for less.
 ; Set to 0 for no pause in a loop.
+Global Const $__LOWCONST_SLEEP_DIV = 15
 
 #Tidy_ILC_Pos=50
 Global Enum _ ; Error Codes
