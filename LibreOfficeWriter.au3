@@ -38579,111 +38579,11 @@ EndFunc   ;==>_LOWriter_TableWidth
 ; Name ..........: __LOWriter_TableCursorMove
 
 ; Name ..........: __LOWriter_TableHasCellName
-; Description ...: Check whether the Table contains a Cell by the requested name.
-; Syntax ........: __LOWriter_TableHasCellName(Byref $oTable, Byref $sCellName)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from any Table Object creation
-;				   +						Or retrieval functions.
-;                  $sCellName           - [in/out] a string value. The requested cell name.
-; Return values .: Success: Boolean.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sCellName variable not a String.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Names.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean: If  the table contains the requested Cell Name, True is returned. Else
-;				   +										False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
 
-	Local $aCellNames
-
-	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sCellName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-
-	$aCellNames = $oTable.getCellNames()
-	If Not IsArray($aCellNames) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-
-	For $i = 0 To UBound($aCellNames) - 1
-		If StringInStr($aCellNames[$i], $sCellName) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
-	Next
-
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;Cell not found
-EndFunc   ;==>__LOWriter_TableHasCellName
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableHasColumnRange
-; Description ...: Check if Table contains the requested Column.
-; Syntax ........: __LOWriter_TableHasColumnRange(Byref $oTable, Byref $iColumn)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from any Table Object creation
-;				   +						Or retrieval functions.
-;                  $iColumn             - [in/out] an integer value. The requested Column.
-; Return values .: Success: Boolean.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColumn variable not an Integer.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested Column. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-
-	Return ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? True : False
-EndFunc   ;==>__LOWriter_TableHasColumnRange
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableHasRowRange
-; Description ...: Check if Table contains the requested row.
-; Syntax ........: __LOWriter_TableHasRowRange(Byref $oTable, Byref $iRow)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from any Table Object creation
-;				   +						Or retrieval functions.
-;                  $iRow                - [in/out] an integer value. The requested row.
-; Return values .: Success: Boolean.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iRow variable not an Integer.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested row. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iRow) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-
-	Return ($iRow <= ($oTable.getRows.getCount() - 1)) ? True : False
-EndFunc   ;==>__LOWriter_TableHasRowRange
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableRowSplitToggle
 ; Description ...: Set or Retrieve Table Row split setting for an entire Table.
 ; Syntax ........: __LOWriter_TableRowSplitToggle(Byref $oTable[, $bSplitRows = Null])
