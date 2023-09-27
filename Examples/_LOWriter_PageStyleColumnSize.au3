@@ -9,27 +9,27 @@ Func Example()
 	Local $iMicrometers
 	Local $avPageStyleSettings
 
-	;Create a New, visible, Blank Libre Office Document.
+	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the Default Page Style's Object, to modify its settings.
+	; Retrieve the Default Page Style's Object, to modify its settings.
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
 	If (@error > 0) Then _ERROR("Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended)
 
-	;Convert 1/4" to Micrometers
+	; Convert 1/4" to Micrometers
 	$iMicrometers = _LOWriter_ConvertToMicrometer(.25)
 	If (@error > 0) Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
-	;Set Page style Column count to 4.
+	; Set Page style Column count to 4.
 	_LOWriter_PageStyleColumnSettings($oPageStyle, 4)
 	If (@error > 0) Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	;Set Page style Column size settings for column 2, set auto width to True, and Global spacing to 1/4".
+	; Set Page style Column size settings for column 2, set auto width to True, and Global spacing to 1/4".
 	_LOWriter_PageStyleColumnSize($oPageStyle, 2, True, $iMicrometers)
 	If (@error > 0) Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the current settings. Return will be an array with elements in order of function parameters.
+	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
 	$avPageStyleSettings = _LOWriter_PageStyleColumnSize($oPageStyle, 2)
 	If (@error > 0) Then _ERROR("Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -42,11 +42,11 @@ Func Example()
 			"relative width, not a metric width, which is why I don't know how to set this value appropriately." & @CRLF & @CRLF & _
 			"I will now demonstrate values when AutoWidth is deactivated.")
 
-	;Set Page style Column size settings for column 2, set auto width to False.
+	; Set Page style Column size settings for column 2, set auto width to False.
 	_LOWriter_PageStyleColumnSize($oPageStyle, 2, False)
 	If (@error > 0) Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the current settings. Return will be an array with elements in order of function parameters.
+	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
 	$avPageStyleSettings = _LOWriter_PageStyleColumnSize($oPageStyle, 2)
 	If (@error > 0) Then _ERROR("Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -60,7 +60,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
-	;Close the document.
+	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 

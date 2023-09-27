@@ -26,8 +26,8 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_FontExists
-;_LOWriter_FontsList
+; _LOWriter_FontExists
+; _LOWriter_FontsList
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -130,7 +130,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 	If Not IsArray($atFonts) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	ReDim $asFonts[UBound($atFonts)][4]
-;~ $asFonts[0][0] = UBound($atFonts)
+; ~ $asFonts[0][0] = UBound($atFonts)
 	For $i = 0 To UBound($atFonts) - 1
 		$asFonts[$i][0] = $atFonts[$i].Name()
 		$asFonts[$i][1] = $atFonts[$i].StyleName()

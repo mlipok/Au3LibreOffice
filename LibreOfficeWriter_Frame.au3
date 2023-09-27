@@ -28,56 +28,56 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_FrameAreaColor
-;_LOWriter_FrameAreaGradient
-;_LOWriter_FrameBorderColor
-;_LOWriter_FrameBorderPadding
-;_LOWriter_FrameBorderStyle
-;_LOWriter_FrameBorderWidth
-;_LOWriter_FrameColumnSeparator
-;_LOWriter_FrameColumnSettings
-;_LOWriter_FrameColumnSize
-;_LOWriter_FrameCreate
-;_LOWriter_FrameCreateTextCursor
-;_LOWriter_FrameDelete
-;_LOWriter_FrameGetAnchor
-;_LOWriter_FrameGetObjByCursor
-;_LOWriter_FrameGetObjByName
-;_LOWriter_FrameHyperlink
-;_LOWriter_FrameOptions
-;_LOWriter_FrameOptionsName
-;_LOWriter_FramesGetNames
-;_LOWriter_FrameShadow
-;_LOWriter_FrameStyleAreaColor
-;_LOWriter_FrameStyleAreaGradient
-;_LOWriter_FrameStyleBorderColor
-;_LOWriter_FrameStyleBorderPadding
-;_LOWriter_FrameStyleBorderStyle
-;_LOWriter_FrameStyleBorderWidth
-;_LOWriter_FrameStyleColumnSeparator
-;_LOWriter_FrameStyleColumnSettings
-;_LOWriter_FrameStyleColumnSize
-;_LOWriter_FrameStyleCreate
-;_LOWriter_FrameStyleDelete
-;_LOWriter_FrameStyleExists
-;_LOWriter_FrameStyleGetObj
-;_LOWriter_FrameStyleOptions
-;_LOWriter_FrameStyleOrganizer
-;_LOWriter_FrameStyleSet
-;_LOWriter_FrameStylesGetNames
-;_LOWriter_FrameStyleShadow
-;_LOWriter_FrameStyleTransparency
-;_LOWriter_FrameStyleTransparencyGradient
-;_LOWriter_FrameStyleTypePosition
-;_LOWriter_FrameStyleTypeSize
-;_LOWriter_FrameStyleWrap
-;_LOWriter_FrameStyleWrapOptions
-;_LOWriter_FrameTransparency
-;_LOWriter_FrameTransparencyGradient
-;_LOWriter_FrameTypePosition
-;_LOWriter_FrameTypeSize
-;_LOWriter_FrameWrap
-;_LOWriter_FrameWrapOptions
+; _LOWriter_FrameAreaColor
+; _LOWriter_FrameAreaGradient
+; _LOWriter_FrameBorderColor
+; _LOWriter_FrameBorderPadding
+; _LOWriter_FrameBorderStyle
+; _LOWriter_FrameBorderWidth
+; _LOWriter_FrameColumnSeparator
+; _LOWriter_FrameColumnSettings
+; _LOWriter_FrameColumnSize
+; _LOWriter_FrameCreate
+; _LOWriter_FrameCreateTextCursor
+; _LOWriter_FrameDelete
+; _LOWriter_FrameGetAnchor
+; _LOWriter_FrameGetObjByCursor
+; _LOWriter_FrameGetObjByName
+; _LOWriter_FrameHyperlink
+; _LOWriter_FrameOptions
+; _LOWriter_FrameOptionsName
+; _LOWriter_FramesGetNames
+; _LOWriter_FrameShadow
+; _LOWriter_FrameStyleAreaColor
+; _LOWriter_FrameStyleAreaGradient
+; _LOWriter_FrameStyleBorderColor
+; _LOWriter_FrameStyleBorderPadding
+; _LOWriter_FrameStyleBorderStyle
+; _LOWriter_FrameStyleBorderWidth
+; _LOWriter_FrameStyleColumnSeparator
+; _LOWriter_FrameStyleColumnSettings
+; _LOWriter_FrameStyleColumnSize
+; _LOWriter_FrameStyleCreate
+; _LOWriter_FrameStyleDelete
+; _LOWriter_FrameStyleExists
+; _LOWriter_FrameStyleGetObj
+; _LOWriter_FrameStyleOptions
+; _LOWriter_FrameStyleOrganizer
+; _LOWriter_FrameStyleSet
+; _LOWriter_FrameStylesGetNames
+; _LOWriter_FrameStyleShadow
+; _LOWriter_FrameStyleTransparency
+; _LOWriter_FrameStyleTransparencyGradient
+; _LOWriter_FrameStyleTypePosition
+; _LOWriter_FrameStyleTypeSize
+; _LOWriter_FrameStyleWrap
+; _LOWriter_FrameStyleWrapOptions
+; _LOWriter_FrameTransparency
+; _LOWriter_FrameTransparencyGradient
+; _LOWriter_FrameTypePosition
+; _LOWriter_FrameTypeSize
+; _LOWriter_FrameWrap
+; _LOWriter_FrameWrapOptions
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -252,7 +252,7 @@ EndFunc   ;==>_LOWriter_FrameAreaColor
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-;Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
+; Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
 ;							$LOW_GRAD_NAME_PASTEL_DREAM("Pastel Dream",
 ;							$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch"),
 ;							$LOW_GRAD_NAME_BLANK_W_GRAY("Blank with Gray"),
@@ -267,7 +267,7 @@ EndFunc   ;==>_LOWriter_FrameAreaColor
 ;							$LOW_GRAD_NAME_SUNSHINE("Sunshine"),
 ;							$LOW_GRAD_NAME_PRESENT("Present"),
 ;							$LOW_GRAD_NAME_MAHOGANY("Mahogany")
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -397,7 +397,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 
 	$oFrame.FillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? $iError : ($oFrame.FillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
 	$iError = ($iXCenter = Null) ? $iError : ($oFrame.FillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
 	$iError = ($iYCenter = Null) ? $iError : ($oFrame.FillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
@@ -806,7 +806,7 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Line Style Constants: $LOW_LINE_STYLE_NONE(0),
+; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
 ;						$LOW_LINE_STYLE_SOLID(1),
 ;						$LOW_LINE_STYLE_DOTTED(2),
 ;						$LOW_LINE_STYLE_DASHED(3)
@@ -828,7 +828,7 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ;					$LOW_COLOR_GREEN(43315),
 ;					$LOW_COLOR_LIME(8508442),
 ;					$LOW_COLOR_BROWN(9127187).
-;Line Position ants: $LOW_ALIGN_VERT_TOP(0),
+; Line Position ants: $LOW_ALIGN_VERT_TOP(0),
 ;						$LOW_ALIGN_VERT_MIDDLE(1),
 ;						$LOW_ALIGN_VERT_BOTTOM(2)
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
@@ -1071,7 +1071,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 		$oFrame.TextColumns = $oTextColumns
 
 		If ($oFrame.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
-			;for setting the width internally also.
+			; for setting the width internally also.
 			$iError = (__LOWriter_IntIsBetween($oFrame.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 		EndIf
 	EndIf
@@ -1080,28 +1080,28 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 
 		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
-			;because spacing can't be set for the last column.
+			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
 		Else
-			;Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
-			;and the next column's left margin to half of the spacing value each.
+			; Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
+			; and the next column's left margin to half of the spacing value each.
 			$iRightMargin = Int($iSpacing / 2)
 			$atColumns[$iColumn].RightMargin = $iRightMargin
 
 			$iLeftMargin = Int($iSpacing - ($iSpacing / 2))
 			$atColumns[$iColumn + 1].LeftMargin = $iLeftMargin
 
-			;Set the settings into the document.
+			; Set the settings into the document.
 			$oTextColumns.setColumns($atColumns)
 			$oFrame.TextColumns = $oTextColumns
 
-			;Retrieve Array of columns again for testing.
+			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
 			If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-			;See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
-			;margin, and the next column's left margin.
+			; See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
+			; margin, and the next column's left margin.
 			$iError = (__LOWriter_IntIsBetween($atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $iSpacing - 1, $iSpacing + 1)) ? $iError : BitOR($iError, 4)
 		EndIf
 	EndIf
@@ -1110,11 +1110,11 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$atColumns[$iColumn].Width = $iWidth
 
-		;Set the settings into the document.
+		; Set the settings into the document.
 		$oTextColumns.setColumns($atColumns)
 		$oFrame.TextColumns = $oTextColumns
 
-		;Retrieve Array of columns again for testing.
+		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrame.TextColumns.Columns()
 		If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? $iError : (__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 8)
@@ -1381,7 +1381,7 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 
 	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oFrames.getByName($sFrameName))
 
-	;If No results, then search Shapes.
+	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
 	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -1435,7 +1435,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByName
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Frame Target Constants: $LOW_FRAME_TARGET_NONE = "",
+; Frame Target Constants: $LOW_FRAME_TARGET_NONE = "",
 ;							$LOW_FRAME_TARGET_TOP = "_top", File opens in the topmost frame in the hierarchy.
 ;							$LOW_FRAME_TARGET_PARENT = "_parent", File opens in the parent frame of the current frame. If there
 ;								is no parent frame, the current frame is used.
@@ -1470,7 +1470,7 @@ Func _LOWriter_FrameHyperlink(ByRef $oFrame, $sURL = Null, $sName = Null, $sFram
 		$oFrame.HyperLinkName = $sName
 		$iError = ($oFrame.HyperLinkName = $sName) ? $iError : BitOR($iError, 2)
 	EndIf
-	;"" ; "_top" ; "_parent" ; "_blank" ; "_self"
+	; "" ; "_top" ; "_parent" ; "_blank" ; "_self"
 
 	If ($sFrameTarget <> Null) Then
 		If Not IsString($sFrameTarget) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
@@ -1908,7 +1908,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 	EndIf
 
 	$oFrame.ShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oFrame.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -2095,7 +2095,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-;Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
+; Gradient Name Constants: $LOW_GRAD_NAME_PASTEL_BOUQUET("Pastel Bouquet",
 ;							$LOW_GRAD_NAME_PASTEL_DREAM("Pastel Dream",
 ;							$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch"),
 ;							$LOW_GRAD_NAME_BLANK_W_GRAY("Blank with Gray"),
@@ -2110,7 +2110,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 ;							$LOW_GRAD_NAME_SUNSHINE("Sunshine"),
 ;							$LOW_GRAD_NAME_PRESENT("Present"),
 ;							$LOW_GRAD_NAME_MAHOGANY("Mahogany")
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -2241,7 +2241,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 
 	$oFrameStyle.FillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? $iError : ($oFrameStyle.FillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
 	$iError = ($iXCenter = Null) ? $iError : ($oFrameStyle.FillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
 	$iError = ($iYCenter = Null) ? $iError : ($oFrameStyle.FillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
@@ -2659,7 +2659,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Line Style Constants: $LOW_LINE_STYLE_NONE(0),
+; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
 ;						$LOW_LINE_STYLE_SOLID(1),
 ;						$LOW_LINE_STYLE_DOTTED(2),
 ;						$LOW_LINE_STYLE_DASHED(3)
@@ -2681,7 +2681,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;					$LOW_COLOR_GREEN(43315),
 ;					$LOW_COLOR_LIME(8508442),
 ;					$LOW_COLOR_BROWN(9127187).
-;Line Position Constants: $LOW_ALIGN_VERT_TOP(0),
+; Line Position Constants: $LOW_ALIGN_VERT_TOP(0),
 ;							$LOW_ALIGN_VERT_MIDDLE(1),
 ;							$LOW_ALIGN_VERT_BOTTOM(2)
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
@@ -2927,7 +2927,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 			$oFrameStyle.TextColumns = $oTextColumns
 
 			If ($oFrameStyle.TextColumns.IsAutomatic() = True) Then ;If AutoWidth is on (True) Then error test, else dont, because I use $iGlobalSpacing
-				;for setting the width internally also.
+				; for setting the width internally also.
 				$iError = (__LOWriter_IntIsBetween($oFrameStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? $iError : BitOR($iError, 2)
 			EndIf
 		EndIf
@@ -2938,28 +2938,28 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 
 		If ($iColumn = (UBound($atColumns) - 1)) Then ;If the requested column is the last column (furthest right), then set property setting error.
-			;because spacing can't be set for the last column.
+			; because spacing can't be set for the last column.
 			$iError = BitOR($iError, 4)
 
 		Else
-			;Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
-			;and the next column's left margin to half of the spacing value each.
+			; Spacing is equally divided between the two ajoining columns, so set the first columns right margin,
+			; and the next column's left margin to half of the spacing value each.
 			$iRightMargin = Int($iSpacing / 2)
 			$atColumns[$iColumn].RightMargin = $iRightMargin
 
 			$iLeftMargin = Int($iSpacing - ($iSpacing / 2))
 			$atColumns[$iColumn + 1].LeftMargin = $iLeftMargin
 
-			;Set the settings into the document.
+			; Set the settings into the document.
 			$oTextColumns.setColumns($atColumns)
 			$oFrameStyle.TextColumns = $oTextColumns
 
-			;Retrieve Array of columns again for testing.
+			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
 			If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-			;See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
-			;margin, and the next column's left margin.
+			; See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
+			; margin, and the next column's left margin.
 			$iError = (__LOWriter_IntIsBetween($atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $iSpacing - 1, $iSpacing + 1)) ? $iError : BitOR($iError, 4)
 		EndIf
 	EndIf
@@ -2968,11 +2968,11 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$atColumns[$iColumn].Width = $iWidth
 
-		;Set the settings into the document.
+		; Set the settings into the document.
 		$oTextColumns.setColumns($atColumns)
 		$oFrameStyle.TextColumns = $oTextColumns
 
-		;Retrieve Array of columns again for testing.
+		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrameStyle.TextColumns.Columns()
 		If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? $iError : (__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 8)
@@ -3096,7 +3096,7 @@ Func _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle, $bForceDelete = False
 	If $oFrameStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oFrameStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Frame") Then $oFrameStyle.setParentStyle($sReplacementStyle)
-	;If Parent style is blank set it to "Frame" style, Or if not but User has called a specific style set it to that.
+	; If Parent style is blank set it to "Frame" style, Or if not but User has called a specific style set it to that.
 
 	$oFrameStyles.removeByName($sFrameStyle)
 	Return ($oFrameStyles.hasByName($sFrameStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -3639,7 +3639,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	EndIf
 
 	$oFrameStyle.ShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oFrameStyle.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -3767,7 +3767,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -3971,11 +3971,11 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;							$LOW_RELATIVE_PAGE (7),
 ;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;Horizontal Alignment Constants: $LOW_ORIENT_HORI_NONE(0), no hard alignment is applied. Equal to "From Left" in L.O. UI.
+; Horizontal Alignment Constants: $LOW_ORIENT_HORI_NONE(0), no hard alignment is applied. Equal to "From Left" in L.O. UI.
 ;								 $LOW_ORIENT_HORI_RIGHT(1), The frame is aligned at the right side.
 ;								 $LOW_ORIENT_HORI_CENTER(2), The frame is aligned at the middle.
 ;								 $LOW_ORIENT_HORI_LEFT(3), The frame is aligned at the left side.
-;Vertical Alignment Constants: $LOW_ORIENT_VERT_NONE(0), no hard alignment. The same as "From Top"/From Bottom" in L.O. UI, the
+; Vertical Alignment Constants: $LOW_ORIENT_VERT_NONE(0), no hard alignment. The same as "From Top"/From Bottom" in L.O. UI, the
 ;									only difference is the combination setting of $iVertRelation.
 ;								$LOW_ORIENT_VERT_TOP(1), aligned at the top.
 ;								$LOW_ORIENT_VERT_CENTER(2), aligned at the center.
@@ -3994,7 +3994,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;									set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
 ;								$LOW_ORIENT_VERT_LINE_BOTTOM(9), aligned at the bottom of the line Available only when anchor is
 ;									set to "As character". Equal to L.O. UI setting of "Vertical" = Bottom, and "To" = Row.
-;Relation Constants: $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the
+; Relation Constants: $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the
 ;							anchor is placed.
 ;						$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole
 ;							width available for the paragraph, including indent spaces.[For Vertical Relation:]
@@ -4030,7 +4030,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;							the full height available for text, from top to bottom margins.
 ;						$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of
 ;							 the line of text where the anchor is placed.
-;Anchor Constants: $LOW_ANCHOR_AT_PARAGRAPH(0), Anchors the frame to the current paragraph.
+; Anchor Constants: $LOW_ANCHOR_AT_PARAGRAPH(0), Anchors the frame to the current paragraph.
 ;					$LOW_ANCHOR_AS_CHARACTER(1), Anchors the frame as character. The height of the current line is resized to
 ;						match the height of the selection.
 ;					$LOW_ANCHOR_AT_PAGE(2), Anchors the frame to the current page.
@@ -4056,7 +4056,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 				$oFrameStyle.IsFollowingTextFlow(), $oFrameStyle.AnchorType())
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
-	;Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
+	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.HoriOrient = $iHorAlign
@@ -4081,7 +4081,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 		$iError = ($oFrameStyle.PageToggle() = $bMirror) ? $iError : BitOR($iError, 8)
 	EndIf
 
-	;Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
+	; Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.VertOrient = $iVertAlign
@@ -4098,15 +4098,15 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oFrameStyle.AnchorType())
 
-		;Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
-		;for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or "$LOW_RELATIVE_PARAGRAPH",
-		;For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the L.O. UI the furthest left
-		;drop down box) is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1), $LOW_ORIENT_VERT_CHAR_CENTER(2),
-		;$LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and Center, or "From Bottom"/
-		;"From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set to "As Character", I need
-		;to first determine the desired user setting, $LOW_RELATIVE_ROW(-1), $LOW_RELATIVE_PARAGRAPH(0), or
-		;$LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and then manually set the value to the
-		;correct setting. Such as Line_Top, Line_Bottom etc.
+		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
+		; for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or "$LOW_RELATIVE_PARAGRAPH",
+		; For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the L.O. UI the furthest left
+		; drop down box) is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1), $LOW_ORIENT_VERT_CHAR_CENTER(2),
+		; $LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and Center, or "From Bottom"/
+		; "From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set to "As Character", I need
+		; to first determine the desired user setting, $LOW_RELATIVE_ROW(-1), $LOW_RELATIVE_PARAGRAPH(0), or
+		; $LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and then manually set the value to the
+		; correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
 
@@ -4249,7 +4249,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;						some reason the applicable setting values are not updated, so this function may return incorrect
 ;						values for "Keep Ratio".
 ;					When Keep Ratio is set to True, setting Width/Height values via this function will not be kept in ratio.
-;Relative Constants: $LOW_RELATIVE_PARAGRAPH(0), means: text area (excluding margins).
+; Relative Constants: $LOW_RELATIVE_PARAGRAPH(0), means: text area (excluding margins).
 ;						$LOW_RELATIVE_PAGE(7), means: entire page (including margins).
 ; Related .......:  _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
@@ -4397,7 +4397,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
+; Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
 ;						$LOW_WRAP_MODE_THROUGH(1), Places the frame in front of the text.
 ;						$LOW_WRAP_MODE_PARALLEL(2), Wraps text on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_DYNAMIC(3), the same as "Optimal", Automatically wraps text to the left, to the right, or
@@ -4665,7 +4665,7 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
+; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),
 ;							$LOW_GRAD_TYPE_LINEAR(0),
 ;							$LOW_GRAD_TYPE_AXIAL(1),
 ;							$LOW_GRAD_TYPE_RADIAL(2),
@@ -4867,11 +4867,11 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ;							$LOW_RELATIVE_PAGE (7),
 ;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;Horizontal Alignment Constants: $LOW_ORIENT_HORI_NONE(0), no hard alignment is applied. Equal to "From Left" in L.O. UI.
+; Horizontal Alignment Constants: $LOW_ORIENT_HORI_NONE(0), no hard alignment is applied. Equal to "From Left" in L.O. UI.
 ;								 $LOW_ORIENT_HORI_RIGHT(1), The frame is aligned at the right side.
 ;								 $LOW_ORIENT_HORI_CENTER(2), The frame is aligned at the middle.
 ;								 $LOW_ORIENT_HORI_LEFT(3), The frame is aligned at the left side.
-;Vertical Alignment Constants: $LOW_ORIENT_VERT_NONE(0), no hard alignment. The same as "From Top"/From Bottom" in L.O. UI, the
+; Vertical Alignment Constants: $LOW_ORIENT_VERT_NONE(0), no hard alignment. The same as "From Top"/From Bottom" in L.O. UI, the
 ;									only difference is the combination setting of $iVertRelation.
 ;								$LOW_ORIENT_VERT_TOP(1), aligned at the top.
 ;								$LOW_ORIENT_VERT_CENTER(2), aligned at the center.
@@ -4890,7 +4890,7 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ;									set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
 ;								$LOW_ORIENT_VERT_LINE_BOTTOM(9), aligned at the bottom of the line Available only when anchor is
 ;									set to "As character". Equal to L.O. UI setting of "Vertical" = Bottom, and "To" = Row.
-;Relation Constants: $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the
+; Relation Constants: $LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the
 ;							anchor is placed.
 ;						$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole
 ;							width available for the paragraph, including indent spaces.[For Vertical Relation:]
@@ -4925,7 +4925,7 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ;							the full height available for text, from top to bottom margins.
 ;						$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of
 ;							the line of text where the anchor is placed.
-;Anchor Constants: $LOW_ANCHOR_AT_PARAGRAPH(0), Anchors the frame to the current paragraph.
+; Anchor Constants: $LOW_ANCHOR_AT_PARAGRAPH(0), Anchors the frame to the current paragraph.
 ;					$LOW_ANCHOR_AS_CHARACTER(1), Anchors the frame as character. The height of the current line is resized to
 ;						match the height of the selection.
 ;					$LOW_ANCHOR_AT_PAGE(2), Anchors the frame to the current page.
@@ -4950,7 +4950,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 				$oFrame.IsFollowingTextFlow(), $oFrame.AnchorType())
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
-	;Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
+	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.HoriOrient = $iHorAlign
@@ -4975,7 +4975,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 		$iError = ($oFrame.PageToggle() = $bMirror) ? $iError : BitOR($iError, 8)
 	EndIf
 
-	;Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
+	; Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.VertOrient = $iVertAlign
@@ -4992,15 +4992,15 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oFrame.AnchorType())
 
-		;Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting
+		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting
 		;		values for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or
-		;"$LOW_RELATIVE_PARAGRAPH", For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the
-		;L.O. UI the furthest left drop down box)  is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1),
-		;$LOW_ORIENT_VERT_CHAR_CENTER(2), $LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and
-		;Center, or "From Bottom"/ "From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set
-		;to "As Character", I need to first determine the the desired user setting, $LOW_RELATIVE_ROW(-1),
-		;$LOW_RELATIVE_PARAGRAPH(0), or $LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and
-		;then manually set the value to the correct setting. Such as Line_Top, Line_Bottom etc.
+		; "$LOW_RELATIVE_PARAGRAPH", For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the
+		; L.O. UI the furthest left drop down box)  is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1),
+		; $LOW_ORIENT_VERT_CHAR_CENTER(2), $LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and
+		; Center, or "From Bottom"/ "From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set
+		; to "As Character", I need to first determine the the desired user setting, $LOW_RELATIVE_ROW(-1),
+		; $LOW_RELATIVE_PARAGRAPH(0), or $LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and
+		; then manually set the value to the correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
 
@@ -5141,7 +5141,7 @@ EndFunc   ;==>_LOWriter_FrameTypePosition
 ;					This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for
 ;						some reason the applicable setting values are not updated, so this function may return incorrect values
 ;						for "Keep Ratio".
-;Relative Constants: $LOW_RELATIVE_PARAGRAPH(0), means: text area (excluding margins).
+; Relative Constants: $LOW_RELATIVE_PARAGRAPH(0), means: text area (excluding margins).
 ;						$LOW_RELATIVE_PAGE(7), means: entire page (including margins).
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName,
 ;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -5287,7 +5287,7 @@ EndFunc   ;==>_LOWriter_FrameTypeSize
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
+; Wrap Type Constants:  $LOW_WRAP_MODE_NONE(0), Places the frame on a separate line in the document.
 ;						$LOW_WRAP_MODE_THROUGH(1), Places the frame in front of the text.
 ;						$LOW_WRAP_MODE_PARALLEL(2), Wraps text on all four sides of the border frame of the frame.
 ;						$LOW_WRAP_MODE_DYNAMIC(3), the same as "Optimal", Automatically wraps text to the left, to the right, or
@@ -5418,7 +5418,7 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrame.SurroundAnchorOnly(), (($oFrame.Opaque()) ? False : True), $oFrame.AllowOverlap())
-		;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+		; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 

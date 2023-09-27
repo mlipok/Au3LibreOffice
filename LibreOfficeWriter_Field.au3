@@ -28,96 +28,96 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_FieldAuthorInsert
-;_LOWriter_FieldAuthorModify
-;_LOWriter_FieldChapterInsert
-;_LOWriter_FieldChapterModify
-;_LOWriter_FieldCombCharInsert
-;_LOWriter_FieldCombCharModify
-;_LOWriter_FieldCommentInsert
-;_LOWriter_FieldCommentModify
-;_LOWriter_FieldCondTextInsert
-;_LOWriter_FieldCondTextModify
-;_LOWriter_FieldCurrentDisplayGet
-;_LOWriter_FieldDateTimeInsert
-;_LOWriter_FieldDateTimeModify
-;_LOWriter_FieldDelete
-;_LOWriter_FieldDocInfoCommentsInsert
-;_LOWriter_FieldDocInfoCommentsModify
-;_LOWriter_FieldDocInfoCreateAuthInsert
-;_LOWriter_FieldDocInfoCreateAuthModify
-;_LOWriter_FieldDocInfoCreateDateTimeInsert
-;_LOWriter_FieldDocInfoCreateDateTimeModify
-;_LOWriter_FieldDocInfoEditTimeInsert
-;_LOWriter_FieldDocInfoEditTimeModify
-;_LOWriter_FieldDocInfoKeywordsInsert
-;_LOWriter_FieldDocInfoKeywordsModify
-;_LOWriter_FieldDocInfoModAuthInsert
-;_LOWriter_FieldDocInfoModAuthModify
-;_LOWriter_FieldDocInfoModDateTimeInsert
-;_LOWriter_FieldDocInfoModDateTimeModify
-;_LOWriter_FieldDocInfoPrintAuthInsert
-;_LOWriter_FieldDocInfoPrintAuthModify
-;_LOWriter_FieldDocInfoPrintDateTimeInsert
-;_LOWriter_FieldDocInfoPrintDateTimeModify
-;_LOWriter_FieldDocInfoRevNumInsert
-;_LOWriter_FieldDocInfoRevNumModify
-;_LOWriter_FieldDocInfoSubjectInsert
-;_LOWriter_FieldDocInfoSubjectModify
-;_LOWriter_FieldDocInfoTitleInsert
-;_LOWriter_FieldDocInfoTitleModify
-;_LOWriter_FieldFileNameInsert
-;_LOWriter_FieldFileNameModify
-;_LOWriter_FieldFuncHiddenParInsert
-;_LOWriter_FieldFuncHiddenParModify
-;_LOWriter_FieldFuncHiddenTextInsert
-;_LOWriter_FieldFuncHiddenTextModify
-;_LOWriter_FieldFuncInputInsert
-;_LOWriter_FieldFuncInputModify
-;_LOWriter_FieldFuncPlaceholderInsert
-;_LOWriter_FieldFuncPlaceholderModify
-;_LOWriter_FieldGetAnchor
-;_LOWriter_FieldInputListInsert
-;_LOWriter_FieldInputListModify
-;_LOWriter_FieldPageNumberInsert
-;_LOWriter_FieldPageNumberModify
-;_LOWriter_FieldRefBookMarkInsert
-;_LOWriter_FieldRefBookMarkModify
-;_LOWriter_FieldRefEndnoteInsert
-;_LOWriter_FieldRefEndnoteModify
-;_LOWriter_FieldRefFootnoteInsert
-;_LOWriter_FieldRefFootnoteModify
-;_LOWriter_FieldRefGetType
-;_LOWriter_FieldRefInsert
-;_LOWriter_FieldRefMarkDelete
-;_LOWriter_FieldRefMarkGetAnchor
-;_LOWriter_FieldRefMarkList
-;_LOWriter_FieldRefMarkSet
-;_LOWriter_FieldRefModify
-;_LOWriter_FieldsAdvGetList
-;_LOWriter_FieldsDocInfoGetList
-;_LOWriter_FieldSenderInsert
-;_LOWriter_FieldSenderModify
-;_LOWriter_FieldSetVarInsert
-;_LOWriter_FieldSetVarMasterCreate
-;_LOWriter_FieldSetVarMasterDelete
-;_LOWriter_FieldSetVarMasterExists
-;_LOWriter_FieldSetVarMasterGetObj
-;_LOWriter_FieldSetVarMasterList
-;_LOWriter_FieldSetVarMasterListFields
-;_LOWriter_FieldSetVarModify
-;_LOWriter_FieldsGetList
-;_LOWriter_FieldShowVarInsert
-;_LOWriter_FieldShowVarModify
-;_LOWriter_FieldStatCountInsert
-;_LOWriter_FieldStatCountModify
-;_LOWriter_FieldStatTemplateInsert
-;_LOWriter_FieldStatTemplateModify
-;_LOWriter_FieldUpdate
-;_LOWriter_FieldVarSetPageInsert
-;_LOWriter_FieldVarSetPageModify
-;_LOWriter_FieldVarShowPageInsert
-;_LOWriter_FieldVarShowPageModify
+; _LOWriter_FieldAuthorInsert
+; _LOWriter_FieldAuthorModify
+; _LOWriter_FieldChapterInsert
+; _LOWriter_FieldChapterModify
+; _LOWriter_FieldCombCharInsert
+; _LOWriter_FieldCombCharModify
+; _LOWriter_FieldCommentInsert
+; _LOWriter_FieldCommentModify
+; _LOWriter_FieldCondTextInsert
+; _LOWriter_FieldCondTextModify
+; _LOWriter_FieldCurrentDisplayGet
+; _LOWriter_FieldDateTimeInsert
+; _LOWriter_FieldDateTimeModify
+; _LOWriter_FieldDelete
+; _LOWriter_FieldDocInfoCommentsInsert
+; _LOWriter_FieldDocInfoCommentsModify
+; _LOWriter_FieldDocInfoCreateAuthInsert
+; _LOWriter_FieldDocInfoCreateAuthModify
+; _LOWriter_FieldDocInfoCreateDateTimeInsert
+; _LOWriter_FieldDocInfoCreateDateTimeModify
+; _LOWriter_FieldDocInfoEditTimeInsert
+; _LOWriter_FieldDocInfoEditTimeModify
+; _LOWriter_FieldDocInfoKeywordsInsert
+; _LOWriter_FieldDocInfoKeywordsModify
+; _LOWriter_FieldDocInfoModAuthInsert
+; _LOWriter_FieldDocInfoModAuthModify
+; _LOWriter_FieldDocInfoModDateTimeInsert
+; _LOWriter_FieldDocInfoModDateTimeModify
+; _LOWriter_FieldDocInfoPrintAuthInsert
+; _LOWriter_FieldDocInfoPrintAuthModify
+; _LOWriter_FieldDocInfoPrintDateTimeInsert
+; _LOWriter_FieldDocInfoPrintDateTimeModify
+; _LOWriter_FieldDocInfoRevNumInsert
+; _LOWriter_FieldDocInfoRevNumModify
+; _LOWriter_FieldDocInfoSubjectInsert
+; _LOWriter_FieldDocInfoSubjectModify
+; _LOWriter_FieldDocInfoTitleInsert
+; _LOWriter_FieldDocInfoTitleModify
+; _LOWriter_FieldFileNameInsert
+; _LOWriter_FieldFileNameModify
+; _LOWriter_FieldFuncHiddenParInsert
+; _LOWriter_FieldFuncHiddenParModify
+; _LOWriter_FieldFuncHiddenTextInsert
+; _LOWriter_FieldFuncHiddenTextModify
+; _LOWriter_FieldFuncInputInsert
+; _LOWriter_FieldFuncInputModify
+; _LOWriter_FieldFuncPlaceholderInsert
+; _LOWriter_FieldFuncPlaceholderModify
+; _LOWriter_FieldGetAnchor
+; _LOWriter_FieldInputListInsert
+; _LOWriter_FieldInputListModify
+; _LOWriter_FieldPageNumberInsert
+; _LOWriter_FieldPageNumberModify
+; _LOWriter_FieldRefBookMarkInsert
+; _LOWriter_FieldRefBookMarkModify
+; _LOWriter_FieldRefEndnoteInsert
+; _LOWriter_FieldRefEndnoteModify
+; _LOWriter_FieldRefFootnoteInsert
+; _LOWriter_FieldRefFootnoteModify
+; _LOWriter_FieldRefGetType
+; _LOWriter_FieldRefInsert
+; _LOWriter_FieldRefMarkDelete
+; _LOWriter_FieldRefMarkGetAnchor
+; _LOWriter_FieldRefMarkList
+; _LOWriter_FieldRefMarkSet
+; _LOWriter_FieldRefModify
+; _LOWriter_FieldsAdvGetList
+; _LOWriter_FieldsDocInfoGetList
+; _LOWriter_FieldSenderInsert
+; _LOWriter_FieldSenderModify
+; _LOWriter_FieldSetVarInsert
+; _LOWriter_FieldSetVarMasterCreate
+; _LOWriter_FieldSetVarMasterDelete
+; _LOWriter_FieldSetVarMasterExists
+; _LOWriter_FieldSetVarMasterGetObj
+; _LOWriter_FieldSetVarMasterList
+; _LOWriter_FieldSetVarMasterListFields
+; _LOWriter_FieldSetVarModify
+; _LOWriter_FieldsGetList
+; _LOWriter_FieldShowVarInsert
+; _LOWriter_FieldShowVarModify
+; _LOWriter_FieldStatCountInsert
+; _LOWriter_FieldStatCountModify
+; _LOWriter_FieldStatTemplateInsert
+; _LOWriter_FieldStatTemplateModify
+; _LOWriter_FieldUpdate
+; _LOWriter_FieldVarSetPageInsert
+; _LOWriter_FieldVarSetPageModify
+; _LOWriter_FieldVarShowPageInsert
+; _LOWriter_FieldVarShowPageModify
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -308,7 +308,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
+; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
 ;							$LOW_FIELD_CHAP_FRMT_NUMBER(1), The number including prefix and suffix of the chapter is displayed.
 ;							$LOW_FIELD_CHAP_FRMT_NAME_NUMBER(2), The title and number, with prefix and suffix of the chapter are
 ;								displayed.
@@ -381,7 +381,7 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
+; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
 ;							$LOW_FIELD_CHAP_FRMT_NUMBER(1), The number including prefix and suffix of the chapter is displayed.
 ;							$LOW_FIELD_CHAP_FRMT_NAME_NUMBER(2), The title and number, with prefix and suffix of the chapter are
 ;								displayed.
@@ -762,8 +762,8 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	EndIf
 
 	If ($bRefresh = True) Then
-;~ $oCommentField = $oDoc.createInstance("com.sun.star.text.TextField.Annotation")
-;~ If Not IsObj($oCommentField) Then Return  SetError($__LOW_STATUS_INIT_ERROR,1,0)
+; ~ $oCommentField = $oDoc.createInstance("com.sun.star.text.TextField.Annotation")
+; ~ If Not IsObj($oCommentField) Then Return  SetError($__LOW_STATUS_INIT_ERROR,1,0)
 		$oDoc.Text.createTextCursorByRange($oCommentField.Anchor()).Text.insertTextContent($oCommentField.Anchor(), $oCommentField, True)
 	EndIf
 
@@ -955,7 +955,7 @@ Func _LOWriter_FieldCurrentDisplayGet(ByRef $oField)
 	If Not IsObj($oField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oField.supportsService("com.sun.star.text.textfield.ConditionalText")) Then ;COnditional Text Fields don't update "CurrentPresentation" setting,
-		;so acquire the current display based on whether the condition is true or not.
+		; so acquire the current display based on whether the condition is true or not.
 		$sPresentation = ($oField.IsConditionTrue() = False) ? $oField.TrueContent() : $oField.FalseContent()
 	Else
 		$sPresentation = $oField.CurrentPresentation()
@@ -1048,8 +1048,8 @@ Func _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oDateTimeField.Adjust = ($oDateTimeField.IsDate() = True) ? Int((1440 * $iOffset)) : $iOffset
-		;If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
-		;else, just set it to Number of minutes called.
+		; If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
+		; else, just set it to Number of minutes called.
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
@@ -1132,16 +1132,16 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	If Not IsObj($oDateTimeField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $tDateStruct, $bIsDate, $iOffset, $iDateFormatKey) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oDateTimeField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
 		__LOWriter_ArrayFill($avDateTime, $oDateTimeField.IsFixed(), $oDateTimeField.DateTimeValue(), $oDateTimeField.IsDate(), _
 				($oDateTimeField.IsDate() = True) ? Int(($oDateTimeField.Adjust() / 1440)) : $oDateTimeField.Adjust(), $iNumberFormat)
-		;If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise
-		;return Number of minutes.
+		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise
+		; return Number of minutes.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avDateTime)
 	EndIf
 
@@ -1166,8 +1166,8 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$iOffset = ($oDateTimeField.IsDate() = True) ? Int((1440 * $iOffset)) : $iOffset
-		;If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
-		;else, just set it to Number of minutes called.
+		; If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
+		; else, just set it to Number of minutes called.
 
 		$oDateTimeField.Adjust = $iOffset
 		$iError = ($oDateTimeField.Adjust() = $iOffset) ? $iError : BitOR($iError, 8)
@@ -1649,9 +1649,9 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 	If Not IsObj($oDocInfoCreateDtTmField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000 from
-		;the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000 from
+		; the value.
 		$iNumberFormat = $oDocInfoCreateDtTmField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -1801,9 +1801,9 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeFi
 	If Not IsObj($oDocInfoEditTimeField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iTimeFormatKey) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oDocInfoEditTimeField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -2232,9 +2232,9 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 	If Not IsObj($oDocInfoModDtTmField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oDocInfoModDtTmField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -2523,9 +2523,9 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 	If Not IsObj($oDocInfoPrintDtTmField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oDocInfoPrintDtTmField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -3072,7 +3072,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
 ;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
 ;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
 ;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
@@ -3525,7 +3525,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
+; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_TABLE(1), The field initiates the insertion of a text table.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_FRAME(2), The field initiates the insertion of a text frame.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC(3), The field initiates the insertion of a graphic object.
@@ -3605,7 +3605,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
+; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_TABLE(1), The field initiates the insertion of a text table.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_FRAME(2), The field initiates the insertion of a text frame.
 ;							$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC(3), The field initiates the insertion of a graphic object.
@@ -3877,7 +3877,7 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -3949,7 +3949,7 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
 ;	$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-;Page Number Type Constants: $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
+; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
 ;								$LOW_PAGE_NUM_TYPE_CURRENT(1), The current page number.
 ;								$LOW_PAGE_NUM_TYPE_NEXT(2), The Next Page's page number.
 ; Related .......: _LOWriter_FieldPageNumberModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
@@ -4052,7 +4052,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -4124,7 +4124,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
 ;	$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-;Page Number Type Constants: $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
+; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
 ;								$LOW_PAGE_NUM_TYPE_CURRENT(1), The current page number.
 ;								$LOW_PAGE_NUM_TYPE_NEXT(2), The Next Page's page number.
 ; Related .......: _LOWriter_FieldPageNumberInsert, _LOWriter_FieldsGetList
@@ -4153,8 +4153,8 @@ Func _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField, $iNumFor
 		$oNewPageNumField = $oDoc.createInstance("com.sun.star.text.TextField.PageNumber")
 		If Not IsObj($oNewPageNumField) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-		;It doesn't work to just set a new Numbering type for an already inserted Page Number, so I have to create a new one and
-		;then insert it.
+		; It doesn't work to just set a new Numbering type for an already inserted Page Number, so I have to create a new one and
+		; then insert it.
 		With $oNewPageNumField
 			.NumberingType = $iNumFormat
 			.Offset = $oPageNumField.Offset()
@@ -4164,7 +4164,7 @@ Func _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField, $iNumFor
 
 		$oDoc.Text.createTextCursorByRange($oPageNumField.Anchor()).Text.insertTextContent($oPageNumField.Anchor(), $oNewPageNumField, True)
 
-		;Update the Old Page nUmber Field Object to the new one.
+		; Update the Old Page nUmber Field Object to the new one.
 		$oPageNumField = $oNewPageNumField
 
 		$iError = ($oPageNumField.NumberingType() = $iNumFormat) ? $iError : BitOR($iError, 1)
@@ -4226,7 +4226,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4306,7 +4306,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4384,7 +4384,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4466,7 +4466,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4554,7 +4554,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4636,7 +4636,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -4709,7 +4709,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; Modified ......:
 ; Remarks .......: A Reference Field can be referencing multiple different types of Data, such as a Reference Mark, or Bookmark,
 ;					etc.
-;Reference Type Constants: $LOW_FIELD_REF_TYPE_REF_MARK(0), The source is referencing a reference mark.
+; Reference Type Constants: $LOW_FIELD_REF_TYPE_REF_MARK(0), The source is referencing a reference mark.
 ;							$LOW_FIELD_REF_TYPE_SEQ_FIELD(1), The source is referencing a number sequence field. Such as a
 ;															Number range variable, numbered Paragraph, etc.
 ;							$LOW_FIELD_REF_TYPE_BOOKMARK(2), The source is referencing a bookmark.
@@ -4762,7 +4762,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -5051,7 +5051,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
+; Refer Using Constants: $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
 ;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
 ;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
 ;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or
@@ -5149,7 +5149,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-;Advanced Field Type Constants: $LOW_FIELDADV_TYPE_ALL = 1, All of the below listed Fields will be returned.
+; Advanced Field Type Constants: $LOW_FIELDADV_TYPE_ALL = 1, All of the below listed Fields will be returned.
 ;								$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, A Bibliography Field, found in Fields dialog, Database tab.
 ;								$LOW_FIELDADV_TYPE_DATABASE, A Database Field, found in Fields dialog, Database tab.
 ;								$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, A Database Field, found in Fields dialog, Database tab.
@@ -5170,7 +5170,7 @@ Func _LOWriter_FieldsAdvGetList(ByRef $oDoc, $iType = $LOW_FIELDADV_TYPE_ALL, $b
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELDADV_TYPE_ALL, 1023) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	;1023 is all possible Consts added together
+	; 1023 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -5233,7 +5233,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-;Doc Info Field Type Constants: $LOW_FIELD_DOCINFO_TYPE_ALL = 1, Returns a list of all field types listed below.
+; Doc Info Field Type Constants: $LOW_FIELD_DOCINFO_TYPE_ALL = 1, Returns a list of all field types listed below.
 ;									$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, A Modified By Author Field, found in Fields dialog,
 ;																	DocInformation Tab, Modified Type.
 ;									$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME,  A Modified Date/Time Field, found in Fields dialog,
@@ -5269,7 +5269,7 @@ Func _LOWriter_FieldsDocInfoGetList(ByRef $oDoc, $iType = $LOW_FIELD_DOCINFO_TYP
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELDADV_TYPE_ALL, 16383) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	;16383 is all possible Consts added together
+	; 16383 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -5316,7 +5316,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Sender Data Type Constants: $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
+; Sender Data Type Constants: $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
 ;								$LOW_FIELD_USER_DATA_FIRST_NAME(1), The field shows the first name.
 ;								$LOW_FIELD_USER_DATA_NAME(2), The field shows the name.
 ;								$LOW_FIELD_USER_DATA_SHORTCUT(3), The field shows the initials.
@@ -5410,7 +5410,7 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Sender Data Type Constants:  $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
+; Sender Data Type Constants:  $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
 ;								$LOW_FIELD_USER_DATA_FIRST_NAME(1), The field shows the first name.
 ;								$LOW_FIELD_USER_DATA_NAME(2), The field shows the name.
 ;								$LOW_FIELD_USER_DATA_SHORTCUT(3), The field shows the initials.
@@ -5918,9 +5918,9 @@ Func _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField, $sValue = Nul
 	If Not IsObj($oSetVarField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sValue, $iNumFormatKey, $bIsVisible) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oSetVarField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -6002,7 +6002,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-;Field Type Constants: $LOW_FIELD_TYPE_ALL = 1, Returns a list of all field types listed below.
+; Field Type Constants: $LOW_FIELD_TYPE_ALL = 1, Returns a list of all field types listed below.
 ;						$LOW_FIELD_TYPE_COMMENT, A Comment Field. As Found at Insert > Comment
 ;						$LOW_FIELD_TYPE_AUTHOR, A Author field, found in the Fields Dialog, Document tab.
 ;						$LOW_FIELD_TYPE_CHAPTER, A Chapter field, found in the Fields Dialog, Document tab.
@@ -6054,7 +6054,7 @@ Func _LOWriter_FieldsGetList(ByRef $oDoc, $iType = $LOW_FIELD_TYPE_ALL, $bSuppor
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_TYPE_ALL, 2147483647) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	;2147483647 is all possible Consts added together
+	; 2147483647 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -6202,9 +6202,9 @@ Func _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField, $sSetVarNam
 	If Not IsObj($oShowVarField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sSetVarName, $iNumFormatKey, $bShowName) Then
-		;Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
-		;fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
-		;from the value.
+		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
+		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
+		; from the value.
 		$iNumberFormat = $oShowVarField.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : $iNumberFormat
 
@@ -6272,14 +6272,14 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ; Remarks .......: After insertion there seems to be a necessary delay before the value to display is available, thus when a
 ;						new count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this
 ;						field after a few seconds, the value should appear.
-;Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
+; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_IMAGES(1), Count field is an Image Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_OBJECTS(2),  Count field is an Object Count type field._
 ;								$LOW_FIELD_COUNT_TYPE_PAGES(3), Count field is a Page Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_PARAGRAPHS(4), Count field is a Paragraph Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_TABLES(5), Count field is a Table Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_WORDS(6), Count field is a Word Count type field.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -6429,14 +6429,14 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ;					 After changing the Count type there may be a delay before the value to display is available,
 ;						thus when the count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for
 ;						this field after a few seconds, the value should appear.
-;Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
+; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_IMAGES(1), Count field is an Image Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_OBJECTS(2),  Count field is an Object Count type field._
 ;								$LOW_FIELD_COUNT_TYPE_PAGES(3), Count field is a Page Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_PARAGRAPHS(4), Count field is a Paragraph Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_TABLES(5), Count field is a Table Count type field.
 ;								$LOW_FIELD_COUNT_TYPE_WORDS(6), Count field is a Word Count type field.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -6540,13 +6540,13 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 			$oNewCountField = $oDoc.createInstance($sFieldType)
 			If Not IsObj($oNewCountField) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-			;It doesn't work to just set a new Count type for an already inserted Count Field, so I have to create a new one and then
-			;insert it.
+			; It doesn't work to just set a new Count type for an already inserted Count Field, so I have to create a new one and then
+			; insert it.
 			$oNewCountField.NumberingType = $oCountField.NumberingType()
 
 			$oDoc.Text.createTextCursorByRange($oCountField.Anchor()).Text.insertTextContent($oCountField.Anchor(), $oNewCountField, True)
 
-			;Update the Old Count Field Object to the new one.
+			; Update the Old Count Field Object to the new one.
 			$oCountField = $oNewCountField
 
 			$oCountField.Update()
@@ -6595,7 +6595,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
 ;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
 ;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
 ;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
@@ -6660,7 +6660,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
 ;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
 ;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
 ;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
@@ -6740,7 +6740,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 		Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 	EndIf
 
-	;Update All Fields.
+	; Update All Fields.
 	$oTextFields = $oDoc.getTextFields.createEnumeration()
 	If Not IsObj($oTextFields) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
@@ -6931,7 +6931,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -7063,7 +7063,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)

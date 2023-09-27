@@ -28,38 +28,38 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_TableBorderColor
-;_LOWriter_TableBorderPadding
-;_LOWriter_TableBorderStyle
-;_LOWriter_TableBorderWidth
-;_LOWriter_TableBreak
-;_LOWriter_TableColor
-;_LOWriter_TableColumnDelete
-;_LOWriter_TableColumnGetCount
-;_LOWriter_TableColumnInsert
-;_LOWriter_TableCreate
-;_LOWriter_TableCreateCursor
-;_LOWriter_TableCursor
-;_LOWriter_TableDelete
-;_LOWriter_TableGetCellNames
-;_LOWriter_TableGetCellObjByCursor
-;_LOWriter_TableGetCellObjByName
-;_LOWriter_TableGetCellObjByPosition
-;_LOWriter_TableGetData
-;_LOWriter_TableGetObjByCursor
-;_LOWriter_TableGetObjByName
-;_LOWriter_TableInsert
-;_LOWriter_TableMargin
-;_LOWriter_TableProperties
-;_LOWriter_TableRowColor
-;_LOWriter_TableRowDelete
-;_LOWriter_TableRowGetCount
-;_LOWriter_TableRowInsert
-;_LOWriter_TableRowProperty
-;_LOWriter_TableSetData
-;_LOWriter_TablesGetNames
-;_LOWriter_TableShadow
-;_LOWriter_TableWidth
+; _LOWriter_TableBorderColor
+; _LOWriter_TableBorderPadding
+; _LOWriter_TableBorderStyle
+; _LOWriter_TableBorderWidth
+; _LOWriter_TableBreak
+; _LOWriter_TableColor
+; _LOWriter_TableColumnDelete
+; _LOWriter_TableColumnGetCount
+; _LOWriter_TableColumnInsert
+; _LOWriter_TableCreate
+; _LOWriter_TableCreateCursor
+; _LOWriter_TableCursor
+; _LOWriter_TableDelete
+; _LOWriter_TableGetCellNames
+; _LOWriter_TableGetCellObjByCursor
+; _LOWriter_TableGetCellObjByName
+; _LOWriter_TableGetCellObjByPosition
+; _LOWriter_TableGetData
+; _LOWriter_TableGetObjByCursor
+; _LOWriter_TableGetObjByName
+; _LOWriter_TableInsert
+; _LOWriter_TableMargin
+; _LOWriter_TableProperties
+; _LOWriter_TableRowColor
+; _LOWriter_TableRowDelete
+; _LOWriter_TableRowGetCount
+; _LOWriter_TableRowInsert
+; _LOWriter_TableRowProperty
+; _LOWriter_TableSetData
+; _LOWriter_TablesGetNames
+; _LOWriter_TableShadow
+; _LOWriter_TableWidth
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -259,7 +259,7 @@ Func _LOWriter_TableBorderPadding(ByRef $oTable, $iTop = Null, $iBottom = Null, 
 	EndIf
 
 	$oTable.TableBorderDistances = $tBD
-	;Error Checking.
+	; Error Checking.
 	$tBD = $oTable.TableBorderDistances()
 	If Not IsObj($tBD) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -500,7 +500,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the Table. The current Paragraph,
 ;							therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the Table. The current Paragraph,
@@ -1355,8 +1355,8 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 	$avTableData = $oTable.getDataArray() ;Will fail if Columns are joined
 	If Not IsArray($avTableData) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-	;LibreOffice uses @CR and @LF, whereas Autoit uses @CRLF, I need to convert @CRLF back to @CR. So cycle through all Table
-	;Data and replace @CRLF with @CR
+	; LibreOffice uses @CR and @LF, whereas Autoit uses @CRLF, I need to convert @CRLF back to @CR. So cycle through all Table
+	; Data and replace @CRLF with @CR
 	For $k = 0 To UBound($avTableData) - 1
 		$avTempArray = $avTableData[$k]
 		For $j = 0 To UBound($avTempArray) - 1

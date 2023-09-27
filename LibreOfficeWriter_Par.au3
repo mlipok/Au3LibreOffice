@@ -31,46 +31,46 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_ParObjCopy
-;_LOWriter_ParObjCreateList
-;_LOWriter_ParObjDelete
-;_LOWriter_ParObjPaste
-;_LOWriter_ParObjSectionsGet
-;_LOWriter_ParObjSelect
-;_LOWriter_ParStyleAlignment
-;_LOWriter_ParStyleBackColor
-;_LOWriter_ParStyleBorderColor
-;_LOWriter_ParStyleBorderPadding
-;_LOWriter_ParStyleBorderStyle
-;_LOWriter_ParStyleBorderWidth
-;_LOWriter_ParStyleCreate
-;_LOWriter_ParStyleDelete
-;_LOWriter_ParStyleDropCaps
-;_LOWriter_ParStyleEffect
-;_LOWriter_ParStyleExists
-;_LOWriter_ParStyleFont
-;_LOWriter_ParStyleFontColor
-;_LOWriter_ParStyleGetObj
-;_LOWriter_ParStyleHyphenation
-;_LOWriter_ParStyleIndent
-;_LOWriter_ParStyleOrganizer
-;_LOWriter_ParStyleOutLineAndList
-;_LOWriter_ParStyleOverLine
-;_LOWriter_ParStylePageBreak
-;_LOWriter_ParStylePosition
-;_LOWriter_ParStyleRotateScale
-;_LOWriter_ParStyleSet
-;_LOWriter_ParStylesGetNames
-;_LOWriter_ParStyleShadow
-;_LOWriter_ParStyleSpace
-;_LOWriter_ParStyleSpacing
-;_LOWriter_ParStyleStrikeOut
-;_LOWriter_ParStyleTabStopCreate
-;_LOWriter_ParStyleTabStopDelete
-;_LOWriter_ParStyleTabStopList
-;_LOWriter_ParStyleTabStopMod
-;_LOWriter_ParStyleTxtFlowOpt
-;_LOWriter_ParStyleUnderLine
+; _LOWriter_ParObjCopy
+; _LOWriter_ParObjCreateList
+; _LOWriter_ParObjDelete
+; _LOWriter_ParObjPaste
+; _LOWriter_ParObjSectionsGet
+; _LOWriter_ParObjSelect
+; _LOWriter_ParStyleAlignment
+; _LOWriter_ParStyleBackColor
+; _LOWriter_ParStyleBorderColor
+; _LOWriter_ParStyleBorderPadding
+; _LOWriter_ParStyleBorderStyle
+; _LOWriter_ParStyleBorderWidth
+; _LOWriter_ParStyleCreate
+; _LOWriter_ParStyleDelete
+; _LOWriter_ParStyleDropCaps
+; _LOWriter_ParStyleEffect
+; _LOWriter_ParStyleExists
+; _LOWriter_ParStyleFont
+; _LOWriter_ParStyleFontColor
+; _LOWriter_ParStyleGetObj
+; _LOWriter_ParStyleHyphenation
+; _LOWriter_ParStyleIndent
+; _LOWriter_ParStyleOrganizer
+; _LOWriter_ParStyleOutLineAndList
+; _LOWriter_ParStyleOverLine
+; _LOWriter_ParStylePageBreak
+; _LOWriter_ParStylePosition
+; _LOWriter_ParStyleRotateScale
+; _LOWriter_ParStyleSet
+; _LOWriter_ParStylesGetNames
+; _LOWriter_ParStyleShadow
+; _LOWriter_ParStyleSpace
+; _LOWriter_ParStyleSpacing
+; _LOWriter_ParStyleStrikeOut
+; _LOWriter_ParStyleTabStopCreate
+; _LOWriter_ParStyleTabStopDelete
+; _LOWriter_ParStyleTabStopList
+; _LOWriter_ParStyleTabStopMod
+; _LOWriter_ParStyleTxtFlowOpt
+; _LOWriter_ParStyleUnderLine
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -1013,7 +1013,7 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oParStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Default Paragraph Style") Then $oParStyle.setParentStyle($sReplacementStyle)
-	;If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
+	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
 	Return ($oParStyles.hasByName($sParStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -1870,7 +1870,7 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current
 ;							Paragraph, therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current

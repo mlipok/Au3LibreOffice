@@ -8,28 +8,28 @@ Func Example()
 	Local $oDoc, $oViewCursor
 	Local $avSettings
 
-	;Create a New, visible, Blank Libre Office Document.
+	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the document view cursor to insert text with.
+	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Insert some text.
+	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Endnote at the end of this line. ")
 	If (@error > 0) Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	;Insert a Endnote at the ViewCursor
+	; Insert a Endnote at the ViewCursor
 	_LOWriter_EndnoteInsert($oDoc, $oViewCursor)
 	If (@error > 0) Then _ERROR("Failed to insert a Endnote. Error:" & @error & " Extended:" & @extended)
 
-	;Modify the Document's Endnote settings to: Number format = $LOW_NUM_STYLE_ROMAN_UPPER, Start Numbering at 5, Before the Endnote label, Place
-	;a Emdash and after the Endnote label place a Colon
+	; Modify the Document's Endnote settings to: Number format = $LOW_NUM_STYLE_ROMAN_UPPER, Start Numbering at 5, Before the Endnote label, Place
+	; a Emdash and after the Endnote label place a Colon
 	_LOWriter_EndnoteSettingsAutoNumber($oDoc, $LOW_NUM_STYLE_ROMAN_UPPER, 5, "—", ":")
 	If (@error > 0) Then _ERROR("Failed to modify Endnote settings. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the current Endnote settings. Return will be an array in order of function parameters.
+	; Retrieve the current Endnote settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_EndnoteSettingsAutoNumber($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve Endnote settings. Error:" & @error & " Extended:" & @extended)
 
@@ -41,7 +41,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
-	;Close the document.
+	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 

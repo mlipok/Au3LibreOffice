@@ -9,11 +9,11 @@ Func Example()
 	Local $oDoc
 	Local $asFonts
 
-	;Create a New, visible, Blank Libre Office Document.
+	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve Array list of font names
+	; Retrieve Array list of font names
 	$asFonts = _LOWriter_FontsList($oDoc)
 	If (@error > 0) Then _ERROR("Failed to retrieve Array of font names. Error:" & @error & " Extended:" & @extended)
 
@@ -28,7 +28,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
-	;Close the document.
+	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 

@@ -28,73 +28,73 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_DocBookmarkDelete
-;_LOWriter_DocBookmarkGetAnchor
-;_LOWriter_DocBookmarkGetObj
-;_LOWriter_DocBookmarkInsert
-;_LOWriter_DocBookmarkModify
-;_LOWriter_DocBookmarksHasName
-;_LOWriter_DocBookmarksList
-;_LOWriter_DocClose
-;_LOWriter_DocConnect
-;_LOWriter_DocConvertTableToText
-;_LOWriter_DocConvertTextToTable
-;_LOWriter_DocCreate
-;_LOWriter_DocCreateTextCursor
-;_LOWriter_DocDescription
-;_LOWriter_DocEnumPrinters
-;_LOWriter_DocEnumPrintersAlt
-;_LOWriter_DocExecuteDispatch
-;_LOWriter_DocExport
-;_LOWriter_DocFindAll
-;_LOWriter_DocFindAllInRange
-;_LOWriter_DocFindNext
-;_LOWriter_DocFooterGetTextCursor
-;_LOWriter_DocGenProp
-;_LOWriter_DocGenPropCreation
-;_LOWriter_DocGenPropModification
-;_LOWriter_DocGenPropPrint
-;_LOWriter_DocGenPropTemplate
-;_LOWriter_DocGetCounts
-;_LOWriter_DocGetName
-;_LOWriter_DocGetPath
-;_LOWriter_DocGetString
-;_LOWriter_DocGetViewCursor
-;_LOWriter_DocHasFrameName
-;_LOWriter_DocHasPath
-;_LOWriter_DocHasTableName
-;_LOWriter_DocHeaderGetTextCursor
-;_LOWriter_DocHyperlinkInsert
-;_LOWriter_DocInsertControlChar
-;_LOWriter_DocInsertString
-;_LOWriter_DocIsActive
-;_LOWriter_DocIsModified
-;_LOWriter_DocIsReadOnly
-;_LOWriter_DocMaximize
-;_LOWriter_DocMinimize
-;_LOWriter_DocOpen
-;_LOWriter_DocPosAndSize
-;_LOWriter_DocPrint
-;_LOWriter_DocPrintIncludedSettings
-;_LOWriter_DocPrintMiscSettings
-;_LOWriter_DocPrintPageSettings
-;_LOWriter_DocPrintSizeSettings
-;_LOWriter_DocRedo
-;_LOWriter_DocRedoCurActionTitle
-;_LOWriter_DocRedoGetAllActionTitles
-;_LOWriter_DocRedoIsPossible
-;_LOWriter_DocReplaceAll
-;_LOWriter_DocReplaceAllInRange
-;_LOWriter_DocSave
-;_LOWriter_DocSaveAs
-;_LOWriter_DocToFront
-;_LOWriter_DocUndo
-;_LOWriter_DocUndoCurActionTitle
-;_LOWriter_DocUndoGetAllActionTitles
-;_LOWriter_DocUndoIsPossible
-;_LOWriter_DocViewCursorGetPosition
-;_LOWriter_DocVisible
-;_LOWriter_DocZoom
+; _LOWriter_DocBookmarkDelete
+; _LOWriter_DocBookmarkGetAnchor
+; _LOWriter_DocBookmarkGetObj
+; _LOWriter_DocBookmarkInsert
+; _LOWriter_DocBookmarkModify
+; _LOWriter_DocBookmarksHasName
+; _LOWriter_DocBookmarksList
+; _LOWriter_DocClose
+; _LOWriter_DocConnect
+; _LOWriter_DocConvertTableToText
+; _LOWriter_DocConvertTextToTable
+; _LOWriter_DocCreate
+; _LOWriter_DocCreateTextCursor
+; _LOWriter_DocDescription
+; _LOWriter_DocEnumPrinters
+; _LOWriter_DocEnumPrintersAlt
+; _LOWriter_DocExecuteDispatch
+; _LOWriter_DocExport
+; _LOWriter_DocFindAll
+; _LOWriter_DocFindAllInRange
+; _LOWriter_DocFindNext
+; _LOWriter_DocFooterGetTextCursor
+; _LOWriter_DocGenProp
+; _LOWriter_DocGenPropCreation
+; _LOWriter_DocGenPropModification
+; _LOWriter_DocGenPropPrint
+; _LOWriter_DocGenPropTemplate
+; _LOWriter_DocGetCounts
+; _LOWriter_DocGetName
+; _LOWriter_DocGetPath
+; _LOWriter_DocGetString
+; _LOWriter_DocGetViewCursor
+; _LOWriter_DocHasFrameName
+; _LOWriter_DocHasPath
+; _LOWriter_DocHasTableName
+; _LOWriter_DocHeaderGetTextCursor
+; _LOWriter_DocHyperlinkInsert
+; _LOWriter_DocInsertControlChar
+; _LOWriter_DocInsertString
+; _LOWriter_DocIsActive
+; _LOWriter_DocIsModified
+; _LOWriter_DocIsReadOnly
+; _LOWriter_DocMaximize
+; _LOWriter_DocMinimize
+; _LOWriter_DocOpen
+; _LOWriter_DocPosAndSize
+; _LOWriter_DocPrint
+; _LOWriter_DocPrintIncludedSettings
+; _LOWriter_DocPrintMiscSettings
+; _LOWriter_DocPrintPageSettings
+; _LOWriter_DocPrintSizeSettings
+; _LOWriter_DocRedo
+; _LOWriter_DocRedoCurActionTitle
+; _LOWriter_DocRedoGetAllActionTitles
+; _LOWriter_DocRedoIsPossible
+; _LOWriter_DocReplaceAll
+; _LOWriter_DocReplaceAllInRange
+; _LOWriter_DocSave
+; _LOWriter_DocSaveAs
+; _LOWriter_DocToFront
+; _LOWriter_DocUndo
+; _LOWriter_DocUndoCurActionTitle
+; _LOWriter_DocUndoGetAllActionTitles
+; _LOWriter_DocUndoIsPossible
+; _LOWriter_DocViewCursorGetPosition
+; _LOWriter_DocVisible
+; _LOWriter_DocZoom
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -512,7 +512,7 @@ EndFunc   ;==>_LOWriter_DocClose
 ;				   +						last active Document, unless it is not a Text Document.
 ;                  $bConnectAll         - [optional] a boolean value. Default is False. If True, returns an array containing all
 ;				   +					open Libre Text Documents. See remarks.
-;-Return values .:Success: Object or Array.
+; -Return values .:Success: Object or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sFile not a string.
@@ -717,18 +717,18 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	$asCellNames = $oTable.getCellNames()
 	If Not IsArray($asCellNames) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
-	;Retrieve the ViewCursor.
+	; Retrieve the ViewCursor.
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
 	If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-	;Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+	; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 	If Not IsObj($oViewCursorBackup) Then
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
 		If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
-	;Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
+	; Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
 	$oCellTextCursor = $oTable.getCellByName($asCellNames[0]).Text.createTextCursor()
 	If Not IsObj($oCellTextCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
 
@@ -742,7 +742,7 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTableToText", "", 0, $aArgs)
 
-	;Restore the ViewCursor to its previous location.
+	; Restore the ViewCursor to its previous location.
 	$oViewCursor.gotoRange($oViewCursorBackup, False)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -821,7 +821,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	$oTables = $oDoc.TextTables()
 	If Not IsObj($oTables) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 	ReDim $asTables[$oTables.getCount()]
-	;Store all current Table Names.
+	; Store all current Table Names.
 	For $i = 0 To $oTables.getCount() - 1
 		$asTables[$i] = $oTables.getByIndex($i).Name()
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))     ;Sleep every x cycles.
@@ -831,7 +831,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 
-	;If Cursor has no data selected, return error.
+	; If Cursor has no data selected, return error.
 	If $oCursor.isCollapsed() Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
@@ -848,11 +848,11 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 	If ($iCursorType = $LOW_CURTYPE_TEXT_CURSOR) Then
 
-		;Retrieve the ViewCursor.
+		; Retrieve the ViewCursor.
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
 		If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
 
-		;Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+		; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 		If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
 
@@ -860,15 +860,15 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 		$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTextToTable", "", 0, $atArgs)
 
-		;Restore the ViewCursor to its previous location.
+		; Restore the ViewCursor to its previous location.
 		$oViewCursor.gotoRange($oViewCursorBackup, False)
 	Else
 
 		$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTextToTable", "", 0, $atArgs)
 	EndIf
 
-	;Obtain the newly created table object by comparing the original table names to the new list of tables. If none match,
-	;then it is the new one. Return that Table's Object.
+	; Obtain the newly created table object by comparing the original table names to the new list of tables. If none match,
+	; then it is the new one. Return that Table's Object.
 	For $i = 0 To $oTables.getCount() - 1
 
 		For $j = 0 To UBound($asTables) - 1
@@ -936,7 +936,7 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	;If not force new, and L.O pages exist then see if any blank writer documents to use.
+	; If not force new, and L.O pages exist then see if any blank writer documents to use.
 	If Not $bForceNew And $oDesktop.getComponents.hasElements() Then
 		$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 		If Not IsObj($oEnumDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
@@ -993,7 +993,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;					If you set $bCreateAtEnd to False, the new cursor is created at the beginning of the document, True creates
 ;					the cursor at the very end of the document. Setting $bCreateAtViewCursor to True will create a Textcursor at
 ;					the current ViewCursor position.
-;+
+; +
 ;						There are two types of cursors in Word documents. The one you see, called the "ViewCursor", and the one
 ;					you do not see, called the "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing
 ;					a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor
@@ -1737,7 +1737,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
 		If Not IsObj($oLastFind) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		If Not ($oLastFind.supportsService("com.sun.star.text.TextCursor")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
-		;If Search Backwards is False, then retrieve the end of the last result's range, else get the Start.
+		; If Search Backwards is False, then retrieve the end of the last result's range, else get the Start.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? $oLastFind.End() : $oLastFind.Start()
 	EndIf
 
@@ -2519,7 +2519,7 @@ Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 
 	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
 
-	;If No results, then search Shapes.
+	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
 	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -3334,7 +3334,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;					$vPages range is given as entered in the user interface. For example: "1-4,10" to print the
 ;					pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page
 ;					number. i.e. This will work: "1-6,12,27" This will Not 1-6,12,27. This will work: "7", This will also: 7.
-;Duplex Mode Constants: $LOW_DUPLEX_UNKNOWN(0),
+; Duplex Mode Constants: $LOW_DUPLEX_UNKNOWN(0),
 ;						$LOW_DUPLEX_OFF(1) [Default],
 ;						$LOW_DUPLEX_LONG(2),
 ;						$LOW_DUPLEX_SHORT(3)
@@ -3546,9 +3546,9 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Paper Orientation Constants: $LOW_PAPER_PORTRAIT(0),
+; Paper Orientation Constants: $LOW_PAPER_PORTRAIT(0),
 ;								$LOW_PAPER_LANDSCAPE(1)
-;Comment Print Mode Constants: $LOW_PRINT_NOTES_NONE (0), Document content itself is printed, without printing any Comments if
+; Comment Print Mode Constants: $LOW_PRINT_NOTES_NONE (0), Document content itself is printed, without printing any Comments if
 ;									present;
 ;								$LOW_PRINT_NOTES_ONLY(1), Only Comments are printed, and NONE of the Document content is
 ;									printed;
@@ -3777,7 +3777,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;Paper Format Constants:$LOW_PAPER_A3(0);
+; Paper Format Constants:$LOW_PAPER_A3(0);
 ;							$LOW_PAPER_A4(1);
 ;							$LOW_PAPER_A5(2);
 ;							$LOW_PAPER_B4(3);
@@ -3786,7 +3786,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;							$LOW_PAPER_LEGAL(6);
 ;							$LOW_PAPER_TABLOID(7);
 ;							$LOW_PAPER_USER_DEFINED(8).
-;Paper Width Constants: $LOW_PAPER_WIDTH_A6(10490),
+; Paper Width Constants: $LOW_PAPER_WIDTH_A6(10490),
 ;							$LOW_PAPER_WIDTH_A5(14808),
 ;							$LOW_PAPER_WIDTH_A4(21006),
 ;							$LOW_PAPER_WIDTH_A3(29693),
@@ -3815,7 +3815,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;							$LOW_PAPER_WIDTH_11ENVELOPE(11430),
 ;							$LOW_PAPER_WIDTH_12ENVELOPE(12065),
 ;							$LOW_PAPER_WIDTH_JAP_POSTCARD(10008
-;Paper Height Constants: $LOW_PAPER_HEIGHT_A6(14808),
+; Paper Height Constants: $LOW_PAPER_HEIGHT_A6(14808),
 ;							$LOW_PAPER_HEIGHT_A5(21006),
 ;							$LOW_PAPER_HEIGHT_A4(29693),
 ;							$LOW_PAPER_HEIGHT_A3(42012),
@@ -3889,7 +3889,7 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 			If Not IsInt($iPaperWidth) And ($iPaperWidth <> Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 			If Not IsInt($iPaperHeight) And ($iPaperHeight <> Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
-			;Set in uM but retrieved in TWIPS
+			; Set in uM but retrieved in TWIPS
 			$tSize = __LOWriter_CreateStruct("com.sun.star.awt.Size")
 			If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 			$tSize.Width = ($iPaperWidth = Null) ? __LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOWCONST_CONVERT_TWIPS_UM) : $iPaperWidth
@@ -4225,8 +4225,8 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
 	If (UBound($atReplaceFormat) > 0) Then $bFormat = True
 
-	;If Find/Replace using a Regular expression is True, and replace formatting is set, convert the regular expressions for my
-	;alternate replacement function to use.
+	; If Find/Replace using a Regular expression is True, and replace formatting is set, convert the regular expressions for my
+	; alternate replacement function to use.
 	If ($oSrchDescript.SearchRegularExpression() = True) And ($bFormat = True) Then __LOWriter_RegExpConvert($sReplaceString)
 	If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -4254,11 +4254,11 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
 			If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-			;Backup the ViewCursor location and selection.
+			; Backup the ViewCursor location and selection.
 			$oViewCursorBackup = $oDoc.Text.createTextCursorByRange($oViewCursor)
 			If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-			;Move the View Cursor to the input range.
+			; Move the View Cursor to the input range.
 			$oViewCursor.gotoRange($oRange, False)
 
 			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
@@ -4277,7 +4277,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 
 			$oDispatcher.executeDispatch($oDoc.CurrentController, ".uno:ExecuteSearch", "", 0, $atArgs)
 
-			;Restore the ViewCursor to its previous location.
+			; Restore the ViewCursor to its previous location.
 			$oViewCursor.gotoRange($oViewCursorBackup, False)
 
 		EndIf

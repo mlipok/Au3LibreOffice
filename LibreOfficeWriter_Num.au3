@@ -28,16 +28,16 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_LOWriter_NumStyleCreate
-;_LOWriter_NumStyleCustomize
-;_LOWriter_NumStyleDelete
-;_LOWriter_NumStyleExists
-;_LOWriter_NumStyleGetObj
-;_LOWriter_NumStyleOrganizer
-;_LOWriter_NumStylePosition
-;_LOWriter_NumStyleSet
-;_LOWriter_NumStyleSetLevel
-;_LOWriter_NumStylesGetNames
+; _LOWriter_NumStyleCreate
+; _LOWriter_NumStyleCustomize
+; _LOWriter_NumStyleDelete
+; _LOWriter_NumStyleExists
+; _LOWriter_NumStyleGetObj
+; _LOWriter_NumStyleOrganizer
+; _LOWriter_NumStylePosition
+; _LOWriter_NumStyleSet
+; _LOWriter_NumStyleSetLevel
+; _LOWriter_NumStylesGetNames
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -184,7 +184,7 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;						other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					When a lot of settings are set, especially for all levels, this function can be a bit slow.
-;Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
+; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
 ;	$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
 ;	$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
@@ -336,7 +336,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 		$aNumSettings[$iRowCount][1] = $iSubLevels
 		$iRowCount += 1
 
-		;If Document has "ListFormat" setting (Libre 7.2 +), Sub Levels ("ParentNumbering") wont accept a setting without
+		; If Document has "ListFormat" setting (Libre 7.2 +), Sub Levels ("ParentNumbering") wont accept a setting without
 		; also setting "List format", which means combining the corresponding "ListFormat"  number values + Prefix & Suffix.
 		__LOWriter_NumStyleRetrieve($oNumRules, 9, "ListFormat") ;Test if "ListFormat" exists in the Numbering Rules.
 		If (@error = 0) Then ; If List Format does exist, modify it.
@@ -390,7 +390,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	$iLevel = ($iLevel = -1) ? 9 : $iLevel ;If Level is set to -1 (modify all), set to last level to check the settings.
 
-	;Error Checking
+	; Error Checking
 	$iError = ($iNumFormat = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $iNumFormat) ? $iError : BitOR($iError, 1)
 	$iError = ($iStartAt = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith") = $iStartAt) ? $iError : BitOR($iError, 2)
 	$iError = ($sCharStyle = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName") = $sCharStyle) ? $iError : BitOR($iError, 4)
@@ -677,10 +677,10 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;						get the current settings. Note: You can only request setting values for one numbering level at a time,
 ;						you aren't able to call $iLevel with 0 to retrieve all at once.
 ;					Call any optional parameter with Null keyword to skip it.
-;Number Alignment Constants: $LOW_ORIENT_HORI_RIGHT(1),
+; Number Alignment Constants: $LOW_ORIENT_HORI_RIGHT(1),
 ;								$LOW_ORIENT_HORI_CENTER(2),
 ;								$LOW_ORIENT_HORI_LEFT(3)
-;Followed By Constants: $LOW_FOLLOW_BY_TABSTOP(0),
+; Followed By Constants: $LOW_FOLLOW_BY_TABSTOP(0),
 ;							$LOW_FOLLOW_BY_SPACE(1),
 ;							$LOW_FOLLOW_BY_NOTHING(2),
 ;							$LOW_FOLLOW_BY_NEWLINE(3)
@@ -760,7 +760,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 
 	$oNumStyle.NumberingRules = $oNumRules
 
-	;Error Checking:
+	; Error Checking:
 	$oNumRules = $oNumStyle.NumberingRules()
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 	$iLevel = ($iLevel = -1) ? 9 : $iLevel ;If Level is set to -1 (modify all), set to last level to check the settings.

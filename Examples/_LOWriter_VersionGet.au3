@@ -7,15 +7,15 @@ Example()
 Func Example()
 	Local $sVersionAndName, $sFullVersion, $sSimpleVersion
 
-	;Retrieve the current full Office version number and name.
+	; Retrieve the current full Office version number and name.
 	$sVersionAndName = _LOWriter_VersionGet(False, True)
 	If (@error > 0) Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the current full Office version number.
+	; Retrieve the current full Office version number.
 	$sFullVersion = _LOWriter_VersionGet()
 	If (@error > 0) Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the current simple Office version number.
+	; Retrieve the current simple Office version number.
 	$sSimpleVersion = _LOWriter_VersionGet(True)
 	If (@error > 0) Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
 
