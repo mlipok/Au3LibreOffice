@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -163,7 +163,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ;				   +							MicroMeters.
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right border distance in
 ;				   +							MicroMeters.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
@@ -361,7 +361,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -399,7 +399,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sCharStyle          - a string value. The Name of the New Character Style to Create.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -459,7 +459,7 @@ EndFunc   ;==>_LOWriter_CharStyleCreate
 ;                  $sReplacementStyle   - [optional] a string value. Default is "". The Character style to use instead of the
 ;				   +						one being deleted if the Character style being deleted was already applied to text
 ;				   +						in the document. "" = No Character Style
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -829,7 +829,7 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ;				   +						Use the other settings to modify the inherited style settings.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI.
 ;				   +						Libre Office version 4.0 and up only.
-; Return values .:   Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
@@ -856,7 +856,7 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ;				   +								2 elements because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set
 ;					to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStylesGetNames
@@ -950,7 +950,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Note: OverLine line style uses the same constants as underline style.
+; Remarks .......: Note: OverLine line style uses the same constants as underline style.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -1049,7 +1049,7 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ;				   +								settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
@@ -1186,7 +1186,7 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;				   +						Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Character Styles
 ;				   +						are returned.
-; Return values .:  Success: Integer or Array
+; Return values .: Success: Integer or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1435,7 +1435,7 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note Strikeout converted to single line in Ms word document format.

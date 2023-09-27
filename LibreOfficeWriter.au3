@@ -18,7 +18,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -460,7 +460,7 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -2156,7 +2156,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;				   +						must be added to match the search pattern.
 ;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that
 ;				   +						must be replaced to match the search pattern.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.

@@ -12,7 +12,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -479,7 +479,7 @@ EndFunc   ;==>_LOWriter_ConvertColorToLong
 ;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nCMillimetersOut is set.  A
 ;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
 ;					measurement parameter.
-; Related .......:  _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -697,7 +697,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyDelete
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $iFormatKey          - an integer value. The Date Format Key to check for.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2538,7 +2538,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sFormat             - a string value. The format String to create.
-; Return values .:  Success: Integer
+; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2702,7 +2702,7 @@ EndFunc   ;==>_LOWriter_FormatKeyExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyGetString
-; Description ...:  Retrieve a Format Key String.
+; Description ...: Retrieve a Format Key String.
 ; Syntax ........: _LOWriter_FormatKeyGetString(Byref $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.

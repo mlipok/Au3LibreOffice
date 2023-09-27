@@ -13,7 +13,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -85,7 +85,7 @@
 ;				   +							$LOW_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is
 ;				   +						transparent or not. True = visible.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
@@ -246,7 +246,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;				   +								settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
@@ -733,7 +733,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -810,7 +810,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Line Style Constants: $LOW_LINE_STYLE_NONE(0),
@@ -1003,7 +1003,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  NOTE: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
+; Remarks .......: NOTE: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
 ;						best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am
 ;						unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the
 ;						appropriate relative value, especially when spacing is set.
@@ -1143,7 +1143,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSize
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
 ;				   +					DocCreate function.
 ;                  $sPageStyle          - a string value. The Name of the New Page Style to Create.
-; Return values .:  Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1198,7 +1198,7 @@ EndFunc   ;==>_LOWriter_PageStyleCreate
 ;                  $oPageStyle           - [in/out] an object. A Page Style object returned by previous PageStyle Create or
 ;				   +						Object Retrieval function Must be User-Created, not a built-in Style native to
 ;				   +						Libre-Office.
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1441,7 +1441,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ;				   +							$LOW_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is
 ;				   +						transparent or not. True = visible.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
@@ -1816,7 +1816,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradient
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Border Width must be set first to be able to set Border Style and Color.
+; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -2007,7 +2007,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderPadding
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Border Width must be set first to be able to set Border Style and Color.
+; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -2099,11 +2099,11 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  To "Turn Off" Borders, set Width to 0.
+; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -2262,7 +2262,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleFooterTransparency
-; Description ...:  Modify or retrieve Transparency settings for a page style Footer.
+; Description ...: Modify or retrieve Transparency settings for a page style Footer.
 ; Syntax ........: _LOWriter_PageStyleFooterTransparency(Byref $oPageStyle[, $iTransparency = Null])
 ; Parameters ....: $oPageStyle           - [in/out] an object. A Page Style object returned by previous PageStyle Create or
 ;				   +						Object Retrieval function.
@@ -2721,7 +2721,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleHeader
-; Description ...:  Modify or retrieve Header settings for a page style.
+; Description ...: Modify or retrieve Header settings for a page style.
 ; Syntax ........: _LOWriter_PageStyleHeader(Byref $oPageStyle[, $bHeaderOn = Null[, $bSameLeftRight = Null[, $bSameOnFirst = Null[, $iLeftMargin = Null[, $iRightMargin = Null[, $iSpacing = Null[, $bDynamicSpacing = Null[, $iHeight = Null[, $bAutoHeight = Null]]]]]]]]])
 ; Parameters ....: $oPageStyle           - [in/out] an object. A Page Style object returned by previous PageStyle Create or
 ;				   +						Object Retrieval function.
@@ -3258,7 +3258,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradient
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Border Width must be set first to be able to set Border Style and Color.
+; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -3449,7 +3449,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderPadding
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Border Width must be set first to be able to set Border Style and Color.
+; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;					 Call this function with only the required parameters (or with all other parameters set to Null keyword),
 ;					to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -3545,7 +3545,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -3590,7 +3590,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;				   +						or not.
 ;                  $iLocation           - [optional] an integer value. Default is Null. The Location of the Header Shadow, must
 ;				   +						be one of the Constants below.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
@@ -3617,7 +3617,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: LibreOffice may change the shadow width +/- a Micrometer.
@@ -3978,7 +3978,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ;				   +								$bBackCoversMargins will not be available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: I have no way to retrieve possible values for the PaperTray parameter, at least that I can find. You
@@ -4190,7 +4190,7 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ;				   +								array will have 4 elements as Gutter Margin will not be available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
@@ -4266,7 +4266,7 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ;				   +						Libre Office 4.0 and Up.
 ;                  $sFollowStyle        - [optional] a string value. Default is Null. The name of the style that is applied
 ;				   +						After this Page Style.
-; Return values .:   Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
@@ -4756,7 +4756,7 @@ EndFunc   ;==>_LOWriter_PageStyleShadow
 ;				   +								current setting for Transparency in integer format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
@@ -4844,7 +4844,7 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;				   +								settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Gradient Type Constants: $LOW_GRAD_TYPE_OFF(-1),

@@ -10,7 +10,7 @@
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
 ; Author(s) .....: donnyh13
-; Sources . . . .:  jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
+; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
 ;					Andrew Pitonyak & Laurent Godard (VersionGet);
@@ -118,7 +118,7 @@
 ;                  $vData               - a variant value. The Data to add to the Array.
 ;                  $bCountInFirst       - [optional] a boolean value. Default is False. If True the first element of the array
 ;				   +						is a count of contained elements.
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $aArray not an Array
@@ -164,7 +164,7 @@ EndFunc   ;==>__LOWriter_AddTo1DArray
 ;                  $vDataCol2           - a variant value. The Data to add to the Second column of the Array.
 ;                  $bCountInFirst       - [optional] a boolean value. Default is False. If True the first element of the array
 ;				   +						is a count of contained elements.
-; Return values .:  Success: 1
+; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $aArray not an Array
@@ -213,7 +213,7 @@ EndFunc   ;==>__LOWriter_AddTo2DArray
 ;                  $vVar6               - [optional] a variant value. Default is Null.
 ;                  $vVar7               - [optional] a variant value. Default is Null.
 ;                  $vVar8               - [optional] a variant value. Default is Null.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: False
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Boolean = If Any parameters are equal to Default, True is returned. Else False.
@@ -307,7 +307,7 @@ EndFunc   ;==>__LOWriter_ArrayFill
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:   Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true
+; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true
 ;						to get the corresponding current settings.
 ;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -500,7 +500,7 @@ EndFunc   ;==>__LOWriter_CharBorder
 ;                  $iBottom             - an integer value. Set the Bottom border distance in MicroMeters.
 ;                  $iLeft               - an integer value. Set the left border distance in MicroMeters.
 ;                  $iRight              - an integer value. Set the Right border distance in MicroMeters.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -590,7 +590,7 @@ EndFunc   ;==>__LOWriter_CharBorderPadding
 ;                  $bHidden             - a boolean value. Whether the Characters are hidden or not.
 ;                  $bOutline            - a boolean value. Whether the characters have an outline around the outside.
 ;                  $bShadow             - a boolean value. Whether the characters have a shadow.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -686,7 +686,7 @@ EndFunc   ;==>__LOWriter_CharEffect
 ;                  $nFontSize           - a general number value. The new Font size.
 ;                  $iPosture            - an integer value. Italic setting. See Constants below. Also see remarks.
 ;                  $iWeight             - an integer value. Bold settings see Constants below. Also see remarks.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
@@ -1204,7 +1204,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ;                  $bTransparent        - a boolean value. Whether the shadow is transparent or not.
 ;                  $iLocation           - an integer value. Location of the shadow compared to the characters. See Constants
 ;				   +						listed below.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -1337,7 +1337,7 @@ EndFunc   ;==>__LOWriter_CharShadow
 ;				   +								settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the Object parameter and all other parameters set to Null keyword, to
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
@@ -1398,7 +1398,7 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ;				   +						whitespaces.
 ;                  $bStrikeOut          - a boolean value. True = strikeout, False = no strike out.
 ;                  $iStrikeLineStyle    - an integer value. The Strikeout Line Style, see constants below.
-; Return values .:   Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -2312,7 +2312,7 @@ EndFunc   ;==>__LOWriter_FindFormatRetrieveSetting
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_FooterBorder
-; Description ...:  Header Border Setting Internal function.
+; Description ...: Header Border Setting Internal function.
 ; Syntax ........: __LOWriter_FooterBorder(Byref $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. Footer Object.
 ;                  $bWid                - a boolean value. If True the calling function is for setting Border Line Width.
@@ -2939,7 +2939,7 @@ EndFunc   ;==>__LOWriter_GradientPresets
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true
+; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true
 ;						to get the corresponding current settings.
 ;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -3306,7 +3306,7 @@ EndFunc   ;==>__LOWriter_IntIsBetween
 ; Syntax ........: __LOWriter_IsCellRange(Byref $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
 ;				   +						Object creation or retrieval functions.
-; Return values .: Success:  Boolean.
+; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
@@ -3676,7 +3676,7 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ;				   @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested settings.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  This works, but only with a work-around method, see inside this function for a description of why a
+; Remarks .......: This works, but only with a work-around method, see inside this function for a description of why a
 ;					work-around method is necessary.
 ;					When a lot of settings are set, especially for all levels, this function can be a bit slow.
 ; Related .......:
@@ -3793,7 +3793,7 @@ EndFunc   ;==>__LOWriter_NumStyleModify
 ; Parameters ....: $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
 ;                  $iLevel              - an integer value. The Numbering Style level to modify. 0-9.
 ;                  $sSettingName        - a string value. The Numbering Style Setting name to modify.
-; Return values .:  Success: Variable
+; Return values .: Success: Variable
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oNumRules not an Object.
@@ -4119,7 +4119,7 @@ EndFunc   ;==>__LOWriter_ParBackColor
 ;				   +								settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the Object parameter and all other parameters set to Null keyword, to
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -4332,7 +4332,7 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   +						hyphen character (when hyphenation is applied). Min 2, max 9.
 ;                  $iMinTrailingChar    - an integer value. Specifies the minimum number of characters to remain after the
 ;				   +						hyphen character (when hyphenation is applied). Min 2, max 9.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -4521,7 +4521,7 @@ EndFunc   ;==>__LOWriter_ParIndent
 ;                  $bParLineCount       - a boolean value. Whether the paragraph is included in the line numbering.
 ;                  $iLineCountVal       - an integer value. The start value for numbering if a new numbering starts at this
 ;				   +						paragraph. Set to 0 for no line numbering restart.
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
@@ -4966,7 +4966,7 @@ EndFunc   ;==>__LOWriter_ParSpace
 ; Syntax ........: __LOWriter_ParStyleNameToggle(Byref $sParStyle[, $bReverse = False])
 ; Parameters ....: $sParStyle           - a string value. The ParStyle Name to Toggle.
 ;                  $bReverse            - [optional] a boolean value. Default is False. If True, Reverse toggles the name.
-; Return values .:  Success: String.
+; Return values .: Success: String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sParStyle not a String.
@@ -5012,7 +5012,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;                  $iDecChar            - an integer value. Enter a character(in Asc Value(See Autoit Function)) that you want
 ;				   +						the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set
 ;				   +						to $LOW_TAB_ALIGN_DECIMAL.
-; Return values .:   Success: Integer.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
@@ -5144,7 +5144,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ; Syntax ........: __LOWriter_ParTabStopDelete(Byref $oObj, $iTabStop)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
-; Return values .:  Success: Boolean.
+; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
@@ -5157,7 +5157,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
+; Remarks .......: Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
 ;						margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there
 ;						 can only be one of a certain length per document.
 ; Related .......:
@@ -5213,7 +5213,7 @@ EndFunc   ;==>__LOWriter_ParTabStopDelete
 ; Description ...: Retrieve a List of TabStops available in a Paragraph.
 ; Syntax ........: __LOWriter_ParTabStopList(Byref $oObj)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-; Return values .:  Success: Array.
+; Return values .: Success: Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
@@ -5263,7 +5263,7 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;                  $iDecChar            - an integer value. Enter a character(in Asc Value(See Autoit Function)) that you want
 ;				   +						the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set
 ;				   +						to $LOW_TAB_ALIGN_DECIMAL.
-; Return values .:  Success: Integer or Array.
+; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
@@ -6186,7 +6186,7 @@ EndFunc   ;==>__LOWriter_TextCursorMove
 ;				   +						integer value.
 ;                  $iLongToPercent      - [optional] an integer value. Default is Null. The Long color integer value to convert
 ;				   +						to percentage.
-; Return values .:  Success: Integer.
+; Return values .: Success: Integer.
 ;					Failure: Null and sets the @Error and @Extended flags to non-zero.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return Null = No values called in parameters.
@@ -6449,7 +6449,7 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ;                  $vVar10              - [optional] a variant value. Default is Null.
 ;                  $vVar11              - [optional] a variant value. Default is Null.
 ;                  $vVar12              - [optional] a variant value. Default is Null.
-; Return values .:   Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: False
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Boolean = If All parameters are Equal to Null, True is returned. Else False.
