@@ -1,6 +1,6 @@
+#include <MsgBoxConstants.au3>
 
 #include "..\LibreOfficeWriter.au3"
-#include <MsgBoxConstants.au3>
 
 Example()
 
@@ -46,4 +46,3 @@ Func Example()
 			_LOWriter_PathConvert($sOfficePath, $LOW_PATHCONV_OFFICE_RETURN))
 
 EndFunc
-
