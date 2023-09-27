@@ -8588,8 +8588,6 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	Local $oResults, $oResult, $oRangeRegion, $oResultRegion, $oText, $oRangeAnchor
 	Local $aoResults[0]
 	Local $iCount = 0
-	_LOWriter_DocGetViewCursor
-	_LOWriter_DocCreateTextCursor
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
@@ -9245,7 +9243,6 @@ Func _LOWriter_DocGenPropTemplate(ByRef $oDoc, $sTemplateName = Null, $sTemplate
 	Local $oDocProp
 	Local $iError = 0
 	Local $avTemplate[3]
-	_LOWriter_DateStructModify
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
