@@ -30,6 +30,7 @@
 ;_LOWriter_ConvertColorToLong
 ;_LOWriter_ConvertFromMicrometer
 ;_LOWriter_ConvertToMicrometer
+;_LOWriter_PathConvert
 ;_LOWriter_VersionGet
 ; ===============================================================================================================================
 
@@ -565,6 +566,93 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 EndFunc   ;==>_LOWriter_ConvertToMicrometer
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_PathConvert
+; Description ...: Converts the input path to or from a LibreOffice URL notation path.
+; Syntax ........: _LOWriter_PathConvert($sFilePath[, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN])
+; Parameters ....: $sFilePath           - a string value. Full path to convert in String format.
+;                  $iReturnMode         - [optional] an integer value. Default is $__g_iAutoReturn. Designates what format of
+;				   +									path to return. See Constants.
+; Return values .: Success: String.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $sFilePath is not a string
+;				   @Error 1 @Extended 2 Return 0 = $iReturnMode Not a Integer, less than 0 or greater than 2, see constants.
+;				   --Success--
+;				   @Error 0 @Extended 1 Return String = Returning converted File Path from Libre Office URL.
+;				   @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are
+;					allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found
+;					in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering,
+;					Basic Programmer's Guide; Page 74
+;					The user generally should not even need this function, as I have endeavored to convert any URLs to the
+;						appropriate computer path format and any input computer paths to a Libre Office URL.
+;Path Return Constants: ; $LOW_PATHCONV_AUTO_RETURN(0) = Automatically returns the opposite of the input path, determined by
+;										StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File
+;										Path).
+;							$LOW_PATHCONV_OFFICE_RETURN(1) = Returns L.O Office URL, even if the input is already in that
+;										format.
+;							$LOW_PATHCONV_PCPATH_RETURN(2) = Returns Windows File Path, even if the input is already in that
+;										format.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
+	Local Const $STR_STRIPLEADING = 1
+	Local $asURLReplace[9][2] = [["%", "%25"], [" ", "%20"], ["\", "/"], [";", "%3B"], ["#", "%23"], ["^", "%5E"], ["{", "%7B"], _
+			["}", "%7D"], ["`", "%60"]]
+	Local $iPathSearch, $iFileSearch, $iPartialPCPath, $iPartialFilePath
+
+	If Not IsString($sFilePath) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iReturnMode, $LOW_PATHCONV_AUTO_RETURN, $LOW_PATHCONV_PCPATH_RETURN) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	$sFilePath = StringStripWS($sFilePath, $STR_STRIPLEADING)
+
+	$iPathSearch = StringRegExp($sFilePath, "[A-Z]\:\\") ; Search For a Computer Path, as in C:\ etc.
+	$iPartialPCPath = StringInStr($sFilePath, "\") ; Search for partial computer Path containing a backslash.
+	$iFileSearch = StringInStr($sFilePath, "file:///", 0, 1, 1, 9) ;Search for a full Libre path, which begins with File:///
+	$iPartialFilePath = StringInStr($sFilePath, "/") ;Search For a Partial Libre path containing forward slash
+
+	If ($iReturnMode = $LOW_PATHCONV_AUTO_RETURN) Then
+
+		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ; if file path contains partial or full PC path, set to convert to Libre URL.
+			$iReturnMode = $LOW_PATHCONV_OFFICE_RETURN
+		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ; if file path contains partial or full Libre URL, set to convert to PC Path.
+			$iReturnMode = $LOW_PATHCONV_PCPATH_RETURN
+		Else ; If file path contains neither above. convert to Libre URL
+			$iReturnMode = $LOW_PATHCONV_OFFICE_RETURN
+		EndIf
+	EndIf
+
+	Switch $iReturnMode
+
+		Case $LOW_PATHCONV_OFFICE_RETURN
+			If $iFileSearch > 0 Then Return SetError($__LOW_STATUS_SUCCESS, 2, $sFilePath)
+			If ($iPathSearch > 0) Then $sFilePath = "file:///" & $sFilePath
+
+			For $i = 0 To (UBound($asURLReplace) - 1)
+				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][0], $asURLReplace[$i][1])
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Next
+			Return SetError($__LOW_STATUS_SUCCESS, 2, $sFilePath)
+
+		Case $LOW_PATHCONV_PCPATH_RETURN
+			If ($iPathSearch > 0) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $sFilePath)
+			If ($iFileSearch > 0) Then $sFilePath = StringReplace($sFilePath, "file:///", Null)
+
+			For $i = 0 To (UBound($asURLReplace) - 1)
+				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][1], $asURLReplace[$i][0])
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Next
+			Return SetError($__LOW_STATUS_SUCCESS, 1, $sFilePath)
+
+	EndSwitch
+
+EndFunc   ;==>_LOWriter_PathConvert
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_VersionGet
 ; Description ...: Retrieve the current Office version.
 ; Syntax ........: _LOWriter_VersionGet([$bSimpleVersion = False[, $bReturnName = False]])
@@ -623,3 +711,4 @@ Func _LOWriter_VersionGet($bSimpleVersion = False, $bReturnName = False)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $sReturn)
 EndFunc   ;==>_LOWriter_VersionGet
+
