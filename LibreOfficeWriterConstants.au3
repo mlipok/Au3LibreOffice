@@ -691,8 +691,7 @@ Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _
 		$LOW_FIELD_COUNT_TYPE_TABLES, _
 		$LOW_FIELD_COUNT_TYPE_WORDS
 
-; Regular Field Types
-Global Enum Step *2 _
+Global Enum Step *2 _ ; Regular Field Types
 		$LOW_FIELD_TYPE_ALL = 1, _
 		$LOW_FIELD_TYPE_COMMENT, _
 		$LOW_FIELD_TYPE_AUTHOR, _
@@ -725,8 +724,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_TYPE_URL, _
 		$LOW_FIELD_TYPE_WORD_COUNT
 
-; Advanced Field Types
-Global Enum Step *2 _
+Global Enum Step *2 _ ; Advanced Field Types
 		$LOW_FIELDADV_TYPE_ALL = 1, _
 		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _
 		$LOW_FIELDADV_TYPE_DATABASE, _
@@ -738,8 +736,7 @@ Global Enum Step *2 _
 		$LOW_FIELDADV_TYPE_INPUT_USER, _
 		$LOW_FIELDADV_TYPE_USER
 
-; Document Information Field Types
-Global Enum Step *2 _
+Global Enum Step *2 _ ; Document Information Field Types
 		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _
 		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _
 		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _
