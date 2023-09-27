@@ -38434,68 +38434,6 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 
 EndFunc   ;==>_LOWriter_TableWidth
 
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_VersionGet
-; Description ...: Retrieve the current Office version.
-; Syntax ........: _LOWriter_VersionGet([$bSimpleVersion = False[, $bReturnName = False]])
-; Parameters ....: $bSimpleVersion      - [optional] a boolean value. Default is False. If True, returns a two digit version
-;				   +						number, such as "7.3", else returns the complex version number, such as "7.3.2.4".
-;                  $bReturnName         - [optional] a boolean value. Default is True. If True returns the Program Name, such
-;				   +						as "LibreOffice", appended before the version, "LibreOffice 7.3".
-; Return values .: Success: String
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $bSimpleVersion not a Boolean.
-;				   @Error 1 @Extended 2 Return 0 = $bReturnName not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
-;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.configuration.ConfigurationProvider" Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error setting property value.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
-; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
-; Modified ......: donnyh13, modified for Autoit ccompatibility and error checking.
-; Remarks .......: From Macro code by Zizi64 found at:
-;					https://forum.openoffice.org/en/forum/viewtopic.php?t=91542&sid=7f452d65e58ac1cd3cc6063350b5ada0
-;					And Andrew Pitonyak in "Useful Macro Information For OpenOffice.org" Pages 49, 50.
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_VersionGet($bSimpleVersion = False, $bReturnName = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $sAccess = "com.sun.star.configuration.ConfigurationAccess", $sVersionName, $sVersion, $sReturn
-	Local $oSettings, $oConfigProvider
-	Local $aParamArray[1]
-
-	If Not IsBool($bSimpleVersion) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-
-	Local $oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-
-	$oConfigProvider = $oServiceManager.createInstance("com.sun.star.configuration.ConfigurationProvider")
-	If Not IsObj($oConfigProvider) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-
-	$aParamArray[0] = __LOWriter_SetPropertyValue("nodepath", "/org.openoffice.Setup/Product")
-	If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$oSettings = $oConfigProvider.createInstanceWithArguments($sAccess, $aParamArray)
-
-	$sVersionName = $oSettings.getByName("ooName")
-
-	$sVersion = ($bSimpleVersion) ? $oSettings.getByName("ooSetupVersion") : $oSettings.getByName("ooSetupVersionAboutBox")
-
-	$sReturn = ($bReturnName) ? ($sVersionName & " " & $sVersion) : $sVersion
-
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $sReturn)
-EndFunc   ;==>_LOWriter_VersionGet
-
-
-
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_AddTo1DArray
