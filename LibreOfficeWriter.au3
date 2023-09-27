@@ -729,7 +729,7 @@ Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -890,7 +890,7 @@ Func _LOWriter_CellBorderPadding(ByRef $oCell, $iTop = Null, $iBottom = Null, $i
 	Local $iError = 0
 	Local $aiBPadding[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1107,7 +1107,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellCreateTextCursor(ByRef $oCell)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1144,7 +1144,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellFormula(ByRef $oCell, $sFormula = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1183,7 +1183,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellGetDataType(ByRef $oCell)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1213,7 +1213,7 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellGetError(ByRef $oCell)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1244,7 +1244,7 @@ EndFunc   ;==>_LOWriter_CellGetError
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellGetName(ByRef $oCell)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1282,7 +1282,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellProtect(ByRef $oCell, $bProtect = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1321,7 +1321,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellString(ByRef $oCell, $sString = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1364,7 +1364,7 @@ EndFunc   ;==>_LOWriter_CellString
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellValue(ByRef $oCell, $nValue = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1410,7 +1410,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CellVertOrient(ByRef $oCell, $iVertOrient = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1503,7 +1503,7 @@ EndFunc   ;==>_LOWriter_CellVertOrient
 Func _LOWriter_CharStyleBorderColor(ByRef $oCharStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -1574,7 +1574,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 Func _LOWriter_CharStyleBorderPadding(ByRef $oCharStyle, $iAll = Null, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -1673,7 +1673,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 Func _LOWriter_CharStyleBorderStyle(ByRef $oCharStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -1748,7 +1748,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 Func _LOWriter_CharStyleBorderWidth(ByRef $oCharStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -1796,7 +1796,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 Func _LOWriter_CharStyleCreate(ByRef $oDoc, $sCharStyle)
 	Local $oCharStyles, $oStyle, $oCharStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1860,7 +1860,7 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	Local $oCharStyles
 	Local $sCharStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1942,7 +1942,7 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 Func _LOWriter_CharStyleEffect(ByRef $oCharStyle, $iRelief = Null, $iCase = Null, $bHidden = Null, $bOutline = Null, $bShadow = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1975,7 +1975,7 @@ EndFunc   ;==>_LOWriter_CharStyleEffect
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CharStyleExists(ByRef $oDoc, $sCharStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2054,7 +2054,7 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 Func _LOWriter_CharStyleFont(ByRef $oDoc, ByRef $oCharStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2136,7 +2136,7 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 Func _LOWriter_CharStyleFontColor(ByRef $oCharStyle, $iFontColor = Null, $iTransparency = Null, $iHighlight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2174,7 +2174,7 @@ EndFunc   ;==>_LOWriter_CharStyleFontColor
 Func _LOWriter_CharStyleGetObj(ByRef $oDoc, $sCharStyle)
 	Local $oCharStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2239,7 +2239,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 	Local $iError = 0
 	Local $avOrganizer[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2373,7 +2373,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 Func _LOWriter_CharStyleOverLine(ByRef $oCharStyle, $bWordOnly = Null, $iOverLineStyle = Null, $bOLHasColor = Null, $iOLColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2443,7 +2443,7 @@ Func _LOWriter_CharStylePosition(ByRef $oCharStyle, $bAutoSuper = Null, $iSuperS
 		$iRelativeSize = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2492,7 +2492,7 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 Func _LOWriter_CharStyleRotateScale(ByRef $oCharStyle, $iRotation = Null, $iScaleWidth = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2536,7 +2536,7 @@ EndFunc   ;==>_LOWriter_CharStyleRotateScale
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2592,7 +2592,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2702,7 +2702,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -2765,7 +2765,7 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 Func _LOWriter_CharStyleSpacing(ByRef $oCharStyle, $bAutoKerning = Null, $nKerning = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2826,7 +2826,7 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 Func _LOWriter_CharStyleStrikeOut(ByRef $oCharStyle, $bWordOnly = Null, $bStrikeOut = Null, $iStrikeLineStyle = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -2924,7 +2924,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 Func _LOWriter_CharStyleUnderLine(ByRef $oCharStyle, $bWordOnly = Null, $iUnderLineStyle = Null, $bULHasColor = Null, $iULColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -3576,7 +3576,7 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 	$aiCommands[$LOW_CURSOR_STAT_GET_PAGE] = ".getPage()"
 	$aiCommands[$LOW_CURSOR_STAT_GET_RANGE_NAME] = ".getRangeName()"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -3682,7 +3682,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 Func _LOWriter_CursorGoToRange(ByRef $oCursor, ByRef $oRange, $bSelect = False)
 	Local $iCursorType, $iRangeType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -3858,7 +3858,7 @@ Func _LOWriter_DateFormatKeyCreate(ByRef $oDoc, $sFormat)
 	Local $tLocale
 	Local $oFormats
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -3907,7 +3907,7 @@ Func _LOWriter_DateFormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	Local $tLocale
 	Local $oFormats
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -3988,7 +3988,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyExists
 Func _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	Local $oFormatKey
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -4048,7 +4048,7 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	Local $tLocale
 	Local $iColumns = 3, $iCount = 0, $iQueryType = $LOW_FORMAT_KEYS_DATE_TIME
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -4143,7 +4143,7 @@ Func _LOWriter_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iH
 		$iNanoSeconds = Null, $bIsUTC = Null)
 	Local $tDateStruct
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	$tDateStruct = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
@@ -4277,7 +4277,7 @@ Func _LOWriter_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Nul
 	Local $iError = 0
 	Local $avMod[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($tDateStruct) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -4441,7 +4441,7 @@ EndFunc   ;==>_LOWriter_DateStructModify
 Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -4535,7 +4535,7 @@ Func _LOWriter_DirFrmtCharBorderPadding(ByRef $oSelection, $iAll = Null, $iTop =
 		$bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -4654,7 +4654,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -4751,7 +4751,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -4846,7 +4846,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 Func _LOWriter_DirFrmtCharEffect(ByRef $oSelection, $iRelief = Null, $iCase = Null, $bHidden = Null, $bOutline = Null, $bShadow = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -4960,7 +4960,7 @@ Func _LOWriter_DirFrmtCharPosition(ByRef $oSelection, $bAutoSuper = Null, $iSupe
 		$iRelativeSize = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5035,7 +5035,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 Func _LOWriter_DirFrmtCharRotateScale(ByRef $oSelection, $iRotation = Null, $iScaleWidth = Null, $bRotateFitLine = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5162,7 +5162,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -5244,7 +5244,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 Func _LOWriter_DirFrmtCharSpacing(ByRef $oSelection, $bAutoKerning = Null, $nKerning = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5312,7 +5312,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 	Local $oServiceManager, $oDispatcher, $oText, $oViewCursor, $oViewCursorBackup
 	Local $iCursorType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5442,7 +5442,7 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 Func _LOWriter_DirFrmtFont(ByRef $oDoc, ByRef $oSelection, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5564,7 +5564,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTransparency = Null, $iHighlight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5623,7 +5623,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFontColor
 Func _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 	Local $asStyles[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5740,7 +5740,7 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineStyle = Null, $bOLHasColor = Null, $iOLColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5875,7 +5875,7 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 		$bExpandSingleWord = Null, $bSnapToGrid = Null, $iTxtDirection = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -5993,7 +5993,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBackTransparent = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6101,7 +6101,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 Func _LOWriter_DirFrmtParBorderColor(ByRef $oSelection, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6192,7 +6192,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 Func _LOWriter_DirFrmtParBorderPadding(ByRef $oSelection, $iAll = Null, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6307,7 +6307,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 Func _LOWriter_DirFrmtParBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6413,7 +6413,7 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 		$bConnectBorder = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6533,7 +6533,7 @@ Func _LOWriter_DirFrmtParDropCaps(ByRef $oDoc, ByRef $oSelection, $iNumChar = Nu
 		$bWholeWord = Null, $sCharStyle = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6625,7 +6625,7 @@ Func _LOWriter_DirFrmtParHyphenation(ByRef $oSelection, $bAutoHyphen = Null, $bH
 		$iMinLeadingChar = Null, $iMinTrailingChar = Null, $bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6708,7 +6708,7 @@ Func _LOWriter_DirFrmtParIndent(ByRef $oSelection, $iBeforeTxt = Null, $iAfterTx
 		$bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6807,7 +6807,7 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 		$iLineCountVal = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -6929,7 +6929,7 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 		$bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7043,7 +7043,7 @@ Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nul
 		$bClearDirFrmt = False)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7157,7 +7157,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 		$iLineSpcHeight = Null, $bPageLineSpc = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7480,7 +7480,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 Func _LOWriter_DirFrmtParTabStopMod(ByRef $oSelection, $iTabStop, $iPosition = Null, $iFillChar = Null, $iAlignment = Null, $iDecChar = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7563,7 +7563,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 Func _LOWriter_DirFrmtParTxtFlowOpt(ByRef $oSelection, $bParSplit = Null, $bKeepTogether = Null, $iParOrphans = Null, $iParWidows = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7663,7 +7663,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 Func _LOWriter_DirFrmtStrikeOut(ByRef $oSelection, $bWordOnly = Null, $bStrikeOut = Null, $iStrikeLineStyle = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7795,7 +7795,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLineStyle = Null, $bULHasColor = Null, $iULColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7858,7 +7858,7 @@ EndFunc   ;==>_LOWriter_DirFrmtUnderLine
 Func _LOWriter_DocBookmarkDelete(ByRef $oDoc, ByRef $oBookmark)
 	Local $sBookmarkName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7896,7 +7896,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkDelete
 Func _LOWriter_DocBookmarkGetAnchor(ByRef $oBookmark)
 	Local $oBookAnchor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7935,7 +7935,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetAnchor
 Func _LOWriter_DocBookmarkGetObj(ByRef $oDoc, $sBookmarkName)
 	Local $oBookmark
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -7990,7 +7990,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 Func _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sBookmarkName = Null)
 	Local $oBookmark
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8052,7 +8052,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 Func _LOWriter_DocBookmarkModify(ByRef $oDoc, ByRef $oBookmark, $sBookmarkName = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8095,7 +8095,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkModify
 Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
 	Local $oBookmarks
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8134,7 +8134,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksHasName
 Func _LOWriter_DocBookmarksList(ByRef $oDoc)
 	Local $asBookmarkNames[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8190,7 +8190,7 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 	Local $sDocPath = "", $sSavePath, $sFilterName
 	Local $aArgs[1]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8298,7 +8298,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	Local $aoConnectAll[1], $aoPartNameSearch[1]
 	Local $oEnumDoc, $oDoc, $oServiceManager, $oDesktop
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFile) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8441,7 +8441,7 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	Local $asCellNames
 	Local $oServiceManager, $oDispatcher, $oCellTextCursor, $oViewCursor, $oViewCursorBackup
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8544,7 +8544,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	Local $oServiceManager, $oDispatcher, $oViewCursor, $oViewCursorBackup, $oTables, $oTable
 	Local $iCursorType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8662,7 +8662,7 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	Local $iError = 0
 	Local $oServiceManager, $oDesktop, $oDoc, $oEnumDoc
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsBool($bForceNew) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8743,7 +8743,7 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 	Local $oCursor, $oText, $oViewCursor
 	Local $iCursorType = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8836,7 +8836,7 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 	Local $iError = 0
 	Local $avDescription[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -8910,7 +8910,7 @@ Func _LOWriter_DocEnumPrinters($bDefaultOnly = False)
 	Local $sDefault
 	Local $asPrinters[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -8975,7 +8975,7 @@ Func _LOWriter_DocEnumPrintersAlt($sPrinterName = "", $bReturnDefault = False)
 	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
 	Local $oWMIService, $oPrinters
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sPrinterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9071,7 +9071,7 @@ Func _LOWriter_DocExecuteDispatch(ByRef $oDoc, $sDispatch)
 	Local $aArray[0]
 	Local $oServiceManager, $oDispatcher
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9141,7 +9141,7 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 	Local $aProperties[3]
 	Local $sOriginalPath, $sSavePath
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9237,7 +9237,7 @@ Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByR
 	Local $oResults
 	Local $aoResults[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9318,7 +9318,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	Local $iCount = 0
 	_LOWriter_DocGetViewCursor
 	_LOWriter_DocCreateTextCursor
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9450,7 +9450,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 		$bExhaustive = False)
 	Local $oResult, $oRangeRegion, $oResultRegion, $oText, $oFindRange
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9583,7 +9583,7 @@ Func _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle, $bFooter = False, $bFir
 	Local $aoReturn[1]
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9674,7 +9674,7 @@ Func _LOWriter_DocGenProp(ByRef $oDoc, $sNewAuthor = Null, $iRevisions = Null, $
 	Local $iError = 0
 	Local $avGenProp[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9763,7 +9763,7 @@ Func _LOWriter_DocGenPropCreation(ByRef $oDoc, $sAuthor = Null, $tDateStruct = N
 	Local $iError = 0
 	Local $avCreate[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9830,7 +9830,7 @@ Func _LOWriter_DocGenPropModification(ByRef $oDoc, $sModifiedBy = Null, $tDateSt
 	Local $iError = 0
 	Local $avMod[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9898,7 +9898,7 @@ Func _LOWriter_DocGenPropPrint(ByRef $oDoc, $sPrintedBy = Null, $tDateStruct = N
 	Local $iError = 0
 	Local $avPrint[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -9974,7 +9974,7 @@ Func _LOWriter_DocGenPropTemplate(ByRef $oDoc, $sTemplateName = Null, $sTemplate
 	Local $iError = 0
 	Local $avTemplate[3]
 	_LOWriter_DateStructModify
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10036,7 +10036,7 @@ EndFunc   ;==>_LOWriter_DocGenPropTemplate
 Func _LOWriter_DocGetCounts(ByRef $oDoc)
 	Local $aiCounts[9], $avDocStats
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10085,7 +10085,7 @@ EndFunc   ;==>_LOWriter_DocGetCounts
 Func _LOWriter_DocGetName(ByRef $oDoc, $bReturnFull = False)
 	Local $sName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10126,7 +10126,7 @@ EndFunc   ;==>_LOWriter_DocGetName
 Func _LOWriter_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 	Local $sPath
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10173,7 +10173,7 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocGetString(ByRef $oObj)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10211,7 +10211,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 	Local $oViewCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10250,7 +10250,7 @@ EndFunc   ;==>_LOWriter_DocGetViewCursor
 Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 	Local $oFrames, $oShapes
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10299,7 +10299,7 @@ EndFunc   ;==>_LOWriter_DocHasFrameName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocHasPath(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10334,7 +10334,7 @@ EndFunc   ;==>_LOWriter_DocHasPath
 Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
 	Local $oTables
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10387,7 +10387,7 @@ Func _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle, $bHeader = False, $bFir
 	Local $aoReturn[1]
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10475,7 +10475,7 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 	Local $oText, $oTextCursor
 	Local $iCursorType = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10565,7 +10565,7 @@ Func _LOWriter_DocInsertControlChar(ByRef $oDoc, ByRef $oCursor, $iConChar, $bOv
 	Local $iCursorType
 	Local $oTextCursor = $oCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10622,7 +10622,7 @@ Func _LOWriter_DocInsertString(ByRef $oDoc, ByRef $oCursor, $sString, $bOverwrit
 	Local $iCursorType
 	Local $oTextCursor = $oCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10663,7 +10663,7 @@ EndFunc   ;==>_LOWriter_DocInsertString
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocIsActive(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10691,7 +10691,7 @@ EndFunc   ;==>_LOWriter_DocIsActive
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocIsModified(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10718,7 +10718,7 @@ EndFunc   ;==>_LOWriter_DocIsModified
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocIsReadOnly(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10751,7 +10751,7 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocMaximize(ByRef $oDoc, $bMaximize = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10790,7 +10790,7 @@ EndFunc   ;==>_LOWriter_DocMaximize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocMinimize(ByRef $oDoc, $bMinimize = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -10978,7 +10978,7 @@ Func _LOWriter_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null
 	Local $iError = 0
 	Local $aiWinPosSize[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11090,7 +11090,7 @@ Func _LOWriter_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "
 	Local Const $STR_STRIPLEADING = 1, $STR_STRIPTRAILING = 2, $STR_STRIPALL = 8
 	Local $avPrintOpt[4], $asSetPrinterOpt[1]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11191,7 +11191,7 @@ Func _LOWriter_DocPrintIncludedSettings(ByRef $oDoc, $bGraphics = Null, $bContro
 	Local $iError = 0
 	Local $abPrintSettings[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11312,7 +11312,7 @@ Func _LOWriter_DocPrintMiscSettings(ByRef $oDoc, $iPaperOrient = Null, $sPrinter
 	Local $aoSetting[1]
 	Local $avPrintSettings[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11429,7 +11429,7 @@ Func _LOWriter_DocPrintPageSettings(ByRef $oDoc, $bBlackOnly = Null, $bLeftOnly 
 	Local $oSettings
 	Local $abPrintSettings[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11601,7 +11601,7 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 	Local $aoSetting[1]
 	Local $aiPrintSettings[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11677,7 +11677,7 @@ EndFunc   ;==>_LOWriter_DocPrintSizeSettings
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocRedo(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11712,7 +11712,7 @@ EndFunc   ;==>_LOWriter_DocRedo
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocRedoCurActionTitle(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11746,7 +11746,7 @@ EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocRedoGetAllActionTitles(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11779,7 +11779,7 @@ EndFunc   ;==>_LOWriter_DocRedoGetAllActionTitles
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocRedoIsPossible(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11833,7 +11833,7 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
 	Local $iReplacements
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -11953,7 +11953,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 	Local $iResults
 	Local $bFormat = False
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12072,7 +12072,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAllInRange
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocSave(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12124,7 +12124,7 @@ Func _LOWriter_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite
 	Local $aProperties[1]
 	Local $sSavePath
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12181,7 +12181,7 @@ EndFunc   ;==>_LOWriter_DocSaveAs
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocToFront(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12212,7 +12212,7 @@ EndFunc   ;==>_LOWriter_DocToFront
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocUndo(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12247,7 +12247,7 @@ EndFunc   ;==>_LOWriter_DocUndo
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12282,7 +12282,7 @@ EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocUndoGetAllActionTitles(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12315,7 +12315,7 @@ EndFunc   ;==>_LOWriter_DocUndoGetAllActionTitles
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocUndoIsPossible(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12351,7 +12351,7 @@ EndFunc   ;==>_LOWriter_DocUndoIsPossible
 Func _LOWriter_DocViewCursorGetPosition(ByRef $oCursor)
 	Local $iCursorType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12393,7 +12393,7 @@ EndFunc   ;==>_LOWriter_DocViewCursorGetPosition
 Func _LOWriter_DocVisible(ByRef $oDoc, $bVisible = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12441,7 +12441,7 @@ Func _LOWriter_DocZoom(ByRef $oDoc, $iZoom = Null)
 	Local $oServiceManager, $oDispatcher
 	Local $aArgs[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12486,7 +12486,7 @@ EndFunc   ;==>_LOWriter_DocZoom
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_EndnoteDelete(ByRef $oEndNote)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12520,7 +12520,7 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 Func _LOWriter_EndnoteGetAnchor(ByRef $oEndNote)
 	Local $oAnchor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12555,7 +12555,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 Func _LOWriter_EndnoteGetTextCursor(ByRef $oEndNote)
 	Local $oTextCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12604,7 +12604,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 Func _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sLabel = Null)
 	Local $oEndNote
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12663,7 +12663,7 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oEndNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12800,7 +12800,7 @@ Func _LOWriter_EndnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iStar
 	Local $iError = 0
 	Local $avENSettings[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12888,7 +12888,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 	Local $iError = 0
 	Local $asENSettings[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -12964,7 +12964,7 @@ Func _LOWriter_EndnotesGetList(ByRef $oDoc)
 	Local $aoEndnotes[0]
 	Local $iCount
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13031,7 +13031,7 @@ EndFunc   ;==>_LOWriter_EndnotesGetList
 Func _LOWriter_FieldAuthorInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sAuthor = Null, $bFullName = Null)
 	Local $oAuthField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13110,7 +13110,7 @@ Func _LOWriter_FieldAuthorModify(ByRef $oAuthField, $bIsFixed = Null, $sAuthor =
 	Local $iError = 0
 	Local $avAuth[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oAuthField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13190,7 +13190,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 Func _LOWriter_FieldChapterInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $iChapFrmt = Null, $iLevel = Null)
 	Local $oChapField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13262,7 +13262,7 @@ Func _LOWriter_FieldChapterModify(ByRef $oChapField, $iChapFrmt = Null, $iLevel 
 	Local $iError = 0
 	Local $aiChap[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oChapField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13328,7 +13328,7 @@ EndFunc   ;==>_LOWriter_FieldChapterModify
 Func _LOWriter_FieldCombCharInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sCharacters = Null)
 	Local $oCombCharField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13386,7 +13386,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharInsert
 Func _LOWriter_FieldCombCharModify(ByRef $oCombCharField, $sCharacters = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCombCharField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13459,7 +13459,7 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 		$sInitials = Null, $sName = Null, $bResolved = Null)
 	Local $oCommentField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13574,7 +13574,7 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	Local $avAnnot[4]
 	Local $bRefresh = False
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13686,7 +13686,7 @@ EndFunc   ;==>_LOWriter_FieldCommentModify
 Func _LOWriter_FieldCondTextInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sCondition = Null, $sThen = Null, $sElse = Null)
 	Local $oCondTextField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13762,7 +13762,7 @@ Func _LOWriter_FieldCondTextModify(ByRef $oCondTextField, $sCondition = Null, $s
 	Local $iError = 0
 	Local $avCond[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCondTextField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13820,7 +13820,7 @@ EndFunc   ;==>_LOWriter_FieldCondTextModify
 Func _LOWriter_FieldCurrentDisplayGet(ByRef $oField)
 	Local $sPresentation
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13891,7 +13891,7 @@ Func _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fa
 		$bIsDate = Null, $iOffset = Null, $iDateFormatKey = Null)
 	Local $oDateTimeField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -13999,7 +13999,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	Local $iError = 0, $iNumberFormat
 	Local $avDateTime[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDateTimeField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14090,7 +14090,7 @@ Func _LOWriter_FieldDelete(ByRef $oDoc, ByRef $oField, $bDeleteMaster = False)
 	Local $oFieldMaster
 	Local $aoDependents[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14162,7 +14162,7 @@ EndFunc   ;==>_LOWriter_FieldDelete
 Func _LOWriter_FieldDocInfoCommentsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sComments = Null)
 	Local $oDocInfoCommentField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14232,7 +14232,7 @@ Func _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoCommentField, $bIsFixed
 	Local $iError = 0
 	Local $avDocInfoCom[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoCommentField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14301,7 +14301,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsModify
 Func _LOWriter_FieldDocInfoCreateAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sAuthor = Null)
 	Local $oDocInfoCreateAuthField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14371,7 +14371,7 @@ Func _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuthField, $bIs
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoCreateAuthField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14442,7 +14442,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
 Func _LOWriter_FieldDocInfoCreateDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oDocInfoCreateDtTmField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14515,7 +14515,7 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoCrtDate[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14594,7 +14594,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
 Func _LOWriter_FieldDocInfoEditTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iTimeFormatKey = Null)
 	Local $oDocInfoEditTimeField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14667,7 +14667,7 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeFi
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoEditTm[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14744,7 +14744,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeModify
 Func _LOWriter_FieldDocInfoKeywordsInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sKeywords = Null)
 	Local $oDocInfoKeywordField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14814,7 +14814,7 @@ Func _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeywordField, $bIsFixed
 	Local $iError = 0
 	Local $avDocInfoKyWrd[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoKeywordField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14883,7 +14883,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsModify
 Func _LOWriter_FieldDocInfoModAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sAuthor = Null)
 	Local $oDocInfoModAuthField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -14953,7 +14953,7 @@ Func _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuthField, $bIsFixed 
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoModAuthField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15025,7 +15025,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
 Func _LOWriter_FieldDocInfoModDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oDocInfoModDtTmField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15098,7 +15098,7 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoModDate[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15175,7 +15175,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeModify
 Func _LOWriter_FieldDocInfoPrintAuthInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sAuthor = Null)
 	Local $oDocInfoPrintAuthField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15245,7 +15245,7 @@ Func _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuthField, $bIsFi
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoPrintAuthField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15316,7 +15316,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
 Func _LOWriter_FieldDocInfoPrintDateTimeInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oDocInfoPrintDtTmField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15389,7 +15389,7 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoPrntDate[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15466,7 +15466,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeModify
 Func _LOWriter_FieldDocInfoRevNumInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iRevNum = Null)
 	Local $oDocInfoRevNumField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15536,7 +15536,7 @@ Func _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNumField, $bIsFixed = 
 	Local $iError = 0
 	Local $avDocInfoRev[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoRevNumField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15605,7 +15605,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumModify
 Func _LOWriter_FieldDocInfoSubjectInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sSubject = Null)
 	Local $oDocInfoSubField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15675,7 +15675,7 @@ Func _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSubField, $bIsFixed = Nu
 	Local $iError = 0
 	Local $avDocInfoSub[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoSubField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15744,7 +15744,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectModify
 Func _LOWriter_FieldDocInfoTitleInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sTitle = Null)
 	Local $oDocInfoTitleField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15814,7 +15814,7 @@ Func _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitleField, $bIsFixed = Nu
 	Local $iError = 0
 	Local $avDocInfoTitle[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDocInfoTitleField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15888,7 +15888,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 Func _LOWriter_FieldFileNameInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $iFormat = Null)
 	Local $oFileNameField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -15961,7 +15961,7 @@ Func _LOWriter_FieldFileNameModify(ByRef $oFileNameField, $bIsFixed = Null, $iFo
 	Local $iError = 0
 	Local $avFileName[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFileNameField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16025,7 +16025,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameModify
 Func _LOWriter_FieldFuncHiddenParInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sCondition = Null)
 	Local $oHidParField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16083,7 +16083,7 @@ Func _LOWriter_FieldFuncHiddenParModify(ByRef $oHidParField, $sCondition = Null)
 	Local $iError = 0
 	Local $avHidPar[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oHidParField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16143,7 +16143,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParModify
 Func _LOWriter_FieldFuncHiddenTextInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sCondition = Null, $sText = Null)
 	Local $oHidTxtField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16209,7 +16209,7 @@ Func _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField, $sCondition = Null
 	Local $iError = 0
 	Local $avHidPar[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oHidTxtField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16276,7 +16276,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextModify
 Func _LOWriter_FieldFuncInputInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sReference = Null, $sText = Null)
 	Local $oInputField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16341,7 +16341,7 @@ Func _LOWriter_FieldFuncInputModify(ByRef $oInputField, $sReference = Null, $sTe
 	Local $iError = 0
 	Local $asInput[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oInputField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16417,7 +16417,7 @@ Func _LOWriter_FieldFuncPlaceholderInsert(ByRef $oDoc, ByRef $oCursor, $bOverwri
 		$sPHolderName = Null, $sReference = Null)
 	Local $oPHolderField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16496,7 +16496,7 @@ Func _LOWriter_FieldFuncPlaceholderModify(ByRef $oPHolderField, $iPHolderType = 
 	Local $iError = 0
 	Local $asPHolder[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPHolderField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16553,7 +16553,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderModify
 Func _LOWriter_FieldGetAnchor(ByRef $oField)
 	Local $oFieldAnchor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16607,7 +16607,7 @@ EndFunc   ;==>_LOWriter_FieldGetAnchor
 Func _LOWriter_FieldInputListInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $asItems = Null, $sName = Null, $sSelectedItem = Null)
 	Local $oInputField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16684,7 +16684,7 @@ Func _LOWriter_FieldInputListModify(ByRef $oInputField, $asItems = Null, $sName 
 	Local $iError = 0
 	Local $avDropDwn[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oInputField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -16840,7 +16840,7 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 		$iPageNumType = Null, $sUserText = Null)
 	Local $oPageField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17015,7 +17015,7 @@ Func _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField, $iNumFor
 	Local $iError = 0
 	Local $oNewPageNumField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17124,7 +17124,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 Func _LOWriter_FieldRefBookMarkInsert(ByRef $oDoc, ByRef $oCursor, $sBookmarkName, $bOverwrite = False, $iRefUsing = Null)
 	Local $oBookmarkRefField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17203,7 +17203,7 @@ Func _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField, $sB
 	Local $iError = 0
 	Local $avBook[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17282,7 +17282,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 Func _LOWriter_FieldRefEndnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oEndNote, $bOverwrite = False, $iRefUsing = Null)
 	Local $oENoteRefField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17362,7 +17362,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 	Local $iError = 0, $iSourceSeq
 	Local $avFoot[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17452,7 +17452,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 Func _LOWriter_FieldRefFootnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oFootNote, $bOverwrite = False, $iRefUsing = Null)
 	Local $oFNoteRefField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17533,7 +17533,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 	Local $iError = 0, $iSourceSeq
 	Local $avFoot[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17601,7 +17601,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FieldRefGetType(ByRef $oRefField)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oRefField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17660,7 +17660,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 Func _LOWriter_FieldRefInsert(ByRef $oDoc, ByRef $oCursor, $sRefMarkName, $bOverwrite = False, $iRefUsing = Null)
 	Local $oRefMarks, $oMarkRefField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17724,7 +17724,7 @@ EndFunc   ;==>_LOWriter_FieldRefInsert
 Func _LOWriter_FieldRefMarkDelete(ByRef $oDoc, $sName)
 	Local $oRefMark, $oRefMarks
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17772,7 +17772,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 Func _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 	Local $oRefMark, $oRefMarks
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17819,7 +17819,7 @@ Func _LOWriter_FieldRefMarkList(ByRef $oDoc)
 	Local $oRefMarks
 	Local $asRefMarks[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17872,7 +17872,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkList
 Func _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName, $bOverwrite = False)
 	Local $oRefMark, $oRefMarks
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -17948,7 +17948,7 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 	Local $iError = 0
 	Local $avRef[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18221,7 +18221,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 Func _LOWriter_FieldSenderInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bIsFixed = Null, $sContent = Null, $iDataType = Null)
 	Local $oSenderField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18314,7 +18314,7 @@ Func _LOWriter_FieldSenderModify(ByRef $oSenderField, $bIsFixed = Null, $sConten
 	Local $iError = 0
 	Local $avExtUser[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSenderField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18399,7 +18399,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 	Local $oSetVarField, $oSetVarMaster
 	Local $iExtended = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18477,7 +18477,7 @@ Func _LOWriter_FieldSetVarMasterCreate(ByRef $oDoc, $sMasterFieldName)
 	Local $sFullFieldName
 	Local $sField = "com.sun.star.text.fieldmaster.SetExpression"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18530,7 +18530,7 @@ Func _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 	Local $sFullFieldName
 	Local $sField = "com.sun.star.text.fieldmaster.SetExpression"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18583,7 +18583,7 @@ Func _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 	Local $oMasterFields
 	Local $sFullFieldName = "com.sun.star.text.fieldmaster.SetExpression" & "."
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18627,7 +18627,7 @@ Func _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
 	Local $oMasterFields, $oMasterfield
 	Local $sFullFieldName = "com.sun.star.text.fieldmaster.SetExpression" & "."
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18675,7 +18675,7 @@ Func _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
 	Local $iCount = 0
 	Local $sField = "com.sun.star.text.fieldmaster.SetExpression"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18733,7 +18733,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterList
 Func _LOWriter_FieldSetVarMasterListFields(ByRef $oDoc, ByRef $oMasterfield)
 	Local $aoDependFields[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18792,7 +18792,7 @@ Func _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField, $sValue = Nul
 	Local $iError = 0, $iNumberFormat
 	Local $avSetVar[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -18996,7 +18996,7 @@ Func _LOWriter_FieldShowVarInsert(ByRef $oDoc, ByRef $oCursor, $sSetVarName, $bO
 		$bShowName = Null)
 	Local $oShowVarField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19077,7 +19077,7 @@ Func _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField, $sSetVarNam
 	Local $iError = 0, $iNumberFormat
 	Local $avShowVar[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19243,7 +19243,7 @@ Func _LOWriter_FieldStatCountInsert(ByRef $oDoc, ByRef $oCursor, $iCountType, $b
 	Local $oCountField
 	Local $sFieldType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19400,7 +19400,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 	Local $oNewCountField
 	Local $sFieldType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19493,7 +19493,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 Func _LOWriter_FieldStatTemplateInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $iFormat = Null)
 	Local $oTemplateField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19555,7 +19555,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 Func _LOWriter_FieldStatTemplateModify(ByRef $oTemplateField, $iFormat = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTemplateField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19607,7 +19607,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 	Local $oTextFields, $oTextField
 	Local $iCount = 0, $iUpdated = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19693,7 +19693,7 @@ EndFunc   ;==>_LOWriter_FieldUpdate
 Func _LOWriter_FieldVarSetPageInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $bRefOn = Null, $iOffset = Null)
 	Local $oPageVarSetField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19758,7 +19758,7 @@ Func _LOWriter_FieldVarSetPageModify(ByRef $oPageVarSetField, $bRefOn = Null, $i
 	Local $iError = 0
 	Local $avPage[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageVarSetField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -19895,7 +19895,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 Func _LOWriter_FieldVarShowPageInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $iNumFormat = Null)
 	Local $oPageShowField
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -20025,7 +20025,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 Func _LOWriter_FieldVarShowPageModify(ByRef $oPageShowField, $iNumFormat = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageShowField) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -20360,7 +20360,7 @@ Func _LOWriter_FindFormatModifyFont(ByRef $oDoc, ByRef $atFormat, $sFontName = N
 		$iFontPosture = Null, $iFontColor = Null, $iTransparency = Null, $iHighlight = Null)
 	Local Const $UBOUND_COLUMNS = 2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -20799,7 +20799,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyOverline
 Func _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat, $iBreakType = Null, $sPageStyle = Null, $iPgNumOffSet = Null)
 	Local Const $UBOUND_COLUMNS = 2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsArray($atFormat) Or (UBound($atFormat, $UBOUND_COLUMNS) > 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21114,7 +21114,7 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 	Local $tLine
 	Local Const $UBOUND_COLUMNS = 2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsArray($atFormat) Or (UBound($atFormat, $UBOUND_COLUMNS) > 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21495,7 +21495,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 	Local $atFonts
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21559,7 +21559,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 	Local $atFonts
 	Local $asFonts[0][4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21599,7 +21599,7 @@ EndFunc   ;==>_LOWriter_FontsList
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FootnoteDelete(ByRef $oFootNote)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21632,7 +21632,7 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 Func _LOWriter_FootnoteGetAnchor(ByRef $oFootNote)
 	Local $oAnchor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21667,7 +21667,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 Func _LOWriter_FootnoteGetTextCursor(ByRef $oFootNote)
 	Local $oTextCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21717,7 +21717,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 Func _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $sLabel = Null)
 	Local $oFootNote
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21777,7 +21777,7 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote, $sLabel = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -21929,7 +21929,7 @@ Func _LOWriter_FootnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iSta
 	Local $iError = 0
 	Local $avFNSettings[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22019,7 +22019,7 @@ Func _LOWriter_FootnoteSettingsContinuation(ByRef $oDoc, $sEnd = Null, $sBegin =
 	Local $iError = 0
 	Local $asFNSettings[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22093,7 +22093,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 	Local $iError = 0
 	Local $avFNSettings[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22169,7 +22169,7 @@ Func _LOWriter_FootnotesGetList(ByRef $oDoc)
 	Local $aoFootnotes[0]
 	Local $iCount
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22224,7 +22224,7 @@ Func _LOWriter_FormatKeyCreate(ByRef $oDoc, $sFormat)
 	Local $tLocale
 	Local $oFormats
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22273,7 +22273,7 @@ Func _LOWriter_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	Local $tLocale
 	Local $oFormats
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22339,7 +22339,7 @@ Func _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOW_FOR
 	Local $aiFormatKeys[0]
 	Local $tLocale
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22387,7 +22387,7 @@ EndFunc   ;==>_LOWriter_FormatKeyExists
 Func _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	Local $oFormatKey
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22458,7 +22458,7 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 	Local $tLocale
 	Local $iColumns = 3, $iCount = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22559,7 +22559,7 @@ Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null, $bBackTranspare
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22723,7 +22723,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	Local $avGradient[11]
 	Local $sGradName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22905,7 +22905,7 @@ EndFunc   ;==>_LOWriter_FrameAreaGradient
 Func _LOWriter_FrameBorderColor(ByRef $oFrame, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -22971,7 +22971,7 @@ Func _LOWriter_FrameBorderPadding(ByRef $oFrame, $iAll = Null, $iTop = Null, $iB
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23096,7 +23096,7 @@ EndFunc   ;==>_LOWriter_FrameBorderPadding
 Func _LOWriter_FrameBorderStyle(ByRef $oFrame, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23163,7 +23163,7 @@ EndFunc   ;==>_LOWriter_FrameBorderStyle
 Func _LOWriter_FrameBorderWidth(ByRef $oFrame, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23263,7 +23263,7 @@ Func _LOWriter_FrameColumnSeparator(ByRef $oFrame, $bSeparatorOn = Null, $iStyle
 	Local $iError = 0
 	Local $avColumnLine[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23353,7 +23353,7 @@ Func _LOWriter_FrameColumnSettings(ByRef $oFrame, $iColumns = Null)
 	Local $oTextColumns
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23435,7 +23435,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	Local $iError = 0, $iRightMargin, $iLeftMargin
 	Local $avColumnSize[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23589,7 +23589,7 @@ Func _LOWriter_FrameCreate(ByRef $oDoc, ByRef $oCursor, $sFrameName = Null, $iWi
 	Local $oFrame
 	Local Const $iCONST_AutoHW_OFF = 1
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23645,7 +23645,7 @@ EndFunc   ;==>_LOWriter_FrameCreate
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FrameCreateTextCursor(ByRef $oFrame)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23682,7 +23682,7 @@ EndFunc   ;==>_LOWriter_FrameCreateTextCursor
 Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 	Local $sFrameName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23715,7 +23715,7 @@ EndFunc   ;==>_LOWriter_FrameDelete
 Func _LOWriter_FrameGetAnchor(ByRef $oFrame)
 	Local $oAnchor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23751,7 +23751,7 @@ EndFunc   ;==>_LOWriter_FrameGetAnchor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FrameGetObjByCursor(ByRef $oDoc, ByRef $oCursor)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23792,7 +23792,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByCursor
 Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 	Local $oFrames, $oShapes
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23870,7 +23870,7 @@ Func _LOWriter_FrameHyperlink(ByRef $oFrame, $sURL = Null, $sName = Null, $sFram
 	Local $iError = 0
 	Local $avHyperlink[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -23988,7 +23988,7 @@ Func _LOWriter_FrameOptions(ByRef $oFrame, $bProtectContent = Null, $bProtectPos
 	Local $iError = 0
 	Local $avOptions[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24096,7 +24096,7 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 	Local $iError = 0
 	Local $asName[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24170,7 +24170,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 	Local $oFrames, $oShapes
 	Local $iCount = 0, $iEndofArray
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24297,7 +24297,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 	Local $iError = 0
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24403,7 +24403,7 @@ Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null, $bBac
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24569,7 +24569,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	Local $avGradient[11]
 	Local $sGradName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24753,7 +24753,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaGradient
 Func _LOWriter_FrameStyleBorderColor(ByRef $oFrameStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24821,7 +24821,7 @@ Func _LOWriter_FrameStyleBorderPadding(ByRef $oFrameStyle, $iAll = Null, $iTop =
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -24948,7 +24948,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderPadding
 Func _LOWriter_FrameStyleBorderStyle(ByRef $oFrameStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25017,7 +25017,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderStyle
 Func _LOWriter_FrameStyleBorderWidth(ByRef $oFrameStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25118,7 +25118,7 @@ Func _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle, $bSeparatorOn = Nul
 	Local $iError = 0
 	Local $avColumnLine[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25210,7 +25210,7 @@ Func _LOWriter_FrameStyleColumnSettings(ByRef $oFrameStyle, $iColumns = Null)
 	Local $oTextColumns
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25294,7 +25294,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	Local $iError = 0, $iRightMargin, $iLeftMargin
 	Local $avColumnSize[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25437,7 +25437,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSize
 Func _LOWriter_FrameStyleCreate(ByRef $oDoc, $sFrameStyle)
 	Local $oFrameStyles, $oStyle, $oFrameStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25501,7 +25501,7 @@ Func _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle, $bForceDelete = False
 	Local $oFrameStyles
 	Local $sFrameStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25549,7 +25549,7 @@ EndFunc   ;==>_LOWriter_FrameStyleDelete
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FrameStyleExists(ByRef $oDoc, $sFrameStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25587,7 +25587,7 @@ EndFunc   ;==>_LOWriter_FrameStyleExists
 Func _LOWriter_FrameStyleGetObj(ByRef $oDoc, $sFrameStyle)
 	Local $oFrameStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25674,7 +25674,7 @@ Func _LOWriter_FrameStyleOptions(ByRef $oFrameStyle, $bProtectContent = Null, $b
 	Local $iError = 0
 	Local $avOptions[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25790,7 +25790,7 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 	Local $iError = 0
 	Local $avOrganizer[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25870,7 +25870,7 @@ EndFunc   ;==>_LOWriter_FrameStyleOrganizer
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -25920,7 +25920,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26031,7 +26031,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	Local $iError = 0
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26111,7 +26111,7 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 Func _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle, $iTransparency = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26211,7 +26211,7 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 	Local $sTGradName
 	Local $aiTransparent[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26471,7 +26471,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 	Local $iError = 0, $iCurrentAnchor
 	Local $avPosition[9]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26690,7 +26690,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 	Local $avSize[7]
 	Local Const $iCONST_AutoHW_OFF = 1, $iCONST_AutoHW_ON = 2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26843,7 +26843,7 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 	Local $iError = 0
 	Local $avWrap[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -26948,7 +26948,7 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 	Local $iError = 0
 	Local $abWrapOptions[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27014,7 +27014,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 Func _LOWriter_FrameTransparency(ByRef $oFrame, $iTransparency = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27112,7 +27112,7 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 	Local $iError = 0
 	Local $aiTransparent[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27369,7 +27369,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 	Local $iError = 0, $iCurrentAnchor
 	Local $avPosition[9]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27585,7 +27585,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 	Local $avSize[7]
 	Local Const $iCONST_AutoHW_OFF = 1, $iCONST_AutoHW_ON = 2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27736,7 +27736,7 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 	Local $iError = 0
 	Local $avWrap[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27843,7 +27843,7 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 	Local $iError = 0
 	Local $abWrapOptions[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -27907,7 +27907,7 @@ EndFunc   ;==>_LOWriter_FrameWrapOptions
 Func _LOWriter_NumStyleCreate(ByRef $oDoc, $sNumStyle)
 	Local $oNumStyles, $oStyle, $oNumStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28103,7 +28103,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	Local $iRowCount = 0
 	Local $avCustomize[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28274,7 +28274,7 @@ Func _LOWriter_NumStyleDelete(ByRef $oDoc, $oNumStyle)
 	Local $oNumStyles
 	Local $sNumStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28317,7 +28317,7 @@ EndFunc   ;==>_LOWriter_NumStyleDelete
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_NumStyleExists(ByRef $oDoc, $sNumStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28356,7 +28356,7 @@ EndFunc   ;==>_LOWriter_NumStyleExists
 Func _LOWriter_NumStyleGetObj(ByRef $oDoc, $sNumStyle)
 	Local $oNumStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28414,7 +28414,7 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 	Local $iError = 0
 	Local $avOrganizer[1]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28533,7 +28533,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 	Local $iRowCount = 0
 	Local $avPosition[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28644,7 +28644,7 @@ EndFunc   ;==>_LOWriter_NumStylePosition
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_NumStyleSet(ByRef $oDoc, ByRef $oObj, $sNumStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28689,7 +28689,7 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_NumStyleSetLevel(ByRef $oDoc, ByRef $oObj, $iLevel = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28743,7 +28743,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Local $sExecute = ""
 	Local $aStyles[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -28838,7 +28838,7 @@ Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackT
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29005,7 +29005,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	Local $avGradient[11]
 	Local $sGradName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29188,7 +29188,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradient
 Func _LOWriter_PageStyleBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29256,7 +29256,7 @@ Func _LOWriter_PageStyleBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop = N
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29383,7 +29383,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 Func _LOWriter_PageStyleBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29452,7 +29452,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 Func _LOWriter_PageStyleBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29553,7 +29553,7 @@ Func _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle, $bSeparatorOn = Null,
 	Local $iError = 0
 	Local $avColumnLine[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29645,7 +29645,7 @@ Func _LOWriter_PageStyleColumnSettings(ByRef $oPageStyle, $iColumns = Null)
 	Local $oTextColumns
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29729,7 +29729,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	Local $iError = 0, $iRightMargin, $iLeftMargin
 	Local $avColumnSize[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29873,7 +29873,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSize
 Func _LOWriter_PageStyleCreate(ByRef $oDoc, $sPageStyle)
 	Local $oPageStyles, $oStyle, $oPageStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29929,7 +29929,7 @@ Func _LOWriter_PageStyleDelete(ByRef $oDoc, $oPageStyle)
 	Local $oPageStyles
 	Local $sPageStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -29971,7 +29971,7 @@ EndFunc   ;==>_LOWriter_PageStyleDelete
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_PageStyleExists(ByRef $oDoc, $sPageStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30057,7 +30057,7 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 	Local $iError = 0
 	Local $avFooter[8]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30199,7 +30199,7 @@ Func _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30367,7 +30367,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	Local $avGradient[11]
 	Local $sGradName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30554,7 +30554,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradient
 Func _LOWriter_PageStyleFooterBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30625,7 +30625,7 @@ Func _LOWriter_PageStyleFooterBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30752,7 +30752,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderPadding
 Func _LOWriter_PageStyleFooterBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30825,7 +30825,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 Func _LOWriter_PageStyleFooterBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -30919,7 +30919,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	Local $iError = 0
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31003,7 +31003,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 Func _LOWriter_PageStyleFooterTransparency(ByRef $oPageStyle, $iTransparency = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31105,7 +31105,7 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	Local $iError = 0
 	Local $aiTransparent[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31224,7 +31224,7 @@ Func _LOWriter_PageStyleFootnoteArea(ByRef $oPageStyle, $iFootnoteHeight = Null,
 	Local $iError = 0
 	Local $aiFootnote[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31334,7 +31334,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 	Local $iError = 0
 	Local $avFootnoteLine[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31416,7 +31416,7 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteLine
 Func _LOWriter_PageStyleGetObj(ByRef $oDoc, $sPageStyle)
 	Local $oPageStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31503,7 +31503,7 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 	Local $iError = 0
 	Local $avHeader[8]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31645,7 +31645,7 @@ Func _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -31813,7 +31813,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	Local $avGradient[11]
 	Local $sGradName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32000,7 +32000,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradient
 Func _LOWriter_PageStyleHeaderBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32071,7 +32071,7 @@ Func _LOWriter_PageStyleHeaderBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32198,7 +32198,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderPadding
 Func _LOWriter_PageStyleHeaderBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32271,7 +32271,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 Func _LOWriter_PageStyleHeaderBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32365,7 +32365,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	Local $iError = 0
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32448,7 +32448,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
 Func _LOWriter_PageStyleHeaderTransparency(ByRef $oPageStyle, $iTransparency = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32550,7 +32550,7 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	Local $iError = 0
 	Local $aiTransparent[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32781,7 +32781,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, $oPageStyle, $iLayout = Null, $iNumF
 	Local $iError = 0
 	Local $avLayout[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -32915,7 +32915,7 @@ Func _LOWriter_PageStyleMargins(ByRef $oPageStyle, $iLeft = Null, $iRight = Null
 	Local $iError = 0
 	Local $aiMargins[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33017,7 +33017,7 @@ Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, $oPageStyle, $sNewPageStyleName =
 	Local $iError = 0
 	Local $avOrganizer[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33160,7 +33160,7 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 	Local $iError = 0
 	Local $avFormat[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33236,7 +33236,7 @@ EndFunc   ;==>_LOWriter_PageStylePaperFormat
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_PageStyleSet(ByRef $oDoc, ByRef $oObj, $sPageStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33289,7 +33289,7 @@ Func _LOWriter_PageStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	Local $sExecute = ""
 	Local $aStyles[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33399,7 +33399,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	Local $iError = 0
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33479,7 +33479,7 @@ EndFunc   ;==>_LOWriter_PageStyleShadow
 Func _LOWriter_PageStyleTransparency(ByRef $oPageStyle, $iTransparency = Null)
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33578,7 +33578,7 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 	Local $iError = 0
 	Local $aiTransparent[7]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33685,7 +33685,7 @@ EndFunc   ;==>_LOWriter_PageStyleTransparencyGradient
 Func _LOWriter_ParObjCopy(ByRef $oDoc)
 	Local $oObj
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33734,7 +33734,7 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 	Local $iCount = 0
 	Local $aoParagraphs[1]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33794,7 +33794,7 @@ EndFunc   ;==>_LOWriter_ParObjCreateList
 ; ===============================================================================================================================
 Func _LOWriter_ParObjDelete(ByRef $oParObj)
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33833,7 +33833,7 @@ EndFunc   ;==>_LOWriter_ParObjDelete
 ; ===============================================================================================================================
 Func _LOWriter_ParObjPaste(ByRef $oDoc, ByRef $oParObj)
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33890,7 +33890,7 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 	Local $aoSections[1][2]
 	Local $iCount = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParagraph) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -33944,7 +33944,7 @@ EndFunc   ;==>_LOWriter_ParObjSectionsGet
 Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 	Local $oViewCursor
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34054,7 +34054,7 @@ Func _LOWriter_ParStyleAlignment(ByRef $oParStyle, $iHorAlign = Null, $iVertAlig
 		$bExpandSingleWord = Null, $bSnapToGrid = Null, $iTxtDirection = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34124,7 +34124,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 Func _LOWriter_ParStyleBackColor(ByRef $oParStyle, $iBackColor = Null, $bBackTransparent = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34214,7 +34214,7 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 Func _LOWriter_ParStyleBorderColor(ByRef $oParStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34282,7 +34282,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 Func _LOWriter_ParStyleBorderPadding(ByRef $oParStyle, $iAll = Null, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34380,7 +34380,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 Func _LOWriter_ParStyleBorderStyle(ByRef $oParStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34458,7 +34458,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 Func _LOWriter_ParStyleBorderWidth(ByRef $oParStyle, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null, $bConnectBorder = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34515,7 +34515,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 Func _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
 	Local $oParStyles, $oStyle, $oParStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34579,7 +34579,7 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	Local $oParStyles
 	Local $sParStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34669,7 +34669,7 @@ Func _LOWriter_ParStyleDropCaps(ByRef $oDoc, ByRef $oParStyle, $iNumChar = Null,
 		$sCharStyle = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34738,7 +34738,7 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 Func _LOWriter_ParStyleEffect(ByRef $oParStyle, $iRelief = Null, $iCase = Null, $bHidden = Null, $bOutline = Null, $bShadow = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34772,7 +34772,7 @@ EndFunc   ;==>_LOWriter_ParStyleEffect
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ParStyleExists(ByRef $oDoc, $sParStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34850,7 +34850,7 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 Func _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34933,7 +34933,7 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 Func _LOWriter_ParStyleFontColor(ByRef $oParStyle, $iFontColor = Null, $iTransparency = Null, $iHighlight = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -34971,7 +34971,7 @@ EndFunc   ;==>_LOWriter_ParStyleFontColor
 Func _LOWriter_ParStyleGetObj(ByRef $oDoc, $sParStyle)
 	Local $oParStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35043,7 +35043,7 @@ Func _LOWriter_ParStyleHyphenation(ByRef $oParStyle, $bAutoHyphen = Null, $bHyph
 		$iMinLeadingChar = Null, $iMinTrailingChar = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35106,7 +35106,7 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 Func _LOWriter_ParStyleIndent(ByRef $oParStyle, $iBeforeTxt = Null, $iAfterTxt = Null, $iFirstLine = Null, $bAutoFirstLine = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35180,7 +35180,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	Local $iError = 0
 	Local $avOrganizer[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35303,7 +35303,7 @@ Func _LOWriter_ParStyleOutLineAndList(ByRef $oDoc, ByRef $oParStyle, $iOutline =
 		$iLineCountVal = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35404,7 +35404,7 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 Func _LOWriter_ParStyleOverLine(ByRef $oParStyle, $bWordOnly = Null, $iOverLineStyle = Null, $bOLHasColor = Null, $iOLColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35479,7 +35479,7 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 Func _LOWriter_ParStylePageBreak(ByRef $oDoc, ByRef $oParStyle, $iBreakType = Null, $iPgNumOffSet = Null, $sPageStyle = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35550,7 +35550,7 @@ Func _LOWriter_ParStylePosition(ByRef $oParStyle, $bAutoSuper = Null, $iSuperScr
 		$iRelativeSize = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35599,7 +35599,7 @@ EndFunc   ;==>_LOWriter_ParStylePosition
 Func _LOWriter_ParStyleRotateScale(ByRef $oParStyle, $iRotation = Null, $iScaleWidth = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35641,7 +35641,7 @@ EndFunc   ;==>_LOWriter_ParStyleRotateScale
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35695,7 +35695,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35803,7 +35803,7 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35898,7 +35898,7 @@ Func _LOWriter_ParStyleSpace(ByRef $oParStyle, $iAbovePar = Null, $iBelowPar = N
 		$iLineSpcHeight = Null, $bPageLineSpc = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -35960,7 +35960,7 @@ EndFunc   ;==>_LOWriter_ParStyleSpace
 Func _LOWriter_ParStyleSpacing(ByRef $oParStyle, $bAutoKerning = Null, $nKerning = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36021,7 +36021,7 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 Func _LOWriter_ParStyleStrikeOut(ByRef $oParStyle, $bWordOnly = Null, $bStrikeOut = Null, $iStrikeLineStyle = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36102,7 +36102,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition, $iFillChar = Null, $iAlignment = Null, $iDecChar = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36152,7 +36152,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 Func _LOWriter_ParStyleTabStopDelete(ByRef $oDoc, ByRef $oParStyle, $iTabStop)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36192,7 +36192,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 Func _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
 	Local $aiTabList
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36285,7 +36285,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 Func _LOWriter_ParStyleTabStopMod(ByRef $oParStyle, $iTabStop, $iPosition = Null, $iFillChar = Null, $iAlignment = Null, $iDecChar = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36348,7 +36348,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopMod
 Func _LOWriter_ParStyleTxtFlowOpt(ByRef $oParStyle, $bParSplit = Null, $bKeepTogether = Null, $iParOrphans = Null, $iParWidows = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36446,7 +36446,7 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 Func _LOWriter_ParStyleUnderLine(ByRef $oParStyle, $bWordOnly = Null, $iUnderLineStyle = Null, $bULHasColor = Null, $iULColor = Null)
 	Local $vReturn
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36598,7 +36598,7 @@ Func _LOWriter_SearchDescriptorCreate(ByRef $oDoc, $bBackwards = False, $bMatchC
 		$bRegExp = False, $bStyles = False, $bSearchPropValues = False)
 	Local $oSrchDescript
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36683,7 +36683,7 @@ Func _LOWriter_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, 
 		$bRegExp = Null, $bStyles = Null, $bSearchPropValues = Null)
 	Local $avSrchDescript[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36776,7 +36776,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 Func _LOWriter_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity = Null, $bCombine = Null, $iRemove = Null, $iAdd = Null, $iExchange = Null)
 	Local $avSrchDescript[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -36855,7 +36855,7 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 	Local $asShapeNames[0][2]
 	Local $oShapes
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37041,7 +37041,7 @@ Func _LOWriter_TableBorderPadding(ByRef $oTable, $iTop = Null, $iBottom = Null, 
 	Local $tBD
 	Local $aiBPadding[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37340,7 +37340,7 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 	Local $iError = 0
 	Local $avBreaks[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37434,7 +37434,7 @@ Func _LOWriter_TableColor(ByRef $oTable, $iBackColor = Null, $bBackTransparent =
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 
@@ -37494,7 +37494,7 @@ EndFunc   ;==>_LOWriter_TableColor
 Func _LOWriter_TableColumnDelete(ByRef $oTable, $iColumn, $iCount = 1)
 	Local $iColumnCount, $iReturn = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37534,7 +37534,7 @@ EndFunc   ;==>_LOWriter_TableColumnDelete
 Func _LOWriter_TableColumnGetCount(ByRef $oTable)
 	Local $iColumnSize = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0) ;Not an Object.
@@ -37580,7 +37580,7 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 Func _LOWriter_TableColumnInsert(ByRef $oTable, $iCount, $iColumn = -1)
 	Local $iColumnCount
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37659,7 +37659,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 Func _LOWriter_TableCreate(ByRef $oDoc, $iRows = 3, $iColumns = 2, $bSplit = Null, $iBackColor = Null, $sTableName = "")
 	Local $oTable
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37734,7 +37734,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 	Local $oTableCursor
 	Local $asCells
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37808,7 +37808,7 @@ Func _LOWriter_TableCursor(ByRef $oCursor, $sGoToCellByName = Null, $bSelect = F
 	Local $vReturn
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37864,7 +37864,7 @@ EndFunc   ;==>_LOWriter_TableCursor
 Func _LOWriter_TableDelete(ByRef $oDoc, ByRef $oTable)
 	Local $sTableName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -37901,7 +37901,7 @@ EndFunc   ;==>_LOWriter_TableDelete
 Func _LOWriter_TableGetCellNames(ByRef $oTable)
 	Local $asCellNames
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0) ;Not an Object.
@@ -37949,7 +37949,7 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 	Local $sCellRange
 
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38021,7 +38021,7 @@ Func _LOWriter_TableGetCellObjByName(ByRef $oTable, $sCellName, $sToCellName = $
 	Local $oCell
 	Local Const $STR_STRIPALL = 8
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38097,7 +38097,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToColumn = $iColumn, $iToRow = $iRow)
 	Local $oCell
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38166,7 +38166,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 	Local $avTableDataReturn, $avTableData, $avTempArray
 	Local $iExtended
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38230,7 +38230,7 @@ EndFunc   ;==>_LOWriter_TableGetData
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_TableGetObjByCursor(ByRef $oDoc, ByRef $oCursor)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38263,7 +38263,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByCursor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_TableGetObjByName(ByRef $oDoc, $sTableName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38327,7 +38327,7 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 	Local $oText, $oInsertPoint, $oTextCursor
 	Local $iCursorDataType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38431,7 +38431,7 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 	Local $iError = 0
 	Local $aiMargins[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38681,7 +38681,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 	Local $oRow
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38745,7 +38745,7 @@ EndFunc   ;==>_LOWriter_TableRowColor
 Func _LOWriter_TableRowDelete(ByRef $oTable, $iRow, $iCount = 1)
 	Local $iRowCount, $iReturn = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38785,7 +38785,7 @@ EndFunc   ;==>_LOWriter_TableRowDelete
 Func _LOWriter_TableRowGetCount(ByRef $oTable)
 	Local $iRowSize = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0) ;Not an Object.
@@ -38830,7 +38830,7 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 Func _LOWriter_TableRowInsert(ByRef $oTable, $iCount, $iRow = -1)
 	Local $iRowCount
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38894,7 +38894,7 @@ Func _LOWriter_TableRowProperty(ByRef $oTable, $iRow, $iHeight = Null, $bIsAutoH
 	Local $iError = 0
 	Local $avProperties[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -38963,7 +38963,7 @@ EndFunc   ;==>_LOWriter_TableRowProperty
 Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 	Local $iColumns
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -39005,7 +39005,7 @@ Func _LOWriter_TablesGetNames(ByRef $oDoc)
 	Local $oTable, $oTables
 	Local $asTableNames[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -39101,7 +39101,7 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $bTran
 	Local $tShdwFrmt
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -39193,7 +39193,7 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 	Local $iError = 0
 	Local $avWidthProps[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -39256,7 +39256,7 @@ Func _LOWriter_VersionGet($bSimpleVersion = False, $bReturnName = False)
 	Local $oSettings, $oConfigProvider
 	Local $aParamArray[1]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 
@@ -39496,7 +39496,7 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 	Local $avBorder[4]
 	Local $tBL2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(3.4) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -39602,7 +39602,7 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	Local $avBorder[4]
 	Local $tBL2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -39712,7 +39712,7 @@ Func __LOWriter_CharBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -39810,7 +39810,7 @@ Func __LOWriter_CharEffect(ByRef $oObj, $iRelief, $iCase, $bHidden, $bOutline, $
 	Local $iError = 0
 	Local $avEffect[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -39915,7 +39915,7 @@ Func __LOWriter_CharFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeigh
 	Local $iError = 0
 	Local $avFont[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -40021,7 +40021,7 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40150,7 +40150,7 @@ Func __LOWriter_CharOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasCo
 	Local $iError = 0
 	Local $avOverLine[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40242,7 +40242,7 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 	Local $iError = 0
 	Local $avPosition[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40336,7 +40336,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 	Local $iError = 0
 	Local $avRotation[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40443,7 +40443,7 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 	Local $tShdwFrmt
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40537,7 +40537,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	Local $iError = 0
 	Local $avKerning[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40615,7 +40615,7 @@ Func __LOWriter_CharStrikeOut(ByRef $oObj, $bWordOnly, $bStrikeOut, $iStrikeLine
 	Local $iError = 0
 	Local $avStrikeOut[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40777,7 +40777,7 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 	Local $iError = 0
 	Local $avUnderLine[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -40838,7 +40838,7 @@ EndFunc   ;==>__LOWriter_CharUnderLine
 Func __LOWriter_CreateStruct($sStructName)
 	Local $oServiceManager, $tStruct
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sStructName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -40888,7 +40888,7 @@ Func __LOWriter_CursorGetText(ByRef $oDoc, ByRef $oCursor)
 	Local $oText, $oReturnedObj
 	Local $iCursorDataType
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -40935,7 +40935,7 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($tDateStruct1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, False)
@@ -40975,7 +40975,7 @@ EndFunc   ;==>__LOWriter_DateStructCompare
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_DirFrmtCheck(ByRef $oSelection, $bCheckSelection = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	;If Object supports Paragraph or TextPortion services, then return True.
@@ -41035,7 +41035,7 @@ Func __LOWriter_FieldCountType($vInput)
 	$asFieldTypes[$LOW_FIELD_COUNT_TYPE_WORDS] = "com.sun.star.text.TextField.WordCount"
 
 	If IsObj($vInput) Then
-		Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+		Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 		#forceref $oCOM_ErrorHandler
 
 
@@ -41105,7 +41105,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	Local $iCount = 0, $iColumns = 4, $iFieldTypeCol = 2, $iFieldTypeNumCol = 3
 	Local $avTextFields[50][4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41384,7 +41384,7 @@ Func __LOWriter_FindFormatAddSetting(ByRef $atArray, $tSetting)
 	Local $bFound = False
 	Local $sSettingName
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsArray($atArray) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41434,7 +41434,7 @@ EndFunc   ;==>__LOWriter_FindFormatAddSetting
 Func __LOWriter_FindFormatDeleteSetting(ByRef $atArray, $sSettingName)
 	Local $iCount = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsArray($atArray) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41474,7 +41474,7 @@ EndFunc   ;==>__LOWriter_FindFormatDeleteSetting
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_FindFormatRetrieveSetting(ByRef $atArray, $sSettingName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsArray($atArray) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41530,7 +41530,7 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	Local $aiBorder[4]
 	Local $tBL2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41635,7 +41635,7 @@ Func __LOWriter_FrameRelativeSize(ByRef $oDoc, ByRef $oFrameObj, $bRelativeWidth
 	Local $iPageWidth, $iPageHeight, $iFrameWidth, $iFrameHeight
 	Local $oPageStyle
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -41701,7 +41701,7 @@ EndFunc   ;==>__LOWriter_FrameRelativeSize
 Func __LOWriter_GetPrinterSetting(ByRef $oDoc, $sSetting)
 	Local $aoPrinterProperties
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	$aoPrinterProperties = $oDoc.getPrinter()
@@ -41752,7 +41752,7 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 	Local $oGradTable
 	Local $iCount = 1
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42128,7 +42128,7 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	Local $tBL2
 	Local $aiBorder[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42241,7 +42241,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	Local $bFound = False
 	Local $sNoteRefID
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42343,7 +42343,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_Internal_CursorGetType(ByRef $oCursor)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42498,7 +42498,7 @@ EndFunc   ;==>__LOWriter_IntIsBetween
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_IsCellRange(ByRef $oCell)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42530,7 +42530,7 @@ EndFunc   ;==>__LOWriter_IsCellRange
 Func __LOWriter_IsTableInDoc(ByRef $oTable)
 	Local $aTableNames
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42630,7 +42630,7 @@ Func __LOWriter_NumStyleCreateScript(ByRef $oDoc)
 			"End Function"
 	Local $oStandardLibrary, $oScript
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42678,7 +42678,7 @@ EndFunc   ;==>__LOWriter_NumStyleCreateScript
 Func __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
 	Local $oStandardLibrary
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42732,7 +42732,7 @@ Func __LOWriter_NumStyleInitiateDocument()
 	Local $atProperties[3]
 	Local $vProperty
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
@@ -42870,7 +42870,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 	Local $vSettingValue
 	Local $bNumDocOpen = False
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -42994,7 +42994,7 @@ Func __LOWriter_NumStyleRetrieve(ByRef $oNumRules, $iLevel, $sSettingName)
 	Local $atNumLevel
 	Local $iGetLevel = $iLevel
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -43128,7 +43128,7 @@ Func __LOWriter_ParAlignment(ByRef $oObj, $iHorAlign, $iVertAlign, $iLastLineAli
 	Local $iError = 0
 	Local $avAlignment[6]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -43234,7 +43234,7 @@ Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 	Local $iError = 0
 	Local $avColor[2]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -43307,7 +43307,7 @@ Func __LOWriter_ParBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $i
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -43404,7 +43404,7 @@ Func __LOWriter_ParDropCaps(ByRef $oObj, $iNumChar, $iLines, $iSpcTxt, $bWholeWo
 	Local $tDCFrmt
 	Local $avDropCaps[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -43480,7 +43480,7 @@ EndFunc   ;==>__LOWriter_ParDropCaps
 Func __LOWriter_ParHasTabStop(ByRef $oObj, $iTabStop)
 	Local $atTabStops
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -43551,7 +43551,7 @@ Func __LOWriter_ParHyphenation(ByRef $oObj, $bAutoHyphen, $bHyphenNoCaps, $iMaxH
 	Local $iError = 0
 	Local $avHyphenation[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -43649,7 +43649,7 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 	Local $iError = 0
 	Local $avIndent[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -43742,7 +43742,7 @@ Func __LOWriter_ParOutLineAndList(ByRef $oObj, $iOutline, $sNumStyle, $bParLineC
 	Local $iError = 0
 	Local $avOutlineNList[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -43839,7 +43839,7 @@ Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyl
 	Local $iError = 0
 	Local $avPageBreak[3]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -43942,7 +43942,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 	Local $tShdwFrmt
 	Local $avShadow[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -44066,7 +44066,7 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	Local $iError = 0
 	Local $avSpacing[5]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -44248,7 +44248,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 	Local $tFoundTabStop, $tTabStruct
 	Local $iError = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -44349,7 +44349,7 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 	Local $bDeleted = False
 	Local $iCount = 0
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
@@ -44410,7 +44410,7 @@ Func __LOWriter_ParTabStopList(ByRef $oObj)
 	Local $atTabStops[0]
 	Local $aiTabList[0]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -44507,7 +44507,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 	Local $aiTabList
 	Local $aiTabSettings[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
@@ -44626,7 +44626,7 @@ Func __LOWriter_ParTxtFlowOpt(ByRef $oObj, $bParSplit, $bKeepTogether, $iParOrph
 	Local $iError = 0
 	Local $avTxtFlowOpt[4]
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -44733,7 +44733,7 @@ EndFunc   ;==>__LOWriter_RegExpConvert
 Func __LOWriter_SetPropertyValue($sName, $vValue)
 	Local $tProperties
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -44801,7 +44801,7 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	Local $avBorder[6]
 	Local $tBL2, $tTB2
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
@@ -44998,7 +44998,7 @@ Func __LOWriter_TableCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = Fals
 	$asMoves[$LOW_TABLECUR_GOTO_START] = "gotoStart"
 	$asMoves[$LOW_TABLECUR_GOTO_END] = "gotoEnd"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45049,7 +45049,7 @@ EndFunc   ;==>__LOWriter_TableCursorMove
 Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
 	Local $aCellNames
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45088,7 +45088,7 @@ EndFunc   ;==>__LOWriter_TableHasCellName
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45119,7 +45119,7 @@ EndFunc   ;==>__LOWriter_TableHasColumnRange
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45163,7 +45163,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 	Local $iRows
 	Local $bSplitRowTest
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
@@ -45315,7 +45315,7 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 	$asMoves[$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH] = "gotoEndOfParagraph"
 	$asMoves[$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH] = "gotoStartOfParagraph"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45429,7 +45429,7 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 	Local $oTGradTable
 	Local $iCount = 1
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -45798,7 +45798,7 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 	$asMoves[$LOW_VIEWCUR_GOTO_START] = "gotoStart"
 	$asMoves[$LOW_VIEWCUR_GOTO_END] = "gotoEnd"
 
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
