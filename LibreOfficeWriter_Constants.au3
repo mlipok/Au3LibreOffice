@@ -534,291 +534,288 @@ Global Const _
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR = 49, _   ; Numbering in Russian Serbian alphabet lower case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR = 50, _ ; Numbering in Serbian Cyrillic alphabet upper case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR = 51, _ ; Numbering in Serbian Cyrillic alphabet upper case letters.
-		$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER = 52, _    ; Numbering in Greek alphabet upper case letters.
-		$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER = 53, _    ; Numbering in Greek alphabet lower case letters.
-		$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD = 54, _          ; Numbering in Arabic alphabet using abjad sequence.
-		$LOW_NUM_STYLE_CHARS_PERSIAN_WORD = 55, _          ; Numbering in Persian words.
-		$LOW_NUM_STYLE_NUMBER_HEBREW = 56, _               ; Numbering in Hebrew numerals.
-		$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC = 57, _         ; Numbering in Arabic-Indic numerals.
-		$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC = 58, _    ; Numbering in East Arabic-Indic numerals.
-		$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI = 59, _     ; Numbering in Indic Devanagari numerals.
-		$LOW_NUM_STYLE_TEXT_NUMBER = 60, _                 ; Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-		$LOW_NUM_STYLE_TEXT_CARDINAL = 61, _               ; Numbering in cardinal numbers of the language of the text node. (One, Two)
-		$LOW_NUM_STYLE_TEXT_ORDINAL = 62, _                ; Numbering in ordinal numbers of the language of the text node. (First, Second)
-		$LOW_NUM_STYLE_SYMBOL_CHICAGO = 63, _              ; Footnoting symbols according the University of Chicago style.
-		$LOW_NUM_STYLE_ARABIC_ZERO = 64, _                 ; Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-		$LOW_NUM_STYLE_ARABIC_ZERO3 = 65, _                ; Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-		$LOW_NUM_STYLE_ARABIC_ZERO4 = 66, _                ; Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-		$LOW_NUM_STYLE_ARABIC_ZERO5 = 67, _                ; Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-		$LOW_NUM_STYLE_SZEKELY_ROVAS = 68, _               ; Numbering is in Szekely rovas (Old Hungarian) numerals.
-		$LOW_NUM_STYLE_NUMBER_DIGITAL_KO = 69, _           ; Numbering is in Korean Digital number.
-		$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO = 70, _          ; Numbering is in Korean Digital Number, reserved "koreanDigital2".
-		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71                ; Numbering is in Korean Legal Number, reserved "koreanLegal".
+		$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER = 52, _         ; Numbering in Greek alphabet upper case letters.
+		$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER = 53, _         ; Numbering in Greek alphabet lower case letters.
+		$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD = 54, _               ; Numbering in Arabic alphabet using abjad sequence.
+		$LOW_NUM_STYLE_CHARS_PERSIAN_WORD = 55, _               ; Numbering in Persian words.
+		$LOW_NUM_STYLE_NUMBER_HEBREW = 56, _                    ; Numbering in Hebrew numerals.
+		$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC = 57, _              ; Numbering in Arabic-Indic numerals.
+		$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC = 58, _         ; Numbering in East Arabic-Indic numerals.
+		$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI = 59, _          ; Numbering in Indic Devanagari numerals.
+		$LOW_NUM_STYLE_TEXT_NUMBER = 60, _                      ; Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
+		$LOW_NUM_STYLE_TEXT_CARDINAL = 61, _                    ; Numbering in cardinal numbers of the language of the text node. (One, Two)
+		$LOW_NUM_STYLE_TEXT_ORDINAL = 62, _                     ; Numbering in ordinal numbers of the language of the text node. (First, Second)
+		$LOW_NUM_STYLE_SYMBOL_CHICAGO = 63, _                   ; Footnoting symbols according the University of Chicago style.
+		$LOW_NUM_STYLE_ARABIC_ZERO = 64, _                      ; Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
+		$LOW_NUM_STYLE_ARABIC_ZERO3 = 65, _                     ; Numbering is in Arabic numbers, padded with zero to have a length of at least three.
+		$LOW_NUM_STYLE_ARABIC_ZERO4 = 66, _                     ; Numbering is in Arabic numbers, padded with zero to have a length of at least four.
+		$LOW_NUM_STYLE_ARABIC_ZERO5 = 67, _                     ; Numbering is in Arabic numbers, padded with zero to have a length of at least five.
+		$LOW_NUM_STYLE_SZEKELY_ROVAS = 68, _                    ; Numbering is in Szekely rovas (Old Hungarian) numerals.
+		$LOW_NUM_STYLE_NUMBER_DIGITAL_KO = 69, _                ; Numbering is in Korean Digital number.
+		$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO = 70, _               ; Numbering is in Korean Digital Number, reserved "koreanDigital2".
+		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71                     ; Numbering is in Korean Legal Number, reserved "koreanLegal".
 
 ; Line Style
 Global Const _
-		$LOW_LINE_STYLE_NONE = 0, _                        ; No line.
-		$LOW_LINE_STYLE_SOLID = 1, _                       ; A solid line.
-		$LOW_LINE_STYLE_DOTTED = 2, _                      ; A dotted line.
-		$LOW_LINE_STYLE_DASHED = 3                         ; A Dashed line.
+		$LOW_LINE_STYLE_NONE = 0, _                             ; No line.
+		$LOW_LINE_STYLE_SOLID = 1, _                            ; A solid line.
+		$LOW_LINE_STYLE_DOTTED = 2, _                           ; A dotted line.
+		$LOW_LINE_STYLE_DASHED = 3                              ; A Dashed line.
 
 ; Vertical Alignment
 Global Const _
-		$LOW_ALIGN_VERT_TOP = 0, _                         ; Vertically Align the object to the Top.
-		$LOW_ALIGN_VERT_MIDDLE = 1, _                      ; Vertically Align the object to the Middle.
-		$LOW_ALIGN_VERT_BOTTOM = 2                         ; Vertically Align the object to the Bottom.
+		$LOW_ALIGN_VERT_TOP = 0, _                              ; Vertically Align the object to the Top.
+		$LOW_ALIGN_VERT_MIDDLE = 1, _                           ; Vertically Align the object to the Middle.
+		$LOW_ALIGN_VERT_BOTTOM = 2                              ; Vertically Align the object to the Bottom.
 
 ; Horizontal Alignment
 Global Const _
-		$LOW_ALIGN_HORI_LEFT = 0, _                        ; Horizontally align the object to the Left.
-		$LOW_ALIGN_HORI_CENTER = 1, _                      ; Horizontally align the object to the Center.
-		$LOW_ALIGN_HORI_RIGHT = 2                          ; Horizontally align the object to the Right.
+		$LOW_ALIGN_HORI_LEFT = 0, _                             ; Horizontally align the object to the Left.
+		$LOW_ALIGN_HORI_CENTER = 1, _                           ; Horizontally align the object to the Center.
+		$LOW_ALIGN_HORI_RIGHT = 2                               ; Horizontally align the object to the Right.
 
 ; Gradient Type
 Global Const _
-		$LOW_GRAD_TYPE_OFF = -1, _                         ; Turn the Gradient off.
-		$LOW_GRAD_TYPE_LINEAR = 0, _                       ; Linear type Gradient
-		$LOW_GRAD_TYPE_AXIAL = 1, _                        ; Axial type Gradient
-		$LOW_GRAD_TYPE_RADIAL = 2, _                       ; Radial type Gradient
-		$LOW_GRAD_TYPE_ELLIPTICAL = 3, _                   ; Elliptical type Gradient
-		$LOW_GRAD_TYPE_SQUARE = 4, _                       ; Square type Gradient
-		$LOW_GRAD_TYPE_RECT = 5                            ; Rectangle type Gradient
+		$LOW_GRAD_TYPE_OFF = -1, _                              ; Turn the Gradient off.
+		$LOW_GRAD_TYPE_LINEAR = 0, _                            ; Linear type Gradient
+		$LOW_GRAD_TYPE_AXIAL = 1, _                             ; Axial type Gradient
+		$LOW_GRAD_TYPE_RADIAL = 2, _                            ; Radial type Gradient
+		$LOW_GRAD_TYPE_ELLIPTICAL = 3, _                        ; Elliptical type Gradient
+		$LOW_GRAD_TYPE_SQUARE = 4, _                            ; Square type Gradient
+		$LOW_GRAD_TYPE_RECT = 5                                 ; Rectangle type Gradient
 
 ; Follow By
 Global Const _
-		$LOW_FOLLOW_BY_TABSTOP = 0, _                      ; A Tab will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_SPACE = 1, _                        ; A Space will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_NOTHING = 2, _                      ; Nothing will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_NEWLINE = 3                         ; A Newline will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_TABSTOP = 0, _                           ; A Tab will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_SPACE = 1, _                             ; A Space will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_NOTHING = 2, _                           ; Nothing will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_NEWLINE = 3                              ; A Newline will follow the Numbering Style Number.
 
 ; Cursor Status
-Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _               ; Test if the start and end positions are the same for a cursor selection.
-
-;
-$LOW_CURSOR_STAT_IS_START_OF_WORD, _                       ; Test if a cursor is at the start of a word.
-		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                 ; Test if a cursor is at the end of a word.
-		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _           ; Test if a cursor is at the start of a sentence.
-		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _             ; Test if a cursor is at the end of a sentence.
-		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                ; Test if a cursor is at the start of a paragraph.
-		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                  ; Test if a cursor is at the End of a paragraph.
-		$LOW_CURSOR_STAT_IS_START_OF_LINE, _               ; Test if a cursor is at the start of the line.
-		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                 ; Test if a cursor is at the end of the line.
-		$LOW_CURSOR_STAT_GET_PAGE, _                       ; Return the current page the cursor is in.
-		$LOW_CURSOR_STAT_GET_RANGE_NAME                    ; Return the cell range selected by a cursor.
+Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _                    ; Test if the start and end positions are the same for a cursor selection.
+		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word.
+		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word.
+		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence.
+		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _                  ; Test if a cursor is at the end of a sentence.
+		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                     ; Test if a cursor is at the start of a paragraph.
+		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                       ; Test if a cursor is at the End of a paragraph.
+		$LOW_CURSOR_STAT_IS_START_OF_LINE, _                    ; Test if a cursor is at the start of the line.
+		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                      ; Test if a cursor is at the end of the line.
+		$LOW_CURSOR_STAT_GET_PAGE, _                            ; Return the current page the cursor is in.
+		$LOW_CURSOR_STAT_GET_RANGE_NAME                         ; Return the cell range selected by a cursor.
 
 ; Relative to
 Global Const _
-		$LOW_RELATIVE_ROW = -1, _                          ; Position an object considering the row height.
-		$LOW_RELATIVE_PARAGRAPH = 0, _                     ; The Object is placed considering the available paragraph space, including indent spacing. [Also called "Margin" or "Baseline" in L.O. UI]
-		$LOW_RELATIVE_PARAGRAPH_TEXT = 1, _                ; The Object is placed considering the available paragraph space, excluding indent spacing.
-		$LOW_RELATIVE_CHARACTER = 2, _                     ; The Object is placed considering the available character space.
-		$LOW_RELATIVE_PAGE_LEFT = 3, _                     ; The Object is placed considering the available space between the left page border and the left Paragraph border. [Same as Left Page Border in L.O. UI]
-		$LOW_RELATIVE_PAGE_RIGHT = 4, _                    ; The Object is placed considering the available space between the Right page border and the Right Paragraph border. [Same as Right Page Border in L.O. UI]
-		$LOW_RELATIVE_PARAGRAPH_LEFT = 5, _                ; The Object is placed considering the available indent space to the left of the paragraph.
-		$LOW_RELATIVE_PARAGRAPH_RIGHT = 6, _               ; The Object is placed considering the available indent space to the right of the paragraph.
-		$LOW_RELATIVE_PAGE = 7, _                          ; The Object is placed considering the available space between the right and left, or top and bottom page borders.
-		$LOW_RELATIVE_PAGE_PRINT = 8, _                    ; The Object is placed considering the available space between the right and left, or top and bottom page margins. [Same as Page Text Area in L.O. UI]
-		$LOW_RELATIVE_TEXT_LINE = 9, _                     ; The Object is placed considering the height of the line.
-		$LOW_RELATIVE_PAGE_PRINT_BOTTOM = 10, _            ; The Object is placed considering the space available in the page footer(?)
-		$LOW_RELATIVE_PAGE_PRINT_TOP = 11                  ; The Object is placed considering the space available in the page header(?)
+		$LOW_RELATIVE_ROW = -1, _                               ; Position an object considering the row height.
+		$LOW_RELATIVE_PARAGRAPH = 0, _                          ; The Object is placed considering the available paragraph space, including indent spacing. [Also called "Margin" or "Baseline" in L.O. UI]
+		$LOW_RELATIVE_PARAGRAPH_TEXT = 1, _                     ; The Object is placed considering the available paragraph space, excluding indent spacing.
+		$LOW_RELATIVE_CHARACTER = 2, _                          ; The Object is placed considering the available character space.
+		$LOW_RELATIVE_PAGE_LEFT = 3, _                          ; The Object is placed considering the available space between the left page border and the left Paragraph border. [Same as Left Page Border in L.O. UI]
+		$LOW_RELATIVE_PAGE_RIGHT = 4, _                         ; The Object is placed considering the available space between the Right page border and the Right Paragraph border. [Same as Right Page Border in L.O. UI]
+		$LOW_RELATIVE_PARAGRAPH_LEFT = 5, _                     ; The Object is placed considering the available indent space to the left of the paragraph.
+		$LOW_RELATIVE_PARAGRAPH_RIGHT = 6, _                    ; The Object is placed considering the available indent space to the right of the paragraph.
+		$LOW_RELATIVE_PAGE = 7, _                               ; The Object is placed considering the available space between the right and left, or top and bottom page borders.
+		$LOW_RELATIVE_PAGE_PRINT = 8, _                         ; The Object is placed considering the available space between the right and left, or top and bottom page margins. [Same as Page Text Area in L.O. UI]
+		$LOW_RELATIVE_TEXT_LINE = 9, _                          ; The Object is placed considering the height of the line.
+		$LOW_RELATIVE_PAGE_PRINT_BOTTOM = 10, _                 ; The Object is placed considering the space available in the page footer(?)
+		$LOW_RELATIVE_PAGE_PRINT_TOP = 11                       ; The Object is placed considering the space available in the page header(?)
 
 ; Anchor Type
 Global Const _
-		$LOW_ANCHOR_AT_PARAGRAPH = 0, _                    ; Anchors the object to the current paragraph.
-		$LOW_ANCHOR_AS_CHARACTER = 1, _                    ; Anchors the Object as character.
-		$LOW_ANCHOR_AT_PAGE = 2, _                         ; Anchors the Object to the current page.
-		$LOW_ANCHOR_AT_FRAME = 3, _                        ;Anchors the object to the surrounding frame.
-		$LOW_ANCHOR_AT_CHARACTER = 4                       ; Anchors the Object to a character.
+		$LOW_ANCHOR_AT_PARAGRAPH = 0, _                         ; Anchors the object to the current paragraph.
+		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character.
+		$LOW_ANCHOR_AT_PAGE = 2, _                              ; Anchors the Object to the current page.
+		$LOW_ANCHOR_AT_FRAME = 3, _                             ;Anchors the object to the surrounding frame.
+		$LOW_ANCHOR_AT_CHARACTER = 4                            ; Anchors the Object to a character.
 
 ; Wrap Type
 Global Const _
-		$LOW_WRAP_MODE_NONE = 0, _                         ; Places the Object on a separate line in the document.
-		$LOW_WRAP_MODE_THROUGH = 1, _                      ; Places the Object in front of the text.
-		$LOW_WRAP_MODE_PARALLEL = 2, _                     ; Wraps text on all four sides of the border frame of the Object. [Same as "Optimal"]
-		$LOW_WRAP_MODE_DYNAMIC = 3, _                      ; Automatically wraps text to the left, to the right, or on all four sides of the border of the object. [Same as "Before"]
-		$LOW_WRAP_MODE_LEFT = 4, _                         ; Wraps text on the left side of the object. [Same as "After"]
-		$LOW_WRAP_MODE_RIGHT = 5                           ; Wraps text on the right side of the object.
+		$LOW_WRAP_MODE_NONE = 0, _                              ; Places the Object on a separate line in the document.
+		$LOW_WRAP_MODE_THROUGH = 1, _                           ; Places the Object in front of the text.
+		$LOW_WRAP_MODE_PARALLEL = 2, _                          ; Wraps text on all four sides of the border frame of the Object. [Same as "Optimal"]
+		$LOW_WRAP_MODE_DYNAMIC = 3, _                           ; Automatically wraps text to the left, to the right, or on all four sides of the border of the object. [Same as "Before"]
+		$LOW_WRAP_MODE_LEFT = 4, _                              ; Wraps text on the left side of the object. [Same as "After"]
+		$LOW_WRAP_MODE_RIGHT = 5                                ; Wraps text on the right side of the object.
 
 ; Text Adjust
 Global Const _
-		$LOW_TXT_ADJ_VERT_TOP = 0, _                       ; The top edge of the text is adjusted to the top edge of the object.
-		$LOW_TXT_ADJ_VERT_CENTER = 1, _                    ; The text is centered inside the object.
-		$LOW_TXT_ADJ_VERT_BOTTOM = 2, _                    ; The bottom edge of the text is adjusted to the bottom edge of the object.
-		$LOW_TXT_ADJ_VERT_BLOCK = 3                        ;
+		$LOW_TXT_ADJ_VERT_TOP = 0, _                            ; The top edge of the text is adjusted to the top edge of the object.
+		$LOW_TXT_ADJ_VERT_CENTER = 1, _                         ; The text is centered inside the object.
+		$LOW_TXT_ADJ_VERT_BOTTOM = 2, _                         ; The bottom edge of the text is adjusted to the bottom edge of the object.
+		$LOW_TXT_ADJ_VERT_BLOCK = 3                             ;
 
 ; Frame Target
 Global Const _
-		$LOW_FRAME_TARGET_NONE = "", _                     ;
-		$LOW_FRAME_TARGET_TOP = "_top", _                  ; File opens in the topmost frame in the hierarchy.
-		$LOW_FRAME_TARGET_PARENT = "_parent", _            ; File opens in the parent frame of the current frame.
-		$LOW_FRAME_TARGET_BLANK = "_blank", _              ; File opens in a new page.
-		$LOW_FRAME_TARGET_SELF = "_self"                   ; File opens in the current frame.
+		$LOW_FRAME_TARGET_NONE = "", _                          ;
+		$LOW_FRAME_TARGET_TOP = "_top", _                       ; File opens in the topmost frame in the hierarchy.
+		$LOW_FRAME_TARGET_PARENT = "_parent", _                 ; File opens in the parent frame of the current frame.
+		$LOW_FRAME_TARGET_BLANK = "_blank", _                   ; File opens in a new page.
+		$LOW_FRAME_TARGET_SELF = "_self"                        ; File opens in the current frame.
 
 ; Footnote Count type
 Global Const _
-		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _                ; Restarts the numbering of footnotes at the top of each page.
-		$LOW_FOOTNOTE_COUNT_PER_CHAP = 1, _                ; Restarts the numbering of footnotes at the beginning of each chapter.
-		$LOW_FOOTNOTE_COUNT_PER_DOC = 2                    ; Numbers the footnotes in the document sequentially.
+		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _                     ; Restarts the numbering of footnotes at the top of each page.
+		$LOW_FOOTNOTE_COUNT_PER_CHAP = 1, _                     ; Restarts the numbering of footnotes at the beginning of each chapter.
+		$LOW_FOOTNOTE_COUNT_PER_DOC = 2                         ; Numbers the footnotes in the document sequentially.
 
 ; Page Number Type
 Global Const _
-		$LOW_PAGE_NUM_TYPE_PREV = 0, _                     ; The Previous Page's page number.
-		$LOW_PAGE_NUM_TYPE_CURRENT = 1, _                  ; The current page number.
-		$LOW_PAGE_NUM_TYPE_NEXT = 2                        ; The Next Page's page number.
+		$LOW_PAGE_NUM_TYPE_PREV = 0, _                          ; The Previous Page's page number.
+		$LOW_PAGE_NUM_TYPE_CURRENT = 1, _                       ; The current page number.
+		$LOW_PAGE_NUM_TYPE_NEXT = 2                             ; The Next Page's page number.
 
 ; Field Chapter Display Type
 Global Const _
-		$LOW_FIELD_CHAP_FRMT_NAME = 0, _                   ; The title of the chapter is displayed.
-		$LOW_FIELD_CHAP_FRMT_NUMBER = 1, _                 ; The number including prefix and suffix of the chapter is displayed.
-		$LOW_FIELD_CHAP_FRMT_NAME_NUMBER = 2, _            ; The title and number, with prefix and suffix of the chapter are displayed.
-		$LOW_FIELD_CHAP_FRMT_NO_PREFIX_SUFFIX = 3, _       ; The name and number of the chapter are displayed.
-		$LOW_FIELD_CHAP_FRMT_DIGIT = 4                     ; The number of the chapter is displayed.
+		$LOW_FIELD_CHAP_FRMT_NAME = 0, _                        ; The title of the chapter is displayed.
+		$LOW_FIELD_CHAP_FRMT_NUMBER = 1, _                      ; The number including prefix and suffix of the chapter is displayed.
+		$LOW_FIELD_CHAP_FRMT_NAME_NUMBER = 2, _                 ; The title and number, with prefix and suffix of the chapter are displayed.
+		$LOW_FIELD_CHAP_FRMT_NO_PREFIX_SUFFIX = 3, _            ; The name and number of the chapter are displayed.
+		$LOW_FIELD_CHAP_FRMT_DIGIT = 4                          ; The number of the chapter is displayed.
 
 ; User Data Field Type
 Global Const _
-		$LOW_FIELD_USER_DATA_COMPANY = 0, _                ; The field shows the company name.
-
-$LOW_FIELD_USER_DATA_FIRST_NAME = 1, _                     ; The field shows the first name.
-		$LOW_FIELD_USER_DATA_NAME = 2, _                   ; The field shows the name.
-		$LOW_FIELD_USER_DATA_SHORTCUT = 3, _               ; The field shows the initials.
-		$LOW_FIELD_USER_DATA_STREET = 4, _                 ; The field shows the street.
-		$LOW_FIELD_USER_DATA_COUNTRY = 5, _                ; The field shows the country.
-		$LOW_FIELD_USER_DATA_ZIP = 6, _                    ; The field shows the zip code.
-		$LOW_FIELD_USER_DATA_CITY = 7, _                   ; The field shows the city.
-		$LOW_FIELD_USER_DATA_TITLE = 8, _                  ; The field shows the title.
-		$LOW_FIELD_USER_DATA_POSITION = 9, _               ; The field shows the position.
-		$LOW_FIELD_USER_DATA_PHONE_PRIVATE = 10, _         ; The field shows the number of the private phone.
-		$LOW_FIELD_USER_DATA_PHONE_COMPANY = 11, _         ; The field shows the number of the business phone.
-		$LOW_FIELD_USER_DATA_FAX = 12, _                   ; The field shows the fax number.
-		$LOW_FIELD_USER_DATA_EMAIL = 13, _                 ; The field shows the e-Mail.
-		$LOW_FIELD_USER_DATA_STATE = 14                    ; The field shows the state.
+		$LOW_FIELD_USER_DATA_COMPANY = 0, _                     ; The field shows the company name.
+		$LOW_FIELD_USER_DATA_FIRST_NAME = 1, _                  ; The field shows the first name.
+		$LOW_FIELD_USER_DATA_NAME = 2, _                        ; The field shows the name.
+		$LOW_FIELD_USER_DATA_SHORTCUT = 3, _                    ; The field shows the initials.
+		$LOW_FIELD_USER_DATA_STREET = 4, _                      ; The field shows the street.
+		$LOW_FIELD_USER_DATA_COUNTRY = 5, _                     ; The field shows the country.
+		$LOW_FIELD_USER_DATA_ZIP = 6, _                         ; The field shows the zip code.
+		$LOW_FIELD_USER_DATA_CITY = 7, _                        ; The field shows the city.
+		$LOW_FIELD_USER_DATA_TITLE = 8, _                       ; The field shows the title.
+		$LOW_FIELD_USER_DATA_POSITION = 9, _                    ; The field shows the position.
+		$LOW_FIELD_USER_DATA_PHONE_PRIVATE = 10, _              ; The field shows the number of the private phone.
+		$LOW_FIELD_USER_DATA_PHONE_COMPANY = 11, _              ; The field shows the number of the business phone.
+		$LOW_FIELD_USER_DATA_FAX = 12, _                        ; The field shows the fax number.
+		$LOW_FIELD_USER_DATA_EMAIL = 13, _                      ; The field shows the e-Mail.
+		$LOW_FIELD_USER_DATA_STATE = 14                         ; The field shows the state.
 
 ; File Name Field Type
 Global Const _
-		$LOW_FIELD_FILENAME_FULL_PATH = 0, _               ; The content of the URL is completely displayed.
-		$LOW_FIELD_FILENAME_PATH = 1, _                    ; Only the path of the file is displayed.
-		$LOW_FIELD_FILENAME_NAME = 2, _                    ; Only the name of the file without the file extension is displayed.
-		$LOW_FIELD_FILENAME_NAME_AND_EXT = 3, _            ; The file name including the file extension is displayed.
-		$LOW_FIELD_FILENAME_CATEGORY = 4, _                ; The Category of the Template is displayed.
-		$LOW_FIELD_FILENAME_TEMPLATE_NAME = 5              ; The Template Name is displayed.
+		$LOW_FIELD_FILENAME_FULL_PATH = 0, _                    ; The content of the URL is completely displayed.
+		$LOW_FIELD_FILENAME_PATH = 1, _                         ; Only the path of the file is displayed.
+		$LOW_FIELD_FILENAME_NAME = 2, _                         ; Only the name of the file without the file extension is displayed.
+		$LOW_FIELD_FILENAME_NAME_AND_EXT = 3, _                 ; The file name including the file extension is displayed.
+		$LOW_FIELD_FILENAME_CATEGORY = 4, _                     ; The Category of the Template is displayed.
+		$LOW_FIELD_FILENAME_TEMPLATE_NAME = 5                   ; The Template Name is displayed.
 
 ; Format Key Type
 Global Const _
-		$LOW_FORMAT_KEYS_ALL = 0, _                        ; Returns All number formats.
-		$LOW_FORMAT_KEYS_DEFINED = 1, _                    ; Returns Only user-defined number formats.
-		$LOW_FORMAT_KEYS_DATE = 2, _                       ; Returns Date formats.
-		$LOW_FORMAT_KEYS_TIME = 4, _                       ; Returns Time formats.
-		$LOW_FORMAT_KEYS_DATE_TIME = 6, _                  ; Returns Number formats which contain date and time.
-		$LOW_FORMAT_KEYS_CURRENCY = 8, _                   ; Returns Currency formats.
-		$LOW_FORMAT_KEYS_NUMBER = 16, _                    ; Returns Decimal number formats.
-		$LOW_FORMAT_KEYS_SCIENTIFIC = 32, _                ; Returns Scientific number formats.
-		$LOW_FORMAT_KEYS_FRACTION = 64, _                  ; Returns Number formats for fractions.
-		$LOW_FORMAT_KEYS_PERCENT = 128, _                  ; Returns Percentage number formats.
-		$LOW_FORMAT_KEYS_TEXT = 256, _                     ; Returns Text number formats.
-		$LOW_FORMAT_KEYS_LOGICAL = 1024, _                 ; Returns Boolean number formats.
-		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _               ; Returns Is used as a return value if no format exists.
-		$LOW_FORMAT_KEYS_EMPTY = 4096, _                   ; Returns Empty Number formats (?)
-		$LOW_FORMAT_KEYS_DURATION = 8196                   ; Returns Duration number formats.
+		$LOW_FORMAT_KEYS_ALL = 0, _                             ; Returns All number formats.
+		$LOW_FORMAT_KEYS_DEFINED = 1, _                         ; Returns Only user-defined number formats.
+		$LOW_FORMAT_KEYS_DATE = 2, _                            ; Returns Date formats.
+		$LOW_FORMAT_KEYS_TIME = 4, _                            ; Returns Time formats.
+		$LOW_FORMAT_KEYS_DATE_TIME = 6, _                       ; Returns Number formats which contain date and time.
+		$LOW_FORMAT_KEYS_CURRENCY = 8, _                        ; Returns Currency formats.
+		$LOW_FORMAT_KEYS_NUMBER = 16, _                         ; Returns Decimal number formats.
+		$LOW_FORMAT_KEYS_SCIENTIFIC = 32, _                     ; Returns Scientific number formats.
+		$LOW_FORMAT_KEYS_FRACTION = 64, _                       ; Returns Number formats for fractions.
+		$LOW_FORMAT_KEYS_PERCENT = 128, _                       ; Returns Percentage number formats.
+		$LOW_FORMAT_KEYS_TEXT = 256, _                          ; Returns Text number formats.
+		$LOW_FORMAT_KEYS_LOGICAL = 1024, _                      ; Returns Boolean number formats.
+		$LOW_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Returns Is used as a return value if no format exists.
+		$LOW_FORMAT_KEYS_EMPTY = 4096, _                        ; Returns Empty Number formats (?)
+		$LOW_FORMAT_KEYS_DURATION = 8196                        ; Returns Duration number formats.
 
 ; Reference Field Type
 Global Const _
-		$LOW_FIELD_REF_TYPE_REF_MARK = 0, _                ; The source is referencing a reference mark.
-		$LOW_FIELD_REF_TYPE_SEQ_FIELD = 1, _               ; The source is referencing a number sequence field.
-		$LOW_FIELD_REF_TYPE_BOOKMARK = 2, _                ; The source is referencing a bookmark.
-		$LOW_FIELD_REF_TYPE_FOOTNOTE = 3, _                ; The source is referencing a footnote.
-		$LOW_FIELD_REF_TYPE_ENDNOTE = 4                    ; The source is referencing an endnote.
+		$LOW_FIELD_REF_TYPE_REF_MARK = 0, _                     ; The source is referencing a reference mark.
+		$LOW_FIELD_REF_TYPE_SEQ_FIELD = 1, _                    ; The source is referencing a number sequence field.
+		$LOW_FIELD_REF_TYPE_BOOKMARK = 2, _                     ; The source is referencing a bookmark.
+		$LOW_FIELD_REF_TYPE_FOOTNOTE = 3, _                     ; The source is referencing a footnote.
+		$LOW_FIELD_REF_TYPE_ENDNOTE = 4                         ; The source is referencing an endnote.
 
 ; Type of Reference
 Global Const _
-		$LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED = 0, _      ; The page number is displayed using Arabic numbers.
-		$LOW_FIELD_REF_USING_CHAPTER = 1, _                ; The number of the chapter is displayed.
-		$LOW_FIELD_REF_USING_REF_TEXT = 2, _               ; The reference text is displayed.
-		$LOW_FIELD_REF_USING_ABOVE_BELOW = 3, _            ; The reference is displayed as one of the words, "above" or "below".
-		$LOW_FIELD_REF_USING_PAGE_NUM_STYLED = 4, _        ; The page number is displayed using the numbering type defined in the page style of the reference position.
-		$LOW_FIELD_REF_USING_CAT_AND_NUM = 5, _            ; Inserts the category (caption type) and the number of the reference target.
-		$LOW_FIELD_REF_USING_CAPTION = 6, _                ; Inserts the caption label of the reference target.
-		$LOW_FIELD_REF_USING_NUMBERING = 7, _              ; Inserts the caption number of the reference target.
-		$LOW_FIELD_REF_USING_NUMBER = 8, _                 ;  Inserts the number of the heading or numbered paragraph, including superior levels.
-		$LOW_FIELD_REF_USING_NUMBER_NO_CONT = 9, _         ; Inserts only the number of the heading or numbered paragraph.
-		$LOW_FIELD_REF_USING_NUMBER_CONT = 10              ; Inserts the number of the heading or numbered paragraph, including all superior levels.
+		$LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED = 0, _           ; The page number is displayed using Arabic numbers.
+		$LOW_FIELD_REF_USING_CHAPTER = 1, _                     ; The number of the chapter is displayed.
+		$LOW_FIELD_REF_USING_REF_TEXT = 2, _                    ; The reference text is displayed.
+		$LOW_FIELD_REF_USING_ABOVE_BELOW = 3, _                 ; The reference is displayed as one of the words, "above" or "below".
+		$LOW_FIELD_REF_USING_PAGE_NUM_STYLED = 4, _             ; The page number is displayed using the numbering type defined in the page style of the reference position.
+		$LOW_FIELD_REF_USING_CAT_AND_NUM = 5, _                 ; Inserts the category (caption type) and the number of the reference target.
+		$LOW_FIELD_REF_USING_CAPTION = 6, _                     ; Inserts the caption label of the reference target.
+		$LOW_FIELD_REF_USING_NUMBERING = 7, _                   ; Inserts the caption number of the reference target.
+		$LOW_FIELD_REF_USING_NUMBER = 8, _                      ;  Inserts the number of the heading or numbered paragraph, including superior levels.
+		$LOW_FIELD_REF_USING_NUMBER_NO_CONT = 9, _              ; Inserts only the number of the heading or numbered paragraph.
+		$LOW_FIELD_REF_USING_NUMBER_CONT = 10                   ; Inserts the number of the heading or numbered paragraph, including all superior levels.
 
 ; Count Field Type
-Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _        ; Count field is a Character Count type field.
-		$LOW_FIELD_COUNT_TYPE_IMAGES, _                    ; Count field is an Image Count type field.
-		$LOW_FIELD_COUNT_TYPE_OBJECTS, _                   ; Count field is an Object Count type field.
-		$LOW_FIELD_COUNT_TYPE_PAGES, _                     ; Count field is a Page Count type field.
-		$LOW_FIELD_COUNT_TYPE_PARAGRAPHS, _                ; Count field is a Paragraph Count type field.
-		$LOW_FIELD_COUNT_TYPE_TABLES, _                    ; Count field is a Table Count type field.
-		$LOW_FIELD_COUNT_TYPE_WORDS                        ; Count field is a Word Count type field.
+Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _             ; Count field is a Character Count type field.
+		$LOW_FIELD_COUNT_TYPE_IMAGES, _                         ; Count field is an Image Count type field.
+		$LOW_FIELD_COUNT_TYPE_OBJECTS, _                        ; Count field is an Object Count type field.
+		$LOW_FIELD_COUNT_TYPE_PAGES, _                          ; Count field is a Page Count type field.
+		$LOW_FIELD_COUNT_TYPE_PARAGRAPHS, _                     ; Count field is a Paragraph Count type field.
+		$LOW_FIELD_COUNT_TYPE_TABLES, _                         ; Count field is a Table Count type field.
+		$LOW_FIELD_COUNT_TYPE_WORDS                             ; Count field is a Word Count type field.
 
 ; Regular Field Types
 Global Enum Step *2 _
-		$LOW_FIELD_TYPE_ALL = 1, _                         ; Returns a list of all field types listed below.
-		$LOW_FIELD_TYPE_COMMENT, _                         ; A Comment Field.
-		$LOW_FIELD_TYPE_AUTHOR, _                          ; A Author field.
-		$LOW_FIELD_TYPE_CHAPTER, _                         ; A Chapter field
-		$LOW_FIELD_TYPE_CHAR_COUNT, _                      ; A Character Count field.
-		$LOW_FIELD_TYPE_COMBINED_CHAR, _                   ; A Combined Character field.
-		$LOW_FIELD_TYPE_COND_TEXT, _                       ; A Conditional Text field.
-		$LOW_FIELD_TYPE_DATE_TIME, _                       ; A Date/Time field.
-		$LOW_FIELD_TYPE_INPUT_LIST, _                      ; A Input List field.
-		$LOW_FIELD_TYPE_EMB_OBJ_COUNT, _                   ; A Object Count field.
-		$LOW_FIELD_TYPE_SENDER, _                          ; A Sender field.
-		$LOW_FIELD_TYPE_FILENAME, _                        ; A File Name field.
-		$LOW_FIELD_TYPE_SHOW_VAR, _                        ; A Show Variable field.
-		$LOW_FIELD_TYPE_INSERT_REF, _                      ; A Insert Reference field. [Includes: "Insert Reference", "Headings", "Numbered Paragraphs", "Drawing", "Bookmarks", "Footnotes", "Endnotes", etc.]
-		$LOW_FIELD_TYPE_IMAGE_COUNT, _                     ; A Image Count field.
-		$LOW_FIELD_TYPE_HIDDEN_PAR, _                      ; A Hidden Paragraph field.
-		$LOW_FIELD_TYPE_HIDDEN_TEXT, _                     ; A Hidden Text field.
-		$LOW_FIELD_TYPE_INPUT, _                           ; A Input field.
-		$LOW_FIELD_TYPE_PLACEHOLDER, _                     ; A Placeholder field.
-		$LOW_FIELD_TYPE_MACRO, _                           ; A Execute Macro field.
-		$LOW_FIELD_TYPE_PAGE_COUNT, _                      ; A Page Count field.
-		$LOW_FIELD_TYPE_PAGE_NUM, _                        ; A Page Number (Unstyled) field.
-		$LOW_FIELD_TYPE_PAR_COUNT, _                       ; A Paragraph Count field.
-		$LOW_FIELD_TYPE_SHOW_PAGE_VAR, _                   ; A Show Page Variable field.
-		$LOW_FIELD_TYPE_SET_PAGE_VAR, _                    ; A Set Page Variable field.
-		$LOW_FIELD_TYPE_SCRIPT, _                          ;
-		$LOW_FIELD_TYPE_SET_VAR, _                         ; A Set Variable field.
-		$LOW_FIELD_TYPE_TABLE_COUNT, _                     ; A Table Count field.
-		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                   ; A Templates field.
-		$LOW_FIELD_TYPE_URL, _                             ;
-		$LOW_FIELD_TYPE_WORD_COUNT                         ; A Word Count field.
+		$LOW_FIELD_TYPE_ALL = 1, _                              ; Returns a list of all field types listed below.
+		$LOW_FIELD_TYPE_COMMENT, _                              ; A Comment Field.
+		$LOW_FIELD_TYPE_AUTHOR, _                               ; A Author field.
+		$LOW_FIELD_TYPE_CHAPTER, _                              ; A Chapter field
+		$LOW_FIELD_TYPE_CHAR_COUNT, _                           ; A Character Count field.
+		$LOW_FIELD_TYPE_COMBINED_CHAR, _                        ; A Combined Character field.
+		$LOW_FIELD_TYPE_COND_TEXT, _                            ; A Conditional Text field.
+		$LOW_FIELD_TYPE_DATE_TIME, _                            ; A Date/Time field.
+		$LOW_FIELD_TYPE_INPUT_LIST, _                           ; A Input List field.
+		$LOW_FIELD_TYPE_EMB_OBJ_COUNT, _                        ; A Object Count field.
+		$LOW_FIELD_TYPE_SENDER, _                               ; A Sender field.
+		$LOW_FIELD_TYPE_FILENAME, _                             ; A File Name field.
+		$LOW_FIELD_TYPE_SHOW_VAR, _                             ; A Show Variable field.
+		$LOW_FIELD_TYPE_INSERT_REF, _                           ; A Insert Reference field. [Includes: "Insert Reference", "Headings", "Numbered Paragraphs", "Drawing", "Bookmarks", "Footnotes", "Endnotes", etc.]
+		$LOW_FIELD_TYPE_IMAGE_COUNT, _                          ; A Image Count field.
+		$LOW_FIELD_TYPE_HIDDEN_PAR, _                           ; A Hidden Paragraph field.
+		$LOW_FIELD_TYPE_HIDDEN_TEXT, _                          ; A Hidden Text field.
+		$LOW_FIELD_TYPE_INPUT, _                                ; A Input field.
+		$LOW_FIELD_TYPE_PLACEHOLDER, _                          ; A Placeholder field.
+		$LOW_FIELD_TYPE_MACRO, _                                ; A Execute Macro field.
+		$LOW_FIELD_TYPE_PAGE_COUNT, _                           ; A Page Count field.
+		$LOW_FIELD_TYPE_PAGE_NUM, _                             ; A Page Number (Unstyled) field.
+		$LOW_FIELD_TYPE_PAR_COUNT, _                            ; A Paragraph Count field.
+		$LOW_FIELD_TYPE_SHOW_PAGE_VAR, _                        ; A Show Page Variable field.
+		$LOW_FIELD_TYPE_SET_PAGE_VAR, _                         ; A Set Page Variable field.
+		$LOW_FIELD_TYPE_SCRIPT, _                               ;
+		$LOW_FIELD_TYPE_SET_VAR, _                              ; A Set Variable field.
+		$LOW_FIELD_TYPE_TABLE_COUNT, _                          ; A Table Count field.
+		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                        ; A Templates field.
+		$LOW_FIELD_TYPE_URL, _                                  ;
+		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field.
 
 ; Advanced Field Types
 Global Enum Step *2 _
-		$LOW_FIELDADV_TYPE_ALL = 1, _                      ; All of the below listed Fields will be returned.
-		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _                 ; A Bibliography Field.
-		$LOW_FIELDADV_TYPE_DATABASE, _                     ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, _             ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME, _                ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, _            ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, _         ; A Database Field.
-		$LOW_FIELDADV_TYPE_DDE, _                          ; A DDE Field.
-		$LOW_FIELDADV_TYPE_INPUT_USER, _                   ;
-		$LOW_FIELDADV_TYPE_USER                            ; A User Field.
+		$LOW_FIELDADV_TYPE_ALL = 1, _                           ; All of the below listed Fields will be returned.
+		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field.
+		$LOW_FIELDADV_TYPE_DATABASE, _                          ; A Database Field.
+		$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field.
+		$LOW_FIELDADV_TYPE_DATABASE_NAME, _                     ; A Database Field.
+		$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field.
+		$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field.
+		$LOW_FIELDADV_TYPE_DDE, _                               ; A DDE Field.
+		$LOW_FIELDADV_TYPE_INPUT_USER, _                        ;
+		$LOW_FIELDADV_TYPE_USER                                 ; A User Field.
 
 ; Document Information Field Types
 Global Enum Step *2 _
-		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _                 ; Returns a list of all field types listed below.
-		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _                ; A Modified By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _           ; A Modified Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, _             ; A Created By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_CREATE_DATE_TIME, _        ; A Created Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_CUSTOM, _                  ; A Custom Field.
-		$LOW_FIELD_DOCINFO_TYPE_COMMENTS, _                ; A Comments Field.
-		$LOW_FIELD_DOCINFO_TYPE_EDIT_TIME, _               ; A Total Editing Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_KEYWORDS, _                ; A Keywords Field.
-		$LOW_FIELD_DOCINFO_TYPE_PRINT_AUTH, _              ; A Printed By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_PRINT_DATE_TIME, _         ; A Printed Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_REVISION, _                ; A Revision Number Field.
-		$LOW_FIELD_DOCINFO_TYPE_SUBJECT, _                 ; A Subject Field.
-		$LOW_FIELD_DOCINFO_TYPE_TITLE                      ; A Title Field.
+		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _                      ; Returns a list of all field types listed below.
+		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _                     ; A Modified By Author Field.
+		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _                ; A Modified Date/Time Field.
+		$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, _                  ; A Created By Author Field.
+		$LOW_FIELD_DOCINFO_TYPE_CREATE_DATE_TIME, _             ; A Created Date/Time Field.
+		$LOW_FIELD_DOCINFO_TYPE_CUSTOM, _                       ; A Custom Field.
+		$LOW_FIELD_DOCINFO_TYPE_COMMENTS, _                     ; A Comments Field.
+		$LOW_FIELD_DOCINFO_TYPE_EDIT_TIME, _                    ; A Total Editing Time Field.
+		$LOW_FIELD_DOCINFO_TYPE_KEYWORDS, _                     ; A Keywords Field.
+		$LOW_FIELD_DOCINFO_TYPE_PRINT_AUTH, _                   ; A Printed By Author Field.
+		$LOW_FIELD_DOCINFO_TYPE_PRINT_DATE_TIME, _              ; A Printed Date/Time Field.
+		$LOW_FIELD_DOCINFO_TYPE_REVISION, _                     ; A Revision Number Field.
+		$LOW_FIELD_DOCINFO_TYPE_SUBJECT, _                      ; A Subject Field.
+		$LOW_FIELD_DOCINFO_TYPE_TITLE                           ; A Title Field.
 
 ; Placeholder Type
 Global Const _
-		$LOW_FIELD_PLACEHOLD_TYPE_TEXT = 0, _              ; The field represents a piece of text.
-		$LOW_FIELD_PLACEHOLD_TYPE_TABLE = 1, _             ; The field initiates the insertion of a text table.
-		$LOW_FIELD_PLACEHOLD_TYPE_FRAME = 2, _             ; The field initiates the insertion of a text frame.
-		$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC = 3, _           ; The field initiates the insertion of a graphic object.
-		$LOW_FIELD_PLACEHOLD_TYPE_OBJECT = 4               ; The field initiates the insertion of an embedded object.
+		$LOW_FIELD_PLACEHOLD_TYPE_TEXT = 0, _                   ; The field represents a piece of text.
+		$LOW_FIELD_PLACEHOLD_TYPE_TABLE = 1, _                  ; The field initiates the insertion of a text table.
+		$LOW_FIELD_PLACEHOLD_TYPE_FRAME = 2, _                  ; The field initiates the insertion of a text frame.
+		$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC = 3, _                ; The field initiates the insertion of a graphic object.
+		$LOW_FIELD_PLACEHOLD_TYPE_OBJECT = 4                    ; The field initiates the insertion of an embedded object.
