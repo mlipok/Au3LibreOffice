@@ -12,7 +12,7 @@
 ; AutoIt Version : v3.3.16.1
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
-; Author(s) .....: donnyh13
+; Author(s) .....: donnyh13 mLipok
 ; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
@@ -1377,7 +1377,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
 		Next
 		$iExtended = 3 ;set extended to 3 if retrieving a Specific column
-	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ; 
+	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
 		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
 		$iExtended = 4 ; set Extended to 4 if retrieiving a specific cell of Data
