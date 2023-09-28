@@ -3029,7 +3029,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if the TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
 ;						This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be
 ;						one of a certain length per document.
 ; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor,

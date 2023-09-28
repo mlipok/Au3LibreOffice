@@ -921,7 +921,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: OverLine line style uses the same constants as underline style.
+; Remarks .......: OverLine line style uses the same constants as underline style.
 ;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -3910,7 +3910,7 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
+; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
 ;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
 ;					Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
@@ -4360,7 +4360,7 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   +								available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still
+; Remarks .......: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still
 ;					successfully set regardless.
 ;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
@@ -4459,7 +4459,7 @@ EndFunc   ;==>__LOWriter_ParHyphenation
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
+; Remarks .......: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -4632,7 +4632,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before
+; Remarks .......: Break Type must be set before PageStyle will be able to be set, and page style needs set before
 ;					$iPgNumOffSet can be set.
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
@@ -4861,7 +4861,7 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;				   +								settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
+; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
 ;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
 ;						so that each line is the same height.
 ;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
@@ -5039,7 +5039,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;				   +								is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
+; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
 ;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
 ;						be set to 2. See Return Values.
 ;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
@@ -5157,7 +5157,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
 ;						margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there
 ;						 can only be one of a certain length per document.
 ; Related .......:
@@ -5293,7 +5293,7 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;				   +								returned in @Extended.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
 ;						This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be
 ;						one of a certain length per document.
 ;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
