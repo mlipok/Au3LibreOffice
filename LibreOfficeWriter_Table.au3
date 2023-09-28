@@ -1377,7 +1377,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
 		Next
 		$iExtended = 3 ;set extended to 3 if retrieving a Specific column
-	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ; 
+	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
 		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
 		$iExtended = 4 ; set Extended to 4 if retrieiving a specific cell of Data
