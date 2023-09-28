@@ -6102,7 +6102,7 @@ EndFunc   ;==>_LOWriter_FieldsGetList
 ;				   +										Show Variable Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: This function checks if there is a Set Variable matching the name called in $sSetVarName.
+; Remarks .......: This function checks if there is a Set Variable matching the name called in $sSetVarName.
 ; Related .......: _LOWriter_FieldShowVarModify, _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList,
 ;					_LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_DocGetViewCursor,
 ;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,

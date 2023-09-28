@@ -655,7 +655,7 @@ EndFunc   ;==>_LOWriter_DocConnect
 ;				   @Error 0 @Extended 0 Return 1 = Success. Table was successfully converted to text.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: This function temporarily moves the Viewcursor to the Table indicated, and then attempts to restore the ViewCursor to its former position.
+; Remarks .......: This function temporarily moves the Viewcursor to the Table indicated, and then attempts to restore the ViewCursor to its former position.
 ;					This could cause a COM error if the Cursor was presently in the Table.
 ; Related .......: _LOWriter_DocConvertTextToTable, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor,
 ;					_LOWriter_TableInsert
@@ -747,7 +747,7 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;				   @Error 0 @Extended 0 Return Object = Success. Text was successfully converted to a Table, returning the new Table's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to restore the ViewCursor to its former position.
+; Remarks .......: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to restore the ViewCursor to its former position.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
@@ -1406,7 +1406,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ;				   @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Exteneded is set to the number of matches.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: The Objects returned can be used in any of the functions accepting a Paragraph or Cursor Object etc.,
+; Remarks .......: The Objects returned can be used in any of the functions accepting a Paragraph or Cursor Object etc.,
 ;						to modify their properties or even the text itself.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext,
 ;					_LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment,
@@ -2297,7 +2297,7 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ;				   @Error 0 @Extended 0 Return String = Success. The selected text in String format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Libre Office documentation states that when used in Libre Basic, GetString is limited to 64kb's in size.
+; Remarks .......: Libre Office documentation states that when used in Libre Basic, GetString is limited to 64kb's in size.
 ;					I do not know if the same limitation applies to any outside use of GetString (such as through Autoit).
 ;					Also, if there are multiple selections, the returned value will be an empty string ("").
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
@@ -2815,7 +2815,7 @@ EndFunc   ;==>_LOWriter_DocIsModified
 ;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True is document is currently Read Only, else False.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Only documents that have been saved to a location, will ever be "ReadOnly".
+; Remarks .......: Only documents that have been saved to a location, will ever be "ReadOnly".
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3562,7 +3562,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to
+; Remarks .......: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to
 ;					set paper size.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
@@ -3941,7 +3941,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;				   +											in @Extended.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Libre Office does not offer a Function to call to replace only results within a selection,
+; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection,
 ;						consequently I have had to create my own. This function uses the "FindAllInRange" function,
 ;						so any errors with Find/Replace formatting causing deletions will cause problems here. As best
 ;						as I can tell all options for find and replace should be available, Formatting, Paragraph styles
