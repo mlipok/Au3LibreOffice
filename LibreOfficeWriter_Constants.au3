@@ -537,70 +537,70 @@ Global Const _                                             ; Numbering Style Typ
 
 ; Line Style
 Global Const _
-		$LOW_LINE_STYLE_NONE = 0, _ ; No line.
-		$LOW_LINE_STYLE_SOLID = 1, _ ; A solid line.
-		$LOW_LINE_STYLE_DOTTED = 2, _ ; A dotted line.
-		$LOW_LINE_STYLE_DASHED = 3 ; A Dashed line.
+		$LOW_LINE_STYLE_NONE = 0, _                        ; No line.
+		$LOW_LINE_STYLE_SOLID = 1, _                       ; A solid line.
+		$LOW_LINE_STYLE_DOTTED = 2, _                      ; A dotted line.
+		$LOW_LINE_STYLE_DASHED = 3                         ; A Dashed line.
 
 ; Vertical Alignment
 Global Const _
-		$LOW_ALIGN_VERT_TOP = 0, _ ; Vertically Align the object to the Top.
-		$LOW_ALIGN_VERT_MIDDLE = 1, _ ; Vertically Align the object to the Middle.
-		$LOW_ALIGN_VERT_BOTTOM = 2 ; Vertically Align the object to the Bottom.
+		$LOW_ALIGN_VERT_TOP = 0, _                         ; Vertically Align the object to the Top.
+		$LOW_ALIGN_VERT_MIDDLE = 1, _                      ; Vertically Align the object to the Middle.
+		$LOW_ALIGN_VERT_BOTTOM = 2                         ; Vertically Align the object to the Bottom.
 
 ; Horizontal Alignment
 Global Const _
-		$LOW_ALIGN_HORI_LEFT = 0, _ ; Horizontally align the object to the Left.
-		$LOW_ALIGN_HORI_CENTER = 1, _ ; Horizontally align the object to the Center.
-		$LOW_ALIGN_HORI_RIGHT = 2 ; Horizontally align the object to the Right.
+		$LOW_ALIGN_HORI_LEFT = 0, _                        ; Horizontally align the object to the Left.
+		$LOW_ALIGN_HORI_CENTER = 1, _                      ; Horizontally align the object to the Center.
+		$LOW_ALIGN_HORI_RIGHT = 2                          ; Horizontally align the object to the Right.
 
 ; Gradient Type
 Global Const _
-		$LOW_GRAD_TYPE_OFF = -1, _ ; Turn the Gradient off.
-		$LOW_GRAD_TYPE_LINEAR = 0, _ ; Linear type Gradient
-		$LOW_GRAD_TYPE_AXIAL = 1, _ ; Axial type Gradient
-		$LOW_GRAD_TYPE_RADIAL = 2, _ ; Radial type Gradient
-		$LOW_GRAD_TYPE_ELLIPTICAL = 3, _ ; Elliptical type Gradient
-		$LOW_GRAD_TYPE_SQUARE = 4, _ ; Square type Gradient
-		$LOW_GRAD_TYPE_RECT = 5 ; Rectangle type Gradient
+		$LOW_GRAD_TYPE_OFF = -1, _                         ; Turn the Gradient off.
+		$LOW_GRAD_TYPE_LINEAR = 0, _                       ; Linear type Gradient
+		$LOW_GRAD_TYPE_AXIAL = 1, _                        ; Axial type Gradient
+		$LOW_GRAD_TYPE_RADIAL = 2, _                       ; Radial type Gradient
+		$LOW_GRAD_TYPE_ELLIPTICAL = 3, _                   ; Elliptical type Gradient
+		$LOW_GRAD_TYPE_SQUARE = 4, _                       ; Square type Gradient
+		$LOW_GRAD_TYPE_RECT = 5                            ; Rectangle type Gradient
 
 ; Follow By
 Global Const _
-		$LOW_FOLLOW_BY_TABSTOP = 0, _ ; A Tab will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_SPACE = 1, _ ; A Space will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_NOTHING = 2, _ ; Nothing will follow the Numbering Style Number.
-		$LOW_FOLLOW_BY_NEWLINE = 3 ; A Newline will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_TABSTOP = 0, _                      ; A Tab will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_SPACE = 1, _                        ; A Space will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_NOTHING = 2, _                      ; Nothing will follow the Numbering Style Number.
+		$LOW_FOLLOW_BY_NEWLINE = 3                         ; A Newline will follow the Numbering Style Number.
 
 ; Cursor Status
-Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _ ; Test if the start and end positions are the same for a cursor selection.
+Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _               ; Test if the start and end positions are the same for a cursor selection.
 
 ;
-		$LOW_CURSOR_STAT_IS_START_OF_WORD, _ ; Test if a cursor is at the start of a word.
-		$LOW_CURSOR_STAT_IS_END_OF_WORD, _ ; Test if a cursor is at the end of a word.
-		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _ ; Test if a cursor is at the start of a sentence.
-		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _ ; Test if a cursor is at the end of a sentence.
-		$LOW_CURSOR_STAT_IS_START_OF_PAR, _ ; Test if a cursor is at the start of a paragraph.
-		$LOW_CURSOR_STAT_IS_END_OF_PAR, _ ; Test if a cursor is at the End of a paragraph.
-		$LOW_CURSOR_STAT_IS_START_OF_LINE, _ ; Test if a cursor is at the start of the line.
-		$LOW_CURSOR_STAT_IS_END_OF_LINE, _ ; Test if a cursor is at the end of the line.
-		$LOW_CURSOR_STAT_GET_PAGE, _ ; Return the current page the cursor is in.
-		$LOW_CURSOR_STAT_GET_RANGE_NAME ; Return the cell range selected by a cursor.
+$LOW_CURSOR_STAT_IS_START_OF_WORD, _                       ; Test if a cursor is at the start of a word.
+		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                 ; Test if a cursor is at the end of a word.
+		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _           ; Test if a cursor is at the start of a sentence.
+		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _             ; Test if a cursor is at the end of a sentence.
+		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                ; Test if a cursor is at the start of a paragraph.
+		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                  ; Test if a cursor is at the End of a paragraph.
+		$LOW_CURSOR_STAT_IS_START_OF_LINE, _               ; Test if a cursor is at the start of the line.
+		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                 ; Test if a cursor is at the end of the line.
+		$LOW_CURSOR_STAT_GET_PAGE, _                       ; Return the current page the cursor is in.
+		$LOW_CURSOR_STAT_GET_RANGE_NAME                    ; Return the cell range selected by a cursor.
 
 ; Relative to
 Global Const _
-		$LOW_RELATIVE_ROW = -1, _ ; Position an object considering the row height.
-		$LOW_RELATIVE_PARAGRAPH = 0, _ ; The Object is placed considering the available paragraph space, including indent spacing. [Also called "Margin" or "Baseline" in L.O. UI]
-		$LOW_RELATIVE_PARAGRAPH_TEXT = 1, _ ; The Object is placed considering the available paragraph space, excluding indent spacing.
-		$LOW_RELATIVE_CHARACTER = 2, _ ; The Object is placed considering the available character space.
-		$LOW_RELATIVE_PAGE_LEFT = 3, _ ; The Object is placed considering the available space between the left page border and the left Paragraph border. [Same as Left Page Border in L.O. UI]
-		$LOW_RELATIVE_PAGE_RIGHT = 4, _ ; The Object is placed considering the available space between the Right page border and the Right Paragraph border. [Same as Right Page Border in L.O. UI]
-		$LOW_RELATIVE_PARAGRAPH_LEFT = 5, _ ; The Object is placed considering the available indent space to the left of the paragraph.
-		$LOW_RELATIVE_PARAGRAPH_RIGHT = 6, _ ; The Object is placed considering the available indent space to the right of the paragraph.
-		$LOW_RELATIVE_PAGE = 7, _ ; The Object is placed considering the available space between the right and left, or top and bottom page borders.
-		$LOW_RELATIVE_PAGE_PRINT = 8, _ ; The Object is placed considering the available space between the right and left, or top and bottom page margins. [Same as Page Text Area in L.O. UI]
-		$LOW_RELATIVE_TEXT_LINE = 9, _ ; The Object is placed considering the height of the line.
-		$LOW_RELATIVE_PAGE_PRINT_BOTTOM = 10, _ ; The Object is placed considering the space available in the page footer(?)
-		$LOW_RELATIVE_PAGE_PRINT_TOP = 11 ; The Object is placed considering the space available in the page header(?)
+		$LOW_RELATIVE_ROW = -1, _                          ; Position an object considering the row height.
+		$LOW_RELATIVE_PARAGRAPH = 0, _                     ; The Object is placed considering the available paragraph space, including indent spacing. [Also called "Margin" or "Baseline" in L.O. UI]
+		$LOW_RELATIVE_PARAGRAPH_TEXT = 1, _                ; The Object is placed considering the available paragraph space, excluding indent spacing.
+		$LOW_RELATIVE_CHARACTER = 2, _                     ; The Object is placed considering the available character space.
+		$LOW_RELATIVE_PAGE_LEFT = 3, _                     ; The Object is placed considering the available space between the left page border and the left Paragraph border. [Same as Left Page Border in L.O. UI]
+		$LOW_RELATIVE_PAGE_RIGHT = 4, _                    ; The Object is placed considering the available space between the Right page border and the Right Paragraph border. [Same as Right Page Border in L.O. UI]
+		$LOW_RELATIVE_PARAGRAPH_LEFT = 5, _                ; The Object is placed considering the available indent space to the left of the paragraph.
+		$LOW_RELATIVE_PARAGRAPH_RIGHT = 6, _               ; The Object is placed considering the available indent space to the right of the paragraph.
+		$LOW_RELATIVE_PAGE = 7, _                          ; The Object is placed considering the available space between the right and left, or top and bottom page borders.
+		$LOW_RELATIVE_PAGE_PRINT = 8, _                    ; The Object is placed considering the available space between the right and left, or top and bottom page margins. [Same as Page Text Area in L.O. UI]
+		$LOW_RELATIVE_TEXT_LINE = 9, _                     ; The Object is placed considering the height of the line.
+		$LOW_RELATIVE_PAGE_PRINT_BOTTOM = 10, _            ; The Object is placed considering the space available in the page footer(?)
+		$LOW_RELATIVE_PAGE_PRINT_TOP = 11                  ; The Object is placed considering the space available in the page header(?)
 
 ; Anchor Type
 Global Const _
