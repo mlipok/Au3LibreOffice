@@ -4,7 +4,7 @@
 ; Title .........: Libre Office Writer (LOWriter) Constants for the Libre Office Writer UDF.
 ; AutoIt Version : v3.3.16.1
 ; Description ...: Constants for various functions in the Libre Office Writer UDF.
-; Author(s) .....: donnyh13
+; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ; ===============================================================================================================================
 
