@@ -19,53 +19,53 @@ Global Const $__LOWCONST_SLEEP_DIV = 15
 #Tidy_ILC_Pos=65
 ; Error Codes
 Global Enum _
-		$__LOW_STATUS_SUCCESS = 0, _                            ; 0
-		$__LOW_STATUS_INPUT_ERROR, _                            ; 1
-		$__LOW_STATUS_INIT_ERROR, _                             ; 2
-		$__LOW_STATUS_PROCESSING_ERROR, _                       ; 3
-		$__LOW_STATUS_PROP_SETTING_ERROR, _                     ; 4
-		$__LOW_STATUS_DOC_ERROR, _                              ; 5
-		$__LOW_STATUS_PRINTER_RELATED_ERROR, _                  ; 6
-		$__LOW_STATUS_VER_ERROR                                 ; 7
+		$__LOW_STATUS_SUCCESS = 0, _                            ; 0 Function finished successfully.
+		$__LOW_STATUS_INPUT_ERROR, _                            ; 1 Function encountered a input error.
+		$__LOW_STATUS_INIT_ERROR, _                             ; 2 Function encountered a Initialization error.
+		$__LOW_STATUS_PROCESSING_ERROR, _                       ; 3 Function encountered a Processing error.
+		$__LOW_STATUS_PROP_SETTING_ERROR, _                     ; 4 Function encountered a Property setting error.
+		$__LOW_STATUS_DOC_ERROR, _                              ; 5 Function encountered a Document related error.
+		$__LOW_STATUS_PRINTER_RELATED_ERROR, _                  ; 6 Function encountered a Printer related error.
+		$__LOW_STATUS_VER_ERROR                                 ; 7 Function encountered a Version error.
 
 ; Conversion Constants.
 Global Enum _
-		$__LOWCONST_CONVERT_TWIPS_CM, _                         ; 0
-		$__LOWCONST_CONVERT_TWIPS_INCH, _                       ; 1
-		$__LOWCONST_CONVERT_TWIPS_UM, _                         ; 2
-		$__LOWCONST_CONVERT_MM_UM, _                            ; 3
-		$__LOWCONST_CONVERT_UM_MM, _                            ; 4
-		$__LOWCONST_CONVERT_CM_UM, _                            ; 5
-		$__LOWCONST_CONVERT_UM_CM, _                            ; 6
-		$__LOWCONST_CONVERT_INCH_UM, _                          ; 7
-		$__LOWCONST_CONVERT_UM_INCH, _                          ; 8
-		$__LOWCONST_CONVERT_PT_UM, _                            ; 9
-		$__LOWCONST_CONVERT_UM_PT                               ; 10
+		$__LOWCONST_CONVERT_TWIPS_CM, _                         ; 0 Convert from TWIPS (Twentieth of a Printer Point) To Centimeters.
+		$__LOWCONST_CONVERT_TWIPS_INCH, _                       ; 1 Convert from TWIPS (Twentieth of a Printer Point) To Inches.
+		$__LOWCONST_CONVERT_TWIPS_UM, _                         ; 2 Convert from TWIPS(Twentieth of a Printer Point) To Micrometer(100th of a millimeter).
+		$__LOWCONST_CONVERT_MM_UM, _                            ; 3 Convert from Millimeters To Micrometer (100th of a millimeter).
+		$__LOWCONST_CONVERT_UM_MM, _                            ; 4 Convert from Micrometer (100th of a millimeter) To Millimeters.
+		$__LOWCONST_CONVERT_CM_UM, _                            ; 5 Convert from Centimeters To Micrometer (100th of a millimeter).
+		$__LOWCONST_CONVERT_UM_CM, _                            ; 6 Convert from Micrometer (100th of a millimeter) To Centimeters.
+		$__LOWCONST_CONVERT_INCH_UM, _                          ; 7 Convert from Inches To Micrometer (100th of a millimeter).
+		$__LOWCONST_CONVERT_UM_INCH, _                          ; 8 Convert from Micrometer (100th of a millimeter) To Inches.
+		$__LOWCONST_CONVERT_PT_UM, _                            ; 9 Convert from Printers Point to Micrometers.
+		$__LOWCONST_CONVERT_UM_PT                               ; 10 Convert from MicroMeters to Printers Point.
 
 ; Fill Style Type Constants
 Global Enum _
-		$__LOWCONST_FILL_STYLE_OFF, _                           ; 0
-		$__LOWCONST_FILL_STYLE_SOLID, _                         ; 1
-		$__LOWCONST_FILL_STYLE_GRADIENT, _                      ; 2
-		$__LOWCONST_FILL_STYLE_HATCH, _                         ; 3
-		$__LOWCONST_FILL_STYLE_BITMAP                           ; 4
+		$__LOWCONST_FILL_STYLE_OFF, _                           ; 0 Fillstyle is off.
+		$__LOWCONST_FILL_STYLE_SOLID, _                         ; 1 Fillstyle is a solid color.
+		$__LOWCONST_FILL_STYLE_GRADIENT, _                      ; 2 Fillstyle is a gradient color.
+		$__LOWCONST_FILL_STYLE_HATCH, _                         ; 3 Fillstyle is a Hatch style color.
+		$__LOWCONST_FILL_STYLE_BITMAP                           ; 4 Fillstyle is a Bitmap.
 
 ; Cursor Data Related Constants
 Global Const _
-		$LOW_CURDATA_BODY_TEXT = 1, _                           ;Cursor is currently in the Body Text.
-		$LOW_CURDATA_FRAME = 2, _                               ;Cursor is currently in a Text Frame.
-		$LOW_CURDATA_CELL = 3, _                                ;Cursor is currently in a Text Table Cell.
-		$LOW_CURDATA_FOOTNOTE = 4, _                            ;Cursor is currently in a Footnote.
-		$LOW_CURDATA_ENDNOTE = 5, _                             ;Cursor is currently in a Endnote.
-		$LOW_CURDATA_HEADER_FOOTER = 6                          ;Cursor is currently in a Header or Footer.
+		$LOW_CURDATA_BODY_TEXT = 1, _                           ; Cursor is currently in the Body Text.
+		$LOW_CURDATA_FRAME = 2, _                               ; Cursor is currently in a Text Frame.
+		$LOW_CURDATA_CELL = 3, _                                ; Cursor is currently in a Text Table Cell.
+		$LOW_CURDATA_FOOTNOTE = 4, _                            ; Cursor is currently in a Footnote.
+		$LOW_CURDATA_ENDNOTE = 5, _                             ; Cursor is currently in a Endnote.
+		$LOW_CURDATA_HEADER_FOOTER = 6                          ; Cursor is currently in a Header or Footer.
 
 ; Cursor Type Related Constants
 Global Const _
-		$LOW_CURTYPE_TEXT_CURSOR = 1, _                         ;Cursor is a TextCursor type.
-		$LOW_CURTYPE_TABLE_CURSOR = 2, _                        ;Cursor is a TableCursor type.
-		$LOW_CURTYPE_VIEW_CURSOR = 3, _                         ;Cursor is a ViewCursor type.
-		$LOW_CURTYPE_PARAGRAPH = 4, _                           ;Object is a Paragraph Object.
-		$LOW_CURTYPE_TEXT_PORTION = 5                           ;Object is a Paragraph Text Portion Object.
+		$LOW_CURTYPE_TEXT_CURSOR = 1, _                         ; Cursor is a TextCursor type.
+		$LOW_CURTYPE_TABLE_CURSOR = 2, _                        ; Cursor is a TableCursor type.
+		$LOW_CURTYPE_VIEW_CURSOR = 3, _                         ; Cursor is a ViewCursor type.
+		$LOW_CURTYPE_PARAGRAPH = 4, _                           ; Object is a Paragraph Object.
+		$LOW_CURTYPE_TEXT_PORTION = 5                           ; Object is a Paragraph Text Portion Object.
 
 ; Path Convert Constants.
 Global Const _
