@@ -1292,8 +1292,7 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ;                  $sFilePath      - a string value. Full path to save the document to, including Filename and extension. See Remarks.
 ;                  $bSamePath      - [optional] a boolean value. Default is False. Uses the path of the current document to export to. See Remarks
 ;                  $sFilterName    - [optional] a string value. Default is "". Filter name. "" (blank string).
-;				   +					Filter is chosen automatically based on the file extension. If no extension is present,
-;				   +					with filtername of "writer8" or if not matched to the list of extensions in this UDF, the .odt extension is used instead,
+;				   +					Filter is chosen automatically based on the file extension. If no extension is present, with filtername of "writer8" or if not matched to the list of extensions in this UDF, the .odt extension is used instead,
 ;                  $bOverwrite     - [optional] a boolean value. Default is Null. If True, file will be overwritten.
 ;                  $sPassword      - [optional] a string value. Default is Null. Password String to set for the document.
 ;				   +					(Not all file formats can have a Password set). "" (blank string) or Null = No Password.
@@ -1389,7 +1388,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $atFindFormat        - [in/out] an array of structs. An Array of formatting properties created from _LOWriter_FindFormat* functions to search for, call with an empty array to skip.
-;				   +						Array will not be modified.
+;				   Array will not be modified.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
