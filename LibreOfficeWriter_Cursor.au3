@@ -37,10 +37,8 @@
 ; Name ..........: _LOWriter_CursorGetDataType
 ; Description ...: Determines what type of Text data a Cursor is currently in.
 ; Syntax ........: _LOWriter_CursorGetType(Byref $oDoc, Byref $oCursor)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval functions.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -81,10 +79,8 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ; Name ..........: _LOWriter_CursorGetStatus
 ; Description ...: Retrieve the current status of a cursor.
 ; Syntax ........: _LOWriter_CursorGetStatus(Byref $oCursor, $iFlag)
-; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						or retrieval functions.
-;                  $iFlag               - an integer value. The Requested status to return, see constants below. Only some work
-;				   +						for each type of cursor.
+; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
+;                  $iFlag               - an integer value. The Requested status to return, see constants below. Only some work for each type of cursor.
 ; Return values .: Success: Variable.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -99,8 +95,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;				   @Error 3 @Extended 2 Return 0 = Error retrieving Status for Table Cursor.
 ;				   @Error 3 @Extended 3 Return 0 = Error retrieving Status for View Cursor.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See
-;				   +								corresponding flag for return type
+;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See corresponding flag for return type
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -178,8 +173,7 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 ; Name ..........: _LOWriter_CursorGetType
 ; Description ...: Determine what type a Cursor Object is, such as a TableCursor, Text Cursor or a ViewCursor.
 ; Syntax ........: _LOWriter_CursorGetType(Byref $oCursor)
-; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval functions.
+; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -217,12 +211,9 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ; Name ..........: _LOWriter_CursorGoToRange
 ; Description ...: Moves a Text or View cursor to another View or Text Cursor Position or Range.
 ; Syntax ........: _LOWriter_CursorGoToRange(Byref $oCursor, Byref $oRange[, $bSelect = False])
-; Parameters ....: $oCursor             - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor
-;				   +						Object creation or retrieval functions.
-;                  $oRange              - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor
-;				   +						Object creation or retrieval functions to move $oCursor to.
-;                  $bSelect             - [optional] a boolean value. Default is False. If True, the selection is expanded or
-;				   +								created from original cursor location to Range location.
+; Parameters ....: $oCursor             - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
+;                  $oRange              - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions to move $oCursor to.
+;                  $bSelect             - [optional] a boolean value. Default is False. If True, the selection is expanded or created from original cursor location to Range location.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -238,8 +229,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ;				   @Error 0 @Extended 0 Return 1 = Success. Cursor successfully moved to $oRange position.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Text Cursor
-;					also.
+; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Text Cursor also.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor,	_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
@@ -273,12 +263,10 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ; Name ..........: _LOWriter_CursorMove
 ; Description ...: Move a Cursor object in a document. Also for creating/Expanding selections.
 ; Syntax ........: _LOWriter_CursorMove(Byref $oCursor, $iMove[, $iCount = 1[, $bSelect = False]])
-; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval functions.
+; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ;                  $iMove               - an integer value. The movement command. See remarks and Constants.
 ;                  $iCount              - [optional] an integer value. Default is 1. Number of movements to make. See remarks.
-;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this
-;				   +						cursor movement. See remarks.
+;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this cursor movement. See remarks.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -292,10 +280,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;				   @Error 3 @Extended 3 Return 0 = $oCursor Object unknown cursor type.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns
-;				   +				True if the full count of movements were successful, else false if none or only partially
-;				   +				successful. @Extended set to number of successful movements. Or Page Number for "gotoPage"
-;				   +				command. See Remarks
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
@@ -354,14 +339,11 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
 ;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
 ;					-TextCursor
-;						$LOW_TEXTCUR_COLLAPSE_TO_START,(Collapses the current selection and moves the cursor to start of
-;						 the selection.
-;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to End of
-;						the selection.
+;						$LOW_TEXTCUR_COLLAPSE_TO_START,(Collapses the current selection and moves the cursor to start of the selection.
+;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to End of the selection.
 ;					#Misc. Cursor Movements:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully
-;						jumped to.
+;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
