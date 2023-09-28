@@ -74,12 +74,10 @@
 ; Name ..........: _LOWriter_CellBackColor
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(Byref $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iBackColor          - [optional] an integer value. Default is Null. Specify the Cell background color as
-;				   +						a Long Integer. See Remarks. Set to $LOW_COLOR_OFF(-1) to disable Background color.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is
-;				   +						transparent.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+;                  $iBackColor          - [optional] an integer value. Default is Null. Specify the Cell background color as a Long Integer. See Remarks.
+;				   +						Set to $LOW_COLOR_OFF(-1) to disable Background color.
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -87,21 +85,17 @@
 ;				   @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
 ;				   |								2 = Error setting $bBackTransparent
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 2 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					$iBackColor is set using Long integer. See _LOWriter_ConvertColorToLong,
-;						_LOWriter_ConvertColorFromLong. There are also preset colors, listed below.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
+;					See _LOWriter_ConvertColorToLong, _LOWriter_ConvertColorFromLong. There are also preset colors, listed below.
 ; Color Constants: $LOW_COLOR_OFF(-1)
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
@@ -160,20 +154,15 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Name ..........: _LOWriter_CellBorderColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the
-;				   +						Cell in Long Color code format. One of the predefined constants listed below can be
-;				   +						used, or a custom value.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the
-;				   +						Cell in Long Color code format. One of the predefined constants listed below can be
-;				   +						used, or a custom value.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Color of the
-;				   +						Cell in Long Color code format. One of the predefined constants listed below can be
-;				   +						used, or a custom value.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Color of the
-;				   +						Cell in Long Color code format. One of the predefined constants listed below can be
-;				   +						used, or a custom value.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format.
+;				   +						One of the predefined constants listed below can be used, or a custom value.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format.
+;				   +						One of the predefined constants listed below can be used, or a custom value.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format.
+;				   +						One of the predefined constants listed below can be used, or a custom value.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format.
+;				   +						One of the predefined constants listed below can be used, or a custom value.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -196,8 +185,7 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
@@ -247,16 +235,11 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ; Name ..........: _LOWriter_CellBorderPadding
 ; Description ...: Set or retrieve the Border Padding (spacing between the Cell text and border) settings.
 ; Syntax ........: _LOWriter_CellBorderPadding(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border
-;				   +						and Cell text in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the
-;				   +						Border and Cell text in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border
-;				   +						and Cell text in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border
-;				   +						and Cell text in Micrometers(uM).
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Cell text in Micrometers(uM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Cell text in Micrometers(uM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell text in Micrometers(uM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Cell text in Micrometers(uM).
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -266,20 +249,17 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ;				   @Error 1 @Extended 4 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTop border distance
 ;				   |								2 = Error setting $iBottom border distance
 ;				   |								4 = Error setting $iLeft border distance
 ;				   |								8 = Error setting $iRight border distance
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderColor,
@@ -332,29 +312,20 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Name ..........: _LOWriter_CellBorderStyle
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderStyle(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of the
-;				   +							Cell using one of the line style constants, See below for list.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the
-;				   +							Cell using one of the line style constants, See below for list.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the
-;				   +							Cell using one of the line style constants, See below for list.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the
-;				   +							Cell using one of the line style constants, See below for list.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of theCell using one of the line style constants, See below for list.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, See below for list.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, See below for list.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, See below for list.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
-;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF,
-;				   +									Or $iTop is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to
-;				   +								0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF,
-;				   +									Or $iLeft is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to
-;				   +									0x7FFF, Or $iRight is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iTop is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iBottom is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iLeft is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iRight is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -368,38 +339,29 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Style Constants: $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
 ;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
 ;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
 ;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
 ;					$LOW_BORDERSTYLE_DOUBLE(3) Double border line,
-;					$LOW_BORDERSTYLE_THINTHICK_SMALLGAP(4) Double border line with a thin line outside and a thick line inside
-;						separated by a small gap,
-;					$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP(5) Double border line with a thin line outside and a thick line inside
-;						separated by a medium gap,
-;					$LOW_BORDERSTYLE_THINTHICK_LARGEGAP(6) Double border line with a thin line outside and a thick line inside
-;						separated by a large gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP(7) Double border line with a thick line outside and a thin line inside
-;						separated by a small gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP(8) Double border line with a thick line outside and a thin line inside
-;						separated by a medium gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP(9) Double border line with a thick line outside and a thin line inside
-;						separated by a large gap,
+;					$LOW_BORDERSTYLE_THINTHICK_SMALLGAP(4) Double border line with a thin line outside and a thick line inside separated by a small gap,
+;					$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP(5) Double border line with a thin line outside and a thick line inside separated by a medium gap,
+;					$LOW_BORDERSTYLE_THINTHICK_LARGEGAP(6) Double border line with a thin line outside and a thick line inside separated by a large gap,
+;					$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP(7) Double border line with a thick line outside and a thin line inside separated by a small gap,
+;					$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP(8) Double border line with a thick line outside and a thin line inside separated by a medium gap,
+;					$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP(9) Double border line with a thick line outside and a thin line inside separated by a large gap,
 ;					$LOW_BORDERSTYLE_EMBOSSED(10) 3D embossed border line,
 ;					$LOW_BORDERSTYLE_ENGRAVED(11) 3D engraved border line,
 ;					$LOW_BORDERSTYLE_OUTSET(12) Outset border line,
 ;					$LOW_BORDERSTYLE_INSET(13) Inset border line,
 ;					$LOW_BORDERSTYLE_FINE_DASHED(14) Finely dashed border line,
-;					$LOW_BORDERSTYLE_DOUBLE_THIN(15) Double border line consisting of two fixed thin lines separated by a
-;						variable gap,
+;					$LOW_BORDERSTYLE_DOUBLE_THIN(15) Double border line consisting of two fixed thin lines separated by a variable gap,
 ;					$LOW_BORDERSTYLE_DASH_DOT(16) Line consisting of a repetition of one dash and one dot,
 ;					$LOW_BORDERSTYLE_DASH_DOT_DOT(17) Line consisting of a repetition of one dash and 2 dots.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
@@ -452,13 +414,11 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
@@ -490,8 +450,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Name ..........: _LOWriter_CellCreateTextCursor
 ; Description ...: Create a Text Cursor in a particular cell for inserting text etc.
 ; Syntax ........: _LOWriter_CellCreateTextCursor(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ; Return values .: Success: An Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -502,8 +461,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_DocInsertString
+; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -521,8 +479,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Name ..........: _LOWriter_CellFormula
 ; Description ...: Set or retrieve a formula for a cell.
 ; Syntax ........: _LOWriter_CellFormula(Byref $oCell[, $sFormula = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ;                  $sFormula            - [optional] a string value. Default is Null. The Formula to set the Cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -537,8 +494,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Modified ......:
 ; Remarks .......: Note: Formula can only be set for an individual cell, not a range.
 ;					Setting the formula will overwrite any existing data in the cell.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					To retrieve the total of a formula, use _LOWriter_CellValue.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
@@ -562,8 +518,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Name ..........: _LOWriter_CellGetDataType
 ; Description ...: Get the Data type of a specific cell, see remarks.
 ; Syntax ........: _LOWriter_CellGetDataType(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ; Return values .: Success: A Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -573,8 +528,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ;				   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants below.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Returns the data type as one of the below constants, Note: If the data was entered by the keyboard, it is
-;					generally recognized as a string regardless of the data contained.
+; Remarks .......: Returns the data type as one of the below constants, Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data contained.
 ; Data Type Constants: $LOW_CELL_TYPE_EMPTY(0), cell is empty.
 ;						$LOW_CELL_TYPE_VALUE(1), cell contains a value.
 ;						$LOW_CELL_TYPE_TEXT(2), cell contains text.
@@ -597,8 +551,7 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Name ..........: _LOWriter_CellGetError
 ; Description ...: Get the formula error Value.
 ; Syntax ........: _LOWriter_CellGetError(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ; Return values .: Success: A Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -628,8 +581,7 @@ EndFunc   ;==>_LOWriter_CellGetError
 ; Name ..........: _LOWriter_CellGetName
 ; Description ...: Retrieve the current Cell's name.
 ; Syntax ........: _LOWriter_CellGetName(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ; Return values .: Success: A String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -658,10 +610,8 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Name ..........: _LOWriter_CellProtect
 ; Description ...: Write-Protect a Cell
 ; Syntax ........: _LOWriter_CellProtect(Byref $oCell[, $bProtect = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
-;                  $bProtect            - [optional] a boolean value. Default is Null. True = Protected from Writing, False =
-;				   +						Unprotected. See remarks.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+;                  $bProtect            - [optional] a boolean value. Default is Null. True = Protected from Writing, False = Unprotected. See remarks.
 ; Return values .: Success: 1 Or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -672,8 +622,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ;				   @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Successfully set Cell Protect setting.
-;				   @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting
-;				   +										of write-protection for the cell, a Boolean value.
+;				   @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell, a Boolean value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or
@@ -699,8 +648,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Name ..........: _LOWriter_CellString
 ; Description ...: Set or retrieve the current string for a cell.
 ; Syntax ........: _LOWriter_CellString(Byref $oCell[, $sString = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ;                  $sString             - [optional] a string value. Default is Null. The String of text to set the cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -715,8 +663,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Modified ......:
 ; Remarks .......: Note: String can only be set for an individual cell, not a range.
 ;					Setting the String will overwrite any existing data in the cell.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -740,8 +687,7 @@ EndFunc   ;==>_LOWriter_CellString
 ; Name ..........: _LOWriter_CellValue
 ; Description ...: Set or retrieve a Numerical value to a Cell
 ; Syntax ........: _LOWriter_CellValue(Byref $oCell[, $nValue = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object
-;				   +						creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
 ;                  $nValue              - [optional] a general number value. Default is Null. The value to set the cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -756,10 +702,8 @@ EndFunc   ;==>_LOWriter_CellString
 ; Modified ......:
 ; Remarks .......: Note: Value can only be set for an individual cell, not a range.
 ;					Setting the Value will overwrite any existing data in the cell.
-;					For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result
-;						value of a formula is returned.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
+; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -796,12 +740,10 @@ EndFunc   ;==>_LOWriter_CellValue
 ;				   @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Succesfully set Vertical Orientation.
-;				   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical
-;				   +										orientation, see constants below.
+;				   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants below.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Only the Vertical Orientation Constants listed below are accepted. If $iVertOrient is set to Null the
-;					current setting is returned.
+; Remarks .......: Only the Vertical Orientation Constants listed below are accepted. If $iVertOrient is set to Null the current setting is returned.
 ; Vertical Orientation Constants: $LOW_ORIENT_VERT_NONE(0),
 ;									$LOW_ORIENT_VERT_TOP(1),
 ;									$LOW_ORIENT_VERT_CENTER(2),
@@ -828,8 +770,7 @@ EndFunc   ;==>_LOWriter_CellVertOrient
 ; Name ..........: _LOWriter_EndnoteDelete
 ; Description ...: Delete a Endnote.
 ; Syntax ........: _LOWriter_EndnoteDelete(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -859,8 +800,7 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ; Name ..........: _LOWriter_EndnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Endnote Anchor position.
 ; Syntax ........: _LOWriter_EndnoteGetAnchor(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -870,8 +810,7 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Anchor cursor returned is just a Text Cursor placed at the anchor's position.
-; Related .......: _LOWriter_EndnotesGetList, _LOWriter_EndnoteInsert, _LOWriter_CursorMove, _LOWriter_DocGetString,
-;					_LOWriter_DocInsertString
+; Related .......: _LOWriter_EndnotesGetList, _LOWriter_EndnoteInsert, _LOWriter_CursorMove, _LOWriter_DocGetString, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -893,8 +832,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 ; Name ..........: _LOWriter_EndnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Endnote to modify the text therein.
 ; Syntax ........: _LOWriter_EndnoteGetTextCursor(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -928,13 +866,10 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ; Name ..........: _LOWriter_EndnoteInsert
 ; Description ...: Insert a Endnote into a Document.
 ; Syntax ........: _LOWriter_EndnoteInsert(Byref $oDoc, Byref $oCursor, $bOverwrite[, $sLabel = Null])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the
-;				   +									cursor will be overwritten. If False, content will be inserted to the
-;				   +									left of any selection.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
+;				   +								If False, content will be inserted to the left of any selection.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -943,8 +878,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table cursor type, not supported.
-;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/ Footer
-;				   +									cannot insert a Endnote in those data types.
+;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/ Footer cannot insert a Endnote in those data types.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor located in unknown data type.
 ;				   @Error 1 @Extended 7 Return 0 = $sLabel not a string.
 ;				   --Initialization Errors--
@@ -954,8 +888,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Endnote cannot be inserted into a Frame, a Footnote, a Endnote, or the Header/ Footer.
-; Related .......: _LOWriter_EndnoteDelete,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor,
+; Related .......: _LOWriter_EndnoteDelete,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -995,10 +928,8 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ; Name ..........: _LOWriter_EndnoteModifyAnchor
 ; Description ...: Modify a Specific Endnote's settings.
 ; Syntax ........: _LOWriter_EndnoteModifyAnchor(Byref $oEndNote[, $sLabel = Null])
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval
-;				   +							function.
-;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Set
-;				   +							to "" for automatic numbering.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
+;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1009,12 +940,10 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Endnote settings were successfully modified.
 ;				   @Error 0 @Extended 1 Return String = Success. $sLabel set to Null, current Endnote Label returned.
-;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Endnote AutoNumbering number
-;				   +									returned.
+;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Endnote AutoNumbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_EndnotesGetList, _LOWriter_EndnoteInsert
 ; Link ..........:
@@ -1046,16 +975,11 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ; Name ..........: _LOWriter_EndnoteSettingsAutoNumber
 ; Description ...: Set or Retrieve Endnote Autonumbering settings.
 ; Syntax ........: _LOWriter_EndnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $iNumFormat            - [optional] an integer value. Default is Null. The numbering format to use for
-;				   +						Endnote numbering. See Constants.
-;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Endnote counting
-;				   +							from, Min. 1, Max 9999.
-;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Endnote
-;				   +							number in the note text.
-;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Endnote
-;				   +							number in the note text.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Endnote numbering. See Constants.
+;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Endnote counting from, Min. 1, Max 9999.
+;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Endnote number in the note text.
+;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Endnote number in the note text.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1065,16 +989,14 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ;				   @Error 1 @Extended 4 Return 0 = $sBefore not a String.
 ;				   @Error 1 @Extended 5 Return 0 = $sAfter not a String.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iNumFormat
 ;				   |								2 = Error setting $iStartAt
 ;				   |								4 = Error setting $sBefore
 ;				   |								8 = Error setting $sAfter
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1201,15 +1123,11 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ; Name ..........: _LOWriter_EndnoteSettingsStyles
 ; Description ...: Set or Retrieve Document Endnote Style settings.
 ; Syntax ........: _LOWriter_EndnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sEndnoteArea = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParagraph          - [optional] a string value. Default is Null. The Endnote Text Paragraph Style.
-;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Endnote
-;				   +							pages.
-;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Endnote
-;				   +						anchor in the document text.
-;                  $sEndnoteArea        - [optional] a string value. Default is Null. The Character Style to use for the Endnote
-;				   +						number in the Endnote text.
+;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Endnote pages.
+;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Endnote anchor in the document text.
+;                  $sEndnoteArea        - [optional] a string value. Default is Null. The Character Style to use for the Endnote number in the Endnote text.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1223,20 +1141,17 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ;				   @Error 1 @Extended 8 Return 0 = $sEndnoteArea not a String.
 ;				   @Error 1 @Extended 9 Return 0 = Character Style referenced in $sEndnoteArea not found in Document.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sParagraph
 ;				   |								2 = Error setting $sPage
 ;				   |								4 = Error setting $sTextArea
 ;				   |								8 = Error setting $sEndnoteArea
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_CharStylesGetNames, _LOWriter_PageStylesGetNames
 ; Link ..........:
@@ -1298,8 +1213,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 ; Name ..........: _LOWriter_EndnotesGetList
 ; Description ...: Retrieve an array of Endnote Objects contained in a Document.
 ; Syntax ........: _LOWriter_EndnotesGetList(Byref $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1308,8 +1222,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Endnotes Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Endnotes, none contained in document.
-;				   @Error 0 @Extended ? Return Array = Success. Successfully searched for Endnotes, Returning Array of Endnote
-;				   +										Objects. @Extended set to number found.
+;				   @Error 0 @Extended ? Return Array = Success. Successfully searched for Endnotes, Returning Array of Endnote Objects. @Extended set to number found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1349,8 +1262,7 @@ EndFunc   ;==>_LOWriter_EndnotesGetList
 ; Name ..........: _LOWriter_FootnoteDelete
 ; Description ...: Delete a Footnote.
 ; Syntax ........: _LOWriter_FootnoteDelete(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1380,8 +1292,7 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 ; Name ..........: _LOWriter_FootnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Footnote Anchor position.
 ; Syntax ........: _LOWriter_FootnoteGetAnchor(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1413,8 +1324,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 ; Name ..........: _LOWriter_FootnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Footnote to modify the text therein.
 ; Syntax ........: _LOWriter_FootnoteGetTextCursor(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval
-;				   +							function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1448,13 +1358,10 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ; Name ..........: _LOWriter_FootnoteInsert
 ; Description ...: Insert a Footnote into a Document.
 ; Syntax ........: _LOWriter_FootnoteInsert(Byref $oDoc, Byref $oCursor, $bOverwrite[, $sLabel = Null])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation
-;				   +						Or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the
-;				   +									cursor will be overwritten. If False, content will be inserted to the
-;				   +									left of any selection.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
+;				   +									If False, content will be inserted to the left of any selection.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the footnote.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1475,8 +1382,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Footnote cannot be inserted into a Frame, a Footnote, a Endnote, or a Header/ Footer.
-; Related .......: _LOWriter_FootnoteDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor
+; Related .......: _LOWriter_FootnoteDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1517,10 +1423,8 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; Name ..........: _LOWriter_FootnoteModifyAnchor
 ; Description ...: Modify a Footnote's Anchor Character.
 ; Syntax ........: _LOWriter_FootnoteModifyAnchor(Byref $oFootNote[, $sLabel = Null])
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval
-;				   +							function.
-;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Set
-;				   +							to "" for automatic numbering.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
+;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1531,12 +1435,10 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Footnote settings were successfully modified.
 ;				   @Error 0 @Extended 1 Return String = Success. $sLabel set to Null, current Footnote Custom Label returned.
-;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Footnote AutoNumbering number
-;				   +									returned.
+;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Footnote AutoNumbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList
 ; Link ..........:
@@ -1567,20 +1469,13 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; Name ..........: _LOWriter_FootnoteSettingsAutoNumber
 ; Description ...: Set or Retrieve Footnote Autonumbering settings.
 ; Syntax ........: _LOWriter_FootnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null[, $iCounting = Null[, $bEndOfDoc = Null]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +						DocCreate function.
-;                  $iNumFormat            - [optional] an integer value. Default is Null. The numbering format to use for
-;				   +						Footnote numbering. See Constants.
-;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Footnote counting
-;				   +							from, this is labeled "Counting" in the L.O. User Interface. Min. 1, Max 9999.
-;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Footnote
-;				   +							number in the note text.
-;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Footnote
-;				   +							number in the note text.
-;                  $iCounting           - [optional] an integer value. Default is Null. The Counting type of the footnotes,
-;				   +							such as per page etc., see constants below.
-;                  $bEndOfDoc           - [optional] a boolean value. Default is Null. If True, Footnotes are placed at the
-;				   +							end of the document, like Endnotes.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iNumFormat            - [optional] an integer value. Default is Null. The numbering format to use for Footnote numbering. See Constants.
+;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Footnote counting from, this is labeled "Counting" in the L.O. User Interface. Min. 1, Max 9999.
+;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Footnote number in the note text.
+;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Footnote number in the note text.
+;                  $iCounting           - [optional] an integer value. Default is Null. The Counting type of the footnotes, such as per page etc., see constants below.
+;                  $bEndOfDoc           - [optional] a boolean value. Default is Null. If True, Footnotes are placed at the end of the document, like Endnotes.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1592,8 +1487,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;				   @Error 1 @Extended 6 Return 0 = $iCounting not an Integer, less than 0 or greater than 2. See Constants.
 ;				   @Error 1 @Extended 7 Return 0 = $bEndOfDoc not a boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2, 4, 8, 16, 32
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iNumFormat
 ;				   |								2 = Error setting $iStartAt
 ;				   |								4 = Error setting $sBefore
@@ -1602,12 +1496,10 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;				   |								32 = Error setting $bEndOfDoc
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 6 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Numbering Format Constants: $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
 ;	$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
@@ -1681,10 +1573,8 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
 ;	$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
 ;	$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-; Counting Type Constants: $LOW_FOOTNOTE_COUNT_PER_PAGE(0), Restarts the numbering of footnotes at the top of each page. This
-;								option is only available if End of Doc is set to False.
-;							$LOW_FOOTNOTE_COUNT_PER_CHAP(1), Restarts the numbering of footnotes at the beginning of each
-;								chapter.
+; Counting Type Constants: $LOW_FOOTNOTE_COUNT_PER_PAGE(0), Restarts the numbering of footnotes at the top of each page. This option is only available if End of Doc is set to False.
+;							$LOW_FOOTNOTE_COUNT_PER_CHAP(1), Restarts the numbering of footnotes at the beginning of each chapter.
 ;							$LOW_FOOTNOTE_COUNT_PER_DOC(2), Numbers the footnotes in the document sequentially.
 ; Related .......:
 ; Link ..........:
@@ -1750,12 +1640,9 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ; Name ..........: _LOWriter_FootnoteSettingsContinuation
 ; Description ...: Set or Retrieve Footnote continuation settings.
 ; Syntax ........: _LOWriter_FootnoteSettingsContinuation(Byref $oDoc[, $sEnd = Null[, $sBegin = Null]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $sEnd                - [optional] a string value. Default is Null. The text to display at the end of a
-;				   +						Footnote before it continues on the next page.
-;                  $sBegin              - [optional] a string value. Default is Null. The text to display at the beginning of a
-;				   +						Footnote that has continued on the next page.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sEnd                - [optional] a string value. Default is Null. The text to display at the end of a Footnote before it continues on the next page.
+;                  $sBegin              - [optional] a string value. Default is Null. The text to display at the beginning of a Footnote that has continued on the next page.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1763,18 +1650,15 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ;				   @Error 1 @Extended 2 Return 0 = $sEnd not a String.
 ;				   @Error 1 @Extended 3 Return 0 = $sBegin not a String.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sEnd
 ;				   |								2 = Error setting $sBegin
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 2 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -1813,15 +1697,12 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ; Name ..........: _LOWriter_FootnoteSettingsStyles
 ; Description ...: Set or Retrieve Document Footnote Style settings.
 ; Syntax ........: _LOWriter_FootnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sFootnoteArea = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParagraph          - [optional] a string value. Default is Null. The Footnote Text Paragraph Style.
-;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Footnote
-;				   +						pages. Only valid if the footnotes are set to End of Document, instead of per page.
-;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Footnote
-;				   +						anchor in the document text.
-;                  $sFootnoteArea       - [optional] a string value. Default is Null. The Character Style to use for the Footnote
-;				   +						number in the footnote text.
+;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Footnote pages.
+;				   +						Only valid if the footnotes are set to End of Document, instead of per page.
+;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Footnote anchor in the document text.
+;                  $sFootnoteArea       - [optional] a string value. Default is Null. The Character Style to use for the Footnote number in the footnote text.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1835,20 +1716,17 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ;				   @Error 1 @Extended 8 Return 0 = $sFootnoteArea not a String.
 ;				   @Error 1 @Extended 9 Return 0 = Character Style referenced in $sFootnoteArea not found in Document.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for
-;				   +								the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sParagraph
 ;				   |								2 = Error setting $sPage
 ;				   |								4 = Error setting $sTextArea
 ;				   |								8 = Error setting $sFootnoteArea
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_PageStylesGetNames, _LOWriter_CharStylesGetNames
 ; Link ..........:
@@ -1910,8 +1788,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 ; Name ..........: _LOWriter_FootnotesGetList
 ; Description ...: Retrieve an array of Footnote Objects contained in a Document.
 ; Syntax ........: _LOWriter_FootnotesGetList(Byref $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1920,8 +1797,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Footnotes Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Footnotes, none contained in document.
-;				   @Error 0 @Extended ? Return Array = Success. Successfully searched for Footnotes, Returning Array of Footnote
-;				   +										Objects. @Extended set to number found.
+;				   @Error 0 @Extended ? Return Array = Success. Successfully searched for Footnotes, Returning Array of Footnote Objects. @Extended set to number found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1960,24 +1836,17 @@ EndFunc   ;==>_LOWriter_FootnotesGetList
 ; Name ..........: _LOWriter_SearchDescriptorCreate
 ; Description ...: Create a Search Descriptor for searching a document.
 ; Syntax ........: _LOWriter_SearchDescriptorCreate(Byref $oDoc[, $bBackwards = False[, $bMatchCase = False[, $bWholeWord = False[, $bRegExp = False[, $bStyles = False[, $bSearchPropValues = False]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
-;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched
-;				   +						backwards.
-;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is
-;				   +						important for the Search.
-;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be
-;				   +						found.
-;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated
-;				   +						as a regular expression.
-;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a
-;				   +						Paragraph Style name, and the search will return any paragraph utilizing the
-;				   +						specified name, EXCEPT if you input Format properties to search for, then setting
-;				   +						this to True causes the search to search both for direct formatting matching those
-;				   +						properties and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties
-;				   +						searched for are matched based on their value, else if false, the search only looks
-;				   +						for their existence. See Remarks.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
+;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
+;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
+;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
+;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name,
+;				   +						and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for,
+;				   +						then setting this to True causes the search to search both for direct formatting matching those properties
+;				   +						and also Paragraph/Character styles that contain matching properties.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value,
+;				   +						else if false, the search only looks for their existence. See Remarks.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1994,13 +1863,11 @@ EndFunc   ;==>_LOWriter_FootnotesGetList
 ;				   @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search
-;						box and "Attributes". Setting $bSearchPropValues to True, means that the search will look for matches
-;						using the specified property AND having the specified value, such as Character Weight, Bold, only
-;						matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to
-;						false, the search only looks for matches that have the specified property, regardless of its value. Such
-;						as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on
-;						anything directly formatted unless $bStyles is also true.
+; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
+;						Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value,
+;						such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false,
+;						the search only looks for matches that have the specified property, regardless of its value.
+;						Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
 ;					Note: The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for
 ;						other documents.
 ; Related .......: _LOWriter_SearchDescriptorModify, _LOWriter_SearchDescriptorSimilarityModify
@@ -2040,24 +1907,17 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ; Name ..........: _LOWriter_SearchDescriptorModify
 ; Description ...: Modify Search Descriptor settings of an existing Search Descriptor Object.
 ; Syntax ........: _LOWriter_SearchDescriptorModify(Byref $oSrchDescript[, $bBackwards = Null[, $bMatchCase = Null[, $bWholeWord = Null[, $bRegExp = Null[, $bStyles = Null[, $bSearchPropValues = Null]]]]]])
-; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from
-;				   +						_LOWriter_SearchDescriptorCreate function.
-;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched
-;				   +						backwards.
-;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is
-;				   +						important for the Search.
-;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be
-;				   +						found.
-;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated
-;				   +						as a regular expression. Cannot be set to True if Similarity Search is set to True.
-;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a
-;				   +						Paragraph Style name, and the search will return any paragraph utilizing the
-;				   +						specified name, EXCEPT if you input Format properties to search for, then setting
-;				   +						this to True causes the search to search both for direct formatting matching those
-;				   +						properties and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties
-;				   +						searched for are matched based on their value, else if false, the search only looks
-;				   +						for their existence. See Remarks.
+; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
+;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
+;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
+;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
+;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression. Cannot be set to True if Similarity Search is set to True.
+;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name,
+;				   +						and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for,
+;				   +						then setting this to True causes the search to search both for direct formatting matching those properties
+;				   +						and also Paragraph/Character styles that contain matching properties.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false,
+;				   +						the search only looks for their existence. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2073,19 +1933,15 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;				   @Error 3 @Extended 1 Return 0 = $bRegExp is set to True while Similarity Search is also set to True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 6 Element Array with values in order of function parameters.
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search
-;						box and "Attributes". Setting $bSearchPropValues to True, means that the search will look for matches
-;						using the specified property AND having the specified value, such as Character Weight, Bold, only
-;						matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to
-;						false, the search only looks for matches that have the specified property, regardless of its value. Such
-;						as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on
-;						anything directly formatted unless $bStyles is also true.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;						get the current settings.
+; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
+;						Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value,
+;						such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false,
+;						the search only looks for matches that have the specified property, regardless of its value.
+;						Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;						Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_SearchDescriptorSimilarityModify
 ; Link ..........:
@@ -2144,18 +2000,12 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ; Name ..........: _LOWriter_SearchDescriptorSimilarityModify
 ; Description ...: Modify Similarity Search Settings for an existing Search Descriptor Object.
 ; Syntax ........: _LOWriter_SearchDescriptorSimilarityModify(Byref $oSrchDescript[, $bSimilarity = Null[, $bCombine = Null[, $iRemove = Null[, $iAdd = Null[, $iExchange = Null]]]]])
-; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from
-;				   +						_LOWriter_SearchDescriptorCreate function.
-;                  $bSimilarity         - [optional] a boolean value. Default is Null. If True, a "similarity search" is
-;				   +						performed.
-;                  $bCombine            - [optional] a boolean value. Default is Null. If True, all similarity rules ($iRemove,
-;				   +						$iAdd, and $iExchange) are applied together.
-;                  $iRemove             - [optional] an integer value. Default is Null. Specifies the number of characters that
-;				   +						may be ignored to match the search pattern.
-;                  $iAdd                - [optional] an integer value. Default is Null. Specifies the number of characters that
-;				   +						must be added to match the search pattern.
-;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that
-;				   +						must be replaced to match the search pattern.
+; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
+;                  $bSimilarity         - [optional] a boolean value. Default is Null. If True, a "similarity search" is performed.
+;                  $bCombine            - [optional] a boolean value. Default is Null. If True, all similarity rules ($iRemove, $iAdd, and $iExchange) are applied together.
+;                  $iRemove             - [optional] an integer value. Default is Null. Specifies the number of characters that may be ignored to match the search pattern.
+;                  $iAdd                - [optional] an integer value. Default is Null. Specifies the number of characters that must be added to match the search pattern.
+;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that must be replaced to match the search pattern.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2163,22 +2013,18 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to
-;				   +									True.
+;				   @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
 ;				   @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
 ;				   @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = $bSimilarity is set to True while Regular Expression Search is also set to
-;				   +									True.
+;				   @Error 3 @Extended 1 Return 0 = $bSimilarity is set to True while Regular Expression Search is also set to True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 5 Element Array with values in order of function parameters.
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;						get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_SearchDescriptorCreate
 ; Link ..........:
@@ -2235,8 +2081,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorSimilarityModify
 ; Name ..........: _LOWriter_ShapesGetNames
 ; Description ...: Return a list of Shape names contained in a document.
 ; Syntax ........: _LOWriter_ShapesGetNames(Byref $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 2D Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2244,20 +2089,16 @@ EndFunc   ;==>_LOWriter_SearchDescriptorSimilarityModify
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shapes Object.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained
-;				   +									contained in a document, the first column ($aArray[0][0] contains the
-;				   +									shape name, the second column ($aArray[0][1] contains the shape's
-;				   +									Implementation name. See Remarks.
+;				   @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained contained in a document,
+;				   +									the first column ($aArray[0][0] contains the shape name,
+;				   +									the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted
-;						as "Shapes", such as Text Frames etc.
-;						I have found the three Implementation names being returned, SwXTextFrame, indicating the shape
-;						is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And
-;						"SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found
-;						yet. Images inserted into the document are also listed as TextFrames in the shapes category. There isn't
-;						and easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in
-;						the shapes category.
+; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
+;					I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc.
+;					And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
+;					Images inserted into the document are also listed as TextFrames in the shapes category.
+;					There isn't and easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
