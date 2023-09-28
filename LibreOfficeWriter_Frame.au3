@@ -993,7 +993,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSettings
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: NOTE: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
+; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
 ;						best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am
 ;						unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the
 ;						appropriate relative value, especially when spacing is set.
@@ -1737,7 +1737,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;				   +							returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: in Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this
+; Remarks .......: in Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this
 ;					function returns no results, or not the ones you expect, try setting $bSearchShapes to true.
 ; Related .......: _LOWriter_FrameGetObjByName
 ; Link ..........:
@@ -2849,7 +2849,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: NOTE: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work
+; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work
 ;					the best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am
 ;						unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the
 ;						appropriate relative value, especially when spacing is set.
@@ -5396,7 +5396,7 @@ EndFunc   ;==>_LOWriter_FrameWrap
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Contour and Outside only, though shown on the L.O. UI, are not available for frames, as stated in the
+; Remarks .......: Contour and Outside only, though shown on the L.O. UI, are not available for frames, as stated in the
 ;						L.O. Offline help file.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.

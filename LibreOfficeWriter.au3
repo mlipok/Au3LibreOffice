@@ -492,7 +492,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ;				   @Error 0 @Extended 1 Return String = Success. Current formula is returned in String format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Formula can only be set for an individual cell, not a range.
+; Remarks .......: Formula can only be set for an individual cell, not a range.
 ;					Setting the formula will overwrite any existing data in the cell.
 ; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					To retrieve the total of a formula, use _LOWriter_CellValue.
@@ -661,7 +661,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ;				   @Error 0 @Extended 1 Return String = Success. Current String is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: String can only be set for an individual cell, not a range.
+; Remarks .......: String can only be set for an individual cell, not a range.
 ;					Setting the String will overwrite any existing data in the cell.
 ; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
@@ -700,7 +700,7 @@ EndFunc   ;==>_LOWriter_CellString
 ;				   @Error 0 @Extended 1 Return String = Success. Current Value is returned in String format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Value can only be set for an individual cell, not a range.
+; Remarks .......: Value can only be set for an individual cell, not a range.
 ;					Setting the Value will overwrite any existing data in the cell.
 ;					For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
 ; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

@@ -950,7 +950,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: OverLine line style uses the same constants as underline style.
+; Remarks .......: OverLine line style uses the same constants as underline style.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
@@ -1204,7 +1204,7 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;				   +		returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Five Character styles have two separate names, Footnote Characters is also internally called
+; Remarks .......: Five Character styles have two separate names, Footnote Characters is also internally called
 ;					"Footnote Symbol"; Bullets, is internally called "Bullet Symbol"; Endnote Characters is internally called
 ;					"Endnote Symbol"; Quotation is internally called "Citation"; and "No Character Style is internally called
 ;					"Standard". Either name works when setting a Character Style, but on certain functions that return a

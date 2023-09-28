@@ -492,7 +492,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;				   +								settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before
+; Remarks .......: Break Type must be set before PageStyle will be able to be set, and page style needs set before
 ;					$iPgNumOffSet can be set.
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
@@ -806,7 +806,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;				   +									insertion into the document.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: NOTE: This function only creates a Table Object. You must insert it into the document using
+; Remarks .......: This function only creates a Table Object. You must insert it into the document using
 ;					_LOWriter_TableInsert. You can preset some properties using _LOWriter_TableProperties, before inserting, or
 ;						set them after inserting. Note: some properties can only be set on already inserted Tables.
 ;						To skip any of the optional parameters. Use the "Null" keyword.
@@ -2356,7 +2356,7 @@ EndFunc   ;==>_LOWriter_TableShadow
 ;				   +								else false means "plain" Width is used.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than
+; Remarks .......: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than
 ;					$LOW_ORIENT_HORI_FULL(6), which is LibeOffice's default setting. Note: Width may change +/- 1
 ;					Micrometer once set due to Libre Office.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
