@@ -247,259 +247,259 @@ Global Const _
 		$LOW_TAB_ALIGN_DECIMAL = 3, _                      ; Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab.
 		$LOW_TAB_ALIGN_DEFAULT = 4                         ; This setting is the default, setting when no TabStops are present.
 
-Global Const _                                             ; Underline/Overline
-		$LOW_UNDERLINE_NONE = 0, _                         ; No Underline or Overline style.
-		$LOW_UNDERLINE_SINGLE = 1, _                       ; Single line Underline/Overline style.
-		$LOW_UNDERLINE_DOUBLE = 2, _                       ; Double line Underline/Overline style.
-		$LOW_UNDERLINE_DOTTED = 3, _                       ; Dotted line Underline/Overline style.
-		$LOW_UNDERLINE_DONT_KNOW = 4, _                    ; Unknown Underline/Overline style, for read only.
-		$LOW_UNDERLINE_DASH = 5, _                         ; Dashed line Underline/Overline style.
-		$LOW_UNDERLINE_LONG_DASH = 6, _                    ; Long Dashed line Underline/Overline style.
-		$LOW_UNDERLINE_DASH_DOT = 7, _                     ; Dash Dot line Underline/Overline style.
-		$LOW_UNDERLINE_DASH_DOT_DOT = 8, _                 ; Dash Dot Dot line Underline/Overline style.
-		$LOW_UNDERLINE_SML_WAVE = 9, _                     ; Small Wave line Underline/Overline style.
-		$LOW_UNDERLINE_WAVE = 10, _                        ; Wave line Underline/Overline style.
-		$LOW_UNDERLINE_DBL_WAVE = 11, _                    ; Double Wave line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD = 12, _                        ; Bold line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_DOTTED = 13, _                 ; Bold Dotted line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_DASH = 14, _                   ; Bold Dashed line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_LONG_DASH = 15, _              ; Bold Long Dash line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_DASH_DOT = 16, _               ; Bold Dash Dot line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_DASH_DOT_DOT = 17, _           ; Bold Dash Dot Dot line Underline/Overline style.
-		$LOW_UNDERLINE_BOLD_WAVE = 18                      ; Bold Wave line Underline/Overline style.
+Global Const _ ; Underline/Overline
+		$LOW_UNDERLINE_NONE = 0, _ ; No Underline or Overline style.
+		$LOW_UNDERLINE_SINGLE = 1, _ ; Single line Underline/Overline style.
+		$LOW_UNDERLINE_DOUBLE = 2, _ ; Double line Underline/Overline style.
+		$LOW_UNDERLINE_DOTTED = 3, _ ; Dotted line Underline/Overline style.
+		$LOW_UNDERLINE_DONT_KNOW = 4, _ ; Unknown Underline/Overline style, for read only.
+		$LOW_UNDERLINE_DASH = 5, _ ; Dashed line Underline/Overline style.
+		$LOW_UNDERLINE_LONG_DASH = 6, _ ; Long Dashed line Underline/Overline style.
+		$LOW_UNDERLINE_DASH_DOT = 7, _ ; Dash Dot line Underline/Overline style.
+		$LOW_UNDERLINE_DASH_DOT_DOT = 8, _ ; Dash Dot Dot line Underline/Overline style.
+		$LOW_UNDERLINE_SML_WAVE = 9, _ ; Small Wave line Underline/Overline style.
+		$LOW_UNDERLINE_WAVE = 10, _ ; Wave line Underline/Overline style.
+		$LOW_UNDERLINE_DBL_WAVE = 11, _ ; Double Wave line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD = 12, _ ; Bold line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_DOTTED = 13, _ ; Bold Dotted line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_DASH = 14, _ ; Bold Dashed line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_LONG_DASH = 15, _ ; Bold Long Dash line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_DASH_DOT = 16, _ ; Bold Dash Dot line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_DASH_DOT_DOT = 17, _ ; Bold Dash Dot Dot line Underline/Overline style.
+		$LOW_UNDERLINE_BOLD_WAVE = 18 ; Bold Wave line Underline/Overline style.
 
-Global Const _                                             ; Strikeout
-		$LOW_STRIKEOUT_NONE = 0, _                         ; No strike out.
-		$LOW_STRIKEOUT_SINGLE = 1, _                       ; Strike out the characters with a single line.
-		$LOW_STRIKEOUT_DOUBLE = 2, _                       ; Strike out the characters with a double line.
-		$LOW_STRIKEOUT_DONT_KNOW = 3, _                    ; The strikeout mode is not specified. For Read Only.
-		$LOW_STRIKEOUT_BOLD = 4, _                         ; Strike out the characters with a bold line.
-		$LOW_STRIKEOUT_SLASH = 5, _                        ; Strike out the characters with slashes.
-		$LOW_STRIKEOUT_X = 6                               ; Strike out the characters with X's.
+Global Const _ ; Strikeout
+		$LOW_STRIKEOUT_NONE = 0, _ ; No strike out.
+		$LOW_STRIKEOUT_SINGLE = 1, _ ; Strike out the characters with a single line.
+		$LOW_STRIKEOUT_DOUBLE = 2, _ ; Strike out the characters with a double line.
+		$LOW_STRIKEOUT_DONT_KNOW = 3, _ ; The strikeout mode is not specified. For Read Only.
+		$LOW_STRIKEOUT_BOLD = 4, _ ; Strike out the characters with a bold line.
+		$LOW_STRIKEOUT_SLASH = 5, _ ; Strike out the characters with slashes.
+		$LOW_STRIKEOUT_X = 6 ; Strike out the characters with X's.
 
-Global Const _                                             ; Relief
-		$LOW_RELIEF_NONE = 0, _                            ; No relief is applied.
-		$LOW_RELIEF_EMBOSSED = 1, _                        ; The font relief is embossed.
-		$LOW_RELIEF_ENGRAVED = 2                           ; The font relief is engraved.
+Global Const _ ; Relief
+		$LOW_RELIEF_NONE = 0, _ ; No relief is applied.
+		$LOW_RELIEF_EMBOSSED = 1, _ ; The font relief is embossed.
+		$LOW_RELIEF_ENGRAVED = 2 ; The font relief is engraved.
 
-Global Const _                                             ; Case
-		$LOW_CASEMAP_NONE = 0, _                           ; The case of the characters is unchanged.
-		$LOW_CASEMAP_UPPER = 1, _                          ; All characters are put in upper case.
-		$LOW_CASEMAP_LOWER = 2, _                          ; All characters are put in lower case.
-		$LOW_CASEMAP_TITLE = 3, _                          ; The first character of each word is put in upper case.
-		$LOW_CASEMAP_SM_CAPS = 4                           ; All characters are put in upper case, but with a smaller font height.
+Global Const _ ; Case
+		$LOW_CASEMAP_NONE = 0, _ ; The case of the characters is unchanged.
+		$LOW_CASEMAP_UPPER = 1, _ ; All characters are put in upper case.
+		$LOW_CASEMAP_LOWER = 2, _ ; All characters are put in lower case.
+		$LOW_CASEMAP_TITLE = 3, _ ; The first character of each word is put in upper case.
+		$LOW_CASEMAP_SM_CAPS = 4 ; All characters are put in upper case, but with a smaller font height.
 
-Global Const _                                             ; Shadow
-		$LOW_SHADOW_NONE = 0, _                            ; No shadow is applied.
-		$LOW_SHADOW_TOP_LEFT = 1, _                        ; Shadow is located along the upper and left sides.
-		$LOW_SHADOW_TOP_RIGHT = 2, _                       ; Shadow is located along the upper and right sides.
-		$LOW_SHADOW_BOTTOM_LEFT = 3, _                     ; Shadow is located along the lower and left sides.
-		$LOW_SHADOW_BOTTOM_RIGHT = 4                       ; Shadow is located along the lower and right sides.
+Global Const _ ; Shadow
+		$LOW_SHADOW_NONE = 0, _ ; No shadow is applied.
+		$LOW_SHADOW_TOP_LEFT = 1, _ ; Shadow is located along the upper and left sides.
+		$LOW_SHADOW_TOP_RIGHT = 2, _ ; Shadow is located along the upper and right sides.
+		$LOW_SHADOW_BOTTOM_LEFT = 3, _ ; Shadow is located along the lower and left sides.
+		$LOW_SHADOW_BOTTOM_RIGHT = 4 ; Shadow is located along the lower and right sides.
 
-Global Const _                                             ; Posture/Italic
-		$LOW_POSTURE_NONE = 0, _                           ; Specifies a font without slant.
-		$LOW_POSTURE_OBLIQUE = 1, _                        ; Specifies an oblique font (slant not designed into the font).
-		$LOW_POSTURE_ITALIC = 2, _                         ; Specifies an italic font (slant designed into the font).
-		$LOW_POSTURE_DontKnow = 3, _                       ; Specifies a font with an unknown slant. For Read Only.
-		$LOW_POSTURE_REV_OBLIQUE = 4, _                    ; Specifies a reverse oblique font (slant not designed into the font).
-		$LOW_POSTURE_REV_ITALIC = 5                        ; Specifies a reverse italic font (slant designed into the font).
+Global Const _ ; Posture/Italic
+		$LOW_POSTURE_NONE = 0, _ ; Specifies a font without slant.
+		$LOW_POSTURE_OBLIQUE = 1, _ ; Specifies an oblique font (slant not designed into the font).
+		$LOW_POSTURE_ITALIC = 2, _ ; Specifies an italic font (slant designed into the font).
+		$LOW_POSTURE_DontKnow = 3, _ ; Specifies a font with an unknown slant. For Read Only.
+		$LOW_POSTURE_REV_OBLIQUE = 4, _ ; Specifies a reverse oblique font (slant not designed into the font).
+		$LOW_POSTURE_REV_ITALIC = 5 ; Specifies a reverse italic font (slant designed into the font).
 
-Global Const _                                             ; Weight/Bold
-		$LOW_WEIGHT_DONT_KNOW = 0, _                       ; The font weight is not specified/unknown. For Read Only.
-		$LOW_WEIGHT_THIN = 50, _                           ; A 50% (Thin) font weight.
-		$LOW_WEIGHT_ULTRA_LIGHT = 60, _                    ; A 60% (Ultra Light) font weight.
-		$LOW_WEIGHT_LIGHT = 75, _                          ; A 75% (Light) font weight.
-		$LOW_WEIGHT_SEMI_LIGHT = 90, _                     ; A 90% (Semi-Light) font weight.
-		$LOW_WEIGHT_NORMAL = 100, _                        ; A 100% (Normal) font weight.
-		$LOW_WEIGHT_SEMI_BOLD = 110, _                     ; A 110% (Semi-Bold) font weight.
-		$LOW_WEIGHT_BOLD = 150, _                          ; A 150% (Bold) font weight.
-		$LOW_WEIGHT_ULTRA_BOLD = 175, _                    ; A 175% (Ultra-Bold) font weight.
-		$LOW_WEIGHT_BLACK = 200                            ; A 200% (Black) font weight.
+Global Const _ ; Weight/Bold
+		$LOW_WEIGHT_DONT_KNOW = 0, _ ; The font weight is not specified/unknown. For Read Only.
+		$LOW_WEIGHT_THIN = 50, _ ; A 50% (Thin) font weight.
+		$LOW_WEIGHT_ULTRA_LIGHT = 60, _ ; A 60% (Ultra Light) font weight.
+		$LOW_WEIGHT_LIGHT = 75, _ ; A 75% (Light) font weight.
+		$LOW_WEIGHT_SEMI_LIGHT = 90, _ ; A 90% (Semi-Light) font weight.
+		$LOW_WEIGHT_NORMAL = 100, _ ; A 100% (Normal) font weight.
+		$LOW_WEIGHT_SEMI_BOLD = 110, _ ; A 110% (Semi-Bold) font weight.
+		$LOW_WEIGHT_BOLD = 150, _ ; A 150% (Bold) font weight.
+		$LOW_WEIGHT_ULTRA_BOLD = 175, _ ; A 175% (Ultra-Bold) font weight.
+		$LOW_WEIGHT_BLACK = 200 ; A 200% (Black) font weight.
 
-Global Const _                                             ; Outline
-		$LOW_OUTLINE_BODY = 0, _                           ; The paragraph belongs to the body text.
-		$LOW_OUTLINE_LEVEL_1 = 1, _                        ; The paragraph belongs to the level 1 outline level.
-		$LOW_OUTLINE_LEVEL_2 = 2, _                        ; The paragraph belongs to the level 2 outline level.
-		$LOW_OUTLINE_LEVEL_3 = 3, _                        ; The paragraph belongs to the level 3 outline level.
-		$LOW_OUTLINE_LEVEL_4 = 4, _                        ; The paragraph belongs to the level 4 outline level.
-		$LOW_OUTLINE_LEVEL_5 = 5, _                        ; The paragraph belongs to the level 5 outline level.
-		$LOW_OUTLINE_LEVEL_6 = 6, _                        ; The paragraph belongs to the level 6 outline level.
-		$LOW_OUTLINE_LEVEL_7 = 7, _                        ; The paragraph belongs to the level 7 outline level.
-		$LOW_OUTLINE_LEVEL_8 = 8, _                        ; The paragraph belongs to the level 8 outline level.
-		$LOW_OUTLINE_LEVEL_9 = 9, _                        ; The paragraph belongs to the level 9 outline level.
-		$LOW_OUTLINE_LEVEL_10 = 10                         ; The paragraph belongs to the level 10 outline level.
+Global Const _ ; Outline
+		$LOW_OUTLINE_BODY = 0, _ ; The paragraph belongs to the body text.
+		$LOW_OUTLINE_LEVEL_1 = 1, _ ; The paragraph belongs to the level 1 outline level.
+		$LOW_OUTLINE_LEVEL_2 = 2, _ ; The paragraph belongs to the level 2 outline level.
+		$LOW_OUTLINE_LEVEL_3 = 3, _ ; The paragraph belongs to the level 3 outline level.
+		$LOW_OUTLINE_LEVEL_4 = 4, _ ; The paragraph belongs to the level 4 outline level.
+		$LOW_OUTLINE_LEVEL_5 = 5, _ ; The paragraph belongs to the level 5 outline level.
+		$LOW_OUTLINE_LEVEL_6 = 6, _ ; The paragraph belongs to the level 6 outline level.
+		$LOW_OUTLINE_LEVEL_7 = 7, _ ; The paragraph belongs to the level 7 outline level.
+		$LOW_OUTLINE_LEVEL_8 = 8, _ ; The paragraph belongs to the level 8 outline level.
+		$LOW_OUTLINE_LEVEL_9 = 9, _ ; The paragraph belongs to the level 9 outline level.
+		$LOW_OUTLINE_LEVEL_10 = 10 ; The paragraph belongs to the level 10 outline level.
 
-Global Const _                                             ; Line Spacing
-		$LOW_LINE_SPC_MODE_PROP = 0, _                     ; Specifies the height value as a proportional value.
-		$LOW_LINE_SPC_MODE_MIN = 1, _                      ; Specifies the height as the minimum line height.
-		$LOW_LINE_SPC_MODE_LEADING = 2, _                  ; Specifies the height value as the distance to the previous line.
-		$LOW_LINE_SPC_MODE_FIX = 3                         ; Specifies the height value as a fixed line height.
+Global Const _ ; Line Spacing
+		$LOW_LINE_SPC_MODE_PROP = 0, _ ; Specifies the height value as a proportional value.
+		$LOW_LINE_SPC_MODE_MIN = 1, _ ; Specifies the height as the minimum line height.
+		$LOW_LINE_SPC_MODE_LEADING = 2, _ ; Specifies the height value as the distance to the previous line.
+		$LOW_LINE_SPC_MODE_FIX = 3 ; Specifies the height value as a fixed line height.
 
-Global Const _                                             ; Paragraph Horizontal Align
-		$LOW_PAR_ALIGN_HOR_LEFT = 0, _                     ; The Paragraph is left-aligned between the borders.
-		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _                    ; The Paragraph is right-aligned between the borders.
-		$LOW_PAR_ALIGN_HOR_JUSTIFIED = 2, _                ; The Paragraph is adjusted / stretched to both borders.
-		$LOW_PAR_ALIGN_HOR_CENTER = 3, _                   ; The Paragraph is centered between the left and right borders.
-		$LOW_PAR_ALIGN_HOR_STRETCH = 4                     ;HoriAlign 4 does nothing??
+Global Const _ ; Paragraph Horizontal Align
+		$LOW_PAR_ALIGN_HOR_LEFT = 0, _ ; The Paragraph is left-aligned between the borders.
+		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _ ; The Paragraph is right-aligned between the borders.
+		$LOW_PAR_ALIGN_HOR_JUSTIFIED = 2, _ ; The Paragraph is adjusted / stretched to both borders.
+		$LOW_PAR_ALIGN_HOR_CENTER = 3, _ ; The Paragraph is centered between the left and right borders.
+		$LOW_PAR_ALIGN_HOR_STRETCH = 4 ;HoriAlign 4 does nothing??
 
-Global Const _                                             ; Paragraph Vertical Align
-		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                    ; Automatic vertical alignment mode.
-		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _                ; The text is aligned to the baseline.
-		$LOW_PAR_ALIGN_VERT_TOP = 2, _                     ; The text is aligned to the top.
-		$LOW_PAR_ALIGN_VERT_CENTER = 3, _                  ; The text is aligned to the center.
-		$LOW_PAR_ALIGN_VERT_BOTTOM = 4                     ; The text is aligned to bottom.
+Global Const _ ; Paragraph Vertical Align
+		$LOW_PAR_ALIGN_VERT_AUTO = 0, _ ; Automatic vertical alignment mode.
+		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _ ; The text is aligned to the baseline.
+		$LOW_PAR_ALIGN_VERT_TOP = 2, _ ; The text is aligned to the top.
+		$LOW_PAR_ALIGN_VERT_CENTER = 3, _ ; The text is aligned to the center.
+		$LOW_PAR_ALIGN_VERT_BOTTOM = 4 ; The text is aligned to bottom.
 
-Global Const _                                             ; Paragraph Last Line Alignment
-		$LOW_PAR_LAST_LINE_START = 0, _                    ; The Paragraph is aligned either to the Left border or the right, depending on the current text direction.
-		$LOW_PAR_LAST_LINE_JUSTIFIED = 2, _                ; The Paragraph is adjusted to both borders / stretched.
-		$LOW_PAR_LAST_LINE_CENTER = 3                      ; The Paragraph is centered between the left and right borders.
+Global Const _ ; Paragraph Last Line Alignment
+		$LOW_PAR_LAST_LINE_START = 0, _ ; The Paragraph is aligned either to the Left border or the right, depending on the current text direction.
+		$LOW_PAR_LAST_LINE_JUSTIFIED = 2, _ ; The Paragraph is adjusted to both borders / stretched.
+		$LOW_PAR_LAST_LINE_CENTER = 3 ; The Paragraph is centered between the left and right borders.
 
-Global Const _                                             ; Text Direction
-		$LOW_TXT_DIR_LR_TB = 0, _                          ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_RL_TB = 1, _                          ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_TB_RL = 2, _                          ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left.
-		$LOW_TXT_DIR_TB_LR = 3, _                          ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right.
-		$LOW_TXT_DIR_CONTEXT = 4, _                        ; Obtain actual writing mode from the context of the object.
-		$LOW_TXT_DIR_BT_LR = 5                             ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
+Global Const _ ; Text Direction
+		$LOW_TXT_DIR_LR_TB = 0, _ ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom.
+		$LOW_TXT_DIR_RL_TB = 1, _ ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom.
+		$LOW_TXT_DIR_TB_RL = 2, _ ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left.
+		$LOW_TXT_DIR_TB_LR = 3, _ ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right.
+		$LOW_TXT_DIR_CONTEXT = 4, _ ; Obtain actual writing mode from the context of the object.
+		$LOW_TXT_DIR_BT_LR = 5 ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
 
-Global Const _                                             ; Control Character
-		$LOW_CON_CHAR_PAR_BREAK = 0, _                     ; A new paragraph.
-		$LOW_CON_CHAR_LINE_BREAK = 1, _                    ; A new line in a paragraph.
-		$LOW_CON_CHAR_HARD_HYPHEN = 2, _                   ; A dash but prevents this position from being hyphenated.
-		$LOW_CON_CHAR_SOFT_HYPHEN = 3, _                   ; Defines a preferred hyphenation point if the word must be split at the end of a line.
-		$LOW_CON_CHAR_HARD_SPACE = 4, _                    ; Insert a space that prevents two words from splitting at a line break.
-		$LOW_CON_CHAR_APPEND_PAR = 5                       ; Appends a new paragraph.
+Global Const _ ; Control Character
+		$LOW_CON_CHAR_PAR_BREAK = 0, _ ; A new paragraph.
+		$LOW_CON_CHAR_LINE_BREAK = 1, _ ; A new line in a paragraph.
+		$LOW_CON_CHAR_HARD_HYPHEN = 2, _ ; A dash but prevents this position from being hyphenated.
+		$LOW_CON_CHAR_SOFT_HYPHEN = 3, _ ; Defines a preferred hyphenation point if the word must be split at the end of a line.
+		$LOW_CON_CHAR_HARD_SPACE = 4, _ ; Insert a space that prevents two words from splitting at a line break.
+		$LOW_CON_CHAR_APPEND_PAR = 5 ; Appends a new paragraph.
 
-Global Const _                                             ; Cell Type
-		$LOW_CELL_TYPE_EMPTY = 0, _                        ; Cell is empty.
-		$LOW_CELL_TYPE_VALUE = 1, _                        ; Cell contains a value.
-		$LOW_CELL_TYPE_TEXT = 2, _                         ; Cell contains text.
-		$LOW_CELL_TYPE_FORMULA = 3                         ; Cell contains a formula.
+Global Const _ ; Cell Type
+		$LOW_CELL_TYPE_EMPTY = 0, _ ; Cell is empty.
+		$LOW_CELL_TYPE_VALUE = 1, _ ; Cell contains a value.
+		$LOW_CELL_TYPE_TEXT = 2, _ ; Cell contains text.
+		$LOW_CELL_TYPE_FORMULA = 3 ; Cell contains a formula.
 
-Global Const _                                             ; Paper Width in uM
-		$LOW_PAPER_WIDTH_A6 = 10490, _                     ; A6 paper width in Micrometers.
-		$LOW_PAPER_WIDTH_A5 = 14808, _                     ; A5 paper width in Micrometers.
-		$LOW_PAPER_WIDTH_A4 = 21006, _                     ; A4 paper width in Micrometers.
-		$LOW_PAPER_WIDTH_A3 = 29693, _                     ; A3 paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B6ISO = 12497, _                  ; B6ISO paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B5ISO = 17602, _                  ; B5ISO paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B4ISO = 24994, _                  ; B4ISO paper width in Micrometers.
-		$LOW_PAPER_WIDTH_LETTER = 21590, _                 ; Letter paper width in Micrometers.
-		$LOW_PAPER_WIDTH_LEGAL = 21590, _                  ; Legal paper width in Micrometers.
-		$LOW_PAPER_WIDTH_LONG_BOND = 21590, _              ; Long Bond paper width in Micrometers.
-		$LOW_PAPER_WIDTH_TABLOID = 27940, _                ; Tabloid paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B6JIS = 12801, _                  ; B6JIS paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B5JIS = 18212, _                  ; B5JIS paper width in Micrometers.
-		$LOW_PAPER_WIDTH_B4JIS = 25705, _                  ; B4JIS paper width in Micrometers.
-		$LOW_PAPER_WIDTH_16KAI = 18390, _                  ; 16KAI paper width in Micrometers.
-		$LOW_PAPER_WIDTH_32KAI = 13005, _                  ; 32KAI paper width in Micrometers.
-		$LOW_PAPER_WIDTH_BIG_32KAI = 13995, _              ; Big 32KAI paper width in Micrometers.
-		$LOW_PAPER_WIDTH_DLENVELOPE = 10998, _             ; DL Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_C6ENVELOPE = 11405, _             ; C6 Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_C6_5_ENVELOPE = 11405, _          ; C6/5 Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_C5ENVELOPE = 16205, _             ; C5 Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_C4ENVELOPE = 22911, _             ; C4 Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_6_3_4ENVELOPE = 9208, _           ; 6 3/4 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_7_3_4ENVELOPE = 9855, _           ; 7 3/4 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_9ENVELOPE = 9843, _               ; 9 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_10ENVELOPE = 10490, _             ; 10 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_11ENVELOPE = 11430, _             ; 11 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_12ENVELOPE = 12065, _             ; 12 Pound Envelope paper width in Micrometers.
-		$LOW_PAPER_WIDTH_JAP_POSTCARD = 10008              ; Japanese Postcard paper width in Micrometers.
+Global Const _ ; Paper Width in uM
+		$LOW_PAPER_WIDTH_A6 = 10490, _ ; A6 paper width in Micrometers.
+		$LOW_PAPER_WIDTH_A5 = 14808, _ ; A5 paper width in Micrometers.
+		$LOW_PAPER_WIDTH_A4 = 21006, _ ; A4 paper width in Micrometers.
+		$LOW_PAPER_WIDTH_A3 = 29693, _ ; A3 paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B6ISO = 12497, _ ; B6ISO paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B5ISO = 17602, _ ; B5ISO paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B4ISO = 24994, _ ; B4ISO paper width in Micrometers.
+		$LOW_PAPER_WIDTH_LETTER = 21590, _ ; Letter paper width in Micrometers.
+		$LOW_PAPER_WIDTH_LEGAL = 21590, _ ; Legal paper width in Micrometers.
+		$LOW_PAPER_WIDTH_LONG_BOND = 21590, _ ; Long Bond paper width in Micrometers.
+		$LOW_PAPER_WIDTH_TABLOID = 27940, _ ; Tabloid paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B6JIS = 12801, _ ; B6JIS paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B5JIS = 18212, _ ; B5JIS paper width in Micrometers.
+		$LOW_PAPER_WIDTH_B4JIS = 25705, _ ; B4JIS paper width in Micrometers.
+		$LOW_PAPER_WIDTH_16KAI = 18390, _ ; 16KAI paper width in Micrometers.
+		$LOW_PAPER_WIDTH_32KAI = 13005, _ ; 32KAI paper width in Micrometers.
+		$LOW_PAPER_WIDTH_BIG_32KAI = 13995, _ ; Big 32KAI paper width in Micrometers.
+		$LOW_PAPER_WIDTH_DLENVELOPE = 10998, _ ; DL Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_C6ENVELOPE = 11405, _ ; C6 Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_C6_5_ENVELOPE = 11405, _ ; C6/5 Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_C5ENVELOPE = 16205, _ ; C5 Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_C4ENVELOPE = 22911, _ ; C4 Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_6_3_4ENVELOPE = 9208, _ ; 6 3/4 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_7_3_4ENVELOPE = 9855, _ ; 7 3/4 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_9ENVELOPE = 9843, _ ; 9 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_10ENVELOPE = 10490, _ ; 10 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_11ENVELOPE = 11430, _ ; 11 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_12ENVELOPE = 12065, _ ; 12 Pound Envelope paper width in Micrometers.
+		$LOW_PAPER_WIDTH_JAP_POSTCARD = 10008 ; Japanese Postcard paper width in Micrometers.
 
-Global Const _                                             ; Paper Height in uM
-		$LOW_PAPER_HEIGHT_A6 = 14808, _                    ; A6 paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_A5 = 21006, _                    ; A5 paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_A4 = 29693, _                    ; A4 paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_A3 = 42012, _                    ; A3 paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B6ISO = 17602, _                 ; B6ISO paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B5ISO = 24994, _                 ; B5ISO paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B4ISO = 35306, _                 ; B4ISO paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_LETTER = 27940, _                ; Letter paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_LEGAL = 35560, _                 ; Legal paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_LONG_BOND = 33020, _             ; Long Bond paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_TABLOID = 43180, _               ; Tabloid paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B6JIS = 18200, _                 ; B6JIS paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B5JIS = 25705, _                 ; B5JIS paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_B4JIS = 36398, _                 ; B4JIS paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_16KAI = 26010, _                 ; 16KAI paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_32KAI = 18390, _                 ; 32KAI paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_BIG_32KAI = 20295, _             ; Big 32KAI paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_DLENVELOPE = 21996, _            ; DL Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_C6ENVELOPE = 16205, _            ; C6 Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_C6_5_ENVELOPE = 22911, _         ; C6/5 Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_C5ENVELOPE = 22911, _            ; C5 Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_C4ENVELOPE = 32410, _            ; C4 Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_6_3_4ENVELOPE = 16510, _         ; 6 3/4 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_7_3_4ENVELOPE = 19050, _         ; 7 3/4 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_9ENVELOPE = 22543, _             ; 9 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_10ENVELOPE = 24130, _            ; 10 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_11ENVELOPE = 26365, _            ; 11 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_12ENVELOPE = 27940, _            ; 12 Pound Envelope paper height in Micrometers.
-		$LOW_PAPER_HEIGHT_JAP_POSTCARD = 14808             ; Japanese Postcard paper height in Micrometers.
+Global Const _ ; Paper Height in uM
+		$LOW_PAPER_HEIGHT_A6 = 14808, _ ; A6 paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_A5 = 21006, _ ; A5 paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_A4 = 29693, _ ; A4 paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_A3 = 42012, _ ; A3 paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B6ISO = 17602, _ ; B6ISO paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B5ISO = 24994, _ ; B5ISO paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B4ISO = 35306, _ ; B4ISO paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_LETTER = 27940, _ ; Letter paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_LEGAL = 35560, _ ; Legal paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_LONG_BOND = 33020, _ ; Long Bond paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_TABLOID = 43180, _ ; Tabloid paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B6JIS = 18200, _ ; B6JIS paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B5JIS = 25705, _ ; B5JIS paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_B4JIS = 36398, _ ; B4JIS paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_16KAI = 26010, _ ; 16KAI paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_32KAI = 18390, _ ; 32KAI paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_BIG_32KAI = 20295, _ ; Big 32KAI paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_DLENVELOPE = 21996, _ ; DL Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_C6ENVELOPE = 16205, _ ; C6 Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_C6_5_ENVELOPE = 22911, _ ; C6/5 Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_C5ENVELOPE = 22911, _ ; C5 Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_C4ENVELOPE = 32410, _ ; C4 Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_6_3_4ENVELOPE = 16510, _ ; 6 3/4 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_7_3_4ENVELOPE = 19050, _ ; 7 3/4 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_9ENVELOPE = 22543, _ ; 9 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_10ENVELOPE = 24130, _ ; 10 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_11ENVELOPE = 26365, _ ; 11 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_12ENVELOPE = 27940, _ ; 12 Pound Envelope paper height in Micrometers.
+		$LOW_PAPER_HEIGHT_JAP_POSTCARD = 14808 ; Japanese Postcard paper height in Micrometers.
 
-Global Const _                                             ; Gradient Names
+Global Const _ ; Gradient Names
 		$LOW_GRAD_NAME_PASTEL_BOUQUET = "Pastel Bouquet", _ ; The "Pastel Bouquet" Gradient Preset.
-		$LOW_GRAD_NAME_PASTEL_DREAM = "Pastel Dream", _    ; The "Pastel Dream" Gradient Preset.
-		$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch", _        ; The "Blue Touch" Gradient Preset.
+		$LOW_GRAD_NAME_PASTEL_DREAM = "Pastel Dream", _ ; The "Pastel Dream" Gradient Preset.
+		$LOW_GRAD_NAME_BLUE_TOUCH = "Blue Touch", _ ; The "Blue Touch" Gradient Preset.
 		$LOW_GRAD_NAME_BLANK_W_GRAY = "Blank with Gray", _ ; The "Blank with Gray" Gradient Preset.
-		$LOW_GRAD_NAME_SPOTTED_GRAY = "Spotted Gray", _    ; The "Spotted Gray" Gradient Preset.
-		$LOW_GRAD_NAME_LONDON_MIST = "London Mist", _      ; The "London Mist" Gradient Preset.
-		$LOW_GRAD_NAME_TEAL_TO_BLUE = "Teal to Blue", _    ; The "Teal to Blue" Gradient Preset.
-		$LOW_GRAD_NAME_MIDNIGHT = "Midnight", _            ; The "Midnight" Gradient Preset.
-		$LOW_GRAD_NAME_DEEP_OCEAN = "Deep Ocean", _        ; The "Deep Ocean" Gradient Preset.
-		$LOW_GRAD_NAME_SUBMARINE = "Submarine", _          ; The "Submarine" Gradient Preset.
-		$LOW_GRAD_NAME_GREEN_GRASS = "Green Grass", _      ; The "Green Grass" Gradient Preset.
-		$LOW_GRAD_NAME_NEON_LIGHT = "Neon Light", _        ; The "Neon Light" Gradient Preset.
-		$LOW_GRAD_NAME_SUNSHINE = "Sunshine", _            ; The "Sunshine" Gradient Preset.
-		$LOW_GRAD_NAME_PRESENT = "Present", _              ; The "Present" Gradient Preset.
-		$LOW_GRAD_NAME_MAHOGANY = "Mahogany"               ; The "Mahogany" Gradient Preset.
+		$LOW_GRAD_NAME_SPOTTED_GRAY = "Spotted Gray", _ ; The "Spotted Gray" Gradient Preset.
+		$LOW_GRAD_NAME_LONDON_MIST = "London Mist", _ ; The "London Mist" Gradient Preset.
+		$LOW_GRAD_NAME_TEAL_TO_BLUE = "Teal to Blue", _ ; The "Teal to Blue" Gradient Preset.
+		$LOW_GRAD_NAME_MIDNIGHT = "Midnight", _ ; The "Midnight" Gradient Preset.
+		$LOW_GRAD_NAME_DEEP_OCEAN = "Deep Ocean", _ ; The "Deep Ocean" Gradient Preset.
+		$LOW_GRAD_NAME_SUBMARINE = "Submarine", _ ; The "Submarine" Gradient Preset.
+		$LOW_GRAD_NAME_GREEN_GRASS = "Green Grass", _ ; The "Green Grass" Gradient Preset.
+		$LOW_GRAD_NAME_NEON_LIGHT = "Neon Light", _ ; The "Neon Light" Gradient Preset.
+		$LOW_GRAD_NAME_SUNSHINE = "Sunshine", _ ; The "Sunshine" Gradient Preset.
+		$LOW_GRAD_NAME_PRESENT = "Present", _ ; The "Present" Gradient Preset.
+		$LOW_GRAD_NAME_MAHOGANY = "Mahogany" ; The "Mahogany" Gradient Preset.
 
-Global Const _                                             ; Page Layout
-		$LOW_PAGE_LAYOUT_ALL = 0, _                        ; Page style shows both odd(Right) and even(Left) pages. With left and right margins.
-		$LOW_PAGE_LAYOUT_LEFT = 1, _                       ; Page style shows only even(Left) pages. Odd pages are shown as blank pages. With left and right margins.
-		$LOW_PAGE_LAYOUT_RIGHT = 2, _                      ; Page style shows only odd(Right) pages. Even pages are shown as blank pages. With left and right margins.
-		$LOW_PAGE_LAYOUT_MIRRORED = 3                      ; Page style shows both odd(Right) and even(Left) pages with inner and outer margins.
+Global Const _ ; Page Layout
+		$LOW_PAGE_LAYOUT_ALL = 0, _ ; Page style shows both odd(Right) and even(Left) pages. With left and right margins.
+		$LOW_PAGE_LAYOUT_LEFT = 1, _ ; Page style shows only even(Left) pages. Odd pages are shown as blank pages. With left and right margins.
+		$LOW_PAGE_LAYOUT_RIGHT = 2, _ ; Page style shows only odd(Right) pages. Even pages are shown as blank pages. With left and right margins.
+		$LOW_PAGE_LAYOUT_MIRRORED = 3 ; Page style shows both odd(Right) and even(Left) pages with inner and outer margins.
 
-Global Const _                                             ; Numbering Style Type
-		$LOW_NUM_STYLE_CHARS_UPPER_LETTER = 0, _           ; Numbering is put in upper case letters. ("A, B, C, D)
-		$LOW_NUM_STYLE_CHARS_LOWER_LETTER = 1, _           ; Numbering is in lower case letters. (a, b, c, d)
-		$LOW_NUM_STYLE_ROMAN_UPPER = 2, _                  ; Numbering is in Roman numbers with upper case letters. (I, II, III)
-		$LOW_NUM_STYLE_ROMAN_LOWER = 3, _                  ; Numbering is in Roman numbers with lower case letters. (i, ii, iii).
-		$LOW_NUM_STYLE_ARABIC = 4, _                       ; Numbering is in Arabic numbers. (1, 2, 3, 4),
-		$LOW_NUM_STYLE_NUMBER_NONE = 5, _                  ; Numbering is invisible.
-		$LOW_NUM_STYLE_CHAR_SPECIAL = 6, _                 ; Use a character from a specified font.
-		$LOW_NUM_STYLE_PAGE_DESCRIPTOR = 7, _              ; Numbering is specified in the page style.
-		$LOW_NUM_STYLE_BITMAP = 8, _                       ; Numbering is displayed as a bitmap graphic.
-		$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N = 9, _         ; Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-		$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N = 10, _        ; Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-		$LOW_NUM_STYLE_TRANSLITERATION = 11, _             ; A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-		$LOW_NUM_STYLE_NATIVE_NUMBERING = 12, _            ; The NativeNumberSupplier service will be called to produce numbers in native languages.
-		$LOW_NUM_STYLE_FULLWIDTH_ARABIC = 13, _            ; Numbering for full width Arabic number.
-		$LOW_NUM_STYLE_CIRCLE_NUMBER = 14, _               ; Bullet for Circle Number.
-		$LOW_NUM_STYLE_NUMBER_LOWER_ZH = 15, _             ; Numbering for Chinese lower case number.
-		$LOW_NUM_STYLE_NUMBER_UPPER_ZH = 16, _             ; Numbering for Chinese upper case number.
-		$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW = 17, _          ; Numbering for Traditional Chinese upper case number.
-		$LOW_NUM_STYLE_TIAN_GAN_ZH = 18, _                 ; Bullet for Chinese Tian Gan.
-		$LOW_NUM_STYLE_DI_ZI_ZH = 19, _                    ; Bullet for Chinese Di Zi.
-		$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA = 20, _       ; Numbering for Japanese traditional number.
-		$LOW_NUM_STYLE_AIU_FULLWIDTH_JA = 21, _            ; Bullet for Japanese AIU fullwidth.
-		$LOW_NUM_STYLE_AIU_HALFWIDTH_JA = 22, _            ; Bullet for Japanese AIU halfwidth.
-		$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA = 23, _          ; Bullet for Japanese IROHA fullwidth.
-		$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA = 24, _          ; Bullet for Japanese IROHA halfwidth.
-		$LOW_NUM_STYLE_NUMBER_UPPER_KO = 25, _             ; Numbering for Korean upper case number.
-		$LOW_NUM_STYLE_NUMBER_HANGUL_KO = 26, _            ; Numbering for Korean Hangul number.
-		$LOW_NUM_STYLE_HANGUL_JAMO_KO = 27, _              ; Bullet for Korean Hangul Jamo.
-		$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO = 28, _          ; Bullet for Korean Hangul Syllable.
-		$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO = 29, _      ; Bullet for Korean Hangul Circled Jamo.
-		$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO = 30, _  ; Bullet for Korean Hangul Circled Syllable.
-		$LOW_NUM_STYLE_CHARS_ARABIC = 31, _                ; Numbering in Arabic alphabet letters.
-		$LOW_NUM_STYLE_CHARS_THAI = 32, _                  ; Numbering in Thai alphabet letters.
-		$LOW_NUM_STYLE_CHARS_HEBREW = 33, _                ; Numbering in Hebrew alphabet letters.
-		$LOW_NUM_STYLE_CHARS_NEPALI = 34, _                ; Numbering in Nepali alphabet letters.
-		$LOW_NUM_STYLE_CHARS_KHMER = 35, _                 ; Numbering in Khmer alphabet letters.
-		$LOW_NUM_STYLE_CHARS_LAO = 36, _                   ; Numbering in Lao alphabet letters.
-		$LOW_NUM_STYLE_CHARS_TIBETAN = 37, _               ; Numbering in Tibetan/Dzongkha alphabet letters.
+Global Const _ ; Numbering Style Type
+		$LOW_NUM_STYLE_CHARS_UPPER_LETTER = 0, _ ; Numbering is put in upper case letters. ("A, B, C, D)
+		$LOW_NUM_STYLE_CHARS_LOWER_LETTER = 1, _ ; Numbering is in lower case letters. (a, b, c, d)
+		$LOW_NUM_STYLE_ROMAN_UPPER = 2, _ ; Numbering is in Roman numbers with upper case letters. (I, II, III)
+		$LOW_NUM_STYLE_ROMAN_LOWER = 3, _ ; Numbering is in Roman numbers with lower case letters. (i, ii, iii).
+		$LOW_NUM_STYLE_ARABIC = 4, _ ; Numbering is in Arabic numbers. (1, 2, 3, 4),
+		$LOW_NUM_STYLE_NUMBER_NONE = 5, _ ; Numbering is invisible.
+		$LOW_NUM_STYLE_CHAR_SPECIAL = 6, _ ; Use a character from a specified font.
+		$LOW_NUM_STYLE_PAGE_DESCRIPTOR = 7, _ ; Numbering is specified in the page style.
+		$LOW_NUM_STYLE_BITMAP = 8, _ ; Numbering is displayed as a bitmap graphic.
+		$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N = 9, _ ; Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
+		$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N = 10, _ ; Numbering is put in lower case letters. (a, b, y, z, aa, bb)
+		$LOW_NUM_STYLE_TRANSLITERATION = 11, _ ; A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
+		$LOW_NUM_STYLE_NATIVE_NUMBERING = 12, _ ; The NativeNumberSupplier service will be called to produce numbers in native languages.
+		$LOW_NUM_STYLE_FULLWIDTH_ARABIC = 13, _ ; Numbering for full width Arabic number.
+		$LOW_NUM_STYLE_CIRCLE_NUMBER = 14, _ ; Bullet for Circle Number.
+		$LOW_NUM_STYLE_NUMBER_LOWER_ZH = 15, _ ; Numbering for Chinese lower case number.
+		$LOW_NUM_STYLE_NUMBER_UPPER_ZH = 16, _ ; Numbering for Chinese upper case number.
+		$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW = 17, _ ; Numbering for Traditional Chinese upper case number.
+		$LOW_NUM_STYLE_TIAN_GAN_ZH = 18, _ ; Bullet for Chinese Tian Gan.
+		$LOW_NUM_STYLE_DI_ZI_ZH = 19, _ ; Bullet for Chinese Di Zi.
+		$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA = 20, _ ; Numbering for Japanese traditional number.
+		$LOW_NUM_STYLE_AIU_FULLWIDTH_JA = 21, _ ; Bullet for Japanese AIU fullwidth.
+		$LOW_NUM_STYLE_AIU_HALFWIDTH_JA = 22, _ ; Bullet for Japanese AIU halfwidth.
+		$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA = 23, _ ; Bullet for Japanese IROHA fullwidth.
+		$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA = 24, _ ; Bullet for Japanese IROHA halfwidth.
+		$LOW_NUM_STYLE_NUMBER_UPPER_KO = 25, _ ; Numbering for Korean upper case number.
+		$LOW_NUM_STYLE_NUMBER_HANGUL_KO = 26, _ ; Numbering for Korean Hangul number.
+		$LOW_NUM_STYLE_HANGUL_JAMO_KO = 27, _ ; Bullet for Korean Hangul Jamo.
+		$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO = 28, _ ; Bullet for Korean Hangul Syllable.
+		$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO = 29, _ ; Bullet for Korean Hangul Circled Jamo.
+		$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO = 30, _ ; Bullet for Korean Hangul Circled Syllable.
+		$LOW_NUM_STYLE_CHARS_ARABIC = 31, _ ; Numbering in Arabic alphabet letters.
+		$LOW_NUM_STYLE_CHARS_THAI = 32, _ ; Numbering in Thai alphabet letters.
+		$LOW_NUM_STYLE_CHARS_HEBREW = 33, _ ; Numbering in Hebrew alphabet letters.
+		$LOW_NUM_STYLE_CHARS_NEPALI = 34, _ ; Numbering in Nepali alphabet letters.
+		$LOW_NUM_STYLE_CHARS_KHMER = 35, _ ; Numbering in Khmer alphabet letters.
+		$LOW_NUM_STYLE_CHARS_LAO = 36, _ ; Numbering in Lao alphabet letters.
+		$LOW_NUM_STYLE_CHARS_TIBETAN = 37, _ ; Numbering in Tibetan/Dzongkha alphabet letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG = 38, _ ; Numbering in Cyrillic alphabet upper case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG = 39, _ ; Numbering in Cyrillic alphabet lower case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG = 40, _ ; Numbering in Cyrillic alphabet upper case letters.
@@ -508,32 +508,32 @@ Global Const _                                             ; Numbering Style Typ
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU = 43, _ ; Numbering in Russian Cyrillic alphabet lower case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU = 44, _ ; Numbering in Russian Cyrillic alphabet upper case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU = 45, _ ; Numbering in Russian Cyrillic alphabet upper case letters.
-		$LOW_NUM_STYLE_CHARS_PERSIAN = 46, _               ; Numbering in Persian alphabet letters.
-		$LOW_NUM_STYLE_CHARS_MYANMAR = 47, _               ; Numbering in Myanmar alphabet letters.
+		$LOW_NUM_STYLE_CHARS_PERSIAN = 46, _ ; Numbering in Persian alphabet letters.
+		$LOW_NUM_STYLE_CHARS_MYANMAR = 47, _ ; Numbering in Myanmar alphabet letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR = 48, _ ; Numbering in Serbian Cyrillic alphabet upper case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR = 49, _ ; Numbering in Russian Serbian alphabet lower case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR = 50, _ ; Numbering in Serbian Cyrillic alphabet upper case letters.
 		$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR = 51, _ ;
-		$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER = 52, _    ;
-		$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER = 53, _    ;
-		$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD = 54, _          ;
-		$LOW_NUM_STYLE_CHARS_PERSIAN_WORD = 55, _          ;
-		$LOW_NUM_STYLE_NUMBER_HEBREW = 56, _               ;
-		$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC = 57, _         ;
-		$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC = 58, _    ;
-		$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI = 59, _     ;
-		$LOW_NUM_STYLE_TEXT_NUMBER = 60, _                 ;
-		$LOW_NUM_STYLE_TEXT_CARDINAL = 61, _               ;
-		$LOW_NUM_STYLE_TEXT_ORDINAL = 62, _                ;
-		$LOW_NUM_STYLE_SYMBOL_CHICAGO = 63, _              ;
-		$LOW_NUM_STYLE_ARABIC_ZERO = 64, _                 ;
-		$LOW_NUM_STYLE_ARABIC_ZERO3 = 65, _                ;
-		$LOW_NUM_STYLE_ARABIC_ZERO4 = 66, _                ;
-		$LOW_NUM_STYLE_ARABIC_ZERO5 = 67, _                ;
-		$LOW_NUM_STYLE_SZEKELY_ROVAS = 68, _               ;
-		$LOW_NUM_STYLE_NUMBER_DIGITAL_KO = 69, _           ;
-		$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO = 70, _          ;
-		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71                ;
+		$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER = 52, _ ;
+		$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER = 53, _ ;
+		$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD = 54, _ ;
+		$LOW_NUM_STYLE_CHARS_PERSIAN_WORD = 55, _ ;
+		$LOW_NUM_STYLE_NUMBER_HEBREW = 56, _ ;
+		$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC = 57, _ ;
+		$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC = 58, _ ;
+		$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI = 59, _ ;
+		$LOW_NUM_STYLE_TEXT_NUMBER = 60, _ ;
+		$LOW_NUM_STYLE_TEXT_CARDINAL = 61, _ ;
+		$LOW_NUM_STYLE_TEXT_ORDINAL = 62, _ ;
+		$LOW_NUM_STYLE_SYMBOL_CHICAGO = 63, _ ;
+		$LOW_NUM_STYLE_ARABIC_ZERO = 64, _ ;
+		$LOW_NUM_STYLE_ARABIC_ZERO3 = 65, _ ;
+		$LOW_NUM_STYLE_ARABIC_ZERO4 = 66, _ ;
+		$LOW_NUM_STYLE_ARABIC_ZERO5 = 67, _ ;
+		$LOW_NUM_STYLE_SZEKELY_ROVAS = 68, _ ;
+		$LOW_NUM_STYLE_NUMBER_DIGITAL_KO = 69, _ ;
+		$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO = 70, _ ;
+		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71 ;
 
 ; Line Style
 Global Const _
