@@ -50,184 +50,184 @@ Global Enum _ ; Fill Style Type Constants
 #Tidy_ILC_Pos=0
 
 Global Const _ ; Cursor Data Related Constants
-		$LOW_CURDATA_BODY_TEXT = 1, _
-		$LOW_CURDATA_FRAME = 2, _
-		$LOW_CURDATA_CELL = 3, _
-		$LOW_CURDATA_FOOTNOTE = 4, _
-		$LOW_CURDATA_ENDNOTE = 5, _
-		$LOW_CURDATA_HEADER_FOOTER = 6
+		$LOW_CURDATA_BODY_TEXT = 1, _ ;Cursor is currently in the Body Text.
+		$LOW_CURDATA_FRAME = 2, _ ;Cursor is currently in a Text Frame.
+		$LOW_CURDATA_CELL = 3, _ ;Cursor is currently in a Text Table Cell.
+		$LOW_CURDATA_FOOTNOTE = 4, _ ;Cursor is currently in a Footnote.
+		$LOW_CURDATA_ENDNOTE = 5, _ ;Cursor is currently in a Endnote.
+		$LOW_CURDATA_HEADER_FOOTER = 6 ;Cursor is currently in a Header or Footer.
 
 Global Const _ ; Cursor Type Related Constants
-		$LOW_CURTYPE_TEXT_CURSOR = 1, _
-		$LOW_CURTYPE_TABLE_CURSOR = 2, _
-		$LOW_CURTYPE_VIEW_CURSOR = 3, _
-		$LOW_CURTYPE_PARAGRAPH = 4, _
-		$LOW_CURTYPE_TEXT_PORTION = 5
+		$LOW_CURTYPE_TEXT_CURSOR = 1, _ ;Cursor is a TextCursor type.
+		$LOW_CURTYPE_TABLE_CURSOR = 2, _ ;Cursor is a TableCursor type.
+		$LOW_CURTYPE_VIEW_CURSOR = 3, _ ;Cursor is a ViewCursor type.
+		$LOW_CURTYPE_PARAGRAPH = 4, _ ;Object is a Paragraph Object.
+		$LOW_CURTYPE_TEXT_PORTION = 5 ;Object is a Paragraph Text Portion Object.
 
 Global Const _ ; Path Convert Constants.
-		$LOW_PATHCONV_AUTO_RETURN = 0, _
-		$LOW_PATHCONV_OFFICE_RETURN = 1, _
-		$LOW_PATHCONV_PCPATH_RETURN = 2
+		$LOW_PATHCONV_AUTO_RETURN = 0, _ ; Automatically returns the opposite of the input.
+		$LOW_PATHCONV_OFFICE_RETURN = 1, _; Returns L.O. Office URL.
+		$LOW_PATHCONV_PCPATH_RETURN = 2 ; Returns Windows File Path.
 
 Global Const _ ; Printer Duplex Constants.
-		$LOW_DUPLEX_UNKNOWN = 0, _
-		$LOW_DUPLEX_OFF = 1, _
-		$LOW_DUPLEX_LONG = 2, _
-		$LOW_DUPLEX_SHORT = 3
+		$LOW_DUPLEX_UNKNOWN = 0, _ ; Duplex mode setting is unknown.
+		$LOW_DUPLEX_OFF = 1, _ ; Duplex mode is off.
+		$LOW_DUPLEX_LONG = 2, _ ; Duplex mode is on, flip on Long edge.
+		$LOW_DUPLEX_SHORT = 3 ; Duplex mode is on, flip on Short edge.
 
 Global Const _ ; Printer Paper Orientation Constants.
-		$LOW_PAPER_PORTRAIT = 0, _
-		$LOW_PAPER_LANDSCAPE = 1
+		$LOW_PAPER_PORTRAIT = 0, _ ; Portrait Paper Orientation.
+		$LOW_PAPER_LANDSCAPE = 1 ; Landscape Paper Orientation.
 
 Global Const _ ; Paper Size Constants.
-		$LOW_PAPER_A3 = 0, _
-		$LOW_PAPER_A4 = 1, _
-		$LOW_PAPER_A5 = 2, _
-		$LOW_PAPER_B4 = 3, _
-		$LOW_PAPER_B5 = 4, _
-		$LOW_PAPER_LETTER = 5, _
-		$LOW_PAPER_LEGAL = 6, _
-		$LOW_PAPER_TABLOID = 7, _
-		$LOW_PAPER_USER_DEFINED = 8
+		$LOW_PAPER_A3 = 0, _ ; A3 Paper size.
+		$LOW_PAPER_A4 = 1, _ ; A4 Paper size.
+		$LOW_PAPER_A5 = 2, _ ; A5 Paper size.
+		$LOW_PAPER_B4 = 3, _ ; B4 Paper size.
+		$LOW_PAPER_B5 = 4, _ ; B5 Paper size.
+		$LOW_PAPER_LETTER = 5, _ ; Letter Paper size.
+		$LOW_PAPER_LEGAL = 6, _ ; Legal Paper size.
+		$LOW_PAPER_TABLOID = 7, _ ; Tabloid Paper size.
+		$LOW_PAPER_USER_DEFINED = 8 ; Paper size is User-Defined.
 
 Global Const _ ; LO Print Comments Constants.
-		$LOW_PRINT_NOTES_NONE = 0, _
-		$LOW_PRINT_NOTES_ONLY = 1, _
-		$LOW_PRINT_NOTES_END = 2, _
-		$LOW_PRINT_NOTES_NEXT_PAGE = 3
+		$LOW_PRINT_NOTES_NONE = 0, _ ; Document contents are printed, without printing any Comments.
+		$LOW_PRINT_NOTES_ONLY = 1, _ ; Only Comments are printed, and NONE of the Document content.
+		$LOW_PRINT_NOTES_END = 2, _ ; Document content is printed with comments appended to a blank page at the end of the document.
+		$LOW_PRINT_NOTES_NEXT_PAGE = 3; Document content is printed and comments are appended to a blank page after the commented page.
 
 Global Enum _ ; LO ViewCursor Movement Constants.
-		$LOW_VIEWCUR_GO_DOWN, _
-		$LOW_VIEWCUR_GO_UP, _
-		$LOW_VIEWCUR_GO_LEFT, _
-		$LOW_VIEWCUR_GO_RIGHT, _
-		$LOW_VIEWCUR_GOTO_END_OF_LINE, _
-		$LOW_VIEWCUR_GOTO_START_OF_LINE, _
-		$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, _
-		$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, _
-		$LOW_VIEWCUR_SCREEN_DOWN, _
-		$LOW_VIEWCUR_SCREEN_UP, _
-		$LOW_VIEWCUR_GOTO_START, _
-		$LOW_VIEWCUR_GOTO_END
+		$LOW_VIEWCUR_GO_DOWN, _ ; Move the cursor Down.
+		$LOW_VIEWCUR_GO_UP, _ ; Move the cursor Up.
+		$LOW_VIEWCUR_GO_LEFT, _ ; Move the cursor left.
+		$LOW_VIEWCUR_GO_RIGHT, _ ; Move the cursor right.
+		$LOW_VIEWCUR_GOTO_END_OF_LINE, _ ;     Move the cursor to the end of the current line.
+		$LOW_VIEWCUR_GOTO_START_OF_LINE, _ ; Move the cursor to the start of the current line.
+		$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, _ ; Move the cursor to the first page.
+		$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, _ ; Move the cursor to the Last page.
+		$LOW_VIEWCUR_JUMP_TO_PAGE, _ ; Jump to a specified page.
+		$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, _ ; Move the cursor to the Next page.
+		$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, _ ; Move the cursor to the previous page.
+		$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, _ ; Move the cursor to the end of the current page.
+		$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, _ ; Move the cursor to the start of the current page.
+		$LOW_VIEWCUR_SCREEN_DOWN, _ ; Scroll the view forward by one visible page.
+		$LOW_VIEWCUR_SCREEN_UP, _ ; Scroll the view back by one visible page.
+		$LOW_VIEWCUR_GOTO_START, _ ; Move the cursor to the start of the document or Table.
+		$LOW_VIEWCUR_GOTO_END ; Move the cursor to the end of the document or Table.
 
 Global Enum _ ; LO TextCursor Movement Constants.
-		$LOW_TEXTCUR_COLLAPSE_TO_START, _
-		$LOW_TEXTCUR_COLLAPSE_TO_END, _
-		$LOW_TEXTCUR_GO_LEFT, _
-		$LOW_TEXTCUR_GO_RIGHT, _
-		$LOW_TEXTCUR_GOTO_START, _
-		$LOW_TEXTCUR_GOTO_END, _
-		$LOW_TEXTCUR_GOTO_NEXT_WORD, _
-		$LOW_TEXTCUR_GOTO_PREV_WORD, _
-		$LOW_TEXTCUR_GOTO_END_OF_WORD, _
-		$LOW_TEXTCUR_GOTO_START_OF_WORD, _
-		$LOW_TEXTCUR_GOTO_NEXT_SENTENCE, _
-		$LOW_TEXTCUR_GOTO_PREV_SENTENCE, _
-		$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, _
-		$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, _
-		$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, _
-		$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, _
-		$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, _
-		$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH
+		$LOW_TEXTCUR_COLLAPSE_TO_START, _ ; Collapses the current selection the start of the selection.
+		$LOW_TEXTCUR_COLLAPSE_TO_END, _ ; Collapses the current selection the end of the selection.
+		$LOW_TEXTCUR_GO_LEFT, _ ; Move the cursor left.
+		$LOW_TEXTCUR_GO_RIGHT, _ ; Move the cursor right.
+		$LOW_TEXTCUR_GOTO_START, _ ; Move the cursor to the start of the text.
+		$LOW_TEXTCUR_GOTO_END, _ ; Move the cursor to the end of the text.
+		$LOW_TEXTCUR_GOTO_NEXT_WORD, _ ; Move to the start of the next word.
+		$LOW_TEXTCUR_GOTO_PREV_WORD, _ ; Move to the end of the previous word.
+		$LOW_TEXTCUR_GOTO_END_OF_WORD, _ ; Move to the end of the current word.
+		$LOW_TEXTCUR_GOTO_START_OF_WORD, _ ; Move to the start of the current word.
+		$LOW_TEXTCUR_GOTO_NEXT_SENTENCE, _ ; Move to the start of the next sentence.
+		$LOW_TEXTCUR_GOTO_PREV_SENTENCE, _ ; Move to the end of the previous sentence.
+		$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, _ ; Move to the end of the current sentence.
+		$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, _ ; Move to the start of the current sentence.
+		$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, _ ; Move to the start of the next paragraph.
+		$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, _ ; Move to the End of the previous paragraph.
+		$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, _ ; Move to the end of the current paragraph.
+		$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH ; Move to the start of the current paragraph.
 
 Global Enum _ ; LO TableCursor Movement Constants.
-		$LOW_TABLECUR_GO_LEFT, _
-		$LOW_TABLECUR_GO_RIGHT, _
-		$LOW_TABLECUR_GO_UP, _
-		$LOW_TABLECUR_GO_DOWN, _
-		$LOW_TABLECUR_GOTO_START, _
-		$LOW_TABLECUR_GOTO_END
+		$LOW_TABLECUR_GO_LEFT, _ ; Move the cursor left.
+		$LOW_TABLECUR_GO_RIGHT, _ ; Move the cursor right.
+		$LOW_TABLECUR_GO_UP, _ ; Move the cursor up.
+		$LOW_TABLECUR_GO_DOWN, _ ; Move the cursor down.
+		$LOW_TABLECUR_GOTO_START, _ ; Move the cursor to the first cell.
+		$LOW_TABLECUR_GOTO_END ; Move the cursor to the last cell.
 
 Global Const _ ; Break Type
-		$LOW_BREAK_NONE = 0, _
-		$LOW_BREAK_COLUMN_BEFORE = 1, _
-		$LOW_BREAK_COLUMN_AFTER = 2, _
-		$LOW_BREAK_COLUMN_BOTH = 3, _
-		$LOW_BREAK_PAGE_BEFORE = 4, _
-		$LOW_BREAK_PAGE_AFTER = 5, _
-		$LOW_BREAK_PAGE_BOTH = 6
+		$LOW_BREAK_NONE = 0, _ ; No column or page break is applied.
+		$LOW_BREAK_COLUMN_BEFORE = 1, _ ; A column break is applied before the current Paragraph.
+		$LOW_BREAK_COLUMN_AFTER = 2, _ ; A column break is applied after the current Paragraph.
+		$LOW_BREAK_COLUMN_BOTH = 3, _ ; A column break is applied before and after the current Paragraph.
+		$LOW_BREAK_PAGE_BEFORE = 4, _ ; A page break is applied before the current Paragraph.
+		$LOW_BREAK_PAGE_AFTER = 5, _ ; A page break is applied after the current Paragraph.
+		$LOW_BREAK_PAGE_BOTH = 6 ; A page break is applied before and after the current Paragraph.
 
 Global Const _ ; Horizontal Orientation
-		$LOW_ORIENT_HORI_NONE = 0, _
-		$LOW_ORIENT_HORI_RIGHT = 1, _
-		$LOW_ORIENT_HORI_CENTER = 2, _
-		$LOW_ORIENT_HORI_LEFT = 3, _
-		$LOW_ORIENT_HORI_FULL = 6, _
-		$LOW_ORIENT_HORI_LEFT_AND_WIDTH = 7
+		$LOW_ORIENT_HORI_NONE = 0, _ ; No hard alignment is applied. Equal to "From Left" in L.O. U.I.
+		$LOW_ORIENT_HORI_RIGHT = 1, _ ; The object is aligned at the right side.
+		$LOW_ORIENT_HORI_CENTER = 2, _ ; The object is aligned at the middle.
+		$LOW_ORIENT_HORI_LEFT = 3, _ ; The object is aligned at the left side.
+		$LOW_ORIENT_HORI_FULL = 6, _ ; The table uses the full space (for text tables only).
+		$LOW_ORIENT_HORI_LEFT_AND_WIDTH = 7 ;  The left offset and the width of the table are defined.
 
 Global Const _ ; Color in Long Color Format
-		$LOW_COLOR_OFF = -1, _
-		$LOW_COLOR_BLACK = 0, _
-		$LOW_COLOR_WHITE = 16777215, _
-		$LOW_COLOR_LGRAY = 11711154, _
-		$LOW_COLOR_GRAY = 8421504, _
-		$LOW_COLOR_DKGRAY = 3355443, _
-		$LOW_COLOR_YELLOW = 16776960, _
-		$LOW_COLOR_GOLD = 16760576, _
-		$LOW_COLOR_ORANGE = 16744448, _
-		$LOW_COLOR_BRICK = 16728064, _
-		$LOW_COLOR_RED = 16711680, _
-		$LOW_COLOR_MAGENTA = 12517441, _
-		$LOW_COLOR_PURPLE = 8388736, _
-		$LOW_COLOR_INDIGO = 5582989, _
-		$LOW_COLOR_BLUE = 2777241, _
-		$LOW_COLOR_TEAL = 1410150, _
-		$LOW_COLOR_GREEN = 43315, _
-		$LOW_COLOR_LIME = 8508442, _
-		$LOW_COLOR_BROWN = 9127187
+		$LOW_COLOR_OFF = -1, _ ; Turn Color off, or to automatic mode.
+		$LOW_COLOR_BLACK = 0, _ ; Black color.
+		$LOW_COLOR_WHITE = 16777215, _ ; White color.
+		$LOW_COLOR_LGRAY = 11711154, _ ; Light Gray color.
+		$LOW_COLOR_GRAY = 8421504, _ ; Gray color.
+		$LOW_COLOR_DKGRAY = 3355443, _ ; Dark Gray color.
+		$LOW_COLOR_YELLOW = 16776960, _ ; Yellow color.
+		$LOW_COLOR_GOLD = 16760576, _ ; Gold color.
+		$LOW_COLOR_ORANGE = 16744448, _ ; Orange color.
+		$LOW_COLOR_BRICK = 16728064, _ ; Brick color.
+		$LOW_COLOR_RED = 16711680, _ ; Red color.
+		$LOW_COLOR_MAGENTA = 12517441, _ ; Magenta color.
+		$LOW_COLOR_PURPLE = 8388736, _ ; Purple color.
+		$LOW_COLOR_INDIGO = 5582989, _ ; Indigo color.
+		$LOW_COLOR_BLUE = 2777241, _ ; Blue color.
+		$LOW_COLOR_TEAL = 1410150, _ ; Teal color.
+		$LOW_COLOR_GREEN = 43315, _ ; Green color.
+		$LOW_COLOR_LIME = 8508442, _ ; Lime color.
+		$LOW_COLOR_BROWN = 9127187 ; Brown color.
 
 Global Const _ ; Border Style
-		$LOW_BORDERSTYLE_NONE = 0x7FFF, _
-		$LOW_BORDERSTYLE_SOLID = 0, _
-		$LOW_BORDERSTYLE_DOTTED = 1, _
-		$LOW_BORDERSTYLE_DASHED = 2, _
-		$LOW_BORDERSTYLE_DOUBLE = 3, _
-		$LOW_BORDERSTYLE_THINTHICK_SMALLGAP = 4, _
-		$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP = 5, _
-		$LOW_BORDERSTYLE_THINTHICK_LARGEGAP = 6, _
-		$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP = 7, _
-		$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP = 8, _
-		$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP = 9, _
-		$LOW_BORDERSTYLE_EMBOSSED = 10, _
-		$LOW_BORDERSTYLE_ENGRAVED = 11, _
-		$LOW_BORDERSTYLE_OUTSET = 12, _
-		$LOW_BORDERSTYLE_INSET = 13, _
-		$LOW_BORDERSTYLE_FINE_DASHED = 14, _
-		$LOW_BORDERSTYLE_DOUBLE_THIN = 15, _
-		$LOW_BORDERSTYLE_DASH_DOT = 16, _
-		$LOW_BORDERSTYLE_DASH_DOT_DOT = 17
+		$LOW_BORDERSTYLE_NONE = 0x7FFF, _ ; No border line.
+		$LOW_BORDERSTYLE_SOLID = 0, _ ; Solid border line.
+		$LOW_BORDERSTYLE_DOTTED = 1, _ ; Dotted border line.
+		$LOW_BORDERSTYLE_DASHED = 2, _ ; Dashed border line.
+		$LOW_BORDERSTYLE_DOUBLE = 3, _ ; Double border line.
+		$LOW_BORDERSTYLE_THINTHICK_SMALLGAP = 4, _ ; Double border line with a thin line outside and a thick line inside separated by a small gap.
+		$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP = 5, _ ; Double border line with a thin line outside and a thick line inside separated by a medium gap.
+		$LOW_BORDERSTYLE_THINTHICK_LARGEGAP = 6, _ ; Double border line with a thin line outside and a thick line inside separated by a large gap.
+		$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP = 7, _ ; Double border line with a thick line outside and a thin line inside separated by a small gap.
+		$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP = 8, _ ; Double border line with a thick line outside and a thin line inside separated by a medium gap.
+		$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP = 9, _ ; Double border line with a thick line outside and a thin line inside separated by a large gap.
+		$LOW_BORDERSTYLE_EMBOSSED = 10, _ ; 3D embossed border line.
+		$LOW_BORDERSTYLE_ENGRAVED = 11, _ ; 3D engraved border line.
+		$LOW_BORDERSTYLE_OUTSET = 12, _ ; Outset border line.
+		$LOW_BORDERSTYLE_INSET = 13, _ ; Inset border line.
+		$LOW_BORDERSTYLE_FINE_DASHED = 14, _ ; Finely dashed border line.
+		$LOW_BORDERSTYLE_DOUBLE_THIN = 15, _ ; Double border line consisting of two fixed thin lines separated by a variable gap.
+		$LOW_BORDERSTYLE_DASH_DOT = 16, _ ; Line consisting of a repetition of one dash and one dot.
+		$LOW_BORDERSTYLE_DASH_DOT_DOT = 17 ; Line consisting of a repetition of one dash and 2 dots.
 
 Global Const _ ; Border Width
-		$LOW_BORDERWIDTH_HAIRLINE = 2, _
-		$LOW_BORDERWIDTH_VERY_THIN = 18, _
-		$LOW_BORDERWIDTH_THIN = 26, _
-		$LOW_BORDERWIDTH_MEDIUM = 53, _
-		$LOW_BORDERWIDTH_THICK = 79, _
-		$LOW_BORDERWIDTH_EXTRA_THICK = 159
+		$LOW_BORDERWIDTH_HAIRLINE = 2, _ ; Hairline Border line width.
+		$LOW_BORDERWIDTH_VERY_THIN = 18, _ ; Very Thin Border line width.
+		$LOW_BORDERWIDTH_THIN = 26, _ ; Thin Border line width.
+		$LOW_BORDERWIDTH_MEDIUM = 53, _ ; Medium Border line width.
+		$LOW_BORDERWIDTH_THICK = 79, _ ; Thick Border line width.
+		$LOW_BORDERWIDTH_EXTRA_THICK = 159 ; Extra Thick Border line width.
 
 Global Const _ ; Vertical Orientation
-		$LOW_ORIENT_VERT_NONE = 0, _
-		$LOW_ORIENT_VERT_TOP = 1, _
-		$LOW_ORIENT_VERT_CENTER = 2, _
-		$LOW_ORIENT_VERT_BOTTOM = 3, _
-		$LOW_ORIENT_VERT_CHAR_TOP = 4, _
-		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _
-		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _
-		$LOW_ORIENT_VERT_LINE_TOP = 7, _
-		$LOW_ORIENT_VERT_LINE_CENTER = 8, _
-		$LOW_ORIENT_VERT_LINE_BOTTOM = 9
+		$LOW_ORIENT_VERT_NONE = 0, _ ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I.
+		$LOW_ORIENT_VERT_TOP = 1, _ ; Aligned at the top.
+		$LOW_ORIENT_VERT_CENTER = 2, _ ; Aligned at the center.
+		$LOW_ORIENT_VERT_BOTTOM = 3, _ ; Aligned at the bottom.
+		$LOW_ORIENT_VERT_CHAR_TOP = 4, _ ; Aligned at the top of a character.
+		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _ ; Aligned at the center of a character.
+		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _ ; Aligned at the bottom of a character.
+		$LOW_ORIENT_VERT_LINE_TOP = 7, _ ; Aligned at the top of the line.
+		$LOW_ORIENT_VERT_LINE_CENTER = 8, _ ; Aligned at the center of the line.
+		$LOW_ORIENT_VERT_LINE_BOTTOM = 9 ; Aligned at the bottom of the line.
 
 Global Const _ ; Tab Alignment
-		$LOW_TAB_ALIGN_LEFT = 0, _
-		$LOW_TAB_ALIGN_CENTER = 1, _
-		$LOW_TAB_ALIGN_RIGHT = 2, _
-		$LOW_TAB_ALIGN_DECIMAL = 3, _
-		$LOW_TAB_ALIGN_DEFAULT = 4
+		$LOW_TAB_ALIGN_LEFT = 0, _ ; Aligns the left edge of the text to the tab stop and extends the text to the right.
+		$LOW_TAB_ALIGN_CENTER = 1, _ ; Aligns the center of the text to the tab stop.
+		$LOW_TAB_ALIGN_RIGHT = 2, _ ; Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
+		$LOW_TAB_ALIGN_DECIMAL = 3, _ ; Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab.
+		$LOW_TAB_ALIGN_DEFAULT = 4 ; This setting is the default, setting when no TabStops are present.
 
 Global Const _ ; Underline/Overline
 		$LOW_UNDERLINE_NONE = 0, _
