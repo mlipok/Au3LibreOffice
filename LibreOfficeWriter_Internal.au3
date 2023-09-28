@@ -874,9 +874,9 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 		If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for
 		; setting.
-; ~ If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR,2,0)
-; ~ $oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-; ~ $iError = ($oObj.CharHighlight() = $iHighlight) ? $iError : BitOR($iError,4)
+;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR,2,0)
+;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
+;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? $iError : BitOR($iError,4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? $iError : BitOR($iError, 4)
 	EndIf

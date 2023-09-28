@@ -762,8 +762,8 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	EndIf
 
 	If ($bRefresh = True) Then
-; ~ $oCommentField = $oDoc.createInstance("com.sun.star.text.TextField.Annotation")
-; ~ If Not IsObj($oCommentField) Then Return  SetError($__LOW_STATUS_INIT_ERROR,1,0)
+;~ 		$oCommentField = $oDoc.createInstance("com.sun.star.text.TextField.Annotation")
+;~ 		If Not IsObj($oCommentField) Then Return  SetError($__LOW_STATUS_INIT_ERROR,1,0)
 		$oDoc.Text.createTextCursorByRange($oCommentField.Anchor()).Text.insertTextContent($oCommentField.Anchor(), $oCommentField, True)
 	EndIf
 
