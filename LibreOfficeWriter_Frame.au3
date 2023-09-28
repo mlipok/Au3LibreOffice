@@ -4015,7 +4015,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;							available between the left page border and the left paragraph border. [Same as Left Page Border in
 ;							L.O. UI]
 ;						$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space
-;							available between the Right page border and the right paragraph border. [Same as Left Page Border in
+;							available between the Right page border and the right paragraph border. [Same as Right Page Border in
 ;							L.O. UI]
 ;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the
 ;							width of the indent space available to the left of the paragraph.
