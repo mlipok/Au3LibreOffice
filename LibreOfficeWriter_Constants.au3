@@ -157,12 +157,12 @@ Global Enum _
 ; Break Type
 Global Const _
 		$LOW_BREAK_NONE = 0, _                                  ; No column or page break is applied.
-		$LOW_BREAK_COLUMN_BEFORE = 1, _                         ; A column break is applied before the current Paragraph.
-		$LOW_BREAK_COLUMN_AFTER = 2, _                          ; A column break is applied after the current Paragraph.
-		$LOW_BREAK_COLUMN_BOTH = 3, _                           ; A column break is applied before and after the current Paragraph.
-		$LOW_BREAK_PAGE_BEFORE = 4, _                           ; A page break is applied before the current Paragraph.
-		$LOW_BREAK_PAGE_AFTER = 5, _                            ; A page break is applied after the current Paragraph.
-		$LOW_BREAK_PAGE_BOTH = 6                                ; A page break is applied before and after the current Paragraph.
+		$LOW_BREAK_COLUMN_BEFORE = 1, _                         ; A column break is applied before the current Paragraph. The current Paragraph, therefore, is the first in the column.
+		$LOW_BREAK_COLUMN_AFTER = 2, _                          ; A column break is applied after the current Paragraph. The current Paragraph, therefore, is the last in the column.
+		$LOW_BREAK_COLUMN_BOTH = 3, _                           ; A column break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only Paragraph in the column.
+		$LOW_BREAK_PAGE_BEFORE = 4, _                           ; A page break is applied before the current Paragraph. The current Paragraph, therefore, is the first on the page.
+		$LOW_BREAK_PAGE_AFTER = 5, _                            ; A page break is applied after the current Paragraph. The current Paragraph, therefore, is the last on the page.
+		$LOW_BREAK_PAGE_BOTH = 6                                ; A page break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only paragraph on the page.
 
 ; Horizontal Orientation
 Global Const _
@@ -245,7 +245,7 @@ Global Const _
 		$LOW_TAB_ALIGN_CENTER = 1, _                            ; Aligns the center of the text to the tab stop.
 		$LOW_TAB_ALIGN_RIGHT = 2, _                             ; Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
 		$LOW_TAB_ALIGN_DECIMAL = 3, _                           ; Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab.
-		$LOW_TAB_ALIGN_DEFAULT = 4                              ; This setting is the default, setting when no TabStops are present.
+		$LOW_TAB_ALIGN_DEFAULT = 4                              ; This setting is the default setting when no TabStops are present. Setting any Tabstop to this constant will make it disappear from the TabStop list. It is therefore only listed here for property reading purposes.
 
 ; Underline/Overline
 Global Const _
@@ -339,10 +339,10 @@ Global Const _
 
 ; Line Spacing
 Global Const _
-		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value.
-		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height.
-		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line.
-		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height.
+		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
+		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.]  Min 0, Max 10008 MicroMeters (uM)
+		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line. Min 0, Max 10008 MicroMeters (uM)
+		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height. Min 51 MicroMeters, Max 10008 MicroMeters (uM)
 
 ; Paragraph Horizontal Align
 Global Const _
@@ -350,11 +350,11 @@ Global Const _
 		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _                         ; The Paragraph is right-aligned between the borders.
 		$LOW_PAR_ALIGN_HOR_JUSTIFIED = 2, _                     ; The Paragraph is adjusted / stretched to both borders.
 		$LOW_PAR_ALIGN_HOR_CENTER = 3, _                        ; The Paragraph is centered between the left and right borders.
-		$LOW_PAR_ALIGN_HOR_STRETCH = 4                          ;HoriAlign 4 does nothing??
+		$LOW_PAR_ALIGN_HOR_STRETCH = 4                          ; HoriAlign 4 does nothing??
 
 ; Paragraph Vertical Align
 Global Const _
-		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                         ; Automatic vertical alignment mode.
+		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                         ; Automatic vertical alignment mode. In automatic mode, horizontal text is aligned to the baseline. The same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the center.
 		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _                     ; The text is aligned to the baseline.
 		$LOW_PAR_ALIGN_VERT_TOP = 2, _                          ; The text is aligned to the top.
 		$LOW_PAR_ALIGN_VERT_CENTER = 3, _                       ; The text is aligned to the center.
@@ -368,10 +368,10 @@ Global Const _
 
 ; Text Direction
 Global Const _
-		$LOW_TXT_DIR_LR_TB = 0, _                               ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_RL_TB = 1, _                               ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left.
-		$LOW_TXT_DIR_TB_LR = 3, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right.
+		$LOW_TXT_DIR_LR_TB = 0, _                               ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom. Typically, this is the writing mode for normal "alphabetic" text.
+		$LOW_TXT_DIR_RL_TB = 1, _                               ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom. Typically, this writing mode is used in Arabic and Hebrew text.
+		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left. Typically, this writing mode is used in Chinese and Japanese text.
+		$LOW_TXT_DIR_TB_LR = 3, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right. Typically, this writing mode is used in Mongolian text.
 		$LOW_TXT_DIR_CONTEXT = 4, _                             ; Obtain actual writing mode from the context of the object.
 		$LOW_TXT_DIR_BT_LR = 5                                  ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
 
