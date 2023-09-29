@@ -34,7 +34,7 @@
 ; Name ..........: _LOWriter_FontExists
 ; Description ...: Tests whether a Document has a specific font available by name.
 ; Syntax ........: _LOWriter_FontExists(Byref $oDoc, $sFontName)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFontName           - a string value. The Font name to search for.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -75,7 +75,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ; Name ..........: _LOWriter_FontsList
 ; Description ...: Retrieve a list of currently available fonts.
 ; Syntax ........: _LOWriter_FontsList(Byref $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -95,22 +95,8 @@ EndFunc   ;==>_LOWriter_FontExists
 ;					easier processing if required. From personal tests, Slant only returns 0 or 2. This function may cause a
 ;					 processor usage spike for a moment or two. If you wish to eliminate this, comment out the current sleep
 ;					function and place a sleep(10) in its place.
-; Weight Constants : $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
-;						$LOW_WEIGHT_THIN(50); specifies a 50% font weight.
-;						$LOW_WEIGHT_ULTRA_LIGHT(60); specifies a 60% font weight.
-;						$LOW_WEIGHT_LIGHT(75); specifies a 75% font weight.
-;						$LOW_WEIGHT_SEMI_LIGHT(90); specifies a 90% font weight.
-;						$LOW_WEIGHT_NORMAL(100); specifies a normal font weight.
-;						$LOW_WEIGHT_SEMI_BOLD(110); specifies a 110% font weight.
-;						$LOW_WEIGHT_BOLD(150); specifies a 150% font weight.
-;						$LOW_WEIGHT_ULTRA_BOLD(175); specifies a 175% font weight.
-;						$LOW_WEIGHT_BLACK(200); specifies a 200% font weight.
-; Slant/Posture Constants : $LOW_POSTURE_NONE(0); specifies a font without slant.
-;							$LOW_POSTURE_OBLIQUE(1); specifies an oblique font (slant not designed into the font).
-;							$LOW_POSTURE_ITALIC(2); specifies an italic font (slant designed into the font).
-;							$LOW_POSTURE_DontKnow(3); specifies a font with an unknown slant.
-;							$LOW_POSTURE_REV_OBLIQUE(4); specifies a reverse oblique font (slant not designed into the font).
-;							$LOW_POSTURE_REV_ITALIC(5); specifies a reverse italic font (slant designed into the font).
+; Weight Constants: $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3
+; Slant/Posture Constants: $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
