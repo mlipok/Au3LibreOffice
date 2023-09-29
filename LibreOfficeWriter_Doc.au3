@@ -1,7 +1,3 @@
-#Region ; *** Dynamically added Include files ***
-#include "LibreOfficeWriter_Table.au3"                       ; added:09/29/23 09:31:26
-#include "LibreOfficeWriter_Page.au3"                        ; added:09/29/23 09:41:47
-#EndRegion ; *** Dynamically added Include files ***
 ;~ #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
@@ -944,7 +940,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;					you do not see, called the "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing
 ;					a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor
 ;					used for inserting text etc., into a Writer document. You can have multiple "TextCursors" per document.
-; Cursor Data Type Constants: $LOW_CURDATA_BODY_TEXT(1) Cursor is currently in the Body Text.
+; Cursor Data Type Constants:   $LOW_CURDATA_BODY_TEXT(1) Cursor is currently in the Body Text.
 ;								$LOW_CURDATA_FRAME(2) Cursor is currently in a Text Frame.
 ;								$LOW_CURDATA_CELL(3) Cursor is currently in a Text Table Cell.
 ;								$LOW_CURDATA_FOOTNOTE(4)  Cursor is currently in a Footnote.
@@ -2642,7 +2638,7 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Control Char Constants: $LOW_CON_CHAR_PAR_BREAK(0), start a new paragraph.
+; Control Char Constants:   $LOW_CON_CHAR_PAR_BREAK(0), start a new paragraph.
 ;							$LOW_CON_CHAR_LINE_BREAK(1), start a new line in a paragraph.
 ;							$LOW_CON_CHAR_HARD_HYPHEN(2), equals a dash but prevents this position from being hyphenated.
 ;							$LOW_CON_CHAR_SOFT_HYPHEN(3), Define a preferred hyphenation point if the word must be split at the end of a line.
@@ -3132,9 +3128,9 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;					Default is "ALL". Must be in String format to accept more than just a single page number.
 ;					i.e. This will work: "1-6,12,27" This will Not 1-6,12,27. This will work: "7", This will also: 7.
 ; Duplex Mode Constants: $LOW_DUPLEX_UNKNOWN(0),
-;						$LOW_DUPLEX_OFF(1) [Default],
-;						$LOW_DUPLEX_LONG(2),
-;						$LOW_DUPLEX_SHORT(3)
+;						 $LOW_DUPLEX_OFF(1) [Default],
+;						 $LOW_DUPLEX_LONG(2),
+;						 $LOW_DUPLEX_SHORT(3)
 ; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings,
 ;					_LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3326,7 +3322,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Orientation Constants: $LOW_PAPER_PORTRAIT(0),
+; Paper Orientation Constants:  $LOW_PAPER_PORTRAIT(0),
 ;								$LOW_PAPER_LANDSCAPE(1)
 ; Comment Print Mode Constants: $LOW_PRINT_NOTES_NONE (0), Document content itself is printed, without printing any Comments if present;
 ;								$LOW_PRINT_NOTES_ONLY(1), Only Comments are printed, and NONE of the Document content is printed;
@@ -3538,7 +3534,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Format Constants:$LOW_PAPER_A3(0);
+; Paper Format Constants:   $LOW_PAPER_A3(0);
 ;							$LOW_PAPER_A4(1);
 ;							$LOW_PAPER_A5(2);
 ;							$LOW_PAPER_B4(3);
@@ -3547,7 +3543,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;							$LOW_PAPER_LEGAL(6);
 ;							$LOW_PAPER_TABLOID(7);
 ;							$LOW_PAPER_USER_DEFINED(8).
-; Paper Width Constants: $LOW_PAPER_WIDTH_A6(10490),
+; Paper Width Constants:    $LOW_PAPER_WIDTH_A6(10490),
 ;							$LOW_PAPER_WIDTH_A5(14808),
 ;							$LOW_PAPER_WIDTH_A4(21006),
 ;							$LOW_PAPER_WIDTH_A3(29693),
@@ -3576,7 +3572,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;							$LOW_PAPER_WIDTH_11ENVELOPE(11430),
 ;							$LOW_PAPER_WIDTH_12ENVELOPE(12065),
 ;							$LOW_PAPER_WIDTH_JAP_POSTCARD(10008
-; Paper Height Constants: $LOW_PAPER_HEIGHT_A6(14808),
+; Paper Height Constants:   $LOW_PAPER_HEIGHT_A6(14808),
 ;							$LOW_PAPER_HEIGHT_A5(21006),
 ;							$LOW_PAPER_HEIGHT_A4(29693),
 ;							$LOW_PAPER_HEIGHT_A3(42012),
