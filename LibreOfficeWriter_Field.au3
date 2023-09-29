@@ -286,11 +286,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
-;							$LOW_FIELD_CHAP_FRMT_NUMBER(1), The number including prefix and suffix of the chapter is displayed.
-;							$LOW_FIELD_CHAP_FRMT_NAME_NUMBER(2), The title and number, with prefix and suffix of the chapter are displayed.
-;							$LOW_FIELD_CHAP_FRMT_NO_PREFIX_SUFFIX(3), The name and number of the chapter are displayed.
-;							$LOW_FIELD_CHAP_FRMT_DIGIT(4), The number of the chapter is displayed.
+; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldChapterModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -352,11 +348,7 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_NAME(0), The title of the chapter is displayed.
-;							$LOW_FIELD_CHAP_FRMT_NUMBER(1), The number including prefix and suffix of the chapter is displayed.
-;							$LOW_FIELD_CHAP_FRMT_NAME_NUMBER(2), The title and number, with prefix and suffix of the chapter are displayed.
-;							$LOW_FIELD_CHAP_FRMT_NO_PREFIX_SUFFIX(3), The name and number of the chapter are displayed.
-;							$LOW_FIELD_CHAP_FRMT_DIGIT(4), The number of the chapter is displayed.
+; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldChapterInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -2786,10 +2778,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ;							of $LOW_FIELD_FILENAME_NAME.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
-;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
-;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
-;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFileNameInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3199,11 +3188,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
-;							$LOW_FIELD_PLACEHOLD_TYPE_TABLE(1), The field initiates the insertion of a text table.
-;							$LOW_FIELD_PLACEHOLD_TYPE_FRAME(2), The field initiates the insertion of a text frame.
-;							$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC(3), The field initiates the insertion of a graphic object.
-;							$LOW_FIELD_PLACEHOLD_TYPE_OBJECT(4), The field initiates the insertion of an embedded object.
+; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFuncPlaceholderModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -3273,11 +3258,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_TEXT(0), The field represents a piece of text.
-;							$LOW_FIELD_PLACEHOLD_TYPE_TABLE(1), The field initiates the insertion of a text table.
-;							$LOW_FIELD_PLACEHOLD_TYPE_FRAME(2), The field initiates the insertion of a text frame.
-;							$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC(3), The field initiates the insertion of a graphic object.
-;							$LOW_FIELD_PLACEHOLD_TYPE_OBJECT(4), The field initiates the insertion of an embedded object.
+; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFuncPlaceholderInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3522,81 +3503,8 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-; Page Number Type Constants:   $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
-;								$LOW_PAGE_NUM_TYPE_CURRENT(1), The current page number.
-;								$LOW_PAGE_NUM_TYPE_NEXT(2), The Next Page's page number.
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
+; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldPageNumberModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -3688,81 +3596,8 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
-; Page Number Type Constants:   $LOW_PAGE_NUM_TYPE_PREV(0), The Previous Page's page number.
-;								$LOW_PAGE_NUM_TYPE_CURRENT(1), The current page number.
-;								$LOW_PAGE_NUM_TYPE_NEXT(2), The Next Page's page number.
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
+; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldPageNumberInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3855,11 +3690,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
 ;					 _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -3926,11 +3757,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
 ;					_LOWriter_FieldsGetList
 ; Link ..........:
@@ -3995,11 +3822,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefEndnoteModify, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -4067,11 +3890,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefEndnoteInsert, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -4146,11 +3965,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefFootnoteModify, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -4218,11 +4033,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefFootnoteInsert, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList,
 ;					_LOWriter_FieldsGetList
 ; Link ..........:
@@ -4287,11 +4098,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Reference Field can be referencing multiple different types of Data, such as a Reference Mark, or Bookmark, etc.
-; Reference Type Constants: $LOW_FIELD_REF_TYPE_REF_MARK(0), The source is referencing a reference mark.
-;							$LOW_FIELD_REF_TYPE_SEQ_FIELD(1), The source is referencing a number sequence field. Such as a Number range variable, numbered Paragraph, etc.
-;							$LOW_FIELD_REF_TYPE_BOOKMARK(2), The source is referencing a bookmark.
-;							$LOW_FIELD_REF_TYPE_FOOTNOTE(3), The source is referencing a footnote.
-;							$LOW_FIELD_REF_TYPE_ENDNOTE(4), The source is referencing an endnote.
+; Reference Type Constants: $LOW_FIELD_REF_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -4332,11 +4139,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -4598,11 +4401,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants:    $LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED(0), The page number is displayed using Arabic numbers.
-;							$LOW_FIELD_REF_USING_CHAPTER(1), The number of the chapter is displayed.
-;							$LOW_FIELD_REF_USING_REF_TEXT(2), The reference text is displayed.
-;							$LOW_FIELD_REF_USING_ABOVE_BELOW(3), The reference is displayed as one of the words, "above" or "below".
-;							$LOW_FIELD_REF_USING_PAGE_NUM_STYLED(4), The page number is displayed using the numbering type defined in the page style of the reference position.
+; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
 ; Link ..........:
 ; Example .......: Yes
@@ -4683,16 +4482,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Advanced Field Type Constants: $LOW_FIELDADV_TYPE_ALL = 1, All of the below listed Fields will be returned.
-;								 $LOW_FIELDADV_TYPE_BIBLIOGRAPHY, A Bibliography Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DATABASE, A Database Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DATABASE_SET_NUM, A Database Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DATABASE_NAME, A Database Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, A Database Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, A Database Field, found in Fields dialog, Database tab.
-;								 $LOW_FIELDADV_TYPE_DDE, A DDE Field, found in Fields dialog, Variables tab.
-;								 $LOW_FIELDADV_TYPE_INPUT_USER, ?
-;								 $LOW_FIELDADV_TYPE_USER, A User Field, found in Fields dialog, Variables tab.
+; Advanced Field Type Constants: $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -4757,20 +4547,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Doc Info Field Type Constants:    $LOW_FIELD_DOCINFO_TYPE_ALL = 1, Returns a list of all field types listed below.
-;									$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, A Modified By Author Field, found in Fields dialog, DocInformation Tab, Modified Type.
-;									$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME,  A Modified Date/Time Field, found in Fields dialog, DocInformation Tab, Modified Type.
-;									$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, A Created By Author Field, found in Fields dialog, DocInformation Tab, Created Type.
-;									$LOW_FIELD_DOCINFO_TYPE_CREATE_DATE_TIME, A Created Date/Time Field, found in Fields dialog, DocInformation Tab, Created Type.
-;									$LOW_FIELD_DOCINFO_TYPE_CUSTOM, A Custom Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_COMMENTS, A Comments Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_EDIT_TIME, A Total Editing Time Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_KEYWORDS, A Keywords Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_PRINT_AUTH, A Printed By Author Field, found in Fields dialog, DocInformation Tab, Last Printed Type.
-;									$LOW_FIELD_DOCINFO_TYPE_PRINT_DATE_TIME,  A Printed Date/Time Field, found in Fields dialog, DocInformation Tab, Last Printed Type.
-;									$LOW_FIELD_DOCINFO_TYPE_REVISION, A Revision Number Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_SUBJECT, A Subject Field, found in Fields dialog, DocInformation Tab.
-;									$LOW_FIELD_DOCINFO_TYPE_TITLE, A Title Field, found in Fields dialog, DocInformation Tab.
+; Doc Info Field Type Constants: $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -4822,21 +4599,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Sender Data Type Constants:   $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
-;								$LOW_FIELD_USER_DATA_FIRST_NAME(1), The field shows the first name.
-;								$LOW_FIELD_USER_DATA_NAME(2), The field shows the name.
-;								$LOW_FIELD_USER_DATA_SHORTCUT(3), The field shows the initials.
-;								$LOW_FIELD_USER_DATA_STREET(4), The field shows the street.
-;								$LOW_FIELD_USER_DATA_COUNTRY(5), The field shows the country.
-;								$LOW_FIELD_USER_DATA_ZIP(6), The field shows the zip code.
-;								$LOW_FIELD_USER_DATA_CITY(7), The field shows the city.
-;								$LOW_FIELD_USER_DATA_TITLE(8), The field shows the title.
-;								$LOW_FIELD_USER_DATA_POSITION(9), The field shows the position.
-;								$LOW_FIELD_USER_DATA_PHONE_PRIVATE(10), The field shows the number of the private phone.
-;								$LOW_FIELD_USER_DATA_PHONE_COMPANY(11), The field shows the number of the business phone.
-;								$LOW_FIELD_USER_DATA_FAX(12), The field shows the fax number.
-;								$LOW_FIELD_USER_DATA_EMAIL(13), The field shows the e-Mail.
-;								$LOW_FIELD_USER_DATA_STATE(14), The field shows the state.
+; Sender Data Type Constants: $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldSenderModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -4910,21 +4673,7 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Sender Data Type Constants:   $LOW_FIELD_USER_DATA_COMPANY(0), The field shows the company name.
-;								$LOW_FIELD_USER_DATA_FIRST_NAME(1), The field shows the first name.
-;								$LOW_FIELD_USER_DATA_NAME(2), The field shows the name.
-;								$LOW_FIELD_USER_DATA_SHORTCUT(3), The field shows the initials.
-;								$LOW_FIELD_USER_DATA_STREET(4), The field shows the street.
-;								$LOW_FIELD_USER_DATA_COUNTRY(5), The field shows the country.
-;								$LOW_FIELD_USER_DATA_ZIP(6), The field shows the zip code.
-;								$LOW_FIELD_USER_DATA_CITY(7), The field shows the city.
-;								$LOW_FIELD_USER_DATA_TITLE(8), The field shows the title.
-;								$LOW_FIELD_USER_DATA_POSITION(9), The field shows the position.
-;								$LOW_FIELD_USER_DATA_PHONE_PRIVATE(10), The field shows the number of the private phone.
-;								$LOW_FIELD_USER_DATA_PHONE_COMPANY(11), The field shows the number of the business phone.
-;								$LOW_FIELD_USER_DATA_FAX(12), The field shows the fax number.
-;								$LOW_FIELD_USER_DATA_EMAIL(13), The field shows the e-Mail.
-;								$LOW_FIELD_USER_DATA_STATE(14), The field shows the state.
+; Sender Data Type Constants: $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldSenderInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5453,37 +5202,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Field Type Constants: $LOW_FIELD_TYPE_ALL = 1, Returns a list of all field types listed below.
-;						$LOW_FIELD_TYPE_COMMENT, A Comment Field. As Found at Insert > Comment
-;						$LOW_FIELD_TYPE_AUTHOR, A Author field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_CHAPTER, A Chapter field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_CHAR_COUNT, A Character Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_COMBINED_CHAR, A Combined Character field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_COND_TEXT, A Conditional Text field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_DATE_TIME, A Date/Time field, found in the Fields Dialog, Document tab, Date Type and Time Type.
-;						$LOW_FIELD_TYPE_INPUT_LIST,  A Input List field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_EMB_OBJ_COUNT,  A Object Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_SENDER, A Sender field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_FILENAME,  A File Name field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_SHOW_VAR, A Show Variable field, found in the Fields Dialog, Variables tab.
-;						$LOW_FIELD_TYPE_INSERT_REF,  A Insert Reference field, found in the Fields Dialog, Cross-References tab, including: "Insert Reference", "Headings", "Numbered Paragraphs", "Drawing", "Bookmarks", "Footnotes", "Endnotes", etc.
-;						$LOW_FIELD_TYPE_IMAGE_COUNT, A Image Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_HIDDEN_PAR, A Hidden Paragraph field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_HIDDEN_TEXT, A Hidden Text field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_INPUT, A Input field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_PLACEHOLDER, A Placeholder field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_MACRO, A Execute Macro field, found in the Fields Dialog, Functions tab.
-;						$LOW_FIELD_TYPE_PAGE_COUNT, A Page Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_PAGE_NUM,  A Page Number (Unstyled) field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_PAR_COUNT, A Paragraph Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_SHOW_PAGE_VAR, A Show Page Variable field, found in the Fields Dialog, Variables tab.
-;						$LOW_FIELD_TYPE_SET_PAGE_VAR, A Set Page Variable field, found in the Fields Dialog, Variables tab.
-;						$LOW_FIELD_TYPE_SCRIPT,
-;						$LOW_FIELD_TYPE_SET_VAR, A Set Variable field, found in the Fields Dialog, Variables tab.
-;						$LOW_FIELD_TYPE_TABLE_COUNT, A Table Count field, found in the Fields Dialog, Document tab, Statistics Type.
-;						$LOW_FIELD_TYPE_TEMPLATE_NAME, A Templates field, found in the Fields Dialog, Document tab.
-;						$LOW_FIELD_TYPE_URL,
-;						$LOW_FIELD_TYPE_WORD_COUNT, A Word Count field, found in the Fields Dialog, Document tab, Statistics Type.
+; Field Type Constants: $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -5693,85 +5412,8 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ; Remarks .......: After insertion there seems to be a necessary delay before the value to display is available, thus when a
 ;						new count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this
 ;						field after a few seconds, the value should appear.
-; Field Count Type Constants:   $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
-;								$LOW_FIELD_COUNT_TYPE_IMAGES(1), Count field is an Image Count type field.
-;								$LOW_FIELD_COUNT_TYPE_OBJECTS(2),  Count field is an Object Count type field._
-;								$LOW_FIELD_COUNT_TYPE_PAGES(3), Count field is a Page Count type field.
-;								$LOW_FIELD_COUNT_TYPE_PARAGRAPHS(4), Count field is a Paragraph Count type field.
-;								$LOW_FIELD_COUNT_TYPE_TABLES(5), Count field is a Table Count type field.
-;								$LOW_FIELD_COUNT_TYPE_WORDS(6), Count field is a Word Count type field.
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
+; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatCountModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -5845,85 +5487,8 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ;					 After changing the Count type there may be a delay before the value to display is available,
 ;						thus when the count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for
 ;						this field after a few seconds, the value should appear.
-; Field Count Type Constants:   $LOW_FIELD_COUNT_TYPE_CHARACTERS(0), Count field is a Character Count type field.
-;								$LOW_FIELD_COUNT_TYPE_IMAGES(1), Count field is an Image Count type field.
-;								$LOW_FIELD_COUNT_TYPE_OBJECTS(2),  Count field is an Object Count type field._
-;								$LOW_FIELD_COUNT_TYPE_PAGES(3), Count field is a Page Count type field.
-;								$LOW_FIELD_COUNT_TYPE_PARAGRAPHS(4), Count field is a Paragraph Count type field.
-;								$LOW_FIELD_COUNT_TYPE_TABLES(5), Count field is a Table Count type field.
-;								$LOW_FIELD_COUNT_TYPE_WORDS(6), Count field is a Word Count type field.
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
+; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatCountInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -6005,12 +5570,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; File Name Constants:  $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
-;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
-;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
-;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
-;						$LOW_FIELD_FILENAME_CATEGORY(4), The Category of the Template is displayed.
-;						$LOW_FIELD_FILENAME_TEMPLATE_NAME(5), The Template Name is displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatTemplateModify, _LOWriter_DocGenPropTemplate,  _LOWriter_DocGetViewCursor,
 ;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
 ;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
@@ -6066,12 +5626,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; File Name Constants: $LOW_FIELD_FILENAME_FULL_PATH(0), The content of the URL is completely displayed.
-;						$LOW_FIELD_FILENAME_PATH(1), Only the path of the file is displayed.
-;						$LOW_FIELD_FILENAME_NAME(2), Only the name of the file without the file extension is displayed.
-;						$LOW_FIELD_FILENAME_NAME_AND_EXT(3), The file name including the file extension is displayed.
-;						$LOW_FIELD_FILENAME_CATEGORY(4), The Category of the Template is displayed.
-;						$LOW_FIELD_FILENAME_TEMPLATE_NAME(5), The Template Name is displayed.
+; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatTemplateInsert, _LOWriter_DocGenPropTemplate, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -6315,78 +5870,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldVarShowPageModify, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -6442,78 +5926,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Numbering Format Constants:   $LOW_NUM_STYLE_CHARS_UPPER_LETTER(0), Numbering is put in upper case letters. ("A, B, C, D)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER(1), Numbering is in lower case letters. (a, b, c, d)
-;								$LOW_NUM_STYLE_ROMAN_UPPER(2), Numbering is in Roman numbers with upper case letters. (I, II, III)
-;								$LOW_NUM_STYLE_ROMAN_LOWER(3), Numbering is in Roman numbers with lower case letters. (i, ii, iii)
-;								$LOW_NUM_STYLE_ARABIC(4), Numbering is in Arabic numbers. (1, 2, 3, 4)
-;								$LOW_NUM_STYLE_NUMBER_NONE(5), Numbering is invisible.
-;								$LOW_NUM_STYLE_CHAR_SPECIAL(6), Use a character from a specified font.
-;								$LOW_NUM_STYLE_PAGE_DESCRIPTOR(7), Numbering is specified in the page style.
-;								$LOW_NUM_STYLE_BITMAP(8), Numbering is displayed as a bitmap graphic.
-;								$LOW_NUM_STYLE_CHARS_UPPER_LETTER_N(9), Numbering is put in upper case letters. (A, B, Y, Z, AA, BB)
-;								$LOW_NUM_STYLE_CHARS_LOWER_LETTER_N(10), Numbering is put in lower case letters. (a, b, y, z, aa, bb)
-;								$LOW_NUM_STYLE_TRANSLITERATION(11), A transliteration module will be used to produce numbers in Chinese, Japanese, etc.
-;								$LOW_NUM_STYLE_NATIVE_NUMBERING(12), The NativeNumberSupplier service will be called to produce numbers in native languages.
-;								$LOW_NUM_STYLE_FULLWIDTH_ARABIC(13), Numbering for full width Arabic number.
-;								$LOW_NUM_STYLE_CIRCLE_NUMBER(14), 	Bullet for Circle Number.
-;								$LOW_NUM_STYLE_NUMBER_LOWER_ZH(15), Numbering for Chinese lower case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH(16), Numbering for Chinese upper case number.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_ZH_TW(17), Numbering for Traditional Chinese upper case number.
-;								$LOW_NUM_STYLE_TIAN_GAN_ZH(18), Bullet for Chinese Tian Gan.
-;								$LOW_NUM_STYLE_DI_ZI_ZH(19), Bullet for Chinese Di Zi.
-;								$LOW_NUM_STYLE_NUMBER_TRADITIONAL_JA(20), Numbering for Japanese traditional number.
-;								$LOW_NUM_STYLE_AIU_FULLWIDTH_JA(21), Bullet for Japanese AIU fullwidth.
-;								$LOW_NUM_STYLE_AIU_HALFWIDTH_JA(22), Bullet for Japanese AIU halfwidth.
-;								$LOW_NUM_STYLE_IROHA_FULLWIDTH_JA(23), Bullet for Japanese IROHA fullwidth.
-;								$LOW_NUM_STYLE_IROHA_HALFWIDTH_JA(24), Bullet for Japanese IROHA halfwidth.
-;								$LOW_NUM_STYLE_NUMBER_UPPER_KO(25), Numbering for Korean upper case number.
-;								$LOW_NUM_STYLE_NUMBER_HANGUL_KO(26), Numbering for Korean Hangul number.
-;								$LOW_NUM_STYLE_HANGUL_JAMO_KO(27), Bullet for Korean Hangul Jamo.
-;								$LOW_NUM_STYLE_HANGUL_SYLLABLE_KO(28), Bullet for Korean Hangul Syllable.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_JAMO_KO(29), Bullet for Korean Hangul Circled Jamo.
-;								$LOW_NUM_STYLE_HANGUL_CIRCLED_SYLLABLE_KO(30), Bullet for Korean Hangul Circled Syllable.
-;								$LOW_NUM_STYLE_CHARS_ARABIC(31), Numbering in Arabic alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_THAI(32), Numbering in Thai alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_HEBREW(33), Numbering in Hebrew alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_NEPALI(34), Numbering in Nepali alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_KHMER(35), Numbering in Khmer alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_LAO(36), Numbering in Lao alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_TIBETAN(37), Numbering in Tibetan/Dzongkha alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_BG(38), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_BG(39), Numbering in Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_BG(40), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_BG(41), Numbering in Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_RU(42), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_RU(43), Numbering in Russian Cyrillic alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_RU(44), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_RU(45), Numbering in Russian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN(46), Numbering in Persian alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_MYANMAR(47), Numbering in Myanmar alphabet letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_SR(48), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_SR(49), Numbering in Russian Serbian alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_UPPER_LETTER_N_SR(50), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_CYRILLIC_LOWER_LETTER_N_SR(51), Numbering in Serbian Cyrillic alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_UPPER_LETTER(52), Numbering in Greek alphabet upper case letters.
-;								$LOW_NUM_STYLE_CHARS_GREEK_LOWER_LETTER(53), Numbering in Greek alphabet lower case letters.
-;								$LOW_NUM_STYLE_CHARS_ARABIC_ABJAD(54), Numbering in Arabic alphabet using abjad sequence.
-;								$LOW_NUM_STYLE_CHARS_PERSIAN_WORD(55), Numbering in Persian words.
-;								$LOW_NUM_STYLE_NUMBER_HEBREW(56), Numbering in Hebrew numerals.
-;								$LOW_NUM_STYLE_NUMBER_ARABIC_INDIC(57), Numbering in Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_EAST_ARABIC_INDIC(58), Numbering in East Arabic-Indic numerals.
-;								$LOW_NUM_STYLE_NUMBER_INDIC_DEVANAGARI(59), Numbering in Indic Devanagari numerals.
-;								$LOW_NUM_STYLE_TEXT_NUMBER(60), Numbering in ordinal numbers of the language of the text node. (1st, 2nd, 3rd)
-;								$LOW_NUM_STYLE_TEXT_CARDINAL(61), Numbering in cardinal numbers of the language of the text node. (One, Two)
-;								$LOW_NUM_STYLE_TEXT_ORDINAL(62), Numbering in ordinal numbers of the language of the text node. (First, Second)
-;								$LOW_NUM_STYLE_SYMBOL_CHICAGO(63), Footnoting symbols according the University of Chicago style.
-;								$LOW_NUM_STYLE_ARABIC_ZERO(64), Numbering is in Arabic numbers, padded with zero to have a length of at least two. (01, 02)
-;								$LOW_NUM_STYLE_ARABIC_ZERO3(65), Numbering is in Arabic numbers, padded with zero to have a length of at least three.
-;								$LOW_NUM_STYLE_ARABIC_ZERO4(66), Numbering is in Arabic numbers, padded with zero to have a length of at least four.
-;								$LOW_NUM_STYLE_ARABIC_ZERO5(67), Numbering is in Arabic numbers, padded with zero to have a length of at least five.
-;								$LOW_NUM_STYLE_SZEKELY_ROVAS(68), Numbering is in Szekely rovas (Old Hungarian) numerals.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL_KO(69), Numbering is in Korean Digital number.
-;								$LOW_NUM_STYLE_NUMBER_DIGITAL2_KO(70), Numbering is in Korean Digital Number, reserved "koreanDigital2".
-;								$LOW_NUM_STYLE_NUMBER_LEGAL_KO(71), Numbering is in Korean Legal Number, reserved "koreanLegal".
+; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldVarShowPageInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes

@@ -751,66 +751,66 @@ Global Enum $LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _             ; Count field is
 ; Regular Field Types
 Global Enum Step *2 _
 		$LOW_FIELD_TYPE_ALL = 1, _                              ; Returns a list of all field types listed below.
-		$LOW_FIELD_TYPE_COMMENT, _                              ; A Comment Field.
-		$LOW_FIELD_TYPE_AUTHOR, _                               ; A Author field.
-		$LOW_FIELD_TYPE_CHAPTER, _                              ; A Chapter field
-		$LOW_FIELD_TYPE_CHAR_COUNT, _                           ; A Character Count field.
-		$LOW_FIELD_TYPE_COMBINED_CHAR, _                        ; A Combined Character field.
-		$LOW_FIELD_TYPE_COND_TEXT, _                            ; A Conditional Text field.
-		$LOW_FIELD_TYPE_DATE_TIME, _                            ; A Date/Time field.
-		$LOW_FIELD_TYPE_INPUT_LIST, _                           ; A Input List field.
-		$LOW_FIELD_TYPE_EMB_OBJ_COUNT, _                        ; A Object Count field.
-		$LOW_FIELD_TYPE_SENDER, _                               ; A Sender field.
-		$LOW_FIELD_TYPE_FILENAME, _                             ; A File Name field.
-		$LOW_FIELD_TYPE_SHOW_VAR, _                             ; A Show Variable field.
-		$LOW_FIELD_TYPE_INSERT_REF, _                           ; A Insert Reference field. [Includes: "Insert Reference", "Headings", "Numbered Paragraphs", "Drawing", "Bookmarks", "Footnotes", "Endnotes", etc.]
-		$LOW_FIELD_TYPE_IMAGE_COUNT, _                          ; A Image Count field.
-		$LOW_FIELD_TYPE_HIDDEN_PAR, _                           ; A Hidden Paragraph field.
-		$LOW_FIELD_TYPE_HIDDEN_TEXT, _                          ; A Hidden Text field.
-		$LOW_FIELD_TYPE_INPUT, _                                ; A Input field.
-		$LOW_FIELD_TYPE_PLACEHOLDER, _                          ; A Placeholder field.
-		$LOW_FIELD_TYPE_MACRO, _                                ; A Execute Macro field.
-		$LOW_FIELD_TYPE_PAGE_COUNT, _                           ; A Page Count field.
-		$LOW_FIELD_TYPE_PAGE_NUM, _                             ; A Page Number (Unstyled) field.
-		$LOW_FIELD_TYPE_PAR_COUNT, _                            ; A Paragraph Count field.
-		$LOW_FIELD_TYPE_SHOW_PAGE_VAR, _                        ; A Show Page Variable field.
-		$LOW_FIELD_TYPE_SET_PAGE_VAR, _                         ; A Set Page Variable field.
+		$LOW_FIELD_TYPE_COMMENT, _                              ; A Comment Field. As Found at Insert > Comment
+		$LOW_FIELD_TYPE_AUTHOR, _                               ; A Author field, found in the Fields Dialog, Document tab.
+		$LOW_FIELD_TYPE_CHAPTER, _                              ; A Chapter field, found in the Fields Dialog, Document tab.
+		$LOW_FIELD_TYPE_CHAR_COUNT, _                           ; A Character Count field, found in the Fields Dialog, Document tab, Statistics Type.
+		$LOW_FIELD_TYPE_COMBINED_CHAR, _                        ; A Combined Character field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_COND_TEXT, _                            ; A Conditional Text field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_DATE_TIME, _                            ; A Date/Time field, found in the Fields Dialog, Document tab, Date Type and Time Type..
+		$LOW_FIELD_TYPE_INPUT_LIST, _                           ; A Input List field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_EMB_OBJ_COUNT, _                        ; A Object Count field, found in the Fields Dialog, Document tab, Statistics Type.
+		$LOW_FIELD_TYPE_SENDER, _                               ; A Sender field, found in the Fields Dialog, Document tab.
+		$LOW_FIELD_TYPE_FILENAME, _                             ; A File Name field, found in the Fields Dialog, Document tab.
+		$LOW_FIELD_TYPE_SHOW_VAR, _                             ; A Show Variable field, found in the Fields Dialog, Variables tab.
+		$LOW_FIELD_TYPE_INSERT_REF, _                           ; A Insert Reference field, found in the Fields Dialog, Cross-References tab. [Includes: "Insert Reference", "Headings", "Numbered Paragraphs", "Drawing", "Bookmarks", "Footnotes", "Endnotes", etc.]
+		$LOW_FIELD_TYPE_IMAGE_COUNT, _                          ; A Image Count field, found in the Fields Dialog, Document tab, Statistics Type.
+		$LOW_FIELD_TYPE_HIDDEN_PAR, _                           ; A Hidden Paragraph field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_HIDDEN_TEXT, _                          ; A Hidden Text field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_INPUT, _                                ; A Input field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_PLACEHOLDER, _                          ; A Placeholder field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_MACRO, _                                ; A Execute Macro field, found in the Fields Dialog, Functions tab.
+		$LOW_FIELD_TYPE_PAGE_COUNT, _                           ; A Page Count field, found in the Fields Dialog, Document tab, Statistics Type.
+		$LOW_FIELD_TYPE_PAGE_NUM, _                             ; A Page Number (Unstyled) field, found in the Fields Dialog, Document tab.
+		$LOW_FIELD_TYPE_PAR_COUNT, _                            ; A Paragraph Count field, found in the Fields Dialog, Document tab, Statistics Type..
+		$LOW_FIELD_TYPE_SHOW_PAGE_VAR, _                        ; A Show Page Variable field, found in the Fields Dialog, Variables tab.
+		$LOW_FIELD_TYPE_SET_PAGE_VAR, _                         ; A Set Page Variable field, found in the Fields Dialog, Variables tab.
 		$LOW_FIELD_TYPE_SCRIPT, _                               ;
-		$LOW_FIELD_TYPE_SET_VAR, _                              ; A Set Variable field.
-		$LOW_FIELD_TYPE_TABLE_COUNT, _                          ; A Table Count field.
-		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                        ; A Templates field.
+		$LOW_FIELD_TYPE_SET_VAR, _                              ; A Set Variable field, found in the Fields Dialog, Variables tab..
+		$LOW_FIELD_TYPE_TABLE_COUNT, _                          ; A Table Count field, found in the Fields Dialog, Document tab, Statistics Type.
+		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                        ; A Templates field, found in the Fields Dialog, Document tab.
 		$LOW_FIELD_TYPE_URL, _                                  ;
-		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field.
+		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field, found in the Fields Dialog, Document tab, Statistics Type.
 
 ; Advanced Field Types
 Global Enum Step *2 _
 		$LOW_FIELDADV_TYPE_ALL = 1, _                           ; All of the below listed Fields will be returned.
-		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field.
-		$LOW_FIELDADV_TYPE_DATABASE, _                          ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME, _                     ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field.
-		$LOW_FIELDADV_TYPE_DDE, _                               ; A DDE Field.
-		$LOW_FIELDADV_TYPE_INPUT_USER, _                        ;
-		$LOW_FIELDADV_TYPE_USER                                 ; A User Field.
+		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DATABASE, _                          ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DATABASE_NAME, _                     ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELDADV_TYPE_DDE, _                               ; A DDE Field, found in Fields dialog, Variables tab.
+		$LOW_FIELDADV_TYPE_INPUT_USER, _                        ; ?
+		$LOW_FIELDADV_TYPE_USER                                 ; A User Field, found in Fields dialog, Variables tab.
 
 ; Document Information Field Types
 Global Enum Step *2 _
 		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _                      ; Returns a list of all field types listed below.
-		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _                     ; A Modified By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _                ; A Modified Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, _                  ; A Created By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_CREATE_DATE_TIME, _             ; A Created Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_CUSTOM, _                       ; A Custom Field.
-		$LOW_FIELD_DOCINFO_TYPE_COMMENTS, _                     ; A Comments Field.
-		$LOW_FIELD_DOCINFO_TYPE_EDIT_TIME, _                    ; A Total Editing Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_KEYWORDS, _                     ; A Keywords Field.
-		$LOW_FIELD_DOCINFO_TYPE_PRINT_AUTH, _                   ; A Printed By Author Field.
-		$LOW_FIELD_DOCINFO_TYPE_PRINT_DATE_TIME, _              ; A Printed Date/Time Field.
-		$LOW_FIELD_DOCINFO_TYPE_REVISION, _                     ; A Revision Number Field.
-		$LOW_FIELD_DOCINFO_TYPE_SUBJECT, _                      ; A Subject Field.
-		$LOW_FIELD_DOCINFO_TYPE_TITLE                           ; A Title Field.
+		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _                     ; A Modified By Author Field, found in Fields dialog, DocInformation Tab, Modified Type.
+		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _                ; A Modified Date/Time Field, found in Fields dialog, DocInformation Tab, Modified Type.
+		$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, _                  ; A Created By Author Field, found in Fields dialog, DocInformation Tab, Created Type.
+		$LOW_FIELD_DOCINFO_TYPE_CREATE_DATE_TIME, _             ; A Created Date/Time Field, found in Fields dialog, DocInformation Tab, Created Type.
+		$LOW_FIELD_DOCINFO_TYPE_CUSTOM, _                       ; A Custom Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_COMMENTS, _                     ; A Comments Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_EDIT_TIME, _                    ; A Total Editing Time Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_KEYWORDS, _                     ; A Keywords Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_PRINT_AUTH, _                   ; A Printed By Author Field, found in Fields dialog, DocInformation Tab, Last Printed Type.
+		$LOW_FIELD_DOCINFO_TYPE_PRINT_DATE_TIME, _              ; A Printed Date/Time Field, found in Fields dialog, DocInformation Tab, Last Printed Type.
+		$LOW_FIELD_DOCINFO_TYPE_REVISION, _                     ; A Revision Number Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_SUBJECT, _                      ; A Subject Field, found in Fields dialog, DocInformation Tab.
+		$LOW_FIELD_DOCINFO_TYPE_TITLE                           ; A Title Field, found in Fields dialog, DocInformation Tab.
 
 ; Placeholder Type
 Global Const _
