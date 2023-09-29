@@ -106,10 +106,10 @@ Global Const _
 
 ; LO ViewCursor Movement Constants.
 Global Enum _
-		$LOW_VIEWCUR_GO_DOWN, _                                 ; Move the cursor Down.
-		$LOW_VIEWCUR_GO_UP, _                                   ; Move the cursor Up.
-		$LOW_VIEWCUR_GO_LEFT, _                                 ; Move the cursor left.
-		$LOW_VIEWCUR_GO_RIGHT, _                                ; Move the cursor right.
+		$LOW_VIEWCUR_GO_DOWN, _                                 ; Move the cursor Down by n lines.
+		$LOW_VIEWCUR_GO_UP, _                                   ; Move the cursor Up by n lines.
+		$LOW_VIEWCUR_GO_LEFT, _                                 ; Move the cursor left by n characters.
+		$LOW_VIEWCUR_GO_RIGHT, _                                ; Move the cursor right by n characters.
 		$LOW_VIEWCUR_GOTO_END_OF_LINE, _                        ; Move the cursor to the end of the current line.
 		$LOW_VIEWCUR_GOTO_START_OF_LINE, _                      ; Move the cursor to the start of the current line.
 		$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, _                      ; Move the cursor to the first page.
@@ -126,10 +126,10 @@ Global Enum _
 
 ; LO TextCursor Movement Constants.
 Global Enum _
-		$LOW_TEXTCUR_COLLAPSE_TO_START, _                       ; Collapses the current selection the start of the selection.
-		$LOW_TEXTCUR_COLLAPSE_TO_END, _                         ; Collapses the current selection the end of the selection.
-		$LOW_TEXTCUR_GO_LEFT, _                                 ; Move the cursor left.
-		$LOW_TEXTCUR_GO_RIGHT, _                                ; Move the cursor right.
+		$LOW_TEXTCUR_COLLAPSE_TO_START, _                       ; Collapses the current selection to the start of the selection.
+		$LOW_TEXTCUR_COLLAPSE_TO_END, _                         ; Collapses the current selection the to end of the selection.
+		$LOW_TEXTCUR_GO_LEFT, _                                 ; Move the cursor left by n characters.
+		$LOW_TEXTCUR_GO_RIGHT, _                                ; Move the cursor right by n characters.
 		$LOW_TEXTCUR_GOTO_START, _                              ; Move the cursor to the start of the text.
 		$LOW_TEXTCUR_GOTO_END, _                                ; Move the cursor to the end of the text.
 		$LOW_TEXTCUR_GOTO_NEXT_WORD, _                          ; Move to the start of the next word.
@@ -147,10 +147,10 @@ Global Enum _
 
 ; LO TableCursor Movement Constants.
 Global Enum _
-		$LOW_TABLECUR_GO_LEFT, _                                ; Move the cursor left.
-		$LOW_TABLECUR_GO_RIGHT, _                               ; Move the cursor right.
-		$LOW_TABLECUR_GO_UP, _                                  ; Move the cursor up.
-		$LOW_TABLECUR_GO_DOWN, _                                ; Move the cursor down.
+		$LOW_TABLECUR_GO_LEFT, _                                ; Move the cursor left n cells.
+		$LOW_TABLECUR_GO_RIGHT, _                               ; Move the cursor right n cells.
+		$LOW_TABLECUR_GO_UP, _                                  ; Move the cursor up n cells.
+		$LOW_TABLECUR_GO_DOWN, _                                ; Move the cursor down n cells.
 		$LOW_TABLECUR_GOTO_START, _                             ; Move the cursor to the first cell.
 		$LOW_TABLECUR_GOTO_END                                  ; Move the cursor to the last cell.
 
@@ -592,17 +592,17 @@ Global Const _
 		$LOW_FOLLOW_BY_NEWLINE = 3                              ; A Newline will follow the Numbering Style Number.
 
 ; Cursor Status
-Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _                    ; Test if the start and end positions are the same for a cursor selection.
-		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word.
-		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word.
-		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence.
-		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _                  ; Test if a cursor is at the end of a sentence.
-		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                     ; Test if a cursor is at the start of a paragraph.
-		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                       ; Test if a cursor is at the End of a paragraph.
-		$LOW_CURSOR_STAT_IS_START_OF_LINE, _                    ; Test if a cursor is at the start of the line.
-		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                      ; Test if a cursor is at the end of the line.
-		$LOW_CURSOR_STAT_GET_PAGE, _                            ; Return the current page the cursor is in.
-		$LOW_CURSOR_STAT_GET_RANGE_NAME                         ; Return the cell range selected by a cursor.
+Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _                    ; Test if the start and end positions are the same for a cursor selection, meaning the cursor has nothing selected..
+		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word. Returns True if so.
+		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _                  ; Test if a cursor is at the end of a sentence. Returns True if so.
+		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                     ; Test if a cursor is at the start of a paragraph. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                       ; Test if a cursor is at the End of a paragraph. Returns True if so.
+		$LOW_CURSOR_STAT_IS_START_OF_LINE, _                    ; Test if a cursor is at the start of the line. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                      ; Test if a cursor is at the end of the line. Returns True if so.
+		$LOW_CURSOR_STAT_GET_PAGE, _                            ; Return the current page number the cursor is in as an integer.
+		$LOW_CURSOR_STAT_GET_RANGE_NAME                         ; Return the cell range selected by a cursor as a string. For example, “B3:D5”.
 
 ; Relative to
 Global Const _

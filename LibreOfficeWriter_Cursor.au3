@@ -51,12 +51,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of data a cursor is currently located in, such as a TextTable, Footnote etc.
-; Cursor Data Type Constants:   $LOW_CURDATA_BODY_TEXT(1),
-;								$LOW_CURDATA_FRAME(2),
-;								$LOW_CURDATA_CELL(3),
-;								$LOW_CURDATA_FOOTNOTE(4),
-;								$LOW_CURDATA_ENDNOTE(5),
-;								$LOW_CURDATA_HEADER_FOOTER(6)
+; Cursor Data Type Constants: $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
@@ -183,11 +178,7 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Will also work for Paragraph object and paragraph section objects.
-; Cursor Type Constants: $LOW_CURTYPE_TEXT_CURSOR(1),
-;						 $LOW_CURTYPE_TABLE_CURSOR(2),
-;						 $LOW_CURTYPE_VIEW_CURSOR(3),
-;						 $LOW_CURTYPE_PARAGRAPH(4), such as from _LOWriter_ParObjCreateList
-;						 $LOW_CURTYPE_TEXT_PORTION(5) such as from _LOWriter_ParObjSectionsGet
+; Cursor Type Constants: $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
