@@ -940,12 +940,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;					you do not see, called the "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing
 ;					a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor
 ;					used for inserting text etc., into a Writer document. You can have multiple "TextCursors" per document.
-; Cursor Data Type Constants:   $LOW_CURDATA_BODY_TEXT(1) Cursor is currently in the Body Text.
-;								$LOW_CURDATA_FRAME(2) Cursor is currently in a Text Frame.
-;								$LOW_CURDATA_CELL(3) Cursor is currently in a Text Table Cell.
-;								$LOW_CURDATA_FOOTNOTE(4)  Cursor is currently in a Footnote.
-;								$LOW_CURDATA_ENDNOTE(5) Cursor is currently in a Endnote.
-;								$LOW_CURDATA_HEADER_FOOTER(6) Cursor is currently in a Header or Footer.
+; Cursor Data Type Constants: $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
@@ -2638,12 +2633,7 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Control Char Constants:   $LOW_CON_CHAR_PAR_BREAK(0), start a new paragraph.
-;							$LOW_CON_CHAR_LINE_BREAK(1), start a new line in a paragraph.
-;							$LOW_CON_CHAR_HARD_HYPHEN(2), equals a dash but prevents this position from being hyphenated.
-;							$LOW_CON_CHAR_SOFT_HYPHEN(3), Define a preferred hyphenation point if the word must be split at the end of a line.
-;							$LOW_CON_CHAR_HARD_SPACE(4), Insert a space that prevents two words from splitting at a line break
-;							$LOW_CON_CHAR_APPEND_PAR(5), appends a new paragraph.
+; Control Char Constants: $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
@@ -3127,10 +3117,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;					$vPages range is given as entered in the user interface. For example: "1-4,10" to print the pages 1 to 4 and 10.
 ;					Default is "ALL". Must be in String format to accept more than just a single page number.
 ;					i.e. This will work: "1-6,12,27" This will Not 1-6,12,27. This will work: "7", This will also: 7.
-; Duplex Mode Constants: $LOW_DUPLEX_UNKNOWN(0),
-;						 $LOW_DUPLEX_OFF(1) [Default],
-;						 $LOW_DUPLEX_LONG(2),
-;						 $LOW_DUPLEX_SHORT(3)
+; Duplex Mode Constants: $LOW_DUPLEX_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings,
 ;					_LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3322,12 +3309,8 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Orientation Constants:  $LOW_PAPER_PORTRAIT(0),
-;								$LOW_PAPER_LANDSCAPE(1)
-; Comment Print Mode Constants: $LOW_PRINT_NOTES_NONE (0), Document content itself is printed, without printing any Comments if present;
-;								$LOW_PRINT_NOTES_ONLY(1), Only Comments are printed, and NONE of the Document content is printed;
-;								$LOW_PRINT_NOTES_END(2), Document content is printed and comments are appended to a blank page at the end of the document;
-;								$LOW_PRINT_NOTES_NEXT_PAGE(3), Document content is printed and comments are appended to a blank page after the page they are found in the document.
+; Paper Orientation Constants: $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3
+; Comment Print Mode Constants: $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
@@ -3359,7 +3342,7 @@ Func _LOWriter_DocPrintMiscSettings(ByRef $oDoc, $iPaperOrient = Null, $sPrinter
 	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($iPaperOrient <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPaperOrient, $LOW_PAPER_PORTRAIT, $LOW_PAPER_LANDSCAPE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iPaperOrient, $LOW_PAPER_ORIENT_PORTRAIT, $LOW_PAPER_ORIENT_LANDSCAPE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		If $bCanSetPaperOrientation Then
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperOrientation", $iPaperOrient)
 			$oDoc.setPrinter($aoSetting)
@@ -3534,73 +3517,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Format Constants:   $LOW_PAPER_A3(0);
-;							$LOW_PAPER_A4(1);
-;							$LOW_PAPER_A5(2);
-;							$LOW_PAPER_B4(3);
-;							$LOW_PAPER_B5(4);
-;							$LOW_PAPER_LETTER(5);
-;							$LOW_PAPER_LEGAL(6);
-;							$LOW_PAPER_TABLOID(7);
-;							$LOW_PAPER_USER_DEFINED(8).
-; Paper Width Constants:    $LOW_PAPER_WIDTH_A6(10490),
-;							$LOW_PAPER_WIDTH_A5(14808),
-;							$LOW_PAPER_WIDTH_A4(21006),
-;							$LOW_PAPER_WIDTH_A3(29693),
-;							$LOW_PAPER_WIDTH_B6ISO(12497),
-;							$LOW_PAPER_WIDTH_B5ISO(17602),
-;							$LOW_PAPER_WIDTH_B4ISO(24994),
-;							$LOW_PAPER_WIDTH_LETTER(21590),
-;							$LOW_PAPER_WIDTH_LEGAL(21590),
-;							$LOW_PAPER_WIDTH_LONG_BOND(21590),
-;							$LOW_PAPER_WIDTH_TABLOID(27940),
-;							$LOW_PAPER_WIDTH_B6JIS(12801),
-;							$LOW_PAPER_WIDTH_B5JIS(18212),
-;							$LOW_PAPER_WIDTH_B4JIS(25705),
-;							$LOW_PAPER_WIDTH_16KAI(18390),
-;							$LOW_PAPER_WIDTH_32KAI(13005),
-;							$LOW_PAPER_WIDTH_BIG_32KAI(13995),
-;							$LOW_PAPER_WIDTH_DLENVELOPE(10998),
-;							$LOW_PAPER_WIDTH_C6ENVELOPE(11405),
-;							$LOW_PAPER_WIDTH_C6_5_ENVELOPE(11405),
-;							$LOW_PAPER_WIDTH_C5ENVELOPE(16205),
-;							$LOW_PAPER_WIDTH_C4ENVELOPE(22911),
-;							$LOW_PAPER_WIDTH_6_3_4ENVELOPE(9208),
-;							$LOW_PAPER_WIDTH_7_3_4ENVELOPE(9855),
-;							$LOW_PAPER_WIDTH_9ENVELOPE(9843),
-;							$LOW_PAPER_WIDTH_10ENVELOPE(10490),
-;							$LOW_PAPER_WIDTH_11ENVELOPE(11430),
-;							$LOW_PAPER_WIDTH_12ENVELOPE(12065),
-;							$LOW_PAPER_WIDTH_JAP_POSTCARD(10008
-; Paper Height Constants:   $LOW_PAPER_HEIGHT_A6(14808),
-;							$LOW_PAPER_HEIGHT_A5(21006),
-;							$LOW_PAPER_HEIGHT_A4(29693),
-;							$LOW_PAPER_HEIGHT_A3(42012),
-;							$LOW_PAPER_HEIGHT_B6ISO(17602),
-;							$LOW_PAPER_HEIGHT_B5ISO(24994),
-;							$LOW_PAPER_HEIGHT_B4ISO(35306),
-;							$LOW_PAPER_HEIGHT_LETTER(27940),
-;							$LOW_PAPER_HEIGHT_LEGAL(35560),
-;							$LOW_PAPER_HEIGHT_LONG_BOND(33020),
-;							$LOW_PAPER_HEIGHT_TABLOID(43180),
-;							$LOW_PAPER_HEIGHT_B6JIS(18200),
-;							$LOW_PAPER_HEIGHT_B5JIS(25705),
-;							$LOW_PAPER_HEIGHT_B4JIS(36398),
-;							$LOW_PAPER_HEIGHT_16KAI(26010),
-;							$LOW_PAPER_HEIGHT_32KAI(18390),
-;							$LOW_PAPER_HEIGHT_BIG_32KAI(20295),
-;							$LOW_PAPER_HEIGHT_DLENVELOPE(21996),
-;							$LOW_PAPER_HEIGHT_C6ENVELOPE(16205),
-;							$LOW_PAPER_HEIGHT_C6_5_ENVELOPE(22911),
-;							$LOW_PAPER_HEIGHT_C5ENVELOPE(22911),
-;							$LOW_PAPER_HEIGHT_C4ENVELOPE(32410),
-;							$LOW_PAPER_HEIGHT_6_3_4ENVELOPE(16510),
-;							$LOW_PAPER_HEIGHT_7_3_4ENVELOPE(19050),
-;							$LOW_PAPER_HEIGHT_9ENVELOPE(22543),
-;							$LOW_PAPER_HEIGHT_10ENVELOPE(24130),
-;							$LOW_PAPER_HEIGHT_11ENVELOPE(26365),
-;							$LOW_PAPER_HEIGHT_12ENVELOPE(27940),
-;							$LOW_PAPER_HEIGHT_JAP_POSTCARD(14808)
+; Paper Format Constants: $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3
+; Paper Width Constants: $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3
+; Paper Height Constants: $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocPrintPageSettings,
 ;					_LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
