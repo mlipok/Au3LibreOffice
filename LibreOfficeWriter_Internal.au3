@@ -495,7 +495,7 @@ EndFunc   ;==>__LOWriter_CharBorder
 ;				   @Error 1 @Extended 7 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
 ;				   |								2 = Error setting $iTop border distance
 ;				   |								4 = Error setting $iBottom border distance
@@ -580,7 +580,7 @@ EndFunc   ;==>__LOWriter_CharBorderPadding
 ;				   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iRelief
 ;				   |								2 = Error setting $iCase
 ;				   |								4 = Error setting $bHidden
@@ -670,7 +670,7 @@ EndFunc   ;==>__LOWriter_CharEffect
 ;				   @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants.
 ;				   @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4,8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sFontName
 ;				   |								2 = Error setting $nFontSize
 ;				   |								4 = Error setting $iPosture
@@ -763,7 +763,7 @@ EndFunc   ;==>__LOWriter_CharFont
 ;				   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
 ;				   @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $FontColor
 ;				   |								2 = Error setting $iTransparency.
 ;				   |								4 = Error setting $iHighlight
@@ -862,7 +862,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ;				   @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $iOverLineStyle
 ;				   |								4 = Error setting $OLHasColor
@@ -979,7 +979,7 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ;				   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100, higher than 100 and Not 14000.
 ;				   @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iSuperScript
 ;				   |								2 = Error setting $iSubScript
 ;				   |								4 = Error setting $iRelativeSize.
@@ -1075,7 +1075,7 @@ EndFunc   ;==>__LOWriter_CharPosition
 ;				   @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
 ;				   @Error 1 @Extended 6 Return 0 = $bRotateFitLine not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iRotation
 ;				   |								2 = Error setting $iScaleWidth
 ;				   |								4 = Error setting $bRotateFitLine
@@ -1149,7 +1149,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iColor
 ;				   |								4 = Error setting $bTransparent
@@ -1253,7 +1253,7 @@ EndFunc   ;==>__LOWriter_CharShadow
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoKerning
 ;				   |								2 = Error setting $nKerning.
 ;				   --Success--
@@ -1326,7 +1326,7 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ;				   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. Check the Constants list.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $bStrikeOut
 ;				   |								4 = Error setting $iStrikeLineStyle
@@ -1444,7 +1444,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ;				   @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $iUnderLineStyle
 ;				   |								4 = Error setting $ULHasColor
@@ -3371,7 +3371,7 @@ EndFunc   ;==>__LOWriter_NumStyleDeleteScript
 ;				   @Error 2 @Extended 4 Return 0 = Error retrieving standard Macro Library Object from Document.
 ;				   @Error 2 @Extended 5 Return 0 = Error creating NumStyleModifierDH13 Module in document.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting Hidden
 ;				   |								2 = Error setting MacroExecutionMode
 ;				   |								4 = Error setting ReadOnly
@@ -3719,7 +3719,7 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ;				   @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
 ;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5, See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iHorAlign
 ;				   |								2 = Error setting $iVertAlign
 ;				   |								4 = Error setting $iLastLineALign
@@ -3826,7 +3826,7 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ;				   @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
 ;				   |								2 = Error setting $bBackTransparent
 ;				   --Success--
@@ -3908,7 +3908,7 @@ EndFunc   ;==>__LOWriter_ParBackColor
 ;				   @Error 1 @Extended 7 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
 ;				   |								2 = Error setting $iTop border distance
 ;				   |								4 = Error setting $iBottom border distance
@@ -3994,7 +3994,7 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iNumChar
 ;				   |								2 = Error setting $iLines
 ;				   |								4 = Error setting $iSpcTxt
@@ -4135,7 +4135,7 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2 or greater than 9.
 ;				   @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2 or greater than 9.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoHyphen
 ;				   |								2 = Error setting $bHyphenNoCaps
 ;				   |								4 = Error setting $iMaxHyphens
@@ -4230,7 +4230,7 @@ EndFunc   ;==>__LOWriter_ParHyphenation
 ;				   @Error 1 @Extended 6 Return 0 = $iFirstLine not an integer, less than -57785 or more than 17094 uM.
 ;				   @Error 1 @Extended 7 Return 0 = $bAutoFirstLine not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBeforeTxt
 ;				   |								2 = Error setting $iAfterTxt
 ;				   |								4 = Error setting $iFirstLine
@@ -4308,7 +4308,7 @@ EndFunc   ;==>__LOWriter_ParIndent
 ;				   @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
 ;				   @Error 1 @Extended 9 Return 0 = $iLineCountVal Not an Integer or less than 0.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iOutline
 ;				   |								2 = Error setting $sNumStyle
 ;				   |								4 = Error setting $bParLineCount
@@ -4393,7 +4393,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;				   @Error 1 @Extended 8 Return 0 = $sPageStyle not a String.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBreakType
 ;				   |								2 = Error setting $iPgNumOffSet
 ;				   |								4 = Error setting $sPageStyle
@@ -4476,7 +4476,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error Checking.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4,8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iColor
 ;				   |								4 = Error setting $bTransparent
@@ -4594,7 +4594,7 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAbovePar
 ;				   |								2 = Error setting $iBelowPar
 ;				   |								4 = Error setting $bAddSpace
@@ -4761,7 +4761,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted. in $iPosition.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iPosition
 ;				   |								2 = Error setting $iFillChar
 ;				   |								4 = Error setting $iAlignment
@@ -5000,7 +5000,7 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iPosition
 ;				   |								2 = Error setting $iFillChar
 ;				   |								4 = Error setting $iAlignment
@@ -5129,7 +5129,7 @@ EndFunc   ;==>__LOWriter_ParTabStopMod
 ;				   @Error 1 @Extended 6 Return 0 = $iParOrphans not an Integer, less than 0, equal to 1, or greater than 9.
 ;				   @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bParSplit
 ;				   |								2 = Error setting $bKeepTogether
 ;				   |								4 = Error setting $iParOrphans

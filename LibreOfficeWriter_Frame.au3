@@ -94,7 +94,7 @@
 ;				   @Error 1 @Extended 2 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
 ;				   |								2 = Error setting $bBackTransparent
 ;				   --Success--
@@ -197,7 +197,7 @@ EndFunc   ;==>_LOWriter_FrameAreaColor
 ;				   @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;				   @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sGradientName
 ;				   |								2 = Error setting $iType
 ;				   |								4 = Error setting $iIncrement
@@ -474,7 +474,7 @@ EndFunc   ;==>_LOWriter_FrameBorderColor
 ;				   @Error 1 @Extended 5 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 6 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
 ;				   |								2 = Error setting $iTop border distance
 ;				   |								4 = Error setting $iBottom border distance
@@ -702,7 +702,7 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bSeparatorOn
 ;				   |								2 = Error setting $iStyle
 ;				   |								4 = Error setting $iWidth
@@ -820,7 +820,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iColumns
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
@@ -881,7 +881,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSettings
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = No columns present for requested Frame.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoWidth
 ;				   |								2 = Error setting $iGlobalSpacing
 ;				   |								4 = Error setting $iSpacing
@@ -1298,7 +1298,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByName
 ;				   @Error 1 @Extended 5 Return 0 = $sFrameTarget not equal to one of the Constants listed below.
 ;				   @Error 1 @Extended 6 Return 0 = $bServerSideMap not a boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sURL
 ;				   |								2 = Error setting $sName
 ;				   |								4 = Error setting $sFrameTarget
@@ -1391,7 +1391,7 @@ EndFunc   ;==>_LOWriter_FrameHyperlink
 ;				   @Error 1 @Extended 7 Return 0 = $bPrint not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bProtectContent
 ;				   |								2 = Error setting $bProtectPos
 ;				   |								4 = Error setting $bProtectSize
@@ -1503,7 +1503,7 @@ EndFunc   ;==>_LOWriter_FrameOptions
 ;				   @Error 1 @Extended 8 Return 0 = $sNextLink not a String.
 ;				   @Error 1 @Extended 9 Return 0 = Document does not contain Frame matching $sNextLink
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sName
 ;				   |								2 = Error setting $sDesc
 ;				   |								4 = Error setting $sPrevLink
@@ -1665,7 +1665,7 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iColor
 ;				   |								4 = Error setting $bTransparent
@@ -1772,7 +1772,7 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
 ;				   |								2 = Error setting $bBackTransparent
 ;				   --Success--
@@ -1877,7 +1877,7 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 ;				   @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
 ;				   @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sGradientName
 ;				   |								2 = Error setting $iType
 ;				   |								4 = Error setting $iIncrement
@@ -2158,7 +2158,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderColor
 ;				   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
 ;				   |								2 = Error setting $iTop border distance
 ;				   |								4 = Error setting $iBottom border distance
@@ -2392,7 +2392,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bSeparatorOn
 ;				   |								2 = Error setting $iStyle
 ;				   |								4 = Error setting $iWidth
@@ -2511,7 +2511,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSeparator
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iColumns
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
@@ -2574,7 +2574,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = No columns present for requested Frame Style.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoWidth
 ;				   |								2 = Error setting $iGlobalSpacing
 ;				   |								4 = Error setting $iSpacing
@@ -2922,7 +2922,7 @@ EndFunc   ;==>_LOWriter_FrameStyleGetObj
 ;				   @Error 1 @Extended 8 Return 0 = $bPrint not a Boolean.
 ;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bProtectContent
 ;				   |								2 = Error setting $bProtectPos
 ;				   |								4 = Error setting $bProtectSize
@@ -3034,7 +3034,7 @@ EndFunc   ;==>_LOWriter_FrameStyleOptions
 ;				   @Error 1 @Extended 8 Return 0 = $bAutoUpdate not a Boolean.
 ;				   @Error 1 @Extended 9 Return 0 = $bHidden not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sNewFrameStyleName
 ;				   |								2 = Error setting $sParentStyle
 ;				   |								4 = Error setting $bAutoUpdate
@@ -3239,7 +3239,7 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iColor
 ;				   |								4 = Error setting $bTransparent
@@ -3344,7 +3344,7 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 ;				   @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
 ;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTransparency
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
@@ -3410,7 +3410,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;				   @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;				   @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iType
 ;				   |								2 = Error setting $iXCenter
 ;				   |								4 = Error setting $iYCenter
@@ -3549,7 +3549,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;				   @Error 1 @Extended 10 Return 0 = $bKeepInside not a Boolean.
 ;				   @Error 1 @Extended 11 Return 0 = $iAnchorPos not an Integer, or less than 0 or greater than 4, or equal to 3. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iHorAlign
 ;				   |								2 = Error setting $iHorPos
 ;				   |								4 = Error setting $iHorRelation
@@ -3814,7 +3814,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;				   @Error 1 @Extended 11 Return 0 = $bAutoHeight not a Boolean.
 ;				   @Error 1 @Extended 12 Return 0 = $bKeepRatio not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iRelativeWidth
 ;				   |								4 = Error setting $iWidthRelativeTo
@@ -3964,7 +3964,7 @@ EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWrapType
 ;				   |								2 = Error setting $iLeft
 ;				   |								4 = Error setting $iRight
@@ -4069,7 +4069,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrap
 ;				   @Error 1 @Extended 4 Return 0 = $bInBackground not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bAllowOverlap not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bFirstPar
 ;				   |								2 = Error setting $bInBackground
 ;				   |								4 = Error setting $bAllowOverlap
@@ -4134,7 +4134,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 ;				   @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTransparency
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
@@ -4198,7 +4198,7 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ;				   @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;				   @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iType
 ;				   |								2 = Error setting $iXCenter
 ;				   |								4 = Error setting $iYCenter
@@ -4335,7 +4335,7 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ;				   @Error 1 @Extended 9 Return 0 = $bKeepInside not a Boolean.
 ;				   @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or less than 0 or greater than 4, or equal to 3. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iHorAlign
 ;				   |								2 = Error setting $iHorPos
 ;				   |								4 = Error setting $iHorRelation
@@ -4598,7 +4598,7 @@ EndFunc   ;==>_LOWriter_FrameTypePosition
 ;				   @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean.
 ;				   @Error 1 @Extended 11 Return 0 = $bKeepRatio not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iRelativeWidth
 ;				   |								4 = Error setting $iWidthRelativeTo
@@ -4744,7 +4744,7 @@ EndFunc   ;==>_LOWriter_FrameTypeSize
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWrapType
 ;				   |								2 = Error setting $iLeft
 ;				   |								4 = Error setting $iRight
@@ -4850,7 +4850,7 @@ EndFunc   ;==>_LOWriter_FrameWrap
 ;				   @Error 1 @Extended 3 Return 0 = $bInBackground not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bAllowOverlap not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bFirstPar
 ;				   |								2 = Error setting $bInBackground
 ;				   |								4 = Error setting $bAllowOverlap

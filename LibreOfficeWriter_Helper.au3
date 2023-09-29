@@ -955,7 +955,7 @@ EndFunc   ;==>_LOWriter_DateStructCreate
 ;				   @Error 1 @Extended 9 Return 0 = $iNanoSeconds not an Integer, less than 0 or greater than 999999999.
 ;				   @Error 1 @Extended 10 Return 0 = $bIsUTC not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iYear
 ;				   |								2 = Error setting $iMonth
 ;				   |								4 = Error setting $iDay
