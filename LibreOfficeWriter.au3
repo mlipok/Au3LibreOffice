@@ -74,7 +74,7 @@
 ; Name ..........: _LOWriter_CellBackColor
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(Byref $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $iBackColor          - [optional] an integer value. Default is Null. Specify the Cell background color as a Long Integer. See Remarks.
 ;				   +						Set to $LOW_COLOR_OFF(-1) to disable Background color.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -154,7 +154,7 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Name ..........: _LOWriter_CellBorderColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format.
 ;				   +						One of the predefined constants listed below can be used, or a custom value.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format.
@@ -235,7 +235,7 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ; Name ..........: _LOWriter_CellBorderPadding
 ; Description ...: Set or retrieve the Border Padding (spacing between the Cell text and border) settings.
 ; Syntax ........: _LOWriter_CellBorderPadding(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Cell text in Micrometers(uM).
 ;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Cell text in Micrometers(uM).
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell text in Micrometers(uM).
@@ -312,7 +312,7 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Name ..........: _LOWriter_CellBorderStyle
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderStyle(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of theCell using one of the line style constants, See below for list.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, See below for list.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, See below for list.
@@ -387,16 +387,11 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ; Name ..........: _LOWriter_CellBorderWidth
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line Width. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderWidth(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the
-;				   +						Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the
-;				   +							Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the
-;				   +							Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the
-;				   +							Cell in MicroMeters. One of the predefined constants listed below can be used.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -450,7 +445,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Name ..........: _LOWriter_CellCreateTextCursor
 ; Description ...: Create a Text Cursor in a particular cell for inserting text etc.
 ; Syntax ........: _LOWriter_CellCreateTextCursor(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ; Return values .: Success: An Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -479,7 +474,7 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Name ..........: _LOWriter_CellFormula
 ; Description ...: Set or retrieve a formula for a cell.
 ; Syntax ........: _LOWriter_CellFormula(Byref $oCell[, $sFormula = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $sFormula            - [optional] a string value. Default is Null. The Formula to set the Cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -518,7 +513,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Name ..........: _LOWriter_CellGetDataType
 ; Description ...: Get the Data type of a specific cell, see remarks.
 ; Syntax ........: _LOWriter_CellGetDataType(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ; Return values .: Success: A Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -551,7 +546,7 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Name ..........: _LOWriter_CellGetError
 ; Description ...: Get the formula error Value.
 ; Syntax ........: _LOWriter_CellGetError(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ; Return values .: Success: A Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -581,7 +576,7 @@ EndFunc   ;==>_LOWriter_CellGetError
 ; Name ..........: _LOWriter_CellGetName
 ; Description ...: Retrieve the current Cell's name.
 ; Syntax ........: _LOWriter_CellGetName(Byref $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ; Return values .: Success: A String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -610,7 +605,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Name ..........: _LOWriter_CellProtect
 ; Description ...: Write-Protect a Cell
 ; Syntax ........: _LOWriter_CellProtect(Byref $oCell[, $bProtect = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $bProtect            - [optional] a boolean value. Default is Null. True = Protected from Writing, False = Unprotected. See remarks.
 ; Return values .: Success: 1 Or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -648,7 +643,7 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Name ..........: _LOWriter_CellString
 ; Description ...: Set or retrieve the current string for a cell.
 ; Syntax ........: _LOWriter_CellString(Byref $oCell[, $sString = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $sString             - [optional] a string value. Default is Null. The String of text to set the cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -687,7 +682,7 @@ EndFunc   ;==>_LOWriter_CellString
 ; Name ..........: _LOWriter_CellValue
 ; Description ...: Set or retrieve a Numerical value to a Cell
 ; Syntax ........: _LOWriter_CellValue(Byref $oCell[, $nValue = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from any Table Cell Object creation or retrieval functions.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
 ;                  $nValue              - [optional] a general number value. Default is Null. The value to set the cell to.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -727,10 +722,8 @@ EndFunc   ;==>_LOWriter_CellValue
 ; Name ..........: _LOWriter_CellVertOrient
 ; Description ...: Set the Vertical Orientation of the Cell or Cell Range contents.
 ; Syntax ........: _LOWriter_CellVertOrient(Byref $oCell[, $iVertOrient = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from any Table Cell
-;				   +						Object creation or retrieval functions.
-;                  $iVertOrient         - [optional]  an integer value. Default is Null. A Vertical Orientation constant. See
-;				   +						Constants Below.
+; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
+;                  $iVertOrient         - [optional]  an integer value. Default is Null. A Vertical Orientation constant. See Constants Below.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -770,7 +763,7 @@ EndFunc   ;==>_LOWriter_CellVertOrient
 ; Name ..........: _LOWriter_EndnoteDelete
 ; Description ...: Delete a Endnote.
 ; Syntax ........: _LOWriter_EndnoteDelete(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -800,7 +793,7 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ; Name ..........: _LOWriter_EndnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Endnote Anchor position.
 ; Syntax ........: _LOWriter_EndnoteGetAnchor(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -832,7 +825,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 ; Name ..........: _LOWriter_EndnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Endnote to modify the text therein.
 ; Syntax ........: _LOWriter_EndnoteGetTextCursor(Byref $oEndNote)
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -928,7 +921,7 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ; Name ..........: _LOWriter_EndnoteModifyAnchor
 ; Description ...: Modify a Specific Endnote's settings.
 ; Syntax ........: _LOWriter_EndnoteModifyAnchor(Byref $oEndNote[, $sLabel = Null])
-; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous Endnote insert, or retrieval function.
+; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1262,7 +1255,7 @@ EndFunc   ;==>_LOWriter_EndnotesGetList
 ; Name ..........: _LOWriter_FootnoteDelete
 ; Description ...: Delete a Footnote.
 ; Syntax ........: _LOWriter_FootnoteDelete(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1292,7 +1285,7 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 ; Name ..........: _LOWriter_FootnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Footnote Anchor position.
 ; Syntax ........: _LOWriter_FootnoteGetAnchor(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1324,7 +1317,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 ; Name ..........: _LOWriter_FootnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Footnote to modify the text therein.
 ; Syntax ........: _LOWriter_FootnoteGetTextCursor(Byref $oFootNote)
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1423,7 +1416,7 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; Name ..........: _LOWriter_FootnoteModifyAnchor
 ; Description ...: Modify a Footnote's Anchor Character.
 ; Syntax ........: _LOWriter_FootnoteModifyAnchor(Byref $oFootNote[, $sLabel = Null])
-; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous Footnote insert, or retrieval function.
+; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1470,7 +1463,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; Description ...: Set or Retrieve Footnote Autonumbering settings.
 ; Syntax ........: _LOWriter_FootnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null[, $iCounting = Null[, $bEndOfDoc = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iNumFormat            - [optional] an integer value. Default is Null. The numbering format to use for Footnote numbering. See Constants.
+;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Footnote numbering. See Constants.
 ;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Footnote counting from, this is labeled "Counting" in the L.O. User Interface. Min. 1, Max 9999.
 ;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Footnote number in the note text.
 ;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Footnote number in the note text.
@@ -1699,8 +1692,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ; Syntax ........: _LOWriter_FootnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sFootnoteArea = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParagraph          - [optional] a string value. Default is Null. The Footnote Text Paragraph Style.
-;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Footnote pages.
-;				   +						Only valid if the footnotes are set to End of Document, instead of per page.
+;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Footnote pages. Only valid if the footnotes are set to End of Document, instead of per page.
 ;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Footnote anchor in the document text.
 ;                  $sFootnoteArea       - [optional] a string value. Default is Null. The Character Style to use for the Footnote number in the footnote text.
 ; Return values .: Success: 1 or Array.
@@ -1841,12 +1833,8 @@ EndFunc   ;==>_LOWriter_FootnotesGetList
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
 ;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
-;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name,
-;				   +						and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for,
-;				   +						then setting this to True causes the search to search both for direct formatting matching those properties
-;				   +						and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value,
-;				   +						else if false, the search only looks for their existence. See Remarks.
+;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name, and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for, then setting this to True causes the search to search both for direct formatting matching those properties and also Paragraph/Character styles that contain matching properties.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false, the search only looks for their existence. See Remarks.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1912,12 +1900,8 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
 ;                  $bWholeWord          - [optional] a boolean value. Default is False. If True, only complete words will be found.
 ;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression. Cannot be set to True if Similarity Search is set to True.
-;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name,
-;				   +						and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for,
-;				   +						then setting this to True causes the search to search both for direct formatting matching those properties
-;				   +						and also Paragraph/Character styles that contain matching properties.
-;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false,
-;				   +						the search only looks for their existence. See Remarks.
+;                  $bStyles             - [optional] a boolean value. Default is False. If True, the string is considered a Paragraph Style name, and the search will return any paragraph utilizing the specified name, EXCEPT if you input Format properties to search for, then setting this to True causes the search to search both for direct formatting matching those properties and also Paragraph/Character styles that contain matching properties.
+;                  $bSearchPropValues   - [optional] a boolean value. Default is False. If True, any formatting properties searched for are matched based on their value, else if false, the search only looks for their existence. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
