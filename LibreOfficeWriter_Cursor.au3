@@ -323,7 +323,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;					-TextCursor
 ;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
 ;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current
+;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
 ;						$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
 ;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
 ;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
