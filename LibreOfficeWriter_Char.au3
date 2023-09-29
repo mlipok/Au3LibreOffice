@@ -89,7 +89,7 @@
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Color Constants: $LOW_COLOR_BLACK(0),
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -227,7 +227,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					 Call any optional parameter with Null keyword to skip it.
-; Style Constants: $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
+; Style Constants:  $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
 ;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
 ;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
 ;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
@@ -303,7 +303,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -482,10 +482,10 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Relief Constants: $LOW_RELIEF_NONE(0); no relief is used.
+; Relief Constants:     $LOW_RELIEF_NONE(0); no relief is used.
 ;						$LOW_RELIEF_EMBOSSED(1); the font relief is embossed.
 ;						$LOW_RELIEF_ENGRAVED(2); the font relief is engraved.
-; Case Constants : 	$LOW_CASEMAP_NONE(0); The case of the characters is unchanged.
+; Case Constants : 	    $LOW_CASEMAP_NONE(0); The case of the characters is unchanged.
 ;						$LOW_CASEMAP_UPPER(1); All characters are put in upper case.
 ;						$LOW_CASEMAP_LOWER(2); All characters are put in lower case.
 ;						$LOW_CASEMAP_TITLE(3); The first character of each word is put in upper case.
@@ -577,7 +577,7 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
 ;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
 ;					are changed automatically to an acceptable value, which could trigger a settings error.
-; Weight Constants : $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
+; Weight Constants :    $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
 ;						$LOW_WEIGHT_THIN(50); specifies a 50% font weight.
 ;						$LOW_WEIGHT_ULTRA_LIGHT(60); specifies a 60% font weight.
 ;						$LOW_WEIGHT_LIGHT(75); specifies a 75% font weight.
@@ -644,7 +644,7 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: When setting transparency, the value of font color value is changed.
-; Color Constants: $LOW_COLOR_OFF(-1)
+; Color Constants:  $LOW_COLOR_OFF(-1)
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
@@ -841,7 +841,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: $bOLHasColor must be set to true in order to set the Overline color.
-; OverLine line style Constants: $LOW_UNDERLINE_NONE(0),
+; OverLine line style Constants:    $LOW_UNDERLINE_NONE(0),
 ;									$LOW_UNDERLINE_SINGLE(1),
 ;									$LOW_UNDERLINE_DOUBLE(2),
 ;									$LOW_UNDERLINE_DOTTED(3),
@@ -860,7 +860,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT(16),
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
 ;									$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
@@ -1155,11 +1155,11 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
 ; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
-;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
-;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
-;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
-;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-; Color Constants: $LOW_COLOR_BLACK(0),
+;							 $LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
+;							 $LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
+;							 $LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
+;							 $LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -1281,13 +1281,13 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note Strikeout converted to single line in Ms word document format.
-; Strikeout Line Style Constants : $LOW_STRIKEOUT_NONE(0); specifies not to strike out the characters.
-;					$LOW_STRIKEOUT_SINGLE(1); specifies to strike out the characters with a single line
-;					$LOW_STRIKEOUT_DOUBLE(2); specifies to strike out the characters with a double line.
-;					$LOW_STRIKEOUT_DONT_KNOW(3); The strikeout mode is not specified.
-;					$LOW_STRIKEOUT_BOLD(4); specifies to strike out the characters with a bold line.
-;					$LOW_STRIKEOUT_SLASH(5); specifies to strike out the characters with slashes.
-;					$LOW_STRIKEOUT_X(6); specifies to strike out the characters with X's.
+; Strikeout Line Style Constants :  $LOW_STRIKEOUT_NONE(0); specifies not to strike out the characters.
+;									$LOW_STRIKEOUT_SINGLE(1); specifies to strike out the characters with a single line
+;									$LOW_STRIKEOUT_DOUBLE(2); specifies to strike out the characters with a double line.
+;									$LOW_STRIKEOUT_DONT_KNOW(3); The strikeout mode is not specified.
+;									$LOW_STRIKEOUT_BOLD(4); specifies to strike out the characters with a bold line.
+;									$LOW_STRIKEOUT_SLASH(5); specifies to strike out the characters with slashes.
+;									$LOW_STRIKEOUT_X(6); specifies to strike out the characters with X's.
 ; Related .......: _LOWriter_CharStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1338,7 +1338,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: $bULHasColor must be set to true in order to set the underline color.
-; UnderLine line style Constants: $LOW_UNDERLINE_NONE(0),
+; UnderLine line style Constants:   $LOW_UNDERLINE_NONE(0),
 ;									$LOW_UNDERLINE_SINGLE(1),
 ;									$LOW_UNDERLINE_DOUBLE(2),
 ;									$LOW_UNDERLINE_DOTTED(3),
@@ -1357,7 +1357,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT(16),
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
 ;									$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
