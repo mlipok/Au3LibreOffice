@@ -133,7 +133,7 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16, 32, 64, 128, 256
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iNumFormat
 ;				   |								2 = Error setting $iStartAt
 ;				   |								4 = Error setting $sCharStyle
@@ -522,7 +522,7 @@ EndFunc   ;==>_LOWriter_NumStyleGetObj
 ;				   @Error 1 @Extended 5 Return 0 = $sNewNumStyleName already exists in document.
 ;				   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sNewParStyleName
 ;				   |								2 = Error setting $bHidden
 ;				   --Version Related Errors--
@@ -606,7 +606,7 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAlignedAt
 ;				   |								2 = Error setting $iNumAlign
 ;				   |								4 = Error setting $iFollowedBy

@@ -2474,7 +2474,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted. in $iPosition.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test
-;				   +							@Extended for the following values: 1, 2, 4, 8
+;				   +							@Extended for the following values:
 ;				   |								1 = Error setting $iPosition
 ;				   |								2 = Error setting $iFillChar
 ;				   |								4 = Error setting $iAlignment
