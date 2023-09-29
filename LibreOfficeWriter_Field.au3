@@ -3672,7 +3672,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sBookmarkName       - a string value. The Bookmark name to Reference.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the bookmark, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the bookmark, see $LOW_FIELD_REF_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3690,7 +3690,6 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
 ;					 _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -3737,7 +3736,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oBookmarkRefField   - [in/out] an object. A Bookmark Reference field Object from a previous _LOWriter_FieldRefBookMarkInsert, or _LOWriter_FieldsGetList function.
 ;                  $sBookmarkName       - [optional] a string value. Default is Null. The Bookmark name to Reference.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the bookmark, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the bookmark, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3757,7 +3756,6 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
 ;					_LOWriter_FieldsGetList
 ; Link ..........:
@@ -3805,7 +3803,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Endnote, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Endnote, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3822,7 +3820,6 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefEndnoteModify, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -3868,7 +3865,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oEndNoteRefField    - [in/out] an object. A Endnote Reference field Object from a previous _LOWriter_FieldRefEndnoteInsert, or _LOWriter_FieldsGetList function.
 ;                  $oEndNote            - [optional] an object. Default is Null. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Endnote, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Endnote, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3890,7 +3887,6 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefEndnoteInsert, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3948,7 +3944,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iRefUsing            - [optional] an integer value. Default is Null. The Type of reference to use to reference the Footnote, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Footnote, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3965,7 +3961,6 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefFootnoteModify, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -4011,7 +4006,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oFootNoteRefField   - [in/out] an object. A Footnote Reference field Object from a previous _LOWriter_FieldRefFootnoteInsert, or _LOWriter_FieldsGetList function.
 ;                  $oFootNote           - [optional] an object. Default is Null. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Footnote, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to use to reference the Footnote, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4033,7 +4028,6 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefFootnoteInsert, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList,
 ;					_LOWriter_FieldsGetList
 ; Link ..........:
@@ -4089,7 +4083,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; Description ...: Retrieve the type of Data a Reference Field is Referencing.
 ; Syntax ........: _LOWriter_FieldRefGetType(Byref $oRefField)
 ; Parameters ....: $oRefField           - [in/out] an object. a Reference Field Object from a previous Insert or _LOWriter_FieldsGetList function.
-; Return values .: Success: Integer
+; Return values .: Success: Integer $LOW_FIELD_REF_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oRefField not an Object.
@@ -4098,7 +4092,6 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Reference Field can be referencing multiple different types of Data, such as a Reference Mark, or Bookmark, etc.
-; Reference Type Constants: $LOW_FIELD_REF_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -4120,7 +4113,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sRefMarkName        - a string value. The Reference Mark Name to Reference.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to insert, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to insert, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4139,7 +4132,6 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -4379,7 +4371,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oRefField           - [in/out] an object. A Reference field Object from a previous _LOWriter_FieldRefInsert or _LOWriter_FieldsGetList function.
 ;                  $sRefMarkName        - [optional] a string value. Default is Null. The Reference Mark Name to Reference.
-;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to insert, see Constants.
+;                  $iRefUsing           - [optional] an integer value. Default is Null. The Type of reference to insert, see $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4387,7 +4379,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ;				   @Error 1 @Extended 2 Return 0 = $oRefField not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $sRefMarkName not a String.
 ;				   @Error 1 @Extended 4 Return 0 = Document does not contain a Reference Mark by the same name as called in $sRefMarkName.
-;				   @Error 1 @Extended 6 Return 0 = $iRefUsing not an Integer, Less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 6 Return 0 = $iRefUsing not an Integer, Less than 0 or greater than 4. See $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;				   --Property Setting Errors--
@@ -4401,7 +4393,6 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Refer Using Constants: $LOW_FIELD_REF_USING_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldRefInsert, _LOWriter_FieldsGetList, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList
 ; Link ..........:
 ; Example .......: Yes
