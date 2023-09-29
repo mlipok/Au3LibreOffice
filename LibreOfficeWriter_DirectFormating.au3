@@ -110,7 +110,7 @@
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				  Call any optional parameter with Null keyword to skip it.
-; Color Constants: $LOW_COLOR_BLACK(0),
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -281,7 +281,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Style Constants: $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
+; Style Constants:  $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
 ;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
 ;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
 ;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
@@ -376,7 +376,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;				   To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -461,10 +461,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting.
-; Relief Constants: $LOW_RELIEF_NONE(0); no relief is used.
+; Relief Constants:     $LOW_RELIEF_NONE(0); no relief is used.
 ;						$LOW_RELIEF_EMBOSSED(1); the font relief is embossed.
 ;						$LOW_RELIEF_ENGRAVED(2); the font relief is engraved.
-; Case Constants : 	$LOW_CASEMAP_NONE(0); The case of the characters is unchanged.
+; Case Constants : 	    $LOW_CASEMAP_NONE(0); The case of the characters is unchanged.
 ;						$LOW_CASEMAP_UPPER(1); All characters are put in upper case.
 ;						$LOW_CASEMAP_LOWER(2); All characters are put in lower case.
 ;						$LOW_CASEMAP_TITLE(3); The first character of each word is put in upper case.
@@ -727,11 +727,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
 ; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
-;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
-;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
-;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
-;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-; Color Constants: $LOW_COLOR_BLACK(0),
+;							 $LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
+;							 $LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
+;							 $LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
+;							 $LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -990,7 +990,7 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
 ;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
 ;					are changed automatically to an acceptable value, which could trigger a settings error.
-; Weight Constants : $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
+; Weight Constants:     $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
 ;						$LOW_WEIGHT_THIN(50); specifies a 50% font weight.
 ;						$LOW_WEIGHT_ULTRA_LIGHT(60); specifies a 60% font weight.
 ;						$LOW_WEIGHT_LIGHT(75); specifies a 75% font weight.
@@ -1000,7 +1000,7 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;						$LOW_WEIGHT_BOLD(150); specifies a 150% font weight.
 ;						$LOW_WEIGHT_ULTRA_BOLD(175); specifies a 175% font weight.
 ;						$LOW_WEIGHT_BLACK(200); specifies a 200% font weight.
-; Slant/Posture Constants : $LOW_POSTURE_NONE(0); specifies a font without slant.
+; Slant/Posture Constants:  $LOW_POSTURE_NONE(0); specifies a font without slant.
 ;							$LOW_POSTURE_OBLIQUE(1); specifies an oblique font (slant not designed into the font).
 ;							$LOW_POSTURE_ITALIC(2); specifies an italic font (slant designed into the font).
 ;							$LOW_POSTURE_DontKnow(3); specifies a font with an unknown slant.
@@ -1094,7 +1094,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;				  Call any optional parameter with Null keyword to skip it.
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Font Color and
 ;						Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
@@ -1238,7 +1238,7 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Overline style,
 ;						Color and $bHasColor all reset together.
 ;					Note: $bOLHasColor must be set to true in order to set the underline color.
-; UnderLine line style Constants: $LOW_UNDERLINE_NONE(0),
+; UnderLine line style Constants:   $LOW_UNDERLINE_NONE(0),
 ;									$LOW_UNDERLINE_SINGLE(1),
 ;									$LOW_UNDERLINE_DOUBLE(2),
 ;									$LOW_UNDERLINE_DOTTED(3),
@@ -1257,7 +1257,7 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT(16),
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
 ;									$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
@@ -1373,16 +1373,16 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ;					$iLastLineAlign, and $bExpandSingleWord are all reset together.
 ;					 Note: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
 ;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-; Horizontal Alignment Constants: $LOW_PAR_ALIGN_HOR_LEFT(0); The Paragraph is left-aligned between the borders.
+; Horizontal Alignment Constants:   $LOW_PAR_ALIGN_HOR_LEFT(0); The Paragraph is left-aligned between the borders.
 ;									$LOW_PAR_ALIGN_HOR_RIGHT(1); The Paragraph is right-aligned between the borders.
 ;									$LOW_PAR_ALIGN_HOR_JUSTIFIED(2); The Paragraph is adjusted to both borders / stretched.
 ;									$LOW_PAR_ALIGN_HOR_CENTER(3); The Paragraph is centered between the left and right borders.
-; Vertical Alignment Constants: $LOW_PAR_ALIGN_VERT_AUTO(0); In automatic mode, horizontal text is aligned to the baseline. The same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the center.
+; Vertical Alignment Constants:     $LOW_PAR_ALIGN_VERT_AUTO(0); In automatic mode, horizontal text is aligned to the baseline. The same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the center.
 ;									$LOW_PAR_ALIGN_VERT_BASELINE(1); The text is aligned to the baseline.
 ;									$LOW_PAR_ALIGN_VERT_TOP(2); The text is aligned to the top.
 ;									$LOW_PAR_ALIGN_VERT_CENTER(3); The text is aligned to the center.
 ;									$LOW_PAR_ALIGN_VERT_BOTTOM(4); The text is aligned to bottom.
-; Last Line Alignment Constants: $LOW_PAR_LAST_LINE_START(0); The Paragraph is aligned either to the Left border or the right, depending on the current text direction.
+; Last Line Alignment Constants:    $LOW_PAR_LAST_LINE_START(0); The Paragraph is aligned either to the Left border or the right, depending on the current text direction.
 ;									$LOW_PAR_LAST_LINE_JUSTIFIED(2); The Paragraph is adjusted to both borders / stretched.
 ;									$LOW_PAR_LAST_LINE_CENTER(3); The Paragraph is centered between the left and right borders.
 ; Text Direction Constants: $LOW_TXT_DIR_LR_TB(0), — text within lines is written left-to-right. Lines and blocks are placed top-to-bottom. Typically, this is the writing mode for normal "alphabetic" text.
@@ -1479,7 +1479,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
@@ -1569,7 +1569,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					 Border Width must be set first to be able to set Border Style and Color.
-; Color Constants: $LOW_COLOR_BLACK(0),
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -1738,7 +1738,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					 Border Width must be set first to be able to set Border Style and Color.
-; Style Constants: $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
+; Style Constants:  $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
 ;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
 ;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
 ;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
@@ -1836,7 +1836,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
 ;					 To "Turn Off" Borders, set them to 0
-; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
+; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
 ;					$LOW_BORDERWIDTH_VERY_THIN(18),
 ;					$LOW_BORDERWIDTH_THIN(26),
 ;					$LOW_BORDERWIDTH_MEDIUM(53),
@@ -2168,17 +2168,17 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;					"Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am
 ;					able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable
 ;					to clear either setting once applied, so for those reasons I am not including it in this UDF.
-; Outline Constants :$LOW_OUTLINE_BODY(0); Indicates that the paragraph belongs to the body text.
-;					$LOW_OUTLINE_LEVEL_1(1), Indicates that the paragraph belongs to the corresponding outline level.
-;					$LOW_OUTLINE_LEVEL_2(2),
-;					$LOW_OUTLINE_LEVEL_3(3),
-;					$LOW_OUTLINE_LEVEL_4(4),
-;					$LOW_OUTLINE_LEVEL_5(5),
-;					$LOW_OUTLINE_LEVEL_6(6),
-;					$LOW_OUTLINE_LEVEL_7(7),
-;					$LOW_OUTLINE_LEVEL_8(8),
-;					$LOW_OUTLINE_LEVEL_9(9),
-;					$LOW_OUTLINE_LEVEL_10(10)
+; Outline Constants : $LOW_OUTLINE_BODY(0); Indicates that the paragraph belongs to the body text.
+;					  $LOW_OUTLINE_LEVEL_1(1), Indicates that the paragraph belongs to the corresponding outline level.
+;					  $LOW_OUTLINE_LEVEL_2(2),
+;					  $LOW_OUTLINE_LEVEL_3(3),
+;					  $LOW_OUTLINE_LEVEL_4(4),
+;					  $LOW_OUTLINE_LEVEL_5(5),
+;					  $LOW_OUTLINE_LEVEL_6(6),
+;					  $LOW_OUTLINE_LEVEL_7(7),
+;					  $LOW_OUTLINE_LEVEL_8(8),
+;					  $LOW_OUTLINE_LEVEL_9(9),
+;					  $LOW_OUTLINE_LEVEL_10(10)
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -2275,7 +2275,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
 ;						 though I'm not sure if they will work correctly.
-; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
+; Break Constants :     $LOW_BREAK_NONE(0) – No column or page break is applied.
 ;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current Paragraph, therefore, is the first in the column.
 ;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current Paragraph, therefore, is the last in the column.
 ;						$LOW_BREAK_COLUMN_BOTH(3) – A column break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only Paragraph in the column.
@@ -2360,11 +2360,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;				   Call any optional parameter with Null keyword to skip it.
 ;					Note: LibreOffice may change the shadow width +/- a Micrometer.
 ; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
-;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
-;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
-;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
-;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-; Color Constants: $LOW_COLOR_BLACK(0),
+;							 $LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
+;							 $LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
+;							 $LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
+;							 $LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
+; Color Constants:  $LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
 ;					$LOW_COLOR_GRAY(8421504),
@@ -2470,7 +2470,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;					$iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
 ;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
-; Spacing Constants :$LOW_LINE_SPC_MODE_PROP(0); This specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
+; Spacing Constants :   $LOW_LINE_SPC_MODE_PROP(0); This specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
 ;						$LOW_LINE_SPC_MODE_MIN(1); (Minimum/At least) This specifies the height as the minimum line height. Min 0, Max 10008 MicroMeters (uM)
 ;						$LOW_LINE_SPC_MODE_LEADING(2); This specifies the height value as the distance to the previous line. Min 0, Max 10008 MicroMeters (uM)
 ;						$LOW_LINE_SPC_MODE_FIX(3); This specifies the height value as a fixed line height. Min 51 MicroMeters, Max 10008 MicroMeters (uM)
@@ -2580,7 +2580,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
 ;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
 ;					Call any optional parameter with Null keyword to skip it.
-; Tab Alignment Constants: $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
+; Tab Alignment Constants:  $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
 ;							$LOW_TAB_ALIGN_CENTER(1); Aligns the center of the text to the tab stop
 ;							$LOW_TAB_ALIGN_RIGHT(2); Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
 ;							$LOW_TAB_ALIGN_DECIMAL(3); Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab
@@ -2752,7 +2752,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
 ;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
 ;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
-; Tab Alignment Constants: $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
+; Tab Alignment Constants:  $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
 ;							$LOW_TAB_ALIGN_CENTER(1); Aligns the center of the text to the tab stop
 ;							$LOW_TAB_ALIGN_RIGHT(2); Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
 ;							$LOW_TAB_ALIGN_DECIMAL(3); Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab
@@ -2913,13 +2913,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $bStrikeout and
 ;						$iStrikeLineStyle are reset together.
 ;					Note Strikeout converted to single line in Ms word document format.
-; Strikeout Line Style Constants : $LOW_STRIKEOUT_NONE(0); specifies not to strike out the characters.
-;					$LOW_STRIKEOUT_SINGLE(1); specifies to strike out the characters with a single line
-;					$LOW_STRIKEOUT_DOUBLE(2); specifies to strike out the characters with a double line.
-;					$LOW_STRIKEOUT_DONT_KNOW(3); The strikeout mode is not specified.
-;					$LOW_STRIKEOUT_BOLD(4); specifies to strike out the characters with a bold line.
-;					$LOW_STRIKEOUT_SLASH(5); specifies to strike out the characters with slashes.
-;					$LOW_STRIKEOUT_X(6); specifies to strike out the characters with X's.
+; Strikeout Line Style Constants :  $LOW_STRIKEOUT_NONE(0); specifies not to strike out the characters.
+;									$LOW_STRIKEOUT_SINGLE(1); specifies to strike out the characters with a single line
+;									$LOW_STRIKEOUT_DOUBLE(2); specifies to strike out the characters with a double line.
+;									$LOW_STRIKEOUT_DONT_KNOW(3); The strikeout mode is not specified.
+;									$LOW_STRIKEOUT_BOLD(4); specifies to strike out the characters with a bold line.
+;									$LOW_STRIKEOUT_SLASH(5); specifies to strike out the characters with slashes.
+;									$LOW_STRIKEOUT_X(6); specifies to strike out the characters with X's.
 ; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -3001,7 +3001,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Underline style,
 ;						Color and $bHasColor all reset together.
 ;					Note: $bULHasColor must be set to true in order to set the underline color.
-; UnderLine line style Constants: $LOW_UNDERLINE_NONE(0),
+; UnderLine line style Constants:   $LOW_UNDERLINE_NONE(0),
 ;									$LOW_UNDERLINE_SINGLE(1),
 ;									$LOW_UNDERLINE_DOUBLE(2),
 ;									$LOW_UNDERLINE_DOTTED(3),
@@ -3020,7 +3020,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT(16),
 ;									$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
 ;									$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
+; Color Constants:  $LOW_COLOR_OFF(-1),
 ;					$LOW_COLOR_BLACK(0),
 ;					$LOW_COLOR_WHITE(16777215),
 ;					$LOW_COLOR_LGRAY(11711154),
