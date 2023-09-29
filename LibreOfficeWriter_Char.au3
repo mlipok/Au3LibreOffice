@@ -55,7 +55,7 @@
 ; Name ..........: _LOWriter_CharStyleBorderColor
 ; Description ...: Set and Retrieve the Character Style Border Line Color. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleBorderColor(Byref $oCharStyle[, $iTop = Null[, $iBottom = Null[,$iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the Character Style in Long Color code format. One of the predefined constants listed below can be used, or a custom value.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the Character Style in Long Color code format. One of the predefined constants listed below can be used, or a custom value.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Color of the Character Style in Long Color code format. One of the predefined constants listed below can be used, or a custom value.
@@ -136,7 +136,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ; Name ..........: _LOWriter_CharStyleBorderPadding
 ; Description ...: Set and retrieve the distance between the border and the characters. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleBorderPadding(Byref $oCharStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iAll                - [optional] an integer value. Default is Null. Set all four values to the same value. When used, all other parameters are ignored.  In MicroMeters.
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top border distance in MicroMeters.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom border distance in MicroMeters.
@@ -154,7 +154,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ;				   @Error 1 @Extended 7 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
 ;				   |								2 = Error setting $iTop border distance
 ;				   |								4 = Error setting $iBottom border distance
@@ -193,7 +193,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 ; Name ..........: _LOWriter_CharStyleBorderStyle
 ; Description ...: Set or Retrieve the Character Style Border Line style. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleBorderStyle(Byref $oCharStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of the Character Style using one of the line style constants, See below for list. To skip a parameter, set it to Null.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Character Style using one of the line style constants, See below for list. To skip a parameter, set it to Null.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Character Style using one of the line style constants, See below for list. To skip a parameter, set it to Null.
@@ -274,7 +274,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ; Name ..........: _LOWriter_CharStyleBorderWidth
 ; Description ...: Set and Retrieve the Character Style Border Line Width. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleBorderWidth(Byref $oCharStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Character Style in MicroMeters. One of the predefined constants listed below can be used. To skip a parameter, set it to Null.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Character Style in MicroMeters. One of the predefined constants listed below can be used. To skip a parameter, set it to Null.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Character Style in MicroMeters. One of the predefined constants listed below can be used. To skip a parameter, set it to Null.
@@ -338,8 +338,8 @@ EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 ; Name ..........: _LOWriter_CharStyleCreate
 ; Description ...: Create a new Character Style in a Document.
 ; Syntax ........: _LOWriter_CharStyleCreate(Byref $oDoc, $sCharStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $sCharStyle          - a string value. The Name of the New Character Style to Create.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCharStyle     - a string value. The Name of the New Character Style to Create.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -389,8 +389,8 @@ EndFunc   ;==>_LOWriter_CharStyleCreate
 ; Name ..........: _LOWriter_CharStyleDelete
 ; Description ...: Delete a User-Created Character Style from a Document.
 ; Syntax ........: _LOWriter_CharStyleDelete(Byref $oDoc, $oCharStyle[, $bForceDelete = False[, $sReplacementStyle = ""]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function. Must be a User-Created Style, not a built-in Style native to Libre-Office.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function. Must be a User-Created Style, not a built-in Style native to Libre-Office.
 ;                  $bForceDelete        - [optional] a boolean value. Default is False. If True Character style will be deleted regardless of whether it is in use or not.
 ;                  $sReplacementStyle   - [optional] a string value. Default is "". The Character style to use instead of the one being deleted if the Character style being deleted was already applied to text in the document. "" = No Character Style
 ; Return values .: Success: 1
@@ -451,7 +451,7 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ; Name ..........: _LOWriter_CharStyleEffect
 ; Description ...: Set or Retrieve the Font Effect settings for a Character Style.
 ; Syntax ........: _LOWriter_CharStyleEffect(Byref $oCharStyle[, $iRelief = Null[, $iCase = Null[, $bHidden = Null[, $bOutline = Null[, $bShadow = Null]]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iRelief             - [optional] an integer value. Default is Null. The Character Relief style. See Constants below.
 ;                  $iCase               - [optional] an integer value. Default is Null. The Character Case Style. See Constants below.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether the Characters are hidden or not.
@@ -469,7 +469,7 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ;				   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4,8, 16
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iRelief
 ;				   |								2 = Error setting $iCase
 ;				   |								4 = Error setting $bHidden
@@ -511,8 +511,8 @@ EndFunc   ;==>_LOWriter_CharStyleEffect
 ; Name ..........: _LOWriter_CharStyleExists
 ; Description ...: Check whether a document contains a Character Style by Name.
 ; Syntax ........: _LOWriter_CharStyleExists(Byref $oDoc, $sCharStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $sCharStyle          - a string value. The Character Style to check.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCharStyle     - a string value. The Character Style name to check for.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -543,8 +543,8 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ; Name ..........: _LOWriter_CharStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Character Style.
 ; Syntax ........: _LOWriter_CharStyleFont(Byref $oDoc, $oCharStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to change to.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
 ;                  $iPosture            - [optional] an integer value. Default is Null. Italic setting. See Constants below. Also see remarks.
@@ -562,7 +562,7 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ;				   @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants.
 ;				   @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4,8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sFontName
 ;				   |								2 = Error setting $nFontSize
 ;				   |								4 = Error setting $iPosture
@@ -616,7 +616,7 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ; Name ..........: _LOWriter_CharStyleFontColor
 ; Description ...: Set or retrieve the font color, transparency and highlighting of a Character style.
 ; Syntax ........: _LOWriter_CharStyleFontColor(Byref $oCharStyle[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iFontColor          - [optional] an integer value. Default is Null. the desired Color value in Long Integer format, to make the font, can be one of the constants listed below or a custom value. Set to $LOW_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - [optional] an integer value. Default is Null. Transparency percentage. 0 is not visible, 100 is fully visible. Available for Libre Office 7.0 and up.
 ;                  $iHighlight          - [optional] an integer value. Default is Null. A Color value in Long Integer format, to highlight the text in, can be one of the constants listed below or a custom value. Set to $LOW_COLOR_OFF(-1) for No color.
@@ -630,7 +630,7 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ;				   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
 ;				   @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $FontColor
 ;				   |								2 = Error setting $iTransparency.
 ;				   |								4 = Error setting $iHighlight
@@ -685,8 +685,8 @@ EndFunc   ;==>_LOWriter_CharStyleFontColor
 ; Name ..........: _LOWriter_CharStyleGetObj
 ; Description ...: Retrieve a Character Style Object for use with other CharStyle functions.
 ; Syntax ........: _LOWriter_CharStyleGetObj(Byref $oDoc, $sCharStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $sCharStyle           - a string value. The Character Style name to retrieve the Object for.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCharStyle          - a string value. The Character Style name to retrieve the Object for.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -723,8 +723,8 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ; Name ..........: _LOWriter_CharStyleOrganizer
 ; Description ...: Set or retrieve the Organizer settings of a Character Style.
 ; Syntax ........: _LOWriter_CharStyleOrganizer(Byref $oDoc, $oCharStyle[, $sNewCharStyleName = Null[, $sParentStyle = Null[, $bHidden = Null]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
-;                  $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $sNewCharStyleName   - [optional] a string value. Default is Null. The new name to set $sChrStyle Character style to.
 ;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing  Character style (or an Empty String ("") = - None -) to apply its settings to the current style. Use the other settings to modify the inherited style settings.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre Office version 4.0 and up only.
@@ -740,7 +740,7 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ;				   @Error 1 @Extended 7 Return 0 = $sParentStyle Doesn't exist in this Document.
 ;				   @Error 1 @Extended 8 Return 0 = $bHidden not a Boolean.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sNewParStyleName
 ;				   |								2 = Error setting $sParentStyle
 ;				   |								4 = Error setting $bHidden
@@ -811,7 +811,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ; Name ..........: _LOWriter_CharStyleOverLine
 ; Description ...: Set and retrieve the OverLine settings for a Character style.
 ; Syntax ........: _LOWriter_CharStyleOverLine(Byref $oCharStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value. Default is Null. The style of the Overline line, see constants listed below. See Remarks.
 ;                  $bOLHasColor         - [optional] a boolean value. Default is Null. Whether the Overline is colored, must be set to true in order to set the Overline color.
@@ -827,7 +827,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;				   @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $iOverLineStyle
 ;				   |								4 = Error setting $OLHasColor
@@ -901,7 +901,7 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ; Name ..........: _LOWriter_CharStylePosition
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: _LOWriter_CharStylePosition(Byref $oCharStyle[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SuperScript.
 ;                  $iSuperScript        - [optional] an integer value. Default is Null. SuperScript percentage value. See Remarks.
 ;                  $bAutoSub            - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SubScript.
@@ -919,7 +919,7 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ;				   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000.
 ;				   @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iSuperScript
 ;				   |								2 = Error setting $iSubScript
 ;				   |								4 = Error setting $iRelativeSize.
@@ -963,7 +963,7 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 ; Name ..........: _LOWriter_CharStyleRotateScale
 ; Description ...: Set or retrieve the character rotational and Scale settings for a Character Style.
 ; Syntax ........: _LOWriter_CharStyleRotateScale(Byref $oCharStyle[, $iRotation = Null[, $iScaleWidth = Null]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iRotation           - [optional] an integer value. Default is Null. Degrees to rotate the text. Accepts only 0, 90, and 270 degrees.
 ;                  $iScaleWidth         - [optional] an integer value. Default is Null. The percentage to  horizontally stretch or compress the text. Must be above 1. Max 100. 100 is normal sizing.
 ; Return values .: Success: 1 or Array.
@@ -975,7 +975,7 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 ;				   @Error 1 @Extended 4 Return 0 = $iRotation not an Integer or not equal to 0, 90 or 270 degrees.
 ;				   @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iRotation
 ;				   |								2 = Error setting $iScaleWidth
 ;				   --Success--
@@ -1006,7 +1006,7 @@ EndFunc   ;==>_LOWriter_CharStyleRotateScale
 ; Name ..........: _LOWriter_CharStyleSet
 ; Description ...: Set a Character style for a section of text by Cursor or paragraph Object.
 ; Syntax ........: _LOWriter_CharStyleSet(Byref $oDoc, Byref $oObj, $sCharStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
 ;                  $sCharStyle          - a string value. The Character Style name.
 ; Return values .: Success: 1
@@ -1050,7 +1050,7 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ; Name ..........: _LOWriter_CharStylesGetNames
 ; Description ...: Retrieve a list of all Character Style names available for a document.
 ; Syntax ........: _LOWriter_CharStylesGetNames(Byref $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Character Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Character Styles are returned.
 ; Return values .: Success: Integer or Array
@@ -1119,7 +1119,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ; Name ..........: _LOWriter_CharStyleShadow
 ; Description ...: Set and retrieve the Shadow for a Character Style. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleShadow(Byref $oCharStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. Width of the shadow, set in Micrometers.
 ;                  $iColor              - [optional] an integer value. Default is Null. Color of the shadow. See Remarks and Constants below.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the shadow is transparent or not.
@@ -1138,7 +1138,7 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
 ;				   |								2 = Error setting $iColor
 ;				   |								4 = Error setting $bTransparent
@@ -1200,7 +1200,7 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 ; Name ..........: _LOWriter_CharStyleSpacing
 ; Description ...: Set and retrieve the spacing between characters (Kerning) for a Character style.
 ; Syntax ........: _LOWriter_CharStyleSpacing(Byref $oDoc, $sCharStyle[, $bAutoKerning = Null[, $nKerning = Null]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $bAutoKerning        - [optional] a boolean value. Default is Null. True applies a spacing in between certain pairs of characters. False = disabled.
 ;                  $nKerning            - [optional] a general number value. Default is Null. The kerning value of the characters. Min is -2 Pt. Max is 928.8 Pt. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: 1 or Array.
@@ -1212,7 +1212,7 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoKerning
 ;				   |								2 = Error setting $nKerning.
 ;				   --Success--
@@ -1255,7 +1255,7 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ; Name ..........: _LOWriter_CharStyleStrikeOut
 ; Description ...: Set or Retrieve the StrikeOut settings for a Character style.
 ; Syntax ........: _LOWriter_CharStyleStrikeOut(Byref $oCharStyle[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. Whether to strike out words only and skip whitespaces. True = skip whitespaces.
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. True = strikeout, False = no strikeout.
 ;                  $iStrikeLineStyle    - [optional] an integer value. Default is Null. The Strikeout Line Style, see constants below.
@@ -1269,7 +1269,7 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ;				   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. Check the Constants list.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $bStrikeOut
 ;				   |								4 = Error setting $iStrikeLineStyle
@@ -1309,7 +1309,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Name ..........: _LOWriter_CharStyleUnderLine
 ; Description ...: Set and retrieve the UnderLine settings for a Character style.
 ; Syntax ........: _LOWriter_CharStyleUnderLine(Byref $oCharStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
-; Parameters ....: $oCharStyle           - [in/out] an object. A Character Style object returned by previous CharStyle Create or Object Retrieval function.
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by previous _LOWriter_CharStyleCreate, _LOWriter_CharStyleGetObj, function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value. Default is Null. The style of the Underline line, see constants listed below.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. Whether the underline is colored, must be set to true in order to set the underline color.
@@ -1325,7 +1325,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ;				   @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values: 1, 2, 4, 8
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
 ;				   |								2 = Error setting $iUnderLineStyle
 ;				   |								4 = Error setting $ULHasColor
