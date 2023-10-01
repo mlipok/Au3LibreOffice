@@ -82,8 +82,8 @@ Global Const _
 
 ; Printer Paper Orientation Constants.
 Global Const _
-		$LOW_PAPER_ORIENT_PORTRAIT = 0, _                              ; Portrait Paper Orientation.
-		$LOW_PAPER_ORIENT_LANDSCAPE = 1                                ; Landscape Paper Orientation.
+		$LOW_PAPER_ORIENT_PORTRAIT = 0, _                       ; Portrait Paper Orientation.
+		$LOW_PAPER_ORIENT_LANDSCAPE = 1                         ; Landscape Paper Orientation.
 
 ; Paper Size Constants.
 Global Const _
