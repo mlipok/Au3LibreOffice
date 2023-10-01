@@ -47,8 +47,8 @@
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(Byref $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iBackColor          - [optional] an integer value. Default is Null. Specify the Cell background color as a Long Integer. See Remarks.
-;				   +						Set to $LOW_COLOR_OFF(-1) to disable Background color.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks.
+;				   +						Set to $LOW_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -67,26 +67,7 @@
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
-;					See _LOWriter_ConvertColorToLong, _LOWriter_ConvertColorFromLong. There are also preset colors, listed below.
-; Color Constants:  $LOW_COLOR_OFF(-1)
-;					$LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
+;					See _LOWriter_ConvertColorToLong, _LOWriter_ConvertColorFromLong.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -127,14 +108,14 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format.
-;				   +						One of the predefined constants listed below can be used, or a custom value.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format.
-;				   +						One of the predefined constants listed below can be used, or a custom value.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format.
-;				   +						One of the predefined constants listed below can be used, or a custom value.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format.
-;				   +						One of the predefined constants listed below can be used, or a custom value.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format.
+;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format.
+;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format.
+;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format.
+;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -161,27 +142,8 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Color Constants:  $LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CellBorderWidth,
 ;					_LOWriter_CellBorderStyle, _LOWriter_CellBorderPadding
@@ -285,10 +247,10 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderStyle(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of theCell using one of the line style constants, See below for list.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, See below for list.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, See below for list.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, See below for list.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -317,25 +279,6 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Style Constants:  $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
-;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
-;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
-;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
-;					$LOW_BORDERSTYLE_DOUBLE(3) Double border line,
-;					$LOW_BORDERSTYLE_THINTHICK_SMALLGAP(4) Double border line with a thin line outside and a thick line inside separated by a small gap,
-;					$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP(5) Double border line with a thin line outside and a thick line inside separated by a medium gap,
-;					$LOW_BORDERSTYLE_THINTHICK_LARGEGAP(6) Double border line with a thin line outside and a thick line inside separated by a large gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP(7) Double border line with a thick line outside and a thin line inside separated by a small gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP(8) Double border line with a thick line outside and a thin line inside separated by a medium gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP(9) Double border line with a thick line outside and a thin line inside separated by a large gap,
-;					$LOW_BORDERSTYLE_EMBOSSED(10) 3D embossed border line,
-;					$LOW_BORDERSTYLE_ENGRAVED(11) 3D engraved border line,
-;					$LOW_BORDERSTYLE_OUTSET(12) Outset border line,
-;					$LOW_BORDERSTYLE_INSET(13) Inset border line,
-;					$LOW_BORDERSTYLE_FINE_DASHED(14) Finely dashed border line,
-;					$LOW_BORDERSTYLE_DOUBLE_THIN(15) Double border line consisting of two fixed thin lines separated by a variable gap,
-;					$LOW_BORDERSTYLE_DASH_DOT(16) Line consisting of a repetition of one dash and one dot,
-;					$LOW_BORDERSTYLE_DASH_DOT_DOT(17) Line consisting of a repetition of one dash and 2 dots.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_CellBorderWidth, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
 ; Link ..........:
@@ -360,10 +303,10 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line Width. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderWidth(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in MicroMeters. One of the predefined constants listed below can be used.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -387,12 +330,6 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants:  $LOW_BORDERWIDTH_HAIRLINE(2),
-;					$LOW_BORDERWIDTH_VERY_THIN(18),
-;					$LOW_BORDERWIDTH_THIN(26),
-;					$LOW_BORDERWIDTH_MEDIUM(53),
-;					$LOW_BORDERWIDTH_THICK(79),
-;					$LOW_BORDERWIDTH_EXTRA_THICK(159)
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderStyle,
 ;					_LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
@@ -496,10 +433,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns the data type as one of the below constants, Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data contained.
-; Data Type Constants:  $LOW_CELL_TYPE_EMPTY(0), cell is empty.
-;						$LOW_CELL_TYPE_VALUE(1), cell contains a value.
-;						$LOW_CELL_TYPE_TEXT(2), cell contains text.
-;						$LOW_CELL_TYPE_FORMULA(3), cell contains a formula.
+; Data Type Constants: $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -695,7 +629,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ; Description ...: Set the Vertical Orientation of the Cell or Cell Range contents.
 ; Syntax ........: _LOWriter_CellVertOrient(Byref $oCell[, $iVertOrient = Null])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iVertOrient         - [optional]  an integer value. Default is Null. A Vertical Orientation constant. See Constants Below.
+;                  $iVertOrient         - [optional] an integer value (0-3). Default is Null. A Vertical Orientation constant. $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -705,14 +639,10 @@ EndFunc   ;==>_LOWriter_CellValue
 ;				   @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Succesfully set Vertical Orientation.
-;				   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants below.
+;				   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Only the Vertical Orientation Constants listed below are accepted. If $iVertOrient is set to Null the current setting is returned.
-; Vertical Orientation Constants:   $LOW_ORIENT_VERT_NONE(0),
-;									$LOW_ORIENT_VERT_TOP(1),
-;									$LOW_ORIENT_VERT_CENTER(2),
-;									$LOW_ORIENT_VERT_BOTTOM(3)
+; Remarks .......: If $iVertOrient is set to Null the current setting is returned.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
