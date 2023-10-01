@@ -928,7 +928,7 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Current ViewCursor is in unknown data type or failed detecting what data type.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Object = Success, Cursor object was returned. @Extended can be on of the below constants indicating the current created cursor is in that type of data.
+;				   @Error 0 @Extended ? Return Object = Success, Cursor object was returned. @Extended can be on of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3 indicating the current created cursor is in that type of data.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The cursor Created by this function in a text document, is used for inserting text, reading text, etc.
@@ -940,7 +940,6 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;					you do not see, called the "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing
 ;					a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor
 ;					used for inserting text etc., into a Writer document. You can have multiple "TextCursors" per document.
-; Cursor Data Type Constants: $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
@@ -2615,14 +2614,14 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ; Syntax ........: _LOWriter_DocInsertControlChar(Byref $oDoc, Byref $oCursor, $iConChar[, $bOverwrite = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iConChar            - an integer value. The control character to insert. See constants below.
+;                  $iConChar            - an integer value (0-5). The control character to insert. See constants, $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, and the cursor object has text selected, it is overwritten, else the character is inserted to the left of the selection.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iConChar not an Integer, less than 0 or higher than 5. See Constants below.
+;				   @Error 1 @Extended 3 Return 0 = $iConChar not an Integer, less than 0 or higher than 5. See Constants, $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $oCursor is a TableCursor. Can only use View Cursor or Text Cursor.
 ;				   --Processing Errors--
@@ -2633,7 +2632,6 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Control Char Constants: $LOW_CON_CHAR_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
@@ -3084,7 +3082,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;                  $vPages              - [optional] a String or Integer value. Default is "ALL". Specifies which pages to print. See remarks.
 ;                  $bWait               - [optional] a boolean value. Default is True. If True, the corresponding print request will be executed synchronous. Default is the asynchronous print mode.
 ;				   +						ATTENTION: Setting this field to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
-;                  $iDuplexMode         - [optional] an integer value. Default is $__g_iDuplexOFF. Determines the duplex mode for the print job. See Constants.
+;                  $iDuplexMode         - [optional] an integer value (0-3). Default is $__g_iDuplexOFF. Determines the duplex mode for the print job. See Constants, $LOW_DUPLEX_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPrinter            - [optional] a string value. Default is "". Printer name. If left blank, or if printer name is not found, default printer is used.
 ;                  $sFilePathName       - [optional] a string value. Default is "". Specifies the name of a file to print to. Creates a .prn file at the given Path. Must include the desired path destination with file name.
 ; Return values .: Success: 1
@@ -3096,7 +3094,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;				   @Error 1 @Extended 4 Return 0 = $vPages Not an Integer or String.
 ;				   @Error 1 @Extended 5 Return 0 = $vPages contains invalid characters, a-z, or a period(.).
 ;				   @Error 1 @Extended 6 Return 0 = $bWait not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iDuplexMode not an Integer, less than 0 or greater than 3. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iDuplexMode not an Integer, less than 0 or greater than 3. See Constants, $LOW_DUPLEX_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $sPrinter Not a String.
 ;				   @Error 1 @Extended 9 Return 0 = $sFilePathName Not a String.
 ;				   --Property Setting Errors--
@@ -3117,7 +3115,6 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;					$vPages range is given as entered in the user interface. For example: "1-4,10" to print the pages 1 to 4 and 10.
 ;					Default is "ALL". Must be in String format to accept more than just a single page number.
 ;					i.e. This will work: "1-6,12,27" This will Not 1-6,12,27. This will work: "7", This will also: 7.
-; Duplex Mode Constants: $LOW_DUPLEX_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings,
 ;					_LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3272,9 +3269,9 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Description ...: Set or Retrieve Miscellaneous Printing related settings.
 ; Syntax ........: _LOWriter_DocPrintMiscSettings(Byref $oDoc[, $iPaperOrient = Null[, $sPrinterName = Null[, $iCommentsMode = Null[, $bBrochure = Null[, $bBrochureRTL = Null[, $bReversed = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iPaperOrient        - [optional] an integer value. Default is Null. The orientation of the paper. See Constants.
+;                  $iPaperOrient        - [optional] an integer value (0-1). Default is Null. The orientation of the paper. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPrinterName        - [optional] a string value. Default is Null. The Name of the Printer to set as the printer to send print jobs to.
-;                  $iCommentsMode       - [optional] an integer value. Default is Null. Where to print comments (if any). See Constants.
+;                  $iCommentsMode       - [optional] an integer value (0-3). Default is Null. Where to print comments (if any). See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bBrochure           - [optional] a boolean value. Default is Null. If True, prints the document in brochure format.
 ;                  $bBrochureRTL        - [optional] a boolean value. Default is Null. If True, prints the document in brochure Right to Left format.
 ;                  $bReversed           - [optional] a boolean value. Default is Null. If True, prints pages in reverse order.
@@ -3282,9 +3279,9 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iPaperOrient not an integer, less than 0 or greater than 1. See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iPaperOrient not an integer, less than 0 or greater than 1. See Constants, $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $sPrinterName not a string.
-;				   @Error 1 @Extended 4 Return 0 = $iCommentsMode not an integer, less than 0, or greater than 3. See Constants.
+;				   @Error 1 @Extended 4 Return 0 = $iCommentsMode not an integer, less than 0, or greater than 3. See Constants, $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 5 Return 0 = $bBrochure not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $bBrochureRTL not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $bReversed not a Boolean.
@@ -3309,8 +3306,6 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Orientation Constants: $LOW_PAPER_ORIENT_* as defined in LibreOfficeWriter_Constants.au3
-; Comment Print Mode Constants: $LOW_PRINT_NOTES_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
@@ -3485,16 +3480,16 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Description ...: Set or Retrieve Print Paper size settings.
 ; Syntax ........: _LOWriter_DocPrintSizeSettings(Byref $oDoc[, $iPaperFormat = Null[, $iPaperWidth = Null[, $iPaperHeight = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iPaperFormat        - [optional] an integer value. Default is Null. Specifies a predefined paper size or if the paper size is a user-defined size. See constants.
-;                  $iPaperWidth         - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. See constants below for possible options, can also be a custom value.
+;                  $iPaperFormat        - [optional] an integer value (0-8). Default is Null. Specifies a predefined paper size or if the paper size is a user-defined size. See constants, $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iPaperWidth         - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. Can be a custom value or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   +						Note: for some reason, setting this setting modifies the document page size also, I am unsure why.
-;                  $iPaperHeight        - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. See constants below for possible options, can also be a custom value.
+;                  $iPaperHeight        - [optional] an integer value. Default is Null. Specifies the size of the paper in micrometers. Can be a custom value or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   +						Note: for some reason, setting this setting modifies the document page size also, I am unsure why.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iPaperFormat not an integer, less than 0 or greater than 8. See constants.
+;				   @Error 1 @Extended 2 Return 0 = $iPaperFormat not an integer, less than 0 or greater than 8. See constants, $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $iPaperWidth not an integer, and not set to Null keyword.
 ;				   @Error 1 @Extended 4 Return 0 = $iPaperHeight not an integer, and not set to Null keyword.
 ;				   --Initialization Errors--
@@ -3517,9 +3512,6 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Paper Format Constants: $LOW_PAPER_* as defined in LibreOfficeWriter_Constants.au3
-; Paper Width Constants: $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3
-; Paper Height Constants: $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocPrintPageSettings,
 ;					_LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
