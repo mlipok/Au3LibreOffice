@@ -18,7 +18,7 @@ Func Example()
 	If (@error > 0) Then _ERROR("Error retrieving Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "Current Settings", "Your current miscellaneous print settings are as follows: " & @CRLF & @CRLF & _
-			"Paper Orientation:— " & $avSettings[0] & @CRLF & " 0 = $LOW_PAPER_PORTRAIT, 1 = $LOW_PAPER_LANDSCAPE" & @CRLF & @CRLF & _
+			"Paper Orientation:— " & $avSettings[0] & @CRLF & " 0 = $LOW_PAPER_ORIENT_PORTRAIT, 1 = $LOW_PAPER_ORIENT_LANDSCAPE" & @CRLF & @CRLF & _
 			"Printer Name:— " & $avSettings[1] & @CRLF & @CRLF & _
 			"Comment Print Mode:— " & $avSettings[2] & @CRLF & " 0 = $LOW_PRINT_NOTES_NONE, 1 = $LOW_PRINT_NOTES_ONLY, " & _
 			"2 = $LOW_PRINT_NOTES_END, 3 = $LOW_PRINT_NOTES_NEXT_PAGE" & @CRLF & @CRLF & _
@@ -29,7 +29,7 @@ Func Example()
 
 	; Changes the print settings to Landscape, Skip the printer setting, Print comments Only, Print in brochure,
 	;	print Brochure in Right to Left mode, and print in reverse.
-	_LOWriter_DocPrintMiscSettings($oDoc, $LOW_PAPER_LANDSCAPE, Null, $LOW_PRINT_NOTES_ONLY, True, True, True)
+	_LOWriter_DocPrintMiscSettings($oDoc, $LOW_PAPER_ORIENT_LANDSCAPE, Null, $LOW_PRINT_NOTES_ONLY, True, True, True)
 	If (@error > 0) Then _ERROR("Error setting Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Now retrieve the settings again.
@@ -38,7 +38,7 @@ Func Example()
 
 	; Display the new settings.
 	MsgBox($MB_OK, "Current Settings", "Your new miscellaneous print settings are as follows: " & @CRLF & @CRLF & _
-			"Paper Orientation:— " & $avSettingsNew[0] & @CRLF & " : 0 = $LOW_PAPER_PORTRAIT, 1 = $LOW_PAPER_LANDSCAPE" & @CRLF & @CRLF & _
+			"Paper Orientation:— " & $avSettingsNew[0] & @CRLF & " : 0 = $LOW_PAPER_ORIENT_PORTRAIT, 1 = $LOW_PAPER_ORIENT_LANDSCAPE" & @CRLF & @CRLF & _
 			"Printer Name:— " & $avSettingsNew[1] & @CRLF & @CRLF & _
 			"Comment Print Mode:— " & $avSettingsNew[2] & @CRLF & " 0 = $LOW_PRINT_NOTES_NONE, 1 = $LOW_PRINT_NOTES_ONLY, " & _
 			"2 = $LOW_PRINT_NOTES_END, 3 = $LOW_PRINT_NOTES_NEXT_PAGE" & @CRLF & @CRLF & _

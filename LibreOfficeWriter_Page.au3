@@ -12,7 +12,7 @@
 ; AutoIt Version : v3.3.16.1
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
-; Author(s) .....: donnyh13
+; Author(s) .....: donnyh13, mLipok
 ; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
@@ -1003,7 +1003,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;				   +								settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: NOTE: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
+; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
 ;						best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am
 ;						unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the
 ;						appropriate relative value, especially when spacing is set.
@@ -4564,7 +4564,7 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 ;				   +		true then only User-Created Page styles that are applied are returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: One Page style has two separate names, Default Page Style is also internally called "Standard"  Either
+; Remarks .......: One Page style has two separate names, Default Page Style is also internally called "Standard"  Either
 ;					name works when setting a Page Style, but on certain functions that return a Page Style Name, you may see
 ;					the alternative name.
 ; Related .......: _LOWriter_PageStyleGetObj

@@ -10,7 +10,7 @@
 ; AutoIt Version : v3.3.16.1
 ; UDF Version    : 0.0.0.3
 ; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
-; Author(s) .....: donnyh13
+; Author(s) .....: donnyh13, mLipok
 ; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
 ;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
 ;						-- WriterDemo.au3, used _CreateStruct;
@@ -34,8 +34,7 @@
 ; Name ..........: _LOWriter_FontExists
 ; Description ...: Tests whether a Document has a specific font available by name.
 ; Syntax ........: _LOWriter_FontExists(Byref $oDoc, $sFontName)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFontName           - a string value. The Font name to search for.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -45,8 +44,7 @@
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean  = Success. Returns True if Font is contained in the document, else
-;				   +										False.
+;				   @Error 0 @Extended 0 Return Boolean  = Success. Returns True if Font is contained in the document, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function may cause a processor usage spike for a moment or two. If you wish to eliminate this, comment
@@ -77,8 +75,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ; Name ..........: _LOWriter_FontsList
 ; Description ...: Retrieve a list of currently available fonts.
 ; Syntax ........: _LOWriter_FontsList(Byref $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous DocOpen, DocConnect, or
-;				   +					DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -86,11 +83,11 @@ EndFunc   ;==>_LOWriter_FontExists
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array  = Success. Returns a 4 Column Array, @extended is set to the number of
-;				   +			results. The First column (Array[1][0]) contains the Font Name. The Second column (Array [1][1]
-;				   +			contains the style name (Such as Bold Italic etc.) The third column (Array[1][2]) contains
-;				   +			the Font weight (Bold ) See Constants listed below; The fourth column (Array[1][3]) Contains
-;				   +			the font slant (Italic) See constants below.
+;				   @Error 0 @Extended ? Return Array  = Success. Returns a 4 Column Array, @extended is set to the number of results.
+;				   +			The First column (Array[1][0]) contains the Font Name.
+;				   +			The Second column (Array [1][1] contains the style name (Such as Bold Italic etc.)
+;				   +			The third column (Array[1][2]) contains the Font weight (Bold ) See Constants listed below;
+;				   +			TheThe fourth column (Array[1][3]) Contains the font slant (Italic) See constants below.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Many fonts will be listed multiple times, this is because of the varying settings for them, such as bold,
@@ -98,22 +95,8 @@ EndFunc   ;==>_LOWriter_FontExists
 ;					easier processing if required. From personal tests, Slant only returns 0 or 2. This function may cause a
 ;					 processor usage spike for a moment or two. If you wish to eliminate this, comment out the current sleep
 ;					function and place a sleep(10) in its place.
-; Weight Constants : $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
-;						$LOW_WEIGHT_THIN(50); specifies a 50% font weight.
-;						$LOW_WEIGHT_ULTRA_LIGHT(60); specifies a 60% font weight.
-;						$LOW_WEIGHT_LIGHT(75); specifies a 75% font weight.
-;						$LOW_WEIGHT_SEMI_LIGHT(90); specifies a 90% font weight.
-;						$LOW_WEIGHT_NORMAL(100); specifies a normal font weight.
-;						$LOW_WEIGHT_SEMI_BOLD(110); specifies a 110% font weight.
-;						$LOW_WEIGHT_BOLD(150); specifies a 150% font weight.
-;						$LOW_WEIGHT_ULTRA_BOLD(175); specifies a 175% font weight.
-;						$LOW_WEIGHT_BLACK(200); specifies a 200% font weight.
-; Slant/Posture Constants : $LOW_POSTURE_NONE(0); specifies a font without slant.
-;							$LOW_POSTURE_OBLIQUE(1); specifies an oblique font (slant not designed into the font).
-;							$LOW_POSTURE_ITALIC(2); specifies an italic font (slant designed into the font).
-;							$LOW_POSTURE_DontKnow(3); specifies a font with an unknown slant.
-;							$LOW_POSTURE_REV_OBLIQUE(4); specifies a reverse oblique font (slant not designed into the font).
-;							$LOW_POSTURE_REV_ITALIC(5); specifies a reverse italic font (slant designed into the font).
+; Weight Constants: $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3
+; Slant/Posture Constants: $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -130,7 +113,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 	If Not IsArray($atFonts) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	ReDim $asFonts[UBound($atFonts)][4]
-; ~ $asFonts[0][0] = UBound($atFonts)
+
 	For $i = 0 To UBound($atFonts) - 1
 		$asFonts[$i][0] = $atFonts[$i].Name()
 		$asFonts[$i][1] = $atFonts[$i].StyleName()
