@@ -628,9 +628,9 @@ Global Const _
 ; Anchor Type
 Global Const _
 		$LOW_ANCHOR_AT_PARAGRAPH = 0, _                         ; Anchors the object to the current paragraph.
-		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character.
+		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character. The height of the current line is resized to match the height of the selection.
 		$LOW_ANCHOR_AT_PAGE = 2, _                              ; Anchors the Object to the current page.
-		$LOW_ANCHOR_AT_FRAME = 3, _                             ;Anchors the object to the surrounding frame.
+		$LOW_ANCHOR_AT_FRAME = 3, _                             ; Anchors the object to the surrounding frame.
 		$LOW_ANCHOR_AT_CHARACTER = 4                            ; Anchors the Object to a character.
 
 ; Wrap Type
