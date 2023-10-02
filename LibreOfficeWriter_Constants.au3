@@ -69,9 +69,9 @@ Global Const _
 
 ; Path Convert Constants.
 Global Const _
-		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input.
-		$LOW_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL.
-		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path.
+		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input path, determined by StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
+		$LOW_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
+		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
 ; Printer Duplex Constants.
 Global Const _
