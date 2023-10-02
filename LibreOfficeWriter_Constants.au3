@@ -653,7 +653,7 @@ Global Const _
 Global Const _
 		$LOW_FRAME_TARGET_NONE = "", _                          ;
 		$LOW_FRAME_TARGET_TOP = "_top", _                       ; File opens in the topmost frame in the hierarchy.
-		$LOW_FRAME_TARGET_PARENT = "_parent", _                 ; File opens in the parent frame of the current frame.
+		$LOW_FRAME_TARGET_PARENT = "_parent", _                 ; File opens in the parent frame of the current frame. If there is no parent frame, the current frame is used.
 		$LOW_FRAME_TARGET_BLANK = "_blank", _                   ; File opens in a new page.
 		$LOW_FRAME_TARGET_SELF = "_self"                        ; File opens in the current frame.
 
