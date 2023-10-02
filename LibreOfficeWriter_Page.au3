@@ -210,7 +210,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than 0 or greater than 5. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants.
 ;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
 ;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
@@ -1568,7 +1568,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than 0 or greater than 5. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants.
 ;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
 ;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
@@ -2345,7 +2345,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than 0 or greater than 5, see constants list.
+;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants list.
 ;				   @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
@@ -3010,7 +3010,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than 0 or greater than 5. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants.
 ;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
 ;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
@@ -3786,7 +3786,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than 0 or greater than 5, see constants list.
+;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants list.
 ;				   @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
@@ -4813,7 +4813,7 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than 0 or greater than 5, see constants list.
+;				   @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants list.
 ;				   @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.

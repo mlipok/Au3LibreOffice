@@ -228,16 +228,16 @@ Global Const _
 
 ; Vertical Orientation
 Global Const _
-		$LOW_ORIENT_VERT_NONE = 0, _                            ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I.
+		$LOW_ORIENT_VERT_NONE = 0, _                            ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I., the only difference is the combination setting of Vertical Relation.
 		$LOW_ORIENT_VERT_TOP = 1, _                             ; Aligned at the top.
 		$LOW_ORIENT_VERT_CENTER = 2, _                          ; Aligned at the center.
 		$LOW_ORIENT_VERT_BOTTOM = 3, _                          ; Aligned at the bottom.
-		$LOW_ORIENT_VERT_CHAR_TOP = 4, _                        ; Aligned at the top of a character.
-		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _                     ; Aligned at the center of a character.
-		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _                     ; Aligned at the bottom of a character.
-		$LOW_ORIENT_VERT_LINE_TOP = 7, _                        ; Aligned at the top of the line.
-		$LOW_ORIENT_VERT_LINE_CENTER = 8, _                     ; Aligned at the center of the line.
-		$LOW_ORIENT_VERT_LINE_BOTTOM = 9                        ; Aligned at the bottom of the line.
+		$LOW_ORIENT_VERT_CHAR_TOP = 4, _                        ; Aligned at the top of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Top, and "To" = Character.
+		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _                     ; Aligned at the center of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Character.
+		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _                     ; Aligned at the bottom of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Character.
+		$LOW_ORIENT_VERT_LINE_TOP = 7, _                        ; Aligned at the top of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Top, and "To" = Row.
+		$LOW_ORIENT_VERT_LINE_CENTER = 8, _                     ; Aligned at the center of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
+		$LOW_ORIENT_VERT_LINE_BOTTOM = 9                        ; Aligned at the bottom of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
 
 ; Tab Alignment
 Global Const _
