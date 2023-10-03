@@ -3004,7 +3004,7 @@ EndFunc   ;==>__LOWriter_IsCellRange
 ; Name ..........: __LOWriter_IsTableInDoc
 ; Description ...: Check if Table is inserted in a Document or has only been created and not inserted.
 ; Syntax ........: __LOWriter_IsTableInDoc(Byref $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -5005,7 +5005,7 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Name ..........: __LOWriter_TableBorder
 ; Description ...: Set or Retrieve Table Border settings -- internal function. Libre Office 3.6 and Up.
 ; Syntax ........: __LOWriter_TableBorder(Byref $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $bWid                - a boolean value. If True the calling function is for setting Border Line Width.
 ;                  $bSty                - a boolean value. If True the calling function is for setting Border Line Style.
 ;                  $bCol                - a boolean value. If True the calling function is for setting Border Line Color.
@@ -5266,7 +5266,7 @@ EndFunc   ;==>__LOWriter_TableCursorMove
 ; Name ..........: __LOWriter_TableHasCellName
 ; Description ...: Check whether the Table contains a Cell by the requested name.
 ; Syntax ........: __LOWriter_TableHasCellName(Byref $oTable, Byref $sCellName)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $sCellName           - [in/out] a string value. The requested cell name.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5308,7 +5308,7 @@ EndFunc   ;==>__LOWriter_TableHasCellName
 ; Name ..........: __LOWriter_TableHasColumnRange
 ; Description ...: Check if Table contains the requested Column.
 ; Syntax ........: __LOWriter_TableHasColumnRange(Byref $oTable, Byref $iColumn)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $iColumn             - [in/out] an integer value. The requested Column.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5338,7 +5338,7 @@ EndFunc   ;==>__LOWriter_TableHasColumnRange
 ; Name ..........: __LOWriter_TableHasRowRange
 ; Description ...: Check if Table contains the requested row.
 ; Syntax ........: __LOWriter_TableHasRowRange(Byref $oTable, Byref $iRow)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $iRow                - [in/out] an integer value. The requested row.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5368,7 +5368,7 @@ EndFunc   ;==>__LOWriter_TableHasRowRange
 ; Name ..........: __LOWriter_TableRowSplitToggle
 ; Description ...: Set or Retrieve Table Row split setting for an entire Table.
 ; Syntax ........: __LOWriter_TableRowSplitToggle(Byref $oTable[, $bSplitRows = Null])
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $bSplitRows          - [optional] a boolean value. Default is Null. If True, the content in a Table row is allowed to split at page splits, else if False, Content is not allowed to split across pages.
 ; Return values .: Success: Integer or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
