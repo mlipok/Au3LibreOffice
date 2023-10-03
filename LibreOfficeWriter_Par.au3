@@ -196,7 +196,7 @@ EndFunc   ;==>_LOWriter_ParObjCreateList
 ;				   @Error 0 @Extended 0 Return 1  = Success. Paragraph was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: you cannot delete the last paragraph contained in a Text area, it will cause a COM error.
+; Remarks .......: You cannot delete the last paragraph contained in a Text area, it will cause a COM error.
 ; Related .......: _LOWriter_ParObjCreateList
 ; Link ..........:
 ; Example .......: Yes
@@ -254,8 +254,7 @@ EndFunc   ;==>_LOWriter_ParObjPaste
 ; Name ..........: _LOWriter_ParObjSectionsGet
 ; Description ...: Break a Paragraph Object into individual Sections for Direct Formatting etc. See Remarks.
 ; Syntax ........: _LOWriter_ParObjSectionsGet(Byref $oParagraph)
-; Parameters ....: $oParagraph          - [in/out] an object. A Paragraph Object returned from _LOWriter_ParObjCreateList
-;				   +						function. Make sure it's not a Table!
+; Parameters ....: $oParagraph          - [in/out] an object. A Paragraph Object returned from _LOWriter_ParObjCreateList function. Make sure it's not a Table!
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -372,32 +371,25 @@ EndFunc   ;==>_LOWriter_ParObjSelect
 ; Name ..........: _LOWriter_ParStyleAlignment
 ; Description ...: Set and Retrieve Alignment settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleAlignment(Byref $oParStyle[, $iHorAlign = Null[, $iVertAlign = Null[, $iLastLineAlign = Null[, $bExpandSingleWord = Null[, $bSnapToGrid = Null[, $iTxtDirection = Null]]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iHorAlign           - [optional] an integer value. Default is Null. The Horizontal alignment of the
-;				   +						paragraph. See Constants below. See Remarks.
-;                  $iVertAlign          - [optional] an integer value. Default is Null. The Vertical alignment of the
-;				   +						paragraph. See Constants below.
-;                  $iLastLineAlign      - [optional] an integer value. Default is Null. Specify the alignment for the last line
-;				   +						 in the paragraph. See Constants below. See Remarks.
-;                  $bExpandSingleWord   - [optional] a boolean value. Default is Null. If the last line of a justified paragraph
-;				   +						consists of one word, the word is stretched to the width of the paragraph.
-;                  $bSnapToGrid         - [optional] a boolean value. Default is Null. If True, Aligns the paragraph to a text
-;				   +						grid (if one is active).
-;                  $iTxtDirection       - [optional] an integer value. Default is Null. The Text Writing Direction. See Constants
-;				   +						below. [Libre Office Default is 4]
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The Horizontal alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
+;                  $iVertAlign          - [optional] an integer value (0-4). Default is Null. The Vertical alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLastLineAlign      - [optional] an integer value (0-3). Default is Null. Specify the alignment for the last line in the paragraph. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
+;                  $bExpandSingleWord   - [optional] a boolean value. Default is Null. If the last line of a justified paragraph consists of one word, the word is stretched to the width of the paragraph.
+;                  $bSnapToGrid         - [optional] a boolean value. Default is Null. If True, Aligns the paragraph to a text grid (if one is active).
+;                  $iTxtDirection       - [optional] an integer value (0-5). Default is Null. The Text Writing Direction. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3. [Libre Office Default is 4]
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3.
-;				   @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or more than 4.
-;				   @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or more than 3.
+;				   @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or more than 4. See constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or more than 3. See constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $bExpandSingleWord not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5, see constants.
+;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5, see constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iHorAlign
@@ -408,43 +400,14 @@ EndFunc   ;==>_LOWriter_ParObjSelect
 ;				   |								32 = Error setting $iTxtDirection
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 6 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
 ;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
 ;					Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Horizontal Alignment Constants: $LOW_PAR_ALIGN_HOR_LEFT(0); The Paragraph is left-aligned between the borders.
-;									$LOW_PAR_ALIGN_HOR_RIGHT(1); The Paragraph is right-aligned between the borders.
-;									$LOW_PAR_ALIGN_HOR_JUSTIFIED(2); The Paragraph is adjusted to both borders / stretched.
-;									$LOW_PAR_ALIGN_HOR_CENTER(3); The Paragraph is centered between the left and right borders.
-; Vertical Alignment Constants: $LOW_PAR_ALIGN_VERT_AUTO(0); In automatic mode, horizontal text is aligned to the baseline. The
-;										same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the
-;										center.
-;									$LOW_PAR_ALIGN_VERT_BASELINE(1); The text is aligned to the baseline.
-;									$LOW_PAR_ALIGN_VERT_TOP(2); The text is aligned to the top.
-;									$LOW_PAR_ALIGN_VERT_CENTER(3); The text is aligned to the center.
-;									$LOW_PAR_ALIGN_VERT_BOTTOM(4); The text is aligned to bottom.
-; Last Line Alignment Constants: $LOW_PAR_LAST_LINE_START(0); The Paragraph is aligned either to the Left border or the right,
-;										depending on the current text direction.
-;									$LOW_PAR_LAST_LINE_JUSTIFIED(2); The Paragraph is adjusted to both borders / stretched.
-;									$LOW_PAR_LAST_LINE_CENTER(3); The Paragraph is centered between the left and right borders.
-; Text Direction Constants: $LOW_TXT_DIR_LR_TB(0), — text within lines is written left-to-right. Lines and blocks are placed
-;								top-to-bottom. Typically, this is the writing mode for normal "alphabetic" text.
-;							$LOW_TXT_DIR_RL_TB(1), — text within a line are written right-to-left. Lines and blocks are placed
-;								top-to-bottom. Typically, this writing mode is used in Arabic and Hebrew text.
-;							$LOW_TXT_DIR_TB_RL(2), — text within a line is written top-to-bottom. Lines and blocks are placed
-;								right-to-left. Typically, this writing mode is used in Chinese and Japanese text.
-;							$LOW_TXT_DIR_TB_LR(3), — text within a line is written top-to-bottom. Lines and blocks are placed
-;								left-to-right. Typically, this writing mode is used in Mongolian text.
-;							$LOW_TXT_DIR_CONTEXT(4)[LibreOffice Default], — obtain actual writing mode from the context of the
-;								object.
-;							$LOW_TXT_DIR_BT_LR(5), — text within a line is written bottom-to-top. Lines and blocks are placed
-;								left-to-right. (LibreOffice 6.3)
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -466,13 +429,9 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; Name ..........: _LOWriter_ParStyleBackColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleBackColor(Byref $oDoc, $sParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iBackColor          - [optional] an integer value. Default is Null. The color to make the background. Set in
-;				   +							Long integer format. Can be one of the below constants or a custom value.
-;												Set to $LOW_COLOR_OFF(-1), to turn Background color off.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is
-;				   +						transparent or not. True = visible.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1), to turn Background color off.
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -487,32 +446,11 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ;				   |								2 = Error setting $bBackTransparent
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 2 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Color Constants: $LOW_COLOR_OFF(-1),
-;					$LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -535,34 +473,21 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ; Name ..........: _LOWriter_ParStyleBorderColor
 ; Description ...: Set and Retrieve the Paragraph Style Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_ParStyleBorderColor(Byref $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Color of the
-;				   +						Paragraph Style in Long Color code format. One of the predefined constants listed
-;				   +						below can be used, or a custom value.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Color of the
-;				   +						Paragraph Style in Long Color code format. One of the predefined constants listed
-;				   +						below can be used, or a custom value.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Color of the
-;				   +						Paragraph Style in Long Color code format. One of the predefined constants listed
-;				   +						below can be used, or a custom value.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Color of the
-;				   +						Paragraph Style in Long Color code format. One of the predefined constants listed
-;				   +						below can be used, or a custom value.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not
-;				   +								set to Null.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or
-;				   +								not set to Null.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not
-;				   +								set to Null.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or
-;				   +								not set to Null.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -576,32 +501,12 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Color Constants: $LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle,
 ;					_LOWriter_ParStyleBorderPadding
@@ -630,18 +535,12 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 ; Name ..........: _LOWriter_ParStyleBorderPadding
 ; Description ...: Set or retrieve the Border Padding (spacing between the Paragraph and border) settings.
 ; Syntax ........: _LOWriter_ParStyleBorderPadding(Byref $oParStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one
-;				   +						distance in Micrometers (uM).
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border
-;				   +						and Paragraph in Micrometers(uM).
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the
-;				   +						Border and Paragraph in Micrometers(uM).
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border
-;				   +						and Paragraph in Micrometers(uM).
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border
-;				   +						and Paragraph in Micrometers(uM).
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Paragraph in Micrometers(uM).
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Paragraph in Micrometers(uM).
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Paragraph in Micrometers(uM).
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Paragraph in Micrometers(uM).
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -662,12 +561,10 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 ;				   |								16 = Error setting $iRight border distance
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle,
@@ -692,34 +589,21 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ; Name ..........: _LOWriter_ParStyleBorderStyle
 ; Description ...: Set and retrieve the Paragraph Style Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_ParStyleBorderStyle(Byref $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of the
-;				   +							Paragraph Style using one of the line style constants, See below for list. To
-;				   +							skip a parameter, set it to Null.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the
-;				   +							Paragraph Style using one of the line style constants, See below for list. To
-;				   +							skip a parameter, set it to Null.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the
-;				   +							Paragraph Style using one of the line style constants, See below for list. To
-;				   +							skip a parameter, set it to Null.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the
-;				   +							Paragraph Style using one of the line style constants, See below for list. To
-;				   +							skip a parameter, set it to Null.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF,
-;				   +									Or $iTop is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to
-;				   +								0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF,
-;				   +									Or $iLeft is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to
-;				   +									0x7FFF, Or $iRight is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iTop is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iLeft is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iRight is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -733,41 +617,12 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Style Constants: $LOW_BORDERSTYLE_NONE(0x7FFF) No border line,
-;					$LOW_BORDERSTYLE_SOLID(0) Solid border line,
-;					$LOW_BORDERSTYLE_DOTTED(1) Dotted border line,
-;					$LOW_BORDERSTYLE_DASHED(2) Dashed border line,
-;					$LOW_BORDERSTYLE_DOUBLE(3) Double border line,
-;					$LOW_BORDERSTYLE_THINTHICK_SMALLGAP(4) Double border line
-;						with a thin line outside and a thick line inside separated by a small gap,
-;					$LOW_BORDERSTYLE_THINTHICK_MEDIUMGAP(5) Double border line with a thin line outside and a thick line inside
-;						separated by a medium gap,
-;						$LOW_BORDERSTYLE_THINTHICK_LARGEGAP(6) Double border line with a thin line outside and a thick line
-;						inside separated by a large gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_SMALLGAP(7) Double border line with a thick line outside and a thin line inside
-;						separated by a small gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP(8) Double border line with a thick line outside and a thin line inside
-;						separated by a medium gap,
-;					$LOW_BORDERSTYLE_THICKTHIN_LARGEGAP(9) Double border line with a thick line outside and a thin line inside
-;						separated by a large gap,
-;					$LOW_BORDERSTYLE_EMBOSSED(10) 3D embossed border line,
-;					$LOW_BORDERSTYLE_ENGRAVED(11) 3D engraved border
-;						line,
-;					$LOW_BORDERSTYLE_OUTSET(12) Outset border line,
-;					$LOW_BORDERSTYLE_INSET(13) Inset border line,
-;					$LOW_BORDERSTYLE_FINE_DASHED(14) Finely dashed border line,
-;					$LOW_BORDERSTYLE_DOUBLE_THIN(15) Double border
-;						line consisting of two fixed thin lines separated by a variable gap,
-;					$LOW_BORDERSTYLE_DASH_DOT(16) Line consisting of a repetition of one dash and one dot,
-;					$LOW_BORDERSTYLE_DASH_DOT_DOT(17) Line consisting of a repetition of one dash and 2 dots.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleBorderWidth,
 ;					_LOWriter_ParStyleBorderColor, _LOWriter_ParStyleBorderPadding
 ; Link ..........:
@@ -795,23 +650,12 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ; Name ..........: _LOWriter_ParStyleBorderWidth
 ; Description ...: Set and retrieve the Paragraph Style Border Line Width, or the Paragraph Style Connect Border option.
 ; Syntax ........: _LOWriter_ParStyleBorderWidth(Byref $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bConnectBorder = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the
-;				   +							Paragraph Style in MicroMeters. One of the predefined constants listed below can
-;				   +						be used. To skip a parameter, set it to Null. Libre Office Version 3.4 and Up.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the
-;				   +							Paragraph Style in MicroMeters. One of the predefined constants listed below can
-;				   +						be used. To skip a parameter, set it to Null. Libre Office Version 3.4 and Up.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the
-;				   +							Paragraph Style in MicroMeters. One of the predefined constants listed below can
-;				   +						be used. To skip a parameter, set it to Null. Libre Office Version 3.4 and Up.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the
-;				   +							Paragraph Style in MicroMeters. One of the predefined constants listed below can
-;				   +						be used. To skip a parameter, set it to Null. Libre Office Version 3.4 and Up.
-;                  $bConnectBorder      - [optional] a boolean value. Default is Null. Determines if borders set for a paragraph
-;				   +						are merged with the next paragraph. Note: Borders are only merged if they are
-;				   +						identical. Libre Office Version 3.4 and Up.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Paragraph Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Paragraph Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Paragraph Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Paragraph Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $bConnectBorder      - [optional] a boolean value. Default is Null. Determines if borders set for a paragraph are merged with the next paragraph. Note: Borders are only merged if they are identical. Libre Office Version 3.4 and Up.
 ; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -831,20 +675,12 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Width Constants: $LOW_BORDERWIDTH_HAIRLINE(2),
-;					$LOW_BORDERWIDTH_VERY_THIN(18),
-;					$LOW_BORDERWIDTH_THIN(26),
-;					$LOW_BORDERWIDTH_MEDIUM(53),
-;					$LOW_BORDERWIDTH_THICK(79),
-;					$LOW_BORDERWIDTH_EXTRA_THICK(159)
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderColor,
 ;					_LOWriter_ParStyleBorderPadding
@@ -883,7 +719,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 ; Name ..........: _LOWriter_ParStyleCreate
 ; Description ...: Create a new Paragraph Style in a Document.
 ; Syntax ........: _LOWriter_ParStyleCreate(Byref $oDoc, $sParStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParStyle           - a string value. The Name of the New Paragraph Style to Create.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -898,8 +734,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error creating new Paragraph Style by Name.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. New paragraph Style successfully created. Returning Paragraph
-;				   +												Style Object.
+;				   @Error 0 @Extended 0 Return Object = Success. New paragraph Style successfully created. Returning Paragraph Style Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -935,15 +770,10 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ; Name ..........: _LOWriter_ParStyleDelete
 ; Description ...: Delete a User-Created Paragraph Style from a Document.
 ; Syntax ........: _LOWriter_ParStyleDelete(Byref $oDoc, $oParStyle[, $bForceDelete = False[, $sReplacementStyle = "Default Paragraph Style"]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function. Must be a User-Created Style, not a built-in Style native
-;				   +						to Libre-Office.
-;                  $bForceDelete        - [optional] a boolean value. Default is False. If True Paragraph style will be deleted
-;				   +						regardless of whether it is in use or not.
-;                  $sReplacementStyle   - [optional] a string value. Default is "Default Paragraph Style". The Paragraph style
-;				   +						to use instead of the one being deleted if the paragraph style being deleted was
-;				   +						already applied to text in the document.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function. Must be a User-Created Style, not a built-in Style native to Libre-Office.
+;                  $bForceDelete        - [optional] a boolean value. Default is False. If True Paragraph style will be deleted regardless of whether it is in use or not.
+;                  $sReplacementStyle   - [optional] a string value. Default is "Default Paragraph Style". The Paragraph style to use instead of the one being deleted if the paragraph style being deleted was already applied to text in the document.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1002,19 +832,13 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ; Name ..........: _LOWriter_ParStyleDropCaps
 ; Description ...: Set or Retrieve DropCaps settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleDropCaps(Byref $oDoc, $oParStyle[, $iNumChar = Null[, $iLines = Null[, $iSpcTxt = Null[, $bWholeWord = Null[, $sCharStyle = Null]]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iNumChar            - [optional] an integer value. Default is Null. The number of characters to make into
-;				   +									DropCaps. Min is 0, max is 9.
-;                  $iLines              - [optional] an integer value. Default is Null. The number of lines to drop down, min is
-;				   +								0, max is 9, cannot be 1.
-;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the
-;				   +								following text. in MicroMeters.
-;                  $bWholeWord          - [optional] a boolean value. Default is Null. Whether to DropCap the whole first word.
-;				   +									(Nullifys $iNumChars.)
-;                  $sCharStyle          - [optional] a string value. Default is Null. The character style to use for the
-;				   +							DropCaps. See Remarks.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iNumChar            - [optional] an integer value. Default is Null. The number of characters to make into DropCaps. Min is 0, max is 9.
+;                  $iLines              - [optional] an integer value. Default is Null. The number of lines to drop down, min is 0, max is 9, cannot be 1.
+;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the following text. in MicroMeters.
+;                  $bWholeWord          - [optional] a boolean value. Default is Null. Whether to DropCap the whole first word. (Nullifys $iNumChars.)
+;                  $sCharStyle          - [optional] a string value. Default is Null. The character style to use for the DropCaps. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1039,8 +863,7 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ;				   |								16 = Error setting $sCharStyle
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
@@ -1049,8 +872,7 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
 ;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
 ;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
@@ -1076,15 +898,11 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ; Name ..........: _LOWriter_ParStyleEffect
 ; Description ...: Set or Retrieve the Font Effect settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleEffect(Byref $oParStyle[, $iRelief = Null[, $iCase = Null[, $bHidden = Null[, $bOutline = Null[, $bShadow = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iRelief             - [optional] an integer value. Default is Null. The Character Relief style. See Constants
-;				   +									below.
-;                  $iCase               - [optional] an integer value. Default is Null. The Character Case Style. See Constants
-;				   +									below.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether the Characters are hidden or not.
-;                  $bOutline            - [optional] a boolean value. Default is Null. Whether the characters have an outline
-;				   +									around the outside.
+;                  $bOutline            - [optional] a boolean value. Default is Null. Whether the characters have an outline around the outside.
 ;                  $bShadow             - [optional] a boolean value. Default is Null. Whether the characters have a shadow.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1092,8 +910,8 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ;				   @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants.
-;				   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
@@ -1106,21 +924,11 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ;				   |								16 = Error setting $bShadow
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Relief Constants: $LOW_RELIEF_NONE(0); no relief is used.
-;						$LOW_RELIEF_EMBOSSED(1); the font relief is embossed.
-;						$LOW_RELIEF_ENGRAVED(2); the font relief is engraved.
-; Case Constants : 	$LOW_CASEMAP_NONE(0); The case of the characters is unchanged.
-;						$LOW_CASEMAP_UPPER(1); All characters are put in upper case.
-;						$LOW_CASEMAP_LOWER(2); All characters are put in lower case.
-;						$LOW_CASEMAP_TITLE(3); The first character of each word is put in upper case.
-;						$LOW_CASEMAP_SM_CAPS(4); All characters are put in upper case, but with a smaller font height.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1143,7 +951,7 @@ EndFunc   ;==>_LOWriter_ParStyleEffect
 ; Name ..........: _LOWriter_ParStyleExists
 ; Description ...: Check whether a Document contains a specific Paragraph Style by name.
 ; Syntax ........: _LOWriter_ParStyleExists(Byref $oDoc, $sParStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParStyle           - a string value. The Paragraph Style Name to search for.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1151,8 +959,7 @@ EndFunc   ;==>_LOWriter_ParStyleEffect
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $sParStyle not a String.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If the Document contains a Paragraph style matching the input
-;				   +										name, True is returned, else False.
+;				   @Error 0 @Extended 0 Return Boolean = Success. If the Document contains a Paragraph style matching the input name, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1175,15 +982,12 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Name ..........: _LOWriter_ParStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleFont(Byref $oDoc, Byref $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to change to.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
-;                  $iPosture            - [optional] an integer value. Default is Null. Italic setting. See Constants below. Also
-;				   +								see remarks.
-;                  $iWeight             - [optional] an integer value. Default is Null. Bold settings see Constants below.
-;				   +								Also see remarks.
+;                  $iPosture            - [optional] an integer value (0-5). Default is Null. Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
+;                  $iWeight             - [optional] an integer value (0,50-200). Default is Null. Bold settings see Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1204,32 +1008,14 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ;				   |								8 = Error setting $iWeight
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
 ;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
 ;					are changed automatically to an acceptable value, which could trigger a settings error.
-; Weight Constants : $LOW_WEIGHT_DONT_KNOW(0); The font weight is not specified/known.
-;						$LOW_WEIGHT_THIN(50); specifies a 50% font weight.
-;						$LOW_WEIGHT_ULTRA_LIGHT(60); specifies a 60% font weight.
-;						$LOW_WEIGHT_LIGHT(75); specifies a 75% font weight.
-;						$LOW_WEIGHT_SEMI_LIGHT(90); specifies a 90% font weight.
-;						$LOW_WEIGHT_NORMAL(100); specifies a normal font weight.
-;						$LOW_WEIGHT_SEMI_BOLD(110); specifies a 110% font weight.
-;						$LOW_WEIGHT_BOLD(150); specifies a 150% font weight.
-;						$LOW_WEIGHT_ULTRA_BOLD(175); specifies a 175% font weight.
-;						$LOW_WEIGHT_BLACK(200); specifies a 200% font weight.
-; Slant/Posture Constants : $LOW_POSTURE_NONE(0); specifies a font without slant.
-;							$LOW_POSTURE_OBLIQUE(1); specifies an oblique font (slant not designed into the font).
-;							$LOW_POSTURE_ITALIC(2); specifies an italic font (slant designed into the font).
-;							$LOW_POSTURE_DontKnow(3); specifies a font with an unknown slant.
-;							$LOW_POSTURE_REV_OBLIQUE(4); specifies a reverse oblique font (slant not designed into the font).
-;							$LOW_POSTURE_REV_ITALIC(5); specifies a reverse italic font (slant designed into the font).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_FontsList
 ; Link ..........:
 ; Example .......: Yes
@@ -1254,16 +1040,10 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 ; Name ..........: _LOWriter_ParStyleFontColor
 ; Description ...: Set or retrieve the font color, transparency and highlighting of a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleFontColor(Byref $oParStyle[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iFontColor          - [optional] an integer value. Default is Null. the desired Color value in Long Integer
-;				   +								format, to make the font, can be one of the constants listed below or a
-;				   +								custom value. Set to $LOW_COLOR_OFF(-1) for Auto color.
-;                  $iTransparency       - [optional] an integer value. Default is Null. Transparency percentage. 0 is not
-;				   +								visible, 100 is fully visible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - [optional] an integer value. Default is Null. A Color value in Long Integer format,
-;				   +								to highlight the text in, can be one of the constants listed below or a
-;				   +								custom value. Set to $LOW_COLOR_OFF(-1) for No color.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iFontColor          - [optional] an integer value (-1-16777215). Default is Null. the desired Color value in Long Integer format, to make the font, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iTransparency       - [optional] an integer value. Default is Null. Transparency percentage. 0 is not visible, 100 is fully visible. Available for Libre Office 7.0 and up.
+;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. A Color value in Long Integer format, to highlight the text in, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1282,35 +1062,12 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 2 or 3 Element Array with values in order of function
-;				   +								parameters. If The current Libre Office version is below 7.0 the returned
-;				   +								array will contain 2 elements, because $iTransparency is not available.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If The current Libre Office version is below 7.0 the returned array will contain 2 elements, because $iTransparency is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: When setting transparency, the value of font color value is changed.
-; Color Constants: $LOW_COLOR_OFF(-1)
-;					$LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -1344,8 +1101,7 @@ EndFunc   ;==>_LOWriter_ParStyleFontColor
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Paragraph Style Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Paragraph Style successfully retrieved, returning Paragraph
-;				   +										Style Object.
+;				   @Error 0 @Extended 0 Return Object = Success. Paragraph Style successfully retrieved, returning Paragraph Style Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1372,19 +1128,12 @@ EndFunc   ;==>_LOWriter_ParStyleGetObj
 ; Name ..........: _LOWriter_ParStyleHyphenation
 ; Description ...: Set or Retrieve Hyphenation settings for a paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleHyphenation(Byref $oParStyle[, $bAutoHyphen = Null[, $bHyphenNoCaps = Null[, $iMaxHyphens = Null[, $iMinLeadingChar = Null[, $iMinTrailingChar = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoHyphen         - [optional] a boolean value. Default is Null. Whether  automatic hyphenation is applied.
-;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null. Setting to true will disable hyphenation
-;				   +						of words written in CAPS for this paragraph. Libre 6.4 and up.
-;                  $iMaxHyphens         - [optional] an integer value. Default is Null. The maximum number of consecutive
-;				   +						hyphens. Min 0, Max 99.
-;                  $iMinLeadingChar     - [optional] an integer value. Default is Null. Specifies the minimum number of
-;				   +						characters to remain before the hyphen character (when hyphenation is applied).
-;				   +						Min 2, max 9.
-;                  $iMinTrailingChar    - [optional] an integer value. Default is Null. Specifies the minimum number of
-;				   +						characters to remain after the hyphen character (when hyphenation is applied).
-;				   +						Min 2, max 9.
+;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null. Setting to true will disable hyphenation of words written in CAPS for this paragraph. Libre 6.4 and up.
+;                  $iMaxHyphens         - [optional] an integer value. Default is Null. The maximum number of consecutive hyphens. Min 0, Max 99.
+;                  $iMinLeadingChar     - [optional] an integer value. Default is Null. Specifies the minimum number of characters to remain before the hyphen character (when hyphenation is applied). Min 2, max 9.
+;                  $iMinTrailingChar    - [optional] an integer value. Default is Null. Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied). Min 2, max 9.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1407,17 +1156,11 @@ EndFunc   ;==>_LOWriter_ParStyleGetObj
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 or 5 Element Array with values in order of function
-;				   +								parameters. If the current Libre Office Version is below 6.4, then the
-;				   +								Array returned will contain 4 elements because $bHyphenNoCaps is not
-;				   +								available.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office Version is below 6.4, then the Array returned will contain 4 elements because $bHyphenNoCaps is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still
-;					successfully set regardless.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still successfully set regardless.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
@@ -1440,20 +1183,11 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ; Name ..........: _LOWriter_ParStyleIndent
 ; Description ...: Set or Retrieve Indent settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleIndent(Byref $oParStyle[, $iBeforeTxt = Null[, $iAfterTxt = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iBeforeTxt          - [optional] an integer value. Default is Null. The amount of space that you want
-;				   +						to indent the paragraph from the page margin. If you want the paragraph to extend
-;				   +						into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989,
-;				   +						Max.17094
-;                  $iAfterTxt           - [optional] an integer value. Default is Null. The amount of space that you want to
-;				   +						indent the paragraph from the page margin. If you want the paragraph to extend into
-;				   +						the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989,
-;				   +						Max.17094
-;                  $iFirstLine          - [optional] an integer value. Default is Null. Indents the first line of a paragraph by
-;				   +						the amount that you enter. Set in MicroMeters(uM) Min. -57785, Max.17094.
-;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. Whether the first line should be indented
-;				   +						automatically.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iBeforeTxt          - [optional] an integer value. Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
+;                  $iAfterTxt           - [optional] an integer value. Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
+;                  $iFirstLine          - [optional] an integer value. Default is Null. Indents the first line of a paragraph by the amount that you enter. Set in MicroMeters(uM) Min. -57785, Max.17094.
+;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. Whether the first line should be indented automatically.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1472,13 +1206,11 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ;				   |								8 = Error setting $bAutoFirstLine
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
@@ -1502,14 +1234,12 @@ EndFunc   ;==>_LOWriter_ParStyleIndent
 ; Name ..........: _LOWriter_ParStyleOrganizer
 ; Description ...: Set or retrieve the Organizer settings of a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleOrganizer(Byref $oDoc, $oParStyle[, $sNewParStyleName = Null[, $sFollowStyle = Null[, $sParentStyle = Null[, $bAutoUpdate = Null[, $bHidden = Null]]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sNewParStyleName    - [optional] a string value. Default is Null. The new name to set $sParStyle paragraph style to.
 ;                  $sFollowStyle        - [optional] a string value. Default is Null. The name of the style that is applied to the next paragraph.
-;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing  paragraph style (or an Empty String ("") = - None -) to apply its settings to the current style.
-;				   +						Use the other settings to modify the inherited style settings.
-;                  $bAutoUpdate         - [optional] a boolean value. Default is Null. If True, Updates the style when you apply direct formatting to a paragraph using this style in your document.
-;				   +						The formatting of all paragraphs using this style is automatically updated.
+;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing  paragraph style (or an Empty String ("") = - None -) to apply its settings to the current style. Use the other settings to modify the inherited style settings.
+;                  $bAutoUpdate         - [optional] a boolean value. Default is Null. If True, Updates the style when you apply direct formatting to a paragraph using this style in your document. The formatting of all paragraphs using this style is automatically updated.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre 4.0 and up Only.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1614,14 +1344,12 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ; Name ..........: _LOWriter_ParStyleOutLineAndList
 ; Description ...: Set and Retrieve the Outline and List settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleOutLineAndList(Byref $oDoc, $oParStyle[, $iOutline = Null[, $sNumStyle = Null[, $bParLineCount = Null[, $iLineCountVal = Null]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
-;                  $iOutline            - [optional] an integer value. Default is Null. The Outline Level, see Constants below.
-;				   +							Min is 0, max is 10.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iOutline            - [optional] an integer value (0-10). Default is Null. The Outline Level, see Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sNumStyle           - [optional] a string value. Default is Null. Specifies the name of the style for the Paragraph numbering. Set to "" for None.
 ;                  $bParLineCount       - [optional] a boolean value. Default is Null. Whether the paragraph is included in the line numbering.
-;                  $iLineCountVal       - [optional] an integer value. Default is Null. The start value for numbering if a new numbering starts at this paragraph.
-;				   +							Set to 0 for no line numbering restart.
+;                  $iLineCountVal       - [optional] an integer value. Default is Null. The start value for numbering if a new numbering starts at this paragraph. Set to 0 for no line numbering restart.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1630,7 +1358,7 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ;				   @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sNumStyle not found in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10.
+;				   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
 ;				   @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
 ;				   @Error 1 @Extended 9 Return 0 = $iLineCountVal Not an Integer or less than 0.
@@ -1647,17 +1375,6 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Outline Constants :$LOW_OUTLINE_BODY(0); Indicates that the paragraph belongs to the body text.
-;					$LOW_OUTLINE_LEVEL_1(1), Indicates that the paragraph belongs to the corresponding outline level.
-;					$LOW_OUTLINE_LEVEL_2(2),
-;					$LOW_OUTLINE_LEVEL_3(3),
-;					$LOW_OUTLINE_LEVEL_4(4),
-;					$LOW_OUTLINE_LEVEL_5(5),
-;					$LOW_OUTLINE_LEVEL_6(6),
-;					$LOW_OUTLINE_LEVEL_7(7),
-;					$LOW_OUTLINE_LEVEL_8(8),
-;					$LOW_OUTLINE_LEVEL_9(9),
-;					$LOW_OUTLINE_LEVEL_10(10)
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_NumStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
@@ -1681,16 +1398,11 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ; Name ..........: _LOWriter_ParStyleOverLine
 ; Description ...: Set and retrieve the OverLine settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleOverLine(Byref $oParStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
-;                  $iOverLineStyle      - [optional] an integer value. Default is Null. The style of the Overline line, see
-;				   +									constants listed below. See Remarks.
-;                  $bOLHasColor         - [optional] a boolean value. Default is Null. Whether the Overline is colored, must
-;				   +						be set to true in order to set the Overline color.
-;                  $iOLColor            - [optional] an integer value. Default is Null. The color of the Overline, set in Long
-;				   +						integer format. Can be one of the constants below or a custom value. Set to
-;				   +						$LOW_COLOR_OFF(-1) for automatic color mode.
+;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
+;                  $bOLHasColor         - [optional] a boolean value. Default is Null. Whether the Overline is colored, must be set to true in order to set the Overline color.
+;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1698,8 +1410,7 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. Check
-;				   +									the Constants list.
+;				   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
@@ -1710,52 +1421,13 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ;				   |								8 = Error setting $iOLColor
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 4 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: OverLine line style uses the same constants as underline style.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Note: $bOLHasColor must be set to true in order to set the Overline color.
-; OverLine line style Constants: $LOW_UNDERLINE_NONE(0),
-;					$LOW_UNDERLINE_SINGLE(1),
-;					$LOW_UNDERLINE_DOUBLE(2),
-;					$LOW_UNDERLINE_DOTTED(3),
-;					$LOW_UNDERLINE_DONT_KNOW(4),
-;					$LOW_UNDERLINE_DASH(5),
-;					$LOW_UNDERLINE_LONG_DASH(6),
-;					$LOW_UNDERLINE_DASH_DOT(7),
-;					$LOW_UNDERLINE_DASH_DOT_DOT(8),
-;					$LOW_UNDERLINE_SML_WAVE(9),
-;					$LOW_UNDERLINE_WAVE(10),
-;					$LOW_UNDERLINE_DBL_WAVE(11),
-;					$LOW_UNDERLINE_BOLD(12),
-;					$LOW_UNDERLINE_BOLD_DOTTED(13),
-;					$LOW_UNDERLINE_BOLD_DASH(14),
-;					$LOW_UNDERLINE_BOLD_LONG_DASH(15),
-;					$LOW_UNDERLINE_BOLD_DASH_DOT(16),
-;					$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
-;					$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
-;					$LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -1778,9 +1450,9 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ; Name ..........: _LOWriter_ParStylePageBreak
 ; Description ...: Set or Retrieve Page Break Settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStylePageBreak(Byref $oDoc, $oParStyle[, $iBreakType = Null[, $iPgNumOffSet = Null[, $sPageStyle = Null]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
-;                  $iBreakType          - [optional] an integer value. Default is Null. The Page Break Type. See Constants below.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $sPageStyle          - [optional] a string value. Default is Null. Creates a page break before the paragraph it belongs to and assigns the value as the name of the new page style to use.
 ;				   +						Note: If you set this parameter, to remove the page break setting you must set this to "".
@@ -1792,7 +1464,7 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;				   @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sPageStyle not found in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6.
+;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;				   @Error 1 @Extended 8 Return 0 = $sPageStyle not a String.
 ;				   --Property Setting Errors--
@@ -1802,8 +1474,7 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;				   |								4 = Error setting $sPageStyle
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current
-;				   +								settings in a 3 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Break Type must be set before PageStyle will be able to be set, and page style needs set before $iPgNumOffSet can be set.
@@ -1811,13 +1482,6 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;						but doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Break Constants : $LOW_BREAK_NONE(0) – No column or page break is applied.
-;						$LOW_BREAK_COLUMN_BEFORE(1) – A column break is applied before the current Paragraph. The current Paragraph, therefore, is the first in the column.
-;						$LOW_BREAK_COLUMN_AFTER(2) – A column break is applied after the current Paragraph. The current Paragraph, therefore, is the last in the column.
-;						$LOW_BREAK_COLUMN_BOTH(3) – A column break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only Paragraph in the column.
-;						$LOW_BREAK_PAGE_BEFORE(4) – A page break is applied before the current Paragraph. The current Paragraph, therefore, is the first on the page.
-;						$LOW_BREAK_PAGE_AFTER(5) – A page break is applied after the current Paragraph. The current Paragraph, therefore, is the last on the page.
-;						$LOW_BREAK_PAGE_BOTH(6) – A page break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only paragraph on the page.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1841,7 +1505,7 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ; Name ..........: _LOWriter_ParStylePosition
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: _LOWriter_ParStylePosition(Byref $oParStyle[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SuperScript.
 ;                  $iSuperScript        - [optional] an integer value. Default is Null. SuperScript percentage value. See Remarks.
 ;                  $bAutoSub            - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SubScript.
@@ -1898,7 +1562,7 @@ EndFunc   ;==>_LOWriter_ParStylePosition
 ; Name ..........: _LOWriter_ParStyleRotateScale
 ; Description ...: Set or retrieve the character rotational and Scale settings for a paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleRotateScale(Byref $oParStyle[, $iRotation = Null[, $iScaleWidth = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iRotation           - [optional] an integer value. Default is Null. Degrees to rotate the text. Accepts only 0, 90, and 270 degrees.
 ;                  $iScaleWidth         - [optional] an integer value. Default is Null. The percentage to  horizontally stretch or compress the text. Must be above 1. Max 100. 100 is normal sizing.
 ; Return values .: Success: 1 or Array.
@@ -2054,11 +1718,11 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ; Name ..........: _LOWriter_ParStyleShadow
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleShadow(Byref $oParStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the shadow set in Micrometers.
-;                  $iColor              - [optional] an integer value. Default is Null. The color of the shadow, set in Long Integer format. Can be one of the below constants or a custom value.
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether or not the shadow is transparent.
-;                  $iLocation           - [optional] an integer value. Default is Null. The location of the shadow compared to the paragraph. See Constants below.
+;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2068,7 +1732,7 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;				   @Error 1 @Extended 4 Return 0 = $iWidth not an integer or less than 0.
 ;				   @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
 ;				   @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
@@ -2086,29 +1750,6 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Shadow Location Constants: $LOW_SHADOW_NONE(0) = No shadow.
-;							$LOW_SHADOW_TOP_LEFT(1) = Shadow is located along the upper and left sides.
-;							$LOW_SHADOW_TOP_RIGHT(2) = Shadow is located along the upper and right sides.
-;							$LOW_SHADOW_BOTTOM_LEFT(3) = Shadow is located along the lower and left sides.
-;							$LOW_SHADOW_BOTTOM_RIGHT(4) = Shadow is located along the lower and right sides.
-; Color Constants: $LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -2131,21 +1772,13 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ; Name ..........: _LOWriter_ParStyleSpace
 ; Description ...: Set and Retrieve Line Spacing settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleSpace(Byref $oParStyle[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null[, $bPageLineSpc = Null]]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $iAbovePar           - [optional] an integer value. Default is Null. The Space above a paragraph, in
-;				   +									Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
-;                  $iBelowPar           - [optional] an integer value. Default is Null. The Space Below a paragraph, in
-;				   +									Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
-;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins
-;				   +									of the paragraph should not be applied when the previous and next
-;				   +									paragraphs have the same style. Libre Office Version 3.6 and Up.
-;                  $iLineSpcMode        - [optional] an integer value. Default is Null. The type of the line spacing of a
-;				   +									paragraph. See Constants below, also notice min and max values for each.
-;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing
-;				   +						of the lines. See Remarks for Minimum and Max values.
-;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. Determines if the register mode is applied
-;				   +						to a paragraph. See Remarks.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $iAbovePar           - [optional] an integer value. Default is Null. The Space above a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
+;                  $iBelowPar           - [optional] an integer value. Default is Null. The Space Below a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
+;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
+;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The type of the line spacing of a paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
+;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values.
+;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. Determines if the register mode is applied to a paragraph. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2155,7 +1788,7 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;				   @Error 1 @Extended 4 Return 0 = $iAbovePar not an integer, less than 0 or more than 10008 uM.
 ;				   @Error 1 @Extended 5 Return 0 = $iBelowPar not an integer, less than 0 or more than 10008 uM.
 ;				   @Error 1 @Extended 6 Return 0 = $bAddSpc not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iLineSpcMode Not an integer, less than 0 or greater than 3. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iLineSpcMode Not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $iLineSpcHeight not an Integer.
 ;				   @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
 ;				   @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
@@ -2186,10 +1819,6 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Spacing Constants :$LOW_LINE_SPC_MODE_PROP(0); This specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
-;						$LOW_LINE_SPC_MODE_MIN(1); (Minimum/At least) This specifies the height as the minimum line height. Min 0, Max 10008 MicroMeters (uM)
-;						$LOW_LINE_SPC_MODE_LEADING(2); This specifies the height value as the distance to the previous line. Min 0, Max 10008 MicroMeters (uM)
-;						$LOW_LINE_SPC_MODE_FIX(3); This specifies the height value as a fixed line height. Min 51 MicroMeters, Max 10008 MicroMeters (uM)
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -2212,13 +1841,9 @@ EndFunc   ;==>_LOWriter_ParStyleSpace
 ; Name ..........: _LOWriter_ParStyleSpacing
 ; Description ...: Set and retrieve the spacing between characters (Kerning) for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleSpacing(Byref $oParStyle[, $bAutoKerning = Null[, $nKerning = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or
-;				   +						Object Retrieval function.
-;                  $bAutoKerning        - [optional] a boolean value. Default is Null. True applies a spacing in between
-;				   +						certain pairs of characters. False = disabled.
-;                  $nKerning            - [optional] a general number value. Default is Null. The kerning value of the
-;				   +								characters. Min is -2 Pt. Max is 928.8 Pt. See Remarks. Values are in
-;				   +								Printer's Points as set in the Libre Office UI.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+;                  $bAutoKerning        - [optional] a boolean value. Default is Null. True applies a spacing in between certain pairs of characters. False = disabled.
+;                  $nKerning            - [optional] a general number value. Default is Null. The kerning value of the characters. Min is -2 Pt. Max is 928.8 Pt. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2267,10 +1892,10 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 ; Name ..........: _LOWriter_ParStyleStrikeOut
 ; Description ...: Set or Retrieve the StrikeOut settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleStrikeOut(Byref $oParStyle[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. Whether to strike out words only and skip whitespaces. True = skip whitespaces.
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. True = strikeout, False = no strikeout.
-;                  $iStrikeLineStyle    - [optional] an integer value. Default is Null. The Strikeout Line Style, see constants below.
+;                  $iStrikeLineStyle    - [optional] an integer value (0-8). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2279,8 +1904,7 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. Check
-;				   +									the Constants list.
+;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
@@ -2294,13 +1918,6 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note Strikeout converted to single line in Ms word document format.
-; Strikeout Line Style Constants : $LOW_STRIKEOUT_NONE(0); specifies not to strike out the characters.
-;					$LOW_STRIKEOUT_SINGLE(1); specifies to strike out the characters with a single line
-;					$LOW_STRIKEOUT_DOUBLE(2); specifies to strike out the characters with a double line.
-;					$LOW_STRIKEOUT_DONT_KNOW(3); The strikeout mode is not specified.
-;					$LOW_STRIKEOUT_BOLD(4); specifies to strike out the characters with a bold line.
-;					$LOW_STRIKEOUT_SLASH(5); specifies to strike out the characters with slashes.
-;					$LOW_STRIKEOUT_X(6); specifies to strike out the characters with X's.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2322,10 +1939,10 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ; Name ..........: _LOWriter_ParStyleTabStopCreate
 ; Description ...: Create a new TabStop for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopCreate(Byref $oParStyle, $iPosition[, $iAlignment = Null[, $iFillChar = Null[, $iDecChar = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iPosition           - an integer value. The TabStop position/length to set the new TabStop to. Set in Micrometers (uM). See Remarks.
-;                  $iAlignment          - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
-;                  $iFillChar           - [optional] an integer value. Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants.
+;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
+;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator.
 ;				   +						Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer.
@@ -2337,7 +1954,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;				   @Error 1 @Extended 4 Return 0 = $iPosition Already exists in this ParStyle.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iFillChar not an Integer.
-;				   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants , $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
@@ -2363,13 +1980,6 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;					The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95).
 ;					You can also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
 ;					Call any optional parameter with Null keyword to skip it.
-; Tab Alignment Constants: $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
-;							$LOW_TAB_ALIGN_CENTER(1); Aligns the center of the text to the tab stop
-;							$LOW_TAB_ALIGN_RIGHT(2); Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
-;							$LOW_TAB_ALIGN_DECIMAL(3); Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab
-;							$LOW_TAB_ALIGN_DEFAULT(4);4 = This setting is the default, setting when no TabStops are present.
-;								Setting and Tabstop to this constant will make it disappear from the TabStop list.
-;								It is therefore only listed here for property reading purposes.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleTabStopDelete
 ; Link ..........:
@@ -2392,8 +2002,8 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ; Name ..........: _LOWriter_ParStyleTabStopDelete
 ; Description ...: Delete a TabStop from a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopDelete(Byref $oDoc, $oParStyle, $iTabStop)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2440,7 +2050,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 ; Name ..........: _LOWriter_ParStyleTabStopList
 ; Description ...: Retrieve a List of TabStops available in a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopList(Byref $oParStyle)
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2477,11 +2087,11 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ; Name ..........: _LOWriter_ParStyleTabStopMod
 ; Description ...: Modify or retrieve the properties of an existing TabStop in a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopMod(Byref $oParStyle, $iTabStop[, $iPosition = Null[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the input position to. Set in Micrometers (uM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
-;                  $iAlignment          - [optional] an integer value. Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants.
+;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator.
 ;				   +						Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer or Array.
@@ -2494,7 +2104,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iPosition not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
-;				   @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
@@ -2525,16 +2135,8 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
 ;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
 ;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
-;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Tab Alignment Constants: $LOW_TAB_ALIGN_LEFT(0); Aligns the left edge of the text to the tab stop and extends the text to the right.
-;							$LOW_TAB_ALIGN_CENTER(1); Aligns the center of the text to the tab stop
-;							$LOW_TAB_ALIGN_RIGHT(2); Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
-;							$LOW_TAB_ALIGN_DECIMAL(3); Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab
-;							$LOW_TAB_ALIGN_DEFAULT(4);4 = This setting is the default, setting when no TabStops are present.
-;								Setting and Tabstop to this constant will make it disappear from the TabStop list.
-;								It is therefore only listed here for property reading purposes.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopCreate,
 ;					_LOWriter_ParStyleTabStopList, _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -2559,13 +2161,11 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopMod
 ; Name ..........: _LOWriter_ParStyleTxtFlowOpt
 ; Description ...: Set and Retrieve Text Flow settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTxtFlowOpt(Byref $oParStyle[, $bParSplit = Null[, $bKeepTogether = Null[, $iParOrphans = Null[, $iParWidows = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bParSplit           - [optional] a boolean value. Default is Null. FALSE prevents the paragraph from getting split into two pages or columns
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. TRUE prevents page or column breaks between this and the following paragraph
-;                  $iParOrphans         - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page.
-;				   +						Min is 0 (disabled), and cannot be 1. Max is 9.
-;                  $iParWidows          - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page.
-;				   +						Min is 0 (disabled), and cannot be 1. Max is 9.
+;                  $iParOrphans         - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
+;                  $iParWidows          - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2611,12 +2211,11 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ; Name ..........: _LOWriter_ParStyleUnderLine
 ; Description ...: Set and retrieve the UnderLine settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleUnderLine(Byref $oParStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous ParStyle Create or Object Retrieval function.
+; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
-;                  $iUnderLineStyle     - [optional] an integer value. Default is Null. The style of the Underline line, see constants listed below.
+;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The style of the Underline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. Whether the underline is colored, must be set to true in order to set the underline color.
-;                  $iULColor            - [optional] an integer value. Default is Null. The color of the underline, set in Long integer format.
-;				   +						Can be one of the constants below or a custom value. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
+;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2624,7 +2223,7 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ;				   @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. Check the Constants list.
+;				   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
 ;				   --Property Setting Errors--
@@ -2641,44 +2240,6 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ;					Note: $bULHasColor must be set to true in order to set the underline color.
-; UnderLine line style Constants: $LOW_UNDERLINE_NONE(0),
-;									$LOW_UNDERLINE_SINGLE(1),
-;									$LOW_UNDERLINE_DOUBLE(2),
-;									$LOW_UNDERLINE_DOTTED(3),
-;									$LOW_UNDERLINE_DONT_KNOW(4),
-;									$LOW_UNDERLINE_DASH(5),
-;									$LOW_UNDERLINE_LONG_DASH(6),
-;									$LOW_UNDERLINE_DASH_DOT(7),
-;									$LOW_UNDERLINE_DASH_DOT_DOT(8),
-;									$LOW_UNDERLINE_SML_WAVE(9),
-;									$LOW_UNDERLINE_WAVE(10),
-;									$LOW_UNDERLINE_DBL_WAVE(11),
-;									$LOW_UNDERLINE_BOLD(12),
-;									$LOW_UNDERLINE_BOLD_DOTTED(13),
-;									$LOW_UNDERLINE_BOLD_DASH(14),
-;									$LOW_UNDERLINE_BOLD_LONG_DASH(15),
-;									$LOW_UNDERLINE_BOLD_DASH_DOT(16),
-;									$LOW_UNDERLINE_BOLD_DASH_DOT_DOT(17),
-;									$LOW_UNDERLINE_BOLD_WAVE(18)
-; Color Constants: $LOW_COLOR_OFF(-1),
-;					$LOW_COLOR_BLACK(0),
-;					$LOW_COLOR_WHITE(16777215),
-;					$LOW_COLOR_LGRAY(11711154),
-;					$LOW_COLOR_GRAY(8421504),
-;					$LOW_COLOR_DKGRAY(3355443),
-;					$LOW_COLOR_YELLOW(16776960),
-;					$LOW_COLOR_GOLD(16760576),
-;					$LOW_COLOR_ORANGE(16744448),
-;					$LOW_COLOR_BRICK(16728064),
-;					$LOW_COLOR_RED(16711680),
-;					$LOW_COLOR_MAGENTA(12517441),
-;					$LOW_COLOR_PURPLE(8388736),
-;					$LOW_COLOR_INDIGO(5582989),
-;					$LOW_COLOR_BLUE(2777241),
-;					$LOW_COLOR_TEAL(1410150),
-;					$LOW_COLOR_GREEN(43315),
-;					$LOW_COLOR_LIME(8508442),
-;					$LOW_COLOR_BROWN(9127187).
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
