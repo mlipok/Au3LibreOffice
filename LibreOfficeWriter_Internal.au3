@@ -1,6 +1,3 @@
-#Region ; *** Dynamically added Include files ***
-#include "LibreOfficeWriter_Par.au3"                         ; added:10/02/23 17:31:03
-#EndRegion ; *** Dynamically added Include files ***
 ;~ #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
