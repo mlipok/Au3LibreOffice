@@ -1856,15 +1856,15 @@ EndFunc   ;==>_LOWriter_TableSetData
 ; Description ...: List the names of all tables contained in a document.
 ; Syntax ........: _LOWriter_TablesGetNames(Byref $oDoc)
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: Array of Strings.
+; Return values .: Success: 1 or Array of Strings.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc variable not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failure retrieving Table objects.
-;				   @Error 2 @Extended 2 Return 0 = Document contains no Tables.
 ;				   --Success--
 ;				   @Error 0 @Extended ? Return Array. Returning Array of Table Names. @Extended set to number of Names returned.
+;				   @Error 0 @Extended 0 Return 1. Document contains no tables.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1891,7 +1891,7 @@ Func _LOWriter_TablesGetNames(ByRef $oDoc)
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, UBound($asTableNames), $asTableNames)
 	Else
-		Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0) ; No tables.
+		Return SetError($__LOW_STATUS_SUCCESS, 0, 1) ; No tables.
 	EndIf
 
 EndFunc   ;==>_LOWriter_TablesGetNames
