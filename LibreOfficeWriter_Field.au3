@@ -268,7 +268,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iChapFrmt           - [optional] an integer value. Default is Null. The Display format for the Chapter Field. See Constants.
+;                  $iChapFrmt           - [optional] an integer value (0-4). Default is Null. The Display format for the Chapter Field. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLevel              - [optional] an integer value. Default is Null. The Chapter level to display. Min. 1, Max 10.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -277,7 +277,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Chapter" Object.
@@ -286,7 +286,6 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldChapterModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -329,13 +328,13 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ; Description ...: Set or Retrieve a Chapter Field's settings.
 ; Syntax ........: _LOWriter_FieldChapterModify(Byref $oChapField[, $iChapFrmt = Null[, $iLevel = Null]])
 ; Parameters ....: $oChapField          - [in/out] an object. A Chapter field Object from a previous_LOWriter_FieldChapterInsert,  or _LOWriter_FieldsGetList function.
-;                  $iChapFrmt           - [optional] an integer value. Default is Null. The Display format for the Chapter Field. See Constants.
+;                  $iChapFrmt           - [optional] an integer value (0-4). Default is Null. The Display format for the Chapter Field. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLevel              - [optional] an integer value. Default is Null. The Chapter level to display. Min. 1, Max 10.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oChapField not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iChapFrmt not an integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1 or greater than 10.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -348,7 +347,6 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Chapter Format Constants: $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldChapterInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -2695,7 +2693,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, this is the value does not update if the source changes or all fields are updated.
-;				   $iFormat             - [optional] an integer value. Default is Null. The Data Format to  display. See Constants.
+;				   $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to  display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2704,7 +2702,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bIsFixed not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iFormat not an Integer, Less than 0, or greater than 3. See Constants.
+;				   @Error 1 @Extended 6 Return 0 = $iFormat not an Integer, Less than 0, or greater than 3. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.FileName" Object.
 ;				   --Success--
@@ -2713,7 +2711,6 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ; Modified ......:
 ; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the content is set to Fixed = True.
 ;				   For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format of $LOW_FIELD_FILENAME_NAME.
-; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFileNameModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -2757,13 +2754,13 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ; Syntax ........: _LOWriter_FieldFileNameModify(Byref $oFileNameField[, $bIsFixed = Null[, $iFormat = Null]])
 ; Parameters ....: $oFileNameField      - [in/out] an object. A File Name field Object from a previous _LOWriter_FieldFileNameInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, this is the value does not update if the source changes or all fields are updated.
-;				   $iFormat             - [optional] an integer value. Default is Null. The Data Format to  display. See Constants.
+;				   $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to  display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oFileNameField not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $iFormat not an Integer, Less than 0, or greater than 3. See Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iFormat not an Integer, Less than 0, or greater than 3. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bIsFixed
@@ -2778,7 +2775,6 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ;							of $LOW_FIELD_FILENAME_NAME.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFileNameInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3168,7 +3164,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iPHolderType        - [optional] an integer value. Default is Null. The type of Placeholder to insert. See Constants.
+;                  $iPHolderType        - [optional] an integer value (0-4). Default is Null. The type of Placeholder to insert. See Constants, $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPHolderName        - [optional] a string value. Default is Null. The Placeholder's name.
 ;                  $sReference          - [optional] a string value. Default is Null. A Reference to display when the mouse hovers the Placeholder.
 ; Return values .: Success: Object
@@ -3178,7 +3174,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iPHolderType not an Integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iPHolderType not an Integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $sPHolderName not a String.
 ;				   @Error 1 @Extended 7 Return 0 = $sReference not a String.
 ;				   --Initialization Errors--
@@ -3188,7 +3184,6 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFuncPlaceholderModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -3236,14 +3231,14 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ; Description ...: Set or Retrieve a Placeholder Field's settings.
 ; Syntax ........: _LOWriter_FieldFuncPlaceholderModify(Byref $oPHolderField[, $iPHolderType = Null[, $sPHolderName = Null[, $sReference = Null]]])
 ; Parameters ....: $oPHolderField       - [in/out] an object. A Placeholder field Object from a previous _LOWriter_FieldFuncPlaceholderInsert, or _LOWriter_FieldsGetList function.
-;                  $iPHolderType        - [optional] an integer value. Default is Null. The type of Placeholder to insert. See Constants.
+;                  $iPHolderType        - [optional] an integer value (0-4). Default is Null. The type of Placeholder to insert. See Constants, $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPHolderName        - [optional] a string value. Default is Null. The Placeholder's name.
 ;                  $sReference          - [optional] a string value. Default is Null. A Reference to display when the mouse hovers the Placeholder.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPHolderField not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iPHolderType not an Integer, less than 0 or greater than 4. See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iPHolderType not an Integer, less than 0 or greater than 4. See Constants, $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $sPHolderName not a String.
 ;				   @Error 1 @Extended 4 Return 0 = $sReference not a String.
 ;				   --Property Setting Errors--
@@ -3258,7 +3253,6 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Placehold Type Constants: $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldFuncPlaceholderInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3481,9 +3475,9 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Page numbering. See Constants.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Page numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iOffset             - [optional] an integer value. Default is Null. The number of pages to minus or add to the page Number.
-;                  $iPageNumType        - [optional] an integer value. Default is Null. The Page Number type, either previous, current or next page. See Constants.
+;                  $iPageNumType        - [optional] an integer value (0-2). Default is Null. The Page Number type, either previous, current or next page. See Constants, $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sUserText           - [optional] a string value. Default is Null. The custom User text to display. Only valid if $iNumFormat is set to $LOW_NUM_STYLE_CHAR_SPECIAL(6).
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3492,9 +3486,9 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $iOffset not an Integer.
-;				   @Error 1 @Extended 7 Return 0 = $iPageNumType not an Integer, less than 0 or greater than 2. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iPageNumType not an Integer, less than 0 or greater than 2. See Constants, $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $sUserText not a String.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.PageNumber" Object.
@@ -3503,8 +3497,6 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
-; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldPageNumberModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -3568,18 +3560,18 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ; Syntax ........: _LOWriter_FieldPageNumberModify(Byref $oDoc, Byref $oPageNumField[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageNumField       - [in/out] an object. A Page Number field Object from a previous _LOWriter_FieldPageNumberInsert, or _LOWriter_FieldsGetList function.
-;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Page numbering. See Constants.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Page numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iOffset             - [optional] an integer value. Default is Null. The number of pages to minus or add to the page Number.
-;                  $iPageNumType        - [optional] an integer value. Default is Null. The Page Number type, either previous, current or next page. See Constants.
+;                  $iPageNumType        - [optional] an integer value (0-2). Default is Null. The Page Number type, either previous, current or next page. See Constants, $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sUserText           - [optional] a string value. Default is Null. The custom User text to display. Only valid if $iNumFormat is set to $LOW_NUM_STYLE_CHAR_SPECIAL(6).
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageNumField not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iNumFormat not an Integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $iOffset not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iPageNumType not an Integer, less than 0 or greater than 2. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iPageNumType not an Integer, less than 0 or greater than 2. See Constants, $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $sUserText not a String.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.PageNumber" Object.
@@ -3596,8 +3588,6 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
-; Page Number Type Constants: $LOW_PAGE_NUM_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldPageNumberInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -4439,7 +4429,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ; Description ...: Retrieve an Array of Advanced Field Objects contained in a document.
 ; Syntax ........: _LOWriter_FieldsAdvGetList(Byref $oDoc[, $iType = $LOW_FIELDADV_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iType               - [optional] an integer value. Default is $LOW_FIELDADV_TYPE_ALL. The type of Field to search for. See Constants. Can be BitOr'd together.
+;                  $iType               - [optional] an integer value (1-1023). Default is $LOW_FIELDADV_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
 ;                  $bFieldType          - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type String for that particular Field as described by Libre Office. To assist in identifying the Field type.
 ;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type.
@@ -4447,7 +4437,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 1023. (The total of all Constants added together.) See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 1023. (The total of all Constants added together.) See Constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $bSupportedServices not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bFieldType not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
@@ -4465,7 +4455,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;					Field Object.
 ;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
 ;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the below constants, for the found Field.
+;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
 ;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
 ;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
 ;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
@@ -4473,7 +4463,6 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Advanced Field Type Constants: $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -4503,7 +4492,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ; Description ...: Retrieve an Array of Document Information Field Objects contained in a document.
 ; Syntax ........: _LOWriter_FieldsDocInfoGetList(Byref $oDoc[, $iType = $LOW_FIELD_DOCINFO_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iType               - [optional] an integer value. Default is $LOW_FIELD_DOCINFO_TYPE_ALL. The type of Field to search for. See Constants. Can be BitOr'd together.
+;                  $iType               - [optional] an integer value (1-16383). Default is $LOW_FIELD_DOCINFO_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
 ;                  $bFieldType          - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type String for that particular Field as described by Libre Office. To assist in identifying the Field type.
 ;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type.
@@ -4511,7 +4500,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 16383. (The total of all Constants added together.) See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 16383. (The total of all Constants added together.) See Constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $bSupportedServices not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bFieldType not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
@@ -4529,7 +4518,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;					Field Object.
 ;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
 ;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the below constants, for the
+;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the
 ;						found Field.
 ;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
 ;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
@@ -4538,7 +4527,6 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Doc Info Field Type Constants: $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -4572,7 +4560,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, this is the value does not update if the source changes or all fields are updated.
 ;                  $sContent            - [optional] a string value. Default is Null. The Content to Display, only valid if $bIsFixed is set to True.
-;                  $iDataType           - [optional] an integer value. Default is Null. The Data Type to display. See Constants.
+;                  $iDataType           - [optional] an integer value (0-14). Default is Null. The Data Type to display. See Constants, $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4582,7 +4570,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bIsFixed not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $sContent not a String.
-;				   @Error 1 @Extended 7 Return 0 = $iDataType not an Integer, less than 0 or greater than 14. See Constants.
+;				   @Error 1 @Extended 7 Return 0 = $iDataType not an Integer, less than 0 or greater than 14. See Constants, $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.ExtendedUser" Object.
 ;				   --Success--
@@ -4590,7 +4578,6 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Sender Data Type Constants: $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldSenderModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -4644,14 +4631,14 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ; Parameters ....: $oSenderField        - [in/out] an object. A Sender field Object from a previous _LOWriter_FieldSenderInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, this is the value does not update if the source changes or all fields are updated.
 ;                  $sContent            - [optional] a string value. Default is Null. The Content to Display, only valid if $bIsFixed is set to True.
-;                  $iDataType           - [optional] an integer value. Default is Null. The Data Type to display. See Constants.
+;                  $iDataType           - [optional] an integer value (0-14). Default is Null. The Data Type to display. See Constants, $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSenderField not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;				   @Error 1 @Extended 3 Return 0 = $sContent not a String.
-;				   @Error 1 @Extended 4 Return 0 = $iDataType not an Integer, less than 0 or greater than 14. See Constants.
+;				   @Error 1 @Extended 4 Return 0 = $iDataType not an Integer, less than 0 or greater than 14. See Constants, $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bIsFixed
@@ -4664,7 +4651,6 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Sender Data Type Constants: $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldSenderInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5159,7 +5145,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ; Description ...: Retrieve an Array of Field Objects contained in a document.
 ; Syntax ........: _LOWriter_FieldsGetList(Byref $oDoc[, $iType = $LOW_FIELD_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iType               - [optional] an integer value. Default is $LOW_FIELD_TYPE_ALL. The type of Field to search for. See Constants. Can be BitOr'd together.
+;                  $iType               - [optional] an integer value (1-2147483647). Default is $LOW_FIELD_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
 ;                  $bFieldType          - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type String for that particular Field as described by Libre Office. To assist in identifying the Field type.
 ;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type.
@@ -5167,7 +5153,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 2147483647. (The total of all Constants added together.) See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1 or greater than 2147483647. (The total of all Constants added together.) See Constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $bSupportedServices not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bFieldType not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
@@ -5185,7 +5171,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;					Field Object.
 ;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
 ;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the below constants, for the found Field.
+;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
 ;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
 ;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
 ;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
@@ -5193,7 +5179,6 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;						that I have made a function to create/modify it, you may still be able to update or delete it using the
 ;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
 ;						and others are literally impossible.
-; Field Type Constants: $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -5380,18 +5365,18 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ; Syntax ........: _LOWriter_FieldStatCountInsert(Byref $oDoc, Byref $oCursor, $iCountType[, $bOverwrite = False[, $iNumFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
-;                  $iCountType          - an integer value. The Type of Data to Count. See Constants.
+;                  $iCountType          - an integer value (0-6). The Type of Data to Count. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Count field numbering. See Constants.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Count field numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
-;				   @Error 1 @Extended 4 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants.
+;				   @Error 1 @Extended 4 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 5 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 6 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create requested Count Field Object.
 ;				   --Processing Errors--
@@ -5403,8 +5388,6 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ; Remarks .......: After insertion there seems to be a necessary delay before the value to display is available, thus when a
 ;						new count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this
 ;						field after a few seconds, the value should appear.
-; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatCountModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -5450,15 +5433,15 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ; Syntax ........: _LOWriter_FieldStatCountModify(Byref $oDoc, Byref $oCountField[, $iCountType = Null[, $iNumFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCountField         - [in/out] an object. A Count field Object from a previous _LOWriter_FieldStatCountInsert, or _LOWriter_FieldsGetList function.
-;                  $iCountType          - [optional] an integer value. Default is Null. The Type of Data to Count. See Constants.
-;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Count field numbering. See Constants.
+;                  $iCountType          - [optional] an integer value (0-6). Default is Null. The Type of Data to Count. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Count field numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCountField not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants.
-;				   @Error 1 @Extended 4 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iCountType not an integer, less than 0 or greater than 6. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create requested Count Field Object.
 ;				   --Processing Errors--
@@ -5478,8 +5461,6 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ;					 After changing the Count type there may be a delay before the value to display is available,
 ;						thus when the count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for
 ;						this field after a few seconds, the value should appear.
-; Field Count Type Constants: $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatCountInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5545,7 +5526,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iFormat             - [optional] an integer value. Default is Null. The Format to display the Template data in. See Constants.
+;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Format to display the Template data in. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -5553,7 +5534,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextField.TemplateName" Object.
 ;				   --Success--
@@ -5561,7 +5542,6 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatTemplateModify, _LOWriter_DocGenPropTemplate,  _LOWriter_DocGetViewCursor,
 ;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
 ;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
@@ -5600,12 +5580,12 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ; Description ...: Set or Retrieve a Template Field's settings.
 ; Syntax ........: _LOWriter_FieldStatTemplateModify(Byref $oTemplateField[, $iFormat = Null])
 ; Parameters ....: $oTemplateField      - [in/out] an object. A Template field Object from a previous _LOWriter_FieldStatTemplateInsert, or _LOWriter_FieldsGetList function.
-;                  $iFormat             - [optional] an integer value. Default is Null. The Format to display the Template data in. See Constants.
+;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Format to display the Template data in. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oTemplateField not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iFormat not an integer, less than 0 or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iFormat
@@ -5617,7 +5597,6 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
 ;					get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; File Name Constants: $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldStatTemplateInsert, _LOWriter_DocGenPropTemplate, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5845,7 +5824,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;                  $iNumFormat          - [optional] an integer value. Default is Null. The numbering format to use for Show Page Variable numbering. See Constants.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Show Page Variable numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -5853,7 +5832,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oCursor is a Table Cursor, not supported.
 ;				   @Error 1 @Extended 4 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 5 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextField.ReferencePageGet" Object.
 ;				   --Success--
@@ -5861,7 +5840,6 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldVarShowPageModify, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
@@ -5901,12 +5879,12 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; Description ...: Set or Retrieve a Show Page Variable Field's settings.
 ; Syntax ........: _LOWriter_FieldVarShowPageModify(Byref $oPageShowField[, $iNumFormat = Null])
 ; Parameters ....: $oPageShowField        - [in/out] an object. A Show Page Variable field Object from a previous _LOWriter_FieldVarShowPageInsert, or _LOWriter_FieldsGetList function.
-;                  $iNumFormat            - [optional] an integer value. Default is Null. The numbering format to use for Show Page Variable numbering. See Constants.
+;                  $iNumFormat            - [optional] an integer value (0-71). Default is Null. The numbering format to use for Show Page Variable numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageShowField not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants.
+;				   @Error 1 @Extended 2 Return 0 = $iNumFormat not an integer, less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iNumFormat
@@ -5917,7 +5895,6 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-; Numbering Format Constants: $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......: _LOWriter_FieldVarShowPageInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes

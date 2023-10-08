@@ -69,9 +69,9 @@ Global Const _
 
 ; Path Convert Constants.
 Global Const _
-		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input.
-		$LOW_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL.
-		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path.
+		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input path, determined by StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
+		$LOW_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
+		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
 ; Printer Duplex Constants.
 Global Const _
@@ -82,8 +82,8 @@ Global Const _
 
 ; Printer Paper Orientation Constants.
 Global Const _
-		$LOW_PAPER_PORTRAIT = 0, _                              ; Portrait Paper Orientation.
-		$LOW_PAPER_LANDSCAPE = 1                                ; Landscape Paper Orientation.
+		$LOW_PAPER_ORIENT_PORTRAIT = 0, _                       ; Portrait Paper Orientation.
+		$LOW_PAPER_ORIENT_LANDSCAPE = 1                         ; Landscape Paper Orientation.
 
 ; Paper Size Constants.
 Global Const _
@@ -106,10 +106,10 @@ Global Const _
 
 ; LO ViewCursor Movement Constants.
 Global Enum _
-		$LOW_VIEWCUR_GO_DOWN, _                                 ; Move the cursor Down.
-		$LOW_VIEWCUR_GO_UP, _                                   ; Move the cursor Up.
-		$LOW_VIEWCUR_GO_LEFT, _                                 ; Move the cursor left.
-		$LOW_VIEWCUR_GO_RIGHT, _                                ; Move the cursor right.
+		$LOW_VIEWCUR_GO_DOWN, _                                 ; Move the cursor Down by n lines.
+		$LOW_VIEWCUR_GO_UP, _                                   ; Move the cursor Up by n lines.
+		$LOW_VIEWCUR_GO_LEFT, _                                 ; Move the cursor left by n characters.
+		$LOW_VIEWCUR_GO_RIGHT, _                                ; Move the cursor right by n characters.
 		$LOW_VIEWCUR_GOTO_END_OF_LINE, _                        ; Move the cursor to the end of the current line.
 		$LOW_VIEWCUR_GOTO_START_OF_LINE, _                      ; Move the cursor to the start of the current line.
 		$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, _                      ; Move the cursor to the first page.
@@ -126,10 +126,10 @@ Global Enum _
 
 ; LO TextCursor Movement Constants.
 Global Enum _
-		$LOW_TEXTCUR_COLLAPSE_TO_START, _                       ; Collapses the current selection the start of the selection.
-		$LOW_TEXTCUR_COLLAPSE_TO_END, _                         ; Collapses the current selection the end of the selection.
-		$LOW_TEXTCUR_GO_LEFT, _                                 ; Move the cursor left.
-		$LOW_TEXTCUR_GO_RIGHT, _                                ; Move the cursor right.
+		$LOW_TEXTCUR_COLLAPSE_TO_START, _                       ; Collapses the current selection to the start of the selection.
+		$LOW_TEXTCUR_COLLAPSE_TO_END, _                         ; Collapses the current selection the to end of the selection.
+		$LOW_TEXTCUR_GO_LEFT, _                                 ; Move the cursor left by n characters.
+		$LOW_TEXTCUR_GO_RIGHT, _                                ; Move the cursor right by n characters.
 		$LOW_TEXTCUR_GOTO_START, _                              ; Move the cursor to the start of the text.
 		$LOW_TEXTCUR_GOTO_END, _                                ; Move the cursor to the end of the text.
 		$LOW_TEXTCUR_GOTO_NEXT_WORD, _                          ; Move to the start of the next word.
@@ -147,22 +147,22 @@ Global Enum _
 
 ; LO TableCursor Movement Constants.
 Global Enum _
-		$LOW_TABLECUR_GO_LEFT, _                                ; Move the cursor left.
-		$LOW_TABLECUR_GO_RIGHT, _                               ; Move the cursor right.
-		$LOW_TABLECUR_GO_UP, _                                  ; Move the cursor up.
-		$LOW_TABLECUR_GO_DOWN, _                                ; Move the cursor down.
+		$LOW_TABLECUR_GO_LEFT, _                                ; Move the cursor left n cells.
+		$LOW_TABLECUR_GO_RIGHT, _                               ; Move the cursor right n cells.
+		$LOW_TABLECUR_GO_UP, _                                  ; Move the cursor up n cells.
+		$LOW_TABLECUR_GO_DOWN, _                                ; Move the cursor down n cells.
 		$LOW_TABLECUR_GOTO_START, _                             ; Move the cursor to the first cell.
 		$LOW_TABLECUR_GOTO_END                                  ; Move the cursor to the last cell.
 
 ; Break Type
 Global Const _
 		$LOW_BREAK_NONE = 0, _                                  ; No column or page break is applied.
-		$LOW_BREAK_COLUMN_BEFORE = 1, _                         ; A column break is applied before the current Paragraph.
-		$LOW_BREAK_COLUMN_AFTER = 2, _                          ; A column break is applied after the current Paragraph.
-		$LOW_BREAK_COLUMN_BOTH = 3, _                           ; A column break is applied before and after the current Paragraph.
-		$LOW_BREAK_PAGE_BEFORE = 4, _                           ; A page break is applied before the current Paragraph.
-		$LOW_BREAK_PAGE_AFTER = 5, _                            ; A page break is applied after the current Paragraph.
-		$LOW_BREAK_PAGE_BOTH = 6                                ; A page break is applied before and after the current Paragraph.
+		$LOW_BREAK_COLUMN_BEFORE = 1, _                         ; A column break is applied before the current Paragraph. The current Paragraph, therefore, is the first in the column.
+		$LOW_BREAK_COLUMN_AFTER = 2, _                          ; A column break is applied after the current Paragraph. The current Paragraph, therefore, is the last in the column.
+		$LOW_BREAK_COLUMN_BOTH = 3, _                           ; A column break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only Paragraph in the column.
+		$LOW_BREAK_PAGE_BEFORE = 4, _                           ; A page break is applied before the current Paragraph. The current Paragraph, therefore, is the first on the page.
+		$LOW_BREAK_PAGE_AFTER = 5, _                            ; A page break is applied after the current Paragraph. The current Paragraph, therefore, is the last on the page.
+		$LOW_BREAK_PAGE_BOTH = 6                                ; A page break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only paragraph on the page.
 
 ; Horizontal Orientation
 Global Const _
@@ -228,16 +228,16 @@ Global Const _
 
 ; Vertical Orientation
 Global Const _
-		$LOW_ORIENT_VERT_NONE = 0, _                            ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I.
+		$LOW_ORIENT_VERT_NONE = 0, _                            ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I., the only difference is the combination setting of Vertical Relation.
 		$LOW_ORIENT_VERT_TOP = 1, _                             ; Aligned at the top.
 		$LOW_ORIENT_VERT_CENTER = 2, _                          ; Aligned at the center.
 		$LOW_ORIENT_VERT_BOTTOM = 3, _                          ; Aligned at the bottom.
-		$LOW_ORIENT_VERT_CHAR_TOP = 4, _                        ; Aligned at the top of a character.
-		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _                     ; Aligned at the center of a character.
-		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _                     ; Aligned at the bottom of a character.
-		$LOW_ORIENT_VERT_LINE_TOP = 7, _                        ; Aligned at the top of the line.
-		$LOW_ORIENT_VERT_LINE_CENTER = 8, _                     ; Aligned at the center of the line.
-		$LOW_ORIENT_VERT_LINE_BOTTOM = 9                        ; Aligned at the bottom of the line.
+		$LOW_ORIENT_VERT_CHAR_TOP = 4, _                        ; Aligned at the top of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Top, and "To" = Character.
+		$LOW_ORIENT_VERT_CHAR_CENTER = 5, _                     ; Aligned at the center of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Character.
+		$LOW_ORIENT_VERT_CHAR_BOTTOM = 6, _                     ; Aligned at the bottom of a character. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Character.
+		$LOW_ORIENT_VERT_LINE_TOP = 7, _                        ; Aligned at the top of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Top, and "To" = Row.
+		$LOW_ORIENT_VERT_LINE_CENTER = 8, _                     ; Aligned at the center of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
+		$LOW_ORIENT_VERT_LINE_BOTTOM = 9                        ; Aligned at the bottom of the line. Available only when anchor is set to "As character". Equal to L.O. UI setting of "Vertical" = Center, and "To" = Row.
 
 ; Tab Alignment
 Global Const _
@@ -245,7 +245,7 @@ Global Const _
 		$LOW_TAB_ALIGN_CENTER = 1, _                            ; Aligns the center of the text to the tab stop.
 		$LOW_TAB_ALIGN_RIGHT = 2, _                             ; Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
 		$LOW_TAB_ALIGN_DECIMAL = 3, _                           ; Aligns the decimal separator of a number to the center of the tab stop and text to the left of the tab.
-		$LOW_TAB_ALIGN_DEFAULT = 4                              ; This setting is the default, setting when no TabStops are present.
+		$LOW_TAB_ALIGN_DEFAULT = 4                              ; This setting is the default setting when no TabStops are present. Setting any Tabstop to this constant will make it disappear from the TabStop list. It is therefore only listed here for property reading purposes.
 
 ; Underline/Overline
 Global Const _
@@ -339,10 +339,10 @@ Global Const _
 
 ; Line Spacing
 Global Const _
-		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value.
-		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height.
-		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line.
-		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height.
+		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
+		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.]  Min 0, Max 10008 MicroMeters (uM)
+		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line. Min 0, Max 10008 MicroMeters (uM)
+		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height. Min 51 MicroMeters, Max 10008 MicroMeters (uM)
 
 ; Paragraph Horizontal Align
 Global Const _
@@ -350,11 +350,11 @@ Global Const _
 		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _                         ; The Paragraph is right-aligned between the borders.
 		$LOW_PAR_ALIGN_HOR_JUSTIFIED = 2, _                     ; The Paragraph is adjusted / stretched to both borders.
 		$LOW_PAR_ALIGN_HOR_CENTER = 3, _                        ; The Paragraph is centered between the left and right borders.
-		$LOW_PAR_ALIGN_HOR_STRETCH = 4                          ;HoriAlign 4 does nothing??
+		$LOW_PAR_ALIGN_HOR_STRETCH = 4                          ; HoriAlign 4 does nothing??
 
 ; Paragraph Vertical Align
 Global Const _
-		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                         ; Automatic vertical alignment mode.
+		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                         ; Automatic vertical alignment mode. In automatic mode, horizontal text is aligned to the baseline. The same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the center.
 		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _                     ; The text is aligned to the baseline.
 		$LOW_PAR_ALIGN_VERT_TOP = 2, _                          ; The text is aligned to the top.
 		$LOW_PAR_ALIGN_VERT_CENTER = 3, _                       ; The text is aligned to the center.
@@ -368,10 +368,10 @@ Global Const _
 
 ; Text Direction
 Global Const _
-		$LOW_TXT_DIR_LR_TB = 0, _                               ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_RL_TB = 1, _                               ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom.
-		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left.
-		$LOW_TXT_DIR_TB_LR = 3, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right.
+		$LOW_TXT_DIR_LR_TB = 0, _                               ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom. Typically, this is the writing mode for normal "alphabetic" text.
+		$LOW_TXT_DIR_RL_TB = 1, _                               ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom. Typically, this writing mode is used in Arabic and Hebrew text.
+		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left. Typically, this writing mode is used in Chinese and Japanese text.
+		$LOW_TXT_DIR_TB_LR = 3, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right. Typically, this writing mode is used in Mongolian text.
 		$LOW_TXT_DIR_CONTEXT = 4, _                             ; Obtain actual writing mode from the context of the object.
 		$LOW_TXT_DIR_BT_LR = 5                                  ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
 
@@ -590,20 +590,25 @@ Global Const _
 		$LOW_FOLLOW_BY_SPACE = 1, _                             ; A Space will follow the Numbering Style Number.
 		$LOW_FOLLOW_BY_NOTHING = 2, _                           ; Nothing will follow the Numbering Style Number.
 		$LOW_FOLLOW_BY_NEWLINE = 3                              ; A Newline will follow the Numbering Style Number.
-
+#Tidy_Off
 ; Cursor Status
-Global Enum $LOW_CURSOR_STAT_IS_COLLAPSED, _                    ; Test if the start and end positions are the same for a cursor selection.
-		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word.
-		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word.
-		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence.
-		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _                  ; Test if a cursor is at the end of a sentence.
-		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                     ; Test if a cursor is at the start of a paragraph.
-		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                       ; Test if a cursor is at the End of a paragraph.
-		$LOW_CURSOR_STAT_IS_START_OF_LINE, _                    ; Test if a cursor is at the start of the line.
-		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                      ; Test if a cursor is at the end of the line.
-		$LOW_CURSOR_STAT_GET_PAGE, _                            ; Return the current page the cursor is in.
-		$LOW_CURSOR_STAT_GET_RANGE_NAME                         ; Return the cell range selected by a cursor.
-
+Global Enum _
+	_; Text And View Cursor Status Flag Constants:
+		$LOW_CURSOR_STAT_IS_COLLAPSED, _                        ; Test if the start and end positions are the same for a cursor selection, meaning the cursor has nothing selected..
+	_; Text Cursor Status Flag Constants:
+		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word. Returns True if so.
+		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_SENTENCE, _                  ; Test if a cursor is at the end of a sentence. Returns True if so.
+		$LOW_CURSOR_STAT_IS_START_OF_PAR, _                     ; Test if a cursor is at the start of a paragraph. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_PAR, _                       ; Test if a cursor is at the End of a paragraph. Returns True if so.
+	_; View Cursor Status Flag Constants:
+		$LOW_CURSOR_STAT_IS_START_OF_LINE, _                    ; Test if a cursor is at the start of the line. Returns True if so.
+		$LOW_CURSOR_STAT_IS_END_OF_LINE, _                      ; Test if a cursor is at the end of the line. Returns True if so.
+		$LOW_CURSOR_STAT_GET_PAGE, _                            ; Return the current page number the cursor is in as an integer.
+	_; Table Cursor Status Flag Constants:
+		$LOW_CURSOR_STAT_GET_RANGE_NAME                         ; Return the cell range selected by a cursor as a string. For example, “B3:D5”.
+#Tidy_On
 ; Relative to
 Global Const _
 		$LOW_RELATIVE_ROW = -1, _                               ; Position an object considering the row height.
@@ -623,9 +628,9 @@ Global Const _
 ; Anchor Type
 Global Const _
 		$LOW_ANCHOR_AT_PARAGRAPH = 0, _                         ; Anchors the object to the current paragraph.
-		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character.
+		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character. The height of the current line is resized to match the height of the selection.
 		$LOW_ANCHOR_AT_PAGE = 2, _                              ; Anchors the Object to the current page.
-		$LOW_ANCHOR_AT_FRAME = 3, _                             ;Anchors the object to the surrounding frame.
+		$LOW_ANCHOR_AT_FRAME = 3, _                             ; Anchors the object to the surrounding frame.
 		$LOW_ANCHOR_AT_CHARACTER = 4                            ; Anchors the Object to a character.
 
 ; Wrap Type
@@ -648,13 +653,13 @@ Global Const _
 Global Const _
 		$LOW_FRAME_TARGET_NONE = "", _                          ;
 		$LOW_FRAME_TARGET_TOP = "_top", _                       ; File opens in the topmost frame in the hierarchy.
-		$LOW_FRAME_TARGET_PARENT = "_parent", _                 ; File opens in the parent frame of the current frame.
+		$LOW_FRAME_TARGET_PARENT = "_parent", _                 ; File opens in the parent frame of the current frame. If there is no parent frame, the current frame is used.
 		$LOW_FRAME_TARGET_BLANK = "_blank", _                   ; File opens in a new page.
 		$LOW_FRAME_TARGET_SELF = "_self"                        ; File opens in the current frame.
 
 ; Footnote Count type
 Global Const _
-		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _                     ; Restarts the numbering of footnotes at the top of each page.
+		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _                     ; Restarts the numbering of footnotes at the top of each page. This option is only available if End of Doc is set to False.
 		$LOW_FOOTNOTE_COUNT_PER_CHAP = 1, _                     ; Restarts the numbering of footnotes at the beginning of each chapter.
 		$LOW_FOOTNOTE_COUNT_PER_DOC = 2                         ; Numbers the footnotes in the document sequentially.
 
