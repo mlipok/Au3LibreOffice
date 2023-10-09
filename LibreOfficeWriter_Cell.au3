@@ -429,11 +429,10 @@ EndFunc   ;==>_LOWriter_CellFormula
 ;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants below.
+;				   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns the data type as one of the below constants, Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data contained.
-; Data Type Constants: $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
