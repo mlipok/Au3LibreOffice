@@ -21,7 +21,7 @@ Func Example()
 	; Now set the User COM Error function
 	; The First Param is my User function I want called any time there is a COM Error.
 	_LOWriter_ComError_UserFunction($MyFunc)
-	If (@error > 0) Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now cause a COM Error, to demonstrate the function.")
 

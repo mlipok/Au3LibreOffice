@@ -10,15 +10,15 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Set the X coordinate to 50, Y coordinate to 150, Width to 500, Height to 600
 	_LOWriter_DocPosAndSize($oDoc, 50, 150, 500, 600)
-	If (@error > 0) Then _ERROR("Failed to set document settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to set document settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current document coordinates. Return will be an array in order of function parameters.
 	$aiReturn = _LOWriter_DocPosAndSize($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve document position. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve document position. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The document's current position and size is as follows: " & @CRLF & _
 			"X Coordinate = " & $aiReturn[0] & @CRLF & _
@@ -30,7 +30,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 
