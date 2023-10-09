@@ -26,7 +26,7 @@ Func Example()
 
 	; Retrieve the current Frame Hyperlink settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameHyperlink($oFrame)
-	If (@error > 0) Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If (@error > 0) Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame's Hyperlink settings are as follows: " & @CRLF & _
 			"The Hyperlink URL is, (if there is one): " & $avSettings[0] & @CRLF & _

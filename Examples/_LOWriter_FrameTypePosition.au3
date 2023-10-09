@@ -37,15 +37,15 @@ Func Example()
 	If (@error > 0) Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame's position settings are as follows: " & @CRLF & _
-			"The Frame style' Horizontal alignment setting is (see UDF Constants): " & $avSettings[0] & @CRLF & _
-			"The frame style's Horizontal position is, in Micrometers: " & $avSettings[1] & @CRLF & _
-			"The Frame style' Horizontal relation setting is (see UDF Constants): " & $avSettings[2] & @CRLF & _
+			"The Frame's Horizontal alignment setting is (see UDF Constants): " & $avSettings[0] & @CRLF & _
+			"The frame's Horizontal position is, in Micrometers: " & $avSettings[1] & @CRLF & _
+			"The Frame's Horizontal relation setting is (see UDF Constants): " & $avSettings[2] & @CRLF & _
 			"Mirror Frame position? True/False: " & $avSettings[3] & @CRLF & _
-			"The Frame style' Vertical alignment setting is (see UDF Constants): " & $avSettings[4] & @CRLF & _
-			"The frame style's Vertical position is, in Micrometers: " & $avSettings[5] & @CRLF & _
-			"The Frame style' Vertical relation setting is (see UDF Constants): " & $avSettings[6] & @CRLF & _
+			"The Frame's Vertical alignment setting is (see UDF Constants): " & $avSettings[4] & @CRLF & _
+			"The frame's Vertical position is, in Micrometers: " & $avSettings[5] & @CRLF & _
+			"The Frame's Vertical relation setting is (see UDF Constants): " & $avSettings[6] & @CRLF & _
 			"Keep Frame within Text boundaries? True/False: " & $avSettings[7] & @CRLF & _
-			"The Frame Style's anchor position is, (see UDF Constants): " & $avSettings[8])
+			"The Frame's anchor position is, (see UDF Constants): " & $avSettings[8])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

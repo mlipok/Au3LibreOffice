@@ -50,7 +50,7 @@ Func Example()
 	_LOWriter_FrameColumnSize($oFrame, 2, False)
 	If (@error > 0) Then _ERROR("Failed to set Frame settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current Frame Style settings. Return will be an array in order of function parameters.
+	; Retrieve the current Frame settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameColumnSize($oFrame, 2)
 	If (@error > 0) Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
