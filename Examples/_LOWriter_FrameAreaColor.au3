@@ -29,8 +29,8 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame's Background color settings are as follows: " & @CRLF & _
-			"The Frame Style's Background color is, in Long color format: " & $avSettings[0] & @CRLF & _
-			"Is the frame style's background color transparent? True/False: " & $avSettings[1])
+			"The Frame's Background color is, in Long color format: " & $avSettings[0] & @CRLF & _
+			"Is the frame's background color transparent? True/False: " & $avSettings[1])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

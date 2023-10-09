@@ -30,12 +30,12 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame's size settings are as follows: " & @CRLF & _
-			"The Frame style width is, in Micrometers: " & $avSettings[0] & @CRLF & _
-			"The frame style relative width percentage is: " & $avSettings[1] & @CRLF & _
+			"The Frame's width is, in Micrometers: " & $avSettings[0] & @CRLF & _
+			"The frame's relative width percentage is: " & $avSettings[1] & @CRLF & _
 			"The width is relative to what? (See UDF Constants): " & $avSettings[2] & @CRLF & _
 			"Automatic width? True/False: " & $avSettings[3] & @CRLF & _
-			"The Frame style height is, in Micrometers: " & $avSettings[4] & @CRLF & _
-			"The frame style relative height percentage is: " & $avSettings[5] & @CRLF & _
+			"The Frame's height is, in Micrometers: " & $avSettings[4] & @CRLF & _
+			"The frame's relative height percentage is: " & $avSettings[5] & @CRLF & _
 			"The height is relative to what? (See UDF Constants): " & $avSettings[6] & @CRLF & _
 			"Automatic Height? True/False: " & $avSettings[7] & @CRLF & _
 			"Keep Height width Ratio? True/False: " & $avSettings[8])
