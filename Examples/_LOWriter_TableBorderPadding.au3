@@ -11,35 +11,35 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create the Table, 5 rows, 3 columns
 	$oTable = _LOWriter_TableCreate($oDoc, 5, 3)
-	If (@error > 0) Then _ERROR("Failed to create Text Table. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to create Text Table. Error:" & @error & " Extended:" & @extended)
 
 	; Insert the Table into the document.
 	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
-	If (@error > 0) Then _ERROR("Failed to insert Text Table. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert Text Table. Error:" & @error & " Extended:" & @extended)
 
 	; Set the outer table borders to medium thickness.
 	_LOWriter_TableBorderWidth($oTable, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM)
-	If (@error > 0) Then _ERROR("Failed to set Table Border width settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to set Table Border width settings. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/2 Inch to Micrometers.
 	$iMicrometers = _LOWriter_ConvertToMicrometer(0.5)
-	If (@error > 0) Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Table padding to 1/2"
 	_LOWriter_TableBorderPadding($oTable, $iMicrometers, $iMicrometers, $iMicrometers, $iMicrometers)
-	If (@error > 0) Then _ERROR("Failed to set Table Border Padding settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to set Table Border Padding settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Table Border Padding settings. Return will be an Array, with values in order of function parameters.
 	$aiPadding = _LOWriter_TableBorderPadding($oTable)
-	If (@error > 0) Then _ERROR("Failed to retrieve Table Border Padding settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve Table Border Padding settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Table Border padding values are as follows: " & @CRLF & _
 			"Top = " & $aiPadding[0] & " Micrometers" & @CRLF & _
@@ -51,7 +51,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

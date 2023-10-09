@@ -11,14 +11,14 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create a unique file name
 	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".odt")
 
 	; Save The New Blank Doc To Desktop Directory.
 	$sPath = _LOWriter_DocSaveAs($oDoc, $sSavePath, "", True)
-	If (@error > 0) Then _ERROR("Failed to save the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to save the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Document's Save Path if it has one, the return will be a string, and the path will be like a computer path.
 	If _LOWriter_DocHasPath($oDoc) Then $sReturn = _LOWriter_DocGetPath($oDoc, False)
@@ -36,7 +36,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 	; Delete the file.
 	FileDelete($sPath)
