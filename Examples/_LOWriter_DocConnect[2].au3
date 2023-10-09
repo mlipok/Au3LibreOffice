@@ -11,7 +11,7 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have created a blank L.O. Writer Doc, I will now Connect to it and use the new Object returned to close it.")
 
@@ -21,7 +21,7 @@ Func Example()
 
 	; Retrieve Doc Name.
 	$sDocName = _LOWriter_DocGetName($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to retrieve Writer Document name. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve Writer Document name. Error:" & @error & " Extended:" & @extended)
 
 	$iUserChoice = MsgBox($MB_YESNO, "Close?", "I have connected to the Document with the following title: " & $sDocName & _
 			@CRLF & "Would you like to close it now?")
@@ -29,7 +29,7 @@ Func Example()
 	If ($iUserChoice = $IDYES) Then
 		; Close the document.
 		_LOWriter_DocClose($oDoc2, False)
-		If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 	EndIf
 
 EndFunc

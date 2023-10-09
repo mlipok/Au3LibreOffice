@@ -12,16 +12,16 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Document's Description settings, Title = "Autoit Example", Subject = "Doc Description Demonstration", Keywords to Keywords Array,
 	; Comments To two lines of comments.
 	_LOWriter_DocDescription($oDoc, "Autoit Example", "Doc Description Demonstration", $asKeywords, "This is a comment." & @CR & "This is a second comment line.")
-	If (@error > 0) Then _ERROR("Failed to modify Document settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify Document settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Document's description. Return will be an Array in order of function parameters.
 	$avReturn = _LOWriter_DocDescription($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
 
 	$asReturnedKeywords = $avReturn[2]
 	; Convert the Keyword Array to a String, separate each element with a @CRLF
@@ -39,7 +39,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

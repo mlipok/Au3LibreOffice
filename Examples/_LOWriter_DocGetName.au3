@@ -10,17 +10,17 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document's Name.
 	$sName = _LOWriter_DocGetName($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Document's name is: " & $sName)
 
 	; Retrieve the full name this time.
 	$sName = _LOWriter_DocGetName($oDoc, True)
-	If (@error > 0) Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The document's full name is: " & $sName & @CRLF & @CRLF & _
 			"This is the name you would use for Autoit Window functions, such as WinMove etc." & @CRLF & @CRLF & _
@@ -30,7 +30,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 
