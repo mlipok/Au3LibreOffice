@@ -80,8 +80,7 @@
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Note: If transparency is set, it can cause strange values to be displayed for Background color.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong,
@@ -1680,7 +1679,7 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The return for $bOriginalSize is  a Boolean whether the image is currently set to its original size (True) or not.
+; Remarks .......: The return for $bOriginalSize is a Boolean whether the image is currently set to its original size (True) or not.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
