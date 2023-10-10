@@ -74,7 +74,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ; Description ...: Retrieve the current status of a cursor.
 ; Syntax ........: _LOWriter_CursorGetStatus(Byref $oCursor, $iFlag)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $iFlag               - an integer value. The Requested status to return, see constants, $LOW_CURSOR_STAT_* as defined in LibreOfficeWriter_Constants.au3. Only some work for each type of cursor.
+;                  $iFlag               - an integer value. The Requested status to return, see constants, $LOW_CURSOR_STAT_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ; Return values .: Success: Variable.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -92,7 +92,22 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See corresponding flag for return type
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Only certain flags work for certain types of cursors:
+;				   |	Text And View Cursor Status Flag Constants:
+;				   + $LOW_CURSOR_STAT_IS_COLLAPSED
+;				   |	Text Cursor Status Flag Constants:
+;				   + $LOW_CURSOR_STAT_IS_START_OF_WORD,
+;				   + $LOW_CURSOR_STAT_IS_END_OF_WORD,
+;				   + $LOW_CURSOR_STAT_IS_START_OF_SENTENCE,
+;				   + $LOW_CURSOR_STAT_IS_END_OF_SENTENCE,
+;				   + $LOW_CURSOR_STAT_IS_START_OF_PAR,
+;				   + $LOW_CURSOR_STAT_IS_END_OF_PAR,
+;				   |	View Cursor Status Flag Constants:
+;				   + $LOW_CURSOR_STAT_IS_START_OF_LINE,
+;				   + $LOW_CURSOR_STAT_IS_END_OF_LINE,
+;				   + $LOW_CURSOR_STAT_GET_PAGE,
+;				   |	Table Cursor Status Flag Constants:
+;				   + $LOW_CURSOR_STAT_GET_RANGE_NAME
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
