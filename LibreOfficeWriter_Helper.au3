@@ -1640,9 +1640,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ; Syntax ........: _LOWriter_FindFormatModifyPosition(Byref $atFormat[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for SuperScript is active. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
-;                  $iSuperScript        - [optional] an integer value. Default is Null. The SuperScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
+;                  $iSuperScript        - [optional] an integer value (0-100,14000) Default is Null. The SuperScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
 ;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for SubScript is active. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
-;                  $iSubScript          - [optional] an integer value. Default is Null. The SubScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
+;                  $iSubScript          - [optional] an integer value (-100-100,-14000,14000) Default is Null. The SubScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
 ;                  $iRelativeSize       - [optional] an integer value (1-100). Default is Null. The size percentage relative to current font size.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.

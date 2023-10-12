@@ -1507,9 +1507,9 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ; Syntax ........: _LOWriter_ParStylePosition(Byref $oParStyle[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A ParagraphStyle object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SuperScript.
-;                  $iSuperScript        - [optional] an integer value. Default is Null. SuperScript percentage value. See Remarks.
+;                  $iSuperScript        - [optional] an integer value (0-100,14000) Default is Null. SuperScript percentage value. See Remarks.
 ;                  $bAutoSub            - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SubScript.
-;                  $iSubScript          - [optional] an integer value. Default is Null. SubScript percentage value. See Remarks.
+;                  $iSubScript          - [optional] an integer value (-100-100,-14000,14000) Default is Null. SubScript percentage value. See Remarks.
 ;                  $iRelativeSize       - [optional] an integer value. Default is Null. 1-100 percentage relative to current font size.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
