@@ -724,7 +724,7 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Syntax ........: __LOWriter_CharFontColor(Byref $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
-;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is invisible, 100 is fully visible. Available for Libre Office 7.0 and up.
+;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
 ;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
