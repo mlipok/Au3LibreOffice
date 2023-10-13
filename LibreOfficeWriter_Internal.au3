@@ -113,7 +113,7 @@
 ; Name ..........: __LOWriter_AddTo1DArray
 ; Description ...: Add data to a 1 Dimensional array.
 ; Syntax ........: __LOWriter_AddTo1DArray(Byref $aArray, $vData[, $bCountInFirst = False])
-; Parameters ....: $aArray              - [in/out] an array of unknowns. The Array to directly add data to.  Array will be directly modified.
+; Parameters ....: $aArray              - [in/out] an array of unknowns. The Array to directly add data to. Array will be directly modified.
 ;                  $vData               - a variant value. The Data to add to the Array.
 ;                  $bCountInFirst       - [optional] a boolean value. Default is False. If True the first element of the array is a count of contained elements.
 ; Return values .: Success: 1
@@ -152,7 +152,7 @@ Func __LOWriter_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 EndFunc   ;==>__LOWriter_AddTo1DArray
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_AddTo1DArray
+; Name ..........: __LOWriter_AddTo2DArray
 ; Description ...: Add data to a 2 Dimensional array.
 ; Syntax ........: __LOWriter_AddTo2DArray(Byref $aArray, $vDataCol1, $vDataCol2[, $bCountInFirst = False])
 ; Parameters ....: $aArray              - [in/out] an array of unknowns. The Array to directly add data to. Array will be directly modified.
@@ -229,7 +229,7 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; Name ..........: __LOWriter_ArrayFill
 ; Description ...: Fill an Array with data.
 ; Syntax ........: __LOWriter_ArrayFill(Byref $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null]]]]]]]]]]]]]]]]]])
-; Parameters ....: $aArrayToFill        - [in/out] an array of unknowns. The Array to Fill.  Array will be directly modified.
+; Parameters ....: $aArrayToFill        - [in/out] an array of unknowns. The Array to Fill. Array will be directly modified.
 ;                  $vVar1               - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar2               - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar3               - [optional] a variant value. Default is Null. The Data to add to the Array.
@@ -258,8 +258,7 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; ===============================================================================================================================
 Func __LOWriter_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, _
 		$vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null)
-	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14
-	#forceref $vVar15, $vVar16, $vVar17, $vVar18
+	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18
 
 	If UBound($aArrayToFill) < (@NumParams - 1) Then ReDim $aArrayToFill[@NumParams - 1]
 	For $i = 0 To @NumParams - 2
@@ -272,9 +271,9 @@ EndFunc   ;==>__LOWriter_ArrayFill
 ; Description ...: Border Setting Internal function. Libre Office Version 3.4 and Up.
 ; Syntax ........: __LOWriter_Border(Byref $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that implements BorderLine2 service for border properties.
-;                  $bWid                - a boolean value. If True the calling function is for setting Border Line Width.
-;                  $bSty                - a boolean value. If True the calling function is for setting Border Line Style.
-;                  $bCol                - a boolean value. If True the calling function is for setting Border Line Color.
+;                  $bWid                - a boolean value. If True, the calling function is for setting Border Line Width.
+;                  $bSty                - a boolean value. If True, the calling function is for setting Border Line Style.
+;                  $bCol                - a boolean value. If True, the calling function is for setting Border Line Color.
 ;                  $iTop                - an integer value. See Border Style, Width, and Color functions for possible values.
 ;                  $iBottom             - an integer value. See Border Style, Width, and Color functions for possible values.
 ;                  $iLeft               - an integer value. See Border Style, Width, and Color functions for possible values.
@@ -282,16 +281,16 @@ EndFunc   ;==>__LOWriter_ArrayFill
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oObj Variable not Object type variable.
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Right Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -300,7 +299,7 @@ EndFunc   ;==>__LOWriter_ArrayFill
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
-;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -376,9 +375,9 @@ EndFunc   ;==>__LOWriter_Border
 ; Description ...: Character Border Setting and retrieving Internal function.
 ; Syntax ........: __LOWriter_CharBorder(Byref $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bWid                - a boolean value. If True the calling function is for setting Border Line Width.
-;                  $bSty                - a boolean value. If True the calling function is for setting Border Line Style.
-;                  $bCol                - a boolean value. If True the calling function is for setting Border Line Color.
+;                  $bWid                - a boolean value. If True, the calling function is for setting Border Line Width.
+;                  $bSty                - a boolean value. If True, the calling function is for setting Border Line Style.
+;                  $bCol                - a boolean value. If True, the calling function is for setting Border Line Color.
 ;                  $iTop                - an integer value. See Border Style, Width, and Color functions for possible values.
 ;                  $iBottom             - an integer value. See Border Style, Width, and Color functions for possible values.
 ;                  $iLeft               - an integer value. See Border Style, Width, and Color functions for possible values.
@@ -392,18 +391,17 @@ EndFunc   ;==>__LOWriter_Border
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Right Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, and $bWid,
-;					or $bSty, or $bCol set to true to get the corresponding current settings.
-;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -480,11 +478,11 @@ EndFunc   ;==>__LOWriter_CharBorder
 ; Description ...: Set and retrieve the distance between the border and the characters.
 ; Syntax ........: __LOWriter_CharBorderPadding(Byref $oObj, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iAll                - an integer value. Set all four values to the same value. When used, all other parameters are ignored. In MicroMeters.
-;                  $iTop                - an integer value. Set the Top border distance in MicroMeters.
-;                  $iBottom             - an integer value. Set the Bottom border distance in MicroMeters.
-;                  $iLeft               - an integer value. Set the left border distance in MicroMeters.
-;                  $iRight              - an integer value. Set the Right border distance in MicroMeters.
+;                  $iAll                - an integer value. Set all four padding values to the same value. When used, all other parameters are ignored. In Micrometers.
+;                  $iTop                - an integer value. Set the Top border distance in Micrometers.
+;                  $iBottom             - an integer value. Set the Bottom border distance in Micrometers.
+;                  $iLeft               - an integer value. Set the left border distance in Micrometers.
+;                  $iRight              - an integer value. Set the Right border distance in Micrometers.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -507,7 +505,7 @@ EndFunc   ;==>__LOWriter_CharBorder
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -567,15 +565,15 @@ EndFunc   ;==>__LOWriter_CharBorderPadding
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iRelief             - an integer value (0-2). The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCase               - an integer value (0-4). The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bHidden             - a boolean value. Whether the Characters are hidden or not.
-;                  $bOutline            - a boolean value. Whether the characters have an outline around the outside.
-;                  $bShadow             - a boolean value. Whether the characters have a shadow.
+;                  $bHidden             - a boolean value. If True, the Characters are hidden.
+;                  $bOutline            - a boolean value. If True, the characters have an outline around the outside.
+;                  $bShadow             - a boolean value. If True, the characters have a shadow.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0, or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0, or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
@@ -592,7 +590,7 @@ EndFunc   ;==>__LOWriter_CharBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -659,7 +657,7 @@ EndFunc   ;==>__LOWriter_CharEffect
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $sFontName not a String.
 ;				   @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;				   @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -673,10 +671,8 @@ EndFunc   ;==>__LOWriter_CharEffect
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
-;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
-;					are changed automatically to an acceptable value, which could trigger a settings error.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -727,16 +723,16 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Description ...: Set or retrieve the font color, transparency and highlighting values.
 ; Syntax ........: __LOWriter_CharFontColor(Byref $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iFontColor          - an integer value (-1-16777215). The desired Color value in Long Integer format, to make the font, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
-;                  $iTransparency       - an integer value. Transparency percentage. 0 is not visible, 100 is fully visible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - an integer value (-1-16777215). A Color value in Long Integer format, to highlight the text in, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
+;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
+;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
-;				   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
-;				   @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
+;				   @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1, or greater than 16777215.
+;				   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0, or greater than 100%.
+;				   @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1, or greater than 16777215.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $FontColor
@@ -750,8 +746,7 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Note: When setting transparency, the value of font color value is changed, this may lead to property
-;					setting error messages for setting the Font color.
+;				   Note: When setting transparency, the value of font color value is changed, this may lead to property setting error messages for setting the Font color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -806,17 +801,17 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ; Syntax ........: __LOWriter_CharOverLine(Byref $oObj, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $bWordOnly           - a boolean value. If true, white spaces are not Overlined.
-;                  $iOverLineStyle      - an integer value (0-18). The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bOLHasColor         - a boolean value. Whether the Overline is colored, must be set to true in order to set the Overline color.
+;                  $iOverLineStyle      - an integer value (0-18). The line style of the Overline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
+;                  $bOLHasColor         - a boolean value. If True, the Overline is colored, must be set to true in order to set the Overline color.
 ;                  $iOLColor            - an integer value (-1-16777215). The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0, or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
+;				   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1, or greater than 16777215.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
@@ -829,9 +824,9 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: OverLine line style uses the same constants as underline style.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: $bOLHasColor must be set to true in order to set the Overline color.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Note: $bOLHasColor must be set to true in order to set the Overline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -882,11 +877,11 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: __LOWriter_CharPosition(Byref $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bAutoSuper          -  a boolean value. Whether to active automatic sizing for SuperScript.
-;                  $iSuperScript        -  an integer value.  SuperScript percentage value. See Remarks.
-;                  $bAutoSub            -  a boolean value. Whether to active automatic sizing for SubScript.
-;                  $iSubScript          -  an integer value. SubScript percentage value. See Remarks.
-;                  $iRelativeSize       -  an integer value. Percentage relative to current font size. Min. 1, Max 100.
+;                  $bAutoSuper          -  a boolean value. If True, automatic sizing for SuperScript is active.
+;                  $iSuperScript        -  an integer value. The SuperScript percentage value. See Remarks.
+;                  $bAutoSub            -  a boolean value. If True, automatic sizing for SubScript is active.
+;                  $iSubScript          -  an integer value. The SubScript percentage value. See Remarks.
+;                  $iRelativeSize       -  an integer value (1-100). The size percentage relative to current font size.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -906,20 +901,19 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to
-;					get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;					The way LibreOffice is set up Super/SubScript are set in the same setting, Super is a positive number from
-;						1 to 100 (percentage), SubScript is a negative number set to 1 to 100 percentage. For the user's
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
+;				   The way LibreOffice is set up Super/SubScript are set in the same setting, Superscript is a positive number from
+;						1 to 100 (percentage), SubScript is a negative number set to -1 to -100 percentage. For the user's
 ;						convenience this function accepts both positive and negative numbers for SubScript, if a positive number
 ;						is called for SubScript, it is automatically set to a negative. Automatic Superscript has a integer
 ;						value of 14000, Auto SubScript has a integer value of -14000. There is no settable setting of Automatic
 ;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
 ;						separate parameters to be able to determine if the user wants to automatically set SuperScript or
-;						SubScript. If you set both Auto SuperScript to True and Auto SubScript to True, or $iSuperScript to an
-;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
-;						this function, and thus will over-write any SuperScript settings.
+;						SubScript. If you set both Auto SuperScript to True and Auto SubScript to True, or $iSuperScript
+;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
+;						line to be set in this function, and thus will over-write any SuperScript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -982,8 +976,8 @@ EndFunc   ;==>__LOWriter_CharPosition
 ; Description ...: Set or retrieve the character rotational and Scale settings.
 ; Syntax ........: __LOWriter_CharRotateScale(Byref $oObj, $iRotation, $iScaleWidth[, $bRotateFitLine = Null])
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iRotation           - an integer value. Degrees to rotate the text. Accepts only 0, 90, and 270 degrees.
-;                  $iScaleWidth         - an integer value. The percentage to  horizontally stretch or compress the text. Min. 1. Max 100. 100 is normal sizing.
+;                  $iRotation           - an integer value (0,90,270). Degrees to rotate the text.
+;                  $iScaleWidth         - an integer value (1-100). The percentage to  horizontally stretch or compress the text. 100 is normal sizing.
 ;                  $bRotateFitLine      - [optional] a boolean value. Default is Null. If True, Stretches or compresses the selected text so that it fits between the line that is above the text and the line that is below the text. Only works with Direct Formatting.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1003,7 +997,7 @@ EndFunc   ;==>__LOWriter_CharPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1051,18 +1045,18 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Description ...: Set and retrieve the Shadow for a CharacterStyle
 ; Syntax ........: __LOWriter_CharShadow(Byref $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iWidth              - an integer value. Width of the shadow, set in Micrometers.
-;                  $iColor              - an integer value (0-16777215). Color of the shadow. See Remarks. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - a boolean value. Whether the shadow is transparent or not.
+;                  $iWidth              - an integer value. The Shadow width, set in Micrometers.
+;                  $iColor              - an integer value (0-16777215). The Shadow color. See Remarks. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0, or greater than 16777215.
 ;				   @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
@@ -1078,10 +1072,9 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
-;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;				   Color is set in Long Integer format.
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -1139,8 +1132,8 @@ EndFunc   ;==>__LOWriter_CharShadow
 ; Description ...: Set and retrieve the spacing between characters (Kerning).
 ; Syntax ........: __LOWriter_CharSpacing(Byref $oObj, $bAutoKerning, $nKerning)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bAutoKerning        - a boolean value. True applies a spacing in between certain pairs of characters. False = disabled.
-;                  $nKerning            - a general number value. The kerning value of the characters. Min is -2 Pt. Max is 928.8 Pt. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
+;                  $bAutoKerning        - a boolean value. If True, applies a spacing inbetween certain pairs of characters.
+;                  $nKerning            - a general number value (-2-928.8). The kerning value of the characters. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1157,14 +1150,12 @@ EndFunc   ;==>__LOWriter_CharShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
-;						Display, however the internal setting is measured in MicroMeters. They will be automatically converted
-;						from Points to MicroMeters and back for retrieval of settings.
-;						The acceptable values are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
+;				   Call any optional parameter with Null keyword to skip it.
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;				   The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
 ;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						MicroMeters internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
-;						value, which equals 32766 uM (MicroMeters), after this LibreOffice reports the following:
+;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
+;						value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
 ;						;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
 ;						kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to
 ;						any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
@@ -1210,16 +1201,16 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ; Description ...: Set or Retrieve the StrikeOut settings,
 ; Syntax ........: __LOWriter_CharStrikeOut(Byref $oObj, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bWordOnly           - a boolean value. Whether to strike out words only and skip whitespaces. True = skip whitespaces.
-;                  $bStrikeOut          - a boolean value. True = strikeout, False = no strike out.
-;                  $iStrikeLineStyle    - an integer value. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bWordOnly           - a boolean value. If True, strikeout is applied to words only skipping whitespaces.
+;                  $bStrikeOut          - a boolean value. If True, strikeout is applied to characters.
+;                  $iStrikeLineStyle    - an integer value (0-6). The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0, or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
@@ -1231,8 +1222,8 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note Strikeout converted to single line in Ms word document format.
+;				  Call any optional parameter with Null keyword to skip it.
+;				  Note Strikeout is converted to single line in Ms word document format.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1277,7 +1268,7 @@ EndFunc   ;==>__LOWriter_CharStrikeOut
 ; Description ...: Toggle from Character Style Display Name to Internal Name for error checking and setting retrieval.
 ; Syntax ........: __LOWriter_CharStyleNameToggle(Byref $sCharStyle[, $bReverse = False])
 ; Parameters ....: $sCharStyle          - a string value. The CharStyle Name to Toggle.
-;                  $bReverse            - [optional] a boolean value. Default is False. If True, the Char Style name is reverse toggled.
+;                  $bReverse            - [optional] a boolean value. Default is False. If True, the Character Style name is reverse toggled.
 ; Return values .: Success: String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1320,17 +1311,17 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ; Syntax ........: __LOWriter_CharUnderLine(Byref $oObj, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
-;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The style of the Underline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. Whether the underline is colored, must be set to true in order to set the underline color.
+;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0, or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
+;				   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1, or greater than 16777215.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
@@ -1343,7 +1334,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Note: $bULHasColor must be set to true in order to set the underline color.
+;				   Note: $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -1397,13 +1388,13 @@ EndFunc   ;==>__LOWriter_CharUnderLine
 ; Return values .:Success: Structure.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $sStructName Value not a string
+;				   @Error 1 @Extended 1 Return 0 = $sStructName not a string
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.ServiceManager" Object
-;				   @Error 2 @Extended 2 Return 0 = Error retrieving requested Structure.
+;				   @Error 2 @Extended 2 Return 0 = Error creating requested structure.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Structure = Success. Property Structure Returned
-; Author ........: mLipok;
+; Author ........: mLipok
 ; Modified ......: donnyh13 - Added error checking.
 ; Remarks .......: From WriterDemo.au3 as modified by mLipok from WriterDemo.vbs found in the LibreOffice SDK examples.
 ; Related .......:
@@ -1429,13 +1420,13 @@ EndFunc   ;==>__LOWriter_CreateStruct
 ; Name ..........: __LOWriter_CursorGetText
 ; Description ...: Retrieves a Text object appropriate for the type of cursor.
 ; Syntax ........: __LOWriter_CursorGetText(Byref $oDoc, $oCursor)
-; Parameters ....: $oDoc	    - [in/out] a Document object created by a preceding call to Open, Create, or Connect.
+; Parameters ....: $oDoc	    - [in/out] A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor 	- [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
 ; Return values .:Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oCursor variable not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to get Cursor data type.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
@@ -1530,7 +1521,7 @@ EndFunc   ;==>__LOWriter_DateStructCompare
 ;                  $bCheckSelection     - [optional] a boolean value. Default is False. If True, check for whether the cursor object is collapsed (no data selected).
 ; Return values .: Success: Boolean.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If called Object is fit for DirectFormatting Use then return True, else False.
+;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True, if called Object is fit for DirectFormatting use, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1568,7 +1559,7 @@ EndFunc   ;==>__LOWriter_DirFrmtCheck
 ;				   @Error 1 @Extended 2 Return 0 = $vInput was an Object, but did not match any known counting fields.
 ;				   @Error 1 @Extended 3 Return 0 = $vInput was an Integer but is higher than the size of the array of Field types. See Constants, $LOW_FIELD_COUNT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. Counting Field type identified, returning FieldCountType Variable Integer.
+;				   @Error 0 @Extended 0 Return Integer = Success. Counting Field type identified, returning FieldCountType constant Integer. See Constants, $LOW_FIELD_COUNT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 0 @Extended 1 Return String = Success. Counting Field type identified, returning Field Count Type String for CreateInstance function.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -1613,7 +1604,7 @@ EndFunc   ;==>__LOWriter_FieldCountType
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSupportedServices  - a boolean value. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
 ;                  $bFieldType          - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type String for that particular Field as described by Libre Office. To assist in identifying the Field type.
-;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type.
+;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant for that particular Field, to assist in identifying the Field type. See remarks.
 ;                  $avFieldTypes        - [in/out] an array of variants. An Array of Field types to search for to return. Array will not be modified.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1629,13 +1620,10 @@ EndFunc   ;==>__LOWriter_FieldCountType
 ;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set
-;					to False, the Array will be a single column. With each of the above listed options being set to True, a
-;					column will be added in the order they are listed in the UDF parameters. The First column will always be the
-;					Field Object.
-;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
-;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the below constants, for the found Field.
+; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set to False, the Array will be a single column. With each of the above listed options being set to True, a column will be added in the order they are listed in the UDF parameters. The First column will always be the Field Object.
+;				   Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
+;				   Setting $bFieldType to True will add a Field type column for the found Field.
+;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching one of the following constants for the found Field. $LOW_FIELD_TYPE_*,$LOW_FIELDADV_TYPE_*, and $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1699,7 +1687,7 @@ EndFunc   ;==>__LOWriter_FieldsGetList
 ; Name ..........: __LOWriter_FieldTypeServices
 ; Description ...: Retrieve an Array of Supported Service Names and Integer Constants to search for Fields.
 ; Syntax ........: __LOWriter_FieldTypeServices($iFieldType[, $bAdvancedServices = False[, $bDocInfoServices = False]])
-; Parameters ....: $iFieldType          - an integer value. The Integer Constant Field type.
+; Parameters ....: $iFieldType          - an integer value. The Constant Field type.
 ;                  $bAdvancedServices   - [optional] a boolean value. Default is False. If True, search in Advanced Field Type Array.
 ;                  $bDocInfoServices    - [optional] a boolean value. Default is False. If True, search in Document Information Field Type Array.
 ; Return values .: Success: Array
@@ -1807,14 +1795,14 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ;				   --Success--
 ;				   @Error 0 @Extended 1 Return String = Success. Returns required filtername from "SaveAs" FilterNames.
 ;				   @Error 0 @Extended 2 Return String = Success. Returns required filtername from "Export" FilterNames.
-;				   @Error 0 @Extended 3 Return String = FilterName not found for given file extension, defaulting to .odt file format and updating savepath accordingly.
+;				   @Error 0 @Extended 3 Return String = FilterName not found for given file extension, defaulting to .odt file format and updating save path accordingly.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Searches a predefined list of extensions stored in an array. Not all FilterNames are listed, where multiple
 ;						options were available for a given extension, the most recent Filter was used; Such as for .doc, there
 ;						is the a 97 MsWord Filter available, and also a 95 MsWord, in this case 97 MsWord was used, as is listed
-;						in the "SaveAs" and "Export" dialogs For finding you own FilterNames, see convertfilters.html found in
-;						L.O Install Folder: LibreOffice\help\en-US\text\shared\guide -- Or See: "OOME_3_0.odt / .pdf",
+;						in the "SaveAs" and "Export" dialogs. For finding your own FilterNames, see convertfilters.html found in
+;						L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide -- Or See: "OOME_3_0",
 ;						"OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for
 ;						listing all FilterNames, found on page 284 of the above book in the ODT format.
 ; Related .......:
@@ -1894,7 +1882,7 @@ EndFunc   ;==>__LOWriter_FilterNameGet
 ; Description ...: Add or Update a setting in a Find Format Array.
 ; Syntax ........: __LOWriter_FindFormatAddSetting(Byref $aArray, $tSetting)
 ; Parameters ....: $aArray              - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will be directly modified.
-;                  $tSetting            - a struct value. A Libre Office Structure setting Object.
+;                  $tSetting            - a struct value. A Libre Office Structure setting.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2037,17 +2025,17 @@ EndFunc   ;==>__LOWriter_FindFormatRetrieveSetting
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Right Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
-;					All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -2124,12 +2112,12 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ; Syntax ........: __LOWriter_FrameRelativeSize(Byref $oDoc, Byref $oFrameObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oFrameObj           - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative width percentage.
+;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative Width percentage.
 ;                  $bRelativeHeight     - [optional] a boolean value. Default is False. If True, modify Height based on relative Height percentage.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oFrameObj not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
@@ -2258,10 +2246,7 @@ EndFunc   ;==>__LOWriter_GetPrinterSetting
 ;				   @Error 0 @Extended 0 Return String = Success. A new Gradient name was created. Returning the new name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If The Gradient name is blank, I need to create a new name and apply it. I think I could re-use
-;					an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names
-;					that have been already created, then I need to create and apply one before the transparency gradient will
-;					be displayed. Else if a preset Gradient is called, I need to create its name before it can be used.
+; Remarks .......: If The Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed. Else if a preset Gradient is called, I need to create its name before it can be used.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2617,23 +2602,23 @@ EndFunc   ;==>__LOWriter_GradientPresets
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oObj Variable not Object type variable.
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border style/Color when Right Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
-;					All distance values are set in MicroMeters. Call any optional parameter with Null keyword to skip it.
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -2710,14 +2695,14 @@ EndFunc   ;==>__LOWriter_HeaderBorder
 ; Syntax ........: __LOWriter_Internal_CursorGetDataType(Byref $oDoc, Byref $oCursor[, $ReturnObject = False])
 ; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor              - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $bReturnObject        - [optional] a boolean value. Default is False. Whether to return an object used for creating a Text Object etc.
+;                  $bReturnObject        - [optional] a boolean value. Default is False. If True, return the object used for creating a Text Object etc.
 ; Return values .:Success: Object or Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $ReturnObject not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table Cursor, or a View Cursor with table cells selected. Can't get data type from a Table Cursor.
+;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table Cursor, or a View Cursor with table cells selected. Can't get data type from these types of Cursors.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Footnotes Object for document.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Endnotes Object for document.
@@ -2827,15 +2812,14 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ; Return values .:Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCursor variable not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Unknown Cursor type.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Returns what type of cursor the input Object is, such as a TableCursor, Text Cursor or a ViewCursor.
-;					Can also be a Paragraph or Text Portion.
+; Remarks .......: Returns what type of cursor the input Object is, such as a TableCursor, Text Cursor or a ViewCursor. Can also be a Paragraph or Text Portion.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2869,15 +2853,14 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetType
 ; Parameters ....: $oComError           - [in/out] an object. The Com Error Object passed by Autoit.Error.
 ; Return values .: None
 ; Author ........: mLipok
-; Modified ......: donnyh13 - Added parameters option. Also added MsgBox & ConsoleWrite option.
+; Modified ......: donnyh13 - Added parameters option. Also added MsgBox & ConsoleWrite options.
 ; Remarks .......:
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
-	; If not defined ComError_UserFunction then this function does nothing.
-	; In that case you can only check @error / @extended after suspect functions.
+	; If not defined ComError_UserFunction then this function does nothing, in which case you can only check @error / @extended after suspect functions.
 	Local $avUserFunction = _LOWriter_ComError_UserFunction(Default)
 	Local $vUserFunction, $avUserParams[2] = ["CallArgArray", $oComError]
 
@@ -2979,7 +2962,7 @@ EndFunc   ;==>__LOWriter_IntIsBetween
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Boolean: If the cell object is a Cell Range, True is returned. Else False.
 ; Author ........: donnyh13
@@ -3001,15 +2984,15 @@ EndFunc   ;==>__LOWriter_IsCellRange
 ; Name ..........: __LOWriter_IsTableInDoc
 ; Description ...: Check if Table is inserted in a Document or has only been created and not inserted.
 ; Syntax ........: __LOWriter_IsTableInDoc(Byref $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable Variable not Object type variable.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error retrieving Table cell names.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = If True, Table is inserted into the document, If false Table has been created with TableCreate but not inserted.
+;				   @Error 0 @Extended 0 Return Boolean = If True, Table is inserted into the document, If false Table has been created with _LOWriter_TableCreate but not inserted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3248,7 +3231,7 @@ EndFunc   ;==>__LOWriter_NumStyleInitiateDocument
 ; Parameters ....: $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
 ;                  $iLevel              - an integer value. The Level to create the ListFormat string for
 ;                  $iSubLevels          - an integer value. The number of levels to go up from $iLevel.
-;                  $sPrefix             - [optional] a string value. Default is Null. If Null, retrieves the current Prefix, else use the input prefix.
+;                  $sPrefix             - [optional] a string value. Default is Null. If Null, retrieves the current Prefix, else use the input Prefix.
 ;                  $sSuffix             - [optional] a string value. Default is Null. If Null, retrieves the current Suffix, else use the input Suffix.
 ; Return values .: Success: Array or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3310,7 +3293,7 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ; Syntax ........: __LOWriter_NumStyleModify(Byref $oDoc, Byref $oNumRules, $iLevel, $avSettings)
 ; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, to modify NumberingRules for.
 ;                  $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
-;                  $iLevel              - an integer value. The Numbering Style level to modify. 0-9 or -1 for all.
+;                  $iLevel              - an integer value (-1-9). The Numbering Style level to modify. -1 = all.
 ;                  $avSettings          - an array of variants. Array containing Numbering Style settings to set.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3330,7 +3313,7 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This works, but only with a work-around method, see inside this function for a description of why a work-around method is necessary.
-;					When a lot of settings are set, especially for all levels, this function can be a bit slow.
+;				   When a lot of settings are set, especially for all levels, this function can be a bit slow.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -3443,7 +3426,7 @@ EndFunc   ;==>__LOWriter_NumStyleModify
 ; Description ...: Internal function for Retrieving Numbering Style settings.
 ; Syntax ........: __LOWriter_NumStyleRetrieve(Byref $oNumRules, $iLevel, $sSettingName)
 ; Parameters ....: $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
-;                  $iLevel              - an integer value. The Numbering Style level to modify. 0-9.
+;                  $iLevel              - an integer value (0-9). The Numbering Style level to modify.
 ;                  $sSettingName        - a string value. The Numbering Style Setting name to modify.
 ; Return values .: Success: Variable
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3526,19 +3509,19 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ;                  $iHorAlign           - an integer value (0-3). The Horizontal alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $iVertAlign          - an integer value (0-4). The Vertical alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLastLineAlign      - an integer value (0-3). Specify the alignment for the last line in the paragraph. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bExpandSingleWord   - a boolean value. If the last line of a justified paragraph consists of one word, the word is stretched to the width of the paragraph.
+;                  $bExpandSingleWord   - a boolean value. If True, and the last line of a justified paragraph consists of one word, the word is stretched to the width of the paragraph.
 ;                  $bSnapToGrid         - a boolean value. If True, Aligns the paragraph to a text grid (if one is active).
 ;                  $iTxtDirection       - an integer value (0-5). The Text Writing Direction. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3. [Libre Office Default is 4]
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0, or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or more than 4. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or more than 3. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $bExpandSingleWord not a Boolean.
 ;				   @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5, See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0, or greater than 5, See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iHorAlign
@@ -3552,11 +3535,10 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
-;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-;					Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
+;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -3620,13 +3602,13 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ; Description ...: Set or Retrieve background color settings.
 ; Syntax ........: __LOWriter_ParBackColor(Byref $oObj, $iBackColor, $bBackTransparent)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iBackColor          - an integer value (-1-16777215). The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - a boolean value. Whether the background color is transparent or not. True = visible.
+;                  $iBackColor          - an integer value (-1-16777215). The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
+;                  $bBackTransparent    - a boolean value. If True, the background color is transparent
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;				   @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -3638,7 +3620,7 @@ EndFunc   ;==>__LOWriter_ParAlignment
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -3704,6 +3686,7 @@ EndFunc   ;==>__LOWriter_ParBackColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -3761,16 +3744,16 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ; Description ...: Set or Retrieve DropCaps settings
 ; Syntax ........: __LOWriter_ParDropCaps(Byref $oObj, $iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iNumChar            - an integer value. The number of characters to make into DropCaps. Min is 0, max is 9.
-;                  $iLines              - an integer value. The number of lines to drop down, min is 0, max is 9, cannot be 1.
-;                  $iSpcTxt             - an integer value. The distance between the drop cap and the following text.
-;                  $bWholeWord          - a boolean value. Whether to DropCap the whole first word. (Nullifys $iNumChars.)
+;                  $iNumChar            - an integer value (0-9). The number of characters to make into DropCaps.
+;                  $iLines              - an integer value (0, 2-9). The number of lines to drop down.
+;                  $iSpcTxt             - an integer value. The distance between the drop cap and the following text. In Micrometers.
+;                  $bWholeWord          - a boolean value. If True, DropCap the whole first word. (Nullifys $iNumChars.)
 ;                  $sCharStyle          - a string value. The character style to use for the DropCaps. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0 or greater than 9.
+;				   @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0, or greater than 9.
 ;				   @Error 1 @Extended 7 Return 0 = $iLines not an Integer, less than 0, equal to 1 or greater than 9
 ;				   @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
 ;				   @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
@@ -3790,13 +3773,9 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;					I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
-;					When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM
-;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
-;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
-;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
-;				Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -3904,11 +3883,11 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ; Description ...: Set or Retrieve Hyphenation settings.
 ; Syntax ........: __LOWriter_ParHyphenation(Byref $oObj, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $bAutoHyphen         - a boolean value. Whether  automatic hyphenation is applied.
-;                  $bHyphenNoCaps       - a boolean value.  Setting to true will disable hyphenation of words written in CAPS for this paragraph. Libre 6.4 and up.
-;                  $iMaxHyphens         - an integer value. The maximum number of consecutive hyphens. Min 0, Max 99.
-;                  $iMinLeadingChar     - an integer value. Specifies the minimum number of characters to remain before the hyphen character (when hyphenation is applied). Min 2, max 9.
-;                  $iMinTrailingChar    - an integer value. Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied). Min 2, max 9.
+;                  $bAutoHyphen         - a boolean value. If True, automatic hyphenation is applied.
+;                  $bHyphenNoCaps       - a boolean value. If True, hyphenation will be disabled for words written in CAPS for this paragraph. Libre 6.4 and up.
+;                  $iMaxHyphens         - an integer value (0-99). The maximum number of consecutive hyphens.
+;                  $iMinLeadingChar     - an integer value (2-9). Specifies the minimum number of characters to remain before the hyphen character (when hyphenation is applied).
+;                  $iMinTrailingChar    - an integer value (2-9). Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied).
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3916,8 +3895,8 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoHyphen not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not  a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iMaxHyphens not an Integer, less than 0, or greater than 99.
-;				   @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2 or greater than 9.
-;				   @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2 or greater than 9.
+;				   @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2, or greater than 9.
+;				   @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2, or greater than 9.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bAutoHyphen
@@ -3932,11 +3911,9 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office Version is below 6.4, then the Array returned will contain 4 elements because $bHyphenNoCaps is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still
-;					successfully set regardless.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to
-;					get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: Note: $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -4001,10 +3978,10 @@ EndFunc   ;==>__LOWriter_ParHyphenation
 ; Description ...: Set or Retrieve Indent settings.
 ; Syntax ........: __LOWriter_ParIndent(Byref $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iBeforeTxt          - an integer value. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
-;                  $iAfterTxt           - an integer value. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
-;                  $iFirstLine          - an integer value. Indentation distance of the first line of a paragraph. Set in MicroMeters(uM) Min. -57785, Max.17094.
-;                  $bAutoFirstLine      - a boolean value. Whether the first line should be indented automatically.
+;                  $iBeforeTxt          - an integer value (-9998989-17094). The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM).
+;                  $iAfterTxt           - an integer value (-9998989-17094). The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM)
+;                  $iFirstLine          - an integer value (-57785-17094). Indentation distance of the first line of a paragraph. Set in Micrometers(uM).
+;                  $bAutoFirstLine      - a boolean value. If True, the first line will be indented automatically.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4025,8 +4002,8 @@ EndFunc   ;==>__LOWriter_ParHyphenation
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -4081,16 +4058,16 @@ EndFunc   ;==>__LOWriter_ParIndent
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iOutline            - an integer value (0-10). The Outline Level, see Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sNumStyle           - a string value. Specifies the name of the style for the Paragraph numbering. Set to "" for None.
-;                  $bParLineCount       - a boolean value. Whether the paragraph is included in the line numbering.
+;                  $bParLineCount       - a boolean value. If True, the paragraph is included in the line numbering.
 ;                  $iLineCountVal       - an integer value. The start value for numbering if a new numbering starts at this paragraph. Set to 0 for no line numbering restart.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0, or greater than 10. See constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
 ;				   @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $iLineCountVal Not an Integer or less than 0.
+;				   @Error 1 @Extended 9 Return 0 = $iLineCountVal not an Integer or less than 0.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iOutline
@@ -4103,7 +4080,7 @@ EndFunc   ;==>__LOWriter_ParIndent
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -4157,12 +4134,12 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iBreakType          - an integer value (0-6). The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPgNumOffSet        - an integer value. If a page break property is set at a paragraph, this property contains the new value for the page number.
-;                  $sPageStyle          - a string value. Creates a page break before the paragraph it belongs to and assigns the value as the name of the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
+;                  $sPageStyle          - a string value. Creates a page break before the paragraph it belongs to and assigns the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0, or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;				   @Error 1 @Extended 8 Return 0 = $sPageStyle not a String.
 ;				   --Property Setting Errors--
@@ -4175,13 +4152,10 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Break Type must be set before PageStyle will be able to be set, and page style needs set before
-;					$iPgNumOffSet can be set.
-;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
-;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
-;						though I'm not sure if they will work correctly.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: Break Type must be set before PageStyle will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;				   Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -4226,18 +4200,18 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph.
 ; Syntax ........: __LOWriter_ParShadow(Byref $oObj, $iWidth, $iColor, $bTransparent, $iLocation)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iWidth              - an integer value. The width of the shadow set in Micrometers.
-;                  $iColor              - an integer value (0-16777215). The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - a boolean value. Whether or not the shadow is transparent.
+;                  $iWidth              - an integer value. The shadow width in Micrometers.
+;                  $iColor              - an integer value (0-16777215). The shadow color, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bTransparent        - a boolean value. If True, the shadow is transparent.
 ;                  $iLocation           - an integer value (0-4). The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iWidth not an integer or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0, or greater than 16777215.
 ;				   @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error Checking.
@@ -4253,10 +4227,9 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -4315,12 +4288,12 @@ EndFunc   ;==>__LOWriter_ParShadow
 ; Description ...: Set and Retrieve Line Spacing settings.
 ; Syntax ........: __LOWriter_ParSpace(Byref $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iAbovePar           - an integer value. The Space above a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
-;                  $iBelowPar           - an integer value. The Space Below a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
+;                  $iAbovePar           - an integer value (0-10008). The Space above a paragraph, in Micrometers.
+;                  $iBelowPar           - an integer value (0-10008). The Space Below a paragraph, in Micrometers.
 ;                  $bAddSpace           - a boolean value. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
-;                  $iLineSpcMode        - an integer value (0-3). The type of the line spacing of a paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
+;                  $iLineSpcMode        - an integer value (0-3). The line spacing type of the paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3, also notice min and max values for each.
 ;                  $iLineSpcHeight      - an integer value. This value specifies the height in regard to Mode. See Remarks.
-;                  $bPageLineSpc        - a boolean value. Determines if the register mode is applied to a paragraph. See Remarks.
+;                  $bPageLineSpc        - a boolean value. If True, register mode is applied to a paragraph. See Remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4328,7 +4301,7 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;				   @Error 1 @Extended 4 Return 0 = $iAbovePar not an integer, less than 0 or more than 10008 uM.
 ;				   @Error 1 @Extended 5 Return 0 = $iBelowPar not an integer, less than 0 or more than 10008 uM.
 ;				   @Error 1 @Extended 6 Return 0 = $bAddSpc not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $iLineSpcMode Not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $iLineSpcMode not an integer, less than 0, or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $iLineSpcHeight not an Integer.
 ;				   @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
 ;				   @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
@@ -4351,15 +4324,12 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
-;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
-;						so that each line is the same height.
-;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
-;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
-;					$iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is enabled . $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
+;				   Note: The settings in Libre Office, (Single, 1.15, 1.5, Double), Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+;				   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
+;				   Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -4453,8 +4423,8 @@ EndFunc   ;==>__LOWriter_ParSpace
 ;				   @Error 1 @Extended 1 Return 0 = $sParStyle not a String.
 ;				   @Error 1 @Extended 2 Return 0 = $bReverse not a Boolean.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Success. Paragraph Style Name was Successfully toggled. Returning changed name as a string.
-;				   @Error 0 @Extended 1 Return String = Success. Paragraph Style Name was Successfully reverse toggled. Returning changed name as a string.
+;				   @Error 0 @Extended 0 Return String = Success. Paragraph Style Name was Successfully toggled. Returning toggled name as a string.
+;				   @Error 0 @Extended 1 Return String = Success. Paragraph Style Name was Successfully reverse toggled. Returning toggled name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4482,7 +4452,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ; Description ...: Create a new TabStop for a Paragraph.
 ; Syntax ........: __LOWriter_ParTabStopCreate(Byref $oObj, $iPosition, $iAlignment, $iFillChar, $iDecChar)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $iPosition           - an integer value. The TabStop position/length to set the new TabStop to. Set in Micrometers (uM). See Remarks.
+;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Micrometers (uM). See Remarks.
 ;                  $iAlignment          - an integer value (0-4). The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iFillChar           - an integer value. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iDecChar            - an integer value. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
@@ -4491,34 +4461,29 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iFillChar not an Integer.
-;				   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted. in $iPosition.
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iPosition
 ;				   |								2 = Error setting $iFillChar
 ;				   |								4 = Error setting $iAlignment
 ;				   |								8 = Error setting $iDecChar
-;				   |						Note: $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
+;				   |								Note: $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
-;						be set to 2. See Return Values.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
-;						accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position.
+;				   Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -4618,9 +4583,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
-;						margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there
-;						 can only be one of a certain length per document.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph style.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -4725,7 +4688,7 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iPosition not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
-;				   @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
@@ -4745,19 +4708,12 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;				   @Error 0 @Extended ? Return 2 = Success. Settings were successfully set. New TabStop position is returned in @Extended.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
-;						This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be
-;						one of a certain length per document.
-;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
-;						be set to 2. See Return Values.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
-;						accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
-;					 Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per Paragraph Style.
+;				   Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;				   Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -4845,10 +4801,10 @@ EndFunc   ;==>__LOWriter_ParTabStopMod
 ; Description ...: Set and Retrieve Text Flow settings.
 ; Syntax ........: __LOWriter_ParTxtFlowOpt(Byref $oObj, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
-;                  $bParSplit           - a boolean value. False prevents the paragraph from getting split into two pages or columns
-;                  $bKeepTogether       - a boolean value. True prevents page or column breaks between this and the following paragraph
-;                  $iParOrphans         - an integer value. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
-;                  $iParWidows          - an integer value. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
+;                  $bParSplit           - a boolean value. If False, prevents the paragraph from getting split between two pages or columns
+;                  $bKeepTogether       - a boolean value. If True, prevents page or column breaks between this and the following paragraph
+;                  $iParOrphans         - an integer value (0, 2-9). Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. 0 = disabled.
+;                  $iParWidows          - an integer value (0, 2-9). Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. 0 = disabled.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -4868,10 +4824,9 @@ EndFunc   ;==>__LOWriter_ParTabStopMod
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will
-;					not become active until $bParSplit is set to true.
-;					Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+; Remarks .......: Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to true.
+;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -4971,9 +4926,9 @@ EndFunc   ;==>__LOWriter_RegExpConvert
 ; Return values .:Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = Property $sName Value was not a string
+;				   @Error 1 @Extended 1 Return 0 = $sName not a string
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Properties Object failed to be created
+;				   @Error 2 @Extended 1 Return 0 = Failed to create Properties Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Property Object Returned
 ; Author ........: Leagnus, GMK
@@ -5002,7 +4957,7 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Name ..........: __LOWriter_TableBorder
 ; Description ...: Set or Retrieve Table Border settings -- internal function. Libre Office 3.6 and Up.
 ; Syntax ........: __LOWriter_TableBorder(Byref $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $bWid                - a boolean value. If True the calling function is for setting Border Line Width.
 ;                  $bSty                - a boolean value. If True the calling function is for setting Border Line Style.
 ;                  $bCol                - a boolean value. If True the calling function is for setting Border Line Color.
@@ -5015,19 +4970,19 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable Variable not Object type variable.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style/Color when Border width not set.
-;				   @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style/Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;				   @Error 4 @Extended 5 Return 0 = Cannot set Vertical Border Style/Color when Vertical Border width not set.
+;				   @Error 4 @Extended 6 Return 0 = Cannot set Horizontal Border Style/Color when Horizontal Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;				   --Success--
@@ -5036,7 +4991,7 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Table Object, and either $bWid, $bSty, or $bCol set to true, with all other parameters set to Null keyword, to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5139,15 +5094,15 @@ EndFunc   ;==>__LOWriter_TableBorder
 ; Description ...: Text-TableCursor related movements.
 ; Syntax ........: __LOWriter_TableCursorMove(Byref $oCursor, $iMove, $iCount[, $bSelect = False])
 ; Parameters ....: $oCursor             - [in/out] an object. A TableCursor Object returned from _LOWriter_TableCreateCursor function.
-;                  $iMove               - an Integer value. The movement command. See remarks and Constants.
+;                  $iMove               - an Integer value. The movement command constant. See remarks and Constants, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCount              - an integer value. Number of movements to make.
-;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this cursor movement.
+;                  $bSelect             - [optional] a boolean value. Default is False. If True, select data during this cursor movement.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Constants, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
 ;				   @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;				   --Processing Errors--
@@ -5158,67 +5113,15 @@ EndFunc   ;==>__LOWriter_TableBorder
 ;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-; Cursor Movement Constants:
+; Remarks .......: $iMove may be set to any of the following constants. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;					-ViewCursor
-;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;						$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;						$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
-;					-TextCursor
-;						$LOW_TEXTCUR_GO_LEFT,Move the cursor left by n characters.
-;						$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;						$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;						$LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;						$LOW_TEXTCUR_GOTO_NEXT_SENTENCE,Move to the start of the next sentence.
-;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
-;					-TableCursor
 ;						$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
 ;						$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
 ;						$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
 ;						$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
-;					#Cursor Movements which accept number of Moves Only:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;						$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;						$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
 ;					#Cursor Movements which accept Selecting Only:
-;					-ViewCursor
-;						$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;						$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;						$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;						$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
-;					-TextCursor
-;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;						$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
-;					-TableCursor
 ;						$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
 ;						$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
-;					#Cursor Movements which accept nothing and are done once per call:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
-;					-TextCursor
-;						$LOW_TEXTCUR_COLLAPSE_TO_START,
-;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
-;					#Misc. Cursor Movements:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5263,17 +5166,17 @@ EndFunc   ;==>__LOWriter_TableCursorMove
 ; Name ..........: __LOWriter_TableHasCellName
 ; Description ...: Check whether the Table contains a Cell by the requested name.
 ; Syntax ........: __LOWriter_TableHasCellName(Byref $oTable, Byref $sCellName)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $sCellName           - [in/out] a string value. The requested cell name.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sCellName variable not a String.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sCellName not a String.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Names.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean: If  the table contains the requested Cell Name, True is returned. Else False.
+;				   @Error 0 @Extended 0 Return Boolean: If the table contains the requested Cell Name, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5305,13 +5208,13 @@ EndFunc   ;==>__LOWriter_TableHasCellName
 ; Name ..........: __LOWriter_TableHasColumnRange
 ; Description ...: Check if Table contains the requested Column.
 ; Syntax ........: __LOWriter_TableHasColumnRange(Byref $oTable, Byref $iColumn)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $iColumn             - [in/out] an integer value. The requested Column.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColumn variable not an Integer.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested Column. Else False.
 ; Author ........: donnyh13
@@ -5333,15 +5236,15 @@ EndFunc   ;==>__LOWriter_TableHasColumnRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableHasRowRange
-; Description ...: Check if Table contains the requested row.
+; Description ...: Check if a Table contains the requested row.
 ; Syntax ........: __LOWriter_TableHasRowRange(Byref $oTable, Byref $iRow)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $iRow                - [in/out] an integer value. The requested row.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oTable variable not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iRow variable not an Integer.
+;				   @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iRow not an Integer.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested row. Else False.
 ; Author ........: donnyh13
@@ -5365,7 +5268,7 @@ EndFunc   ;==>__LOWriter_TableHasRowRange
 ; Name ..........: __LOWriter_TableRowSplitToggle
 ; Description ...: Set or Retrieve Table Row split setting for an entire Table.
 ; Syntax ........: __LOWriter_TableRowSplitToggle(Byref $oTable[, $bSplitRows = Null])
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableCreate, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned from _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName functions.
 ;                  $bSplitRows          - [optional] a boolean value. Default is Null. If True, the content in a Table row is allowed to split at page splits, else if False, Content is not allowed to split across pages.
 ; Return values .: Success: Integer or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5381,8 +5284,7 @@ EndFunc   ;==>__LOWriter_TableHasRowRange
 ;				   @Error 0 @Extended 2 Return 1 = Success. Setting was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
-;					get the current settings.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5429,15 +5331,15 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ; Description ...: For TextCursor related movements.
 ; Syntax ........: __LOWriter_TextCursorMove(Byref $oCursor, $iMove, $iCount[, $bSelect = False])
 ; Parameters ....: $oCursor             - [in/out] an object. A TextCursor Object returned from any TextCursor creation functions.
-;                  $iMove               - an Integer value. The movement command. See remarks and Constants.
+;                  $iMove               - an Integer value. The movement command constant. See remarks and Constants, $LOW_TEXTCUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCount              - an integer value. Number of movements to make.
-;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this cursor movement.
+;                  $bSelect             - [optional] a boolean value. Default is False. If True, select data during this cursor movement.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Constants, $LOW_TEXTCUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
 ;				   @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;				   --Processing Errors--
@@ -5448,18 +5350,8 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-; Cursor Movement Constants:
+; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;					-ViewCursor
-;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;						$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;						$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
-;					-TextCursor
 ;						$LOW_TEXTCUR_GO_LEFT,Move the cursor left by n characters.
 ;						$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
 ;						$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
@@ -5468,24 +5360,7 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
 ;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
 ;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
-;					-TableCursor
-;						$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
-;						$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
-;					#Cursor Movements which accept number of Moves Only:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;						$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;						$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
 ;					#Cursor Movements which accept Selecting Only:
-;					-ViewCursor
-;						$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;						$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;						$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;						$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
-;					-TextCursor
 ;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
 ;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
 ;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
@@ -5494,21 +5369,9 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
 ;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
 ;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
-;					-TableCursor
-;						$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;						$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
 ;					#Cursor Movements which accept nothing and are done once per call:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
-;					-TextCursor
 ;						$LOW_TEXTCUR_COLLAPSE_TO_START,
 ;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
-;					#Misc. Cursor Movements:
-;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5588,8 +5451,8 @@ EndFunc   ;==>__LOWriter_TextCursorMove
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return Null = No values called in parameters.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. The requested Integer value to Long color format.
-;				   @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from Long color format.
+;				   @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to Long color format.
+;				   @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from Long color format to percentage.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5634,10 +5497,7 @@ EndFunc   ;==>__LOWriter_TransparencyGradientConvert
 ;				   @Error 0 @Extended 0 Return String = Success. A new transparency Gradient name was created. Returning the new name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If The Transparency Gradient name is blank, I need to create a new name and apply it. I think I could re-use
-;					an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names
-;					that have been already created, then I need to create and apply one before the transparency gradient will
-;					be displayed.
+; Remarks .......: If The Transparency Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5690,19 +5550,19 @@ EndFunc   ;==>__LOWriter_TransparencyGradientNameInsert
 ; Return values .:Success: Integer or Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $nValue is Not a Number.
+;				   @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
 ;				   @Error 1 @Extended 2 Return 0 = $iReturnType is not a Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iReturnType does not match predefined input.
+;				   @Error 1 @Extended 3 Return 0 = $iReturnType does not match constants, See Constants, $__LOWCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Success--
-;				   @Error 0 @Extended 1 Return Number =  Returns Number converted from TWIPS to Centimeters.
-;				   @Error 0 @Extended 2 Return Number =  Returns Number converted from TWIPS to Inches.
-;				   @Error 0 @Extended 3 Return Integer =  Returns Number converted from Millimeters to uM (Micrometers).
-;				   @Error 0 @Extended 4 Return Number =  Returns Number converted from Micrometers to MM
-;				   @Error 0 @Extended 5 Return Integer =  Returns Number converted from Centimeters To uM
-;				   @Error 0 @Extended 6 Return Number =  Returns Number converted from um (Micrometers) To CM
-;				   @Error 0 @Extended 7 Return Integer =  Returns Number converted from Inches to uM(Micrometers).
-;				   @Error 0 @Extended 8 Return Number =  Returns Number converted from uM(Micrometers) to Inches.
-;				   @Error 0 @Extended 9 Return Integer =  Returns Number converted from TWIPS to uM(Micrometers).
+;				   @Error 0 @Extended 1 Return Number = Returns Number converted from TWIPS to Centimeters.
+;				   @Error 0 @Extended 2 Return Number = Returns Number converted from TWIPS to Inches.
+;				   @Error 0 @Extended 3 Return Integer = Returns Number converted from Millimeters to uM (Micrometers).
+;				   @Error 0 @Extended 4 Return Number = Returns Number converted from Micrometers to MM
+;				   @Error 0 @Extended 5 Return Integer = Returns Number converted from Centimeters To uM
+;				   @Error 0 @Extended 6 Return Number = Returns Number converted from um (Micrometers) To CM
+;				   @Error 0 @Extended 7 Return Integer = Returns Number converted from Inches to uM(Micrometers).
+;				   @Error 0 @Extended 8 Return Number = Returns Number converted from uM(Micrometers) to Inches.
+;				   @Error 0 @Extended 9 Return Integer = Returns Number converted from TWIPS to uM(Micrometers).
 ;				   @Error 0 @Extended 10 Return Integer = Returns Number converted from Point to uM(Micrometers).
 ;				   @Error 0 @Extended 11 Return Number = Returns Number converted from uM(Micrometers) to Point.
 ; Author ........: donnyh13
@@ -5862,9 +5722,9 @@ EndFunc   ;==>__LOWriter_VarsAreNull
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $fRequiredVersion not a Number.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error retrieving Current LO Version.
+;				   @Error 3 @Extended 1 Return 0 = Error retrieving Current L.O. Version.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If the Current LO version is higher than or equal to the required version, then the return is True, else False.
+;				   @Error 0 @Extended 0 Return Boolean = Success. If the Current L.O. version is higher than or equal to the required version, then True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5887,7 +5747,7 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ; Description ...: For ViewCursor related movements.
 ; Syntax ........: __LOWriter_ViewCursorMove(Byref $oCursor, $iMove, $iCount[, $bSelect = False])
 ; Parameters ....: $oCursor             - [in/out] an object. A ViewCursor Object returned from _LOWriter_DocGetViewCursor function.
-;                  $iMove               - an integer value. The movement command. See remarks and Constants.
+;                  $iMove               - an integer value. The movement command. See remarks and Constants, $LOW_VIEWCUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCount              - an integer value. Number of movements to make.
 ;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this cursor movement.
 ; Return values .: Success: Boolean.
@@ -5895,7 +5755,7 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Constants, $LOW_VIEWCUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
 ;				   @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;				   --Processing Errors--
@@ -5906,66 +5766,28 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-; Cursor Movement Constants:
+; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
 ;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;					-ViewCursor
 ;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
 ;						$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
 ;						$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
 ;						$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
-;					-TextCursor
-;						$LOW_TEXTCUR_GO_LEFT,Move the cursor left by n characters.
-;						$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;						$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;						$LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;						$LOW_TEXTCUR_GOTO_NEXT_SENTENCE,Move to the start of the next sentence.
-;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
-;					-TableCursor
-;						$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
-;						$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
 ;					#Cursor Movements which accept number of Moves Only:
-;					-ViewCursor
 ;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
 ;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
 ;						$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
 ;						$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
 ;					#Cursor Movements which accept Selecting Only:
-;					-ViewCursor
 ;						$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
 ;						$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
 ;						$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
 ;						$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
-;					-TextCursor
-;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;						$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
-;					-TableCursor
-;						$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;						$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
 ;					#Cursor Movements which accept nothing and are done once per call:
-;					-ViewCursor
 ;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
 ;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
 ;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
 ;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
-;					-TextCursor
-;						$LOW_TEXTCUR_COLLAPSE_TO_START,
-;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
 ;					#Misc. Cursor Movements:
-;					-ViewCursor
 ;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
