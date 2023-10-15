@@ -89,7 +89,7 @@
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageAreaColor(ByRef $oImage, $iBackColor = Null, $bBackTransparent = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -183,7 +183,7 @@ EndFunc   ;==>_LOWriter_ImageAreaColor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Null, $iType = Null, $iIncrement = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iBorder = Null, $iFromColor = Null, $iToColor = Null, $iFromIntense = Null, $iToIntense = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tStyleGradient
@@ -322,7 +322,7 @@ EndFunc   ;==>_LOWriter_ImageAreaGradient
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageAreaTransparency(ByRef $oImage, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -393,7 +393,7 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparency
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iBorder = Null, $iStart = Null, $iEnd = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tStyleGradient
@@ -517,7 +517,7 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradient
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageBorderColor(ByRef $oImage, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
@@ -573,7 +573,7 @@ EndFunc   ;==>_LOWriter_ImageBorderColor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageBorderPadding(ByRef $oImage, $iAll = Null, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -662,7 +662,7 @@ EndFunc   ;==>_LOWriter_ImageBorderPadding
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageBorderStyle(ByRef $oImage, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
@@ -716,7 +716,7 @@ EndFunc   ;==>_LOWriter_ImageBorderStyle
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageBorderWidth(ByRef $oImage, $iTop = Null, $iBottom = Null, $iLeft = Null, $iRight = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
@@ -781,7 +781,7 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageColorAdjust(ByRef $oImage, $iRed = Null, $iGreen = Null, $iBlue = Null, $iBrightness = Null, $iContrast = Null, $nGamma = Null, $iColorMode = Null, $bInvert = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -889,7 +889,7 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = Null, $iBottom = Null, $bKeepScale = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -973,7 +973,7 @@ EndFunc   ;==>_LOWriter_ImageCrop
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageDelete(ByRef $oDoc, ByRef $oImage)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $sImageName
@@ -1005,7 +1005,7 @@ EndFunc   ;==>_LOWriter_ImageDelete
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageGetAnchor(ByRef $oImage)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oAnchor
@@ -1043,7 +1043,7 @@ EndFunc   ;==>_LOWriter_ImageGetAnchor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageGetObjByName(ByRef $oDoc, $sImage)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oImage, $oImages
@@ -1098,7 +1098,7 @@ EndFunc   ;==>_LOWriter_ImageGetObjByName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageHyperlink(ByRef $oImage, $sURL = Null, $sName = Null, $sFrameTarget = Null, $bServerSideMap = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -1187,7 +1187,7 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = $LOW_ANCHOR_AT_CHARACTER, $bOverwrite = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iCursorType
@@ -1284,7 +1284,7 @@ EndFunc   ;==>_LOWriter_ImageInsert
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageModify(ByRef $oImage, $bFlipVert = Null, $bFlipHoriOnRight = Null, $bFlipHoriOnLeft = Null, $nAngle = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -1360,7 +1360,7 @@ EndFunc   ;==>_LOWriter_ImageModify
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageOptions(ByRef $oImage, $bProtectContent = Null, $bProtectPos = Null, $bProtectSize = Null, $bPrint = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -1436,7 +1436,7 @@ EndFunc   ;==>_LOWriter_ImageOptions
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageOptionsName(ByRef $oDoc, ByRef $oImage, $sName = Null, $sAltText = Null, $sDesc = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -1496,7 +1496,7 @@ EndFunc   ;==>_LOWriter_ImageOptionsName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageReplace(ByRef $oImage, $sNewImage)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oImage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1533,7 +1533,7 @@ EndFunc   ;==>_LOWriter_ImageReplace
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImagesGetNames(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $asImages[0]
@@ -1595,7 +1595,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTransparent = Null, $iLocation = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tShdwFrmt
@@ -1687,7 +1687,7 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Null, $iWidth = Null, $iHeight = Null, $bOriginalSize = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -1789,7 +1789,7 @@ EndFunc   ;==>_LOWriter_ImageSize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageTransparency(ByRef $oImage, $iTransparency = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oImage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
@@ -1898,7 +1898,7 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Null, $iHorRelation = Null, $bMirror = Null, $iVertAlign = Null, $iVertPos = Null, $iVertRelation = Null, $bKeepInside = Null, $iAnchorPos = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iCurrentAnchor
@@ -2083,7 +2083,7 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelativeWidth = Null, $iWidthRelativeTo = Null, $iHeight = Null, $iRelativeHeight = Null, $iHeightRelativeTo = Null, $bKeepRatio = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
@@ -2197,7 +2197,7 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRight = Null, $iTop = Null, $iBottom = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oPropInfo
@@ -2298,7 +2298,7 @@ EndFunc   ;==>_LOWriter_ImageWrap
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_ImageWrapOptions(ByRef $oImage, $bFirstPar = Null, $bContour = Null, $bOutsideOnly = Null, $bInBackground = Null, $bAllowOverlap = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
