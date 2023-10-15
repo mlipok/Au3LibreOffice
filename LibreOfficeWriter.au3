@@ -5,7 +5,7 @@
 #include "LibreOfficeWriter_Internal.au3"
 #include "LibreOfficeWriter_Helper.au3"
 
-; include in order like they was splitted from LibreOfficeWriter.au3
+; include in order as they were split from LibreOfficeWriter.au3
 #include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Frame.au3"
 #include "LibreOfficeWriter_Table.au3"
@@ -70,12 +70,8 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
-;						Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value,
-;						such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false,
-;						the search only looks for matches that have the specified property, regardless of its value.
-;						Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
-;					Note: The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for
-;						other documents.
+;				   Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
+;				   Note: The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for other documents.
 ; Related .......: _LOWriter_SearchDescriptorModify, _LOWriter_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes
@@ -138,13 +134,9 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
-;						Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value,
-;						such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false,
-;						the search only looks for matches that have the specified property, regardless of its value.
-;						Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;						Call any optional parameter with Null keyword to skip it.
+; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes". Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes
@@ -227,7 +219,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_SearchDescriptorCreate
 ; Link ..........:
 ; Example .......: Yes
