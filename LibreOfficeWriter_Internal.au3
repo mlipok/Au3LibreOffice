@@ -2114,14 +2114,14 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ; Description ...: Calculate appropriate values to set Frame, Frame Style or Image Width or Height, when using relative values.
 ; Syntax ........: __LOWriter_ObjRelativeSize(Byref $oDoc, Byref $oObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrameObj           - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $oObj                - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function. Can also be an Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative Width percentage.
 ;                  $bRelativeHeight     - [optional] a boolean value. Default is False. If True, modify Height based on relative Height percentage.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oFrameObj not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bRelativeHeight and $bRelativeWidth both set to False.
