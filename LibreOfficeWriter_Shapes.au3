@@ -40,14 +40,12 @@
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shapes Object.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
+;				   @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
-;					I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc.
-;					And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
-;					Images inserted into the document are also listed as TextFrames in the shapes category.
-;					There isn't and easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
+;				   I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
+;				   Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
