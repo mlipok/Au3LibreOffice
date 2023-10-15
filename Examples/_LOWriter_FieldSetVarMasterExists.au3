@@ -10,13 +10,13 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	$sMasterFieldName = "TestMaster"
 
 	; Create a new Set Variable Master Field named "TestMaster".
 	$oMaster = _LOWriter_FieldSetVarMasterCreate($oDoc, $sMasterFieldName)
-	If (@error > 0) Then _ERROR("Failed to create a Set Variable Master. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to create a Set Variable Master. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does the Set Var Master Field exist in the Document? True/False: " & _LOWriter_FieldSetVarMasterExists($oDoc, $sMasterFieldName))
 
@@ -24,7 +24,7 @@ Func Example()
 
 	; Delete the Set Var. MasterField.
 	_LOWriter_FieldSetVarMasterDelete($oDoc, $oMaster)
-	If (@error > 0) Then _ERROR("Failed to delete Master Field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to delete Master Field. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does the Set Var Master Field still exist? True/False: " & _LOWriter_FieldSetVarMasterExists($oDoc, $sMasterFieldName))
 
@@ -32,7 +32,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

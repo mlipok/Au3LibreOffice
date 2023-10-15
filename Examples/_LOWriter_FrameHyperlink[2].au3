@@ -10,23 +10,23 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Frame into the document.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
-	If (@error > 0) Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Frame Hyperlink settings. Set the URL to @ScriptFullPath, set the name to "Current Script"
 	_LOWriter_FrameHyperlink($oFrame, @ScriptFullPath, "Current Script")
-	If (@error > 0) Then _ERROR("Failed to set Frame settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to set Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Frame Hyperlink settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameHyperlink($oFrame)
-	If (@error > 0) Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame's Hyperlink settings are as follows: " & @CRLF & _
 			"The Hyperlink URL is, (if there is one): " & $avSettings[0] & @CRLF & _
@@ -38,7 +38,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

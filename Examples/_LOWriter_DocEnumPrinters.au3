@@ -18,7 +18,7 @@ Func Example()
 	; Retrieve Array of available printers.
 	$asPrinters = _LOWriter_DocEnumPrinters()
 	$iCount = @extended
-	If (@error > 0) Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended)
 
 	; If results, display them, else display a message and exit.
 	If $iCount > 0 Then
@@ -36,7 +36,7 @@ Func Example()
 
 	; Return default printer.
 	$sDefault = _LOWriter_DocEnumPrinters(True)
-	If (@error > 0) Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended)
 
 	If ($sDefault = "") Then
 		MsgBox($MB_OK, "", "You do not have a default printer.")

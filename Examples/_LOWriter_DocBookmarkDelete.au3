@@ -9,26 +9,26 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If (@error > 0) Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Bookmark at the end of this line.--> ")
-	If (@error > 0) Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a BookMark at the ViewCursor, named "New Bookmark".
 	$oBookmark = _LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If (@error > 0) Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarksHasName($oDoc, "New Bookmark") & _
 			@CRLF & @CRLF & "Press Ok to delete the Bookmark.")
 
 	; Delete the Bookmark.
 	_LOWriter_DocBookmarkDelete($oDoc, $oBookmark)
-	If (@error > 0) Then _ERROR("Failed to delete a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to delete a BookMark. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Now does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarksHasName($oDoc, "New Bookmark"))
 
@@ -36,7 +36,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

@@ -10,7 +10,7 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If (@error > 0) Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	$sPageStyleName = "NewPageStyle"
 
@@ -19,7 +19,7 @@ Func Example()
 
 	; Create a New Page Style.
 	_LOWriter_PageStyleCreate($oDoc, $sPageStyleName)
-	If (@error > 0) Then _ERROR("Failed to create a new Page Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to create a new Page Style. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Now does a Page Style Named """ & $sPageStyleName & """exist in the document? True/False: " & _
 			_LOWriter_PageStyleExists($oDoc, $sPageStyleName))
@@ -28,7 +28,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If (@error > 0) Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 
