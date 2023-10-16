@@ -80,20 +80,20 @@
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;				   --Success--
@@ -102,12 +102,20 @@
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple differen settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderPadding
+;				  Call any optional parameter with Null keyword to skip it.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle,
+;					_LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -142,17 +150,17 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ; Description ...: Set and retrieve the distance between the border and the characters by Direct Format. LibreOffice 4.2 and Up.
 ; Syntax ........: _LOWriter_DirFrmtCharBorderPadding(Byref $oSelection[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bClearDirFrmt = False]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four values to the same value. When used, all other parameters are ignored. In Micrometers.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top border distance in Micrometers.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom border distance in Micrometers.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the left border distance in Micrometers.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right border distance in Micrometers.
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four values to the same value. When used, all other parameters are ignored. In MicroMeters.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top border distance in MicroMeters.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom border distance in MicroMeters.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the left border distance in MicroMeters.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right border distance in MicroMeters.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border padding, on all sides.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iAll not an Integer.
 ;				   @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
@@ -174,11 +182,19 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle,
+;					_LOWriter_DirFrmtCharBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -207,29 +223,29 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ; Description ...: Set or Retrieve the Character Style Border Line style by Direct Format. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_DirFrmtCharBorderStyle(Byref $oSelection[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bClearDirFrmt = False]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Top Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Bottom Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Left Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iTop is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iLeft is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iRight is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;				   --Success--
@@ -238,12 +254,20 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth,
+;					_LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ;
 ; Link ..........:
 ; Example .......: Yes
@@ -289,11 +313,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -306,12 +330,21 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor,
+;					_LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -349,16 +382,16 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bHidden             - [optional] a boolean value. Default is Null. If True, the Characters are hidden.
-;                  $bOutline            - [optional] a boolean value. Default is Null. If True, the characters have an outline around the outside.
-;                  $bShadow             - [optional] a boolean value. Default is Null. If True, the characters have a shadow.
+;                  $bHidden             - [optional] a boolean value. Default is Null. Whether the Characters are hidden or not.
+;                  $bOutline            - [optional] a boolean value. Default is Null. Whether the characters have an outline around the outside.
+;                  $bShadow             - [optional] a boolean value. Default is Null. Whether the characters have a shadow.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3..
 ;				   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
@@ -376,12 +409,19 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -432,22 +472,22 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtCharPosition(Byref $oSelection[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null[, $bClearDirFrmt = False]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for SuperScript is active.
-;                  $iSuperScript        - [optional] an integer value (0-100,14000). Default is Null. The SuperScript percentage value. See Remarks.
-;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for SubScript is active.
-;                  $iSubScript          - [optional] an integer value (-100-100,14000,-14000). Default is Null. SubScript percentage value. See Remarks.
-;                  $iRelativeSize       - [optional] an integer value (1-100). Default is Null. The size percentage relative to current font size.
+;                  $bAutoSuper          - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SuperScript.
+;                  $iSuperScript        - [optional] an integer value. Default is Null. SuperScript percentage value. See Remarks.
+;                  $bAutoSub            - [optional] a boolean value. Default is Null. Whether to active automatically sizing for SubScript.
+;                  $iSubScript          - [optional] an integer value. Default is Null. SubScript percentage value. See Remarks.
+;                  $iRelativeSize       - [optional] an integer value. Default is Null. 1-100 percentage relative to current font size.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Super/Sub Script settings.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, or less than 0, higher than 100 and Not 14000.
-;				   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000 or -14000.
+;				   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000.
 ;				   @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -460,13 +500,17 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;				   The way LibreOffice is set up Super/SubScript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), SubScript is a negative number set to -1 to -100 percentage. For the user's
+;					Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
+;					The way LibreOffice is set up Super/SubScript are set in the same setting, Super is a positive number from
+;						1 to 100 (percentage), SubScript is a negative number set to 1 to 100 percentage. For the user's
 ;						convenience this function accepts both positive and negative numbers for SubScript, if a positive number
 ;						is called for SubScript, it is automatically set to a negative. Automatic Superscript has a integer
 ;						value of 14000, Auto SubScript has a integer value of -14000. There is no settable setting of Automatic
@@ -475,7 +519,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ;						SubScript. If you set both Auto SuperScript to True and Auto SubScript to True, or $iSuperScript
 ;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
 ;						line to be set in this function, and thus will over-write any SuperScript settings.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -504,14 +551,14 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 ; Description ...: Set or retrieve the character rotational and Scale settings by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtCharRotateScale(Byref $oSelection[, $iRotation = Null[, $iScaleWidth = Null[, $bRotateFitLine = Null]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $iRotation           - [optional] an integer value (0,90,270). Default is Null. Degrees to rotate the text.
-;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to horizontally stretch or compress the text. 100 is normal sizing.
+;                  $iRotation           - [optional] an integer value. Default is Null. Degrees to rotate the text. Accepts only 0, 90, and 270 degrees.
+;                  $iScaleWidth         - [optional] an integer value. Default is Null. The percentage to  horizontally stretch or compress the text. Must be above 1. Max 100. 100 is normal sizing.
 ;                  $bRotateFitLine      - [optional] a boolean value. Default is Null. If True, Stretches or compresses the selected text so that it fits between the line that is above the text and the line that is below the text.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iRotation not an Integer or not equal to 0, 90 or 270 degrees.
 ;				   @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
@@ -527,12 +574,19 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-; Related .......: _LOWriter_DirFrmtClear,_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear,_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor,_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -580,15 +634,15 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ; Syntax ........: _LOWriter_DirFrmtCharShadow(Byref $oSelection[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null[, $bClearDirFrmt = False]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $iWidth              - [optional] an integer value. Default is Null. Width of the shadow, set in Micrometers.
-;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. Color of the shadow. See Remarks. Can be a custom value or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
+;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. Color of the shadow. See Remarks. Can be a custom value or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Character Shadow, Width, Color and Location.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;				   @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
@@ -611,13 +665,22 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
-;				   Color is set in Long Integer format.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;					Color is set in Long Integer format. You can use one of the below listed constants or a custom one.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -645,13 +708,13 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ; Description ...: Set and retrieve the spacing between characters (Kerning)by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtCharSpacing(Byref $oSelection[, $bAutoKerning = Null[, $nKerning = Null]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $bAutoKerning        - [optional] a boolean value. Default is Null. If True, applies a spacing in between certain pairs of characters.
-;                  $nKerning            - [optional] a general number value (-2-928.8). Default is Null. The kerning value of the characters. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
+;                  $bAutoKerning        - [optional] a boolean value. Default is Null. True applies a spacing in between certain pairs of characters. False = disabled.
+;                  $nKerning            - [optional] a general number value. Default is Null. The kerning value of the characters. Min is -2 Pt. Max is 928.8 Pt. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
@@ -665,21 +728,31 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;				   The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily,
+;					Call a Parameter with Default keyword to clear direct formatting for that setting.
+;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
+;						Display, however the internal setting is measured in MicroMeters. They will be automatically converted
+;						from Points to MicroMeters and back for retrieval of settings.
+;						The acceptable values are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
 ;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
-;						correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;						MicroMeters internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
+;						value, which equals 32766 uM (MicroMeters), after this LibreOffice reports the following: ;928.9
+;						Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning
+;						value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of
+;						these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max
+;						settable kerning is -2.0 Pt  to 928.8 Pt.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -720,7 +793,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 4 Return 0 = $oSelection is a Table Cursor, which is not supported.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
@@ -735,8 +808,13 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ;				   @Error 0 @Extended 0 Return 1 = Success. Direct Formatting was successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function causes the ViewCursor to select the data input in $oSelection, unless $oSelection is a ViewCursor object. After the formatting has been cleared the ViewCursor is returned to its previous position.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Remarks .......: This function causes the ViewCursor to select the data input in $oSelection, unless $oSelection is a
+;						a ViewCursor object. After the formatting has been cleared the ViewCursor is returned to its previous
+;						position.
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -796,18 +874,18 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ; Name ..........: _LOWriter_DirFrmtFont
 ; Description ...: Set and Retrieve the Font Settings by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtFont(Byref $oDoc, Byref $oSelection[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
+;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to change to.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
-;                  $iPosture            - [optional] an integer value (0-5). Default is Null. Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
-;                  $iWeight             - [optional] an integer value (0, 50-200). Default is Null. Font Bold settings, see Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
+;                  $iPosture            - [optional] an integer value (0-5). Default is Null. Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
+;                  $iWeight             - [optional] an integer value (0, 50-200). Default is Null. Bold settings, see Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 3 Return 0 =  $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 4 Return 0 = $sFontName not available in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $sFontName not a String.
@@ -826,14 +904,23 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......:Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
-;				   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOWriter_FontsList, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting.
+;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
+;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
+;					are changed automatically to an acceptable value, which could trigger a settings error.
+; Related .......: _LOWriter_FontsList, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor,
+;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
+;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -883,13 +970,13 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ; Syntax ........: _LOWriter_DirFrmtFontColor(Byref $oSelection[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $iFontColor          - [optional] an integer value (-1-16777215). Default is Null. the desired Color value in Long Integer format, to make the font, Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
+;                  $iTransparency       - [optional] an integer value. Default is Null. Transparency percentage. 0 is not visible, 100 is fully visible. Available for Libre Office 7.0 and up.
 ;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. A Color value in Long Integer format, to highlight the text in, Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
@@ -907,12 +994,21 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;				  Call any optional parameter with Null keyword to skip it.
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Font Color and
+;						Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -962,11 +1058,15 @@ EndFunc   ;==>_LOWriter_DirFrmtFontColor
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support Paragraph Properties service.
 ;				   @Error 1 @Extended 3 Return 0 = $oSelection does not support Character Properties service.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order: Paragraph StyleName, Character StyleName, Page StyleName, Numbering StyleName. See Remarks.
+;				   @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order:
+;					Paragraph StyleName, Character StyleName, Page StyleName, Numbering StyleName. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Some of the returned style values may be blank if they are not set, particularly Numberingstyle.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -994,13 +1094,13 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored. See remarks.
+;                  $bOLHasColor         - [optional] a boolean value. Default is Null. Whether the Overline is colored, must be set to true in order to set the Overline color.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1018,13 +1118,22 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Overline style, Color and $bHasColor all reset together.
-;				   Note: $bOLHasColor must be set to true in order to set the underline color.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;				  Call any optional parameter with Null keyword to skip it.
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Overline style,
+;						Color and $bHasColor all reset together.
+;					Note: $bOLHasColor must be set to true in order to set the underline color.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1075,7 +1184,7 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The Horizontal alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $iVertAlign          - [optional] an integer value (0-4). Default is Null. The Vertical alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLastLineAlign      - [optional] an integer value (0-3). Default is Null. Specify the alignment for the last line in the paragraph. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
-;                  $bExpandSingleWord   - [optional] a boolean value. Default is Null. If true, and the last line of a justified paragraph consists of one word, the word is stretched to the width of the paragraph.
+;                  $bExpandSingleWord   - [optional] a boolean value. Default is Null. If the last line of a justified paragraph consists of one word, the word is stretched to the width of the paragraph.
 ;                  $bSnapToGrid         - [optional] a boolean value. Default is Null. If True, Aligns the paragraph to a text grid (if one is active).
 ;                  $iTxtDirection       - [optional] an integer value (0-5). Default is Null. The Text Writing Direction. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3. [Libre Office Default is 4]
 ; Return values .: Success: Integer or Array.
@@ -1104,14 +1213,23 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
+;					Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
-;				   Note: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iHorAlign,
+;					$iLastLineAlign, and $bExpandSingleWord are all reset together.
+;					 Note: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
+;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					 _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1168,7 +1286,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ; Syntax ........: _LOWriter_DirFrmtParBackColor(Byref $oSelection[, $iBackColor = Null[, $bBackTransparent = Null[, $bClearDirFrmt = False]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) to turn Background color off.
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Background color.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1188,11 +1306,19 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1229,19 +1355,19 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -1250,12 +1376,21 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Border Width must be set first to be able to set Border Style and Color.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderPadding
+;					 Border Width must be set first to be able to set Border Style and Color.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle,
+;					_LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1321,11 +1456,20 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle,
+;					_LOWriter_DirFrmtParBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1352,29 +1496,29 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ; Description ...: Set and retrieve the Paragraph Border Line style by Direct Formatting. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_DirFrmtParBorderStyle(Byref $oSelection[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bClearDirFrmt = False]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Top Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Bottom Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Left Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of the Paragraph Border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iTop is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iLeft is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iRight is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -1383,12 +1527,20 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Border Width must be set first to be able to set Border Style and Color.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
+;					 Border Width must be set first to be able to set Border Style and Color.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth,
+;					_LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1424,22 +1576,22 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ; Description ...: Set and retrieve the Paragraph Border Line Width, or the Paragraph Connect Border option by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParBorderWidth(Byref $oSelection[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bConnectBorder = Null[, $bClearDirFrmt = False]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Paragraph in Micrometers. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Paragraph in Micrometers. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Paragraph in Micrometers. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Paragraph in Micrometers. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
-;                  $bConnectBorder      - [optional] a boolean value. Default is Null. If True, borders set for a paragraph are merged with the next paragraph. Note: Borders are only merged if they are identical. Libre Office Version 3.4 and Up.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Paragraph in MicroMeters. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Paragraph in MicroMeters. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Paragraph in MicroMeters. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Paragraph in MicroMeters. Can be a custom value of one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
+;                  $bConnectBorder      - [optional] a boolean value. Default is Null. Determines if borders set for a paragraph are merged with the next paragraph. Note: Borders are only merged if they are identical. Libre Office Version 3.4 and Up.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of the Paragraph Border, Width, Style and Color. Doesn't clear $bConnectBorder. See Remarks.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;				   @Error 1 @Extended 8 Return 0 = $bConnectBorder not a Boolean.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 8 Return 0 = $bConnectBorder Not a Boolean and Not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -1453,13 +1605,22 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;				   @Error 0 @Extended 0 Return 3 = Success. $bConnectBorder parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
-;				   To "Turn Off" Borders, set them to 0
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
+;					Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
+;					 To "Turn Off" Borders, set them to 0
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor,
+;					_LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1511,12 +1672,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ; Name ..........: _LOWriter_DirFrmtParDropCaps
 ; Description ...: Set or Retrieve DropCaps settings for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParDropCaps(Byref $oDoc, Byref $oSelection[, $iNumChar = Null[, $iLines = Null[, $iSpcTxt = Null[, $bWholeWord = Null[, $sCharStyle = Null[, $bClearDirFrmt = False]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iNumChar            - [optional] an integer value (0-9). Default is Null. The number of characters to make into DropCaps.
-;                  $iLines              - [optional] an integer value (0,2-9). Default is Null. The number of lines to drop down.
+;                  $iNumChar            - [optional] an integer value. Default is Null. The number of characters to make into DropCaps. Min is 0, max is 9.
+;                  $iLines              - [optional] an integer value. Default is Null. The number of lines to drop down, min is 0, max is 9, cannot be 1.
 ;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the following text. In Micrometers.
-;                  $bWholeWord          - [optional] a boolean value. Default is Null. If True, DropCap the whole first word. (Nullifys $iNumChar.)
+;                  $bWholeWord          - [optional] a boolean value. Default is Null. Whether to DropCap the whole first word. (Nullifys $iNumChars.)
 ;                  $sCharStyle          - [optional] a string value. Default is Null. The character style to use for the DropCaps. See Remarks.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of DropCaps and related settings.
 ; Return values .: Success: Integer or Array.
@@ -1525,7 +1686,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 4 Return 0 = Character Style called in $sCharStyle not found in current document.
+;				   @Error 1 @Extended 4 Return 0 = $sCharStyle not found in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0 or greater than 9.
 ;				   @Error 1 @Extended 7 Return 0 = $iLines not an Integer, less than 0, equal to 1 or greater than 9
@@ -1547,17 +1708,25 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
+;					I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
 ;					When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM
 ;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
 ;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
 ;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1587,11 +1756,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ; Description ...: Set or Retrieve Hyphenation settings for a paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParHyphenation(Byref $oSelection[, $bAutoHyphen = Null[, $bHyphenNoCaps = Null[, $iMaxHyphens = Null[, $iMinLeadingChar = Null[, $iMinTrailingChar = Null[, $bClearDirFrmt = False]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $bAutoHyphen         - [optional] a boolean value. Default is Null. If True, automatic hyphenation is applied.
-;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null. Setting to true will disable hyphenation of words written in CAPS for this paragraph. Libre 6.4 and up.
-;                  $iMaxHyphens         - [optional] an integer value (0-99). Default is Null. The maximum number of consecutive hyphens.
-;                  $iMinLeadingChar     - [optional] an integer value (2-9). Default is Null. Specifies the minimum number of characters to remain before the hyphen character (when hyphenation is applied).
-;                  $iMinTrailingChar    - [optional] an integer value (2-9). Default is Null. Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied).
+;                  $bAutoHyphen         - [optional] a boolean value. Default is Null. Whether  automatic hyphenation is applied.
+;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null.  Setting to true will disable hyphenation of words written in CAPS for this paragraph. Libre 6.4 and up.
+;                  $iMaxHyphens         - [optional] an integer value. Default is Null. The maximum number of consecutive hyphens. Min 0, Max 99.
+;                  $iMinLeadingChar     - [optional] an integer value. Default is Null. Specifies the minimum number of characters to remain before the hyphen character (when hyphenation is applied). Min 2, max 9.
+;                  $iMinTrailingChar    - [optional] an integer value. Default is Null. Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied). Min 2, max 9.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Hyphenation.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1600,7 +1769,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bAutoHyphen not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not  a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iMaxHyphens not an Integer, less than 0, or greater than 99.
 ;				   @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2 or greater than 9.
 ;				   @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2 or greater than 9.
@@ -1619,12 +1788,20 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					 Note: $bAutoHyphen set to True for the rest of the settings to be activated, but they will be still
+;					successfully set regardless.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1651,10 +1828,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ; Description ...: Set or Retrieve Indent settings for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParIndent(Byref $oSelection[, $iBeforeTxt = Null[, $iAfterTxt = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null[, $bClearDirFrmt = False]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iBeforeTxt          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM).
-;                  $iAfterTxt           - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM).
-;                  $iFirstLine          - [optional] an integer value (-57785-17904). Default is Null. Indents the first line of a paragraph by the amount that you enter. Set in Micrometers(uM).
-;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. If True, the first line will be indented automatically.
+;                  $iBeforeTxt          - [optional] an integer value. Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
+;                  $iAfterTxt           - [optional] an integer value. Default is Null. The amount of space that you want to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in MicroMeters(uM) Min. -9998989, Max.17094
+;                  $iFirstLine          - [optional] an integer value. Default is Null. Indents the first line of a paragraph by the amount that you enter. Set in MicroMeters(uM) Min. -57785, Max.17094.
+;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. Whether the first line should be indented automatically.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Indent related settings.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1678,12 +1855,20 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					 Note: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1712,11 +1897,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ; Name ..........: _LOWriter_DirFrmtParOutLineAndList
 ; Description ...: Set and Retrieve the Outline and List settings for a paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParOutLineAndList(Byref $oDoc, Byref $oSelection[, $iOutline = Null[, $sNumStyle = Null[, $bParLineCount = Null[, $iLineCountVal = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iOutline            - [optional] an integer value (0-10). Default is Null. The Outline Level, see Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $sNumStyle           - [optional] a string value. Default is Null. The name of the Numbering Style for the Paragraph numbering. Set to "" for None.
-;                  $bParLineCount       - [optional] a boolean value. Default is Null. If True, the paragraph is included in the line numbering.
+;                  $sNumStyle           - [optional] a string value. Default is Null. Specifies the name of the style for the Paragraph numbering. Set to "" for None.
+;                  $bParLineCount       - [optional] a boolean value. Default is Null. Whether the paragraph is included in the line numbering.
 ;                  $iLineCountVal       - [optional] an integer value. Default is Null. The start value for numbering if a new numbering starts at this paragraph. Set to 0 for no line numbering restart.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1724,7 +1909,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 4 Return 0 = Numbering Style called in $sNumStyle not found in document.
+;				   @Error 1 @Extended 4 Return 0 = $sNumStyle not found in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
@@ -1742,13 +1927,24 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
-;				   Note: In LibreOffice User Interface (UI), there are two options available when applying direct formatting, "Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable to clear either setting once applied, so for those reasons I am not including it in this UDF.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iOutline,
+;					$bParLineCount, and $iLineCountVal all are reset together.
+;				   Note: In LibreOffice User Interface (UI), there are two options available when applying direct formatting,
+;					"Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am
+;					able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable
+;					to clear either setting once applied, so for those reasons I am not including it in this UDF.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1801,7 +1997,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
-;                  $sPageStyle          - [optional] a string value. Default is Null. Creates a page break before the paragraph it belongs to and assigns the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
+;                  $sPageStyle          - [optional] a string value. Default is Null. Creates a page break before the paragraph it belongs to and assigns the value as the name of the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Page Break, including Type, Number offset and Page Style. See Remarks.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1809,7 +2005,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;				   @Error 1 @Extended 4 Return 0 = Page Style called in $sPageStyle not found in document.
+;				   @Error 1 @Extended 4 Return 0 = $sPageStyle not found in current document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
@@ -1825,14 +2021,26 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: Clearing directly formatted page breaks may fail, If the cursor selection contains more than one paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph style's original settings even though it returns a success, you will need to reset each paragraph one at a time if this is the case.
-;				   Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;				   Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Note: Clearing directly formatted page breaks may fail, If the cursor selection contains more than one
+;					paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph
+;					style's original settings even though it returns a success, you will need to reset each paragraph one at
+;					a time if this is the case.
+;					Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
+;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
+;						 though I'm not sure if they will work correctly.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1869,7 +2077,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the shadow set in Micrometers.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
+;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether or not the shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Shadow Width, Color and Location.
 ; Return values .: Success: Integer or Array.
@@ -1897,12 +2105,21 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Note: LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor,
+;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
+;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
+;					_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1929,12 +2146,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ; Description ...: Set and Retrieve Line Spacing settings for a paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParSpace(Byref $oSelection[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null[, $bPageLineSpc = Null]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Micrometers.
-;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space Below a paragraph, in Micrometers.
+;                  $iAbovePar           - [optional] an integer value. Default is Null. The Space above a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
+;                  $iBelowPar           - [optional] an integer value. Default is Null. The Space Below a paragraph, in Micrometers. Min 0 Micrometers (uM) Max 10,008 uM.
 ;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office 3.6 and Up.
 ;                  $iLineSpcMode        - [optional] an integer value (0-3). Default is Null. The type of the line spacing of a paragraph. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3. Also notice min and max values for each.
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values.
-;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. If True, register mode is applied to the paragraph. See Remarks.
+;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. Determines if the register mode is applied to a paragraph. See Remarks.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1968,17 +2185,28 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iAbovePar,
-;				   $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
-;				   Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
-;				   Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
-;				   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;				   Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iAbovePar,
+;					$iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
+;					Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
+;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
+;						so that each line is the same height.
+;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
+;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+;					$iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
+;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2035,45 +2263,57 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ; Description ...: Create a new TabStop for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParTabStopCreate(Byref $oSelection, $iPosition[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Micrometers (uM). See Remarks.
-;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc value (see autoit function) of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
+;                  $iPosition           - an integer value. The TabStop position/length to set the new TabStop to. Set in Micrometers (uM). See Remarks.
+;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oSelection parameter not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
 ;				   @Error 1 @Extended 3 Return 0 = $iPosition not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = Tab Stop position called in $iPosition already exists in this Paragraph.
+;				   @Error 1 @Extended 4 Return 0 = $iPosition Already exists in this ParStyle.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iFillChar not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted. in $iPosition.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iPosition
 ;				   |								2 = Error setting $iFillChar
 ;				   |								4 = Error setting $iAlignment
 ;				   |								8 = Error setting $iDecChar
-;				   |								Note: $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
+;				   |						Note: $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
 ;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;					This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC Autoit Function and "ASCII Character Codes" in the Autoit help file.
+;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
+;						be set to 2. See Return Values.
+;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
+;						accidentally overwrite an already existing TabStop.
+;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
+;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
+;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
 ;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete,
+;					_LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2095,7 +2335,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ; Syntax ........: _LOWriter_DirFrmtParTabStopDelete(Byref $oDoc, Byref $oSelection, $iTabStop)
 ; Parameters ....: $oDoc            - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection      - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iTabStop        - an integer value. The TabStop position of the TabStop to modify. See Remarks.
+;                  $iTabStop        - an integer value. The Tab position of the TabStop to modify. See Remarks.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2114,8 +2354,14 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if the TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iTabStop refers to the position, or essentially the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
-; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
+;						This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be
+;						one of a certain length per document.
+; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor,
+;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
+;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
+;					_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2140,7 +2386,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oSelection parameter not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
@@ -2148,8 +2394,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ;				   @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Remarks .......: Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2168,8 +2419,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ; Description ...: Modify or retrieve the properties of an existing TabStop in a Paragraph from Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParTabStopMod(Byref $oSelection, $iTabStop[, $iPosition = Null[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $iTabStop            - an integer value. The TabStop position of the TabStop to modify. See Remarks.
-;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the TabStop called in $iTabStop to. Set in Micrometers (uM). See Remarks.
+;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
+;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the input position to. Set in Micrometers (uM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
@@ -2179,7 +2430,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
 ;				   @Error 1 @Extended 3 Return 0 = $iTabStop not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = TabStop called in $iTabStop not found in this Paragraph or selection.
+;				   @Error 1 @Extended 4 Return 0 = $iTabStop not found in this ParStyle.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iPosition not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
@@ -2190,7 +2441,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Paragraph/Selection already contains a TabStop at the length/position specified in $iPosition.
+;				   @Error 3 @Extended 1 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iPosition
@@ -2204,16 +2455,32 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   @Error 0 @Extended 0 Return 3 = Success. $iTabStop parameter was set to Default, and rest of parameters were set to Null. Direct formatting inserted TabStops have been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
-;				   Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
-;				   Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;				   Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;				   Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
+;					Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
+;						margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there
+;						can only be one of a certain length per document.
+;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
+;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
+;						be set to 2. See Return Values.
+;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
+;						accidentally overwrite an already existing TabStop.
+;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
+;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
+;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate,
+;					_LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2243,10 +2510,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ; Description ...: Set and Retrieve Text Flow settings for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParTxtFlowOpt(Byref $oSelection[, $bParSplit = Null[, $bKeepTogether = Null[, $iParOrphans = Null[, $iParWidows = Null]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
-;                  $bParSplit           - [optional] a boolean value. Default is Null. If False, prevents the paragraph from getting split between two pages or columns
-;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, prevents page or column breaks between this and the following paragraph
-;                  $iParOrphans         - [optional] an integer value(0,2-9). Default is Null. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. 0 = disabled.
-;                  $iParWidows          - [optional] an integer value(0,2-9). Default is Null. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. 0 = disabled.
+;                  $bParSplit           - [optional] a boolean value. Default is Null.  FALSE prevents the paragraph from getting split into two pages or columns
+;                  $bKeepTogether       - [optional] a boolean value. Default is Null. TRUE prevents page or column breaks between this and the following paragraph
+;                  $iParOrphans         - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
+;                  $iParWidows          - [optional] an integer value. Default is Null. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. Min is 0 (disabled), and cannot be 1. Max is 9.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2254,7 +2521,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bParSplit not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $bKeepTogether not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bKeepTogether not  a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $iParOrphans not an Integer, less than 0, equal to 1, or greater than 9.
 ;				   @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
 ;				   --Property Setting Errors--
@@ -2269,13 +2536,22 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
-;				   Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
-; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Resetting Orphan or
+;					Widow will reset $bParSplit to False if it was set to True.
+;					 Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set but
+;					will not become active until $bParSplit is set to true.
+; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2321,18 +2597,18 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ; Description ...: Set or Retrieve the StrikeOut settings by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtStrikeOut(Byref $oSelection[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, strikes out words only and skip whitespaces.
-;                  $bStrikeOut          - [optional] a boolean value. Default is Null. If True, strikeout is applied to characters.
-;                  $iStrikeLineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bWordOnly           - [optional] a boolean value. Default is Null. Whether to strike out words only and skip whitespaces. True = skip whitespaces.
+;                  $bStrikeOut          - [optional] a boolean value. Default is Null. True = strikeout, False = no strikeout.
+;                  $iStrikeLineStyle    - [optional] an integer value (0-8). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 8. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bWordOnly
@@ -2344,13 +2620,21 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $bStrikeout and $iStrikeLineStyle are reset together.
-;				   Note Strikeout converted to single line in Ms word document format.
-; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $bStrikeout and
+;						$iStrikeLineStyle are reset together.
+;					Note Strikeout converted to single line in Ms word document format.
+; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
+;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
+;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2393,13 +2677,13 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The style of the Underline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored. See remarks.
+;                  $bULHasColor         - [optional] a boolean value. Default is Null. Whether the underline is colored, must be set to true in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph";"TextPortion"; "TextCursor"; "TextViewCursor".
 ;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2417,13 +2701,22 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is
+;						messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is
+;						generally not recommended to use. Use at your own risk. Character and Paragraph styles are recommended
+;						instead.
+; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
+;						settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Underline style, Color and $bHasColor all reset together.
-;				   Note: $bULHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;					Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Underline style,
+;						Color and $bHasColor all reset together.
+;					Note: $bULHasColor must be set to true in order to set the underline color.
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
+;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
+;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
+;					_LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2464,3 +2757,4 @@ Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLin
 	Return SetError(@error, @extended, $vReturn)
 
 EndFunc   ;==>_LOWriter_DirFrmtUnderLine
+
