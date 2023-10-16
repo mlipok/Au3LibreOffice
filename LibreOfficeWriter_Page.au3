@@ -80,13 +80,13 @@
 ; Syntax ........: _LOWriter_PageStyleAreaColor(Byref $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -98,8 +98,8 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Note: If transparency is set, it can cause strange values to be displayed for Background color.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Note: If transparency is set, it can cause strange values to be displayed for Background color.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -144,15 +144,15 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See Constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iIncrement          - [optional] an integer value (0,3-256). Default is Null. Specifies the number of steps of change color. 0 = Automatic.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iIncrement          - [optional] an integer value. Default is Null. Specifies the number of steps of change color. Allowed values are: 0, 3 to 256. 0 = Automatic.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
 ;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color.
-;                  $iToIntense          - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "To Color", where 0% corresponds to black, and 100 % to the selected color.
+;                  $iFromIntense        - [optional] an integer value. Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
+;                  $iToIntense          - [optional] an integer value. Default is Null . Enter the intensity for the color in the "To Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -160,16 +160,16 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1, or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
-;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 10 Return 0 = $iBorder Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 11 Return 0 = $iFromColor Not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 10 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 11 Return 0 = $iFromColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;				   --Processing Errors--
@@ -190,14 +190,15 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;				   |								1024 = Error setting $iToIntense
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
+;				   @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -320,28 +321,28 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradient
 ; Description ...: Set the Page Style Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_PageStyleBorderColor(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -350,9 +351,11 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderPadding
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong,  _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle,
+;					_LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -406,9 +409,12 @@ EndFunc   ;==>_LOWriter_PageStyleBorderColor
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+;					get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle,
+;					_LOWriter_PageStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -466,28 +472,28 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ; Description ...: Set or Retrieve the Page Style Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_PageStyleBorderStyle(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Page using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iTop is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iBottom is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iLeft is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, Or $iRight is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -496,9 +502,10 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidt, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidt,
+;					_LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -525,19 +532,19 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ; Description ...: Set or Retrieve the Page Style Border Line Width. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_PageStyleBorderWidth(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Page in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Page in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Page in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Page in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
@@ -550,9 +557,12 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to
+;					get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor,
+;					_LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -581,21 +591,21 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iWidth              - [optional] an integer value (5-180). Default is Null. The width of the separator line. Set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The width of the separator line. Set in Micrometers, Min 5 uM, Max 180 uM.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color for the separator line. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iHeight             - [optional] an integer value (0-100). Default is Null. The length of the separator line as a percentage of the height of the column area.
-;                  $iPosition           - [optional] an integer value (0-2). Default is Null. The vertical alignment of the separator line. This option is only available if Height value of the line is less than 100%. See Constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iHeight             - [optional] an integer value. Default is Null. The length of the separator line as a percentage of the height of the column area. Min 0%, Max 100%.
+;                  $iPosition           - [optional] an integer value (0-2). Default is Null. Select the vertical alignment of the separator line. This option is only available if Height value of the line is less than 100%. See Constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bSeparatorOn not a Boolean value.
-;				   @Error 1 @Extended 4 Return 0 = $iStyle not an Integer, less than 0, or greater than 3. See constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iStyle not an Integer, less than 0 or greater than 3. See constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 5 Return 0 = $iWidth not an Integer, less than 5 or greater than 180.
-;				   @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 7 Return 0 = $iHeight not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iPosition not an Integer, less than 0, or greater than 2. See constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 7 Return 0 = $iHeight not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 8 Return 0 = $iPosition not an Integer, less than 0 or greater than 2. See constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;				   --Property Setting Errors--
@@ -612,8 +622,9 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -700,7 +711,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSeparator
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -734,7 +745,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ; Syntax ........: _LOWriter_PageStyleColumnSize(Byref $oPageStyle, $iColumn[, $bAutoWidth = Null[, $iGlobalSpacing = Null[, $iSpacing = Null[, $iWidth = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iColumn             - an integer value. The column to modify the settings on. See Remarks.
-;                  $bAutoWidth          - [optional] a boolean value. Default is Null. If True, Column Width is automatically adjusted.
+;                  $bAutoWidth          - [optional] a boolean value. Default is Null. If True Column Width is automatically adjusted.
 ;                  $iGlobalSpacing      - [optional] an integer value. Default is Null. Set a spacing value for between all columns. Set in Micrometers. See remarks.
 ;                  $iSpacing            - [optional] an integer value. Default is Null. The Space between two columns, in Micrometers. Cannot be set for the last column.
 ;                  $iWidth              - [optional] an integer value. Default is Null. If $iGlobalSpacing is set to other than 0, enter the width of the column. Set in Micrometers.
@@ -765,11 +776,17 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the appropriate relative value, especially when spacing is set.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing with $bAutoWidth set to false, the value is applied to all the columns still.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Remarks .......: This function will work fine for setting AutoWidth, and Spacing values, however Width will not work the
+;						best, Spacing etc is set in plain micrometer values, however width is set in a relative value, and I am
+;						unable to find a way to be able to convert a specific value, such as 1" (2540 Micrometers) etc, to the
+;						appropriate relative value, especially when spacing is set.
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: To set $bAutoWidth or $iGlobalSpacing you may enter any number in $iColumn as long as you are not
+;						setting width or spacing, as AutoWidth is not column specific. If you set a value for $iGlobalSpacing
+;						with $bAutoWidth set to false, the value is applied to all the columns still.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -896,21 +913,21 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSize
 ; Description ...: Create a new Page Style in a Document.
 ; Syntax ........: _LOWriter_PageStyleCreate(Byref $oDoc, $sPageStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sPageStyle          - a string value. The Name of the new Page Style to create.
+;                  $sPageStyle          - a string value. The Name of the New Page Style to Create.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
-;				   @Error 1 @Extended 3 Return 0 = Page Style name called in $sPageStyle already exists in document.
+;				   @Error 1 @Extended 3 Return 0 = $sPageStyle name already exists in document.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error creating new Page Style by name.
+;				   @Error 3 @Extended 1 Return 0 = Error creating new Page Style by Name.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning its Object.
+;				   @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning Page Style Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -946,7 +963,7 @@ EndFunc   ;==>_LOWriter_PageStyleCreate
 ; Name ..........: _LOWriter_PageStyleDelete
 ; Description ...: Delete a User-Created Page Style from a Document.
 ; Syntax ........: _LOWriter_PageStyleDelete(Byref $oDoc, $oPageStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function. Must be User-Created, not a built-in Style native to Libre-Office.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -959,7 +976,7 @@ EndFunc   ;==>_LOWriter_PageStyleCreate
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Name.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
-;				   @Error 3 @Extended 2 Return 0 = $oPageStyle is in use and cannot be deleted.
+;				   @Error 3 @Extended 2 Return 0 = $oPageStyle is in use.
 ;				   @Error 3 @Extended 3 Return 0 = $oPageStyle still exists after deletion attempt.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Page Style called in $oPageStyle was successfully deleted.
@@ -999,14 +1016,14 @@ EndFunc   ;==>_LOWriter_PageStyleDelete
 ; Description ...: Check whether a document contains the requested Page Style by Name.
 ; Syntax ........: _LOWriter_PageStyleExists(Byref $oDoc, $sPageStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sPageStyle          - a string value. The Page Style Name to search for.
+;                  $sPageStyle          - a string value. The Page Style Name
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object,
 ;				   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean  = Success. If Page Style name exists, then True is returned, else False.
+;				   @Error 0 @Extended 0 Return Boolean  = Success. If PageStyle exists then True is returned, else, False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1038,8 +1055,8 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the footer. Set in Micrometers.
 ;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space that you want to maintain between the bottom edge of the document text and the top edge of the footer. Set in Micrometers.
 ;                  $bDynamicSpacing     - [optional] a boolean value. Default is Null. If True, Overrides the Spacing setting and allows the footer to expand into the area between the footer and document text.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height of the footer. Set in Micrometers.
-;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, automatically adjusts the height of the footer to fit the contents.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height you want for the footer. Set in Micrometers.
+;                  $bAutoHeight         - [optional] a boolean value. Default is Null. Automatically adjusts the height of the footer to fit the content you enter.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1073,8 +1090,9 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1166,17 +1184,17 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ; Description ...: Set or Retrieve background color settings for a Page style Footer.
 ; Syntax ........: _LOWriter_PageStyleFooterAreaColor(Byref $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null. Whether the background color is transparent or not. True = visible.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
@@ -1187,9 +1205,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Note: If transparency is set, it can cause strange values to be displayed for Background color.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;					Note: If transparency is set, it can cause strange values to be displayed for Background color.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1232,36 +1251,36 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See Constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iIncrement          - [optional] an integer value (0,3-256). Default is Null. Specifies the number of steps of change color. 0 = Automatic.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iIncrement          - [optional] an integer value. Default is Null. Specifies the number of steps of change color. Allowed values are: 0, 3 to 256. 0 = Automatic.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
 ;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in "From Color", where 0% corresponds to black, and 100 % to the selected color.
-;                  $iToIntense          - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in "To Color", where 0% corresponds to black, and 100 % to the selected color.
+;                  $iFromIntense        - [optional] an integer value. Default is Null. Enter the intensity for the color in "From Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
+;                  $iToIntense          - [optional] an integer value. Default is Null. Enter the intensity for the color in "To Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 4 Return 0 = $sGradientName not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1, or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 6 Return 0 = $iIncrement not an Integer, less than 3, but not 0, or greater than 256.
-;				   @Error 1 @Extended 7 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 10 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 11 Return 0 = $iFromColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 12 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 13 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 14 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
+;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 10 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 11 Return 0 = $iFromColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
 ;				   @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;				   --Property Setting Errors--
@@ -1279,14 +1298,15 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;				   |								1024 = Error setting $iToIntense
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
+;				   @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1410,38 +1430,40 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradient
 ; Description ...: Set and Retrieve the Page Style Footer Border Line Color.
 ; Syntax ........: _LOWriter_PageStyleFooterBorderColor(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0, or greater than 16,777,215.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderPadding
+;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle,
+;					_LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1485,7 +1507,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 ;				   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
@@ -1499,8 +1521,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle,
+;					_LOWriter_PageStyleFooterBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1559,38 +1583,39 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderPadding
 ; Description ...: Set and retrieve the Page Style Footer Border Line style.
 ; Syntax ........: _LOWriter_PageStyleFooterBorderStyle(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
+;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleFooterBorderWidth,
+;					_LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1618,33 +1643,35 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 ; Description ...: Set and retrieve the Page Style Footer Border Line Width.
 ; Syntax ........: _LOWriter_PageStyleFooterBorderWidth(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Footers are not on for this Page Style.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor,
+;					_LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1672,9 +1699,9 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ; Description ...: Set or Retrieve the shadow settings for a Page Style  Footer.
 ; Syntax ........: _LOWriter_PageStyleFooterShadow(Byref $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[,	$iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the footer, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the footer Shadow set in Micrometers.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Footer shadow, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Footer Shadow is transparent.
+;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the Footer Shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Footer Shadow. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1684,12 +1711,12 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;				   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
 ;				   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
@@ -1702,9 +1729,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1766,15 +1794,15 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 ; Description ...: Modify or retrieve Transparency settings for a page style Footer.
 ; Syntax ........: _LOWriter_PageStyleFooterTransparency(Byref $oPageStyle[, $iTransparency = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency percentage. 0% is fully opaque and 100% is fully transparent.
+;                  $iTransparency       - [optional] an integer value. Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTransparency
@@ -1784,7 +1812,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1816,31 +1844,31 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
+;                  $iStart              - [optional] an integer value. Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value. Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 8 Return 0 = $iBorder Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 8 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Footers are not on for this Page Style.
 ;				   @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
 ;				   @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;				   --Property Setting Errors--
@@ -1859,7 +1887,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1960,7 +1988,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iFootnoteHeight not an Integer, less than 508, but not 0.
+;				   @Error 1 @Extended 3 Return 0 = $iFootnoteHeight not an Integer, less than 508 but not 0.
 ;				   @Error 1 @Extended 4 Return 0 = $iSpaceToText not an Integer.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
@@ -1972,8 +2000,9 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2014,20 +2043,20 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $iPosition           - [optional] an integer value (0-2). Default is Null. The horizontal alignment for the line that separates the main text from the footnote area. See Constants, $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $nThickness          - [optional] a general number value (0-9). Default is Null. The thickness of the separator line. Set in Printer's Points.
+;                  $nThickness          - [optional] a general number value. Default is Null. The thickness of the separator line. Set in Printer's Points. Min., 0, Max 9 Pt.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the separator line. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLength             - [optional] an integer value (0-100). Default is Null. The length of the separator line as a percentage of the page width area.
+;                  $iLength             - [optional] an integer value. Default is Null. The length of the separator line as a percentage of the page width area. Min., 0, Max 100%.
 ;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space to leave between the separator line and the first line of the footnote area. Set in Micrometers.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0, or greater than 2. See Constants, $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 4 Return 0 = $iStyle not an Integer, less than 0, or greater than 3. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $nThickness not a Number, less than 0, or greater than 9.
-;				   @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 7 Return 0 = $iLength not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0 or greater than 2. See Constants, $LOW_ALIGN_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iStyle not an Integer, less than 0 or greater than 3. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $nThickness not a Number, less than 0 or greater than 9.
+;				   @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 7 Return 0 = $iLength not an Integer, less than 0 or greater than 100.
 ;				   @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error converting from Printer's Points to Micrometers.
@@ -2045,8 +2074,9 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2119,7 +2149,7 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteLine
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
-;				   @Error 1 @Extended 3 Return 0 = Page Style called in $sPageStyle not found in Document.
+;				   @Error 1 @Extended 3 Return 0 = Page Style defined in $sPageStyle not found in Document.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Page Style Object.
 ;				   --Success--
@@ -2156,10 +2186,10 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ;                  $bSameOnFirst        - [optional] a boolean value. Default is Null. If True, First and even/odd pages share the same content. LibreOffice 4.0 and up.
 ;                  $iLeftMargin         - [optional] an integer value. Default is Null. The amount of space to leave between the left edge of the page and the left edge of the Header. Set in Micrometers.
 ;                  $iRightMargin        - [optional] an integer value. Default is Null. The amount of space to leave between the right edge of the page and the right edge of the Header. Set in Micrometers.
-;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space to maintain between the Top edge of the document text and the bottom edge of the Header. Set in Micrometers.
+;                  $iSpacing            - [optional] an integer value. Default is Null. The amount of space that you want to maintain between the Top edge of the document text and the bottom edge of the Header. Set in Micrometers.
 ;                  $bDynamicSpacing     - [optional] a boolean value. Default is Null. If True, Overrides the Spacing setting and allows the Header to expand into the area between the Header and document text.
-;                  $iHeight             - [optional] an integer value. Default is Null. The height for the Header. Set in Micrometers.
-;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, Automatically adjusts the height of the Header to fit the contents.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height you want for the Header. Set in Micrometers.
+;                  $bAutoHeight         - [optional] a boolean value. Default is Null. Automatically adjusts the height of the Header to fit the content you enter.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2193,8 +2223,9 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2286,17 +2317,17 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ; Description ...: Set or Retrieve background color settings for a Page style header.
 ; Syntax ........: _LOWriter_PageStyleHeaderAreaColor(Byref $oPageStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
-;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True the background color is transparent.
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
+;                  $bBackTransparent    - [optional] a boolean value. Default is Null.Whether the background color is transparent or not. True = visible.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;				   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBackColor
@@ -2307,9 +2338,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Note: If transparency is set, it can cause strange values to be displayed for Background color.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;					Note: If transparency is set, it can cause strange values to be displayed for Background color.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2346,21 +2378,21 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStyleHeaderAreaGradient
-; Description ...: Modify or retrieve settings for Page Style Header BackGround color Gradient.
+; Description ...: Modify or retrieve the settings for Page Style Header BackGround color Gradient.
 ; Syntax ........: _LOWriter_PageStyleHeaderAreaGradient(Byref $oDoc, Byref $oPageStyle[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null ]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See Constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient type that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iIncrement          - [optional] an integer value (0,3-256). Default is Null. Specifies the number of steps of change color. 0 = Automatic.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iIncrement          - [optional] an integer value. Default is Null. Specifies the number of steps of change color. Allowed values are: 0, 3 to 256. 0 = Automatic.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage, Min. 0%, Max 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
 ;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in "From Color", where 0% corresponds to black, and 100 % to the selected color.
-;                  $iToIntense          - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in "To Color", where 0% corresponds to black, and 100 % to the selected color.
+;                  $iFromIntense        - [optional] an integer value. Default is Null. Enter the intensity for the color in "From Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
+;                  $iToIntense          - [optional] an integer value. Default is Null. Enter the intensity for the color in "To Color", where 0% corresponds to black, and 100 % to the selected color. Min. 0%, Max 100%
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2368,20 +2400,20 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sGradientName Not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1, or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iType Not an Integer, less than -1 or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 6 Return 0 = $iIncrement Not an Integer, less than 3 but not 0, or greater than 256.
-;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 10 Return 0 = $iBorder Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 11 Return 0 = $iFromColor Not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 7 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 8 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 10 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 11 Return 0 = $iFromColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0 or greater than 16777215.
+;				   @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enavled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
 ;				   @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;				   --Property Setting Errors--
@@ -2399,14 +2431,15 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;				   |								1024 = Error setting $iToIntense
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
+;				   @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2530,38 +2563,40 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradient
 ; Description ...: Set and Retrieve the Page Style Header Border Line Color.
 ; Syntax ........: _LOWriter_PageStyleHeaderBorderColor(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderPadding
+;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle,
+;					_LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2605,7 +2640,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 ;				   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iAll border distance
@@ -2619,8 +2654,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle,
+;					_LOWriter_PageStyleHeaderBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2679,38 +2716,39 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderPadding
 ; Description ...: Set and retrieve the Page Style Header Border Line style.
 ; Syntax ........: _LOWriter_PageStyleHeaderBorderStyle(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Top Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Bottom Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Left Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Top Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Bottom Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Left Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0x7FFF-17). Default is Null. Sets the Right Border Line Style of the Page Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17 and not equal to 0x7FFF, Or is set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style Top when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style Bottom when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
+;					 Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleHeaderBorderWidth,
+;					_LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2738,33 +2776,35 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 ; Description ...: Set and retrieve the Page Style Header Border Line Width.
 ; Syntax ........: _LOWriter_PageStyleHeaderBorderWidth(Byref $oPageStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[,	$iRight = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Page Style in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;				   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 2 Return 0 = Headers are not on for this Page Style.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
+;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor,
+;					_LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2792,24 +2832,24 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ; Description ...: Set or Retrieve the shadow settings for a Page Style Header.
 ; Syntax ........: _LOWriter_PageStyleHeaderShadow(Byref $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Header, set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Header Shadow set in Micrometers.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Header shadow, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Header Shadow is transparent.
+;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the Header Shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Header Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
 ;				   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants.
+;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iWidth
@@ -2822,9 +2862,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2885,15 +2926,15 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
 ; Description ...: Modify or retrieve Transparency settings for a page style Header.
 ; Syntax ........: _LOWriter_PageStyleHeaderTransparency(Byref $oPageStyle[, $iTransparency = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+;                  $iTransparency       - [optional] an integer value. Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTransparency
@@ -2903,7 +2944,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2934,32 +2975,32 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ; Syntax ........: _LOWriter_PageStyleHeaderTransparencyGradient(Byref $oDoc, Byref $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
+;                  $iStart              - [optional] an integer value. Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value. Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ; Return values .:Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 8 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 4 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 5 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 6 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 7 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 8 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;				   @Error 3 @Extended 1 Return 0 = Headers are not on for this Page Style.
 ;				   @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
 ;				   @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;				   --Property Setting Errors--
@@ -2978,7 +3019,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3073,12 +3114,12 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ; Syntax ........: _LOWriter_PageStyleLayout(Byref $oDoc, $oPageStyle[, $iLayout = Null[, $iNumFormat = Null[, $sRefStyle = Null[, $bGutterOnRight = Null[, $bGutterAtTop = Null[, $bBackCoversMargins = Null[, $sPaperTray = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iLayout             - [optional] an integer value (0-4). Default is Null. Specify the current Page layout style, either Left(Even) pages, Right(Odd) pages, or both Left(Even) and Right(Odd) pages or mirrored. See Constants, $LOW_PAGE_LAYOUT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The page numbering format to use for this Page Style. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $sRefStyle           - [optional] a string value. Default is Null. The Paragraph Style to use as a reference for lining up the text on the selected Page style. To disable Page Spacing alignment, set to "".
-;                  $bGutterOnRight      - [optional] a boolean value. Default is Null. If True, the page gutter will be placed on the right side of the page. Libre 7.2 and up.
-;                  $bGutterAtTop        - [optional] a boolean value. Default is Null. If False, the current document's gutter will be positioned at the left of the document's pages (L.O. default) or If True, at top of the document's pages when the document is displayed.
-;                  $bBackCoversMargins  - [optional] a boolean value. Default is Null. If true, the background covers the full page, Else only inside the margins. Libre 7.2 and up.
+;                  $iLayout             - [optional] an integer value (0-4). Default is Null. Specify the current layout style, either Left(Even) pages, Right(Odd) pages, or both Left(Even) and Right(Odd) pages or mirrored. See Constants, $LOW_PAGE_LAYOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The page numbering format that you want to use for this Page Style. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $sRefStyle           - [optional] a string value. Default is Null. The Paragraph Style that you want to use as a reference for lining up the text on the selected Page style. To disable Page Spacing alignment, set to "".
+;                  $bGutterOnRight      - [optional] a boolean value. Default is Null. Specifies that the page gutter shall be placed on the right side of the page. Libre 7.2 and up.
+;                  $bGutterAtTop        - [optional] a boolean value. Default is Null. If False, the current document's gutter shall be positioned at the left of the document's pages (L.O. default) or If True, at top of the document's pages when the document is displayed.
+;                  $bBackCoversMargins  - [optional] a boolean value. Default is Null. If true, the background cover the full page, Else only inside the margins. Libre 7.2 and up.
 ;                  $sPaperTray          - [optional] a string value. Default is Null. The paper source for your printer. See remarks.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3100,8 +3141,8 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ;				   |								1 = Error setting $iLayout
 ;				   |								2 = Error setting $iNumFormat
 ;				   |								4 = Error setting $sRefStyle
-;				   |								8 = Error setting $bGutterOnRight
-;				   |								16 = Error setting $bGutterAtTop
+;				   |								8 = Error setting  $bGutterOnRight
+;				   |								16 = Error setting  $bGutterAtTop
 ;				   |								32 = Error setting $bBackCoversMargins
 ;				   |								64 = Error setting $sPaperTray
 ;				   --Version Related Errors--
@@ -3112,8 +3153,9 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: I have no way to retrieve possible values for the PaperTray parameter, at least that I can find. You may still use it if you know the appropriate value.
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: I have no way to retrieve possible values for the PaperTray parameter, at least that I can find. You
+;					may still use it if you know the appropriate value.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3230,8 +3272,9 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3295,20 +3338,20 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ; Syntax ........: _LOWriter_PageStyleOrganizer(Byref $oDoc, $oPageStyle[, $sNewPageStyleName = Null[, $bHidden = Null[, $sFollowStyle = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $sNewPageStyleName   - [optional] a string value. Default is Null. The new name to set the Page Style called in $oPageStyle to.
-;                  $bHidden             - [optional] a boolean value. Default is Null. If True, the style is hidden in L.O. UI. Libre Office 4.0 and Up.
-;                  $sFollowStyle        - [optional] a string value. Default is Null. The name of the Page style that is applied After this Page Style.
+;                  $sNewPageStyleName   - [optional] a string value. Default is Null. The new name to set $sPageStyle page style to.
+;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre Office 4.0 and Up.
+;                  $sFollowStyle        - [optional] a string value. Default is Null. The name of the style that is applied After this Page Style.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
 ;				   @Error 1 @Extended 4 Return 0 = $sNewPageStyleName not a String.
-;				   @Error 1 @Extended 5 Return 0 = Page Style name called in $sNewPageStyleName already exists in document.
+;				   @Error 1 @Extended 5 Return 0 = $sNewPageStyleName already exists in document.
 ;				   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;				   @Error 1 @Extended 7 Return 0 = $sFollowStyle not a String.
-;				   @Error 1 @Extended 8 Return 0 = Page Style called in $sFollowStyle doesn't exist in this document.
+;				   @Error 1 @Extended 8 Return 0 = $sFollowStyle doesn't exist in this document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sNewParStyleName
@@ -3322,7 +3365,7 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
@@ -3377,9 +3420,9 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Description ...: Modify or retrieve the paper format settings for a Page Style.
 ; Syntax ........: _LOWriter_PageStylePaperFormat(Byref $oPageStyle[, $iWidth = Null[, $iHeight = Null[, $bLandscape = Null]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the page, may be a custom value in Micrometers, or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Micrometers, or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page in Landscape layout.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Page, May be a custom value in Micrometers, or one of the constants, $LOW_PAPER_WIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Page, May be a custom value in Micrometers, or one of the constants, $LOW_PAPER_HEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page with the paper oriented horizontally, else displays the page with the paper oriented vertically.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3399,8 +3442,9 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj,  _LOWriter_ConvertFromMicrometer,
+;					_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3459,7 +3503,7 @@ EndFunc   ;==>_LOWriter_PageStylePaperFormat
 ; Syntax ........: _LOWriter_PageStyleSet(Byref $oDoc, Byref $oObj, $sPageStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
-;                  $sPageStyle          - a string value. The Page Style name to set the Page to.
+;                  $sPageStyle          - a string value. The Page Style name.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -3467,7 +3511,7 @@ EndFunc   ;==>_LOWriter_PageStylePaperFormat
 ;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $oObj does not support Paragraph Properties Service.
 ;				   @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
-;				   @Error 1 @Extended 5 Return 0 = Page Style called in $sPageStyle doesn't exist in Document.
+;				   @Error 1 @Extended 5 Return 0 = Page Style defined in $sPageStyle doesn't exist in Document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended 1 Return 0 = Error setting Page Style.
 ;				   --Success--
@@ -3475,7 +3519,8 @@ EndFunc   ;==>_LOWriter_PageStylePaperFormat
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_PageStylesGetNames
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
+;					_LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3514,11 +3559,13 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 ;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
 ;				   +		If Only a Document object is input, all available Page styles will be returned.
 ;				   +		Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
+;				   +		Else, only Applied Page Styles are returned.
 ;				   +		If Both are true then only User-Created Page styles that are applied are returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: One Page style has two separate names, Default Page Style is also internally called "Standard". Either name works when setting a Page Style, but on certain functions that return a Page Style name, you may see the alternative name.
+; Remarks .......: One Page style has two separate names, Default Page Style is also internally called "Standard"  Either
+;					name works when setting a Page Style, but on certain functions that return a Page Style Name, you may see
+;					the alternative name.
 ; Related .......: _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3567,9 +3614,9 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ; Description ...: Set or Retrieve the shadow settings for a Page Style.
 ; Syntax ........: _LOWriter_PageStyleShadow(Byref $oPageStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Page, set in Micrometers.
-;                  $iColor              - [optional] an integer value. Default is Null. The shadow Color of the Page, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Page Shadow is transparent.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Page Shadow set in Micrometers.
+;                  $iColor              - [optional] an integer value. Default is Null. The Color of the Page shadow, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bTransparent        - [optional] a boolean value. Default is Null. Whether the Page Shadow is transparent or not.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Page Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3579,7 +3626,7 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;				   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
 ;				   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;				   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
@@ -3595,9 +3642,10 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
+;					Call any optional parameter with Null keyword to skip it.
+;					Note: LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
+;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3657,23 +3705,23 @@ EndFunc   ;==>_LOWriter_PageStyleShadow
 ; Description ...: Modify or retrieve Transparency settings for a page style.
 ; Syntax ........: _LOWriter_PageStyleTransparency(Byref $oPageStyle[, $iTransparency = Null])
 ; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
+;                  $iTransparency       - [optional] an integer value. Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iTransparency
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency as an integer.
+;				   @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3703,25 +3751,25 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ; Syntax ........: _LOWriter_PageStyleTransparencyGradient(Byref $oDoc, Byref $oPageStyle[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
-;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
-;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
-;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
-;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
+;                  $iXCenter            - [optional] an integer value. Default is Null. The horizontal offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value. Default is Null. The vertical offset for the gradient. Set in percentage. Minimum is 0, Maximum is 100%. $iType must be other than "Linear", or "Axial".
+;                  $iAngle              - [optional] an integer value. Default is Null. The rotation angle for the gradient. Set in degrees, min 0, max 359 degrees. $iType must be other than "Radial".
+;                  $iBorder             - [optional] an integer value. Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage. Minimum is 0, Maximum is 100%.
+;                  $iStart              - [optional] an integer value. Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
+;                  $iEnd                - [optional] an integer value. Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;				   @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 7 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;				   @Error 1 @Extended 3 Return 0 = $iType Not an Integer, less than -1 or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0 or greater than 359.
+;				   @Error 1 @Extended 7 Return 0 = $iBorder Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0 or greater than 100.
+;				   @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0 or greater than 100.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
@@ -3745,7 +3793,7 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
