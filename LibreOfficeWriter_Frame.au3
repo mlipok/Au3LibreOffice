@@ -3535,7 +3535,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 		$iError = ($oFrameStyle.RelativeWidth() = $iRelativeWidth) ? $iError : BitOR($iError, 2)
 
 		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ; If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
-			If ($oFrameStyle.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrameStyle, True)
+			If ($oFrameStyle.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_ObjRelativeSize($oDoc, $oFrameStyle, True)
 		EndIf
 	EndIf
 
@@ -3564,7 +3564,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 		$iError = ($oFrameStyle.RelativeHeight() = $iRelativeHeight) ? $iError : BitOR($iError, 32)
 
 		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ; If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
-			If ($oFrameStyle.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrameStyle, False, True)
+			If ($oFrameStyle.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_ObjRelativeSize($oDoc, $oFrameStyle, False, True)
 		EndIf
 	EndIf
 
@@ -4284,7 +4284,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 		$iError = ($oFrame.RelativeWidth() = $iRelativeWidth) ? $iError : BitOR($iError, 2)
 
 		If ($iRelativeWidth <> 0) And ($bAutoWidth <> True) Then ; If AutoWidth is not On, and Relative Width isn't being turned off, then set Width Value.
-			If ($oFrame.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrame, True)
+			If ($oFrame.WidthType() = $iCONST_AutoHW_OFF) Or ($bAutoWidth = False) Then __LOWriter_ObjRelativeSize($oDoc, $oFrame, True)
 		EndIf
 	EndIf
 
@@ -4313,7 +4313,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 		$iError = ($oFrame.RelativeHeight() = $iRelativeHeight) ? $iError : BitOR($iError, 32)
 
 		If ($iRelativeHeight <> 0) And ($bAutoHeight <> True) Then ; If AutoHeight is not On, and Relative Height isn't being turned off, then set Height Value.
-			If ($oFrame.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_FrameRelativeSize($oDoc, $oFrame, False, True)
+			If ($oFrame.SizeType() = $iCONST_AutoHW_OFF) Or ($bAutoHeight = False) Then __LOWriter_ObjRelativeSize($oDoc, $oFrame, False, True)
 		EndIf
 	EndIf
 
