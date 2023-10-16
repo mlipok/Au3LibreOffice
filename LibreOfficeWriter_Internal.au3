@@ -4,6 +4,8 @@
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
 
+#include <WinAPIGdiDC.au3>
+
 ; #INDEX# =======================================================================================================================
 ; Title .........: Libre Office Writer (LOWriter)
 ; AutoIt Version : v3.3.16.1
@@ -55,11 +57,11 @@
 ; __LOWriter_FindFormatDeleteSetting
 ; __LOWriter_FindFormatRetrieveSetting
 ; __LOWriter_FooterBorder
-; __LOWriter_FrameRelativeSize
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GradientNameInsert
 ; __LOWriter_GradientPresets
 ; __LOWriter_HeaderBorder
+; __LOWriter_ImageGetSuggestedSize
 ; __LOWriter_Internal_CursorGetDataType
 ; __LOWriter_Internal_CursorGetType
 ; __LOWriter_InternalComErrorHandler
@@ -73,6 +75,7 @@
 ; __LOWriter_NumStyleListFormat
 ; __LOWriter_NumStyleModify
 ; __LOWriter_NumStyleRetrieve
+; __LOWriter_ObjRelativeSize
 ; __LOWriter_PageStyleNameToggle
 ; __LOWriter_ParAlignment
 ; __LOWriter_ParBackColor
@@ -2119,18 +2122,18 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 EndFunc   ;==>__LOWriter_FooterBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_FrameRelativeSize
-; Description ...: Calculate appropriate values to set Frame or Frame Style Width or Height, when using relative values.
-; Syntax ........: __LOWriter_FrameRelativeSize(Byref $oDoc, Byref $oFrameObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
+; Name ..........: __LOWriter_ObjRelativeSize
+; Description ...: Calculate appropriate values to set Frame, Frame Style or Image Width or Height, when using relative values.
+; Syntax ........: __LOWriter_ObjRelativeSize(Byref $oDoc, Byref $oObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrameObj           - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative width percentage.
+;                  $oObj                - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function. Can also be an Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
+;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative Width percentage.
 ;                  $bRelativeHeight     - [optional] a boolean value. Default is False. If True, modify Height based on relative Height percentage.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oFrameObj not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bRelativeHeight and $bRelativeWidth both set to False.
@@ -2153,21 +2156,21 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_FrameRelativeSize(ByRef $oDoc, ByRef $oFrameObj, $bRelativeWidth = False, $bRelativeHeight = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iPageWidth, $iPageHeight, $iFrameWidth, $iFrameHeight
+Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = False, $bRelativeHeight = False)
+	Local $iPageWidth, $iPageHeight, $iObjWidth, $iObjHeight
 	Local $oPageStyle
 
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	#forceref $oCOM_ErrorHandler
+
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bRelativeWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bRelativeHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If (($bRelativeHeight = False) And ($bRelativeWidth = False)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 
-	If ($oFrameObj.supportsService("com.sun.star.text.TextFrame")) Then
-		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oFrameObj.Anchor.PageStyleName())
+	If ($oObj.supportsService("com.sun.star.text.TextFrame")) Or ($oObj.supportsService("com.sun.star.text.TextGraphicObject")) Then
+		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oObj.Anchor.PageStyleName())
 	Else
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
 	EndIf
@@ -2179,9 +2182,9 @@ Func __LOWriter_FrameRelativeSize(ByRef $oDoc, ByRef $oFrameObj, $bRelativeWidth
 		$iPageWidth = $iPageWidth - $oPageStyle.RightMargin()
 		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ; Minus off both margins.
 
-		$iFrameWidth = $iPageWidth * ($oFrameObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
+		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
 
-		$oFrameObj.Width = $iFrameWidth
+		$oObj.Width = $iObjWidth
 
 	EndIf
 
@@ -2190,13 +2193,13 @@ Func __LOWriter_FrameRelativeSize(ByRef $oDoc, ByRef $oFrameObj, $bRelativeWidth
 		$iPageHeight = $iPageHeight - $oPageStyle.TopMargin()
 		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ; Minus off both margins.
 
-		$iFrameHeight = $iPageHeight * ($oFrameObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
+		$iObjHeight = $iPageHeight * ($oObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
 
-		$oFrameObj.Height = $iFrameHeight
+		$oObj.Height = $iObjHeight
 	EndIf
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>__LOWriter_FrameRelativeSize
+EndFunc   ;==>__LOWriter_ObjRelativeSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting
@@ -2703,6 +2706,69 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_HeaderBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ImageGetSuggestedSize
+; Description ...: Return a suggested image width/height based on an image's original size.
+; Syntax ........: __LOWriter_ImageGetSuggestedSize(ByRef $oGraphic, $oPageStyle)
+; Parameters ....: $oGraphic            - [in/out] an object. A graphic Object returned from a queryGraphicDescriptor call.
+;                  $oPageStyle          - an object. A Page Style object returned by a previous _LOWriter_PageStyleGetObj function.
+; Return values .: Success: Structure.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oGraphic not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Error calculating Width and Height.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Structure. = Successfully calculated suggested Width and Height, returning size Structure.
+; Author ........: Andrew Pitonyak ("Useful Macro Information For OpenOffice.org", Page 62, listing 5.28)
+; Modified ......: donnyh13, converted code from L.O. Basic to AutoIt. Added a max W/H based on current page size.
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSize
+	Local $iMaxH, $iMaxW
+
+	If Not IsObj($oGraphic) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	;Retrieve the Current PageStyle's height minus top/bottom margins
+	$iMaxH = Int($oPageStyle.Height() - $oPageStyle.LeftMargin() - $oPageStyle.RightMargin())
+	If ($iMaxH = 0) Then $iMaxH = 9.5 * 2540 ; If error or is equal to 0, then set to 9.5 Inches in Micrometers
+
+	;Retrieve the Current PageStyle's width minus left/right margins
+	$iMaxW = Int($oPageStyle.Width() - $oPageStyle.TopMargin() - $oPageStyle.BottomMargin())
+	If ($iMaxW = 0) Then $iMaxW = 6.75 * 2540 ; If error or is equal to 0, then set to 6.75 Inches in Micrometers.
+
+	$oSize = $oGraphic.Size100thMM()
+
+	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then
+		;2540 Micrometers per Inch, 1440 TWIPS per inch
+		$oSize.Height = $oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440
+		$oSize.Width = $oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440
+	EndIf
+
+	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oSize.Width() > $iMaxW) Then
+		$oSize.Height = $oSize.Height * $iMaxW / $oSize.Width()
+		$oSize.Width = $iMaxW
+	EndIf
+
+	If ($oSize.Height() > $iMaxH) Then
+		$oSize.Width = $oSize.Width() * $iMaxH / $oSize.Height
+		$oSize.Height = $iMaxH
+	EndIf
+
+	Return $oSize
+EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Internal_CursorGetDataType

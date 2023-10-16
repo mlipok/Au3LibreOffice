@@ -61,6 +61,7 @@
 ; _LOWriter_DocGetString
 ; _LOWriter_DocGetViewCursor
 ; _LOWriter_DocHasFrameName
+; _LOWriter_DocHasImageName
 ; _LOWriter_DocHasPath
 ; _LOWriter_DocHasTableName
 ; _LOWriter_DocHeaderGetTextCursor
@@ -2379,6 +2380,39 @@ Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_DocHasFrameName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocHasImageName
+; Description ...: Check if a Document contains a Image with the specified name.
+; Syntax ........: _LOWriter_DocHasImageName(Byref $oDoc, $sImageName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sImageName          - a string value. The Image name to search for.
+; Return values .:  Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sImageName not a String.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return False = Success. Search was successful, no Images found matching $sImageName.
+;				   @Error 0 @Extended 1 Return True = Success. Search was successful, Image found matching $sImageName.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ImageDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sImageName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+EndFunc   ;==>_LOWriter_DocHasImageName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHasPath
