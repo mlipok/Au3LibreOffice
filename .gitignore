@@ -1,6 +1,4 @@
 
-LibreOfficeWriter.au3.bak
-LibreOfficeWriter — kopia.au3.bak
-LibreOfficeWriter — kopia.au3
-BackUp/
-
+*.au3.bak
+*kopia.au3
+BackUp/*
