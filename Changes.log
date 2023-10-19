@@ -8,4 +8,6 @@
  ♦ Major re-working of Header layout for every function. As well as several typo corrections and wordiness. — @mLipok & @donnyh13.
  ♦ Change examples layout and error checking slightly. — @mLipok.
  ♦ Added several Image functions. _LOWriter_ImageAreaColor, _LOWriter_ImageAreaGradient, _LOWriter_ImageAreaTransparency, _LOWriter_ImageAreaTransparencyGradient, _LOWriter_ImageBorderColor, _LOWriter_ImageBorderPadding, _LOWriter_ImageBorderStyle, _LOWriter_ImageBorderWidth, _LOWriter_ImageColorAdjust, _LOWriter_ImageCrop, _LOWriter_ImageDelete, _LOWriter_ImageGetAnchor, _LOWriter_ImageGetObjByName, _LOWriter_ImageHyperlink, _LOWriter_ImageInsert, _LOWriter_ImageModify, _LOWriter_ImageOptions, _LOWriter_ImageOptionsName, _LOWriter_ImageReplace, _LOWriter_ImagesGetNames, _LOWriter_ImageShadow, _LOWriter_ImageSize, _LOWriter_ImageTransparency, _LOWriter_ImageTypePosition, _LOWriter_ImageTypeSize, _LOWriter_ImageWrap, _LOWriter_ImageWrapOptions
- ♦ 
+@♦ Renamed Constants $LOW_PAPER_PORTRAIT, 
+$LOW_PAPER_LANDSCAPE to $LOW_PAPER_ORIENT_PORTRAIT
+, $LOW_PAPER_ORIENT_LANDSCAPE
