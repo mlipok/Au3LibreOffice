@@ -71,6 +71,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Examples now work from their separate folder. (@mLipok.)
 - Major editing of Header layout for every function. As well as several typo corrections and wordiness. (@mLipok) & (@donnyh13.)
 - Constants are now all located in the separate Constants files. (@mLipok.)
+- All files re-processed with TIDY.
+- AU3 Check added to each UDF file branch.
 
 ### Fixed
 
