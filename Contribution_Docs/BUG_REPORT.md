@@ -8,10 +8,10 @@
 
 ### Describe the bug 
 
-A clear and concise description of what the bug is. 
+A clear and concise description of what the bug is. (<br>)
 **	|-->:
 
-### How to reproduce
+### How to reproduce 
 
 Steps to reproduce the behavior (e.g.):
 
@@ -21,16 +21,16 @@ Steps to reproduce the behavior (e.g.):
 
 ### Expected behavior
 
-A clear and concise description of what you expected to happen.
+A clear and concise description of what you expected to happen. (<br>)
 **	|-->:
 
 ### Screenshots
 
-If applicable, add screenshots to help explain your problem.
+If applicable, add screenshots to help explain your problem. (<br>)
 
 ### Additional context
 
-Add any other context about the problem here.
+Add any other context about the problem here. (<br>)
 **	|-->:
 
 ### System under test
