@@ -9,7 +9,7 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [1.0.0] - 2023-10-??
+## [0.9.0] - 2023-10-??
 
 **LibreOfficeWriter**
 ### Added 
