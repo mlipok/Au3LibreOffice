@@ -4,7 +4,7 @@
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to the best of our ability, 
-make participation in our community a polite and respectful experience for 
+to make participation in our community a polite and respectful experience for 
 all.
 
 We pledge to act and interact in ways that contribute to an open, welcoming,
