@@ -3,12 +3,12 @@
 ### Bug Report Name: 
 **	|-->:
 
-### Brief Description:  
+### Brief Description: 
 **	|-->: 
 
-### Describe the bug  
+### Describe the bug 
 
-A clear and concise description of what the bug is.  
+A clear and concise description of what the bug is. 
 **	|-->:
 
 ### How to reproduce
