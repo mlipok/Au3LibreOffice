@@ -40,5 +40,5 @@ Please complete the following information.
 - OS: [e.g. Windows 10]
 - OS Arch.: [e.g. X64]
 - LibreOffice Component: [e.g. Writer, Calc]
-- LibreOffice version: [e.g. 96.0.3]
-- Au3LibreOffice Version: [e.g. 7.3.4.2]
+- LibreOffice version: [e.g. 7.3.4.2]
+- Au3LibreOffice Version: [e.g. 0.0.0.3]
