@@ -23,7 +23,7 @@ Commonly your pull request should be one of the following types:
 - [ ] Code style update (formatting, renaming)
 - [ ] Refactoring (functional, structural)
 - [ ] Documentation content changes
-- [ ] Other, please describe:
+- [ ] Other, please describe: <br>
 **	|-->:
 
 > Thank you!

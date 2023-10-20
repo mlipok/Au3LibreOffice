@@ -25,27 +25,27 @@ Please check `x` the type of change your PR introduces:
 - [ ] Code style update (formatting, renaming)
 - [ ] Refactoring (functional, structural)
 - [ ] Documentation content changes
-- [ ] Other (please describe)
+- [ ] Other (please describe) <br>
 **	|-->:
 
 ### What is the current behavior?
 
-Please describe the current behavior that you are modifying, or link to a relevant issue.
+Please describe the current behavior that you are modifying, or link to a relevant issue. <br>
 **	|-->:
 
 ### What is the new behavior?
 
-Please describe the behavior or changes that are being added by this PR.
+Please describe the behavior or changes that are being added by this PR. <br>
 **	|-->:
 
 ### Influences and relationship to other functionality
 
-Describe how the changes will affect other functions, potential script breaking changes, etc.
+Describe how the changes will affect other functions, potential script breaking changes, etc. <br>
 **	|-->:
 
 ### Additional context
 
-Add any other context about the problem here.
+Add any other context about the problem here. <br>
 **	|-->:
 
 ### System under test
@@ -54,6 +54,6 @@ Please complete the following information.
 
 - OS: [e.g. Windows 10]
 - OS Arch.: [e.g. X64]
-- LibreOffice Component [e.g. Main (Writer, Calc, ]
-- LibreOffice version [e.g. 96.0.3]
+- LibreOffice Component [e.g. Main, Writer, Calc, ]
+- LibreOffice version [e.g. 7.3.4.2]
 

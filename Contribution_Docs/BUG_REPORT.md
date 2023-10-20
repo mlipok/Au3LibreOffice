@@ -8,7 +8,7 @@
 
 ### Describe the bug 
 
-A clear and concise description of what the bug is. (<br>)
+A clear and concise description of what the bug is. <br>
 **	|-->:
 
 ### How to reproduce 
@@ -21,16 +21,16 @@ Steps to reproduce the behavior (e.g.):
 
 ### Expected behavior
 
-A clear and concise description of what you expected to happen. (<br>)
+A clear and concise description of what you expected to happen. <br>
 **	|-->:
 
 ### Screenshots
 
-If applicable, add screenshots to help explain your problem. (<br>)
+If applicable, add screenshots to help explain your problem. <br>
 
 ### Additional context
 
-Add any other context about the problem here. (<br>)
+Add any other context about the problem here. <br>
 **	|-->:
 
 ### System under test
@@ -41,4 +41,4 @@ Please complete the following information.
 - OS Arch.: [e.g. X64]
 - LibreOffice Component: [e.g. Writer, Calc]
 - LibreOffice version: [e.g. 96.0.3]
-- Au3LibreOffice Version:
+- Au3LibreOffice Version: [e.g. 7.3.4.2]
