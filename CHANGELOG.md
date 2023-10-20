@@ -9,7 +9,7 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [0.0.0.4] - 2023-10-??
+## [1.0.0] - 2023-10-??
 
 **LibreOfficeWriter**
 ### Added 
@@ -169,6 +169,9 @@ insert a content while the insertion point was located in a Header/Footer would 
 - Initial UDF Release.
 
 ---
+
+[Unreleased]: https://github.com/mlipok/Au3LibreOffice/compare/v1.0.0...v0.0.0.3
+[0.0.0.3]:    https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3
 
 ### Legend - Types of changes
 
