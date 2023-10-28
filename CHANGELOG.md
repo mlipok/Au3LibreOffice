@@ -84,7 +84,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - @mLipok and @donnyh13 began jointly working on this project. — Thanks to @mLipok for his tireless work cleaning up many things in this UDF.
 - All Constants descriptions are moved to the Constants file. (@donnyh13)
-- Added documentation and improved CHANGELOG. Thanks @danp2 for Templates.
+- Added documentation and improved CHANGELOG.md. (@donnyh13)
+- Added bug_report.md. (@donnyh13)
+- Added feature_request.md. (@donnyh13)
+- Added PULL_REQUEST_TEMPLATE.md. (@donnyh13)
+- Added CODE_OF_CONDUCT.md (@donnyh13)
+- Added CONTRIBUTING.md. (@donnyh13)
+
+Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from https://github.com/Danp2/au3WebDriver.
 
 ## [0.0.0.3] - 2023-08-10
 
