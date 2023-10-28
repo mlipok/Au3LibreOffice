@@ -1,5 +1,6 @@
 #####
 
+
 # Changelog
 
 All notable changes to "Au3LibreOffice" SDK/API will be documented in this file.
