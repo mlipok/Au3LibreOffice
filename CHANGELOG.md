@@ -9,11 +9,12 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [0.9.0] - 2023-10-??
+## [0.9.0] - 2023-10-28
 
 **LibreOfficeWriter**
 ### Added 
 
+- directive for Au3Check to each UDF file branch. (@mLipok)
 - Image functions. (@donnyh13)
 	- _ImageAreaColor, 
 	- _ImageAreaGradient, 
@@ -72,7 +73,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Major editing of Header layout for every function. As well as several typo corrections and wordiness. (@mLipok) & (@donnyh13.)
 - Constants are now all located in the separate Constants files. (@mLipok.)
 - All files re-processed with TIDY. (@mLipok)
-- AU3 Check added to each UDF file branch. (@mLipok)
 
 ### Fixed
 
@@ -99,9 +99,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _DocExecuteDispatch function, adding some shortcuts to certain commands, such as select all, copy/paste content to/from clipboard.
 - _DocConvertTextToTable.
 - _DocConvertTableToText.
-- Added examples for the new functions.
+- examples for the new functions.
 - "Related" functions section for most function headers.
 - Warning to _ShapesGetNames, about Images inserted in a document also being called "TextFrames".
+- processing error check.
+	- _DocInsertString, 
+	- _DocInsertControlChar.
+- a missing Datatype for possible Cursor data position types, $LOW_CURDATA_HEADER_FOOTER, previously attempting to insert a content while the insertion point was located in a Header/Footer would have failed. — Thanks to user @Heiko for helping me locate this error. The affected functions are: 
+	- _CursorGetDataType.
+	- _DocCreateTextCursor, 
+	- _EndnoteInsert, 
+	- _FootnoteInsert,	
+	- _TableInsert, 
 
 ### Changed
 
@@ -116,11 +125,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _TableGetCellByCursor --> _TableGetCellObjByCursor. 
 	- _TableGetCellByName --> _TableGetCellObjByName. 
 	- _TableGetCellByPosition --> _TableGetCellObjByPosition. 
-- Added processing error check.
-	- _DocInsertString, 
-	- _DocInsertControlChar.
-- _FramesListNames to have an option to search for Frames listed under shapes.
 - Removed "IsCollpased" check and error from _DocGetString.
+- _FramesListNames to have an option to search for Frames listed under shapes.
 - _ShapesGetNames, Corrected an error that could occur if images are present.
 
 ### Fixed
@@ -128,13 +134,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 -  An error where a COM error would be produced when attempting to insert a string or control character in certain data types. — Thanks to user @Heiko for helping me locate this error.
 	- _DocInsertControlChar,
 	- _DocInsertString.
-- Added a missing Datatype for possible Cursor data position types, $LOW_CURDATA_HEADER_FOOTER, previously attempting to
-insert a content while the insertion point was located in a Header/Footer would have failed. — Thanks to user @Heiko for helping me locate this error. The affected functions are: 
-	- _CursorGetDataType.
-	- _DocCreateTextCursor, 
-	- _EndnoteInsert, 
-	- _FootnoteInsert,	
-	- _TableInsert, 
 	
 ## [0.0.0.2] - 2023-07-16
 
