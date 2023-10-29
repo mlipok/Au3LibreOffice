@@ -8,7 +8,7 @@
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; Description ...: Provides basic functionality through AutoIt for Creating, Modifying, and Inserting L.O. Writer Footnotes and Endnotes.
+; Description ...: Provides basic functionality through AutoIt for Creating, Modifying, and Inserting L.O. Writer Foot/End notes.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ;
