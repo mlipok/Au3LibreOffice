@@ -49,7 +49,7 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
 - Thanks to the maintainers
   - Thanks to [@mLipok](https://github.com/mLipok) for hosting this project on his GitHub. Not to mention his tireless energy and long hours of development and code review and clean-up.
   - Thanks to [@donnyh13](https://github.com/donnyh13) for the initial project creation and development.
-  - **Big thanks** to all the hard-working [contributors]
+  - **Big thanks** to all the hard-working contributors.
 
 ## Links 
 
