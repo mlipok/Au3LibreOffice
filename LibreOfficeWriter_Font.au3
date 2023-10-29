@@ -8,7 +8,7 @@
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; Description ...: Provides basic functionality through AutoIt for Listing and querying available L.O. Writer Font Styles.
+; Description ...: Provides basic functionality through AutoIt for Listing and querying available L.O. Writer Fonts.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ;
