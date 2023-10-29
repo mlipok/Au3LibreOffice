@@ -53,7 +53,7 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
 
 ## Links 
 
-[License]: https://github.com/mlipok/Au3LibreOffice/tree/main/LICENSE <br>
+[License]https://github.com/mlipok/Au3LibreOffice/tree/main/LICENSE <br>
 [AutoIt](https://www.autoitscript.com/site/autoit/) <br>
 [AutoIt Forum Post](https://www.autoitscript.com/forum/index.php?showtopic=210514) <br>
 
