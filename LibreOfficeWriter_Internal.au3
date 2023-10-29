@@ -7,23 +7,12 @@
 #include <WinAPIGdiDC.au3>
 
 ; #INDEX# =======================================================================================================================
-; Title .........: Libre Office Writer (LOWriter)
+; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; UDF Version    : 0.0.0.3
-; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
+; Description ...: Various functions for internal data processing, data retrieval, data processing, retrieving and applying settings for LibreOffice UDF.
 ; Author(s) .....: donnyh13, mLipok
-; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
-;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
-;						-- WriterDemo.au3, used _CreateStruct;
-;					Andrew Pitonyak & Laurent Godard (VersionGet);
-;					Leagnus & GMK -- OOoCalc.au3, used (SetPropertyValue)
 ; Dll ...........:
-; Note...........: Tips/templates taken from OOoCalc UDF written by user GMK; also from Word UDF by user water.
-;					I found the book by Andrew Pitonyak very helpful also, titled, "OpenOffice.org Macros Explained;
-;						OOME Third Edition".
-;					Of course, this UDF is written using the English version of LibreOffice, and may only work for the English
-;						version of LibreOffice installations. Many functions in this UDF may or may not work with OpenOffice
-;						Writer, however some settings are definitely for LibreOffice only.
+;
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

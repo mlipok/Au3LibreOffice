@@ -2,9 +2,9 @@
 #include-once
 
 ; #INDEX# =======================================================================================================================
-; Title .........: Libre Office Writer (LOWriter) Constants for the Libre Office Writer UDF.
+; Title .........: Libre Office Writer Constants for the Libre Office UDF.
 ; AutoIt Version : v3.3.16.1
-; Description ...: Constants for various functions in the Libre Office Writer UDF.
+; Description ...: Constants for various functions in the Libre Office UDF.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ; ===============================================================================================================================
