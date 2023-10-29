@@ -9,6 +9,23 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
+## [?.?.?] - 2023-
+
+**LibreOfficeWriter**
+
+### Changed
+
+- Minor documentation adjustments.
+- Filled in ReadMe.
+
+## [0.9.1] - 2023-10-28
+
+**LibreOfficeWriter**
+
+### Changed
+
+- Minor documentation adjustments.
+
 ## [0.9.0] - 2023-10-28
 
 **LibreOfficeWriter**
