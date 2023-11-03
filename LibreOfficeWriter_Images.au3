@@ -974,6 +974,8 @@ EndFunc   ;==>_LOWriter_ImageDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oImage not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Image anchor Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Image Anchor.
 ; Author ........: donnyh13
