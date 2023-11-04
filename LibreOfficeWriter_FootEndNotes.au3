@@ -73,6 +73,8 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oEndNote not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Endnote anchor Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Endnote Anchor.
 ; Author ........: donnyh13
@@ -493,6 +495,8 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oFootNote not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Footnote anchor Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Footnote Anchor.
 ; Author ........: donnyh13

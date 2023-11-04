@@ -1030,6 +1030,8 @@ EndFunc   ;==>_LOWriter_FrameDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Frame anchor Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Frame Anchor.
 ; Author ........: donnyh13
