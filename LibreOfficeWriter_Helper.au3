@@ -2,8 +2,8 @@
 
 #include-once
 #include "LibreOfficeWriter_Constants.au3"
-#include "LibreOfficeWriter_Internal.au3"
 #include "LibreOfficeWriter_Font.au3"
+#include "LibreOfficeWriter_Internal.au3"
 #include "LibreOfficeWriter_Page.au3"
 
 ; #INDEX# =======================================================================================================================
