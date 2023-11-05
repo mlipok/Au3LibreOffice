@@ -25,6 +25,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_EndnoteGetAnchor
 	- _LOWriter_FrameGetAnchor
 	- _LOWriter_ImageGetAnchor
+	
+- Missing Includes in LibreOfficeWriter file.
 
 ## [0.9.1] - 2023-10-28
 
