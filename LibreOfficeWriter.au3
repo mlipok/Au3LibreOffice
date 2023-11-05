@@ -1,20 +1,28 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+; Common include for Writer
 #include "LibreOfficeWriter_Constants.au3"
-#include "LibreOfficeWriter_Internal.au3"
 #include "LibreOfficeWriter_Helper.au3"
+#include "LibreOfficeWriter_Internal.au3"
 
-; include in order as they were split from LibreOfficeWriter.au3
-#include "LibreOfficeWriter_Doc.au3"
-#include "LibreOfficeWriter_Frame.au3"
-#include "LibreOfficeWriter_Table.au3"
-#include "LibreOfficeWriter_DirectFormating.au3"
-#include "LibreOfficeWriter_Field.au3"
+; Other includes for Writer
 #include "LibreOfficeWriter_Cell.au3"
+#include "LibreOfficeWriter_Char.au3"
+#include "LibreOfficeWriter_Cursor.au3"
+#include "LibreOfficeWriter_DirectFormating.au3"
+#include "LibreOfficeWriter_Doc.au3"
+#include "LibreOfficeWriter_Field.au3"
+#include "LibreOfficeWriter_Font.au3"
 #include "LibreOfficeWriter_FootEndNotes.au3"
-#include "LibreOfficeWriter_Shapes.au3"
+#include "LibreOfficeWriter_Frame.au3"
 #include "LibreOfficeWriter_Images.au3"
+#include "LibreOfficeWriter_Num.au3"
+#include "LibreOfficeWriter_Page.au3"
+#include "LibreOfficeWriter_Par.au3"
+#include "LibreOfficeWriter_Shapes.au3"
+#include "LibreOfficeWriter_Table.au3"
+
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
