@@ -1,9 +1,11 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
 
+; Requred AutoIt Include
 #include <WinAPIGdiDC.au3>
 
 ; #INDEX# =======================================================================================================================
