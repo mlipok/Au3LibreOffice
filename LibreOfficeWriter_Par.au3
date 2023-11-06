@@ -1,12 +1,14 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
 #include "LibreOfficeWriter_Internal.au3"
 
-#include "LibreOfficeWriter_Doc.au3"
+; Other includes for Writer
 #include "LibreOfficeWriter_Cursor.au3"
+#include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Num.au3"
 #include "LibreOfficeWriter_Page.au3"
 
