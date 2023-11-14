@@ -1,6 +1,7 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
 #include "LibreOfficeWriter_Internal.au3"
@@ -73,8 +74,10 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oEndNote not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Endnote anchor Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Endnote Anchor.
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Endnote's Anchor.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Anchor cursor returned is just a Text Cursor placed at the anchor's position.
@@ -145,17 +148,17 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table cursor type, not supported.
-;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/ Footer cannot insert a Endnote in those data types.
+;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table cursor type, and is not supported.
+;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/Footer, cannot insert a Endnote in those data types.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor located in unknown data type.
 ;				   @Error 1 @Extended 7 Return 0 = $sLabel not a string.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 =  Error creating "com.sun.star.text.Endnote" Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new Endnote, returning Endnote Object.
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new Endnote, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: A Endnote cannot be inserted into a Frame, a Footnote, a Endnote, or the Header/ Footer.
+; Remarks .......: A Endnote cannot be inserted into a Frame, a Footnote, a Endnote, or the Header/Footer.
 ; Related .......: _LOWriter_EndnoteDelete,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ; Link ..........:
 ; Example .......: Yes
@@ -208,11 +211,12 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Endnote settings were successfully modified.
 ;				   @Error 0 @Extended 1 Return String = Success. $sLabel set to Null, current Endnote Label returned.
-;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Endnote AutoNumbering number returned.
+;				   @Error 0 @Extended 2 Return String = Success. $sLabel set to Null, current Endnote Auto-Numbering number returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Calling $sLabel with Null will either return the current Label, or the current auto-numbering number, depending on if auto-numbering is active.
 ; Related .......: _LOWriter_EndnotesGetList, _LOWriter_EndnoteInsert
 ; Link ..........:
 ; Example .......: Yes
@@ -245,15 +249,15 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ; Syntax ........: _LOWriter_EndnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Endnote numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Endnote counting from, Min. 1, Max 9999.
-;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Endnote number in the note text.
-;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Endnote number in the note text.
+;                  $iStartAt            - [optional] an integer value (1-9999). Default is Null. The Number to begin Endnote counting from.
+;                  $sBefore             - [optional] a string value. Default is Null. The text to display before an Endnote number in the note text.
+;                  $sAfter              - [optional] a string value. Default is Null. The text to display after an Endnote number in the note text.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iNumFormat not an Integer, or Less than 0 or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 3 Return 0 = $iStartAt not an integer, less than 1 or greater than 9999.
+;				   @Error 1 @Extended 3 Return 0 = $iStartAt not an integer, less than 1, or greater than 9999.
 ;				   @Error 1 @Extended 4 Return 0 = $sBefore not a String.
 ;				   @Error 1 @Extended 5 Return 0 = $sAfter not a String.
 ;				   --Property Setting Errors--
@@ -320,7 +324,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ; Description ...: Set or Retrieve Document Endnote Style settings.
 ; Syntax ........: _LOWriter_EndnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sEndnoteArea = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sParagraph          - [optional] a string value. Default is Null. The Endnote Text Paragraph Style.
+;                  $sParagraph          - [optional] a string value. Default is Null. The Endnote Text Paragraph Style to use.
 ;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Endnote pages.
 ;                  $sTextArea           - [optional] a string value. Default is Null. The Character Style to use for the Endnote anchor in the document text.
 ;                  $sEndnoteArea        - [optional] a string value. Default is Null. The Character Style to use for the Endnote number in the Endnote text.
@@ -329,13 +333,13 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $sParagraph not a String.
-;				   @Error 1 @Extended 3 Return 0 = Paragraph Style referenced in $sParagraph not found in Document.
+;				   @Error 1 @Extended 3 Return 0 = Paragraph Style called in $sParagraph not found in Document.
 ;				   @Error 1 @Extended 4 Return 0 = $sPage not a String.
-;				   @Error 1 @Extended 5 Return 0 = Page Style referenced in $sPage not found in Document.
+;				   @Error 1 @Extended 5 Return 0 = Page Style called in $sPage not found in Document.
 ;				   @Error 1 @Extended 6 Return 0 = $sTextArea not a String.
-;				   @Error 1 @Extended 7 Return 0 = Character Style referenced in $sTextArea not found in Document.
+;				   @Error 1 @Extended 7 Return 0 = Character Style called in $sTextArea not found in Document.
 ;				   @Error 1 @Extended 8 Return 0 = $sEndnoteArea not a String.
-;				   @Error 1 @Extended 9 Return 0 = Character Style referenced in $sEndnoteArea not found in Document.
+;				   @Error 1 @Extended 9 Return 0 = Character Style called in $sEndnoteArea not found in Document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $sParagraph
@@ -348,7 +352,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_CharStylesGetNames, _LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
@@ -479,7 +483,6 @@ Func _LOWriter_FootnoteDelete(ByRef $oFootNote)
 	If Not IsObj($oFootNote) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	$oFootNote.dispose()
-	$oFootNote = Null
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FootnoteDelete
@@ -493,8 +496,10 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oFootNote not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Footnote anchor Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Footnote Anchor.
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the Footnote Anchor.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -565,19 +570,17 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table cursor type, not supported.
-;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/Footer,
-;				   +									cannot insert a Footnote in those data types.
+;				   @Error 1 @Extended 4 Return 0 = $oCursor is a Table cursor type, and is not supported.
+;				   @Error 1 @Extended 5 Return 0 = $oCursor currently located in a Frame, Footnote, Endnote, or Header/Footer, cannot insert a Footnote in those data types.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor located in unknown data type.
 ;				   @Error 1 @Extended 7 Return 0 = $sLabel not a string.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 =  Error creating "com.sun.star.text.Footnote" Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new footnote, returning Footnote
-;				   +									Object.
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new footnote, returning Footnote Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: A Footnote cannot be inserted into a Frame, a Footnote, a Endnote, or a Header/ Footer.
+; Remarks .......: A Footnote cannot be inserted into a Frame, a Footnote, an Endnote, or a Header/Footer.
 ; Related .......: _LOWriter_FootnoteDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -635,7 +638,8 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Calling $sLabel with Null will either return the current Label, or the current auto-numbering number, depending on if auto-numbering is active.
 ; Related .......: _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -667,7 +671,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; Syntax ........: _LOWriter_FootnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null[, $iCounting = Null[, $bEndOfDoc = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Footnote numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iStartAt            - [optional] an integer value. Default is Null. The Number to begin Footnote counting from, this is labeled "Counting" in the L.O. User Interface. Min. 1, Max 9999.
+;                  $iStartAt            - [optional] an integer value (1-9999). Default is Null. The Number to begin Footnote counting from, this is labeled "Counting" in the L.O. User Interface.
 ;                  $sBefore             - [optional] a string value. Default is Null. The text to display before a Footnote number in the note text.
 ;                  $sAfter              - [optional] a string value. Default is Null. The text to display after a Footnote number in the note text.
 ;                  $iCounting           - [optional] an integer value (0-2). Default is Null. The Counting type of the footnotes, such as per page etc., see constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3..
@@ -696,7 +700,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -780,7 +784,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -847,7 +851,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ParStylesGetNames, _LOWriter_PageStylesGetNames, _LOWriter_CharStylesGetNames
 ; Link ..........:
 ; Example .......: Yes

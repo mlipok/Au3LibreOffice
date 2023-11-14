@@ -1,28 +1,18 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
 #include "LibreOfficeWriter_Internal.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: Libre Office Writer (LOWriter)
+; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; UDF Version    : 0.0.0.3
-; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
+; Description ...: Provides basic functionality through AutoIt for Retrieving and manipulating a Cursor in L.O. Writer.
 ; Author(s) .....: donnyh13, mLipok
-; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
-;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
-;						-- WriterDemo.au3, used _CreateStruct;
-;					Andrew Pitonyak & Laurent Godard (VersionGet);
-;					Leagnus & GMK -- OOoCalc.au3, used (SetPropertyValue)
 ; Dll ...........:
-; Note...........: Tips/templates taken from OOoCalc UDF written by user GMK; also from Word UDF by user water.
-;					I found the book by Andrew Pitonyak very helpful also, titled, "OpenOffice.org Macros Explained;
-;						OOME Third Edition".
-;					Of course, this UDF is written using the English version of LibreOffice, and may only work for the English
-;						version of LibreOffice installations. Many functions in this UDF may or may not work with OpenOffice
-;						Writer, however some settings are definitely for LibreOffice only.
+;
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -47,7 +37,7 @@
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error retrieving Cursor Data Type.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 0 @Extended 0 Return Integer = Success, Return value will be one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of data a cursor is currently located in, such as a TextTable, Footnote etc.
@@ -66,6 +56,7 @@ Func _LOWriter_CursorGetDataType(ByRef $oDoc, ByRef $oCursor)
 
 	$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $iCursorDataType)
 EndFunc   ;==>_LOWriter_CursorGetDataType
 
@@ -89,7 +80,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;				   @Error 3 @Extended 2 Return 0 = Error retrieving Status for Table Cursor.
 ;				   @Error 3 @Extended 3 Return 0 = Error retrieving Status for View Cursor.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See corresponding flag for return type
+;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See called flag for expected return type.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only certain flags work for certain types of cursors:
@@ -155,6 +146,7 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
 			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+
 		Case Else
 			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
@@ -169,11 +161,11 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCursor variable not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error retrieving Cursor Type.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the Constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 0 @Extended 0 Return Integer = Success, Return value will be one of the Constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Will also work for Paragraph object and paragraph section objects.
@@ -191,6 +183,7 @@ Func _LOWriter_CursorGetType(ByRef $oCursor)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
 	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $iCursorType)
 EndFunc   ;==>_LOWriter_CursorGetType
 
@@ -216,7 +209,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ;				   @Error 0 @Extended 0 Return 1 = Success. Cursor successfully moved to $oRange position.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Text Cursor also.
+; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Cursor called in $oCursor also.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor,	_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
@@ -251,7 +244,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ; Description ...: Move a Cursor object in a document. Also for creating/Expanding selections.
 ; Syntax ........: _LOWriter_CursorMove(Byref $oCursor, $iMove[, $iCount = 1[, $bSelect = False]])
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
-;                  $iMove               - an integer value. The movement command. See remarks and Constants.
+;                  $iMove               - an integer value. The movement command. See remarks and Constants, $LOW_VIEWCUR_, $LOW_TEXTCUR_, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCount              - [optional] an integer value. Default is 1. Number of movements to make. See remarks.
 ;                  $bSelect             - [optional] a boolean value. Default is False. Whether to select data during this cursor movement. See remarks.
 ; Return values .: Success: Boolean.
@@ -259,7 +252,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants.
+;				   @Error 1 @Extended 3 Return 0 = $iMove mismatch with Cursor type. See Cursor Type/Move Type Constants, $LOW_VIEWCUR_, $LOW_TEXTCUR_, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
 ;				   @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
 ;				   --Processing Errors--
@@ -271,66 +264,64 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-; Cursor Movement Constants:
-;					#Cursor Movement Constants which accept number of Moves and Selecting:
+;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
+;					 To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
+;					#Cursor Movement Constants which accept Number of Moves and Selecting:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;						$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;						$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
+;						$LOW_VIEWCUR_GO_DOWN,
+;						$LOW_VIEWCUR_GO_UP,
+;						$LOW_VIEWCUR_GO_LEFT,
+;						$LOW_VIEWCUR_GO_RIGHT,
 ;					-TextCursor
-;						$LOW_TEXTCUR_GO_LEFT,Move the cursor left by n characters.
-;						$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;						$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;						$LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;						$LOW_TEXTCUR_GOTO_NEXT_SENTENCE,Move to the start of the next sentence.
-;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
+;						$LOW_TEXTCUR_GO_LEFT,
+;						$LOW_TEXTCUR_GO_RIGHT,
+;						$LOW_TEXTCUR_GOTO_NEXT_WORD,
+;						$LOW_TEXTCUR_GOTO_PREV_WORD,
+;						$LOW_TEXTCUR_GOTO_NEXT_SENTENCE,
+;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE,
+;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH,
+;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH,
 ;					-TableCursor
-;						$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
-;						$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
-;					#Cursor Movements which accept number of Moves Only:
+;						$LOW_TABLECUR_GO_LEFT,
+;						$LOW_TABLECUR_GO_RIGHT,
+;						$LOW_TABLECUR_GO_UP,
+;						$LOW_TABLECUR_GO_DOWN,
+;					#Cursor Movements which accept Number of Moves Only:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;						$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;						$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
+;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE,
+;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE,
+;						$LOW_VIEWCUR_SCREEN_DOWN,
+;						$LOW_VIEWCUR_SCREEN_UP,
 ;					#Cursor Movements which accept Selecting Only:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;						$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;						$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;						$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
+;						$LOW_VIEWCUR_GOTO_END_OF_LINE,
+;						$LOW_VIEWCUR_GOTO_START_OF_LINE,
+;						$LOW_VIEWCUR_GOTO_START,
+;						$LOW_VIEWCUR_GOTO_END,
 ;					-TextCursor
-;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;						$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
+;						$LOW_TEXTCUR_GOTO_START,
+;						$LOW_TEXTCUR_GOTO_END,
+;						$LOW_TEXTCUR_GOTO_END_OF_WORD,
+;						$LOW_TEXTCUR_GOTO_START_OF_WORD,
+;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE,
+;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE,
+;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH,
+;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH,
 ;					-TableCursor
-;						$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;						$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
+;						$LOW_TABLECUR_GOTO_START,
+;						$LOW_TABLECUR_GOTO_END,
 ;					#Cursor Movements which accept nothing and are done once per call:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
+;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE,
+;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE,
+;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE,
+;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE,
 ;					-TextCursor
-;						$LOW_TEXTCUR_COLLAPSE_TO_START,(Collapses the current selection and moves the cursor to start of the selection.
-;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to End of the selection.
+;						$LOW_TEXTCUR_COLLAPSE_TO_START,
+;						$LOW_TEXTCUR_COLLAPSE_TO_END,
 ;					#Misc. Cursor Movements:
 ;					-ViewCursor
-;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
+;						$LOW_VIEWCUR_JUMP_TO_PAGE
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,

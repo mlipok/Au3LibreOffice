@@ -1,10 +1,12 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
-#include "LibreOfficeWriter_Internal.au3"
+; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
+#include "LibreOfficeWriter_Internal.au3"
 
+; Other includes for Writer
 #include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Page.au3"
 
@@ -974,6 +976,8 @@ EndFunc   ;==>_LOWriter_ImageDelete
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oImage not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Image anchor Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Image Anchor.
 ; Author ........: donnyh13
