@@ -18,6 +18,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Minor documentation adjustments.
 - Filled in ReadMe.
 
+### Fixed
+
+- Missing error return value descriptions in:
+	- _LOWriter_FootnoteGetAnchor
+	- _LOWriter_EndnoteGetAnchor
+	- _LOWriter_FrameGetAnchor
+	- _LOWriter_ImageGetAnchor
+	
+- Missing Includes in LibreOfficeWriter file.
+
 ## [0.9.1] - 2023-10-28
 
 **LibreOfficeWriter**
