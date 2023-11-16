@@ -7,23 +7,12 @@
 #include "LibreOfficeWriter_Internal.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: Libre Office Writer (LOWriter)
+; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; UDF Version    : 0.0.0.3
-; Description ...: Provides basic functionality through Autoit for interacting with Libre Office Writer.
+; Description ...: Provides basic functionality through AutoIt for Modifying TextTable Cell Settings and Data in L.O. Writer.
 ; Author(s) .....: donnyh13, mLipok
-; Sources .......: jguinch -- Printmgr.au3, used (_PrintMgr_EnumPrinter);
-;					mLipok -- OOoCalc.au3, used (__OOoCalc_ComErrorHandler_UserFunction,_InternalComErrorHandler,
-;						-- WriterDemo.au3, used _CreateStruct;
-;					Andrew Pitonyak & Laurent Godard (VersionGet);
-;					Leagnus & GMK -- OOoCalc.au3, used (SetPropertyValue)
 ; Dll ...........:
-; Note...........: Tips/templates taken from OOoCalc UDF written by user GMK; also from Word UDF by user water.
-;					I found the book by Andrew Pitonyak very helpful also, titled, "OpenOffice.org Macros Explained;
-;						OOME Third Edition".
-;					Of course, this UDF is written using the English version of LibreOffice, and may only work for the English
-;						version of LibreOffice installations. Many functions in this UDF may or may not work with OpenOffice
-;						Writer, however some settings are definitely for LibreOffice only.
+;
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -48,13 +37,12 @@
 ; Description ...: Set and Retrieve the Background color of a Cell or Cell Range.
 ; Syntax ........: _LOWriter_CellBackColor(Byref $oCell[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks.
-;				   +						Set to $LOW_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks. Set to $LOW_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCell variable not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
 ;				   @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
 ;				   --Property Setting Errors--
@@ -68,7 +56,6 @@
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
-;					See _LOWriter_ConvertColorToLong, _LOWriter_ConvertColorFromLong.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -109,32 +96,28 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Description ...: Set the Cell or Cell Range Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderColor(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format.
-;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format.
-;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format.
-;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format.
-;				   +						A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Sets the Top Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
-;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
-;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object .
+;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
+;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;				   @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.table.BorderLine2" Object
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -178,17 +161,17 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCell parameter not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oCell an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $iTop not an Integer.
 ;				   @Error 1 @Extended 3 Return 0 = $iBottom not an Integer.
 ;				   @Error 1 @Extended 4 Return 0 = $Left not an Integer.
 ;				   @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iTop border distance
-;				   |								2 = Error setting $iBottom border distance
-;				   |								4 = Error setting $iLeft border distance
-;				   |								8 = Error setting $iRight border distance
+;				   |								1 = Error setting $iTop.
+;				   |								2 = Error setting $iBottom.
+;				   |								4 = Error setting $iLeft.
+;				   |								8 = Error setting $iRight.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -248,28 +231,28 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderStyle(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Top Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Bottom Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Left Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
-;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iTop is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iBottom is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iLeft is set to less than 0 or not set to Null.
-;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or $iRight is set to less than 0 or not set to Null.
+;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;				   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
 ;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Border width not set.
-;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Border width not set.
-;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Border width not set.
-;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Border width not set.
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
 ;				   --Version Related Errors--
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
 ;				   --Success--
@@ -304,10 +287,10 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ; Description ...: Set or Retrieve the Cell or Cell Range Border Line Width. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_CellBorderWidth(Byref $oCell[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the predefined constants listed $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Cell in MicroMeters. Can be a custom value or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Cell in MicroMeters. Can be a custom value or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in MicroMeters. Can be a custom value or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -362,7 +345,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. A Text Cursor Object located in the specified Cell.
+;				   @Error 0 @Extended 0 Return Object = Success. Returning a Text Cursor Object located in the specified Cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -412,6 +395,7 @@ Func _LOWriter_CellFormula(ByRef $oCell, $sFormula = Null)
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFormula) And Not ($sFormula = Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Can only set/get formula value for individual cells.
+
 	If ($sFormula = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oCell.getFormula())
 
 	$oCell.setFormula($sFormula)
@@ -433,7 +417,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ;				   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Returns the data type as one of the below constants, Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data contained.
+; Remarks .......: Returns the data type as one of the constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -453,16 +437,16 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Description ...: Get the formula error Value.
 ; Syntax ........: _LOWriter_CellGetError(Byref $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-; Return values .: Success: A Number.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Number = Success. The Cell formula error code in Number format.
+;				   @Error 0 @Extended 0 Return Integer = Success. The Cell formula error code in Integer format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Integer error value. If the cell is not a formula, the error value is zero.
+; Remarks .......: If the cell is not a formula, the error value is zero.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -512,7 +496,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Description ...: Write-Protect a Cell
 ; Syntax ........: _LOWriter_CellProtect(Byref $oCell[, $bProtect = Null])
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned from _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition functions.
-;                  $bProtect            - [optional] a boolean value. Default is Null. True = Protected from Writing, False = Unprotected. See remarks.
+;                  $bProtect            - [optional] a boolean value. Default is Null. If True, cell is protected from being written to. See remarks.
 ; Return values .: Success: 1 Or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -522,12 +506,11 @@ EndFunc   ;==>_LOWriter_CellGetName
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Successfully set Cell Protect setting.
-;				   @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell, a Boolean value.
+;				   @Error 0 @Extended 0 Return 1 = Successfully set Cell Protect setting.
+;				   @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or
-;					False)
+; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or False)
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -538,11 +521,14 @@ Func _LOWriter_CellProtect(ByRef $oCell, $bProtect = Null)
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; Can only set individual cell protect property.
-	If ($bProtect = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.IsProtected())
-	If Not IsBool($bProtect) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	$oCell.IsProtected = $bProtect
-	Return ($oCell.IsProtected() = $bProtect) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
 
+	If ($bProtect = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $oCell.IsProtected())
+
+	If Not IsBool($bProtect) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+
+	$oCell.IsProtected = $bProtect
+
+	Return ($oCell.IsProtected() = $bProtect) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
 EndFunc   ;==>_LOWriter_CellProtect
 
 ; #FUNCTION# ====================================================================================================================
@@ -555,11 +541,11 @@ EndFunc   ;==>_LOWriter_CellProtect
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sString not a String and not set to Null keyword.
+;				   @Error 1 @Extended 2 Return 0 = $sString not a String.
 ;				   @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. String was successfully set.
-;				   @Error 0 @Extended 1 Return String = Success. Current String is returned.
+;				   @Error 0 @Extended 0 Return 1 = Successfully set the cell String.
+;				   @Error 0 @Extended 1 Return String = Success. $sString set to Null, returning current string.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: String can only be set for an individual cell, not a range.
@@ -597,8 +583,8 @@ EndFunc   ;==>_LOWriter_CellString
 ;				   @Error 1 @Extended 2 Return 0 = $nValue not a Number and not set to Null keyword.
 ;				   @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Value was successfully set.
-;				   @Error 0 @Extended 1 Return String = Success. Current Value is returned in String format.
+;				   @Error 0 @Extended 0 Return 1 = Successfully set cell value.
+;				   @Error 0 @Extended 1 Return String = Success. $nValue set to Null, returning current cell value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Value can only be set for an individual cell, not a range.
@@ -634,11 +620,11 @@ EndFunc   ;==>_LOWriter_CellValue
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, or less than 0 or greater than 3.
+;				   @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, or less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1  = Success. Succesfully set Vertical Orientation.
+;				   @Error 0 @Extended 0 Return 1  = Succesfully set Vertical Orientation.
 ;				   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
