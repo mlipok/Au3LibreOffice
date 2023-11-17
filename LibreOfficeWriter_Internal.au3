@@ -36,6 +36,7 @@
 ; __LOWriter_CharStrikeOut
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
+; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
 ; __LOWriter_DateStructCompare
@@ -49,6 +50,7 @@
 ; __LOWriter_FindFormatRetrieveSetting
 ; __LOWriter_FooterBorder
 ; __LOWriter_GetPrinterSetting
+; __LOWriter_GetShapeName
 ; __LOWriter_GradientNameInsert
 ; __LOWriter_GradientPresets
 ; __LOWriter_HeaderBorder
@@ -87,6 +89,16 @@
 ; __LOWriter_ParTxtFlowOpt
 ; __LOWriter_RegExpConvert
 ; __LOWriter_SetPropertyValue
+; __LOWriter_Shape_CreateArrow
+; __LOWriter_Shape_CreateBasic
+; __LOWriter_Shape_CreateCallout
+; __LOWriter_Shape_CreateFlowchart
+; __LOWriter_Shape_CreateLine
+; __LOWriter_Shape_CreateStars
+; __LOWriter_Shape_CreateSymbol
+; __LOWriter_Shape_GetCustomType
+; __LOWriter_ShapeArrowStyleName
+; __LOWriter_ShapeLineStyleName
 ; __LOWriter_TableBorder
 ; __LOWriter_TableCursorMove
 ; __LOWriter_TableHasCellName
@@ -396,7 +408,7 @@ EndFunc   ;==>__LOWriter_Border
 ; Modified ......:
 ; Remarks .......:  Call this function with only the Object parameter and all other parameters set to Null keyword, and $bWid,
 ;					or $bSty, or $bCol set to true to get the corresponding current settings.
-;				   All distance values are set in Micrometers. 
+;				   All distance values are set in Micrometers.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -1382,6 +1394,46 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 EndFunc   ;==>__LOWriter_CharUnderLine
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_CreatePoint
+; Description ...: Creates a Position structure.
+; Syntax ........: __LOWriter_CreatePoint($iX, $iY)
+; Parameters ....: $iX                  - an integer value. The X position, in Micrometers.
+;                  $iY                  - an integer value. The Y position, in Micrometers.
+; Return values .: Success: Structure
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $iX not an Integer.
+;				   @Error 1 @Extended 2 Return 0 = $iY not an Integer.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Create a Position Structure.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Structure = Success. Returning created Position Structure set to $iX and $iY values.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Modified from A. Pitonyak, Listing 493. in OOME 3.0
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_CreatePoint($iX, $iY)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tPoint
+
+	If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	$tPoint = __LOWriter_CreateStruct("com.sun.star.awt.Point")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tPoint.X = $iX
+	$tPoint.Y = $iY
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $tPoint)
+EndFunc   ;==>__LOWriter_CreatePoint
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreateStruct
 ; Description ...: Retrieves a Struct.
 ; Syntax ........: __LOWriter_CreateStruct($sStructName)
@@ -2111,88 +2163,6 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 EndFunc   ;==>__LOWriter_FooterBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_ObjRelativeSize
-; Description ...: Calculate appropriate values to set Frame, Frame Style or Image Width or Height, when using relative values.
-; Syntax ........: __LOWriter_ObjRelativeSize(Byref $oDoc, Byref $oObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj                - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function. Can also be an Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative Width percentage.
-;                  $bRelativeHeight     - [optional] a boolean value. Default is False. If True, modify Height based on relative Height percentage.
-; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
-;				   @Error 1 @Extended 5 Return 0 = $bRelativeHeight and $bRelativeWidth both set to False.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error Retrieving PageStyle Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: This function isn't totally necessary, because when setting Relative Width/Height, for a Frame/Frame
-;					style, the frame is still appropriately set to the correct percentage. However, the L.O. U.I. does not
-;					show the percentage unless you set a width value for the frame or frame style based on the Page width.
-;					For Frame Styles, If you notice in L.O. when you set the relative value, while the Viewcursor is in one
-;					PageStyle, and then move the cursor to another type of page style, the percentage changes. So when I am
-;					modifying a FrameStyle obtain the ViewCursor, retrieve what PageStyle it is currently in, and calculate the
-;					Width/Height values based on that sizing. Or when modifying a Frame, I obtain its anchor, and retrieve the
-;					page style name, and get the page size settings for setting Frame Width/Height. However, is makes no
-;					material difference, as the frame still is set to the correct width/height regardless.
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = False, $bRelativeHeight = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iPageWidth, $iPageHeight, $iObjWidth, $iObjHeight
-	Local $oPageStyle
-
-
-
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bRelativeWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bRelativeHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If (($bRelativeHeight = False) And ($bRelativeWidth = False)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-
-	If ($oObj.supportsService("com.sun.star.text.TextFrame")) Or ($oObj.supportsService("com.sun.star.text.TextGraphicObject")) Then
-		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oObj.Anchor.PageStyleName())
-	Else
-		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
-	EndIf
-
-	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-
-	If ($bRelativeWidth = True) Then
-		$iPageWidth = $oPageStyle.Width() ; Retrieve total PageStyle width
-		$iPageWidth = $iPageWidth - $oPageStyle.RightMargin()
-		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ; Minus off both margins.
-
-		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
-
-		$oObj.Width = $iObjWidth
-
-	EndIf
-
-	If ($bRelativeHeight = True) Then
-		$iPageHeight = $oPageStyle.Height() ; Retrieve total PageStyle Height
-		$iPageHeight = $iPageHeight - $oPageStyle.TopMargin()
-		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ; Minus off both margins.
-
-		$iObjHeight = $iPageHeight * ($oObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
-
-		$oObj.Height = $iObjHeight
-	EndIf
-
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>__LOWriter_ObjRelativeSize
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting
 ; Description ...: Internal function for retrieving Printer settings.
 ; Syntax ........: __LOWriter_GetPrinterSetting(Byref $oDoc, $sSetting)
@@ -2229,6 +2199,62 @@ Func __LOWriter_GetPrinterSetting(ByRef $oDoc, $sSetting)
 
 	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; No Matches
 EndFunc   ;==>__LOWriter_GetPrinterSetting
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_GetShapeName
+; Description ...: Create a Shape Name that hasn't been used yet in the document.
+; Syntax ........: __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sShapeName          - a string value. The Shape name to begin with.
+; Return values .: Success: String
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retreive DrawPage object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Success. Document contained no shapes, returns the Shape name with a "1" appended.
+;				   @Error 0 @Extended 1 Return String = Success. Returns the unique Shape name to use.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function adds a digit after the shape name, incrementing it until that name hasn't been used yet in L.O.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
+	Local $oShapes
+
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sShapeName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	If $oShapes.hasElements() Then
+
+		For $i = 1 To $oShapes.getCount + 1
+
+			For $j = 0 To $oShapes.getCount() - 1
+				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Next
+
+			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ;If no matches, exit loop with current name.
+		Next
+
+	Else
+
+		Return SetError($__LOW_STATUS_SUCCESS, 0, $sShapeName & "1") ;If Doc has no shapes, just return the name with a "1" appended.
+	EndIf
+
+	Return SetError($__LOW_STATUS_SUCCESS, 1, $sShapeName & $i)
+EndFunc   ;==>__LOWriter_GetShapeName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GradientNameInsert
@@ -2627,7 +2653,7 @@ EndFunc   ;==>__LOWriter_GradientPresets
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
-;				   All distance values are set in Micrometers. 
+;				   All distance values are set in Micrometers.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -3539,6 +3565,88 @@ Func __LOWriter_NumStyleRetrieve(ByRef $oNumRules, $iLevel, $sSettingName)
 	Next
 	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 EndFunc   ;==>__LOWriter_NumStyleRetrieve
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ObjRelativeSize
+; Description ...: Calculate appropriate values to set Frame, Frame Style or Image Width or Height, when using relative values.
+; Syntax ........: __LOWriter_ObjRelativeSize(Byref $oDoc, Byref $oObj[, $bRelativeWidth = False[, $bRelativeHeight = False]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oObj                - [in/out] an object. A Frame or Frame Style object returned by previous _LOWriter_FrameStyleCreate, _LOWriter_FrameCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function. Can also be an Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
+;                  $bRelativeWidth      - [optional] a boolean value. Default is False. If True, modify Width based on relative Width percentage.
+;                  $bRelativeHeight     - [optional] a boolean value. Default is False. If True, modify Height based on relative Height percentage.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bRelativeHeight and $bRelativeWidth both set to False.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Error Retrieving PageStyle Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function isn't totally necessary, because when setting Relative Width/Height, for a Frame/Frame
+;					style, the frame is still appropriately set to the correct percentage. However, the L.O. U.I. does not
+;					show the percentage unless you set a width value for the frame or frame style based on the Page width.
+;					For Frame Styles, If you notice in L.O. when you set the relative value, while the Viewcursor is in one
+;					PageStyle, and then move the cursor to another type of page style, the percentage changes. So when I am
+;					modifying a FrameStyle obtain the ViewCursor, retrieve what PageStyle it is currently in, and calculate the
+;					Width/Height values based on that sizing. Or when modifying a Frame, I obtain its anchor, and retrieve the
+;					page style name, and get the page size settings for setting Frame Width/Height. However, is makes no
+;					material difference, as the frame still is set to the correct width/height regardless.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = False, $bRelativeHeight = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iPageWidth, $iPageHeight, $iObjWidth, $iObjHeight
+	Local $oPageStyle
+
+
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bRelativeWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bRelativeHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If (($bRelativeHeight = False) And ($bRelativeWidth = False)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+
+	If ($oObj.supportsService("com.sun.star.text.TextFrame")) Or ($oObj.supportsService("com.sun.star.text.TextGraphicObject")) Then
+		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oObj.Anchor.PageStyleName())
+	Else
+		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
+	EndIf
+
+	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	If ($bRelativeWidth = True) Then
+		$iPageWidth = $oPageStyle.Width() ; Retrieve total PageStyle width
+		$iPageWidth = $iPageWidth - $oPageStyle.RightMargin()
+		$iPageWidth = $iPageWidth - $oPageStyle.LeftMargin() ; Minus off both margins.
+
+		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
+
+		$oObj.Width = $iObjWidth
+
+	EndIf
+
+	If ($bRelativeHeight = True) Then
+		$iPageHeight = $oPageStyle.Height() ; Retrieve total PageStyle Height
+		$iPageHeight = $iPageHeight - $oPageStyle.TopMargin()
+		$iPageHeight = $iPageHeight - $oPageStyle.BottomMargin() ; Minus off both margins.
+
+		$iObjHeight = $iPageHeight * ($oObj.RelativeHeight() / 100) ; Times Page Height minus margins by relative Height percentage.
+
+		$oObj.Height = $iObjHeight
+	EndIf
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>__LOWriter_ObjRelativeSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_PageStyleNameToggle
@@ -5050,6 +5158,1644 @@ Func __LOWriter_SetPropertyValue($sName, $vValue)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $tProperties)
 EndFunc   ;==>__LOWriter_SetPropertyValue
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateArrow
+; Description ...: Create a Arrow type Shape.
+; Syntax ........: __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (0-25). The Type of shape to create. See $LOW_SHAPE_TYPE_ARROWS_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to create "MirroredX" property structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tProp2, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tProp = __LOWriter_SetPropertyValue("Type", "")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY
+			$tProp.Value = "quad-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_4_WAY
+			$tProp.Value = "quad-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_DOWN
+			$tProp.Value = "down-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT
+			$tProp.Value = "left-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT_RIGHT
+			$tProp.Value = "left-right-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT
+			$tProp.Value = "right-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP
+			$tProp.Value = "up-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN
+			$tProp.Value = "up-down-arrow-callout"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+			$tProp.Value = "mso-spt100"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CIRCULAR
+			$tProp.Value = "circular-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT
+			$tProp.Value = "corner-right-arrow" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_DOWN
+			$tProp.Value = "down-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT
+			$tProp.Value = "left-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT_RIGHT
+			$tProp.Value = "left-right-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_NOTCHED_RIGHT
+			$tProp.Value = "notched-right-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT
+			$tProp.Value = "right-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT
+			$tProp.Value = "split-arrow" ; "non-primitive"??
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED
+			$tProp.Value = "s-sharped-arrow" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT
+			$tProp.Value = "split-arrow" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT
+			$tProp.Value = "striped-right-arrow" ; "mso-spt100"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP
+			$tProp.Value = "up-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_DOWN
+			$tProp.Value = "up-down-arrow"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT
+			$tProp.Value = "up-right-arrow-callout" ; "mso-spt89"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN
+			$tProp.Value = "up-right-down-arrow" ; "mso-spt100"
+
+			$tProp2 = __LOWriter_SetPropertyValue("MirroredX", True) ;Shape is an up and left arrow without this Property.
+			If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+			ReDim $atCusShapeGeo[2]
+			$atCusShapeGeo[1] = $tProp2
+
+		Case $LOW_SHAPE_TYPE_ARROWS_CHEVRON
+			$tProp.Value = "chevron"
+
+		Case $LOW_SHAPE_TYPE_ARROWS_PENTAGON
+			$tProp.Value = "pentagon-right"
+
+	EndSwitch
+
+	$atCusShapeGeo[0] = $tProp
+	$oShape.CustomShapeGeometry = $atCusShapeGeo
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateArrow
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateBasic
+; Description ...: Create a Basic type Shape.
+; Syntax ........: __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (26-49). The Type of shape to create. See $LOW_SHAPE_TYPE_BASIC_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
+;					$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+	Local $iCircleKind_CUT = 2 ; a circle with a cut connected by a line.
+	Local $iCircleKind_ARC = 3 ; a circle with an open cut.
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	If ($iShapeType = $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) Or ($iShapeType = $LOW_SHAPE_TYPE_BASIC_ARC) Then ; These two shapes need special procedures.
+		$oShape = $oDoc.createInstance("com.sun.star.drawing.EllipseShape")
+		If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	Else
+		$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+		If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+		$tProp = __LOWriter_SetPropertyValue("Type", "")
+		If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+		$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_BASIC_ARC
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Elliptical arc ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.CircleKind = $iCircleKind_ARC
+			$oShape.CircleStartAngle = 0
+			$oShape.CircleEndAngle = 25000
+
+		Case $LOW_SHAPE_TYPE_BASIC_ARC_BLOCK
+			$tProp.Value = "block-arc"
+
+		Case $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE
+			$tProp.Value = "circle-pie" ; "mso-spt100"
+
+		Case $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Ellipse Segment ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.CircleKind = $iCircleKind_CUT
+			$oShape.CircleStartAngle = 0
+			$oShape.CircleEndAngle = 25000
+
+		Case $LOW_SHAPE_TYPE_BASIC_CROSS
+			$tProp.Value = "cross"
+
+		Case $LOW_SHAPE_TYPE_BASIC_CUBE
+			$tProp.Value = "cube"
+
+		Case $LOW_SHAPE_TYPE_BASIC_CYLINDER
+			$tProp.Value = "can"
+
+		Case $LOW_SHAPE_TYPE_BASIC_DIAMOND
+			$tProp.Value = "diamond"
+
+		Case $LOW_SHAPE_TYPE_BASIC_ELLIPSE, $LOW_SHAPE_TYPE_BASIC_CIRCLE
+			$tProp.Value = "ellipse"
+
+		Case $LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER
+			$tProp.Value = "paper"
+
+		Case $LOW_SHAPE_TYPE_BASIC_FRAME
+			$tProp.Value = "frame" ;Not working
+
+		Case $LOW_SHAPE_TYPE_BASIC_HEXAGON
+			$tProp.Value = "hexagon"
+
+		Case $LOW_SHAPE_TYPE_BASIC_OCTAGON
+			$tProp.Value = "octagon"
+
+		Case $LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM
+			$tProp.Value = "parallelogram"
+
+		Case $LOW_SHAPE_TYPE_BASIC_RECTANGLE, $LOW_SHAPE_TYPE_BASIC_SQUARE
+			$tProp.Value = "rectangle"
+
+		Case $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED
+			$tProp.Value = "round-rectangle"
+
+		Case $LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON
+			$tProp.Value = "pentagon"
+
+		Case $LOW_SHAPE_TYPE_BASIC_RING
+			$tProp.Value = "ring"
+
+		Case $LOW_SHAPE_TYPE_BASIC_TRAPEZOID
+			$tProp.Value = "trapezoid"
+
+		Case $LOW_SHAPE_TYPE_BASIC_TRIANGLE_ISOSCELES
+			$tProp.Value = "isosceles-triangle"
+
+		Case $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT
+			$tProp.Value = "right-triangle"
+
+	EndSwitch
+
+	If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then
+		$atCusShapeGeo[0] = $tProp
+		$oShape.CustomShapeGeometry = $atCusShapeGeo
+	EndIf
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateBasic
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateCallout
+; Description ...: Create a Callout type Shape.
+; Syntax ........: __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (50-56). The Type of shape to create. See $LOW_SHAPE_TYPE_CALLOUT_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tProp = __LOWriter_SetPropertyValue("Type", "")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_CLOUD
+			$tProp.Value = "cloud-callout"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_LINE_1
+			$tProp.Value = "line-callout-1"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_LINE_2
+			$tProp.Value = "line-callout-2"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_LINE_3
+			$tProp.Value = "line-callout-3"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR
+			$tProp.Value = "rectangular-callout"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR_ROUNDED
+			$tProp.Value = "round-rectangular-callout"
+
+		Case $LOW_SHAPE_TYPE_CALLOUT_ROUND
+			$tProp.Value = "round-callout"
+
+	EndSwitch
+
+	$atCusShapeGeo[0] = $tProp
+	$oShape.CustomShapeGeometry = $atCusShapeGeo
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateCallout
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateFlowchart
+; Description ...: Create a FlowChart type Shape.
+; Syntax ........: __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (57-84). The Type of shape to create. See $LOW_SHAPE_TYPE_FLOWCHART_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tProp = __LOWriter_SetPropertyValue("Type", "")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_CARD
+			$tProp.Value = "flowchart-card"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_COLLATE
+			$tProp.Value = "flowchart-collate"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR
+			$tProp.Value = "flowchart-connector"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR_OFF_PAGE
+			$tProp.Value = "flowchart-off-page-connector"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DATA
+			$tProp.Value = "flowchart-data"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DECISION
+			$tProp.Value = "flowchart-decision"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DELAY
+			$tProp.Value = "flowchart-delay"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DIRECT_ACCESS_STORAGE
+			$tProp.Value = "flowchart-direct-access-storage"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DISPLAY
+			$tProp.Value = "flowchart-display"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_DOCUMENT
+			$tProp.Value = "flowchart-document"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_EXTRACT
+			$tProp.Value = "flowchart-extract"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_INTERNAL_STORAGE
+			$tProp.Value = "flowchart-internal-storage"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_MAGNETIC_DISC
+			$tProp.Value = "flowchart-magnetic-disk"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_INPUT
+			$tProp.Value = "flowchart-manual-input"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_OPERATION
+			$tProp.Value = "flowchart-manual-operation"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_MERGE
+			$tProp.Value = "flowchart-merge"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT
+			$tProp.Value = "flowchart-multidocument"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_OR
+			$tProp.Value = "flowchart-or"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_PREPARATION
+			$tProp.Value = "flowchart-preparation"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_PROCESS
+			$tProp.Value = "flowchart-process"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_ALTERNATE
+			$tProp.Value = "flowchart-alternate-process"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_PREDEFINED
+			$tProp.Value = "flowchart-predefined-process"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_PUNCHED_TAPE
+			$tProp.Value = "flowchart-punched-tape"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_SEQUENTIAL_ACCESS
+			$tProp.Value = "flowchart-sequential-access"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_SORT
+			$tProp.Value = "flowchart-sort"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_STORED_DATA
+			$tProp.Value = "flowchart-stored-data"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_SUMMING_JUNCTION
+			$tProp.Value = "flowchart-summing-junction"
+
+		Case $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR
+			$tProp.Value = "flowchart-terminator"
+
+	EndSwitch
+
+	$atCusShapeGeo[0] = $tProp
+	$oShape.CustomShapeGeometry = $atCusShapeGeo
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateLine
+; Description ...: Create a Line type Shape.
+; Syntax ........: __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (85-92). The Type of shape to create. See $LOW_SHAPE_TYPE_LINE_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create the requested Line type Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a Position structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tSize, $tPos
+	Local $atPoint[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_LINE_CURVE
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[4]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 3), Int($iHeight / 2))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), $iHeight)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[3] = __LOWriter_CreatePoint($iWidth, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_LINE_CURVE_FILLED
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.ClosedBezierShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[4]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 3), Int($iHeight / 2))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[3] = __LOWriter_CreatePoint(Int($iWidth), 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.FillColor = 7512015 ; Light blue
+
+		Case $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[3]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Case $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.ClosedBezierShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[5]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth / 2), Int($iHeight / 2))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.FillColor = 7512015 ; Light blue
+
+		Case $LOW_SHAPE_TYPE_LINE_LINE
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.LineShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[2]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Line ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+		Case $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.PolyPolygonShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[5]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
+			$oShape = $oDoc.createInstance("com.sun.star.drawing.PolyPolygonShape")
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+			ReDim $atPoint[5]
+
+			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[1] = __LOWriter_CreatePoint(Int($iWidth), 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[3] = __LOWriter_CreatePoint(0, Int($iHeight))
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$atPoint[4] = __LOWriter_CreatePoint(0, 0)
+			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Polygon 4 corners ")
+			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$oShape.FillColor = 7512015 ; Light blue
+
+	EndSwitch
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$oShape.Polygon = $atPoint
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateLine
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateStars
+; Description ...: Create a Star or Banner type Shape.
+; Syntax ........: __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (93-104). The Type of shape to create. See $LOW_SHAPE_TYPE_STARS_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
+;					$LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tProp = __LOWriter_SetPropertyValue("Type", "")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_STARS_4_POINT
+			$tProp.Value = "star4"
+
+		Case $LOW_SHAPE_TYPE_STARS_5_POINT
+			$tProp.Value = "star5"
+
+		Case $LOW_SHAPE_TYPE_STARS_6_POINT
+			$tProp.Value = "star6" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE
+			$tProp.Value = "concave-star6" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_STARS_8_POINT
+			$tProp.Value = "star8"
+
+		Case $LOW_SHAPE_TYPE_STARS_12_POINT
+			$tProp.Value = "star12" ; "non-primitive"
+
+		Case $LOW_SHAPE_TYPE_STARS_24_POINT
+			$tProp.Value = "star24"
+
+		Case $LOW_SHAPE_TYPE_STARS_DOORPLATE
+			$tProp.Value = "mso-spt21" ; "doorplate"
+
+		Case $LOW_SHAPE_TYPE_STARS_EXPLOSION
+			$tProp.Value = "bang"
+
+		Case $LOW_SHAPE_TYPE_STARS_SCROLL_HORIZONTAL
+			$tProp.Value = "horizontal-scroll"
+
+		Case $LOW_SHAPE_TYPE_STARS_SCROLL_VERTICAL
+			$tProp.Value = "vertical-scroll"
+
+		Case $LOW_SHAPE_TYPE_STARS_SIGNET
+			$tProp.Value = "signet" ; "non-primitive"
+
+	EndSwitch
+
+	$atCusShapeGeo[0] = $tProp
+	$oShape.CustomShapeGeometry = $atCusShapeGeo
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateStars
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_CreateSymbol
+; Description ...: Create a Symbol type Shape.
+; Syntax ........: __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
+; Parameters ....: $oDoc                - an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $iWidth              - an integer value. The Shape's Width in Micrometers.
+;                  $iHeight             - an integer value. The Shape's Height in Micrometers.
+;                  $iShapeType          - an integer value (105-122). The Type of shape to create. See $LOW_SHAPE_TYPE_SYMBOL_* as defined in LibreOfficeWriter_Constants.au3
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iShapeType not an Integer
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
+;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
+;					$LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+;				   The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
+;					$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oShape
+	Local $tProp, $tSize, $tPos
+	Local $atCusShapeGeo[1]
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$oShape = $oDoc.createInstance("com.sun.star.drawing.CustomShape")
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	$tProp = __LOWriter_SetPropertyValue("Type", "")
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	Switch $iShapeType
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+			$tProp.Value = "col-502ad400"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON
+			$tProp.Value = "col-60da8460"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_SQUARE
+			$tProp.Value = "quad-bevel"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE
+			$tProp.Value = "brace-pair"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT
+			$tProp.Value = "left-brace"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT
+			$tProp.Value = "right-brace"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE
+			$tProp.Value = "bracket-pair"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT
+			$tProp.Value = "left-bracket"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT
+			$tProp.Value = "right-bracket"
+			$oShape.FillColor = $LOW_COLOR_OFF
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_CLOUD
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+			$tProp.Value = "cloud"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_FLOWER
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+			$tProp.Value = "flower"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_HEART
+			$tProp.Value = "heart"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+			$tProp.Value = "lightning"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_MOON
+			$tProp.Value = "moon"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_SMILEY
+			$tProp.Value = "smiley"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_SUN
+			$tProp.Value = "sun"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_PROHIBITED
+			$tProp.Value = "forbidden"
+
+		Case $LOW_SHAPE_TYPE_SYMBOL_PUZZLE
+			$tProp.Value = "puzzle"
+
+	EndSwitch
+
+	$atCusShapeGeo[0] = $tProp
+	$oShape.CustomShapeGeometry = $atCusShapeGeo
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	$tPos.X = 0
+	$tPos.Y = 0
+
+	$oShape.Position = $tPos
+
+	$tSize = $oShape.Size()
+	If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+	$tSize.Width = $iWidth
+	$tSize.Height = $iHeight
+
+	$oShape.Size = $tSize
+
+	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
+	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $oShape)
+EndFunc   ;==>__LOWriter_Shape_CreateSymbol
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_Shape_GetCustomType
+; Description ...: Return the Shape Type Constant corresponding to the Custom Shape Type string.
+; Syntax ........: __LOWriter_Shape_GetCustomType($sCusShapeType)
+; Parameters ....: $sCusShapeType       - a string value. The Returned Custom Shape Type Value from CustomShapeGeometry Array of properties.
+; Return values .: Success: Integer or -1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $sCusShapeType not a String.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Integer = Success. Custom Shape Type was successfully identified. Returning the Constant value of the Shape, see Constants $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;				   @Error 0 @Extended 0 Return -1 = Success. Custom Shape is of an unimplemented type that has an ambiguous name, and cannot be identified. See Remarks.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
+;					Because of this the following shape types cannot be identified, and this function will return -1:
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;						$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;						$LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;						$LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;						$LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;						$LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;						$LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;						$LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;						$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;				   The following Shapes implement the same type names, and are consequently indistinguishable:
+;						$LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;						$LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;						$LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;				   The following Shapes have strange names that may change in the future, but currently are able to be identified:
+;						$LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_Shape_GetCustomType($sCusShapeType)
+	If Not IsString($sCusShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+
+	Switch $sCusShapeType
+
+		Case "quad-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY)
+
+		Case "quad-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_4_WAY)
+
+		Case "down-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_DOWN)
+
+		Case "left-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT)
+
+		Case "left-right-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT_RIGHT)
+
+		Case "right-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT)
+
+		Case "up-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP)
+
+		Case "up-down-arrow-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN)
+
+;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
+;~ Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
+
+		Case "circular-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CIRCULAR)
+
+		Case "corner-right-arrow" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT)
+
+		Case "down-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_DOWN)
+
+		Case "left-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT)
+
+		Case "left-right-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT_RIGHT)
+
+		Case "notched-right-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_NOTCHED_RIGHT)
+
+		Case "right-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT)
+
+		Case "split-arrow" ; "non-primitive"??
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT)
+
+		Case "s-sharped-arrow" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED)
+
+		Case "split-arrow" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT)
+
+		Case "striped-right-arrow" ; "mso-spt100"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT)
+
+		Case "up-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP)
+
+		Case "up-down-arrow"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_DOWN)
+
+		Case "up-right-arrow-callout", "mso-spt89" ; "mso-spt89"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT)
+
+		Case "up-right-down-arrow" ; "mso-spt100"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN)
+
+		Case "chevron"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_CHEVRON)
+
+		Case "pentagon-right"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_PENTAGON)
+
+		Case "block-arc"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_ARC_BLOCK)
+
+		Case "circle-pie" ; "mso-spt100"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE)
+
+		Case "cross"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CROSS)
+
+		Case "cube"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CUBE)
+
+		Case "can"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CYLINDER)
+
+		Case "diamond"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_DIAMOND)
+
+		Case "ellipse"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE)
+;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
+		Case "paper"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER)
+
+		Case "frame" ;Not working
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FRAME)
+
+		Case "hexagon"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_HEXAGON)
+
+		Case "octagon"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_OCTAGON)
+
+		Case "parallelogram"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM)
+
+		Case "rectangle"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE)
+;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
+		Case "round-rectangle"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED)
+;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
+		Case "pentagon"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON)
+
+		Case "ring"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_RING)
+
+		Case "trapezoid"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRAPEZOID)
+
+		Case "isosceles-triangle"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRIANGLE_ISOSCELES)
+
+		Case "right-triangle"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT)
+
+		Case "cloud-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_CLOUD)
+
+		Case "line-callout-1"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_1)
+
+		Case "line-callout-2"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_2)
+
+		Case "line-callout-3"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_3)
+
+		Case "rectangular-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR)
+
+		Case "round-rectangular-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR_ROUNDED)
+
+		Case "round-callout"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_ROUND)
+
+		Case "flowchart-card"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CARD)
+
+		Case "flowchart-collate"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_COLLATE)
+
+		Case "flowchart-connector"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR)
+
+		Case "flowchart-off-page-connector"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR_OFF_PAGE)
+
+		Case "flowchart-data"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DATA)
+
+		Case "flowchart-decision"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DECISION)
+
+		Case "flowchart-delay"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DELAY)
+
+		Case "flowchart-direct-access-storage"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DIRECT_ACCESS_STORAGE)
+
+		Case "flowchart-display"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DISPLAY)
+
+		Case "flowchart-document"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DOCUMENT)
+
+		Case "flowchart-extract"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_EXTRACT)
+
+		Case "flowchart-internal-storage"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_INTERNAL_STORAGE)
+
+		Case "flowchart-magnetic-disk"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MAGNETIC_DISC)
+
+		Case "flowchart-manual-input"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_INPUT)
+
+		Case "flowchart-manual-operation"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_OPERATION)
+
+		Case "flowchart-merge"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MERGE)
+
+		Case "flowchart-multidocument"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT)
+
+		Case "flowchart-or"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_OR)
+
+		Case "flowchart-preparation"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PREPARATION)
+
+		Case "flowchart-process"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS)
+
+		Case "flowchart-alternate-process"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_ALTERNATE)
+
+		Case "flowchart-predefined-process"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_PREDEFINED)
+
+		Case "flowchart-punched-tape"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PUNCHED_TAPE)
+
+		Case "flowchart-sequential-access"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SEQUENTIAL_ACCESS)
+
+		Case "flowchart-sort"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SORT)
+
+		Case "flowchart-stored-data"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_STORED_DATA)
+
+		Case "flowchart-summing-junction"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SUMMING_JUNCTION)
+
+		Case "flowchart-terminator"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR)
+
+		Case "star4"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_4_POINT)
+
+		Case "star5"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_5_POINT)
+
+		Case "star6" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_6_POINT)
+
+		Case "concave-star6" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE)
+
+		Case "star8"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_8_POINT)
+
+		Case "star12" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_12_POINT)
+
+		Case "star24"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_24_POINT)
+
+		Case "mso-spt21", "doorplate" ; "doorplate"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_DOORPLATE)
+
+		Case "bang"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_EXPLOSION)
+
+		Case "horizontal-scroll"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SCROLL_HORIZONTAL)
+
+		Case "vertical-scroll"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SCROLL_VERTICAL)
+
+		Case "signet" ; "non-primitive"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SIGNET)
+
+		Case "col-502ad400"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND)
+
+		Case "col-60da8460"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON)
+
+		Case "quad-bevel"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_SQUARE)
+
+		Case "brace-pair"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE)
+
+		Case "left-brace"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT)
+
+		Case "right-brace"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT)
+
+		Case "bracket-pair"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE)
+
+		Case "left-bracket"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT)
+
+		Case "right-bracket"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT)
+
+		Case "cloud"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_CLOUD)
+
+		Case "flower"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_FLOWER)
+
+		Case "heart"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_HEART)
+
+		Case "lightning"
+;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING)
+
+		Case "moon"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_MOON)
+
+		Case "smiley"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_SMILEY)
+
+		Case "sun"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_SUN)
+
+		Case "forbidden"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_PROHIBITED)
+
+		Case "puzzle"
+			Return SetError($__LOW_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE)
+
+		Case Else
+			Return SetError($__LOW_STATUS_SUCCESS, 0, -1)
+
+	EndSwitch
+
+EndFunc   ;==>__LOWriter_Shape_GetCustomType
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ShapeArrowStyleName
+; Description ...: Convert a Arrow head Constant to the corresponding name or reverse.
+; Syntax ........: __LOWriter_ShapeArrowStyleName([$iArrowStyle = Null[, $sArrowStyle = Null]])
+; Parameters ....: $iArrowStyle         - [optional] an integer value (0-32). Default is Null. The Arrow Style Constant to convert to its corresponding name. See $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $sArrowStyle         - [optional] a string value. Default is Null. The Arrow Style Name to convert to the corresponding constant if found.
+; Return values .: Success: String or Integer
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $iArrowStyle not set to Null, not an Integer, less than 0, or greater than Arrow type constants. See $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;				   @Error 1 @Extended 2 Return 0 = $sArrowStyle not a String and not set to Null.
+;				   @Error 1 @Extended 3 Return 0 = Both $iArrowStyle and $sArrowStyle set to Null.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Success. Constant called in $iArrowStyle was successfully converted to its corresponding Arrow Type Name.
+;				   @Error 0 @Extended 1 Return Integer = Success. Arrow Type Name called in $sArrowStyle was successfully converted to its corresponding Constant value.
+;				   @Error 0 @Extended 2 Return String = Success. Arrow Type Name called in $sArrowStyle was not matched to an existing Constant value, returning called name. Possibly a custom value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
+	Local $asArrowStyles[33]
+
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_NONE] = ""
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_ARROW_SHORT] = "Arrow short"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CONCAVE_SHORT] = "Concave short"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_ARROW] = "Arrow"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_TRIANGLE] = "Triangle"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CONCAVE] = "Concave"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_ARROW_LARGE] = "Arrow large"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CIRCLE] = "Circle"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE] = "Square"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45] = "Square 45"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DIAMOND] = "Diamond"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_HALF_CIRCLE] = "Half Circle"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSIONAL_LINES] = "Dimension Lines"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSIONAL_LINE_ARROW] = "Dimension Line Arrow"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSION_LINE] = "Dimension Line"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_LINE_SHORT] = "Line short"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_LINE] = "Line"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_TRIANGLE_UNFILLED] = "Triangle unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DIAMOND_UNFILLED] = "Diamond unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CIRCLE_UNFILLED] = "Circle unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45_UNFILLED] = "Square 45 unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_UNFILLED] = "Square unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_HALF_CIRCLE_UNFILLED] = "Half Circle unfilled"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_HALF_ARROW_LEFT] = "Half Arrow left"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_HALF_ARROW_RIGHT] = "Half Arrow right"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_REVERSED_ARROW] = "Reversed Arrow"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_DOUBLE_ARROW] = "Double Arrow"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_ONE] = "CF One"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_ONLY_ONE] = "CF Only One"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_MANY] = "CF Many"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_MANY_ONE] = "CF Many One"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_ONE] = "CF Zero One"
+	$asArrowStyles[$LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY] = "CF Zero Many"
+
+	If ($iArrowStyle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iArrowStyle, 0, UBound($asArrowStyles) - 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+
+		Return SetError($__LOW_STATUS_SUCCESS, 0, $asArrowStyles[$iArrowStyle]) ; Return the requested Arrow Style name.
+
+	ElseIf ($sArrowStyle <> Null) Then
+		If Not IsString($sArrowStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+
+		For $i = 0 To UBound($asArrowStyles) - 1
+
+			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Next
+
+		Return SetError($__LOW_STATUS_SUCCESS, 2, $sArrowStyle) ; If no matches, just return the name, as it could be a custom value.
+
+	Else
+		Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; No values called.
+
+	EndIf
+EndFunc   ;==>__LOWriter_ShapeArrowStyleName
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ShapeLineStyleName
+; Description ...:  Convert a Line Style Constant to the corresponding name or reverse.
+; Syntax ........: __LOWriter_ShapeLineStyleName([$iLineStyle = Null[, $sLineStyle = Null]])
+; Parameters ....: $iLineStyle          - [optional] an integer value. Default is Null. The Line Style Constant to convert to its corresponding name. See $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $sLineStyle          - [optional] a string value. Default is Null. The Line Style Name to convert to the corresponding constant if found.
+; Return values .: Success: String or Integer
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $iLineStyle not set to Null, not an Integer, less than 0, or greater than Line Style constants. See $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3
+;				   @Error 1 @Extended 2 Return 0 = $sLineStyle not a String and not set to Null.
+;				   @Error 1 @Extended 3 Return 0 = Both $iLineStyle and $sLineStyle set to Null.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Success. Constant called in $iLineStyle was successfully converted to its corresponding Line Style Name.
+;				   @Error 0 @Extended 1 Return Integer = Success. Line Style Name called in $sLineStyle was successfully converted to its corresponding Constant value.
+;				   @Error 0 @Extended 2 Return String = Success. Line Style Name called in $sLineStyle was not matched to an existing Constant value, returning called name. Possibly a custom value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
+	Local $asLineStyles[32]
+
+	; $LOW_SHAPE_LINE_STYLE_NONE, $LOW_SHAPE_LINE_STYLE_CONTINUOUS, don't have a name, so to keep things symmetrical I created my own, but those two won't be used.
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_NONE] = "NONE"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_CONTINUOUS] = "CONTINUOUS"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOT] = "Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOT_ROUNDED] = "Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DOT] = "Long Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DOT_ROUNDED] = "Long Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH] = "Dash"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH_ROUNDED] = "Dash (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DASH] = "Long Dash"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DASH_ROUNDED] = "Long Dash (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH] = "Double Dash"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_ROUNDED] = "Double Dash (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH_DOT] = "Dash Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH_DOT_ROUNDED] = "Dash Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DASH_DOT] = "Long Dash Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LONG_DASH_DOT_ROUNDED] = "Long Dash Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT] = "Double Dash Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_ROUNDED] = "Double Dash Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH_DOT_DOT] = "Dash Dot Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASH_DOT_DOT_ROUNDED] = "Dash Dot Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_DOT] = "Double Dash Dot Dot"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_DOT_ROUNDED] = "Double Dash Dot Dot (Rounded)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_ULTRAFINE_DOTTED] = "Ultrafine Dotted (var)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_FINE_DOTTED] = "Fine Dotted"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_ULTRAFINE_DASHED] = "Ultrafine Dashed"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_FINE_DASHED] = "Fine Dashed"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_DASHED] = "Dashed (var)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9] = "Line Style 9"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_3_DASHES_3_DOTS] = "3 Dashes 3 Dots (var)"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_ULTRAFINE_2_DOTS_3_DASHES] = "Ultrafine 2 Dots 3 Dashes"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_2_DOTS_1_DASH] = "2 Dots 1 Dash"
+	$asLineStyles[$LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS] = "Line with Fine Dots"
+
+	If ($iLineStyle <> Null) Then
+		If Not __LOWriter_IntIsBetween($iLineStyle, 0, UBound($asLineStyles) - 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+
+		Return SetError($__LOW_STATUS_SUCCESS, 0, $asLineStyles[$iLineStyle]) ; Return the requested Line Style name.
+
+	ElseIf ($sLineStyle <> Null) Then
+		If Not IsString($sLineStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+
+		For $i = 0 To UBound($asLineStyles) - 1
+
+			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Next
+
+		Return SetError($__LOW_STATUS_SUCCESS, 2, $sLineStyle) ; If no matches, just return the name, as it could be a custom value.
+
+	Else
+		Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; No values called.
+
+	EndIf
+EndFunc   ;==>__LOWriter_ShapeLineStyleName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_TableBorder

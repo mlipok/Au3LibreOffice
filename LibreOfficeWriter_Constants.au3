@@ -822,8 +822,219 @@ Global Const _
 		$LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC = 3, _                ; The field initiates the insertion of a graphic object.
 		$LOW_FIELD_PLACEHOLD_TYPE_OBJECT = 4                    ; The field initiates the insertion of an embedded object.
 
+; Color Mode Constants.
 Global Const _
 		$LOW_COLORMODE_STANDARD = 0, _                          ; The graphic is rendered in the default color style of the output device.
 		$LOW_COLORMODE_GRAYSCALE = 1, _                         ; The graphic is rendered in grayscale on the output device.
 		$LOW_COLORMODE_BLACK_WHITE = 2, _                       ; The graphic is rendered in black and white only.
 		$LOW_COLORMODE_WATERMARK = 3                            ; The graphic is rendered in a watermark like style.
+
+; Shape Type Constants.
+Global Enum _
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY, _                   ; 0 -- A Four-way Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_4_WAY, _           ; 1 -- A Four-way Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_DOWN, _            ; 2 -- A Downward Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT, _            ; 3 -- A Lefthand Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT_RIGHT, _      ; 4 -- A Left and Right Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT, _           ; 5 -- A Righthand Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP, _              ; 6 -- A Upward Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN, _         ; 7 -- A Upward and Downward Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, _        ; 8 -- Upward and Righthand Callout Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CIRCULAR, _                ; 9 -- A Circular Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, _            ; 10 -- A Righthand Corner Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_DOWN, _                    ; 11 -- A Downward Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT, _                    ; 12 -- A Lefthand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT_RIGHT, _              ; 13 -- A Left and Right Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_NOTCHED_RIGHT, _           ; 14 -- A Notched Right Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT, _                   ; 15 -- A Righthand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, _           ; 16 -- A Right or Left Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, _                ; 17 -- A "S"-Shaped Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, _                   ; 18 -- A Split Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, _           ; 19 -- A Striped Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP, _                      ; 20 -- A Upward Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_DOWN, _                 ; 21 -- A Up and Down Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, _                ; 22 -- A Upward and Righthand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, _           ; 23 -- A Upward, Righthand and Downward Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_CHEVRON, _                       ; 24 -- A Chevron Shape Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_PENTAGON, _                      ; 25 -- A Pentagon Shape Arrow.
+		$LOW_SHAPE_TYPE_BASIC_ARC, _                            ; 26 -- An Arc Shape.
+		$LOW_SHAPE_TYPE_BASIC_ARC_BLOCK, _                      ; 27 -- A Block Arc Shape.
+		$LOW_SHAPE_TYPE_BASIC_CIRCLE, _                         ; 28 -- A Circle.
+		$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, _                     ; 29 -- A Pie Circle. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT, _                 ; 30 -- A Segment Circle.
+		$LOW_SHAPE_TYPE_BASIC_CROSS, _                          ; 31 -- A Cross Shape.
+		$LOW_SHAPE_TYPE_BASIC_CUBE, _                           ; 32 -- A Cube Shape.
+		$LOW_SHAPE_TYPE_BASIC_CYLINDER, _                       ; 33 -- A Cylinder Shape.
+		$LOW_SHAPE_TYPE_BASIC_DIAMOND, _                        ; 34 -- A Diamond Shape.
+		$LOW_SHAPE_TYPE_BASIC_ELLIPSE, _                        ; 35 -- An Ellipse Shape.
+		$LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER, _                  ; 36 -- A Paper Shape with a Folded Corner.
+		$LOW_SHAPE_TYPE_BASIC_FRAME, _                          ; 37 -- A Frame Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_BASIC_HEXAGON, _                        ; 38 -- A Hexagon Shape.
+		$LOW_SHAPE_TYPE_BASIC_OCTAGON, _                        ; 39 -- A Octagon Shape.
+		$LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM, _                  ; 40 -- A Paallelogram Shape.
+		$LOW_SHAPE_TYPE_BASIC_RECTANGLE, _                      ; 41 -- A Rectangle.
+		$LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED, _              ; 42 -- A Rectangle with rounded corners.
+		$LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON, _               ; 43 -- A regular Pentagon.
+		$LOW_SHAPE_TYPE_BASIC_RING, _                           ; 44 -- A Ring Shape.
+		$LOW_SHAPE_TYPE_BASIC_SQUARE, _                         ; 45 -- A Square.
+		$LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, _                 ; 46 -- A Square with rounded corners.
+		$LOW_SHAPE_TYPE_BASIC_TRAPEZOID, _                      ; 47 -- A Trapezoid Shape.
+		$LOW_SHAPE_TYPE_BASIC_TRIANGLE_ISOSCELES, _             ; 48 -- An Isosceles Triangle.
+		$LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT, _                 ; 49 -- A Right Angle Triangle.
+		$LOW_SHAPE_TYPE_CALLOUT_CLOUD, _                        ; 50 -- A Cloud Shaoed Callout.
+		$LOW_SHAPE_TYPE_CALLOUT_LINE_1, _                       ; 51 -- A Callout with Line style #1.
+		$LOW_SHAPE_TYPE_CALLOUT_LINE_2, _                       ; 52 -- A Callout with Line style #2.
+		$LOW_SHAPE_TYPE_CALLOUT_LINE_3, _                       ; 53 -- A Callout with Line style #3.
+		$LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR, _                  ; 54 -- A Rectangular Callout.
+		$LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR_ROUNDED, _          ; 55 -- A Rectangular Callout with rounded corners.
+		$LOW_SHAPE_TYPE_CALLOUT_ROUND, _                        ; 56 -- A Round Callout.
+		$LOW_SHAPE_TYPE_FLOWCHART_CARD, _                       ; 57 -- A Card Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_COLLATE, _                    ; 58 -- A Collate Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR, _                  ; 59 -- A Connector Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR_OFF_PAGE, _         ; 60 -- A Off-Page Connector Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DATA, _                       ; 61 -- A Data Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DECISION, _                   ; 62 -- A Decision Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DELAY, _                      ; 63 -- A Delay Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DIRECT_ACCESS_STORAGE, _      ; 64 -- A Direct Access Storage Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DISPLAY, _                    ; 65 -- A Display Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_DOCUMENT, _                   ; 66 -- A Document Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_EXTRACT, _                    ; 67 -- A Extract Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_INTERNAL_STORAGE, _           ; 68 -- A Internal Storage Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MAGNETIC_DISC, _              ; 69 -- A Magnetic Disc Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MANUAL_INPUT, _               ; 70 -- A Manual Input Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MANUAL_OPERATION, _           ; 71 -- A Manual Operation Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MERGE, _                      ; 72 -- A Merge Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT, _              ; 73 -- A Multidocument Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_OR, _                         ; 74 -- A Or Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_PREPARATION, _                ; 75 -- A Preparation Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_PROCESS, _                    ; 76 -- A Process Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_PROCESS_ALTERNATE, _          ; 77 -- A Alternate Process Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_PROCESS_PREDEFINED, _         ; 78 -- A Predefined Process Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_PUNCHED_TAPE, _               ; 79 -- A Punched Tape Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_SEQUENTIAL_ACCESS, _          ; 80 -- A Sequential Access Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_SORT, _                       ; 81 -- A Sort Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_STORED_DATA, _                ; 82 -- A Stored Data Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_SUMMING_JUNCTION, _           ; 83 -- A Summing Junction Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR, _                 ; 84 -- A Terminator Flowchart.
+		$LOW_SHAPE_TYPE_LINE_CURVE, _                           ; 85 -- A Curve.
+		$LOW_SHAPE_TYPE_LINE_CURVE_FILLED, _                    ; 86 -- A Filled Curve.
+		$LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, _                   ; 87 -- A Freeform Line.
+		$LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, _            ; 88 -- A Filled Freform Line.
+		$LOW_SHAPE_TYPE_LINE_LINE, _                            ; 89 -- A Line.
+		$LOW_SHAPE_TYPE_LINE_POLYGON, _                         ; 90 -- A Polygon.
+		$LOW_SHAPE_TYPE_LINE_POLYGON_45, _                      ; 91 -- A 45 degree Polygon.
+		$LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED, _               ; 92 -- A Filled 45 degree Polygon.
+		$LOW_SHAPE_TYPE_STARS_4_POINT, _                        ; 93 -- A 4 Pointed Star.
+		$LOW_SHAPE_TYPE_STARS_5_POINT, _                        ; 94 -- A 5 Pointed Star.
+		$LOW_SHAPE_TYPE_STARS_6_POINT, _                        ; 95 -- A 6 Pointed Star. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, _                ; 96 -- A Concave 6 Pointed Star. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_STARS_8_POINT, _                        ; 97 -- A 8 Pointed Star.
+		$LOW_SHAPE_TYPE_STARS_12_POINT, _                       ; 98 -- A 12 Pointed Star. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_STARS_24_POINT, _                       ; 99 -- A 24 Pointed Star.
+		$LOW_SHAPE_TYPE_STARS_DOORPLATE, _                      ; 100 -- A Doorplate Shape.
+		$LOW_SHAPE_TYPE_STARS_EXPLOSION, _                      ; 101 -- A Explosion Shape.
+		$LOW_SHAPE_TYPE_STARS_SCROLL_HORIZONTAL, _              ; 102 -- A Horizontal Scroll.
+		$LOW_SHAPE_TYPE_STARS_SCROLL_VERTICAL, _                ; 103 -- A Vertical Scroll.
+		$LOW_SHAPE_TYPE_STARS_SIGNET, _                         ; 104 -- A Signet Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, _                 ; 105 -- A Diamond Bevel. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, _                 ; 106 -- A Octagon Bevel. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_SYMBOL_BEVEL_SQUARE, _                  ; 107 -- A Square Bevel.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE, _                  ; 108 -- A Double Brace.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT, _                    ; 109 -- A Lefthand Brace.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT, _                   ; 110 -- A Righthand Brace.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE, _                ; 111 -- A Double Bracket.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT, _                  ; 112 -- A Lefthand Bracket.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT, _                 ; 113 -- A Righthand Bracket.
+		$LOW_SHAPE_TYPE_SYMBOL_CLOUD, _                         ; 114 -- A Cloud Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_SYMBOL_FLOWER, _                        ; 115 -- A Flower Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_SYMBOL_HEART, _                         ; 116 -- A Heart Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, _                     ; 117 -- A Lightning Shape. ## Note: Lightning is visually different than the one available in L.O. Shapes U.I.
+		$LOW_SHAPE_TYPE_SYMBOL_MOON, _                          ; 118 -- A Moon Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_SMILEY, _                        ; 119 -- A Smily Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_SUN, _                           ; 120 -- A Sun Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_PROHIBITED, _                    ; 121 -- A Prohibited Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_PUZZLE                           ; 122 -- A Puzzle Piece Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+
+; Arrowhead Type Constants
+Global Enum $LOW_SHAPE_LINE_ARROW_TYPE_NONE, _                  ; 0 -- No Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_ARROW_SHORT, _               ; 1 --Short Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CONCAVE_SHORT, _             ; 2 -- Short Concave Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_ARROW, _                     ; 3 -- Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_TRIANGLE, _                  ; 4 -- Triangle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CONCAVE, _                   ; 5 -- Concave Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_ARROW_LARGE, _               ; 6 -- Large Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CIRCLE, _                    ; 7 -- Circle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE, _                    ; 8 -- Square Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45, _                 ; 9 -- Square Arrow head rotated 45 degrees.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DIAMOND, _                   ; 10 -- Diamond Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_HALF_CIRCLE, _               ; 11 -- Half Circle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSIONAL_LINES, _         ; 12 -- Dimension Lines head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSIONAL_LINE_ARROW, _    ; 13 -- Dimension Line Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DIMENSION_LINE, _            ; 14 -- Dimension Line head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_LINE_SHORT, _                ; 15 -- Short Line head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_LINE, _                      ; 16 -- Line head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_TRIANGLE_UNFILLED, _         ; 17 -- Unfilled Triangle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DIAMOND_UNFILLED, _          ; 18 -- Unfilled Diamond Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CIRCLE_UNFILLED, _           ; 19 -- Unfilled Circle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45_UNFILLED, _        ; 20 -- Unfilled Square Arrow head, rotated 45 degrees.
+		$LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_UNFILLED, _           ; 21 -- Unfilled Square Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_HALF_CIRCLE_UNFILLED, _      ; 22 -- Unfilled Half Circle Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_HALF_ARROW_LEFT, _           ; 23 -- Half Arrow left Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_HALF_ARROW_RIGHT, _          ; 24 -- Half Arrow right Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_REVERSED_ARROW, _            ; 25 -- Reversed Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_DOUBLE_ARROW, _              ; 26 -- Double Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_ONE, _                    ; 27 -- CF One Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_ONLY_ONE, _               ; 28 -- CF Only One Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_MANY, _                   ; 29 -- CF Many Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_MANY_ONE, _               ; 30 -- CF Many One Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_ONE, _               ; 31 -- CF Zero One Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY                 ; 32 -- CF Zero Many Arrow head.
+
+; Shape Line Style Constants.
+Global Enum _
+		$LOW_SHAPE_LINE_STYLE_NONE, _                           ; 0 -- No Line is applied.
+		$LOW_SHAPE_LINE_STYLE_CONTINUOUS, _                     ; 1 -- A Solid Line.
+		$LOW_SHAPE_LINE_STYLE_DOT, _                            ; 2 -- A Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_DOT_ROUNDED, _                    ; 3 -- A Rounded Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DOT, _                       ; 4 -- A Long Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DOT_ROUNDED, _               ; 5 -- A Rounded Long Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_DASH, _                           ; 6 -- A Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_DASH_ROUNDED, _                   ; 7 -- A Rounded Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DASH, _                      ; 8 -- A Long Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DASH_ROUNDED, _              ; 9 -- A Rounded Long Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH, _                    ; 10 -- A Double Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_ROUNDED, _            ; 11 -- A Rounded Double Dash.
+		$LOW_SHAPE_LINE_STYLE_DASH_DOT, _                       ; 12 -- A Dashed and Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_DASH_DOT_ROUNDED, _               ; 13 -- A Rounded Dashed and Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DASH_DOT, _                  ; 14 -- A Long Dashed and Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_LONG_DASH_DOT_ROUNDED, _          ; 15 -- A Rounded Long Dashed and Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT, _                ; 16 -- A Double Dash Dot Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_ROUNDED, _        ; 17 -- A Rounded Double Dash Dot Line
+		$LOW_SHAPE_LINE_STYLE_DASH_DOT_DOT, _                   ; 18 -- A Dash Dot Dot Line.
+		$LOW_SHAPE_LINE_STYLE_DASH_DOT_DOT_ROUNDED, _           ; 19 -- A Rounded Dash Dot Dot Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_DOT, _            ; 20 -- A Double Dash Dot Dot Line.
+		$LOW_SHAPE_LINE_STYLE_DOUBLE_DASH_DOT_DOT_ROUNDED, _    ; 21 -- A Rounded Double Dash Dot Dot Line.
+		$LOW_SHAPE_LINE_STYLE_ULTRAFINE_DOTTED, _               ; 22 -- A Ultrafine Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_FINE_DOTTED, _                    ; 23 -- A Fine Dotted Line.
+		$LOW_SHAPE_LINE_STYLE_ULTRAFINE_DASHED, _               ; 24 -- A Ultrafine Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_FINE_DASHED, _                    ; 25 -- A Fine Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_DASHED, _                         ; 26 -- A Dashed Line.
+		$LOW_SHAPE_LINE_STYLE_LINE_STYLE_9, _                   ; 27 -- Line Style 9.
+		$LOW_SHAPE_LINE_STYLE_3_DASHES_3_DOTS, _                ; 28 -- A Line consisting of 3 Dashes and 3 Dots.
+		$LOW_SHAPE_LINE_STYLE_ULTRAFINE_2_DOTS_3_DASHES, _      ; 29 -- A Ultrafine Line consisting of 2 Dots and 3 Dashes.
+		$LOW_SHAPE_LINE_STYLE_2_DOTS_1_DASH, _                  ; 30 -- A Line consisting of 2 Dots and 1 Dash.
+		$LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS               ; 31 -- A Line with Fine Dots.
+
+; Shape Line End Cap Constants.
+Global Const _
+		$LOW_SHAPE_LINE_CAP_FLAT = 0, _                         ; Also called Butt, the line will end without any additional shape.
+		$LOW_SHAPE_LINE_CAP_ROUND = 1, _                        ; The line will get a half circle as additional cap.
+		$LOW_SHAPE_LINE_CAP_SQUARE = 2                          ; The line uses a square for the line end.
+
+; Shape Line Joint Constants.
+Global Const _
+		$LOW_SHAPE_LINE_JOINT_NONE = 0, _                       ; The joint between lines will not be connected.
+		$LOW_SHAPE_LINE_JOINT_MIDDLE = 1, _                     ; The middle value between the joints is used. ## Note used?
+		$LOW_SHAPE_LINE_JOINT_BEVEL = 2, _                      ; The edges of the thick lines will be joined by lines.
+		$LOW_SHAPE_LINE_JOINT_MITER = 3, _                      ; The lines join at intersections.
+		$LOW_SHAPE_LINE_JOINT_ROUND = 4                         ; The lines join with an arc.
