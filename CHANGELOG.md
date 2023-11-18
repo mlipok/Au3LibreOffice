@@ -13,6 +13,43 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 **LibreOfficeWriter**
 
+### Added
+
+- Shape Functions and Examples
+	- _LOWriter_DocHasShapeName
+	- _LOWriter_ShapeAreaColor
+	- _LOWriter_ShapeAreaGradient
+	- _LOWriter_ShapeDelete
+	- _LOWriter_ShapeGetAnchor
+	- _LOWriter_ShapeGetObjByName
+	- _LOWriter_ShapeGetType
+	- _LOWriter_ShapeInsert
+	- _LOWriter_ShapeLineArrowStyles
+	- _LOWriter_ShapeLineProperties
+	- _LOWriter_ShapeName
+	- _LOWriter_ShapePosition
+	- _LOWriter_ShapeRotateSlant
+	- _LOWriter_ShapesGetNames
+	- _LOWriter_ShapeTextBox
+	- _LOWriter_ShapeTransparency
+	- _LOWriter_ShapeTransparencyGradient
+	- _LOWriter_ShapeTypePosition
+	- _LOWriter_ShapeTypeSize
+	- _LOWriter_ShapeWrap
+	- _LOWriter_ShapeWrapOptions
+	- __LOWriter_CreatePoint
+	- __LOWriter_GetShapeName
+	- __LOWriter_Shape_CreateArrow
+	- __LOWriter_Shape_CreateBasic
+	- __LOWriter_Shape_CreateCallout
+	- __LOWriter_Shape_CreateFlowchart
+	- __LOWriter_Shape_CreateLine
+	- __LOWriter_Shape_CreateStars
+	- __LOWriter_Shape_CreateSymbol
+	- __LOWriter_Shape_GetCustomType
+	- __LOWriter_ShapeArrowStyleName
+	- __LOWriter_ShapeLineStyleName
+
 ### Changed
 
 - Minor documentation adjustments.

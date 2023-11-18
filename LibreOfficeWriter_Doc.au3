@@ -54,6 +54,7 @@
 ; _LOWriter_DocHasFrameName
 ; _LOWriter_DocHasImageName
 ; _LOWriter_DocHasPath
+; _LOWriter_DocHasShapeName
 ; _LOWriter_DocHasTableName
 ; _LOWriter_DocHeaderGetTextCursor
 ; _LOWriter_DocHyperlinkInsert
@@ -2410,6 +2411,52 @@ Func _LOWriter_DocHasPath(ByRef $oDoc)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.hasLocation())
 EndFunc   ;==>_LOWriter_DocHasPath
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocHasShapeName
+; Description ...: Check if a Document contains a Shape with the specified name.
+; Syntax ........: _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sShapeName          - a string value. The Shape name to search for.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Error retrieving Draw Page Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return False = Success. Search was successful, no Shapes found matching $sShapeName.
+;				   @Error 0 @Extended 1 Return True = Success. Search was successful, Shape found matching $sShapeName.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ShapeGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
+	Local $oShapes
+
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sShapeName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	If $oShapes.hasElements() Then
+		For $i = 0 To $oShapes.getCount() - 1
+			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Next
+	EndIf
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+EndFunc   ;==>_LOWriter_DocHasShapeName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHasTableName
