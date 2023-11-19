@@ -548,6 +548,8 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oCursor cannot be a Table Cursor.
+;				   Note: Line Shapes, such as Curves etc., will not be  smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select them and set the Point type in L.O. UI.
+;				   Polygon and Polygon 45 degree are the same shape internally, one only allows you to draw the lines at 45 degree angles in L.O. UI.
 ;				   The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
 ;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
 ;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
