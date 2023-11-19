@@ -28,6 +28,10 @@
 ; _LOWriter_ShapePosition
 ; _LOWriter_ShapeRotateSlant
 ; _LOWriter_ShapesGetNames
+; _LOWriter_ShapePoints
+; _LOWriter_ShapePointsAdd
+; _LOWriter_ShapePointsModify
+; _LOWriter_ShapePointsRemove
 ; _LOWriter_ShapeTextBox
 ; _LOWriter_ShapeTransparency
 ; _LOWriter_ShapeTransparencyGradient
@@ -71,7 +75,7 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 
 	; If $iColor is Null, and Fill Style is set to solid, then return current color value, else return LOW_COLOR_OFF.
-	If ($iColor = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $__LOWCONST_FILL_STYLE_SOLID) ? $oShape.FillColor() : $LOW_COLOR_OFF)
+	If ($iColor = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $__LOWCONST_FILL_STYLE_SOLID) ? ($oShape.FillColor()) : ($LOW_COLOR_OFF))
 
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If ($iColor = $LOW_COLOR_OFF) Then
@@ -79,10 +83,10 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	Else
 		$oShape.FillStyle = $__LOWCONST_FILL_STYLE_SOLID
 		$oShape.FillColor = $iColor
-		$iError = ($oShape.FillColor() = $iColor) ? $iError : BitOR($iError, 1)
+		$iError = ($oShape.FillColor() = $iColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -176,7 +180,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		__LOWriter_GradientPresets($oDoc, $oShape, $tStyleGradient, $sGradientName)
-		$iError = ($oShape.FillGradientName() = $sGradientName) ? $iError : BitOR($iError, 1)
+		$iError = ($oShape.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iType <> Null) Then
@@ -194,7 +198,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oShape.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
-		$iError = ($oShape.FillGradientStepCount() = $iIncrement) ? $iError : BitOR($iError, 4)
+		$iError = ($oShape.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iXCenter <> Null) Then
@@ -1182,6 +1186,225 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 
 	Return SetError($__LOW_STATUS_SUCCESS, UBound($asShapeNames), $asShapeNames)
 EndFunc   ;==>_LOWriter_ShapesGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePoints
+; Description ...: Set or Retrieve a Shape's Position Points.
+; Syntax ........: _LOWriter_ShapePoints(ByRef $oShape[, $atPoints = Null])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See Remarks.
+;                  $atPoints            - [optional] an array of dll structs. Default is Null. An Array of Position Points, previously returned from this function. Call with Null to retrieve the current Position Point Array.
+; Return values .: Success: 1 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points.
+;				   @Error 1 @Extended 3 Return 0 = $atPoints not an Array, and not set to Null.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Array of Position Points from Shape.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended 1 Return 0 = Failed to set new Array of Position Points.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Position Points were successfully set.
+;				   @Error 0 @Extended ? Return Array = Success. $atPoints was set to Null, returning current Position Points Array with Position Pointss listed from first to last. @Extended is set to the number of rows contained in the Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: A Position Point determines where the Shape's lines are drawn. A Position point is a combination of an X and Y position.
+;				   Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePoints(ByRef $oShape, $atPoints = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $atArray[1]
+
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+
+	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($atPoints = Null) Then
+		; Retrieve the Array of Position Points.
+		$atArray = $oShape.Polygon()
+		If Not IsArray($atArray) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+		Return SetError($__LOW_STATUS_SUCCESS, UBound($atArray), $atArray)
+	EndIf
+
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+
+	$oShape.Polygon = $atPoints
+
+	Return (UBound($oShape.Polygon()) = UBound($atPoints)) ?  SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR,1,0)
+EndFunc   ;==>_LOWriter_ShapePoints
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePointsAdd
+; Description ...: Add a Position Point to an Array of Position Points.
+; Syntax ........: _LOWriter_ShapePointsAdd(ByRef $atPoints, $iArrayElement, $iX, $iY)
+; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
+;                  $iArrayElement       - an integer value. The Array Element to add the new point before. See Remarks.
+;                  $iX                  - an integer value. The X coordinate value, set in Micrometers.
+;                  $iY                  - an integer value. The Y coordinate value, set in Micrometers.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
+;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array plus 1.
+;				   @Error 1 @Extended 3 Return 0 = $iX not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iY not an Integer$PointType not an Integer, less than 0 or greater than 3.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a new Position Point Structure.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: $iArrayElement is the Array Element to add the new Position Point before, i.e. to add a new point at the beginning of the Array, you would call $iArrayElement with 0, to add a new point to the end, you would call $iArrayElement with the last element number of the Array plus 1.
+; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePointsAdd(ByRef $atPoints, $iArrayElement, $iX, $iY)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tPoint
+	Local $iOffset = 0
+	Local $atArray[0]
+
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iArrayElement, 0, UBound($atPoints)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+
+	$tPoint = __LOWriter_CreatePoint($iX, $iY)
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	ReDim $atArray[UBound($atPoints) + 1]
+
+	For $i = 0 To UBound($atArray) - 1
+
+		If ($i = $iArrayElement) Then
+			$atArray[$i] = $tPoint
+			$iOffset -= 1
+
+		Else
+			$atArray[$i] = $atPoints[$i + $iOffset]
+
+		EndIf
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+	Next
+
+	$atPoints = $atArray
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_ShapePointsAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePointsModify
+; Description ...: Modify an existing Position Point in an Array of Position Points.
+; Syntax ........: _LOWriter_ShapePointsModify(ByRef $atPoints, $iArrayElement[, $iX = Null[, $iY = Null]])
+; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
+;                  $iArrayElement       - an integer value. The Array Element to modify the point of.
+;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Micrometers.
+;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Micrometers.
+; Return values .: Success: 1 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
+;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array.
+;				   @Error 1 @Extended 3 Return 0 = $iX not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iY not an Integer
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;~
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings for the Array Element called in $iArrayElement.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsAdd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePointsModify(ByRef $atPoints, $iArrayElement, $iX = Null, $iY = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avPointVals[2]
+
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iArrayElement, 0, (UBound($atPoints) - 1)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOWriter_VarsAreNull($iX, $iY) Then
+		__LOWriter_ArrayFill($avPointVals, $atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y())
+
+		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPointVals)
+	EndIf
+
+	If ($iX <> Null) Then
+		If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		$atPoints[$iArrayElement].X = $iX
+	EndIf
+
+	If ($iY <> Null) Then
+		If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		$atPoints[$iArrayElement].Y = $iY
+	EndIf
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_ShapePointsModify
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePointsRemove
+; Description ...: Remove a position Point from an Array of Position Points.
+; Syntax ........: _LOWriter_ShapePointsRemove(ByRef $atPoints, $iArrayElement)
+; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
+;                  $iArrayElement       - an integer value. The Array Element to remove.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
+;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsModify, _LOWriter_ShapePointsAdd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePointsRemove(ByRef $atPoints, $iArrayElement)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iOffset = 0
+	Local $avArray[0]
+
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iArrayElement, 0, (UBound($atPoints) - 1)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	ReDim $avArray[UBound($atPoints) - 1]
+
+	For $i = 0 To UBound($atPoints) - 1
+
+		If ($i = $iArrayElement) Then ; Skip that element
+			$iOffset -= 1
+
+		Else
+			$avArray[$i + $iOffset] = $atPoints[$i]
+
+		EndIf
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+	Next
+
+	$atPoints = $avArray
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_ShapePointsRemove
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTextBox
