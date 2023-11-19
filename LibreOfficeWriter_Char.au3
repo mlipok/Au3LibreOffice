@@ -391,7 +391,7 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	; If User has called a specific style to replace this style, set it to that.
 
 	$oCharStyles.removeByName($sCharStyle)
-	Return ($oCharStyles.hasByName($sCharStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -685,7 +685,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 		If Not IsString($sNewCharStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		If _LOWriter_CharStyleExists($oDoc, $sNewCharStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oCharStyle.Name = $sNewCharStyleName
-		$iError = ($oCharStyle.Name() = $sNewCharStyleName) ? $iError : BitOR($iError, 1)
+		$iError = ($oCharStyle.Name() = $sNewCharStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
@@ -695,17 +695,17 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 			$sParentStyle = __LOWriter_CharStyleNameToggle($sParentStyle)
 		EndIf
 		$oCharStyle.ParentStyle = $sParentStyle
-		$iError = ($oCharStyle.ParentStyle() = $sParentStyle) ? $iError : BitOR($iError, 2)
+		$iError = ($oCharStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oCharStyle.Hidden = $bHidden
-		$iError = ($oCharStyle.Hidden() = $bHidden) ? $iError : BitOR($iError, 4)
+		$iError = ($oCharStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -907,7 +907,7 @@ Func _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
 
 	$oObj.CharStyleName = $sCharStyle
 
-	Return ($oObj.CharStyleName() = $sCharStyle) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oObj.CharStyleName() = $sCharStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_CharStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -962,25 +962,25 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	If Not $bUserOnly And Not $bAppliedOnly Then
 		For $i = 0 To $oStyles.getCount() - 1
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
-	$sExecute = ($bUserOnly) ? "($oStyles.getByIndex($i).isUserDefined())" : $sExecute
-	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : $sExecute
-	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : $sExecute
+	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
+	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
+	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
 
 	For $i = 0 To $oStyles.getCount() - 1
 		If Execute($sExecute) Then
 			$aStyles[$iCount] = $oStyles.getByIndex($i).DisplayName()
 			$iCount += 1
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles)
+	Return ($iCount = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles))
 EndFunc   ;==>_LOWriter_CharStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

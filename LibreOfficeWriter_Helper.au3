@@ -184,11 +184,11 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$nBlue = (Mod($iHSB, 256)) / 255
 
 			; get Max RGB Value
-			$nResult = ($nRed > $nGreen) ? $nRed : $nGreen
-			$nMaxRGB = ($nResult > $nBlue) ? $nResult : $nBlue
+			$nResult = ($nRed > $nGreen) ? ($nRed) : ($nGreen)
+			$nMaxRGB = ($nResult > $nBlue) ? ($nResult) : ($nBlue)
 			; get Min RGB Value
-			$nResult = ($nRed < $nGreen) ? $nRed : $nGreen
-			$nMinRGB = ($nResult < $nBlue) ? $nResult : $nBlue
+			$nResult = ($nRed < $nGreen) ? ($nRed) : ($nGreen)
+			$nMinRGB = ($nResult < $nBlue) ? ($nResult) : ($nBlue)
 
 			; Determine Brightness
 			$nBrightness = $nMaxRGB
@@ -212,9 +212,9 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			EndSelect
 
 			; Determine Saturation
-			$nSaturation = ($nMaxRGB = 0) ? 0 : (($nMaxRGB - $nMinRGB) / $nMaxRGB)
+			$nSaturation = ($nMaxRGB = 0) ? (0) : (($nMaxRGB - $nMinRGB) / $nMaxRGB)
 
-			$nHue = ($nHue > 0) ? Round($nHue) : 0
+			$nHue = ($nHue > 0) ? (Round($nHue)) : (0)
 			$nSaturation = Round(($nSaturation * 100))
 			$nBrightness = Round(($nBrightness * 100))
 
@@ -235,8 +235,8 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$nBlue = Round(($nBlue / 255), 3)
 
 			; get Max RGB Value
-			$nResult = ($nRed > $nGreen) ? $nRed : $nGreen
-			$nMaxRGB = ($nResult > $nBlue) ? $nResult : $nBlue
+			$nResult = ($nRed > $nGreen) ? ($nRed) : ($nGreen)
+			$nMaxRGB = ($nResult > $nBlue) ? ($nResult) : ($nBlue)
 
 			$nBlack = (1 - $nMaxRGB)
 			$nCyan = ((1 - $nRed - $nBlack) / (1 - $nBlack))
@@ -441,7 +441,7 @@ EndFunc   ;==>_LOWriter_ConvertColorToLong
 ;				   @Error 0 @Extended 4 Return Number. Converted from Micrometers to Printer's Points.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null. 
+; Remarks .......: To skip a parameter, set it to Null.
 ;				   If you are converting to Inches, place the Micrometers in $nInchOut, if
 ;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.  A
 ;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
@@ -647,7 +647,7 @@ Func _LOWriter_DateFormatKeyDelete(ByRef $oDoc, $iFormatKey)
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) = False) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	Return (_LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_DateFormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -776,10 +776,10 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	If Not IsBool($bTimeOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 	If ($bDateOnly = True) And ($bTimeOnly = True) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 
-	$iColumns = ($bIsUser = True) ? $iColumns : 2
+	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
 
-	$iQueryType = ($bDateOnly = True) ? $LOW_FORMAT_KEYS_DATE : $iQueryType
-	$iQueryType = ($bTimeOnly = True) ? $LOW_FORMAT_KEYS_TIME : $iQueryType
+	$iQueryType = ($bDateOnly = True) ? ($LOW_FORMAT_KEYS_DATE) : ($iQueryType)
+	$iQueryType = ($bTimeOnly = True) ? ($LOW_FORMAT_KEYS_TIME) : ($iQueryType)
 
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
@@ -804,7 +804,7 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 			$avDTFormats[$i][1] = $oFormats.getbykey($aiFormatKeys[$i]).FormatString()
 			If ($bIsUser = True) Then $avDTFormats[$i][2] = $oFormats.getbykey($aiFormatKeys[$i]).UserDefined()
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
 	If ($bUserOnly = True) Then ReDim $avDTFormats[$iCount][$iColumns]
@@ -993,53 +993,53 @@ Func _LOWriter_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Nul
 		If Not IsInt($iYear) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$tDateStruct.Year = $iYear
-		$iError = ($tDateStruct.Year() = $iYear) ? $iError : BitOR($iError, 1)
+		$iError = ($tDateStruct.Year() = $iYear) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iMonth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$tDateStruct.Month = $iMonth
-		$iError = ($tDateStruct.Month() = $iMonth) ? $iError : BitOR($iError, 2)
+		$iError = ($tDateStruct.Month() = $iMonth) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iDay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDay, 0, 31) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$tDateStruct.Day = $iDay
-		$iError = ($tDateStruct.Day() = $iDay) ? $iError : BitOR($iError, 4)
+		$iError = ($tDateStruct.Day() = $iDay) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iHours <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHours, 0, 23) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$tDateStruct.Hours = $iHours
-		$iError = ($tDateStruct.Hours() = $iHours) ? $iError : BitOR($iError, 8)
+		$iError = ($tDateStruct.Hours() = $iHours) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iMinutes <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$tDateStruct.Minutes = $iMinutes
-		$iError = ($tDateStruct.Minutes() = $iMinutes) ? $iError : BitOR($iError, 16)
+		$iError = ($tDateStruct.Minutes() = $iMinutes) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$tDateStruct.Seconds = $iSeconds
-		$iError = ($tDateStruct.Seconds() = $iSeconds) ? $iError : BitOR($iError, 32)
+		$iError = ($tDateStruct.Seconds() = $iSeconds) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$tDateStruct.NanoSeconds = $iNanoSeconds
-		$iError = ($tDateStruct.NanoSeconds() = $iNanoSeconds) ? $iError : BitOR($iError, 64)
+		$iError = ($tDateStruct.NanoSeconds() = $iNanoSeconds) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bIsUTC <> Null) Then
 		If Not IsBool($bIsUTC) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
 		If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$tDateStruct.IsUTC = $bIsUTC
-		$iError = ($tDateStruct.IsUTC() = $bIsUTC) ? $iError : BitOR($iError, 128)
+		$iError = ($tDateStruct.IsUTC() = $bIsUTC) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DateStructModify
 
 ; #FUNCTION# ====================================================================================================================
@@ -1695,7 +1695,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			; If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
 			;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
 			; else set SubScript to 1
-			$iSuperScript = ($bAutoSuper) ? 14000 : (IsInt($iSuperScript)) ? $iSuperScript : (IsInt($iSubScript) Or ($bAutoSub = True)) ? $iSuperScript : 1
+			$iSuperScript = ($bAutoSuper) ? (14000) : ((IsInt($iSuperScript)) ? $iSuperScript : ((IsInt($iSubScript) Or ($bAutoSub = True)) ? ($iSuperScript) : (1)))
 		EndIf
 	EndIf
 
@@ -1706,7 +1706,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			If Not IsBool($bAutoSub) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 			; If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
 			;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
-			$iSubScript = ($bAutoSub) ? -14000 : (IsInt($iSubScript)) ? $iSubScript : (IsInt($iSuperScript)) ? $iSubScript : 1
+			$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
 		EndIf
 	EndIf
 
@@ -1724,7 +1724,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharEscapement")
 		Else
 			If Not __LOWriter_IntIsBetween($iSubScript, -100, 100, "", "-14000:14000") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-			$iSubScript = ($iSubScript > 0) ? Int("-" & $iSubScript) : $iSubScript
+			$iSubScript = ($iSubScript > 0) ? (Int("-" & $iSubScript)) : ($iSubScript)
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharEscapement", $iSubScript))
 		EndIf
 	EndIf
@@ -1793,7 +1793,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharRotation")
 		Else
 			If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : $iRotation ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
+			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharRotation", $iRotation))
 		EndIf
 	EndIf
@@ -2246,7 +2246,7 @@ Func _LOWriter_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOWriter_FormatKeyExists($oDoc, $iFormatKey) = False) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	Return (_LOWriter_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_FormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -2296,7 +2296,7 @@ Func _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOW_FOR
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
 		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True) ; Doc does contain format Key
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
 	Return SetError($__LOW_STATUS_SUCCESS, 1, False) ; Doc does not contain format Key
@@ -2385,7 +2385,7 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bIsUser) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bUserOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	$iColumns = ($bIsUser = True) ? $iColumns : 2
+	$iColumns = ($bIsUser = True) ? ($iColumns) : (2)
 
 	If Not IsInt($iFormatKeyType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
@@ -2412,7 +2412,7 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 			$avFormats[$i][1] = $oFormats.getbykey($aiFormatKeys[$i]).FormatString()
 			If ($bIsUser = True) Then $avFormats[$i][2] = $oFormats.getbykey($aiFormatKeys[$i]).UserDefined()
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
 	If ($bUserOnly = True) Then ReDim $avFormats[$iCount][$iColumns]
@@ -2481,7 +2481,7 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 
 			For $i = 0 To (UBound($asURLReplace) - 1)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][0], $asURLReplace[$i][1])
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 			Return SetError($__LOW_STATUS_SUCCESS, 2, $sFilePath)
 
@@ -2491,7 +2491,7 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 
 			For $i = 0 To (UBound($asURLReplace) - 1)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][1], $asURLReplace[$i][0])
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 			Return SetError($__LOW_STATUS_SUCCESS, 1, $sFilePath)
 
@@ -2549,9 +2549,9 @@ Func _LOWriter_VersionGet($bSimpleVersion = False, $bReturnName = False)
 
 	$sVersionName = $oSettings.getByName("ooName")
 
-	$sVersion = ($bSimpleVersion) ? $oSettings.getByName("ooSetupVersion") : $oSettings.getByName("ooSetupVersionAboutBox")
+	$sVersion = ($bSimpleVersion) ? ($oSettings.getByName("ooSetupVersion")) : ($oSettings.getByName("ooSetupVersionAboutBox"))
 
-	$sReturn = ($bReturnName) ? ($sVersionName & " " & $sVersion) : $sVersion
+	$sReturn = ($bReturnName) ? ($sVersionName & " " & $sVersion) : ($sVersion)
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $sReturn)
 EndFunc   ;==>_LOWriter_VersionGet

@@ -285,20 +285,20 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 	$oNumRules = $oNumStyle.NumberingRules() ; Retrieve Numbering Rules a second time for error checking.
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	$iLevel = ($iLevel = -1) ? 9 : $iLevel ;If Level is set to -1 (modify all), set to last level to check the settings.
+	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
 
 	; Error Checking
-	$iError = ($iNumFormat = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $iNumFormat) ? $iError : BitOR($iError, 1)
-	$iError = ($iStartAt = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith") = $iStartAt) ? $iError : BitOR($iError, 2)
-	$iError = ($sCharStyle = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName") = $sCharStyle) ? $iError : BitOR($iError, 4)
-	$iError = ($iSubLevels = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ParentNumbering") = $iSubLevels) ? $iError : BitOR($iError, 8)
-	$iError = ($sSepBefore = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix") = $sSepBefore) ? $iError : BitOR($iError, 16)
-	$iError = ($sSepAfter = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix") = $sSepAfter) ? $iError : BitOR($iError, 32)
-	$iError = ($bConsecutiveNum = Null) ? $iError : ($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? $iError : BitOR($iError, 64)
-	$iError = ($sBulletFont = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletFont").Name() = $sBulletFont) ? $iError : BitOR($iError, 128)
-	$iError = ($iCharDecimal = Null) ? $iError : (Asc(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletChar")) = $iCharDecimal) ? $iError : BitOR($iError, 256)
+	$iError = ($iNumFormat = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iStartAt = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith") = $iStartAt) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($sCharStyle = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName") = $sCharStyle) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iSubLevels = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ParentNumbering") = $iSubLevels) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($sSepBefore = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix") = $sSepBefore) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($sSepAfter = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix") = $sSepAfter) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($bConsecutiveNum = Null) ? ($iError) : (($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? ($iError) : (BitOR($iError, 64)))
+	$iError = ($sBulletFont = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletFont").Name() = $sBulletFont) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iCharDecimal = Null) ? ($iError) : ((Asc(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletChar")) = $iCharDecimal) ? ($iError) : (BitOR($iError, 256)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStyleCustomize
 
 ; #FUNCTION# ====================================================================================================================
@@ -350,7 +350,7 @@ Func _LOWriter_NumStyleDelete(ByRef $oDoc, $oNumStyle)
 
 	$oNumStyles.removeByName($sNumStyle)
 
-	Return ($oNumStyles.hasByName($sNumStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($oNumStyles.hasByName($sNumStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -481,17 +481,17 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 		If Not IsString($sNewNumStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		If _LOWriter_NumStyleExists($oDoc, $sNewNumStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oNumStyle.Name = $sNewNumStyleName
-		$iError = ($oNumStyle.Name() = $sNewNumStyleName) ? $iError : BitOR($iError, 1)
+		$iError = ($oNumStyle.Name() = $sNewNumStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oNumStyle.Hidden = $bHidden
-		$iError = ($oNumStyle.Hidden() = $bHidden) ? $iError : BitOR($iError, 2)
+		$iError = ($oNumStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -624,15 +624,15 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 	; Error Checking:
 	$oNumRules = $oNumStyle.NumberingRules()
 	If Not IsObj($oNumRules) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	$iLevel = ($iLevel = -1) ? 9 : $iLevel ;If Level is set to -1 (modify all), set to last level to check the settings.
+	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
 
-	$iError = ($iAlignedAt = Null) ? $iError : (__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), $iAlignedAt - 1, $iAlignedAt + 1)) ? $iError : BitOR($iError, 1)
-	$iError = ($iNumAlign = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Adjust") = $iNumAlign) ? $iError : BitOR($iError, 2)
-	$iError = ($iFollowedBy = Null) ? $iError : (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "LabelFollowedBy") = $iFollowedBy) ? $iError : BitOR($iError, 4)
-	$iError = ($iTabStop = Null) ? $iError : (__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ListtabStopPosition"), $iTabStop - 1, $iTabStop + 1)) ? $iError : BitOR($iError, 8)
-	$iError = ($iIndent = Null) ? $iError : (__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "IndentAt"), $iIndent - 1, $iIndent + 1)) ? $iError : BitOR($iError, 16)
+	$iError = ($iAlignedAt = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iNumAlign = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Adjust") = $iNumAlign) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iFollowedBy = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "LabelFollowedBy") = $iFollowedBy) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iTabStop = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ListtabStopPosition"), $iTabStop - 1, $iTabStop + 1)) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iIndent = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "IndentAt"), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 16)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStylePosition
 
 ; #FUNCTION# ====================================================================================================================
@@ -674,7 +674,7 @@ Func _LOWriter_NumStyleSet(ByRef $oDoc, ByRef $oObj, $sNumStyle)
 	If Not IsString($sNumStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 	$oObj.NumberingStyleName = $sNumStyle
-	Return ($oObj.NumberingStyleName() = $sNumStyle) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 
 EndFunc   ;==>_LOWriter_NumStyleSet
 
@@ -720,7 +720,7 @@ Func _LOWriter_NumStyleSetLevel(ByRef $oDoc, ByRef $oObj, $iLevel = Null)
 
 	$oObj.NumberingLevel = $iLevel
 
-	Return ($oObj.NumberingLevel() = $iLevel) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oObj.NumberingLevel() = $iLevel) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_NumStyleSetLevel
 
 ; #FUNCTION# ====================================================================================================================
@@ -770,23 +770,23 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	If Not $bUserOnly And Not $bAppliedOnly Then
 		For $i = 0 To $oStyles.getCount() - 1
 			$aStyles[$i] = $oStyles.getByIndex($i).Name() ; DisplayName -- Can't use Display name due to special characters.
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
-	$sExecute = ($bUserOnly) ? "($oStyles.getByIndex($i).isUserDefined())" : $sExecute
-	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : $sExecute
-	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : $sExecute
+	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
+	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
+	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
 
 	For $i = 0 To $oStyles.getCount() - 1
 		If Execute($sExecute) Then
 			$aStyles[$iCount] = $oStyles.getByIndex($i).Name() ; DisplayName
 			$iCount += 1
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles)
+	Return ($iCount = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles))
 EndFunc   ;==>_LOWriter_NumStylesGetNames
