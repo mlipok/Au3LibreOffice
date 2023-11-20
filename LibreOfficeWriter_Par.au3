@@ -161,7 +161,7 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 			$iCount += 1
 		EndIf
 
-		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	WEnd
 
 	If ($bTableCheck = True) Then
@@ -298,7 +298,7 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 		$aoSections[$iCount][0] = $oParSection
 		$aoSections[$iCount][1] = $oParSection.TextPortionType
 		$iCount += 1
-		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	WEnd
 	ReDim $aoSections[$iCount][2]
 	Return SetError($__LOW_STATUS_SUCCESS, $iCount, $aoSections)
@@ -816,7 +816,7 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
-	Return ($oParStyles.hasByName($sParStyle)) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -1294,7 +1294,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If Not IsString($sNewParStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		If _LOWriter_ParStyleExists($oDoc, $sNewParStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oParStyle.Name = $sNewParStyleName
-		$iError = ($oParStyle.Name() = $sNewParStyleName) ? $iError : BitOR($iError, 1)
+		$iError = ($oParStyle.Name() = $sNewParStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sFollowStyle <> Null) Then
@@ -1302,7 +1302,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$sFollowStyle = __LOWriter_ParStyleNameToggle($sFollowStyle)
 		$oParStyle.setPropertyValue("FollowStyle", $sFollowStyle)
-		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? $iError : BitOR($iError, 2)
+		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
@@ -1312,23 +1312,23 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 			$sParentStyle = __LOWriter_ParStyleNameToggle($sParentStyle)
 		EndIf
 		$oParStyle.ParentStyle = $sParentStyle
-		$iError = ($oParStyle.ParentStyle() = $sParentStyle) ? $iError : BitOR($iError, 4)
+		$iError = ($oParStyle.ParentStyle() = $sParentStyle) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoUpdate <> Null) Then
 		If Not IsBool($bAutoUpdate) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
 		$oParStyle.IsAutoUpdate = $bAutoUpdate
-		$iError = ($oParStyle.IsAutoUpdate() = $bAutoUpdate) ? $iError : BitOR($iError, 8)
+		$iError = ($oParStyle.IsAutoUpdate() = $bAutoUpdate) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
 		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oParStyle.Hidden = $bHidden
-		$iError = ($oParStyle.Hidden() = $bHidden) ? $iError : BitOR($iError, 16)
+		$iError = ($oParStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -1631,7 +1631,7 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 	$sParStyle = __LOWriter_ParStyleNameToggle($sParStyle)
 	$oObj.ParaStyleName = $sParStyle
-	Return ($oObj.ParaStyleName() = $sParStyle) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_ParStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -1684,25 +1684,25 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	If Not $bUserOnly And Not $bAppliedOnly Then
 		For $i = 0 To $oStyles.getCount() - 1
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName()
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
-	$sExecute = ($bUserOnly) ? "($oStyles.getByIndex($i).isUserDefined())" : $sExecute
-	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : $sExecute
-	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : $sExecute
+	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
+	$sExecute = ($bUserOnly And $bAppliedOnly) ? ($sExecute & " And ") : ($sExecute)
+	$sExecute = ($bAppliedOnly) ? ($sExecute & "($oStyles.getByIndex($i).isInUse())") : ($sExecute)
 
 	For $i = 0 To $oStyles.getCount() - 1
 		If Execute($sExecute) Then
 			$aStyles[$iCount] = $oStyles.getByIndex($i).DisplayName
 			$iCount += 1
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles)
+	Return ($iCount = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles))
 EndFunc   ;==>_LOWriter_ParStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

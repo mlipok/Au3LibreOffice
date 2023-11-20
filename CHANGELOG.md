@@ -68,6 +68,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ImageGetAnchor
 	
 - Missing Includes in LibreOfficeWriter file.
+- Ternary Operators missing Parenthesis in responses.
 
 ## [0.9.1] - 2023-10-28
 

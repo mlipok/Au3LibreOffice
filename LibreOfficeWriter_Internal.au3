@@ -226,9 +226,9 @@ EndFunc   ;==>__LOWriter_AddTo2DArray
 ; ===============================================================================================================================
 Func __LOWriter_AnyAreDefault($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null)
 	Local $bAnyDefault1, $bAnyDefault2
-	$bAnyDefault1 = (($vVar1 = Default) Or ($vVar2 = Default) Or ($vVar3 = Default) Or ($vVar4 = Default)) ? True : False
-	$bAnyDefault2 = (($vVar5 = Default) Or ($vVar6 = Default) Or ($vVar7 = Default) Or ($vVar8 = Default)) ? True : False
-	Return ($bAnyDefault1 Or $bAnyDefault2) ? SetError($__LOW_STATUS_SUCCESS, 0, True) : SetError($__LOW_STATUS_SUCCESS, 0, False)
+	$bAnyDefault1 = (($vVar1 = Default) Or ($vVar2 = Default) Or ($vVar3 = Default) Or ($vVar4 = Default)) ? (True) : (False)
+	$bAnyDefault2 = (($vVar5 = Default) Or ($vVar6 = Default) Or ($vVar7 = Default) Or ($vVar8 = Default)) ? (True) : (False)
+	Return ($bAnyDefault1 Or $bAnyDefault2) ? (SetError($__LOW_STATUS_SUCCESS, 0, True)) : (SetError($__LOW_STATUS_SUCCESS, 0, False))
 EndFunc   ;==>__LOWriter_AnyAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -340,36 +340,36 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.TopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.TopBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.TopBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.TopBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oObj.TopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oObj.TopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oObj.TopBorder.Color()) ; copy Color over to new size structure
 		$oObj.TopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.BottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.BottomBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.BottomBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.BottomBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oObj.BottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oObj.BottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oObj.BottomBorder.Color()) ; copy Color over to new size structure
 		$oObj.BottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.LeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.LeftBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.LeftBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.LeftBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oObj.LeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oObj.LeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oObj.LeftBorder.Color()) ; copy Color over to new size structure
 		$oObj.LeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.RightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.RightBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.RightBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.RightBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oObj.RightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oObj.RightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oObj.RightBorder.Color()) ; copy Color over to new size structure
 		$oObj.RightBorder = $tBL2
 	EndIf
 
@@ -445,36 +445,36 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.CharTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.CharTopBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.CharTopBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.CharTopBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oObj.CharTopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oObj.CharTopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oObj.CharTopBorder.Color()) ; copy Color over to new size structure
 		$oObj.CharTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.CharBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.CharBottomBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.CharBottomBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.CharBottomBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oObj.CharBottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oObj.CharBottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oObj.CharBottomBorder.Color()) ; copy Color over to new size structure
 		$oObj.CharBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.CharLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.CharLeftBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.CharLeftBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.CharLeftBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oObj.CharLeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oObj.CharLeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oObj.CharLeftBorder.Color()) ; copy Color over to new size structure
 		$oObj.CharLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.CharRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.CharRightBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.CharRightBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.CharRightBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oObj.CharRightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oObj.CharRightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oObj.CharRightBorder.Color()) ; copy Color over to new size structure
 		$oObj.CharRightBorder = $tBL2
 	EndIf
 
@@ -536,34 +536,34 @@ Func __LOWriter_CharBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $
 	If ($iAll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharBorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oObj.CharBorderDistance(), $iAll - 1, $iAll + 1)) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_IntIsBetween($oObj.CharBorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharTopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oObj.CharTopBorderDistance(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oObj.CharTopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharBottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oObj.CharBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_IntIsBetween($oObj.CharBottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharLeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oObj.CharLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 8)
+		$iError = (__LOWriter_IntIsBetween($oObj.CharLeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharRightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oObj.CharRightBorderDistance(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 16)
+		$iError = (__LOWriter_IntIsBetween($oObj.CharRightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharBorderPadding
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -620,34 +620,34 @@ Func __LOWriter_CharEffect(ByRef $oObj, $iRelief, $iCase, $bHidden, $bOutline, $
 	If ($iRelief <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharRelief = $iRelief
-		$iError = ($oObj.CharRelief() = $iRelief) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharRelief() = $iRelief) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iCase <> Null) Then
 		If Not __LOWriter_IntIsBetween($iCase, $LOW_CASEMAP_NONE, $LOW_CASEMAP_SM_CAPS) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharCaseMap = $iCase
-		$iError = ($oObj.CharCaseMap() = $iCase) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharCaseMap() = $iCase) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bHidden <> Null) Then
 		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharHidden = $bHidden
-		$iError = ($oObj.CharHidden() = $bHidden) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharHidden() = $bHidden) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bOutline <> Null) Then
 		If Not IsBool($bOutline) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharContoured = $bOutline
-		$iError = ($oObj.CharContoured() = $bOutline) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.CharContoured() = $bOutline) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bShadow <> Null) Then
 		If Not IsBool($bShadow) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharShadowed = $bShadow
-		$iError = ($oObj.CharShadowed() = $bShadow) ? $iError : BitOR($iError, 16)
+		$iError = ($oObj.CharShadowed() = $bShadow) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharEffect
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -704,28 +704,28 @@ Func __LOWriter_CharFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeigh
 	If ($sFontName <> Null) Then
 		If Not IsString($sFontName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharFontName = $sFontName
-		$iError = ($oObj.CharFontName() = $sFontName) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharFontName() = $sFontName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nFontSize <> Null) Then
 		If Not IsNumber($nFontSize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharHeight = $nFontSize
-		$iError = ($oObj.CharHeight() = $nFontSize) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharHeight() = $nFontSize) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPosture <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharPosture = $iPosture
-		$iError = ($oObj.CharPosture() = $iPosture) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharPosture() = $iPosture) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iWeight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oObj.CharWeight = $iWeight
-		$iError = ($oObj.CharWeight() = $iWeight) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.CharWeight() = $iWeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharFont
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -782,14 +782,14 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	If ($iFontColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFontColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharColor = $iFontColor
-		$iError = ($oObj.CharColor() = $iFontColor) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharColor() = $iFontColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTransparency <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oObj.CharTransparence = $iTransparency
-		$iError = ($oObj.CharTransparence() = $iTransparency) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iHighlight <> Null) Then
@@ -797,12 +797,12 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
 ;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR,2,0)
 ;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? $iError : BitOR($iError,4)
+;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError,4)
 		$oObj.CharBackColor = $iHighlight
-		$iError = ($oObj.CharBackColor() = $iHighlight) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharBackColor() = $iHighlight) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharFontColor
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -858,28 +858,28 @@ Func __LOWriter_CharOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasCo
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharWordMode = $bWordOnly
-		$iError = ($oObj.CharWordMode() = $bWordOnly) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iOverLineStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iOverLineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharOverline = $iOverLineStyle
-		$iError = ($oObj.CharOverline() = $iOverLineStyle) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharOverline() = $iOverLineStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bOLHasColor <> Null) Then
 		If Not IsBool($bOLHasColor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharOverlineHasColor = $bOLHasColor
-		$iError = ($oObj.CharOverlineHasColor() = $bOLHasColor) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharOverlineHasColor() = $bOLHasColor) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iOLColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iOLColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharOverlineColor = $iOLColor
-		$iError = ($oObj.CharOverlineColor() = $iOLColor) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.CharOverlineColor() = $iOLColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharOverLine
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -938,8 +938,8 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then
-		__LOWriter_ArrayFill($avPosition, ($oObj.CharEscapement() = 14000) ? True : False, ($oObj.CharEscapement() > 0) ? $oObj.CharEscapement() : 0, _
-				($oObj.CharEscapement() = -14000) ? True : False, ($oObj.CharEscapement() < 0) ? $oObj.CharEscapement() : 0, $oObj.CharEscapementHeight())
+		__LOWriter_ArrayFill($avPosition, ($oObj.CharEscapement() = 14000) ? (True) : (False), ($oObj.CharEscapement() > 0) ? ($oObj.CharEscapement()) : (0), _
+				($oObj.CharEscapement() = -14000) ? (True) : (False), ($oObj.CharEscapement() < 0) ? ($oObj.CharEscapement()) : (0), $oObj.CharEscapementHeight())
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 
@@ -948,37 +948,37 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 		; If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
 		;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
 		; else set SubScript to 1
-		$iSuperScript = ($bAutoSuper) ? 14000 : (IsInt($iSuperScript)) ? $iSuperScript : (IsInt($iSubScript) Or ($bAutoSub = True)) ? $iSuperScript : 1
+		$iSuperScript = ($bAutoSuper) ? (14000) : ((IsInt($iSuperScript)) ? ($iSuperScript) : ((IsInt($iSubScript) Or ($bAutoSub = True)) ? ($iSuperScript) : (1)))
 	EndIf
 
 	If ($bAutoSub <> Null) Then
 		If Not IsBool($bAutoSub) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		; If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
-		$iSubScript = ($bAutoSub) ? -14000 : (IsInt($iSubScript)) ? $iSubScript : (IsInt($iSuperScript)) ? $iSubScript : 1
+		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
 
 	EndIf
 
 	If ($iSuperScript <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSuperScript, 0, 100, "", 14000) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharEscapement = $iSuperScript
-		$iError = ($oObj.CharEscapement() = $iSuperScript) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharEscapement() = $iSuperScript) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iSubScript <> Null) Then
 		If Not __LOWriter_IntIsBetween($iSubScript, -100, 100, "", "-14000:14000") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$iSubScript = ($iSubScript > 0) ? Int("-" & $iSubScript) : $iSubScript
 		$oObj.CharEscapement = $iSubScript
-		$iError = ($oObj.CharEscapement() = $iSubScript) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharEscapement() = $iSubScript) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iRelativeSize <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRelativeSize, 1, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharEscapementHeight = $iRelativeSize
-		$iError = ($oObj.CharEscapementHeight() = $iRelativeSize) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharEscapementHeight() = $iRelativeSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharPosition
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1029,25 +1029,25 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 
 	If ($iRotation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : $iRotation ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
+		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
 		$oObj.CharRotation = $iRotation
-		$iError = ($oObj.CharRotation() = $iRotation) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharRotation() = $iRotation) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iScaleWidth <> Null) Then ; can't be less than 1%
 		If Not __LOWriter_IntIsBetween($iScaleWidth, 1, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharScaleWidth = $iScaleWidth
-		$iError = ($oObj.CharScaleWidth() = $iScaleWidth) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharScaleWidth() = $iScaleWidth) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bRotateFitLine <> Null) Then
 		; works only on Direct Formatting:
 		If Not IsBool($bRotateFitLine) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharRotationIsFitToLine = $bRotateFitLine
-		$iError = ($oObj.CharRotationIsFitToLine() = $bRotateFitLine) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharRotationIsFitToLine() = $bRotateFitLine) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharRotateScale
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1130,12 +1130,12 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 	$tShdwFrmt = $oObj.CharShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	$iError = ($iWidth = Null) ? $iError : ($tShdwFrmt.ShadowWidth() = $iWidth) ? $iError : BitOR($iError, 1)
-	$iError = ($iColor = Null) ? $iError : ($tShdwFrmt.Color() = $iColor) ? $iError : BitOR($iError, 2)
-	$iError = ($bTransparent = Null) ? $iError : ($tShdwFrmt.IsTransparent() = $bTransparent) ? $iError : BitOR($iError, 4)
-	$iError = ($iLocation = Null) ? $iError : ($tShdwFrmt.Location() = $iLocation) ? $iError : BitOR($iError, 8)
+	$iError = ($iWidth = Null) ? ($iError) : (($tShdwFrmt.ShadowWidth() = $iWidth) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharShadow
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1188,14 +1188,14 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 
 	If __LOWriter_VarsAreNull($bAutoKerning, $nKerning) Then
 		$nKerning = __LOWriter_UnitConvert($oObj.CharKerning(), $__LOWCONST_CONVERT_UM_PT)
-		__LOWriter_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? 1000 : $nKerning))
+		__LOWriter_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avKerning)
 	EndIf
 
 	If ($bAutoKerning <> Null) Then
 		If Not IsBool($bAutoKerning) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharAutoKerning = $bAutoKerning
-		$iError = ($oObj.CharAutoKerning() = $bAutoKerning) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharAutoKerning() = $bAutoKerning) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nKerning <> Null) Then
@@ -1203,10 +1203,10 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 		$nKerning = __LOWriter_UnitConvert($nKerning, $__LOWCONST_CONVERT_PT_UM)
 
 		$oObj.CharKerning = $nKerning
-		$iError = ($oObj.CharKerning() = $nKerning) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharSpacing
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1258,22 +1258,22 @@ Func __LOWriter_CharStrikeOut(ByRef $oObj, $bWordOnly, $bStrikeOut, $iStrikeLine
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharWordMode = $bWordOnly
-		$iError = ($oObj.CharWordMode() = $bWordOnly) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bStrikeOut <> Null) Then
 		If Not IsBool($bStrikeOut) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharCrossedOut = $bStrikeOut
-		$iError = ($oObj.CharCrossedOut() = $bStrikeOut) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharCrossedOut() = $bStrikeOut) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iStrikeLineStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStrikeLineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharStrikeout = $iStrikeLineStyle
-		$iError = ($oObj.CharStrikeout() = $iStrikeLineStyle) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharStrikeout() = $iStrikeLineStyle) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharStrikeOut
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1302,18 +1302,18 @@ Func __LOWriter_CharStyleNameToggle($sCharStyle, $bReverse = False)
 	If Not IsBool($bReverse) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($bReverse = False) Then
-		$sCharStyle = ($sCharStyle = "Footnote Characters") ? "Footnote Symbol" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Bullets") ? "Bullet Symbols" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Endnote Characters") ? "Endnote Symbol" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Quotation") ? "Citation" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "No Character Style") ? "Standard" : $sCharStyle
+		$sCharStyle = ($sCharStyle = "Footnote Characters") ? ("Footnote Symbol") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Bullets") ? ("Bullet Symbols") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Endnote Characters") ? ("Endnote Symbol") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Quotation") ? ("Citation") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "No Character Style") ? ("Standard") : ($sCharStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 0, $sCharStyle)
 	Else
-		$sCharStyle = ($sCharStyle = "Footnote Symbol") ? "Footnote Characters" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Bullet Symbols") ? "Bullets" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Endnote Symbol") ? "Endnote Characters" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Citation") ? "Quotation" : $sCharStyle
-		$sCharStyle = ($sCharStyle = "Standard") ? "No Character Style" : $sCharStyle
+		$sCharStyle = ($sCharStyle = "Footnote Symbol") ? ("Footnote Characters") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Bullet Symbols") ? ("Bullets") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Endnote Symbol") ? ("Endnote Characters") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Citation") ? ("Quotation") : ($sCharStyle)
+		$sCharStyle = ($sCharStyle = "Standard") ? ("No Character Style") : ($sCharStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $sCharStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_CharStyleNameToggle
@@ -1369,28 +1369,28 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 	If ($bWordOnly <> Null) Then
 		If Not IsBool($bWordOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.CharWordMode = $bWordOnly
-		$iError = ($oObj.CharWordMode() = $bWordOnly) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.CharWordMode() = $bWordOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iUnderLineStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iUnderLineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharUnderline = $iUnderLineStyle
-		$iError = ($oObj.CharUnderline() = $iUnderLineStyle) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.CharUnderline() = $iUnderLineStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bULHasColor <> Null) Then
 		If Not IsBool($bULHasColor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharUnderlineHasColor = $bULHasColor
-		$iError = ($oObj.CharUnderlineHasColor() = $bULHasColor) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.CharUnderlineHasColor() = $bULHasColor) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iULColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iULColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharUnderlineColor = $iULColor
-		$iError = ($oObj.CharUnderlineColor() = $iULColor) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.CharUnderlineColor() = $iULColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharUnderLine
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -1594,7 +1594,7 @@ Func __LOWriter_DirFrmtCheck(ByRef $oSelection, $bCheckSelection = False)
 	; false if it is.
 	If $oSelection.supportsService("com.sun.star.text.TextCursor") Or _
 			$oSelection.supportsService("com.sun.star.text.TextViewCursor") Then
-		If $bCheckSelection Then Return SetError($__LOW_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? False : True) ; If collapsed return false meaning fail.
+		If $bCheckSelection Then Return SetError($__LOW_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? (False) : (True)) ; If collapsed return false meaning fail.
 		Return SetError($__LOW_STATUS_SUCCESS, 0, True)
 	EndIf
 	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
@@ -1638,7 +1638,7 @@ Func __LOWriter_FieldCountType($vInput)
 
 		For $i = 0 To UBound($asFieldTypes) - 1
 			If $vInput.supportsService($asFieldTypes[$i]) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $i)
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 		Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0) ; No Hits
 
@@ -1701,15 +1701,15 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsArray($avFieldTypes) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	$iColumns = ($bSupportedServices = False) ? ($iColumns - 1) : $iColumns
-	$iColumns = ($bFieldType = False) ? ($iColumns - 1) : $iColumns
-	$iColumns = ($bFieldTypeNum = False) ? ($iColumns - 1) : $iColumns
+	$iColumns = ($bSupportedServices = False) ? ($iColumns - 1) : ($iColumns)
+	$iColumns = ($bFieldType = False) ? ($iColumns - 1) : ($iColumns)
+	$iColumns = ($bFieldTypeNum = False) ? ($iColumns - 1) : ($iColumns)
 
 	; If Supported Services Option is False, change the column position of FieldType
-	$iFieldTypeCol = ($bSupportedServices = False) ? ($iFieldTypeCol - 1) : $iFieldTypeCol
+	$iFieldTypeCol = ($bSupportedServices = False) ? ($iFieldTypeCol - 1) : ($iFieldTypeCol)
 
-	$iFieldTypeNumCol = ($bSupportedServices = False) ? ($iFieldTypeNumCol - 1) : $iFieldTypeNumCol
-	$iFieldTypeNumCol = ($bFieldType = False) ? ($iFieldTypeNumCol - 1) : $iFieldTypeNumCol
+	$iFieldTypeNumCol = ($bSupportedServices = False) ? ($iFieldTypeNumCol - 1) : ($iFieldTypeNumCol)
+	$iFieldTypeNumCol = ($bFieldType = False) ? ($iFieldTypeNumCol - 1) : ($iFieldTypeNumCol)
 
 	$oTextFields = $oDoc.getTextFields.createEnumeration()
 	If Not IsObj($oTextFields) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
@@ -1730,7 +1730,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 				$iCount += 1
 				If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2][$iColumns]
 			EndIf
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 
 	WEnd
@@ -1828,7 +1828,7 @@ Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDoc
 			$avFieldResults[$iCount][1] = $avSearch[$i][1]
 			$iCount += 1
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
 	ReDim $avFieldResults[$iCount][2]
@@ -1973,7 +1973,7 @@ Func __LOWriter_FindFormatAddSetting(ByRef $atArray, $tSetting)
 			ExitLoop
 		EndIf
 
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	If ($bFound = False) Then
@@ -2018,7 +2018,7 @@ Func __LOWriter_FindFormatDeleteSetting(ByRef $atArray, $sSettingName)
 			$atArray[$iCount] = $atArray[$i]
 			$iCount += 1
 		EndIf
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	ReDim $atArray[$iCount]
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -2054,7 +2054,7 @@ Func __LOWriter_FindFormatRetrieveSetting(ByRef $atArray, $sSettingName)
 
 	For $i = 0 To UBound($atArray) - 1
 		If $atArray[$i].Name() = $sSettingName Then Return SetError($__LOW_STATUS_SUCCESS, 1, $atArray[$i])
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
@@ -2126,36 +2126,36 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.FooterTopBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.FooterTopBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.FooterTopBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oObj.FooterTopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oObj.FooterTopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oObj.FooterTopBorder.Color()) ; copy Color over to new size structure
 		$oObj.FooterTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.FooterBottomBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.FooterBottomBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.FooterBottomBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oObj.FooterBottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oObj.FooterBottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oObj.FooterBottomBorder.Color()) ; copy Color over to new size structure
 		$oObj.FooterBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.FooterLeftBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.FooterLeftBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.FooterLeftBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oObj.FooterLeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oObj.FooterLeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oObj.FooterLeftBorder.Color()) ; copy Color over to new size structure
 		$oObj.FooterLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.FooterRightBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.FooterRightBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.FooterRightBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oObj.FooterRightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oObj.FooterRightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oObj.FooterRightBorder.Color()) ; copy Color over to new size structure
 		$oObj.FooterRightBorder = $tBL2
 	EndIf
 
@@ -2194,7 +2194,7 @@ Func __LOWriter_GetPrinterSetting(ByRef $oDoc, $sSetting)
 
 	For $i = 0 To UBound($aoPrinterProperties) - 1
 		If (($aoPrinterProperties[$i].Name()) = $sSetting) Then Return SetError($__LOW_STATUS_SUCCESS, 0, $aoPrinterProperties[$i].Value())
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; No Matches
@@ -2242,7 +2242,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 			For $j = 0 To $oShapes.getCount() - 1
 				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
 
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 
 			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ;If no matches, exit loop with current name.
@@ -2304,7 +2304,7 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 	If ($sGradientName = "Gradient ") Then
 		While $oGradTable.hasByName($sGradientName & $iCount)
 			$iCount += 1
-			Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		WEnd
 		$sGradientName = $sGradientName & $iCount
 	EndIf
@@ -2689,36 +2689,36 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 	If $iTop <> Null Then
 		If Not $bWid And ($oObj.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $oObj.HeaderTopBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $oObj.HeaderTopBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $oObj.HeaderTopBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oObj.HeaderTopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oObj.HeaderTopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oObj.HeaderTopBorder.Color()) ; copy Color over to new size structure
 		$oObj.HeaderTopBorder = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($oObj.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $oObj.HeaderBottomBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $oObj.HeaderBottomBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $oObj.HeaderBottomBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oObj.HeaderBottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oObj.HeaderBottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oObj.HeaderBottomBorder.Color()) ; copy Color over to new size structure
 		$oObj.HeaderBottomBorder = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($oObj.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $oObj.HeaderLeftBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $oObj.HeaderLeftBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $oObj.HeaderLeftBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oObj.HeaderLeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oObj.HeaderLeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oObj.HeaderLeftBorder.Color()) ; copy Color over to new size structure
 		$oObj.HeaderLeftBorder = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
 		If Not $bWid And ($oObj.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $oObj.HeaderRightBorder.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $oObj.HeaderRightBorder.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $oObj.HeaderRightBorder.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oObj.HeaderRightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oObj.HeaderRightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oObj.HeaderRightBorder.Color()) ; copy Color over to new size structure
 		$oObj.HeaderRightBorder = $tBL2
 	EndIf
 
@@ -2837,19 +2837,19 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	Switch $oCursor.Text.getImplementationName()
 		Case "SwXBodyText"
 			$oReturnObject = $oDoc
-			Return ($bReturnObject) ? SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_BODY_TEXT, $oReturnObject) : SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_BODY_TEXT)
+			Return ($bReturnObject) ? (SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_BODY_TEXT, $oReturnObject)) : (SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_BODY_TEXT))
 		Case "SwXTextFrame"
 			$oReturnObject = $oDoc.TextFrames.getByName($oCursor.TextFrame.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-			Return ($bReturnObject) ? SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_FRAME, $oReturnObject) : SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_FRAME)
+			Return ($bReturnObject) ? (SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_FRAME, $oReturnObject)) : (SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_FRAME))
 		Case "SwXCell"
 			$oReturnObject = $oDoc.TextTables.getByName($oCursor.TextTable.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
-			Return ($bReturnObject) ? SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_CELL, $oReturnObject) : SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_CELL)
+			Return ($bReturnObject) ? (SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_CELL, $oReturnObject)) : (SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_CELL))
 
 		Case "SwXHeadFootText"
 			$oReturnObject = $oCursor
-			Return ($bReturnObject) ? SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_HEADER_FOOTER, $oReturnObject) : SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_HEADER_FOOTER)
+			Return ($bReturnObject) ? (SetError($__LOW_STATUS_SUCCESS, $LOW_CURDATA_HEADER_FOOTER, $oReturnObject)) : (SetError($__LOW_STATUS_SUCCESS, 0, $LOW_CURDATA_HEADER_FOOTER))
 
 		Case "SwXFootnote"
 			$oFootNotes = $oDoc.getFootnotes()
@@ -2895,7 +2895,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 
 			If ($bFound = True) And ($iLWFootEndNote <> 0) Then
 				$oReturnObject = $oFootEndNote
-				Return ($bReturnObject) ? SetError($__LOW_STATUS_SUCCESS, $iLWFootEndNote, $oReturnObject) : SetError($__LOW_STATUS_SUCCESS, 0, $iLWFootEndNote)
+				Return ($bReturnObject) ? (SetError($__LOW_STATUS_SUCCESS, $iLWFootEndNote, $oReturnObject)) : (SetError($__LOW_STATUS_SUCCESS, 0, $iLWFootEndNote))
 			EndIf
 			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ; no matches
 		Case Else
@@ -3025,7 +3025,7 @@ Func __LOWriter_IntIsBetween($iTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 	Local $anNot, $anIncl
 
 	If Not IsInt($iTest) Then Return False
-	If (@NumParams = 3) Then Return (($iTest < $nMin) Or ($iTest > $nMax)) ? False : True
+	If (@NumParams = 3) Then Return (($iTest < $nMin) Or ($iTest > $nMax)) ? (False) : (True)
 
 	If ($snNot <> "") Then
 		If IsString($snNot) And StringInStr($snNot, ":") Then
@@ -3043,11 +3043,11 @@ Func __LOWriter_IntIsBetween($iTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 	If IsString($snIncl) And StringInStr($snIncl, ":") Then
 		$anIncl = StringSplit($snIncl, ":")
 		For $j = 1 To $anIncl[0]
-			$bMatch = ($anIncl[$j] = $iTest) ? True : False
+			$bMatch = ($anIncl[$j] = $iTest) ? (True) : (False)
 			If $bMatch Then ExitLoop
 		Next
 	ElseIf IsNumber($snIncl) Then
-		$bMatch = ($iTest = $snIncl) ? True : False
+		$bMatch = ($iTest = $snIncl) ? (True) : (False)
 	EndIf
 
 	Return $bMatch
@@ -3076,7 +3076,7 @@ Func __LOWriter_IsCellRange(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	Return ($oCell.supportsService("com.sun.star.text.CellRange")) ? SetError($__LOW_STATUS_SUCCESS, 0, True) : SetError($__LOW_STATUS_SUCCESS, 0, False)
+	Return ($oCell.supportsService("com.sun.star.text.CellRange")) ? (SetError($__LOW_STATUS_SUCCESS, 0, True)) : (SetError($__LOW_STATUS_SUCCESS, 0, False))
 EndFunc   ;==>__LOWriter_IsCellRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3109,7 +3109,7 @@ Func __LOWriter_IsTableInDoc(ByRef $oTable)
 	$aTableNames = $oTable.getCellNames()
 	If Not IsArray($aTableNames) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return (UBound($aTableNames)) ? True : False ; If 0 elements = False = not in doc.
+	Return (UBound($aTableNames)) ? (True) : (False) ; If 0 elements = False = not in doc.
 EndFunc   ;==>__LOWriter_IsTableInDoc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3137,7 +3137,7 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 	Local $anNot, $anIncl
 
 	If Not IsNumber($nTest) Then Return SetError($__LOW_STATUS_SUCCESS, 0, False)
-	If (@NumParams = 3) Then Return (($nTest < $nMin) Or ($nTest > $nMax)) ? SetError($__LOW_STATUS_SUCCESS, 0, False) : SetError($__LOW_STATUS_SUCCESS, 0, True)
+	If (@NumParams = 3) Then Return (($nTest < $nMin) Or ($nTest > $nMax)) ? (SetError($__LOW_STATUS_SUCCESS, 0, False)) : (SetError($__LOW_STATUS_SUCCESS, 0, True))
 
 	If ($snNot <> "") Then
 		If IsString($snNot) And StringInStr($snNot, ":") Then
@@ -3155,11 +3155,11 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 	If IsString($snIncl) And StringInStr($snIncl, ":") Then
 		$anIncl = StringSplit($snIncl, ":")
 		For $j = 1 To $anIncl[0]
-			$bMatch = ($anIncl[$j] = $nTest) ? True : False
+			$bMatch = ($anIncl[$j] = $nTest) ? (True) : (False)
 			If $bMatch Then ExitLoop
 		Next
 	ElseIf IsNumber($snIncl) Then
-		$bMatch = ($nTest = $snIncl) ? True : False
+		$bMatch = ($nTest = $snIncl) ? (True) : (False)
 	EndIf
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, $bMatch)
@@ -3320,7 +3320,7 @@ Func __LOWriter_NumStyleInitiateDocument()
 	__LOWriter_NumStyleCreateScript($oNumStyleDoc)
 	If (@error > 0) Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oNumStyleDoc) : SetError($__LOW_STATUS_SUCCESS, 1, $oNumStyleDoc)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oNumStyleDoc)) : (SetError($__LOW_STATUS_SUCCESS, 1, $oNumStyleDoc))
 EndFunc   ;==>__LOWriter_NumStyleInitiateDocument
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3357,32 +3357,32 @@ Func __LOWriter_NumStyleListFormat(ByRef $oNumRules, $iLevel, $iSubLevels, $sPre
 	If Not IsInt($iLevel) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iSubLevels) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 
-	$iBeginLevel = ($iLevel = -1) ? 9 : $iLevel ; If Level = -1 (all levels) then set the begin level at 9 (the last level), else at the called level.
-	$iEndLevel = ($iLevel = -1) ? 0 : ($iLevel - $iSubLevels + 1) ; If Level = -1 (all levels) then set the end level at 0 (the first level), else
+	$iBeginLevel = ($iLevel = -1) ? (9) : ($iLevel) ; If Level = -1 (all levels) then set the begin level at 9 (the last level), else at the called level.
+	$iEndLevel = ($iLevel = -1) ? (0) : ($iLevel - $iSubLevels + 1) ; If Level = -1 (all levels) then set the end level at 0 (the first level), else
 	; at the called level - any Sublevels.
 
 	If ($iLevel = -1) Then ;  If Level = -1 (all levels) cycle through them all, Applying their respective Prefix/Suffix
 		For $i = $iBeginLevel To $iEndLevel Step -1
-			$sPrefix = ($sPrefix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $i, "Prefix") : $sPrefix
-			$sSuffix = ($sSuffix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $i, "Suffix") : $sSuffix
+			$sPrefix = ($sPrefix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $i, "Prefix")) : ($sPrefix)
+			$sSuffix = ($sSuffix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $i, "Suffix")) : ($sSuffix)
 			$aListFormats[$i] = $sPrefix & "%" & ($i + 1) & "%" & $sSuffix
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 
 	Else ;Else if I'm modifying a specific level, retrieve its prefix/Suffix
-		$sPrefix = ($sPrefix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix") : $sPrefix
-		$sSuffix = ($sSuffix = Null) ? __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix") : $sSuffix
+		$sPrefix = ($sPrefix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix")) : ($sPrefix)
+		$sSuffix = ($sSuffix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix")) : ($sSuffix)
 
 		For $i = $iBeginLevel To $iEndLevel Step -1 ;Cycle Through the levels if any Sub levels are set.
 			If ($i = $iEndLevel) Then $sSeperator = ""
 			$sListFormat = $sSeperator & "%" & ($i + 1) & "%" & $sListFormat
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 		$sListFormat = $sPrefix & $sListFormat & $sSuffix
 
 	EndIf
 
-	Return ($iLevel = -1) ? SetError($__LOW_STATUS_SUCCESS, 0, $aListFormats) : SetError($__LOW_STATUS_SUCCESS, 1, $sListFormat)
+	Return ($iLevel = -1) ? (SetError($__LOW_STATUS_SUCCESS, 0, $aListFormats)) : (SetError($__LOW_STATUS_SUCCESS, 1, $sListFormat))
 
 EndFunc   ;==>__LOWriter_NumStyleListFormat
 
@@ -3434,7 +3434,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 	If Not __LOWriter_IntIsBetween($iLevel, -1, 9) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsArray($avSettings) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
-	$iEndLevel = ($iLevel = -1) ? 9 : 0 ;  replace setting value for all levels at once or for one level
+	$iEndLevel = ($iLevel = -1) ? (9) : (0) ;  replace setting value for all levels at once or for one level
 
 	$oScript = __LOWriter_NumStyleCreateScript($oDoc) ; Create my modification Script.
 
@@ -3450,7 +3450,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 		$sSettingName = $avSettings[$k][0]
 		$vSettingValue = $avSettings[$k][1]
 
-		$iGetLevel = ($iLevel = -1) ? 0 : $iLevel
+		$iGetLevel = ($iLevel = -1) ? (0) : ($iLevel)
 
 		For $j = 0 To $iEndLevel ;Set the settings for each level.
 			$atNumLevel = $oNumRules.getByIndex($iGetLevel)
@@ -3461,7 +3461,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 
 					Switch $sSettingName
 						Case "ListFormat"
-							$atNumLevel[$i].Value = ($iLevel = -1) ? $vSettingValue[$j] : $vSettingValue
+							$atNumLevel[$i].Value = ($iLevel = -1) ? ($vSettingValue[$j]) : ($vSettingValue)
 
 						Case "Prefix"
 							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ; Test is ListFormat exists, if so modify prefix/Suffix via new method.
@@ -3501,7 +3501,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 					ExitLoop
 				EndIf
 
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 
 			$iGetLevel += 1
@@ -3561,7 +3561,7 @@ Func __LOWriter_NumStyleRetrieve(ByRef $oNumRules, $iLevel, $sSettingName)
 
 	For $i = 0 To UBound($atNumLevel) - 1
 		If ($atNumLevel[$i].Name() = $sSettingName) Then Return SetError($__LOW_STATUS_SUCCESS, $i, $atNumLevel[$i].Value())
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 EndFunc   ;==>__LOWriter_NumStyleRetrieve
@@ -3674,10 +3674,10 @@ Func __LOWriter_PageStyleNameToggle($sPageStyle, $bReverse = False)
 	If Not IsBool($bReverse) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($bReverse = False) Then
-		$sPageStyle = ($sPageStyle = "Default Page Style") ? "Standard" : $sPageStyle
+		$sPageStyle = ($sPageStyle = "Default Page Style") ? ("Standard") : ($sPageStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 0, $sPageStyle)
 	Else
-		$sPageStyle = ($sPageStyle = "Standard") ? "Default Page Style" : $sPageStyle
+		$sPageStyle = ($sPageStyle = "Standard") ? ("Default Page Style") : ($sPageStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $sPageStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_PageStyleNameToggle
@@ -3743,40 +3743,40 @@ Func __LOWriter_ParAlignment(ByRef $oObj, $iHorAlign, $iVertAlign, $iLastLineAli
 	If ($iHorAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_PAR_ALIGN_HOR_LEFT, $LOW_PAR_ALIGN_HOR_CENTER) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaAdjust = $iHorAlign
-		$iError = ($oObj.ParaAdjust() = $iHorAlign) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.ParaAdjust() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_PAR_ALIGN_VERT_AUTO, $LOW_PAR_ALIGN_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaVertAlignment = $iVertAlign
-		$iError = ($oObj.ParaVertAlignment() = $iVertAlign) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.ParaVertAlignment() = $iVertAlign) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iLastLineAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLastLineAlign, $LOW_PAR_LAST_LINE_JUSTIFIED, $LOW_PAR_LAST_LINE_CENTER, "", $LOW_PAR_LAST_LINE_START) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaLastLineAdjust = $iLastLineAlign
-		$iError = ($oObj.ParaLastLineAdjust() = $iLastLineAlign) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.ParaLastLineAdjust() = $iLastLineAlign) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bExpandSingleWord <> Null) Then
 		If Not IsBool($bExpandSingleWord) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.ParaExpandSingleWord = $bExpandSingleWord
-		$iError = ($oObj.ParaExpandSingleWord() = $bExpandSingleWord) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaExpandSingleWord() = $bExpandSingleWord) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bSnapToGrid <> Null) Then
 		If Not IsBool($bSnapToGrid) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.SnapToGrid = $bSnapToGrid
-		$iError = ($oObj.SnapToGrid() = $bSnapToGrid) ? $iError : BitOR($iError, 16)
+		$iError = ($oObj.SnapToGrid() = $bSnapToGrid) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iTxtDirection <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oObj.WritingMode = $iTxtDirection
-		$iError = ($oObj.WritingMode() = $iTxtDirection) ? $iError : BitOR($iError, 32)
+		$iError = ($oObj.WritingMode() = $iTxtDirection) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParAlignment
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3824,16 +3824,16 @@ Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaBackColor = $iBackColor
-		$iError = ($oObj.ParaBackColor() = $iBackColor) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.ParaBackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaBackTransparent = $bBackTransparent
-		$iError = ($oObj.ParaBackTransparent() = $bBackTransparent) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.ParaBackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParBackColor
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3891,34 +3891,34 @@ Func __LOWriter_ParBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $i
 	If ($iAll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.BorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oObj.BorderDistance(), $iAll - 1, $iAll + 1)) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_IntIsBetween($oObj.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.TopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oObj.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oObj.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.BottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oObj.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_IntIsBetween($oObj.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.LeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oObj.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 8)
+		$iError = (__LOWriter_IntIsBetween($oObj.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.RightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oObj.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 16)
+		$iError = (__LOWriter_IntIsBetween($oObj.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParBorderPadding
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4001,25 +4001,25 @@ Func __LOWriter_ParDropCaps(ByRef $oObj, $iNumChar, $iLines, $iSpcTxt, $bWholeWo
 		EndIf
 
 		$oObj.DropCapFormat = $tDCFrmt
-		$iError = ($iNumChar = Null) ? $iError : ($tDCFrmt.Count() = $iNumChar) ? $iError : BitOR($iError, 1)
-		$iError = ($iLines = Null) ? $iError : ($tDCFrmt.Lines() = $iLines) ? $iError : BitOR($iError, 2)
-		$iError = ($iSpcTxt = Null) ? $iError : (__LOWriter_IntIsBetween($tDCFrmt.Distance(), $iSpcTxt - 1, $iSpcTxt + 1)) ? $iError : BitOR($iError, 4)
+		$iError = ($iNumChar = Null) ? ($iError) : (($tDCFrmt.Count() = $iNumChar) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iLines = Null) ? ($iError) : (($tDCFrmt.Lines() = $iLines) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($iSpcTxt = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tDCFrmt.Distance(), $iSpcTxt - 1, $iSpcTxt + 1)) ? ($iError) : (BitOR($iError, 4)))
 	EndIf
 
 	If ($bWholeWord <> Null) Then
 		If Not IsBool($bWholeWord) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oObj.DropCapWholeWord = $bWholeWord
-		$iError = ($oObj.DropCapWholeWord() = $bWholeWord) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.DropCapWholeWord() = $bWholeWord) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($sCharStyle <> Null) Then
 		If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
 		$sCharStyle = __LOWriter_CharStyleNameToggle($sCharStyle)
 		$oObj.DropCapCharStyleName = $sCharStyle
-		$iError = ($oObj.DropCapCharStyleName() = $sCharStyle) ? $iError : BitOR($iError, 16)
+		$iError = ($oObj.DropCapCharStyleName() = $sCharStyle) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParDropCaps
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4058,7 +4058,7 @@ Func __LOWriter_ParHasTabStop(ByRef $oObj, $iTabStop)
 
 	For $i = 0 To UBound($atTabStops) - 1
 		If ($atTabStops[$i].Position() = $iTabStop) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 0, False)
@@ -4128,35 +4128,35 @@ Func __LOWriter_ParHyphenation(ByRef $oObj, $bAutoHyphen, $bHyphenNoCaps, $iMaxH
 	If ($bAutoHyphen <> Null) Then
 		If Not IsBool($bAutoHyphen) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaIsHyphenation = $bAutoHyphen
-		$iError = ($oObj.ParaIsHyphenation = $bAutoHyphen) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.ParaIsHyphenation = $bAutoHyphen) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bHyphenNoCaps <> Null) Then
 		If Not IsBool($bHyphenNoCaps) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		If Not __LOWriter_VersionCheck(6.4) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oObj.ParaHyphenationNoCaps = $bHyphenNoCaps
-		$iError = ($oObj.ParaHyphenationNoCaps = $bHyphenNoCaps) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.ParaHyphenationNoCaps = $bHyphenNoCaps) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iMaxHyphens <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMaxHyphens, 0, 99) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaHyphenationMaxHyphens = $iMaxHyphens
-		$iError = ($oObj.ParaHyphenationMaxHyphens = $iMaxHyphens) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.ParaHyphenationMaxHyphens = $iMaxHyphens) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iMinLeadingChar <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMinLeadingChar, 2, 9) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.ParaHyphenationMaxLeadingChars = $iMinLeadingChar
-		$iError = ($oObj.ParaHyphenationMaxLeadingChars = $iMinLeadingChar) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaHyphenationMaxLeadingChars = $iMinLeadingChar) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iMinTrailingChar <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMinTrailingChar, 2, 9) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.ParaHyphenationMaxTrailingChars = $iMinTrailingChar
-		$iError = ($oObj.ParaHyphenationMaxTrailingChars = $iMinTrailingChar) ? $iError : BitOR($iError, 16)
+		$iError = ($oObj.ParaHyphenationMaxTrailingChars = $iMinTrailingChar) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParHyphenation
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4212,29 +4212,29 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 	If ($iBeforeTxt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBeforeTxt, -9998989, 17094) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaLeftMargin = $iBeforeTxt
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaLeftMargin()), ($iBeforeTxt - 1), ($iBeforeTxt + 1))) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaLeftMargin()), ($iBeforeTxt - 1), ($iBeforeTxt + 1))) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iAfterTxt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAfterTxt, -9998989, 17094) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaRightMargin = $iAfterTxt
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaRightMargin()), ($iAfterTxt - 1), ($iAfterTxt + 1))) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaRightMargin()), ($iAfterTxt - 1), ($iAfterTxt + 1))) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	; max 17094; min;-57785
 	If ($iFirstLine <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFirstLine, -57785, 17094) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaFirstLineIndent = $iFirstLine
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaFirstLineIndent()), ($iFirstLine - 1), ($iFirstLine + 1))) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaFirstLineIndent()), ($iFirstLine - 1), ($iFirstLine + 1))) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoFirstLine <> Null) Then
 		If Not IsBool($bAutoFirstLine) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.ParaIsAutoFirstLineIndent = $bAutoFirstLine
-		$iError = ($oObj.ParaIsAutoFirstLineIndent() = $bAutoFirstLine) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaIsAutoFirstLineIndent() = $bAutoFirstLine) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParIndent
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4289,28 +4289,28 @@ Func __LOWriter_ParOutLineAndList(ByRef $oObj, $iOutline, $sNumStyle, $bParLineC
 	If ($iOutline <> Null) Then
 		If Not __LOWriter_IntIsBetween($iOutline, $LOW_OUTLINE_BODY, $LOW_OUTLINE_LEVEL_10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.OutlineLevel = $iOutline
-		$iError = ($oObj.OutlineLevel = $iOutline) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.OutlineLevel = $iOutline) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sNumStyle <> Null) Then
 		If Not IsString($sNumStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.NumberingStyleName = $sNumStyle
-		$iError = ($oObj.NumberingStyleName = $sNumStyle) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.NumberingStyleName = $sNumStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bParLineCount <> Null) Then
 		If Not IsBool($bParLineCount) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.ParaLineNumberCount = $bParLineCount
-		$iError = ($oObj.ParaLineNumberCount = $bParLineCount) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.ParaLineNumberCount = $bParLineCount) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLineCountVal <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLineCountVal, 0, $iLineCountVal) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oObj.ParaLineNumberStartValue = $iLineCountVal
-		$iError = ($oObj.ParaLineNumberStartValue = $iLineCountVal) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaLineNumberStartValue = $iLineCountVal) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParOutLineAndList
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4366,22 +4366,22 @@ Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyl
 	If ($iBreakType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBreakType, $LOW_BREAK_NONE, $LOW_BREAK_PAGE_BOTH) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.BreakType = $iBreakType
-		$iError = ($oObj.BreakType = $iBreakType) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.BreakType = $iBreakType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iPgNumOffSet <> Null) Then
 		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0, $iPgNumOffSet) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.PageNumberOffset = $iPgNumOffSet
-		$iError = ($oObj.PageNumberOffset = $iPgNumOffSet) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.PageNumberOffset = $iPgNumOffSet) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sPageStyle <> Null) Then
 		If Not IsString($sPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.PageDescName = $sPageStyle
-		$iError = ($oObj.PageDescName = $sPageStyle) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.PageDescName = $sPageStyle) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParPageBreak
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4464,12 +4464,12 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 	$tShdwFrmt = $oObj.ParaShadowFormat()
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	$iError = ($iWidth = Null) ? $iError : ($tShdwFrmt.ShadowWidth() = $iWidth) ? $iError : BitOR($iError, 1)
-	$iError = ($iColor = Null) ? $iError : ($tShdwFrmt.Color() = $iColor) ? $iError : BitOR($iError, 2)
-	$iError = ($bTransparent = Null) ? $iError : ($tShdwFrmt.IsTransparent() = $bTransparent) ? $iError : BitOR($iError, 4)
-	$iError = ($iLocation = Null) ? $iError : ($tShdwFrmt.Location() = $iLocation) ? $iError : BitOR($iError, 8)
+	$iError = ($iWidth = Null) ? ($iError) : (($tShdwFrmt.ShadowWidth() = $iWidth) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParShadow
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4551,20 +4551,20 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	If ($iAbovePar <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAbovePar, 0, 10008) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaTopMargin = $iAbovePar
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaTopMargin()), ($iAbovePar - 1), ($iAbovePar + 1))) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaTopMargin()), ($iAbovePar - 1), ($iAbovePar + 1))) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iBelowPar <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBelowPar, 0, 10008) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaBottomMargin = $iBelowPar
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaBottomMargin()), ($iBelowPar - 1), ($iBelowPar + 1))) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaBottomMargin()), ($iBelowPar - 1), ($iBelowPar + 1))) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bAddSpace <> Null) Then
 		If Not IsBool($bAddSpace) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oObj.ParaContextMargin = $bAddSpace
-		$iError = ($oObj.ParaContextMargin = $bAddSpace) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.ParaContextMargin = $bAddSpace) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLineSpcMode <> Null) Then
@@ -4573,7 +4573,7 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 		If Not IsObj($tLine) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 		$tLine.Mode = $iLineSpcMode
 		$oObj.ParaLineSpacing = $tLine
-		$iError = ($oObj.ParaLineSpacing.Mode() = $iLineSpcMode) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaLineSpacing.Mode() = $iLineSpcMode) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iLineSpcHeight <> Null) Then
@@ -4591,16 +4591,16 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 		EndSwitch
 		$tLine.Height = $iLineSpcHeight
 		$oObj.ParaLineSpacing = $tLine
-		$iError = (__LOWriter_NumIsBetween(($oObj.ParaLineSpacing.Height()), ($iLineSpcHeight - 1), ($iLineSpcHeight + 1))) ? $iError : BitOR($iError, 16)
+		$iError = (__LOWriter_NumIsBetween(($oObj.ParaLineSpacing.Height()), ($iLineSpcHeight - 1), ($iLineSpcHeight + 1))) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bPageLineSpc <> Null) Then
 		If Not IsBool($bPageLineSpc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
 		$oObj.ParaRegisterModeActive = $bPageLineSpc
-		$iError = ($oObj.ParaRegisterModeActive() = $bPageLineSpc) ? $iError : BitOR($iError, 32)
+		$iError = ($oObj.ParaRegisterModeActive() = $bPageLineSpc) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParSpace
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4629,12 +4629,12 @@ Func __LOWriter_ParStyleNameToggle($sParStyle, $bReverse = False)
 	If Not IsBool($bReverse) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($bReverse = False) Then
-		$sParStyle = ($sParStyle = "Default Paragraph Style") ? "Standard" : $sParStyle
-		$sParStyle = ($sParStyle = "Complimentary Close") ? "Salutation" : $sParStyle
+		$sParStyle = ($sParStyle = "Default Paragraph Style") ? ("Standard") : ($sParStyle)
+		$sParStyle = ($sParStyle = "Complimentary Close") ? ("Salutation") : ($sParStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 0, $sParStyle)
 	Else
-		$sParStyle = ($sParStyle = "Standard") ? "Default Paragraph Style" : $sParStyle
-		$sParStyle = ($sParStyle = "Salutation") ? "Complimentary Close" : $sParStyle
+		$sParStyle = ($sParStyle = "Standard") ? ("Default Paragraph Style") : ($sParStyle)
+		$sParStyle = ($sParStyle = "Salutation") ? ("Complimentary Close") : ($sParStyle)
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $sParStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_ParStyleNameToggle
@@ -4711,7 +4711,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 
 	If ($iFillChar <> Null) Then
 		If Not IsInt($iFillChar) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		$tTabStruct.FillChar = ($iFillChar = 0) ? 32 : $iFillChar
+		$tTabStruct.FillChar = ($iFillChar = 0) ? (32) : ($iFillChar)
 	EndIf
 
 	If ($iAlignment <> Null) Then
@@ -4752,10 +4752,10 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		If Not $bFound Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; didn't find the new TabStop
 	EndIf
 
-	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? $iError : BitOR($iError, 1)
-	$iError = ($iFillChar = Null) ? $iError : ($tFoundTabStop.FillChar = $iFillChar) ? $iError : BitOR($iError, 2)
-	$iError = ($iAlignment = Null) ? $iError : ($tFoundTabStop.Alignment = $iAlignment) ? $iError : BitOR($iError, 4)
-	$iError = ($iDecChar = Null) ? $iError : ($tFoundTabStop.DecimalChar = $iDecChar) ? $iError : BitOR($iError, 8)
+	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? ($iError) : (BitOR($iError, 1))
+	$iError = ($iFillChar = Null) ? ($iError) : (($tFoundTabStop.FillChar = $iFillChar) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iAlignment = Null) ? ($iError) : (($tFoundTabStop.Alignment = $iAlignment) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iDecChar = Null) ? ($iError) : (($tFoundTabStop.DecimalChar = $iDecChar) ? ($iError) : (BitOR($iError, 8)))
 
 	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $iNewPosition) : SetError($__LOW_STATUS_SUCCESS, 0, $iNewPosition)
 EndFunc   ;==>__LOWriter_ParTabStopCreate
@@ -4820,14 +4820,14 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 				$atNewTabStops[$iCount] = $atOldTabStops[$i]
 				$iCount += 1
 			EndIf
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
-	ReDim $atNewTabStops[(($bDeleted) ? (UBound($atNewTabStops) - 1) : UBound($atNewTabStops))]
+	ReDim $atNewTabStops[(($bDeleted) ? (UBound($atNewTabStops) - 1) : (UBound($atNewTabStops)))]
 
 	$oObj.ParaTabStops = $atNewTabStops
 
-	Return ($bDeleted) ? SetError($__LOW_STATUS_SUCCESS, 0, $bDeleted) : SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	Return ($bDeleted) ? (SetError($__LOW_STATUS_SUCCESS, 0, $bDeleted)) : (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0))
 EndFunc   ;==>__LOWriter_ParTabStopDelete
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4865,7 +4865,7 @@ Func __LOWriter_ParTabStopList(ByRef $oObj)
 
 	For $i = 0 To UBound($atTabStops) - 1
 		$aiTabList[$i] = $atTabStops[$i].Position()
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	Return SetError($__LOW_STATUS_SUCCESS, $i, $aiTabList)
 EndFunc   ;==>__LOWriter_ParTabStopList
@@ -4939,9 +4939,9 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 	If Not IsArray($atTabStops) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 	For $i = 0 To UBound($atTabStops) - 1
-		$tTabStruct = ($atTabStops[$i].Position() = $iTabStop) ? $atTabStops[$i] : Null
+		$tTabStruct = ($atTabStops[$i].Position() = $iTabStop) ? ($atTabStops[$i]) : (Null)
 		If IsObj($tTabStruct) Then ExitLoop
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	If Not IsObj($tTabStruct) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
@@ -4954,27 +4954,27 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 		If Not IsInt($iPosition) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		If __LOWriter_ParHasTabStop($oObj, $iPosition) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
 		$tTabStruct.Position = $iPosition
-		$iError = ($tTabStruct.Position() = $iPosition) ? $iError : BitOR($iError, 1)
+		$iError = ($tTabStruct.Position() = $iPosition) ? ($iError) : (BitOR($iError, 1))
 		$bNewPosition = True
 	EndIf
 
 	If ($iFillChar <> Null) Then
 		If Not IsInt($iFillChar) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$tTabStruct.FillChar = $iFillChar
-		$tTabStruct.FillChar = ($tTabStruct.FillChar() = 0) ? 32 : $tTabStruct.FillChar()
-		$iError = ($tTabStruct.FillChar = $iFillChar) ? $iError : BitOR($iError, 2)
+		$tTabStruct.FillChar = ($tTabStruct.FillChar() = 0) ? (32) : ($tTabStruct.FillChar())
+		$iError = ($tTabStruct.FillChar = $iFillChar) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iAlignment <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlignment, $LOW_TAB_ALIGN_LEFT, $LOW_TAB_ALIGN_DEFAULT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$tTabStruct.Alignment = $iAlignment
-		$iError = ($tTabStruct.Alignment = $iAlignment) ? $iError : BitOR($iError, 4)
+		$iError = ($tTabStruct.Alignment = $iAlignment) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iDecChar <> Null) Then
 		If Not IsInt($iDecChar) And ($iDecChar <> Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$tTabStruct.DecimalChar = $iDecChar
-		$iError = ($tTabStruct.DecimalChar = $iDecChar) ? $iError : BitOR($iError, 8)
+		$iError = ($tTabStruct.DecimalChar = $iDecChar) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	$atTabStops[$i] = $tTabStruct
@@ -4993,12 +4993,12 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 				$iNewPosition = $atNewTabStops[$j].Position()
 				ExitLoop
 			EndIf
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-		Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, $iNewPosition, 2)
+		Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, $iNewPosition, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParTabStopMod
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -5054,28 +5054,28 @@ Func __LOWriter_ParTxtFlowOpt(ByRef $oObj, $bParSplit, $bKeepTogether, $iParOrph
 	If ($bParSplit <> Null) Then
 		If Not IsBool($bParSplit) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaSplit = $bParSplit
-		$iError = ($oObj.ParaSplit = $bParSplit) ? $iError : BitOR($iError, 1)
+		$iError = ($oObj.ParaSplit = $bParSplit) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bKeepTogether <> Null) Then
 		If Not IsBool($bKeepTogether) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaKeepTogether = $bKeepTogether
-		$iError = ($oObj.ParaKeepTogether = $bKeepTogether) ? $iError : BitOR($iError, 2)
+		$iError = ($oObj.ParaKeepTogether = $bKeepTogether) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iParOrphans <> Null) Then
 		If Not __LOWriter_IntIsBetween($iParOrphans, 0, 9, 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaOrphans = $iParOrphans
-		$iError = ($oObj.ParaOrphans = $iParOrphans) ? $iError : BitOR($iError, 4)
+		$iError = ($oObj.ParaOrphans = $iParOrphans) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iParWidows <> Null) Then
 		If Not __LOWriter_IntIsBetween($iParWidows, 0, 9, 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.ParaWidows = $iParWidows
-		$iError = ($oObj.ParaWidows = $iParWidows) ? $iError : BitOR($iError, 8)
+		$iError = ($oObj.ParaWidows = $iParWidows) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_ParTxtFlowOpt
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -6702,7 +6702,7 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
 
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
 		Return SetError($__LOW_STATUS_SUCCESS, 2, $sArrowStyle) ; If no matches, just return the name, as it could be a custom value.
@@ -6786,7 +6786,7 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
 
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
 		Return SetError($__LOW_STATUS_SUCCESS, 2, $sLineStyle) ; If no matches, just return the name, as it could be a custom value.
@@ -6877,54 +6877,54 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	If $iTop <> Null Then
 		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
 		; Top Line
-		$tBL2.LineWidth = ($bWid) ? $iTop : $tTB2.TopLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iTop : $tTB2.TopLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iTop : $tTB2.TopLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($tTB2.TopLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($tTB2.TopLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($tTB2.TopLine.Color()) ; copy Color over to new size structure
 		$tTB2.TopLine = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
 		If Not $bWid And ($tTB2.BottomLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
 		; Bottom Line
-		$tBL2.LineWidth = ($bWid) ? $iBottom : $tTB2.BottomLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iBottom : $tTB2.BottomLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iBottom : $tTB2.BottomLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($tTB2.BottomLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($tTB2.BottomLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($tTB2.BottomLine.Color()) ; copy Color over to new size structure
 		$tTB2.BottomLine = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
 		If Not $bWid And ($tTB2.LeftLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
 		; Left Line
-		$tBL2.LineWidth = ($bWid) ? $iLeft : $tTB2.LeftLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iLeft : $tTB2.LeftLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iLeft : $tTB2.LeftLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($tTB2.LeftLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($tTB2.LeftLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($tTB2.LeftLine.Color()) ; copy Color over to new size structure
 		$tTB2.LeftLine = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
 		If Not $bWid And ($tTB2.RightLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
 		; Right Line
-		$tBL2.LineWidth = ($bWid) ? $iRight : $tTB2.RightLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iRight : $tTB2.RightLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iRight : $tTB2.RightLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($tTB2.RightLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($tTB2.RightLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($tTB2.RightLine.Color()) ; copy Color over to new size structure
 		$tTB2.RightLine = $tBL2
 	EndIf
 
 	If $iVert <> Null Then
 		If Not $bWid And ($tTB2.VerticalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 5, 0) ; If Width not set, cant set color or style.
 		; Vertical Line
-		$tBL2.LineWidth = ($bWid) ? $iVert : $tTB2.VerticalLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iVert : $tTB2.VerticalLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iVert : $tTB2.VerticalLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iVert) : ($tTB2.VerticalLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iVert) : ($tTB2.VerticalLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iVert) : ($tTB2.VerticalLine.Color()) ; copy Color over to new size structure
 		$tTB2.VerticalLine = $tBL2
 	EndIf
 
 	If $iHori <> Null Then
 		If Not $bWid And ($tTB2.HorizontalLine.LineWidth() = 0) Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 6, 0) ; If Width not set, cant set color or style.
 		; Horizontal Line
-		$tBL2.LineWidth = ($bWid) ? $iHori : $tTB2.HorizontalLine.LineWidth() ; copy Line Width over to new size structure
-		$tBL2.LineStyle = ($bSty) ? $iHori : $tTB2.HorizontalLine.LineStyle() ; copy Line style over to new size structure
-		$tBL2.Color = ($bCol) ? $iHori : $tTB2.HorizontalLine.Color() ; copy Color over to new size structure
+		$tBL2.LineWidth = ($bWid) ? ($iHori) : ($tTB2.HorizontalLine.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iHori) : ($tTB2.HorizontalLine.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iHori) : ($tTB2.HorizontalLine.Color()) ; copy Color over to new size structure
 		$tTB2.HorizontalLine = $tBL2
 	EndIf
 
@@ -6997,12 +6997,12 @@ Func __LOWriter_TableCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = Fals
 	Switch $iMove
 		Case $LOW_TABLECUR_GO_LEFT, $LOW_TABLECUR_GO_RIGHT, $LOW_TABLECUR_GO_UP, $LOW_TABLECUR_GO_DOWN
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
-			$iCounted = ($bMoved) ? $iCount : 0
+			$iCounted = ($bMoved) ? ($iCount) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TABLECUR_GOTO_START, $LOW_TABLECUR_GOTO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
-			$iCounted = ($bMoved) ? 1 : 0
+			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 		Case Else
 			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
@@ -7045,7 +7045,7 @@ Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
 
 	For $i = 0 To UBound($aCellNames) - 1
 		If StringInStr($aCellNames[$i], $sCellName) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; Cell not found
@@ -7078,7 +7078,7 @@ Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? True : False
+	Return ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False)
 EndFunc   ;==>__LOWriter_TableHasColumnRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7108,7 +7108,7 @@ Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
 	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iRow) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iRow <= ($oTable.getRows.getCount() - 1)) ? True : False
+	Return ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False)
 EndFunc   ;==>__LOWriter_TableHasRowRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7157,7 +7157,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		For $i = 1 To $iRows - 1
 
 			If $bSplitRowTest <> ($oTable.getRows.getByIndex($i).IsSplitAllowed()) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ; Table Rows have mixed settings, return 0.
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $bSplitRowTest) ; All Table Rows are set the same as the first Row, return that setting.
 
@@ -7166,7 +7166,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 
 		For $i = 0 To $iRows - 1
 			$oTable.getRows.getByIndex($i).IsSplitAllowed = $bSplitRows
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 		Return SetError($__LOW_STATUS_SUCCESS, 2, 1)
 	EndIf
@@ -7262,15 +7262,15 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 	Switch $iMove
 		Case $LOW_TEXTCUR_GO_LEFT, $LOW_TEXTCUR_GO_RIGHT
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
-			$iCounted = ($bMoved) ? $iCount : 0
+			$iCounted = ($bMoved) ? ($iCount) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TEXTCUR_GOTO_NEXT_WORD, $LOW_TEXTCUR_GOTO_PREV_WORD, $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, $LOW_TEXTCUR_GOTO_PREV_SENTENCE, _
 				$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, $LOW_TEXTCUR_GOTO_PREV_PARAGRAPH
 			Do
 				$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
-				$iCounted += ($bMoved) ? 1 : 0
-				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+				$iCounted += ($bMoved) ? (1) : (0)
+				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Until ($iCounted >= $iCount) Or ($bMoved = False)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
@@ -7278,12 +7278,12 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 				$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, $LOW_TEXTCUR_GOTO_START_OF_SENTENCE, $LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, _
 				$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
-			$iCounted = ($bMoved) ? 1 : 0
+			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TEXTCUR_COLLAPSE_TO_START, $LOW_TEXTCUR_COLLAPSE_TO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
-			$iCounted = ($bMoved) ? 1 : 0
+			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 		Case Else
 			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
@@ -7371,7 +7371,7 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 
 	While $oTGradTable.hasByName("Transparency " & $iCount)
 		$iCount += 1
-		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV)) ? 10 : 0)
+		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
 	$tNewTGradient = __LOWriter_CreateStruct("com.sun.star.awt.Gradient")
@@ -7488,10 +7488,10 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 
 		Case $__LOWCONST_CONVERT_PT_UM
 			; 1 pt = 35 uM
-			Return ($nValue = 0) ? SetError($__LOW_STATUS_SUCCESS, 10, 0) : SetError($__LOW_STATUS_SUCCESS, 10, Round(($nValue * 35.2778)))
+			Return ($nValue = 0) ? (SetError($__LOW_STATUS_SUCCESS, 10, 0)) : (SetError($__LOW_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
 
 		Case $__LOWCONST_CONVERT_UM_PT
-			Return ($nValue = 0) ? SetError($__LOW_STATUS_SUCCESS, 11, 0) : SetError($__LOW_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2))
+			Return ($nValue = 0) ? (SetError($__LOW_STATUS_SUCCESS, 11, 0)) : (SetError($__LOW_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
 
 		Case Else
 			Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
@@ -7523,9 +7523,9 @@ EndFunc   ;==>__LOWriter_UnitConvert
 ; ===============================================================================================================================
 Func __LOWriter_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
 	Local $bAllDefault1, $bAllDefault2
-	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? True : False
-	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? True : False
-	Return ($bAllDefault1 And $bAllDefault2) ? True : False
+	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? (True) : (False)
+	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? (True) : (False)
+	Return ($bAllDefault1 And $bAllDefault2) ? (True) : (False)
 EndFunc   ;==>__LOWriter_VarsAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7557,12 +7557,12 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ; ===============================================================================================================================
 Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
 	Local $bAllNull1, $bAllNull2, $bAllNull3
-	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? True : False
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? True : False
-	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? True : False
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? True : False
-	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? True : False
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? True : False
+	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
+	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
+	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
+	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? (True) : (False)
+	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
+	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False)
 EndFunc   ;==>__LOWriter_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7592,7 +7592,7 @@ Func __LOWriter_VersionCheck($fRequiredVersion)
 
 	If Not IsNumber($fRequiredVersion) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, False)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 1, ($fCurrentVersion >= $fRequiredVersion) ? True : False)
+	Return SetError($__LOW_STATUS_SUCCESS, 1, ($fCurrentVersion >= $fRequiredVersion) ? (True) : (False))
 EndFunc   ;==>__LOWriter_VersionCheck
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7685,12 +7685,12 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 	Switch $iMove
 		Case $LOW_VIEWCUR_GO_DOWN, $LOW_VIEWCUR_GO_UP, $LOW_VIEWCUR_GO_LEFT, $LOW_VIEWCUR_GO_RIGHT
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
-			$iCounted = ($bMoved) ? $iCount : 0
+			$iCounted = ($bMoved) ? ($iCount) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_GOTO_END_OF_LINE, $LOW_VIEWCUR_GOTO_START_OF_LINE, $LOW_VIEWCUR_GOTO_START, $LOW_VIEWCUR_GOTO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
-			$iCounted = ($bMoved) ? 1 : 0
+			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_PAGE
@@ -7700,15 +7700,15 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 		Case $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, $LOW_VIEWCUR_SCREEN_DOWN, $LOW_VIEWCUR_SCREEN_UP
 			Do
 				$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
-				$iCounted += ($bMoved) ? 1 : 0
-				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+				$iCounted += ($bMoved) ? (1) : (0)
+				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Until ($iCounted >= $iCount) Or ($bMoved = False)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, _
 				$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
-			$iCounted = ($bMoved) ? 1 : 0
+			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LOW_STATUS_SUCCESS, $iCounted, $bMoved)
 		Case Else
 			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
