@@ -79,16 +79,16 @@ Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oCell.BackColor = $iBackColor
 		If ($iBackColor = $LOW_COLOR_OFF) Then $oCell.BackTransparent = True
-		$iError = ($oCell.BackColor() = $iBackColor) ? $iError : BitOR($iError, 1) ; Error setting color.
+		$iError = ($oCell.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1)) ; Error setting color.
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oCell.BackTransparent = $bBackTransparent
-		$iError = ($oCell.BackTransparent() = $bBackTransparent) ? $iError : BitOR($iError, 2) ; Error setting BackTransparent.
+		$iError = ($oCell.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2)) ; Error setting BackTransparent.
 	EndIf
 
-	Return ($iError = 0) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)
+	Return ($iError = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0))
 EndFunc   ;==>_LOWriter_CellBackColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -202,28 +202,28 @@ Func _LOWriter_CellBorderPadding(ByRef $oCell, $iTop = Null, $iBottom = Null, $i
 	If ($iTop <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oCell.TopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oCell.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_IntIsBetween($oCell.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oCell.BottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oCell.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oCell.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oCell.LeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oCell.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_IntIsBetween($oCell.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oCell.RightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oCell.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 8)
+		$iError = (__LOWriter_IntIsBetween($oCell.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0))
 EndFunc   ;==>_LOWriter_CellBorderPadding
 
 ; #FUNCTION# ====================================================================================================================
@@ -528,7 +528,7 @@ Func _LOWriter_CellProtect(ByRef $oCell, $bProtect = Null)
 
 	$oCell.IsProtected = $bProtect
 
-	Return ($oCell.IsProtected() = $bProtect) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oCell.IsProtected() = $bProtect) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_CellProtect
 
 ; #FUNCTION# ====================================================================================================================
@@ -644,5 +644,5 @@ Func _LOWriter_CellVertOrient(ByRef $oCell, $iVertOrient = Null)
 	If Not __LOWriter_IntIsBetween($iVertOrient, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	$oCell.VertOrient = $iVertOrient
 
-	Return ($oCell.VertOrient() = $iVertOrient) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oCell.VertOrient() = $iVertOrient) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_CellVertOrient

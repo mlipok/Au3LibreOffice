@@ -294,29 +294,29 @@ Func _LOWriter_EndnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iStar
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oDoc.EndnoteSettings.NumberingType = $iNumFormat
-		$iError = ($oDoc.EndnoteSettings.NumberingType() = $iNumFormat) ? $iError : BitOR($iError, 1)
+		$iError = ($oDoc.EndnoteSettings.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	; 0 Based -- Minus 1
 	If ($iStartAt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStartAt, 1, 9999) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oDoc.EndnoteSettings.StartAt = ($iStartAt - 1)
-		$iError = ($oDoc.EndnoteSettings.StartAt() = ($iStartAt - 1)) ? $iError : BitOR($iError, 2)
+		$iError = ($oDoc.EndnoteSettings.StartAt() = ($iStartAt - 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sBefore <> Null) Then
 		If Not IsString($sBefore) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oDoc.EndnoteSettings.Prefix = $sBefore
-		$iError = ($oDoc.EndnoteSettings.Prefix() = $sBefore) ? $iError : BitOR($iError, 4)
+		$iError = ($oDoc.EndnoteSettings.Prefix() = $sBefore) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sAfter <> Null) Then
 		If Not IsString($sAfter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oDoc.EndnoteSettings.Suffix = $sAfter
-		$iError = ($oDoc.EndnoteSettings.Suffix() = $sAfter) ? $iError : BitOR($iError, 8)
+		$iError = ($oDoc.EndnoteSettings.Suffix() = $sAfter) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 
 ; #FUNCTION# ====================================================================================================================
@@ -379,7 +379,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$sParagraph = __LOWriter_ParStyleNameToggle($sParagraph)
 		$oDoc.EndnoteSettings.ParaStyleName = $sParagraph
-		$iError = ($oDoc.EndnoteSettings.ParaStyleName() = $sParagraph) ? $iError : BitOR($iError, 1)
+		$iError = ($oDoc.EndnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sPage <> Null) Then
@@ -387,7 +387,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not _LOWriter_PageStyleExists($oDoc, $sPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$sPage = __LOWriter_PageStyleNameToggle($sPage)
 		$oDoc.EndnoteSettings.PageStyleName = $sPage
-		$iError = ($oDoc.EndnoteSettings.PageStyleName() = $sPage) ? $iError : BitOR($iError, 2)
+		$iError = ($oDoc.EndnoteSettings.PageStyleName() = $sPage) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sTextArea <> Null) Then
@@ -395,7 +395,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not _LOWriter_CharStyleExists($oDoc, $sTextArea) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$sTextArea = __LOWriter_CharStyleNameToggle($sTextArea)
 		$oDoc.EndnoteSettings.AnchorCharStyleName = $sTextArea
-		$iError = ($oDoc.EndnoteSettings.AnchorCharStyleName() = $sTextArea) ? $iError : BitOR($iError, 4)
+		$iError = ($oDoc.EndnoteSettings.AnchorCharStyleName() = $sTextArea) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sEndnoteArea <> Null) Then
@@ -403,10 +403,10 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 		If Not _LOWriter_CharStyleExists($oDoc, $sEndnoteArea) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$sEndnoteArea = __LOWriter_CharStyleNameToggle($sEndnoteArea)
 		$oDoc.EndnoteSettings.CharStyleName = $sEndnoteArea
-		$iError = ($oDoc.EndnoteSettings.CharStyleName() = $sEndnoteArea) ? $iError : BitOR($iError, 8)
+		$iError = ($oDoc.EndnoteSettings.CharStyleName() = $sEndnoteArea) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 
 ; #FUNCTION# ====================================================================================================================
@@ -451,11 +451,11 @@ Func _LOWriter_EndnotesGetList(ByRef $oDoc)
 		For $i = 0 To $iCount - 1
 			$aoEndnotes[$i] = $oEndNotes.getByIndex($i)
 
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
 
-	Return ($iCount > 0) ? SetError($__LOW_STATUS_SUCCESS, $iCount, $aoEndnotes) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iCount > 0) ? (SetError($__LOW_STATUS_SUCCESS, $iCount, $aoEndnotes)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_EndnotesGetList
 
 ; #FUNCTION# ====================================================================================================================
@@ -724,41 +724,41 @@ Func _LOWriter_FootnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iSta
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oDoc.FootnoteSettings.NumberingType = $iNumFormat
-		$iError = ($oDoc.FootnoteSettings.NumberingType() = $iNumFormat) ? $iError : BitOR($iError, 1)
+		$iError = ($oDoc.FootnoteSettings.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	; 0 Based -- Minus 1
 	If ($iStartAt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStartAt, 1, 9999) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oDoc.FootnoteSettings.StartAt = ($iStartAt - 1)
-		$iError = ($oDoc.FootnoteSettings.StartAt() = ($iStartAt - 1)) ? $iError : BitOR($iError, 2)
+		$iError = ($oDoc.FootnoteSettings.StartAt() = ($iStartAt - 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sBefore <> Null) Then
 		If Not IsString($sBefore) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oDoc.FootnoteSettings.Prefix = $sBefore
-		$iError = ($oDoc.FootnoteSettings.Prefix() = $sBefore) ? $iError : BitOR($iError, 4)
+		$iError = ($oDoc.FootnoteSettings.Prefix() = $sBefore) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sAfter <> Null) Then
 		If Not IsString($sAfter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oDoc.FootnoteSettings.Suffix = $sAfter
-		$iError = ($oDoc.FootnoteSettings.Suffix() = $sAfter) ? $iError : BitOR($iError, 8)
+		$iError = ($oDoc.FootnoteSettings.Suffix() = $sAfter) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iCounting <> Null) Then
 		If Not __LOWriter_IntIsBetween($iCounting, $LOW_FOOTNOTE_COUNT_PER_PAGE, $LOW_FOOTNOTE_COUNT_PER_DOC) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oDoc.FootnoteSettings.FootnoteCounting = $iCounting
-		$iError = ($oDoc.FootnoteSettings.FootnoteCounting() = $iCounting) ? $iError : BitOR($iError, 16)
+		$iError = ($oDoc.FootnoteSettings.FootnoteCounting() = $iCounting) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bEndOfDoc <> Null) Then
 		If Not IsBool($bEndOfDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oDoc.FootnoteSettings.PositionEndOfDoc = $bEndOfDoc
-		$iError = ($oDoc.FootnoteSettings.PositionEndOfDoc() = $bEndOfDoc) ? $iError : BitOR($iError, 32)
+		$iError = ($oDoc.FootnoteSettings.PositionEndOfDoc() = $bEndOfDoc) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 
 ; #FUNCTION# ====================================================================================================================
@@ -806,16 +806,16 @@ Func _LOWriter_FootnoteSettingsContinuation(ByRef $oDoc, $sEnd = Null, $sBegin =
 	If ($sEnd <> Null) Then
 		If Not IsString($sEnd) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oDoc.FootnoteSettings.EndNotice = $sEnd
-		$iError = ($oDoc.FootnoteSettings.EndNotice() = $sEnd) ? $iError : BitOR($iError, 1)
+		$iError = ($oDoc.FootnoteSettings.EndNotice() = $sEnd) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sBegin <> Null) Then
 		If Not IsString($sBegin) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oDoc.FootnoteSettings.BeginNotice = $sBegin
-		$iError = ($oDoc.FootnoteSettings.BeginNotice() = $sBegin) ? $iError : BitOR($iError, 2)
+		$iError = ($oDoc.FootnoteSettings.BeginNotice() = $sBegin) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 
 ; #FUNCTION# ====================================================================================================================
@@ -878,7 +878,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not _LOWriter_ParStyleExists($oDoc, $sParagraph) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$sParagraph = __LOWriter_ParStyleNameToggle($sParagraph)
 		$oDoc.FootnoteSettings.ParaStyleName = $sParagraph
-		$iError = ($oDoc.FootnoteSettings.ParaStyleName() = $sParagraph) ? $iError : BitOR($iError, 1)
+		$iError = ($oDoc.FootnoteSettings.ParaStyleName() = $sParagraph) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sPage <> Null) Then
@@ -886,7 +886,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not _LOWriter_PageStyleExists($oDoc, $sPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$sPage = __LOWriter_PageStyleNameToggle($sPage)
 		$oDoc.FootnoteSettings.PageStyleName = $sPage
-		$iError = ($oDoc.FootnoteSettings.PageStyleName() = $sPage) ? $iError : BitOR($iError, 2)
+		$iError = ($oDoc.FootnoteSettings.PageStyleName() = $sPage) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sTextArea <> Null) Then
@@ -894,7 +894,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not _LOWriter_CharStyleExists($oDoc, $sTextArea) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$sTextArea = __LOWriter_CharStyleNameToggle($sTextArea)
 		$oDoc.FootnoteSettings.AnchorCharStyleName = $sTextArea
-		$iError = ($oDoc.FootnoteSettings.AnchorCharStyleName() = $sTextArea) ? $iError : BitOR($iError, 4)
+		$iError = ($oDoc.FootnoteSettings.AnchorCharStyleName() = $sTextArea) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sFootnoteArea <> Null) Then
@@ -902,10 +902,10 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 		If Not _LOWriter_CharStyleExists($oDoc, $sFootnoteArea) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$sFootnoteArea = __LOWriter_CharStyleNameToggle($sFootnoteArea)
 		$oDoc.FootnoteSettings.CharStyleName = $sFootnoteArea
-		$iError = ($oDoc.FootnoteSettings.CharStyleName() = $sFootnoteArea) ? $iError : BitOR($iError, 8)
+		$iError = ($oDoc.FootnoteSettings.CharStyleName() = $sFootnoteArea) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 
 ; #FUNCTION# ====================================================================================================================
@@ -949,9 +949,9 @@ Func _LOWriter_FootnotesGetList(ByRef $oDoc)
 
 		For $i = 0 To $iCount - 1
 			$aoFootnotes[$i] = $oFootNotes.getByIndex($i)
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
 
-	Return ($iCount > 0) ? SetError($__LOW_STATUS_SUCCESS, $iCount, $aoFootnotes) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iCount > 0) ? (SetError($__LOW_STATUS_SUCCESS, $iCount, $aoFootnotes)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FootnotesGetList

@@ -135,17 +135,17 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_COLLAPSED, $LOW_CURSOR_STAT_IS_END_OF_PAR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			If Not ($iFlag = $LOW_CURSOR_STAT_GET_RANGE_NAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) : SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
 
 		Case Else
 			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.

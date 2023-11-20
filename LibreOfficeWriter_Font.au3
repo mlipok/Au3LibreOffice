@@ -54,7 +54,7 @@ Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 	If Not IsArray($atFonts) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 	For $i = 0 To UBound($atFonts) - 1
 		If $atFonts[$i].Name = $sFontName Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
 
@@ -106,7 +106,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 		$asFonts[$i][1] = $atFonts[$i].StyleName()
 		$asFonts[$i][2] = $atFonts[$i].Weight
 		$asFonts[$i][3] = $atFonts[$i].Slant() ; only 0 or 2?
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0))
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
 	Return SetError($__LOW_STATUS_SUCCESS, UBound($atFonts), $asFonts)

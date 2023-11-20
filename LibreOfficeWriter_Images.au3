@@ -95,16 +95,16 @@ Func _LOWriter_ImageAreaColor(ByRef $oImage, $iBackColor = Null, $bBackTranspare
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.BackColor = $iBackColor
-		$iError = ($oImage.BackColor() = $iBackColor) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
 		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.BackTransparent = $bBackTransparent
-		$iError = ($oImage.BackTransparent() = $bBackTransparent) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -199,7 +199,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		__LOWriter_GradientPresets($oDoc, $oImage, $tStyleGradient, $sGradientName)
-		$iError = ($oImage.FillGradientName() = $sGradientName) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iType <> Null) Then
@@ -217,7 +217,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
-		$iError = ($oImage.FillGradientStepCount() = $iIncrement) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iXCenter <> Null) Then
@@ -272,17 +272,17 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	$oImage.FillGradient = $tStyleGradient
 
 	;Error checking
-	$iError = ($iType = Null) ? $iError : ($oImage.FillGradient.Style() = $iType) ? $iError : BitOR($iError, 2)
-	$iError = ($iXCenter = Null) ? $iError : ($oImage.FillGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 8)
-	$iError = ($iYCenter = Null) ? $iError : ($oImage.FillGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 16)
-	$iError = ($iAngle = Null) ? $iError : (($oImage.FillGradient.Angle() / 10) = $iAngle) ? $iError : BitOR($iError, 32)
-	$iError = ($iBorder = Null) ? $iError : ($oImage.FillGradient.Border() = $iBorder) ? $iError : BitOR($iError, 64)
-	$iError = ($iFromColor = Null) ? $iError : ($oImage.FillGradient.StartColor() = $iFromColor) ? $iError : BitOR($iError, 128)
-	$iError = ($iToColor = Null) ? $iError : ($oImage.FillGradient.EndColor() = $iToColor) ? $iError : BitOR($iError, 256)
-	$iError = ($iFromIntense = Null) ? $iError : ($oImage.FillGradient.StartIntensity() = $iFromIntense) ? $iError : BitOR($iError, 512)
-	$iError = ($iToIntense = Null) ? $iError : ($oImage.FillGradient.EndIntensity() = $iToIntense) ? $iError : BitOR($iError, 1024)
+	$iError = ($iType = Null) ? ($iError) : (($oImage.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oImage.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iBorder = Null) ? ($iError) : (($oImage.FillGradient.Border() = $iBorder) ? ($iError) : (BitOR($iError, 64)))
+	$iError = ($iFromColor = Null) ? ($iError) : (($oImage.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iToColor = Null) ? ($iError) : (($oImage.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256)))
+	$iError = ($iFromIntense = Null) ? ($iError) : (($oImage.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
+	$iError = ($iToIntense = Null) ? ($iError) : (($oImage.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -323,9 +323,9 @@ Func _LOWriter_ImageAreaTransparency(ByRef $oImage, $iTransparency = Null)
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	$oImage.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
 	$oImage.FillTransparence = $iTransparency
-	$iError = ($oImage.FillTransparence() = $iTransparency) ? $iError : BitOR($iError, 1)
+	$iError = ($oImage.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaTransparency
 
 ; #FUNCTION# ====================================================================================================================
@@ -452,15 +452,15 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 
 	$oImage.FillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? $iError : ($oImage.FillTransparenceGradient.Style() = $iType) ? $iError : BitOR($iError, 1)
-	$iError = ($iXCenter = Null) ? $iError : ($oImage.FillTransparenceGradient.XOffset() = $iXCenter) ? $iError : BitOR($iError, 2)
-	$iError = ($iYCenter = Null) ? $iError : ($oImage.FillTransparenceGradient.YOffset() = $iYCenter) ? $iError : BitOR($iError, 4)
-	$iError = ($iAngle = Null) ? $iError : (($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? $iError : BitOR($iError, 8)
-	$iError = ($iBorder = Null) ? $iError : ($oImage.FillTransparenceGradient.Border() = $iBorder) ? $iError : BitOR($iError, 16)
-	$iError = ($iStart = Null) ? $iError : ($oImage.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? $iError : BitOR($iError, 32)
-	$iError = ($iEnd = Null) ? $iError : ($oImage.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? $iError : BitOR($iError, 64)
+	$iError = ($iType = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oImage.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iBorder = Null) ? ($iError) : (($oImage.FillTransparenceGradient.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oImage.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oImage.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -575,34 +575,34 @@ Func _LOWriter_ImageBorderPadding(ByRef $oImage, $iAll = Null, $iTop = Null, $iB
 	If ($iAll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.BorderDistance = $iAll
-		$iError = (__LOWriter_IntIsBetween($oImage.BorderDistance(), $iAll - 1, $iAll + 1)) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_IntIsBetween($oImage.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.TopBorderDistance = $iTop
-		$iError = (__LOWriter_IntIsBetween($oImage.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oImage.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.BottomBorderDistance = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oImage.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_IntIsBetween($oImage.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.LeftBorderDistance = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oImage.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 8)
+		$iError = (__LOWriter_IntIsBetween($oImage.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.RightBorderDistance = $iRight
-		$iError = (__LOWriter_IntIsBetween($oImage.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 16)
+		$iError = (__LOWriter_IntIsBetween($oImage.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageBorderPadding
 
 ; #FUNCTION# ====================================================================================================================
@@ -779,53 +779,53 @@ Func _LOWriter_ImageColorAdjust(ByRef $oImage, $iRed = Null, $iGreen = Null, $iB
 	If ($iRed <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRed, -100, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.AdjustRed = $iRed
-		$iError = ($oImage.AdjustRed() = $iRed) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.AdjustRed() = $iRed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iGreen <> Null) Then
 		If Not __LOWriter_IntIsBetween($iGreen, -100, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.AdjustGreen = $iGreen
-		$iError = ($oImage.AdjustGreen() = $iGreen) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.AdjustGreen() = $iGreen) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBlue <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBlue, -100, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.AdjustBlue = $iBlue
-		$iError = ($oImage.AdjustBlue() = $iBlue) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.AdjustBlue() = $iBlue) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iBrightness <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBrightness, -100, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.AdjustLuminance = $iBrightness
-		$iError = ($oImage.AdjustLuminance() = $iBrightness) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.AdjustLuminance() = $iBrightness) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iContrast <> Null) Then
 		If Not __LOWriter_IntIsBetween($iContrast, -100, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.AdjustContrast = $iContrast
-		$iError = ($oImage.AdjustContrast() = $iContrast) ? $iError : BitOR($iError, 16)
+		$iError = ($oImage.AdjustContrast() = $iContrast) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	; Min 0.1, Max 10
 	If ($nGamma <> Null) Then
 		If Not __LOWriter_NumIsBetween($nGamma, 0.1, 10) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oImage.Gamma = $nGamma
-		$iError = ($oImage.Gamma() = $nGamma) ? $iError : BitOR($iError, 32)
+		$iError = ($oImage.Gamma() = $nGamma) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iColorMode <> Null) Then
 		If Not __LOWriter_IntIsBetween($iColorMode, $LOW_COLORMODE_STANDARD, $LOW_COLORMODE_WATERMARK) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		$oImage.GraphicColorMode = $iColorMode
-		$iError = ($oImage.GraphicColorMode() = $iColorMode) ? $iError : BitOR($iError, 64)
+		$iError = ($oImage.GraphicColorMode() = $iColorMode) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bInvert <> Null) Then
 		If Not IsBool($bInvert) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oImage.GraphicIsInverted = $bInvert
-		$iError = ($oImage.GraphicIsInverted() = $bInvert) ? $iError : BitOR($iError, 128)
+		$iError = ($oImage.GraphicIsInverted() = $bInvert) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageColorAdjust
 
 ; #FUNCTION# ====================================================================================================================
@@ -881,7 +881,7 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 	If Not IsObj($oImage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If ($bKeepScale <> Null) And Not IsBool($bKeepScale) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 
-	$bKeepScaleInternal = ($bKeepScale = Null) ? $bKeepScaleInternal : $bKeepScale
+	$bKeepScaleInternal = ($bKeepScale = Null) ? ($bKeepScaleInternal) : ($bKeepScale)
 
 	$tCrop = $oImage.GraphicCrop()
 	If Not IsObj($tCrop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
@@ -923,12 +923,12 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 	If ($bKeepScaleInternal = True) Then $oImage.Size = $tSize
 
 	;Error checking
-	$iError = ($iLeft = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.GraphicCrop.Left(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 1)
-	$iError = ($iRight = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.GraphicCrop.Right(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 2)
-	$iError = ($iTop = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.GraphicCrop.Top(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 4)
-	$iError = ($iBottom = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.GraphicCrop.Bottom(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 8)
+	$iError = ($iLeft = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Left(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iRight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Right(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iTop = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Top(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iBottom = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Bottom(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageCrop
 
 ; #FUNCTION# ====================================================================================================================
@@ -1097,13 +1097,13 @@ Func _LOWriter_ImageHyperlink(ByRef $oImage, $sURL = Null, $sName = Null, $sFram
 	If ($sURL <> Null) Then
 		If Not IsString($sURL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.HyperLinkURL = $sURL
-		$iError = ($oImage.HyperLinkURL() = $sURL) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.HyperLinkURL() = $sURL) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.HyperLinkName = $sName
-		$iError = ($oImage.HyperLinkName = $sName) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.HyperLinkName = $sName) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 	;"" ; "_top" ; "_parent" ; "_blank" ; "_self"
 
@@ -1116,16 +1116,16 @@ Func _LOWriter_ImageHyperlink(ByRef $oImage, $sURL = Null, $sName = Null, $sFram
 					($sFrameTarget <> $LOW_FRAME_TARGET_SELF) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		EndIf
 		$oImage.HyperLinkTarget = $sFrameTarget
-		$iError = ($oImage.HyperLinkTarget() = $sFrameTarget) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.HyperLinkTarget() = $sFrameTarget) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bServerSideMap <> Null) Then
 		If Not IsBool($bServerSideMap) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.ServerMap = $bServerSideMap
-		$iError = ($oImage.ServerMap() = $bServerSideMap) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.ServerMap() = $bServerSideMap) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageHyperlink
 
 ; #FUNCTION# ====================================================================================================================
@@ -1283,28 +1283,28 @@ Func _LOWriter_ImageModify(ByRef $oImage, $bFlipVert = Null, $bFlipHoriOnRight =
 	If ($bFlipVert <> Null) Then
 		If Not IsBool($bFlipVert) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.VertMirrored = $bFlipVert
-		$iError = ($oImage.VertMirrored() = $bFlipVert) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.VertMirrored() = $bFlipVert) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bFlipHoriOnRight <> Null) Then
 		If Not IsBool($bFlipHoriOnRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.HoriMirroredOnEvenPages = $bFlipHoriOnRight
-		$iError = ($oImage.HoriMirroredOnEvenPages() = $bFlipHoriOnRight) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.HoriMirroredOnEvenPages() = $bFlipHoriOnRight) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bFlipHoriOnLeft <> Null) Then
 		If Not IsBool($bFlipHoriOnLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.HoriMirroredOnOddPages = $bFlipHoriOnLeft
-		$iError = ($oImage.HoriMirroredOnOddPages() = $bFlipHoriOnLeft) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.HoriMirroredOnOddPages() = $bFlipHoriOnLeft) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($nAngle <> Null) Then
 		If Not __LOWriter_NumIsBetween($nAngle, 0, 360) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.GraphicRotation = ($nAngle * 10) ;X10 to match L.O. Values
-		$iError = ($oImage.GraphicRotation() = ($nAngle * 10)) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.GraphicRotation() = ($nAngle * 10)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageModify
 
 ; #FUNCTION# ====================================================================================================================
@@ -1358,28 +1358,28 @@ Func _LOWriter_ImageOptions(ByRef $oImage, $bProtectContent = Null, $bProtectPos
 	If ($bProtectContent <> Null) Then
 		If Not IsBool($bProtectContent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.ContentProtected = $bProtectContent
-		$iError = ($oImage.ContentProtected() = $bProtectContent) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.ContentProtected() = $bProtectContent) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bProtectPos <> Null) Then
 		If Not IsBool($bProtectPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.PositionProtected = $bProtectPos
-		$iError = ($oImage.PositionProtected() = $bProtectPos) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.PositionProtected() = $bProtectPos) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bProtectSize <> Null) Then
 		If Not IsBool($bProtectSize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.SizeProtected = $bProtectSize
-		$iError = ($oImage.SizeProtected() = $bProtectSize) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.SizeProtected() = $bProtectSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bPrint <> Null) Then
 		If Not IsBool($bPrint) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.Print = $bPrint
-		$iError = ($oImage.Print() = $bPrint) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.Print() = $bPrint) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageOptions
 
 ; #FUNCTION# ====================================================================================================================
@@ -1436,22 +1436,22 @@ Func _LOWriter_ImageOptionsName(ByRef $oDoc, ByRef $oImage, $sName = Null, $sAlt
 		If Not IsString($sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		If _LOWriter_DocHasImageName($oDoc, $sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.Name = $sName
-		$iError = ($oImage.Name() = $sName) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAltText <> Null) Then
 		If Not IsString($sAltText) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.Title = $sAltText
-		$iError = ($oImage.Title() = $sAltText) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.Title() = $sAltText) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sDesc <> Null) Then
 		If Not IsString($sDesc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.Description = $sDesc
-		$iError = ($oImage.Description = $sDesc) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.Description = $sDesc) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageOptionsName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1528,7 +1528,7 @@ Func _LOWriter_ImagesGetNames(ByRef $oDoc)
 		ReDim $asImages[$oImages.getCount()]
 		For $i = 0 To $oImages.getCount() - 1
 			$asImages[$i] = ($oImages.getByIndex($i).Name)
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? 10 : 0)) ;Sleep every x cycles.
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0))) ;Sleep every x cycles.
 		Next
 
 		Return SetError($__LOW_STATUS_SUCCESS, UBound($asImages), $asImages)
@@ -1617,12 +1617,12 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTran
 	$tShdwFrmt = $oImage.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	$iError = ($iWidth = Null) ? $iError : (__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 1)
-	$iError = ($iColor = Null) ? $iError : ($tShdwFrmt.Color() = $iColor) ? $iError : BitOR($iError, 2)
-	$iError = ($bTransparent = Null) ? $iError : ($tShdwFrmt.IsTransparent() = $bTransparent) ? $iError : BitOR($iError, 4)
-	$iError = ($iLocation = Null) ? $iError : ($tShdwFrmt.Location() = $iLocation) ? $iError : BitOR($iError, 8)
+	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageShadow
 
 ; #FUNCTION# ====================================================================================================================
@@ -1686,7 +1686,7 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 	If __LOWriter_VarsAreNull($iScaleWidth, $iScaleHeight, $iWidth, $iHeight, $bOriginalSize) Then
 		__LOWriter_ArrayFill($avImage, Round(($tSize.Width() / $tOrigSize.Width()) * 100), _
 				Round(($tSize.Height() / $tOrigSize.Height()) * 100), $tSize.Width(), $tSize.Height(), _
-				((($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? True : False)) ;If image is set to its original size, return true.
+				((($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? (True) : (False))) ;If image is set to its original size, return true.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
@@ -1708,8 +1708,8 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
 
 		;Error checking
-		$iError = ($iScaleWidth = Null) ? $iError : (Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? $iError : BitOR($iError, 1)
-		$iError = ($iScaleHeight = Null) ? $iError : (Round(($tSize.Height() / $tOrigSize.Height()) * 100) = $iScaleHeight) ? $iError : BitOR($iError, 2)
+		$iError = ($iScaleWidth = Null) ? ($iError) : ((Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iScaleHeight = Null) ? ($iError) : ((Round(($tSize.Height() / $tOrigSize.Height()) * 100) = $iScaleHeight) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
@@ -1727,8 +1727,8 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		$oImage.Size = $tSize
 
 		;Error checking
-		$iError = ($iWidth = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 4)
-		$iError = ($iHeight = Null) ? $iError : (__LOWriter_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? $iError : BitOR($iError, 8)
+		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4)))
+		$iError = ($iHeight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8)))
 
 	EndIf
 
@@ -1738,10 +1738,10 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 
 		$oImage.Size = $tSize
 
-		$iError = (($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? $iError : BitOR($iError, 16)
+		$iError = (($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -1781,7 +1781,7 @@ Func _LOWriter_ImageTransparency(ByRef $oImage, $iTransparency = Null)
 
 	$oImage.Transparency = $iTransparency
 
-	Return ($oImage.Transparency() = $iTransparency) ? SetError($__LOW_STATUS_SUCCESS, 0, 1) : SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	Return ($oImage.Transparency() = $iTransparency) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_ImageTransparency
 
 ; #FUNCTION# ====================================================================================================================
@@ -1898,43 +1898,43 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.HoriOrient = $iHorAlign
-		$iError = ($oImage.HoriOrient() = $iHorAlign) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.HoriOrient() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHorPos <> Null) Then
 		If Not IsInt($iHorPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.HoriOrientPosition = $iHorPos
-		$iError = (__LOWriter_IntIsBetween($oImage.HoriOrientPosition(), $iHorPos - 1, $iHorPos + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oImage.HoriOrientPosition(), $iHorPos - 1, $iHorPos + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iHorRelation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.HoriOrientRelation = $iHorRelation
-		$iError = ($oImage.HoriOrientRelation() = $iHorRelation) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.HoriOrientRelation() = $iHorRelation) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bMirror <> Null) Then
 		If Not IsBool($bMirror) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.PageToggle = $bMirror
-		$iError = ($oImage.PageToggle() = $bMirror) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	;Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.VertOrient = $iVertAlign
-		$iError = ($oImage.VertOrient() = $iVertAlign) ? $iError : BitOR($iError, 16)
+		$iError = ($oImage.VertOrient() = $iVertAlign) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iVertPos <> Null) Then
 		If Not IsInt($iVertPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oImage.VertOrientPosition = $iVertPos
-		$iError = (__LOWriter_IntIsBetween($oImage.VertOrientPosition(), $iVertPos - 1, $iVertPos + 1)) ? $iError : BitOR($iError, 32)
+		$iError = (__LOWriter_IntIsBetween($oImage.VertOrientPosition(), $iVertPos - 1, $iVertPos + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertRelation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oImage.AnchorType())
+		$iCurrentAnchor = (($iAnchorPos <> Null) ? ($iAnchorPos) : ($oImage.AnchorType()))
 
 		;Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
 		;for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or "$LOW_RELATIVE_PARAGRAPH",
@@ -1955,20 +1955,20 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_TOP
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? ($iError) : (BitOR($iError, 64))
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_CENTER
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? ($iError) : (BitOR($iError, 64))
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_BOTTOM
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_BOTTOM)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_BOTTOM)) ? ($iError) : (BitOR($iError, 64))
 				EndSwitch
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ;Paragraph = Baseline setting in L.O. UI
 				$oImage.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
-				$iError = (($oImage.VertOrientRelation() = $iVertRelation)) ? $iError : BitOR($iError, 64)
+				$iError = (($oImage.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
 				Switch $oImage.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
@@ -1976,37 +1976,37 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_TOP
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? ($iError) : (BitOR($iError, 64))
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_CENTER
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? ($iError) : (BitOR($iError, 64))
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_BOTTOM
-						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_BOTTOM)) ? $iError : BitOR($iError, 64)
+						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_BOTTOM)) ? ($iError) : (BitOR($iError, 64))
 				EndSwitch
 			EndIf
 
 		Else
 			$oImage.VertOrientRelation = $iVertRelation
-			$iError = ($oImage.VertOrientRelation() = $iVertRelation) ? $iError : BitOR($iError, 64)
+			$iError = ($oImage.VertOrientRelation() = $iVertRelation) ? ($iError) : (BitOR($iError, 64))
 		EndIf
 	EndIf
 
 	If ($bKeepInside <> Null) Then
 		If Not IsBool($bKeepInside) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oImage.IsFollowingTextFlow = $bKeepInside
-		$iError = ($oImage.IsFollowingTextFlow() = $bKeepInside) ? $iError : BitOR($iError, 128)
+		$iError = ($oImage.IsFollowingTextFlow() = $bKeepInside) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iAnchorPos <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER, $LOW_ANCHOR_AT_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
 		$oImage.AnchorType = $iAnchorPos
-		$iError = ($oImage.AnchorType() = $iAnchorPos) ? $iError : BitOR($iError, 256)
+		$iError = ($oImage.AnchorType() = $iAnchorPos) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageTypePosition
 
 ; #FUNCTION# ====================================================================================================================
@@ -2074,10 +2074,10 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		If __LOWriter_VersionCheck(4.3) Then
 			__LOWriter_ArrayFill($avSize, $oImage.Width(), $oImage.RelativeWidth(), $oImage.RelativeWidthRelation(), _
 					$oImage.Height(), $oImage.RelativeHeight(), $oImage.RelativeHeightRelation(), _
-					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? True : False))
+					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? (True) : (False)))
 		Else
 			__LOWriter_ArrayFill($avSize, $oImage.Width(), $oImage.RelativeWidth(), $oImage.Height(), $oImage.RelativeHeight(), _
-					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? True : False))
+					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $avSize)
 	EndIf
@@ -2085,13 +2085,13 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 	If ($iWidth <> Null) Then ;Min 51
 		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.Width = $iWidth
-		$iError = (__LOWriter_IntIsBetween($oImage.Width(), $iWidth - 1, $iWidth + 1)) ? $iError : BitOR($iError, 1)
+		$iError = (__LOWriter_IntIsBetween($oImage.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRelativeWidth <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRelativeWidth, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.RelativeWidth = $iRelativeWidth
-		$iError = ($oImage.RelativeWidth() = $iRelativeWidth) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.RelativeWidth() = $iRelativeWidth) ? ($iError) : (BitOR($iError, 2))
 
 		If ($iRelativeWidth <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, True) ;If Relative Width isn't being turned off, then set Width Value.
 	EndIf
@@ -2100,19 +2100,19 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		If Not __LOWriter_IntIsBetween($iWidthRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oImage.RelativeWidthRelation = $iWidthRelativeTo
-		$iError = ($oImage.RelativeWidthRelation() = $iWidthRelativeTo) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.RelativeWidthRelation() = $iWidthRelativeTo) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iHeight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.Height = $iHeight
-		$iError = ($oImage.Height() = $iHeight) ? $iError : BitOR($iError, 8)
+		$iError = ($oImage.Height() = $iHeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRelativeHeight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRelativeHeight, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
 		$oImage.RelativeHeight = $iRelativeHeight
-		$iError = ($oImage.RelativeHeight() = $iRelativeHeight) ? $iError : BitOR($iError, 16)
+		$iError = ($oImage.RelativeHeight() = $iRelativeHeight) ? ($iError) : (BitOR($iError, 16))
 
 		If ($iRelativeHeight <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, False, True) ;If Relative Height isn't being turned off, then set Height Value.
 	EndIf
@@ -2121,17 +2121,17 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		If Not __LOWriter_IntIsBetween($iHeightRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
 		$oImage.RelativeHeightRelation = $iHeightRelativeTo
-		$iError = ($oImage.RelativeHeightRelation() = $iHeightRelativeTo) ? $iError : BitOR($iError, 32)
+		$iError = ($oImage.RelativeHeightRelation() = $iHeightRelativeTo) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($bKeepRatio <> Null) Then
 		If Not IsBool($bKeepRatio) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
 		$oImage.IsSyncHeightToWidth = $bKeepRatio
 		$oImage.IsSyncWidthToHeight = $bKeepRatio
-		$iError = (($oImage.IsSyncHeightToWidth() = $bKeepRatio) And ($oImage.IsSyncWidthToHeight() = $bKeepRatio)) ? $iError : BitOR($iError, 64)
+		$iError = (($oImage.IsSyncHeightToWidth() = $bKeepRatio) And ($oImage.IsSyncWidthToHeight() = $bKeepRatio)) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageTypeSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -2203,37 +2203,37 @@ Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRigh
 		If $oPropInfo.hasPropertyByName("Surround") Then $oImage.Surround = $iWrapType
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oImage.TextWrap = $iWrapType
 		If $oPropInfo.hasPropertyByName("Surround") Then
-			$iError = ($oImage.Surround() = $iWrapType) ? $iError : BitOR($iError, 1)
+			$iError = ($oImage.Surround() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		Else
-			$iError = ($oImage.TextWrap() = $iWrapType) ? $iError : BitOR($iError, 1)
+			$iError = ($oImage.TextWrap() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		EndIf
 	EndIf
 
 	If ($iLeft <> Null) Then
 		If Not IsInt($iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.LeftMargin = $iLeft
-		$iError = (__LOWriter_IntIsBetween($oImage.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? $iError : BitOR($iError, 2)
+		$iError = (__LOWriter_IntIsBetween($oImage.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iRight <> Null) Then
 		If Not IsInt($iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.RightMargin = $iRight
-		$iError = (__LOWriter_IntIsBetween($oImage.RightMargin(), $iRight - 1, $iRight + 1)) ? $iError : BitOR($iError, 4)
+		$iError = (__LOWriter_IntIsBetween($oImage.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTop <> Null) Then
 		If Not IsInt($iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.TopMargin = $iTop
-		$iError = (__LOWriter_IntIsBetween($oImage.TopMargin(), $iTop - 1, $iTop + 1)) ? $iError : BitOR($iError, 8)
+		$iError = (__LOWriter_IntIsBetween($oImage.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBottom <> Null) Then
 		If Not IsInt($iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.BottomMargin = $iBottom
-		$iError = (__LOWriter_IntIsBetween($oImage.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? $iError : BitOR($iError, 16)
+		$iError = (__LOWriter_IntIsBetween($oImage.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageWrap
 
 ; #FUNCTION# ====================================================================================================================
@@ -2285,39 +2285,39 @@ Func _LOWriter_ImageWrapOptions(ByRef $oImage, $bFirstPar = Null, $bContour = Nu
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bContour, $bOutsideOnly, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oImage.SurroundAnchorOnly(), $oImage.SurroundContour(), $oImage.ContourOutside(), _
-				(($oImage.Opaque()) ? False : True), $oImage.AllowOverlap()) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+				(($oImage.Opaque()) ? (False) : (True)), $oImage.AllowOverlap()) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 		Return SetError($__LOW_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
 	If ($bFirstPar <> Null) Then
 		If Not IsBool($bFirstPar) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.SurroundAnchorOnly = $bFirstPar
-		$iError = ($oImage.SurroundAnchorOnly() = $bFirstPar) ? $iError : BitOR($iError, 1)
+		$iError = ($oImage.SurroundAnchorOnly() = $bFirstPar) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bContour <> Null) Then
 		If Not IsBool($bContour) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.SurroundContour = $bContour
-		$iError = ($oImage.SurroundContour() = $bContour) ? $iError : BitOR($iError, 2)
+		$iError = ($oImage.SurroundContour() = $bContour) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bOutsideOnly <> Null) Then
 		If Not IsBool($bOutsideOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.ContourOutside = $bOutsideOnly
-		$iError = ($oImage.ContourOutside() = $bOutsideOnly) ? $iError : BitOR($iError, 4)
+		$iError = ($oImage.ContourOutside() = $bOutsideOnly) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bInBackground <> Null) Then
 		If Not IsBool($bInBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.Opaque = (($bInBackground) ? False : True)
-		$iError = ($oImage.Opaque() = (($bInBackground) ? False : True)) ? $iError : BitOR($iError, 8) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+		$iError = ($oImage.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 8)) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then
 		If Not IsBool($bAllowOverlap) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.AllowOverlap = $bAllowOverlap
-		$iError = ($oImage.AllowOverlap() = $bAllowOverlap) ? $iError : BitOR($iError, 16)
+		$iError = ($oImage.AllowOverlap() = $bAllowOverlap) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0) : SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ImageWrapOptions
