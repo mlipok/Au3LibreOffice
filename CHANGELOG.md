@@ -27,6 +27,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ShapeLineArrowStyles
 	- _LOWriter_ShapeLineProperties
 	- _LOWriter_ShapeName
+	- _LOWriter_ShapePoints
+ 	- _LOWriter_ShapePointsAdd
+ 	- _LOWriter_ShapePointsModify
+ 	- _LOWriter_ShapePointsRemove
 	- _LOWriter_ShapePosition
 	- _LOWriter_ShapeRotateSlant
 	- _LOWriter_ShapesGetNames
