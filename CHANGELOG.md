@@ -58,6 +58,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Minor documentation adjustments.
 - Filled in ReadMe.
+- Moved Search Descriptor functions from LibreOfficeWriter.au3 to LibreOfficeWriter_Helper.au3. 
+	- _LOWriter_SearchDescriptorCreate
+	- _LOWriter_SearchDescriptorModify
+	- _LOWriter_SearchDescriptorSimilarityModify
 
 ### Fixed
 
