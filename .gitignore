@@ -1,3 +1,4 @@
 *.au3.bak
 *kopia.au3
 BackUp/*
+Examples/BackUp/*
