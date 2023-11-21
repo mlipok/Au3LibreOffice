@@ -62,6 +62,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_SearchDescriptorCreate
 	- _LOWriter_SearchDescriptorModify
 	- _LOWriter_SearchDescriptorSimilarityModify
+- Default value of $__LOWCONST_SLEEP_DIV from 15 to 0.
 
 ### Fixed
 
