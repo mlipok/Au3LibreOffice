@@ -205,16 +205,16 @@ Global Const _
 
 ; Advanced Field Types
 Global Enum Step *2 _
-		$LOW_FIELD_ADV_TYPE_ALL = 1, _                           ; All of the below listed Fields will be returned.
-		$LOW_FIELD_ADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DATABASE, _                          ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DATABASE_NAME, _                     ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELD_ADV_TYPE_DDE, _                               ; A DDE Field, found in Fields dialog, Variables tab.
-		$LOW_FIELD_ADV_TYPE_INPUT_USER, _                        ; ?
-		$LOW_FIELD_ADV_TYPE_USER                                 ; A User Field, found in Fields dialog, Variables tab.
+		$LOW_FIELD_ADV_TYPE_ALL = 1, _                          ; All of the below listed Fields will be returned.
+		$LOW_FIELD_ADV_TYPE_BIBLIOGRAPHY, _                     ; A Bibliography Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE, _                         ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_SET_NUM, _                 ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NAME, _                    ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NEXT_SET, _                ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NAME_OF_SET, _             ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DDE, _                              ; A DDE Field, found in Fields dialog, Variables tab.
+		$LOW_FIELD_ADV_TYPE_INPUT_USER, _                       ; ?
+		$LOW_FIELD_ADV_TYPE_USER                                ; A User Field, found in Fields dialog, Variables tab.
 
 ; Field Chapter Display Type
 Global Const _
@@ -226,7 +226,7 @@ Global Const _
 
 ; Count Field Type
 Global Enum _
-		$LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _             ; Count field is a Character Count type field.
+		$LOW_FIELD_COUNT_TYPE_CHARACTERS = 0, _                 ; Count field is a Character Count type field.
 		$LOW_FIELD_COUNT_TYPE_IMAGES, _                         ; Count field is an Image Count type field.
 		$LOW_FIELD_COUNT_TYPE_OBJECTS, _                        ; Count field is an Object Count type field.
 		$LOW_FIELD_COUNT_TYPE_PAGES, _                          ; Count field is a Page Count type field.
@@ -704,7 +704,7 @@ Global Const _
 
 ; Arrowhead Type Constants
 Global Enum _
-		$LOW_SHAPE_LINE_ARROW_TYPE_NONE, _                  ; 0 -- No Arrow head.
+		$LOW_SHAPE_LINE_ARROW_TYPE_NONE, _                      ; 0 -- No Arrow head.
 		$LOW_SHAPE_LINE_ARROW_TYPE_ARROW_SHORT, _               ; 1 --Short Arrow head.
 		$LOW_SHAPE_LINE_ARROW_TYPE_CONCAVE_SHORT, _             ; 2 -- Short Concave Arrow head.
 		$LOW_SHAPE_LINE_ARROW_TYPE_ARROW, _                     ; 3 -- Arrow head.
