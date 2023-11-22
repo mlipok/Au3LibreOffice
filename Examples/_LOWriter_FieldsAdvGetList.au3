@@ -107,13 +107,13 @@ Func Example()
 			"Insert, Field, More Fields, Database, Click on ""Database Name"" and drop down ""Bibliography"", select ""Biblio"", then click insert. Press Ok on this MsgBox.")
 
 	; Retrieve an array of Advanced Fields. The Doc Info Field, and regular fields, wont be listed in this array.
-	$avFields = _LOWriter_FieldsAdvGetList($oDoc, $LOW_FIELDADV_TYPE_ALL)
+	$avFields = _LOWriter_FieldsAdvGetList($oDoc, $LOW_FIELD_ADV_TYPE_ALL)
 	If @error Then _ERROR("Failed to search for Fields. Error:" & @error & " Extended:" & @extended)
 
 	_ArrayDisplay($avFields)
 
-	; Retrieve an array of Advanced Fields again, this time only list $LOW_FIELDADV_TYPE_USER and $LOW_FIELDADV_TYPE_DATABASE_NAME type fields.
-	$avFields = _LOWriter_FieldsAdvGetList($oDoc, BitOR($LOW_FIELDADV_TYPE_DATABASE_NAME, $LOW_FIELDADV_TYPE_USER))
+	; Retrieve an array of Advanced Fields again, this time only list $LOW_FIELD_ADV_TYPE_USER and $LOW_FIELD_ADV_TYPE_DATABASE_NAME type fields.
+	$avFields = _LOWriter_FieldsAdvGetList($oDoc, BitOR($LOW_FIELD_ADV_TYPE_DATABASE_NAME, $LOW_FIELD_ADV_TYPE_USER))
 	If @error Then _ERROR("Failed to search for Fields. Error:" & @error & " Extended:" & @extended)
 
 	_ArrayDisplay($avFields)
