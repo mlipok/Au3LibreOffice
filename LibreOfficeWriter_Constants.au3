@@ -203,6 +203,19 @@ Global Const _
 		$LOW_DUPLEX_LONG = 2, _                                 ; Duplex mode is on, flip on Long edge.
 		$LOW_DUPLEX_SHORT = 3                                   ; Duplex mode is on, flip on Short edge.
 
+; Advanced Field Types
+Global Enum Step *2 _
+		$LOW_FIELD_ADV_TYPE_ALL = 1, _                           ; All of the below listed Fields will be returned.
+		$LOW_FIELD_ADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE, _                          ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NAME, _                     ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field, found in Fields dialog, Database tab.
+		$LOW_FIELD_ADV_TYPE_DDE, _                               ; A DDE Field, found in Fields dialog, Variables tab.
+		$LOW_FIELD_ADV_TYPE_INPUT_USER, _                        ; ?
+		$LOW_FIELD_ADV_TYPE_USER                                 ; A User Field, found in Fields dialog, Variables tab.
+
 ; Field Chapter Display Type
 Global Const _
 		$LOW_FIELD_CHAP_FRMT_NAME = 0, _                        ; The title of the chapter is displayed.
@@ -310,19 +323,6 @@ Global Enum Step *2 _
 		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                        ; A Templates field, found in the Fields Dialog, Document tab.
 		$LOW_FIELD_TYPE_URL, _                                  ;
 		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field, found in the Fields Dialog, Document tab, Statistics Type.
-
-; Advanced Field Types
-Global Enum Step *2 _
-		$LOW_FIELDADV_TYPE_ALL = 1, _                           ; All of the below listed Fields will be returned.
-		$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, _                      ; A Bibliography Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DATABASE, _                          ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, _                  ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME, _                     ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, _                 ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, _              ; A Database Field, found in Fields dialog, Database tab.
-		$LOW_FIELDADV_TYPE_DDE, _                               ; A DDE Field, found in Fields dialog, Variables tab.
-		$LOW_FIELDADV_TYPE_INPUT_USER, _                        ; ?
-		$LOW_FIELDADV_TYPE_USER                                 ; A User Field, found in Fields dialog, Variables tab.
 
 ; User Data Field Type
 Global Const _

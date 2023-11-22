@@ -4411,17 +4411,17 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldsAdvGetList
 ; Description ...: Retrieve an Array of Advanced Field Objects contained in a document.
-; Syntax ........: _LOWriter_FieldsAdvGetList(Byref $oDoc[, $iType = $LOW_FIELDADV_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
+; Syntax ........: _LOWriter_FieldsAdvGetList(Byref $oDoc[, $iType = $LOW_FIELD_ADV_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $iType               - [optional] an integer value (1-1023). Default is $LOW_FIELDADV_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
+;                  $iType               - [optional] an integer value (1-1023). Default is $LOW_FIELD_ADV_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
 ;                  $bFieldType          - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type String for that particular Field as described by Libre Office. To assist in identifying the Field type.
-;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type. See Constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bFieldTypeNum       - [optional] a boolean value. Default is True. If True, adds a column to the array that has the Field Type Constant Integer for that particular Field, to assist in identifying the Field type. See Constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 1023. (The total of all Constants added together.) See Constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 1023. (The total of all Constants added together.) See Constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   @Error 1 @Extended 3 Return 0 = $bSupportedServices not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bFieldType not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
@@ -4439,7 +4439,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;					Field Object.
 ;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
 ;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELDADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
+;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
 ;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
 ;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
 ;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
@@ -4452,12 +4452,12 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldsAdvGetList(ByRef $oDoc, $iType = $LOW_FIELDADV_TYPE_ALL, $bSupportedServices = True, $bFieldType = True, $bFieldTypeNum = True)
+Func _LOWriter_FieldsAdvGetList(ByRef $oDoc, $iType = $LOW_FIELD_ADV_TYPE_ALL, $bSupportedServices = True, $bFieldType = True, $bFieldTypeNum = True)
 	Local $avFieldTypes[0][0]
 	Local $vReturn
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELDADV_TYPE_ALL, 1023) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_ADV_TYPE_ALL, 1023) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	; 1023 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
@@ -4521,7 +4521,7 @@ Func _LOWriter_FieldsDocInfoGetList(ByRef $oDoc, $iType = $LOW_FIELD_DOCINFO_TYP
 	Local $vReturn
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELDADV_TYPE_ALL, 16383) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_ADV_TYPE_ALL, 16383) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
 	; 16383 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
