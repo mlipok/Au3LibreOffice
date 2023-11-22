@@ -62,6 +62,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_SearchDescriptorCreate
 	- _LOWriter_SearchDescriptorModify
 	- _LOWriter_SearchDescriptorSimilarityModify
+- Sorted Constants in LibreOfficeWriter_Constants alphabetically.
+- Renamed $LOW_FIELDADV_TYPE_ Constants to $LOW_FIELD_ADV_TYPE_ to match formatting of other Field Type Constants.
 
 ### Fixed
 

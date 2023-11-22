@@ -1679,7 +1679,7 @@ EndFunc   ;==>__LOWriter_FieldCountType
 ;					Field Object.
 ;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
 ;					Setting $bFieldType to True will add a Field type column for the found Field.
-;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching one of the following constants for the found Field. $LOW_FIELD_TYPE_*,$LOW_FIELDADV_TYPE_*, and $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching one of the following constants for the found Field. $LOW_FIELD_TYPE_*,$LOW_FIELD_ADV_TYPE_*, and $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1784,11 +1784,11 @@ Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDoc
 			[$LOW_FIELD_TYPE_TEMPLATE_NAME, "com.sun.star.text.TextField.TemplateName"], [$LOW_FIELD_TYPE_URL, "com.sun.star.text.TextField.URL"], _
 			[$LOW_FIELD_TYPE_WORD_COUNT, "com.sun.star.text.TextField.WordCount"]]
 
-	Local $avFieldAdvTypes[9][2] = [[$LOW_FIELDADV_TYPE_BIBLIOGRAPHY, "com.sun.star.text.TextField.Bibliography"], _
-			[$LOW_FIELDADV_TYPE_DATABASE, "com.sun.star.text.TextField.Database"], [$LOW_FIELDADV_TYPE_DATABASE_NAME, "com.sun.star.text.TextField.DatabaseName"], _
-			[$LOW_FIELDADV_TYPE_DATABASE_NEXT_SET, "com.sun.star.text.TextField.DatabaseNextSet"], [$LOW_FIELDADV_TYPE_DATABASE_NAME_OF_SET, "com.sun.star.text.TextField.DatabaseNumberOfSet"], _
-			[$LOW_FIELDADV_TYPE_DATABASE_SET_NUM, "com.sun.star.text.TextField.DatabaseSetNumber"], [$LOW_FIELDADV_TYPE_DDE, "com.sun.star.text.TextField.DDE"], _
-			[$LOW_FIELDADV_TYPE_INPUT_USER, "com.sun.star.text.TextField.InputUser"], [$LOW_FIELDADV_TYPE_USER, "com.sun.star.text.TextField.User"]]
+	Local $avFieldAdvTypes[9][2] = [[$LOW_FIELD_ADV_TYPE_BIBLIOGRAPHY, "com.sun.star.text.TextField.Bibliography"], _
+			[$LOW_FIELD_ADV_TYPE_DATABASE, "com.sun.star.text.TextField.Database"], [$LOW_FIELD_ADV_TYPE_DATABASE_NAME, "com.sun.star.text.TextField.DatabaseName"], _
+			[$LOW_FIELD_ADV_TYPE_DATABASE_NEXT_SET, "com.sun.star.text.TextField.DatabaseNextSet"], [$LOW_FIELD_ADV_TYPE_DATABASE_NAME_OF_SET, "com.sun.star.text.TextField.DatabaseNumberOfSet"], _
+			[$LOW_FIELD_ADV_TYPE_DATABASE_SET_NUM, "com.sun.star.text.TextField.DatabaseSetNumber"], [$LOW_FIELD_ADV_TYPE_DDE, "com.sun.star.text.TextField.DDE"], _
+			[$LOW_FIELD_ADV_TYPE_INPUT_USER, "com.sun.star.text.TextField.InputUser"], [$LOW_FIELD_ADV_TYPE_USER, "com.sun.star.text.TextField.User"]]
 
 	Local $avFieldDocInfoTypes[13][2] = [[$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, "com.sun.star.text.TextField.DocInfo.ChangeAuthor"], _
 			[$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, "com.sun.star.text.TextField.DocInfo.ChangeDateTime"], _
@@ -1811,7 +1811,7 @@ Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDoc
 		$avSearch = $avFieldTypes
 
 	ElseIf ($bAdvancedServices = True) And ($bDocInfoServices = False) Then
-		If (BitAND($iFieldType, $LOW_FIELDADV_TYPE_ALL)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $avFieldAdvTypes)
+		If (BitAND($iFieldType, $LOW_FIELD_ADV_TYPE_ALL)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $avFieldAdvTypes)
 		$avSearch = $avFieldAdvTypes
 
 	ElseIf ($bDocInfoServices = True) And ($bAdvancedServices = False) Then
