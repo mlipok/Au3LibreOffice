@@ -13,9 +13,10 @@
 ; ===============================================================================================================================
 
 ; Sleep Divisor $__LOWCONST_SLEEP_DIV
-; Lower this number for more frequent sleeps in applicable functions, raise it for less.
+; In applicable functions this is used for adjusting how frequent a sleep occurs in loops.
+; For any number above 0 the number of times a loop has completed is divided by $__LOWCONST_SLEEP_DIV. If you find some functions cause momentary freeze ups, a recommended value is 15.
 ; Set to 0 for no pause in a loop.
-Global Const $__LOWCONST_SLEEP_DIV = 15
+Global Const $__LOWCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=65
 ; Error Codes
