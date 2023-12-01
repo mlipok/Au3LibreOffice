@@ -27,11 +27,11 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The number of points in this shape is: " & $iCount)
 
-	;Retrieve the Shape's current settings for its second point.
-	$avArray = _LOWriter_ShapePointsModify($oShape, 2)
+	;Retrieve the Shape's current settings for its first point.
+	$avArray = _LOWriter_ShapePointsModify($oShape, 1)
 	If @error Then _ERROR("Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
 
-	; I will retrieve the second points current position, and add to its X and Y values to determine my new point's new X and Y values.
+	; I will retrieve the first point's current position, and add to its X and Y values to determine my new point's new X and Y values.
 
 	; Minus 400 Micrometers from the X coordinate
 	$iNewX = $avArray[0] - 400
@@ -41,8 +41,8 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press Ok to insert the new Point into the shape.")
 
-	; Add the new Point using the new X and Y coordinates. The new point will be added after the called point (2), The point's type will be Symmetrical.
-	_LOWriter_ShapePointsAdd($oShape, 2, $iNewX, $iNewY, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
+	; Add the new Point using the new X and Y coordinates. The new point will be added after the called point (1), The point's type will be Symmetrical.
+	_LOWriter_ShapePointsAdd($oShape, 1, $iNewX, $iNewY, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
 	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the new number of points in the shape.

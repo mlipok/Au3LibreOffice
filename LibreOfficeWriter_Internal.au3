@@ -5775,6 +5775,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ;				   @Error 2 @Extended 2 Return 0 = Failed to create a Position structure.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
 ;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
+;				   @Error 2 @Extended 5 Return 0 = Failed to create "com.sun.star.drawing.PolyPolygonBezierCoords" Structure.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
 ;				   --Success--
@@ -5801,7 +5802,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	If Not IsInt($iShapeType) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
 
 	$tPolyCoords = __LOWriter_CreateStruct("com.sun.star.drawing.PolyPolygonBezierCoords")
-	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
 
 	Switch $iShapeType
 
@@ -5880,7 +5881,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
-			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
+			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_NORMAL
 
 			$oShape.Name = __LOWriter_GetShapeName($oDoc, "Bézier curve ")
@@ -5896,7 +5897,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
 			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 2)),$iHeight -  Int(($iHeight / 2) * 0.123))
+			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 8)),Int(($iHeight / 2)))
 			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))
@@ -5906,7 +5907,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
 			$aiFlags[0] = $LOW_SHAPE_POINT_TYPE_NORMAL
-			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_NORMAL
+			$aiFlags[1] = $LOW_SHAPE_POINT_TYPE_CONTROL
 			$aiFlags[2] = $LOW_SHAPE_POINT_TYPE_NORMAL
 			$aiFlags[3] = $LOW_SHAPE_POINT_TYPE_NORMAL
 

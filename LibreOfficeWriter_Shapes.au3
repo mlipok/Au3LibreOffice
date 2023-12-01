@@ -537,7 +537,7 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ;				   @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
 ;				   @Error 1 @Extended 6 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Polygon Array of Structures.
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
 ;				   --Processing Errors--
@@ -1231,7 +1231,7 @@ EndFunc   ;==>_LOWriter_ShapesGetNames
 ;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you call a new point with "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
 ;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
 ;				   Calling any Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as with the last point in a shape, as they are already a curve, or not supported in the case of the last point.
-; Related .......:
+; Related .......:_LOWriter_ShapePointsModify, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1695,7 +1695,7 @@ EndFunc   ;==>_LOWriter_ShapePointsAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
-; Related .......:
+; Related .......: _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsModify, _LOWriter_ShapePointsRemove
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1767,7 +1767,7 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you modify a point to "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
 ;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
 ;				   Calling and Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as they are already a curve.
-; Related .......:
+; Related .......: _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1885,7 +1885,7 @@ EndFunc   ;==>_LOWriter_ShapePointsModify
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
 ;				   This is a homemade function as LibreOffice doesn't offer an easy way for removing points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
 ;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon deletion that were already present in the shape. Some symmetrical points may revert also.
-; Related .......:
+; Related .......: _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsModify, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
