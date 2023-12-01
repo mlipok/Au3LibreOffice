@@ -28,8 +28,8 @@
 ; _LOWriter_ShapePosition
 ; _LOWriter_ShapeRotateSlant
 ; _LOWriter_ShapesGetNames
-; _LOWriter_ShapePoints
 ; _LOWriter_ShapePointsAdd
+; _LOWriter_ShapePointsGetCount
 ; _LOWriter_ShapePointsModify
 ; _LOWriter_ShapePointsRemove
 ; _LOWriter_ShapeTextBox
@@ -548,7 +548,7 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oCursor cannot be a Table Cursor.
-;				   Note: Line Shapes, such as Curves etc., will not be  smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select them and set the Point type in L.O. UI.
+;				   Note: Line Shapes, such as Curves etc., may not be smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select the individual points and set the Point type in L.O. UI.
 ;				   Polygon and Polygon 45 degree are the same shape internally, one only allows you to draw the lines at 45 degree angles in L.O. UI.
 ;				   The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
 ;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
@@ -569,8 +569,8 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 	Local $iCursorType
 	Local $oShape
-	Local $tPos
-	Local $atCusShapeGeo, $atPoly
+	Local $tPos, $tPolyCoords
+	Local $atCusShapeGeo
 
 	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
@@ -619,8 +619,8 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 			$oShape = __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
 
-			$atPoly = $oShape.Polygon() ; Backup the Polygon property, as it is generally lost upon insertion.
-			If Not IsArray($atPoly) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+			$tPolyCoords = $oShape.PolyPolygonBezier()
+			If Not IsObj($tPolyCoords) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
 		Case $LOW_SHAPE_TYPE_STARS_4_POINT To $LOW_SHAPE_TYPE_STARS_SIGNET ; Create a Star or Banner Shape.
 			$oShape = __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
@@ -645,8 +645,8 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 	$oShape.AnchorType = $LOW_ANCHOR_AT_PARAGRAPH
 
-	If IsArray($atPoly) Then
-		$oShape.Polygon = $atPoly ; If shape used the Polygon property, re-Set it after insertion.
+	If IsObj($tPolyCoords) Then
+		$oShape.PolyPolygonBezier = $tPolyCoords ; If shape used the PolyPolygonBezier property, re-Set it after insertion.
 
 	ElseIf IsArray($atCusShapeGeo) Then
 		$oShape.CustomShapeGeometry = $atCusShapeGeo ; If shape used the CustomSHapeGeometry property, re-Set it after insertion.
@@ -1190,220 +1190,1025 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 EndFunc   ;==>_LOWriter_ShapesGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapePoints
-; Description ...: Set or Retrieve a Shape's Position Points.
-; Syntax ........: _LOWriter_ShapePoints(ByRef $oShape[, $atPoints = Null])
-; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See Remarks.
-;                  $atPoints            - [optional] an array of dll structs. Default is Null. An Array of Position Points, previously returned from this function. Call with Null to retrieve the current Position Point Array.
-; Return values .: Success: 1 or Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points.
-;				   @Error 1 @Extended 3 Return 0 = $atPoints not an Array, and not set to Null.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Array of Position Points from Shape.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Failed to set new Array of Position Points.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Position Points were successfully set.
-;				   @Error 0 @Extended ? Return Array = Success. $atPoints was set to Null, returning current Position Points Array with Position Pointss listed from first to last. @Extended is set to the number of rows contained in the Array.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: A Position Point determines where the Shape's lines are drawn. A Position point is a combination of an X and Y position.
-;				   Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
-; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsModify
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapePoints(ByRef $oShape, $atPoints = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $atArray[1]
-
-	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-
-	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($atPoints = Null) Then
-		; Retrieve the Array of Position Points.
-		$atArray = $oShape.Polygon()
-		If Not IsArray($atArray) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-		Return SetError($__LOW_STATUS_SUCCESS, UBound($atArray), $atArray)
-	EndIf
-
-	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-
-	$oShape.Polygon = $atPoints
-
-	Return (UBound($oShape.Polygon()) = UBound($atPoints)) ?  (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR,1,0))
-EndFunc   ;==>_LOWriter_ShapePoints
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapePointsAdd
-; Description ...: Add a Position Point to an Array of Position Points.
-; Syntax ........: _LOWriter_ShapePointsAdd(ByRef $atPoints, $iArrayElement, $iX, $iY)
-; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
-;                  $iArrayElement       - an integer value. The Array Element to add the new point before. See Remarks.
+; Description ...: Add a Position Point to Shape.
+; Syntax ........: _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY[, $iPointType = $LOW_SHAPE_POINT_TYPE_NORMAL[, $bIsCurve = False]])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
+;                  $iPoint              - an integer value. The Point to insert the new point AFTER. 0 means insert at the beginning.
 ;                  $iX                  - an integer value. The X coordinate value, set in Micrometers.
 ;                  $iY                  - an integer value. The Y coordinate value, set in Micrometers.
+;                  $iPointType          - [optional] an integer value (0,1,3). Default is $LOW_SHAPE_POINT_TYPE_NORMAL. The Type of Point this new Point is. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $bIsCurve            - [optional] a boolean value. Default is False. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
-;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array plus 1.
-;				   @Error 1 @Extended 3 Return 0 = $iX not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = $iY not an Integer$PointType not an Integer, less than 0 or greater than 3.
+;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 0 or greater than number of points in the shape.
+;				   @Error 1 @Extended 4 Return 0 = $iX not an Integer.
+;				   @Error 1 @Extended 5 Return 0 = $iY not an Integer
+;				   @Error 1 @Extended 6 Return 0 = $iPointType not an Integer, less than 0 or greater than 3, or equal to 2. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;				   @Error 1 @Extended 7 Return 0 = $bIsCurve not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = First or Last Points in a shape can only be a "Normal" type point.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create a new Position Point Structure.
+;				   @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure.
+;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;				   @Error 2 @Extended 3 Return 0 = Failed to Retrieve Array of Points.
+;				   @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
+;				   @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;				   @Error 2 @Extended 6 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;				   @Error 2 @Extended 7 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
+;				   @Error 2 @Extended 8 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;				   @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Array.
+;				   @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Shape.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iArrayElement is the Array Element to add the new Position Point before, i.e. to add a new point at the beginning of the Array, you would call $iArrayElement with 0, to add a new point to the end, you would call $iArrayElement with the last element number of the Array plus 1.
-; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsModify
+; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+;				   This is a homemade function as LibreOffice doesn't offer an easy way for adding points to a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you call a new point with "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
+;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
+;				   Calling any Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as with the last point in a shape, as they are already a curve, or not supported in the case of the last point.
+; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ShapePointsAdd(ByRef $atPoints, $iArrayElement, $iX, $iY)
+Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $LOW_SHAPE_POINT_TYPE_NORMAL, $bIsCurve = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tPoint
-	Local $iOffset = 0
-	Local $atArray[0]
+	Local $tPoint, $tPolyCoords, $tControlPoint1, $tControlPoint2, $tControlPoint3, $tControlPoint4
+	Local $iCount = 0, $iArrayElement, $iNextArrayElement, $iOffset = 0, $iForOffset = 0, $iReDimCount, $iSymmetricalPointXValue, $iSymmetricalPointYValue
+	Local $aiFlags[0]
+	Local $atPoints[0]
+	Local $avArray[0], $avArray2[0]
 
-	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iArrayElement, 0, UBound($atPoints)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	If Not __LOWriter_IntIsBetween($iPoint, 0, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
+	If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LOWriter_IntIsBetween($iPointType, $LOW_SHAPE_POINT_TYPE_NORMAL, $LOW_SHAPE_POINT_TYPE_SYMMETRIC, $LOW_SHAPE_POINT_TYPE_CONTROL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bIsCurve) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+
+	; Temporary -- Smooth cannot be set, change it to Symmetrical -- Need to find a way to make work.
+	If ($iPointType = $LOW_SHAPE_POINT_TYPE_SMOOTH) Then $iPointType = $LOW_SHAPE_POINT_TYPE_SYMMETRIC
 
 	$tPoint = __LOWriter_CreatePoint($iX, $iY)
 	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-	ReDim $atArray[UBound($atPoints) + 1]
+	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
+	If Not IsArray($aiFlags) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-	For $i = 0 To UBound($atArray) - 1
+	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
 
-		If ($i = $iArrayElement) Then
-			$atArray[$i] = $tPoint
-			$iOffset -= 1
+	If ($iPoint = 0) Then
+		$iArrayElement = -1
 
-		Else
-			$atArray[$i] = $atPoints[$i + $iOffset]
+	Else
+
+		; Identify the Array element to add the point after.
+		For $i = 0 To UBound($aiFlags) - 1
+
+			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
+
+			If ($iCount = $iPoint) Then
+				$iArrayElement = $i
+				ExitLoop
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+	EndIf
+
+	If Not IsInt($iArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($iArrayElement = -1) Then ; Insertion will be at the beginning of the Points.
+
+		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0) ; First Point in a shape can only be a "Normal" type Point.
+
+		If ($bIsCurve = True) Then ; Point is a curve.
+
+			ReDim $avArray[UBound($atPoints) + 3]
+			ReDim $avArray2[UBound($aiFlags) + 3]
+			; Make the control Point's Coordinates the new Point's Coords, plus half the difference between this new point and the next point, which will be the first element in the Points array.
+			$tControlPoint1 = __LOWriter_CreatePoint(Int(($iX + (($atPoints[0]).X() - $iX) * .5)), Int(($iY + (($atPoints[0]).Y() - $iY) * .5)))
+			If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+			; Make the next control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be the first element in the Points array.
+			$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[0].X() - (($atPoints[0].X() - $iX) * .5)), Int($atPoints[0].Y() - (($atPoints[0].Y() - $iY) * .5)))
+			If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+			$avArray[0] = $tPoint ; Place the new point at the beginning of the array.
+			$avArray2[0] = $iPointType ; Place the new point's Type at the beginning of the array.
+			$avArray[1] = $tControlPoint1 ; Place the two new Control Points next in the Array.
+			$avArray2[1] = $LOW_SHAPE_POINT_TYPE_CONTROL ; Place the two new Control Point's types next in the Array. Both are "Control" points.
+			$avArray[2] = $tControlPoint2
+			$avArray2[2] = $LOW_SHAPE_POINT_TYPE_CONTROL
+
+			For $i = 3 To UBound($avArray) - 1
+
+				$avArray[$i] = $atPoints[$i - 3] ; Add the rest of the points to the array.
+				$avArray2[$i] = $aiFlags[$i - 3] ; Add the rest of the point's types to the array.
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
+
+		Else ; Point is a regular point.
+
+			ReDim $avArray[UBound($atPoints) + 1]
+			ReDim $avArray2[UBound($aiFlags) + 1]
+
+			$avArray[0] = $tPoint ; Place the new point at the beginning of the array.
+			$avArray2[0] = $iPointType ; Place the new point's Type at the beginning of the array.
+
+
+			For $i = 1 To UBound($avArray) - 1
+
+				$avArray[$i] = $atPoints[$i - 1] ; Add the rest of the points to the array.
+				$avArray2[$i] = $aiFlags[$i - 1] ; Add the rest of the point's types to the array.
+
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
 
 		EndIf
 
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
-	Next
+	ElseIf ($iArrayElement = (UBound($aiFlags) - 1)) Then ; Insertion will be at the end of the Points.
 
-	$atPoints = $atArray
+		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0) ; Last Point in a shape can only be a "Normal" type Point.
+
+		ReDim $avArray[UBound($atPoints) + 1]
+		ReDim $avArray2[UBound($aiFlags) + 1]
+
+		For $i = 0 To UBound($atPoints) - 1
+
+			$avArray[$i] = $atPoints[$i] ; Add the rest of the points to the array.
+			$avArray2[$i] = $aiFlags[$i] ; Add the rest of the point's types to the array.
+
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		$avArray[$i] = $tPoint ; Place the new point at the end of the array.
+		$avArray2[$i] = $iPointType ; Place the new point's Type at the end of the array.
+
+
+		$atPoints = $avArray
+		$aiFlags = $avArray2
+
+	Else ; Insertion is in the middle.
+
+		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
+
+			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+
+				$iNextArrayElement = $i
+				ExitLoop
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		If Not IsInt($iNextArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+
+		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Point Type is a curve of some form. Create four control points.
+
+			; Check if the point I am placing the new point after is a normal point or not. If the Point Type after this point is a Control point,
+			; the point I am inserting after is not a regular point.
+			If ($aiFlags[$iArrayElement + 1] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+
+				$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y()) ; If the point I am inserting after is normal, the control point has the same coords.
+				If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+			Else
+
+				$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the existing Control point.
+
+			EndIf
+
+			;Pick the lowest X value difference between previous point and New point and Next point and New Point.
+			$iSymmetricalPointXValue = ((($iX - $atPoints[$iArrayElement].X()) * .5) < (($atPoints[$iNextArrayElement].X() - $iX) * .5)) ? Int((($iX - $atPoints[$iArrayElement].X()) * .5)) : Int(($atPoints[$iNextArrayElement].X() - $iX) * .5)
+			$iSymmetricalPointYValue = (((($iY - $atPoints[$iArrayElement].Y()) * .5)) < (($atPoints[$iNextArrayElement].Y() - $iY) * .5)) ? Int((($iY - $atPoints[$iArrayElement].Y()) * .5)) : Int((($atPoints[$iNextArrayElement].Y() - $iY) * .5))
+
+			; Make the Second control Point's Coordinates the New Point's Coords, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+			$tControlPoint2 = __LOWriter_CreatePoint(($iX - $iSymmetricalPointXValue), ($iY - $iSymmetricalPointYValue))
+			If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+			; Make the Third control Point's Coordinates the New Point's Coords, plus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+			$tControlPoint3 = __LOWriter_CreatePoint(($iX + $iSymmetricalPointXValue), ($iY + ($iSymmetricalPointYValue)))
+			If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 6, 0)
+
+			; Check if the second point after the point I am placing the new point after is a normal point or not. If the second Point Type after this point is a Control point, copy it.
+			If ($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+				$tControlPoint4 = $atPoints[$iArrayElement + 2]
+
+			Else
+
+				; Make the Fourth control Point's Coordinates the Next Point's Coords, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+				$tControlPoint4 = __LOWriter_CreatePoint(($atPoints[$iNextArrayElement].X() - $iSymmetricalPointXValue), ($atPoints[$iNextArrayElement].Y() - $iSymmetricalPointYValue))
+				If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 7, 0)
+
+			EndIf
+
+			$iOffset = 0
+			$iForOffset = 0
+			$iReDimCount = 3
+			; If point after the point I am inserting the new point after is a control point, don't add one to my Redim Count variable, as the element will be replaced. Else I need to add a
+			; new element to the array for it.
+			$iReDimCount += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (0) : (1)
+			$iReDimCount += (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (0) : (1)
+
+			ReDim $avArray[UBound($atPoints) + $iReDimCount]
+			ReDim $avArray2[UBound($aiFlags) + $iReDimCount]
+			$iReDimCount = 0
+
+			For $i = 0 To UBound($atPoints) - 1
+
+				If ($iOffset = 0) Then
+					$avArray[$i + $iForOffset] = $atPoints[$i + $iOffset] ; Add the rest of the points to the array.
+					$avArray2[$i + $iForOffset] = $aiFlags[$i + $iOffset] ; Add the rest of the point's types to the array.
+
+				Else
+					$iOffset -= 1 ; minus 1 from offset per round so I don't go over array limits
+					$iForOffset -= 1 ; Minus 1 from ForOffset as I am skipping one For cycle.
+				EndIf
+
+				If ($i = $iArrayElement) Then ; Insert the new point and its control points.
+
+					$avArray[$i + 1] = $tControlPoint1
+					$avArray2[$i + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL
+					$avArray[$i + 2] = $tControlPoint2
+					$avArray2[$i + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL
+					$avArray[$i + 3] = $tPoint
+					$avArray2[$i + 3] = $iPointType
+					$avArray[$i + 4] = $tControlPoint3
+					$avArray2[$i + 4] = $LOW_SHAPE_POINT_TYPE_CONTROL
+					$avArray[$i + 5] = $tControlPoint4
+					$avArray2[$i + 5] = $LOW_SHAPE_POINT_TYPE_CONTROL
+
+					$iOffset += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point I am inserting after has a control point after it, I need to skip them in the PointsArray.
+					$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0) ; If the point I am inserting after has two control points after it, I need to skip them in the PointsArray.
+
+					$iForOffset += 5 ; Add to $i to skip the elements I manually added.
+
+				EndIf
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
+
+		Else ; New Point is a Normal Point.
+
+			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after the point I am inserting my point at is a control point. I need to determine which point is a curve, and adjust as needed.
+
+				; If the Point I am inserting after is not a normal Point, or if it is a normal point but the coords of the Point and the first control point after it are not identical,
+				; (Indicating the Normal Point is set to "Create Curve"), modify the control points accordingly.
+				If ($aiFlags[$iArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Or _
+						(($atPoints[$iArrayElement].X() <> $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() <> $atPoints[$iArrayElement + 1].Y())) Then
+					$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the first Control Point.
+
+					; Make the Second control Point's Coordinates the New Point's Coords, minus half the difference between this new point and the previous point, which will be in the $iArrayElement of the Points array.
+					$tControlPoint2 = __LOWriter_CreatePoint(Int($iX - (($iX - $atPoints[$iArrayElement].X()) * .5)), Int($iY - (($iY - $atPoints[$iArrayElement].Y()) * .5)))
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+				EndIf
+
+				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If next Point after the one I am inserting is not a normal Point, modify the control points accordingly.
+
+					; Make the Third control Point's Coordinates the New Point's Coords
+					$tControlPoint3 = __LOWriter_CreatePoint($iX, $iY)
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 6, 0)
+
+					If (($iArrayElement + 2 < $iNextArrayElement) And $atPoints[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; If the second point after the point I am inserting ahead of is a control point, copy it.
+
+						$tControlPoint4 = $atPoints[$iArrayElement + 2] ; Copy the second control point after the point I am inserting after.
+
+					Else ; Create the fourth point.
+
+						; Make the Fourth control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
+						If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 7, 0)
+					EndIf
+
+				EndIf
+
+				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then either modify the third Control Point or create two new ones.
+
+					; Make the Third control Point's Coordinates the New Point's Coords, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					$tControlPoint3 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 6, 0)
+
+					If Not IsObj($tControlPoint4) Then ; If I haven't already made Control Point 4, create #4 and add two elements to the main array.
+
+						; Make the Fourth control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
+						If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 7, 0)
+
+					EndIf
+
+				EndIf
+
+				$iOffset = 0
+				$iForOffset = 0
+				$iReDimCount = 1 ; Add one element to the array for the new point,
+
+				;If I have created 4 control points add 4 to the RedimCount, else add two if either one or the other set have been created.
+				If (IsObj($tControlPoint1) And IsObj($tControlPoint3)) Then
+					$iReDimCount += 4
+
+				ElseIf (IsObj($tControlPoint1) And IsObj($tControlPoint2)) Or (IsObj($tControlPoint3) And IsObj($tControlPoint4)) Then
+					$iReDimCount += 2
+
+				EndIf
+
+				; If both or either point after the point I am inserting the new point after is a control point, remove one from my Redim Count variable, as the element will be replaced.
+				; But only remove one if Redim count is greater than the one I added for my new point.
+				$iReDimCount -= (($iReDimCount > 1) And ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0)
+				$iReDimCount -= (($iReDimCount > 1) And ($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0)
+
+				ReDim $avArray[UBound($atPoints) + $iReDimCount]
+				ReDim $avArray2[UBound($atPoints) + $iReDimCount]
+				$iReDimCount = 0
+
+				For $i = 0 To UBound($atPoints) - 1
+
+					If ($iOffset = 0) Then
+						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
+						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the point's types to the array.
+					Else
+						$iOffset -= 1 ; minus 1 from offset per round so I don't go over array limits
+						$iForOffset -= 1 ; Minus 1 from ForOffset as I am skipping one For cycle.
+					EndIf
+
+					If ($i = $iArrayElement) Then ; Insert the new point and its control points.
+
+						If IsObj($tControlPoint1) Then ; If ControlPoint1 is an Object, that means both 1 and 2 need inserted.
+							$avArray[$i + 1] = $tControlPoint1
+							$avArray2[$i + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL
+							$avArray[$i + 2] = $tControlPoint2
+							$avArray2[$i + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL
+							$avArray[$i + 3] = $tPoint
+							$avArray2[$i + 3] = $iPointType
+							$iForOffset += 3 ; Add 3 to $i Count.
+
+							$iOffset += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point I am inserting after has a control point after it, I need to skip it in the PointsArray.
+							$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And $aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point I am inserting after has two control points after it, I need to skip them in the PointsArray.
+
+						Else
+							$avArray[$i + 1] = $tPoint
+							$avArray2[$i + 1] = $iPointType
+							$iForOffset += 1
+
+						EndIf
+
+						If IsObj($tControlPoint3) Then ; If ControlPoint3 is an Object, that means both 3 and 4 need inserted.
+							$avArray[$i + 2 + $iOffset] = $tControlPoint3
+							$avArray2[$i + 2 + $iOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
+							$avArray[$i + 3 + $iOffset] = $tControlPoint4
+							$avArray2[$i + 3 + $iOffset] = $LOW_SHAPE_POINT_TYPE_CONTROL
+							$iForOffset += 2
+
+							If ($iOffset = 0) Then ; If I haven't already set Offset, check if it needs set.
+								$iOffset += (($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0) ; If the point I am inserting after has a control point after it, I need to skip it in the PointsArray.
+								$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And $aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point I am inserting after has two control points after it, I need to skip them in the PointsArray.
+							EndIf
+						EndIf
+
+					EndIf
+
+					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+				Next
+
+				$atPoints = $avArray
+				$aiFlags = $avArray2
+
+			Else ; Point after the insertion point is a regular point.
+
+				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then create two new control Points.
+
+					; Make the First control Point's Coordinates the New Point's Coords, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					$tControlPoint1 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+					; Make the Second control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+					$iReDimCount += 2 ; Add 2 elements in the Array because I had to create two control points.
+
+				EndIf
+
+				$iForOffset = 0
+				$iReDimCount += 1 ; Add one element to the array for the new point.
+
+				ReDim $avArray[UBound($atPoints) + $iReDimCount]
+				ReDim $avArray2[UBound($atPoints) + $iReDimCount]
+				$iReDimCount = 0
+
+				For $i = 0 To UBound($atPoints) - 1
+
+					$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
+					$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the point's types to the array.
+
+					If ($i = $iArrayElement) Then ; Insert the new point and its control points if applicable.
+
+						If IsObj($tControlPoint1) Then ; If ControlPoint1 is an Object, that means both 1 and 2 need inserted.
+							$avArray[$i + 1] = $tPoint
+							$avArray2[$i + 1] = $iPointType
+							$avArray[$i + 2] = $tControlPoint1
+							$avArray2[$i + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL
+							$avArray[$i + 3] = $tControlPoint2
+							$avArray2[$i + 3] = $LOW_SHAPE_POINT_TYPE_CONTROL
+
+							$iForOffset += 3 ; Add 2 to $i Count.
+
+						Else
+							$avArray[$i + 1] = $tPoint
+							$avArray2[$i + 1] = $iPointType
+							$iForOffset += 1
+
+						EndIf
+
+					EndIf
+
+					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+				Next
+
+				$atPoints = $avArray
+				$aiFlags = $avArray2
+
+			EndIf
+
+		EndIf
+
+	EndIf
+
+	$tPolyCoords = $oShape.PolyPolygonBezier()
+	If Not IsObj($tPolyCoords) Then Return SetError($__LOW_STATUS_INIT_ERROR, 8, 0)
+
+	ReDim $avArray[1]
+
+	; Each Array needs to be nested in an array.
+	$avArray[0] = $atPoints
+	$tPolyCoords.Coordinates = $avArray
+
+	$avArray[0] = $aiFlags
+	$tPolyCoords.Flags = $avArray
+
+	; Set the  new Position Points for the Shape.
+	$oShape.PolyPolygonBezier = $tPolyCoords
+
+	; Apply it twice, as after inserting new points, the Point types get lost.
+	$oShape.PolyPolygonBezier = $tPolyCoords
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ShapePointsAdd
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapePointsModify
-; Description ...: Modify an existing Position Point in an Array of Position Points.
-; Syntax ........: _LOWriter_ShapePointsModify(ByRef $atPoints, $iArrayElement[, $iX = Null[, $iY = Null]])
-; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
-;                  $iArrayElement       - an integer value. The Array Element to modify the point of.
-;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Micrometers.
-;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Micrometers.
-; Return values .: Success: 1 or Array
+; Name ..........: _LOWriter_ShapePointsGetCount
+; Description ...: Retrieve a count of Points present in a Shape.
+; Syntax ........: _LOWriter_ShapePointsGetCount(ByRef $oShape)
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
+; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
-;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array.
-;				   @Error 1 @Extended 3 Return 0 = $iX not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = $iY not an Integer
+;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Integer = Success. Returns total number of points present in a shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePointsGetCount(ByRef $oShape)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount = 0
+	Local $aiFlags[0]
+
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+
+	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+
+	; Retrieve the Array of Point Type Constants. There is one flag per point, so I can just use these to count them by.
+	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
+	If Not IsArray($aiFlags) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+
+	For $i = 0 To UBound($aiFlags) - 1
+
+		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+	Next
+
+	Return SetError($__LOW_STATUS_SUCCESS, 0, $iCount)
+EndFunc   ;==>_LOWriter_ShapePointsGetCount
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePointsModify
+; Description ...: Modify an existing Position Point or Point Type in a shape.
+; Syntax ........: _LOWriter_ShapePointsModify2(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
+;                  $iPoint              - an integer value. The Point to modify, starting at 1.
+;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Micrometers.
+;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate value, set in Micrometers.
+;                  $iPointType          - [optional] an integer value (0,1,3). Default is Null. The Type of Point to change the called point to. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  $bIsCurve            - [optional] a boolean value. Default is Null. If True, the Normal Point is a Curve. See remarks.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
+;				   @Error 1 @Extended 4 Return 0 = $iX not an Integer.
+;				   @Error 1 @Extended 5 Return 0 = $iY not an Integer
+;				   @Error 1 @Extended 6 Return 0 = $PointType not an Integer, less than 0 or greater than 3, or equal to 2.
+;				   @Error 1 @Extended 7 Return 0 = $PointType set to other than Normal while $iPoint is referencing first or last point.
+;				   @Error 1 @Extended 8 Return 0 = $bIsCurve not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bIsCurve cannot be set for last point in a shape.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;				   @Error 2 @Extended 3 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current settings for requested point.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended 1 Return 0 = Failed to modify the requested point.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
-;~
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings for the Array Element called in $iArrayElement.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsAdd
+;				   Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+;				   This is a homemade function as LibreOffice doesn't offer an easy way for modifying points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you modify a point to "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
+;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
+;				   Calling and Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as they are already a curve.
+; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ShapePointsModify(ByRef $atPoints, $iArrayElement, $iX = Null, $iY = Null)
+Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null, $iPointType = Null, $bIsCurve = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $avPointVals[2]
+	Local $iCount = 0, $iArrayElement
+	Local $tPolyCoords
+	Local $aiFlags[0]
+	Local $atPoints[0]
+	Local $avPosPoint[4], $avArray[1]
 
-	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iArrayElement, 0, (UBound($atPoints) - 1)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iPoint, 1, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
 
-	If __LOWriter_VarsAreNull($iX, $iY) Then
-		__LOWriter_ArrayFill($avPointVals, $atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y())
+	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
+	If Not IsArray($aiFlags) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPointVals)
+	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+
+	; Identify the Array element to modify the point.
+	For $i = 0 To UBound($aiFlags) - 1
+
+		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
+
+		If ($iCount = $iPoint) Then
+			$iArrayElement = $i
+			ExitLoop
+		EndIf
+
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+	Next
+
+	If Not IsInt($iArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iX, $iY, $iPointType, $bIsCurve) Then
+		__LOWriter_ShapePointGetSettings($avPosPoint, $aiFlags, $atPoints, $iArrayElement)
+		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosPoint)
 	EndIf
 
 	If ($iX <> Null) Then
 		If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		$atPoints[$iArrayElement].X = $iX
 	EndIf
 
 	If ($iY <> Null) Then
 		If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		$atPoints[$iArrayElement].Y = $iY
 	EndIf
+
+	If ($iPointType <> Null) Then
+		If Not __LOWriter_IntIsBetween($iPointType, $LOW_SHAPE_POINT_TYPE_NORMAL, $LOW_SHAPE_POINT_TYPE_SYMMETRIC, $LOW_SHAPE_POINT_TYPE_CONTROL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If ($iArrayElement = 0) Or ($iArrayElement = (UBound($atPoints) - 1)) And ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0) ; First or last point can't be a curve.
+		; ## TEMPORARY
+		If ($iPointType = $LOW_SHAPE_POINT_TYPE_SMOOTH) Then $iPointType = $LOW_SHAPE_POINT_TYPE_SYMMETRIC
+	EndIf
+
+	If ($bIsCurve <> Null) Then
+		If Not IsBool($bIsCurve) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If ($iArrayElement = (UBound($atPoints) - 1)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0) ; Last point cant be a curve.
+	EndIf
+
+	__LOWriter_ShapePointModify($aiFlags, $atPoints, $iArrayElement, $iX, $iY, $iPointType, $bIsCurve)
+	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+
+	$tPolyCoords = $oShape.PolyPolygonBezier()
+	If Not IsObj($tPolyCoords) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+	; Each Array needs to be nested in an array.
+	$avArray[0] = $atPoints
+	$tPolyCoords.Coordinates = $avArray
+
+	$avArray[0] = $aiFlags
+	$tPolyCoords.Flags = $avArray
+
+	; Set the modified Position Points for the Shape.
+	$oShape.PolyPolygonBezier = $tPolyCoords
+
+	; Apply it twice, as after modifying points, the Point types get lost.
+	$oShape.PolyPolygonBezier = $tPolyCoords
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ShapePointsModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapePointsRemove
-; Description ...: Remove a position Point from an Array of Position Points.
-; Syntax ........: _LOWriter_ShapePointsRemove(ByRef $atPoints, $iArrayElement)
-; Parameters ....: $atPoints            - [in/out] an array of dll structs. An Array of Position Points returned from _LOWriter_ShapePoints. Array will be directly modified.
-;                  $iArrayElement       - an integer value. The Array Element to remove.
+; Description ...: Remove a position Point from a Shape.
+; Syntax ........: _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+;                  $iPoint              - an integer value. The Point to in the Shape to delete, beginning at 1.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $atPoints not an Array.
-;				   @Error 1 @Extended 2 Return 0 = $iArrayElement is not an Integer, less than 0, or greater than number of elements contained in the Array.
+;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;				   @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;				   @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;				   @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
+;				   @Error 2 @Extended 6 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;				   @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;				   @Error 3 @Extended 3 Return 0 = Failed to identify the Previous normal Point in the Array of Points.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Array.
+;				   @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Shape.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ShapePoints, _LOWriter_ShapePointsModify, _LOWriter_ShapePointsAdd
+; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+;				   This is a homemade function as LibreOffice doesn't offer an easy way for removing points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon deletion that were already present in the shape. Some symmetrical points may revert also.
+; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ShapePointsRemove(ByRef $atPoints, $iArrayElement)
+Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iOffset = 0
-	Local $avArray[0]
+	Local $tPolyCoords, $tControlPoint1, $tControlPoint2, $tControlPoint3, $tControlPoint4
+	Local $iOffset = 0, $iArrayElement, $iNextArrayElement, $iPreviousArrayElement, $iSkip = 0, $iCount = 0, $iReDimCount
+	Local $avArray[0], $avArray2[0]
+	Local $aiFlags[0]
+	Local $atPoints[0]
 
-	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iArrayElement, 0, (UBound($atPoints) - 1)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oShape) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oShape.getPropertySetInfo().hasPropertyByName("PolyPolygonBezier")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iPoint, 1, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
 
-	ReDim $avArray[UBound($atPoints) - 1]
+	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
+	If Not IsArray($aiFlags) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
 
-	For $i = 0 To UBound($atPoints) - 1
+	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
+	If Not IsArray($atPoints) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
 
-		If ($i = $iArrayElement) Then ; Skip that element
-			$iOffset -= 1
+	; Identify the Array element to remove the point.
+	For $i = 0 To UBound($aiFlags) - 1
 
-		Else
-			$avArray[$i + $iOffset] = $atPoints[$i]
+		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
 
+		If ($iCount = $iPoint) Then
+			$iArrayElement = $i
+			ExitLoop
 		EndIf
 
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	$atPoints = $avArray
+	If Not IsInt($iArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($iArrayElement <> UBound($atPoints) - 1) Then ; If The requested point to be deleted is not at the end of the Array of points, find the next regular point.
+
+		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
+
+			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+
+				$iNextArrayElement = $i
+				ExitLoop
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		If Not IsInt($iNextArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Else
+		$iNextArrayElement = -1
+
+	EndIf
+
+	If ($iPoint > 1) Then ; If Point requested is not the first point, find the previous Point's position.
+
+		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
+
+			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+
+				$iPreviousArrayElement = $i
+				ExitLoop
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		If Not IsInt($iPreviousArrayElement) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)
+
+	Else
+		$iPreviousArrayElement = -1
+	EndIf
+
+	If ($iArrayElement = 0) Then ; Point requested to be deleted is the first point.
+
+		; Ensure next Point is a Normal Type Point.
+		$aiFlags[$iNextArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL
+
+		ReDim $avArray[UBound($atPoints) - $iNextArrayElement]
+		ReDim $avArray2[UBound($aiFlags) - $iNextArrayElement]
+
+		For $i = 0 To (UBound($atPoints) - 1)
+
+			If ($i >= $iNextArrayElement) Then
+				$avArray[$i - $iSkip] = $atPoints[$i]
+				$avArray2[$i - $iSkip] = $aiFlags[$i]
+			Else
+				$iSkip += 1
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		$atPoints = $avArray
+		$aiFlags = $avArray2
+
+	ElseIf ($iArrayElement = UBound($atPoints) - 1) Then ; Point requested to be deleted is the last point in the shape.
+		; Ensure the second to last Normal point is a Normal Point.
+		$aiFlags[$iPreviousArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL
+
+		ReDim $avArray[UBound($atPoints) - (UBound($atPoints) - $iPreviousArrayElement - 1)]
+		ReDim $avArray2[UBound($aiFlags) - (UBound($aiFlags) - $iPreviousArrayElement - 1)]
+
+		For $i = 0 To $iPreviousArrayElement + 1
+
+			$avArray[$i] = $atPoints[$i]
+			$avArray2[$i] = $aiFlags[$i]
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		$atPoints = $avArray
+		$aiFlags = $avArray2
+
+	Else ; Point to be deleted is in the middle.
+
+		If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; If there is a control point after the Previous point.
+
+			If ($aiFlags[$iPreviousArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If Previous Point is not a normal point.
+
+				$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1] ; Copy the first control point after the previous point.
+
+				If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement - 1) > $iArrayElement) Then ; If Point before the next Point is a control point, copy it.
+					$tControlPoint2 = $atPoints[$iNextArrayElement - 1]
+
+				Else ; Point before the next Point is not a control point, create a new one.
+					; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
+					If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+				EndIf
+
+			Else ; Previous Point is a normal point.
+
+				; If the X and Y Coord of the previous point, and the control point after it do not match, the previous point is a "Curve".
+				If ($atPoints[$iPreviousArrayElement].X() <> $atPoints[$iPreviousArrayElement + 1].X()) And ($atPoints[$iPreviousArrayElement].Y() <> $atPoints[$iPreviousArrayElement + 1].Y()) Then
+
+					$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1] ; Copy the first control point after the previous point.
+
+					If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement - 1) > $iArrayElement) Then ; Point before the next Point is a control point, copy it.
+						$tControlPoint2 = $atPoints[$iNextArrayElement - 1]
+
+					Else ; Point before the next Point is not a control point, create a new one.
+						; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+						$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
+						If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+
+					EndIf
+
+				EndIf
+
+			EndIf
+
+			$iOffset = 0
+			$iSkip = 0
+			$iReDimCount = 1 ; Start at one for the point I am deleting.
+			$iReDimCount += ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point before the next point is a control point, add 1.
+			$iReDimCount += (($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement - 2) > $iArrayElement)) ? (1) : (0) ; If the second point before the next point is a control point, and still after the point to be deleted, add 1.
+			$iReDimCount += ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point after the previous point is a control point, add 1.
+			$iReDimCount += (($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iPreviousArrayElement + 2) < $iArrayElement)) ? (1) : (0) ; If the second point after the previous point is a control point, and still before the point to be deleted, add 1.
+			; If I had to create or retrieve control points to insert, minus 1 per from my Redim count.
+			$iReDimCount -= (IsObj($tControlPoint1)) ? (1) : (0)
+			$iReDimCount -= (IsObj($tControlPoint2)) ? (1) : (0)
+
+			ReDim $avArray[UBound($atPoints) - $iReDimCount]
+			ReDim $avArray2[UBound($aiFlags) - $iReDimCount]
+
+			For $i = 0 To UBound($atPoints) - 1
+
+				If ($i = $iArrayElement) Then
+					$iOffset -= 1
+
+				ElseIf ($iSkip = 0) Then
+					$avArray[$i + $iOffset] = $atPoints[$i]
+					$avArray2[$i + $iOffset] = $aiFlags[$i]
+
+				Else
+					$iSkip -= 1
+					$iOffset -= 1
+
+				EndIf
+
+				If ($i = $iPreviousArrayElement) Then
+					If IsObj($tControlPoint1) Then
+						$avArray[$i + 1] = $tControlPoint1
+						$avArray2[$i + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL
+						$iOffset += 1
+					EndIf
+
+					If IsObj($tControlPoint2) Then
+						$avArray[$i + 2] = $tControlPoint2
+						$avArray2[$i + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL
+						$iOffset += 1
+					EndIf
+
+					$iSkip += ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0)
+					$iSkip += (($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iPreviousArrayElement + 2) < $iArrayElement)) ? (1) : (0)
+					$iSkip += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0)
+					$iSkip += (($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iArrayElement + 2) < $iNextArrayElement)) ? (1) : (0)
+
+				EndIf
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
+
+		ElseIf ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If the next point is not a Normal Point
+
+			If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then
+				$tControlPoint4 = $atPoints[$iNextArrayElement - 1]
+
+			Else
+				; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+				$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
+				If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+
+			EndIf
+
+			If ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement = 2) > $iArrayElement) Then
+				$tControlPoint3 = $atPoints[$iNextArrayElement - 2]
+
+			Else
+				; Make the New control Point's Coordinates the same as the previous point.
+				$tControlPoint3 = __LOWriter_CreatePoint($atPoints[$iPreviousArrayElement].X(), $atPoints[$iPreviousArrayElement].Y())
+				If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+
+			EndIf
+
+			$iOffset = 0
+			$iSkip = 0
+			$iReDimCount = 1 ; Start at one for the point I am deleting.
+
+			ReDim $avArray[UBound($atPoints) - $iReDimCount]
+			ReDim $avArray2[UBound($aiFlags) - $iReDimCount]
+
+			For $i = 0 To UBound($atPoints) - 1
+
+				If ($i = $iArrayElement) Then
+					$iOffset -= 1
+
+				ElseIf ($iSkip = 0) Then
+					$avArray[$i + $iOffset] = $atPoints[$i]
+					$avArray2[$i + $iOffset] = $aiFlags[$i]
+
+				Else
+					$iSkip -= 1
+					$iOffset -= 1
+				EndIf
+
+				If ($i = $iArrayElement) Then
+					If IsObj($tControlPoint3) Then
+						$avArray[$i] = $tControlPoint3
+						$avArray2[$i] = $LOW_SHAPE_POINT_TYPE_CONTROL
+						$iOffset += 1
+					EndIf
+
+					If IsObj($tControlPoint4) Then
+						$avArray[$i + 1] = $tControlPoint4
+						$avArray2[$i + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL
+						$iOffset += 1
+					EndIf
+
+					$iSkip += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0)
+					$iSkip += (($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iArrayElement + 2) < $iNextArrayElement)) ? (1) : (0)
+
+				EndIf
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
+
+		Else ; There are no control points before or after the point to be deleted.
+
+			ReDim $avArray[UBound($atPoints) - 1]
+			ReDim $avArray2[UBound($aiFlags) - 1]
+
+			For $i = 0 To UBound($atPoints) - 1
+
+				If ($i = $iArrayElement) Then
+					$iOffset -= 1
+
+				Else
+					$avArray[$i + $iOffset] = $atPoints[$i]
+					$avArray2[$i + $iOffset] = $aiFlags[$i]
+
+				EndIf
+
+				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$atPoints = $avArray
+			$aiFlags = $avArray2
+
+		EndIf
+
+	EndIf
+
+	$tPolyCoords = $oShape.PolyPolygonBezier()
+	If Not IsObj($tPolyCoords) Then Return SetError($__LOW_STATUS_INIT_ERROR, 6, 0)
+
+	ReDim $avArray[1]
+
+	; Each Array needs to be nested in an array.
+	$avArray[0] = $atPoints
+	$tPolyCoords.Coordinates = $avArray
+
+	$avArray[0] = $aiFlags
+	$tPolyCoords.Flags = $avArray
+
+	; Set the  new Position Points for the Shape.
+	$oShape.PolyPolygonBezier = $tPolyCoords
+
+	; Apply it twice, as after modifying points, the Point types get lost.
+	$oShape.PolyPolygonBezier = $tPolyCoords
+
 
 	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ShapePointsRemove

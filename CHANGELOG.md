@@ -27,8 +27,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ShapeLineArrowStyles
 	- _LOWriter_ShapeLineProperties
 	- _LOWriter_ShapeName
-	- _LOWriter_ShapePoints
  	- _LOWriter_ShapePointsAdd
+	- _LOWriter_ShapePointsGetCount
  	- _LOWriter_ShapePointsModify
  	- _LOWriter_ShapePointsRemove
 	- _LOWriter_ShapePosition
@@ -53,6 +53,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_Shape_GetCustomType
 	- __LOWriter_ShapeArrowStyleName
 	- __LOWriter_ShapeLineStyleName
+	- __LOWriter_ShapePointGetSettings
+	- __LOWriter_ShapePointModify
+
+- Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 
 ### Changed
 
