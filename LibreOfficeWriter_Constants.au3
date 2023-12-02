@@ -788,6 +788,13 @@ Global Enum _
 		$LOW_SHAPE_LINE_STYLE_2_DOTS_1_DASH, _                  ; 30 -- A Line consisting of 2 Dots and 1 Dash.
 		$LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS               ; 31 -- A Line with Fine Dots.
 
+; PolygonFlags
+Global Const _
+		$LOW_SHAPE_POINT_TYPE_NORMAL = 0, _                     ; the point is normal, from the curve discussion view.
+		$LOW_SHAPE_POINT_TYPE_SMOOTH = 1, _                     ; the point is smooth, the first derivation from the curve discussion view.
+		$LOW_SHAPE_POINT_TYPE_CONTROL = 2, _                    ; the point is a control point, to control the curve from the user interface.
+		$LOW_SHAPE_POINT_TYPE_SYMMETRIC = 3                     ; the point is symmetric, the second derivation from the curve discussion view.
+
 ; Shape Type Constants.
 Global Enum _
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY, _                   ; 0 -- A Four-way Arrow.

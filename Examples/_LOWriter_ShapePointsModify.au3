@@ -6,7 +6,8 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oShape
-	Local $atArray[0], $atArray2[0]
+	Local $avArray[0]
+	Local $iNewX, $iNewY
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
@@ -16,33 +17,48 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Polygon Shape into the document, 3000 Wide by 2000 High.
-	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_LINE_POLYGON, 3000, 2000)
+	; Insert a Polygon Shape into the document, 5000 Wide by 7000 High.
+	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_LINE_POLYGON, 5000, 7000)
 	If @error Then _ERROR("Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the Shape's current Array of Points.
-	$atArray = _LOWriter_ShapePoints($oShape)
-	If @error Then _ERROR("Failed to retrieve Array of Shape points. Error:" & @error & " Extended:" & @extended)
+	;Retrieve the Shape's current settings for its third point.
+	$avArray = _LOWriter_ShapePointsModify($oShape, 3)
+	If @error Then _ERROR("Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the Third point's X and Y settings.
-	$atArray2 = _LOWriter_ShapePointsModify($atArray, 2)
-	If @error Then _ERROR("Failed to retrieve Shape point settings. Error:" & @error & " Extended:" & @extended)
+	; I will retrieve the second points current position, and add to its X and Y values to determine my new point's new X and Y values.
 
-	; Add 500 Micrometers to the X coordinate
-	$atArray2[0] += 500
+	; Minus 1400 Micrometers from the X coordinate
+	$iNewX = $avArray[0] - 1400
 
-	; Minus 300 Micrometers from the Y coordinate
-	$atArray2[1] -= 300
+	; Add 400 Micrometers to the Y coordinate
+	$iNewY = $avArray[1] + 400
+
+	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Point.")
 
 	; Apply the modified X and Y coordinates
-	_LOWriter_ShapePointsModify($atArray, 2, $atArray2[0], $atArray2[1])
+	_LOWriter_ShapePointsModify($oShape, 3, $iNewX, $iNewY)
 	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "Press Ok to insert the modified Points into the shape.")
+	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Third Point type.")
 
-	; Re-insert the modified Points
-	_LOWriter_ShapePoints($oShape, $atArray)
-	If @error Then _ERROR("Failed to modify Array of Shape points. Error:" & @error & " Extended:" & @extended)
+	; Modify the Shape's Third point to be a Symmetrical Point Type
+	_LOWriter_ShapePointsModify($oShape, 3, Null, Null, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
+	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Third Point to no longer be a curve.")
+
+	; Modify the Shape's Third point to be a normal point agin
+	_LOWriter_ShapePointsModify($oShape, 3, Null, Null, Null, False)
+	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
+
+	; Retrieve the current settings for the Third Point. Return will be an Array in order of Function parameters.
+	$avArray = _LOWriter_ShapePointsModify($oShape, 3)
+	If @error Then _ERROR("Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "The Shape's X Coordinate is, in Micrometers: " & $avArray[0] & @CRLF & _
+			"The Shape's Y Coordinate is, in Micrometers: " & $avArray[1] & @CRLF & _
+			"The Shape's Point Type is, (See UDF Constants): " & $avArray[2] & @CRLF & _
+			"Is this point a Curve? True/False: " & $avArray[3])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

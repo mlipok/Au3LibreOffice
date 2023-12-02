@@ -21,6 +21,10 @@ Func Example()
 	_LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
+	; Insert a Rectangle Shape into the document, 3000 Wide by 6000 High.
+	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_BASIC_RECTANGLE, 3000, 6000)
+	If @error Then _ERROR("Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
+
 	; Retrieve an array of Shape names currently in the document.
 	$asShapes = _LOWriter_ShapesGetNames($oDoc)
 	If @error Then _ERROR("Failed to retrieve a list of Shapes. Error:" & @error & " Extended:" & @extended)
