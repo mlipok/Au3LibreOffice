@@ -80,6 +80,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	
 - Missing Includes in LibreOfficeWriter file.
 - Ternary Operators missing Parenthesis in responses.
+- Export extension was incorrect, "jjpe" --> "jpe" 
 
 ## [0.9.1] - 2023-10-28
 
