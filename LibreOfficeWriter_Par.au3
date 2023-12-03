@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -94,12 +98,12 @@ Func _LOWriter_ParObjCopy(ByRef $oDoc)
 
 	Local $oObj
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oObj = $oDoc.CurrentController.getTransferable() ; Copy
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oObj)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oObj)
 EndFunc   ;==>_LOWriter_ParObjCopy
 
 ; #FUNCTION# ====================================================================================================================
@@ -137,11 +141,11 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 	Local $iCount = 0
 	Local $aoParagraphs[1]
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bTableCheck) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bTableCheck) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oEnum = $oCursor.Text.createEnumeration()
-	If Not IsObj($oEnum) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($bTableCheck = True) Then ReDim $aoParagraphs[1][2]
 
@@ -171,7 +175,7 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, $iCount, $aoParagraphs)
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoParagraphs)
 EndFunc   ;==>_LOWriter_ParObjCreateList
 
 ; #FUNCTION# ====================================================================================================================
@@ -196,7 +200,7 @@ Func _LOWriter_ParObjDelete(ByRef $oParObj)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oParObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oParObj.supportsService("com.sun.star.text.TextTable")) Then
 		$oParObj.dispose()
@@ -206,7 +210,7 @@ Func _LOWriter_ParObjDelete(ByRef $oParObj)
 
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ParObjDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -233,12 +237,12 @@ Func _LOWriter_ParObjPaste(ByRef $oDoc, ByRef $oParObj)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.insertTransferable($oParObj)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ParObjPaste
 
 ; #FUNCTION# ====================================================================================================================
@@ -286,11 +290,11 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 	Local $aoSections[1][2]
 	Local $iCount = 0
 
-	If Not IsObj($oParagraph) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParagraph.supportsService("com.sun.star.text.Paragraph") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParagraph) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParagraph.supportsService("com.sun.star.text.Paragraph") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSecEnum = $oParagraph.createEnumeration()
-	If Not IsObj($oSecEnum) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSecEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	While $oSecEnum.hasMoreElements()
 		$oParSection = $oSecEnum.nextElement()
 
@@ -301,7 +305,7 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	WEnd
 	ReDim $aoSections[$iCount][2]
-	Return SetError($__LOW_STATUS_SUCCESS, $iCount, $aoSections)
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSections)
 EndFunc   ;==>_LOWriter_ParObjSectionsGet
 
 ; #FUNCTION# ====================================================================================================================
@@ -337,25 +341,25 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 
 	Local $oViewCursor
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Select($oObj)
 
 	If ($oObj.supportsService("com.sun.star.text.TextTable")) Then
 
 		$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of cell
-		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of Table
-		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ParObjSelect
 
 ; #FUNCTION# ====================================================================================================================
@@ -409,8 +413,8 @@ Func _LOWriter_ParStyleAlignment(ByRef $oParStyle, $iHorAlign = Null, $iVertAlig
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParAlignment($oParStyle, $iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection)
 	Return SetError(@error, @extended, $vReturn)
@@ -453,8 +457,8 @@ Func _LOWriter_ParStyleBackColor(ByRef $oParStyle, $iBackColor = Null, $bBackTra
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParBackColor($oParStyle, $iBackColor, $bBackTransparent)
 	Return SetError(@error, @extended, $vReturn)
@@ -510,13 +514,13 @@ Func _LOWriter_ParStyleBorderColor(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oParStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -569,8 +573,8 @@ Func _LOWriter_ParStyleBorderPadding(ByRef $oParStyle, $iAll = Null, $iTop = Nul
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParBorderPadding($oParStyle, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -625,13 +629,13 @@ Func _LOWriter_ParStyleBorderStyle(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oParStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -684,26 +688,26 @@ Func _LOWriter_ParStyleBorderWidth(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If ($bConnectBorder <> Null) And Not IsBool($bConnectBorder) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($bConnectBorder <> Null) And Not IsBool($bConnectBorder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		__LOWriter_AddTo1DArray($vReturn, $oParStyle.ParaIsConnectBorder())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $vReturn)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		If @error Then Return SetError(@error, @extended, $vReturn)
 	EndIf
 	If ($bConnectBorder <> Null) Then $oParStyle.ParaIsConnectBorder = $bConnectBorder
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 
 ; #FUNCTION# ====================================================================================================================
@@ -739,22 +743,22 @@ Func _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
 
 	Local $oParStyles, $oStyle, $oParStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
-	If Not IsObj($oParStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-	If _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.ParagraphStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oParStyles.insertByName($sParStyle, $oStyle)
 
-	If Not $oParStyles.hasByName($sParStyle) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oParStyles.hasByName($sParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oParStyle = $oParStyles.getByName($sParStyle)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oParStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oParStyle)
 EndFunc   ;==>_LOWriter_ParStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -797,26 +801,26 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	Local $oParStyles
 	Local $sParStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bForceDelete) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsString($sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($sReplacementStyle <> "") And Not _LOWriter_ParStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bForceDelete) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($sReplacementStyle <> "") And Not _LOWriter_ParStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
-	If Not IsObj($oParStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$sParStyle = $oParStyle.Name()
-	If Not IsString($sParStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not $oParStyle.isUserDefined() Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oParStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oParStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Default Paragraph Style") Then $oParStyle.setParentStyle($sReplacementStyle)
 	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
-	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -876,10 +880,10 @@ Func _LOWriter_ParStyleDropCaps(ByRef $oDoc, ByRef $oParStyle, $iNumChar = Null,
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParDropCaps($oParStyle, $iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -930,8 +934,8 @@ Func _LOWriter_ParStyleEffect(ByRef $oParStyle, $iRelief = Null, $iCase = Null, 
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharEffect($oParStyle, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
 	Return SetError(@error, @extended, $vReturn)
@@ -962,11 +966,11 @@ Func _LOWriter_ParStyleExists(ByRef $oDoc, $sParStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If $oDoc.StyleFamilies.getByName("ParagraphStyles").hasByName($sParStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If $oDoc.StyleFamilies.getByName("ParagraphStyles").hasByName($sParStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>_LOWriter_ParStyleExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -1017,11 +1021,11 @@ Func _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle, $sFontName = Null, $n
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_CharFont($oParStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
 	Return SetError(@error, @extended, $vReturn)
@@ -1070,8 +1074,8 @@ Func _LOWriter_ParStyleFontColor(ByRef $oParStyle, $iFontColor = Null, $iTranspa
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharFontColor($oParStyle, $iFontColor, $iTransparency, $iHighlight)
 	Return SetError(@error, @extended, $vReturn)
@@ -1106,13 +1110,13 @@ Func _LOWriter_ParStyleGetObj(ByRef $oDoc, $sParStyle)
 
 	Local $oParStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oParStyle = $oDoc.StyleFamilies().getByName("ParagraphStyles").getByName($sParStyle)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oParStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oParStyle)
 EndFunc   ;==>_LOWriter_ParStyleGetObj
 
 ; #FUNCTION# ====================================================================================================================
@@ -1163,8 +1167,8 @@ Func _LOWriter_ParStyleHyphenation(ByRef $oParStyle, $bAutoHyphen = Null, $bHyph
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParHyphenation($oParStyle, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
 	Return SetError(@error, @extended, $vReturn)
@@ -1214,8 +1218,8 @@ Func _LOWriter_ParStyleIndent(ByRef $oParStyle, $iBeforeTxt = Null, $iAfterTxt =
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParIndent($oParStyle, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
 	Return SetError(@error, @extended, $vReturn)
@@ -1274,9 +1278,9 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	Local $iError = 0
 	Local $avOrganizer[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($sNewParStyleName, $sParentStyle, $sFollowStyle, $bAutoUpdate, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
@@ -1287,28 +1291,28 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 			__LOWriter_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
 					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), $oParStyle.IsAutoUpdate())
 		EndIf
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avOrganizer)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
 	If ($sNewParStyleName <> Null) Then
-		If Not IsString($sNewParStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		If _LOWriter_ParStyleExists($oDoc, $sNewParStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sNewParStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_ParStyleExists($oDoc, $sNewParStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oParStyle.Name = $sNewParStyleName
 		$iError = ($oParStyle.Name() = $sNewParStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sFollowStyle <> Null) Then
-		If Not IsString($sFollowStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsString($sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not _LOWriter_ParStyleExists($oDoc, $sFollowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$sFollowStyle = __LOWriter_ParStyleNameToggle($sFollowStyle)
 		$oParStyle.setPropertyValue("FollowStyle", $sFollowStyle)
 		$iError = ($oParStyle.getPropertyValue("FollowStyle") = $sFollowStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
-		If Not IsString($sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If ($sParentStyle <> "") Then
-			If Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+			If Not _LOWriter_ParStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 			$sParentStyle = __LOWriter_ParStyleNameToggle($sParentStyle)
 		EndIf
 		$oParStyle.ParentStyle = $sParentStyle
@@ -1316,19 +1320,19 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 	EndIf
 
 	If ($bAutoUpdate <> Null) Then
-		If Not IsBool($bAutoUpdate) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not IsBool($bAutoUpdate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oParStyle.IsAutoUpdate = $bAutoUpdate
 		$iError = ($oParStyle.IsAutoUpdate() = $bAutoUpdate) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bHidden <> Null) Then
-		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oParStyle.Hidden = $bHidden
 		$iError = ($oParStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -1376,10 +1380,10 @@ Func _LOWriter_ParStyleOutLineAndList(ByRef $oDoc, ByRef $oParStyle, $iOutline =
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParOutLineAndList($oParStyle, $iOutline, $sNumStyle, $bParLineCount, $iLineCountVal)
 	Return SetError(@error, @extended, $vReturn)
@@ -1430,8 +1434,8 @@ Func _LOWriter_ParStyleOverLine(ByRef $oParStyle, $bWordOnly = Null, $iOverLineS
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharOverLine($oParStyle, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 	Return SetError(@error, @extended, $vReturn)
@@ -1483,10 +1487,10 @@ Func _LOWriter_ParStylePageBreak(ByRef $oDoc, ByRef $oParStyle, $iBreakType = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($sPageStyle <> Null) And ($sPageStyle <> "") And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sPageStyle <> Null) And ($sPageStyle <> "") And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParPageBreak($oParStyle, $iBreakType, $iPgNumOffSet, $sPageStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -1542,8 +1546,8 @@ Func _LOWriter_ParStylePosition(ByRef $oParStyle, $bAutoSuper = Null, $iSuperScr
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharPosition($oParStyle, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
 	Return SetError(@error, @extended, $vReturn)
@@ -1585,8 +1589,8 @@ Func _LOWriter_ParStyleRotateScale(ByRef $oParStyle, $iRotation = Null, $iScaleW
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharRotateScale($oParStyle, $iRotation, $iScaleWidth)
 	Return SetError(@error, @extended, $vReturn)
@@ -1624,14 +1628,14 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$sParStyle = __LOWriter_ParStyleNameToggle($sParStyle)
 	$oObj.ParaStyleName = $sParStyle
-	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_ParStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -1674,11 +1678,11 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bUserOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bAppliedOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("ParagraphStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -1686,7 +1690,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName()
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
+		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
 	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
@@ -1702,7 +1706,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles))
+	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles))
 EndFunc   ;==>_LOWriter_ParStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================
@@ -1752,8 +1756,8 @@ Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, 
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParShadow($oParStyle, $iWidth, $iColor, $bTransparent, $iLocation)
 	Return SetError(@error, @extended, $vReturn)
@@ -1821,8 +1825,8 @@ Func _LOWriter_ParStyleSpace(ByRef $oParStyle, $iAbovePar = Null, $iBelowPar = N
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParSpace($oParStyle, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
 	Return SetError(@error, @extended, $vReturn)
@@ -1872,8 +1876,8 @@ Func _LOWriter_ParStyleSpacing(ByRef $oParStyle, $bAutoKerning = Null, $nKerning
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharSpacing($oParStyle, $bAutoKerning, $nKerning)
 	Return SetError(@error, @extended, $vReturn)
@@ -1919,8 +1923,8 @@ Func _LOWriter_ParStyleStrikeOut(ByRef $oParStyle, $bWordOnly = Null, $bStrikeOu
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharStrikeOut($oParStyle, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -1979,10 +1983,10 @@ Func _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition, $iFillChar = 
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iPosition) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If __LOWriter_ParHasTabStop($oParStyle, $iPosition) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If __LOWriter_ParHasTabStop($oParStyle, $iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iPosition = __LOWriter_ParTabStopCreate($oParStyle, $iPosition, $iAlignment, $iFillChar, $iDecChar)
 	Return SetError(@error, @extended, $iPosition)
@@ -2026,11 +2030,11 @@ Func _LOWriter_ParStyleTabStopDelete(ByRef $oDoc, ByRef $oParStyle, $iTabStop)
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_ParTabStopDelete($oParStyle, $oDoc, $iTabStop)
 	Return SetError(@error, @extended, $vReturn)
@@ -2065,8 +2069,8 @@ Func _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
 
 	Local $aiTabList
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$aiTabList = __LOWriter_ParTabStopList($oParStyle)
 
@@ -2137,10 +2141,10 @@ Func _LOWriter_ParStyleTabStopMod(ByRef $oParStyle, $iTabStop, $iPosition = Null
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParTabStopMod($oParStyle, $iTabStop, $iPosition, $iFillChar, $iAlignment, $iDecChar)
 	Return SetError(@error, @extended, $vReturn)
@@ -2189,8 +2193,8 @@ Func _LOWriter_ParStyleTxtFlowOpt(ByRef $oParStyle, $bParSplit = Null, $bKeepTog
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParTxtFlowOpt($oParStyle, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
 	Return SetError(@error, @extended, $vReturn)
@@ -2239,8 +2243,8 @@ Func _LOWriter_ParStyleUnderLine(ByRef $oParStyle, $bWordOnly = Null, $iUnderLin
 
 	Local $vReturn
 
-	If Not IsObj($oParStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharUnderLine($oParStyle, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 	Return SetError(@error, @extended, $vReturn)
