@@ -37,10 +37,3 @@ Global Enum _
 		$__LOCONST_CONVERT_UM_INCH, _                          ; 8 Convert from Micrometer (100th of a millimeter) To Inches.
 		$__LOCONST_CONVERT_PT_UM, _                            ; 9 Convert from Printers Point to Micrometers.
 		$__LOCONST_CONVERT_UM_PT                               ; 10 Convert from MicroMeters to Printers Point.
-
-; Path Convert Constants.
-Global Const _
-		$LO_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input path, determined by StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
-		$LO_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
-		$LO_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
-
