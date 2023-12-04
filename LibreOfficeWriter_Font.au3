@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -48,15 +52,15 @@ Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 
 	Local $atFonts
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFontName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
-	If Not IsArray($atFonts) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	For $i = 0 To UBound($atFonts) - 1
-		If $atFonts[$i].Name = $sFontName Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+		If $atFonts[$i].Name = $sFontName Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 EndFunc   ;==>_LOWriter_FontExists
 
@@ -95,9 +99,9 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 	Local $atFonts
 	Local $asFonts[0][4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
-	If Not IsArray($atFonts) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	ReDim $asFonts[UBound($atFonts)][4]
 
@@ -109,5 +113,5 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
-	Return SetError($__LOW_STATUS_SUCCESS, UBound($atFonts), $asFonts)
+	Return SetError($__LO_STATUS_SUCCESS, UBound($atFonts), $asFonts)
 EndFunc   ;==>_LOWriter_FontsList

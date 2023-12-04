@@ -19,30 +19,6 @@
 Global Const $__LOWCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=65
-; Error Codes
-Global Enum _
-		$__LOW_STATUS_SUCCESS = 0, _                            ; 0 Function finished successfully.
-		$__LOW_STATUS_INPUT_ERROR, _                            ; 1 Function encountered a input error.
-		$__LOW_STATUS_INIT_ERROR, _                             ; 2 Function encountered a Initialization error.
-		$__LOW_STATUS_PROCESSING_ERROR, _                       ; 3 Function encountered a Processing error.
-		$__LOW_STATUS_PROP_SETTING_ERROR, _                     ; 4 Function encountered a Property setting error.
-		$__LOW_STATUS_DOC_ERROR, _                              ; 5 Function encountered a Document related error.
-		$__LOW_STATUS_PRINTER_RELATED_ERROR, _                  ; 6 Function encountered a Printer related error.
-		$__LOW_STATUS_VER_ERROR                                 ; 7 Function encountered a Version error.
-
-; Conversion Constants.
-Global Enum _
-		$__LOWCONST_CONVERT_TWIPS_CM, _                         ; 0 Convert from TWIPS (Twentieth of a Printer Point) To Centimeters.
-		$__LOWCONST_CONVERT_TWIPS_INCH, _                       ; 1 Convert from TWIPS (Twentieth of a Printer Point) To Inches.
-		$__LOWCONST_CONVERT_TWIPS_UM, _                         ; 2 Convert from TWIPS(Twentieth of a Printer Point) To Micrometer(100th of a millimeter).
-		$__LOWCONST_CONVERT_MM_UM, _                            ; 3 Convert from Millimeters To Micrometer (100th of a millimeter).
-		$__LOWCONST_CONVERT_UM_MM, _                            ; 4 Convert from Micrometer (100th of a millimeter) To Millimeters.
-		$__LOWCONST_CONVERT_CM_UM, _                            ; 5 Convert from Centimeters To Micrometer (100th of a millimeter).
-		$__LOWCONST_CONVERT_UM_CM, _                            ; 6 Convert from Micrometer (100th of a millimeter) To Centimeters.
-		$__LOWCONST_CONVERT_INCH_UM, _                          ; 7 Convert from Inches To Micrometer (100th of a millimeter).
-		$__LOWCONST_CONVERT_UM_INCH, _                          ; 8 Convert from Micrometer (100th of a millimeter) To Inches.
-		$__LOWCONST_CONVERT_PT_UM, _                            ; 9 Convert from Printers Point to Micrometers.
-		$__LOWCONST_CONVERT_UM_PT                               ; 10 Convert from MicroMeters to Printers Point.
 
 ; Fill Style Type Constants
 Global Enum _

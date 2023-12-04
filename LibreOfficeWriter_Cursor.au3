@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -51,13 +55,13 @@
 Func _LOWriter_CursorGetDataType(ByRef $oDoc, ByRef $oCursor)
 	Local $iCursorDataType
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $iCursorDataType)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iCursorDataType)
 EndFunc   ;==>_LOWriter_CursorGetDataType
 
 ; #FUNCTION# ====================================================================================================================
@@ -125,30 +129,30 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 	$aiCommands[$LOW_CURSOR_STAT_GET_PAGE] = ".getPage()"
 	$aiCommands[$LOW_CURSOR_STAT_GET_RANGE_NAME] = ".getRangeName()"
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iFlag) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iFlag) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Switch $iCursorType
 		Case $LOW_CURTYPE_TEXT_CURSOR
-			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_COLLAPSED, $LOW_CURSOR_STAT_IS_END_OF_PAR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_COLLAPSED, $LOW_CURSOR_STAT_IS_END_OF_PAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_TABLE_CURSOR
-			If Not ($iFlag = $LOW_CURSOR_STAT_GET_RANGE_NAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+			If Not ($iFlag = $LOW_CURSOR_STAT_GET_RANGE_NAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
-			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case Else
-			Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
+			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
 
 EndFunc   ;==>_LOWriter_CursorGetStatus
@@ -179,12 +183,12 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 Func _LOWriter_CursorGetType(ByRef $oCursor)
 	Local $iCursorType
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $iCursorType)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iCursorType)
 EndFunc   ;==>_LOWriter_CursorGetType
 
 ; #FUNCTION# ====================================================================================================================
@@ -223,20 +227,20 @@ Func _LOWriter_CursorGoToRange(ByRef $oCursor, ByRef $oRange, $bSelect = False)
 
 	Local $iCursorType, $iRangeType
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oRange) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bSelect) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bSelect) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$iRangeType = __LOWriter_Internal_CursorGetType($oRange)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
-	If ($iCursorType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRangeType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iRangeType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If ($iCursorType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRangeType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iRangeType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oCursor.gotoRange($oRange, $bSelect)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_CursorGoToRange
 
 ; #FUNCTION# ====================================================================================================================
@@ -333,10 +337,10 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 	Local $iCursorType
 	Local $bMoved = False
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Switch $iCursorType
 		Case $LOW_CURTYPE_TEXT_CURSOR
@@ -349,6 +353,6 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
 		Case Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor data type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor data type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorMove

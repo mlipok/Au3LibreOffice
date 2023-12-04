@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -118,14 +122,14 @@ Func _LOWriter_DocBookmarkDelete(ByRef $oDoc, ByRef $oBookmark)
 
 	Local $sBookmarkName
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$sBookmarkName = $oBookmark.Name()
 
 	$oBookmark.dispose()
 
-	Return (_LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return (_LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarkDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -154,12 +158,12 @@ Func _LOWriter_DocBookmarkGetAnchor(ByRef $oBookmark)
 
 	Local $oBookAnchor
 
-	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oBookAnchor = $oBookmark.Anchor.Text.createTextCursorByRange($oBookmark.Anchor())
-	If Not IsObj($oBookAnchor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookAnchor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oBookAnchor)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookAnchor)
 EndFunc   ;==>_LOWriter_DocBookmarkGetAnchor
 
 ; #FUNCTION# ====================================================================================================================
@@ -191,15 +195,15 @@ Func _LOWriter_DocBookmarkGetObj(ByRef $oDoc, $sBookmarkName)
 
 	Local $oBookmark
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If Not _LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not _LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oBookmark = $oDoc.Bookmarks.getByName($sBookmarkName)
-	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oBookmark)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmark)
 EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 
 ; #FUNCTION# ====================================================================================================================
@@ -239,17 +243,17 @@ Func _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	Local $oBookmark
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oBookmark = $oDoc.createInstance("com.sun.star.text.Bookmark")
-	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($sBookmarkName <> Null) Then
-		If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0) ; Invalid Characters in Name.
+		If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Invalid Characters in Name.
 		$oBookmark.Name = $sBookmarkName
 	Else
 		$oBookmark.Name = "Bookmark "
@@ -257,7 +261,7 @@ Func _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 
 	$oCursor.Text.insertTextContent($oCursor, $oBookmark, $bOverwrite)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oBookmark)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmark)
 EndFunc   ;==>_LOWriter_DocBookmarkInsert
 
 ; #FUNCTION# ====================================================================================================================
@@ -296,17 +300,17 @@ Func _LOWriter_DocBookmarkModify(ByRef $oDoc, ByRef $oBookmark, $sBookmarkName =
 
 	Local $iError = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oBookmark) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($sBookmarkName) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oBookmark.Name())
+	If __LOWriter_VarsAreNull($sBookmarkName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oBookmark.Name())
 
-	If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0) ; Invalid Characters in Name.
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Invalid Characters in Name.
 	$oBookmark.Name = $sBookmarkName
 	$iError = ($oBookmark.Name() = $sBookmarkName) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarkModify
 
 ; #FUNCTION# ====================================================================================================================
@@ -337,13 +341,13 @@ Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
 
 	Local $oBookmarks
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sBookmarkName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oBookmarks = $oDoc.getBookmarks()
-	If Not IsObj($oBookmarks) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
 EndFunc   ;==>_LOWriter_DocBookmarksHasName
 
 ; #FUNCTION# ====================================================================================================================
@@ -373,12 +377,12 @@ Func _LOWriter_DocBookmarksList(ByRef $oDoc)
 
 	Local $asBookmarkNames[0]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$asBookmarkNames = $oDoc.Bookmarks.getElementNames()
-	If Not IsArray($asBookmarkNames) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return (UBound($asBookmarkNames) > 0) ? (SetError($__LOW_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return (UBound($asBookmarkNames) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarksList
 
 ; #FUNCTION# ====================================================================================================================
@@ -422,10 +426,10 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 	Local $sDocPath = "", $sSavePath, $sFilterName
 	Local $aArgs[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bSaveChanges) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sSaveName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bDeliverOwnership) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bSaveChanges) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sSaveName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bDeliverOwnership) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If Not $oDoc.hasLocation() And ($bSaveChanges = True) Then
 		$sSavePath = @DesktopDir & "\"
@@ -435,13 +439,13 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 		EndIf
 
 		$sSavePath = _LOWriter_PathConvert($sSavePath & $sSaveName, 1)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		If $sFilterName = "" Then $sFilterName = __LOWriter_FilterNameGet($sSavePath)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$aArgs[0] = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	EndIf
 
@@ -451,18 +455,18 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 			$oDoc.store()
 			$sDocPath = _LOWriter_PathConvert($oDoc.getURL(), $LOW_PATHCONV_PCPATH_RETURN)
 			$oDoc.Close($bDeliverOwnership)
-			Return SetError($__LOW_STATUS_SUCCESS, 2, $sDocPath)
+			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
 		Else
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
-			Return SetError($__LOW_STATUS_SUCCESS, 1, _LOWriter_PathConvert($sSavePath, $LOW_PATHCONV_PCPATH_RETURN))
+			Return SetError($__LO_STATUS_SUCCESS, 1, _LOWriter_PathConvert($sSavePath, $LOW_PATHCONV_PCPATH_RETURN))
 		EndIf
 
 	EndIf
 
 	If $oDoc.hasLocation() Then $sDocPath = _LOWriter_PathConvert($oDoc.getURL(), $LOW_PATHCONV_PCPATH_RETURN)
 	$oDoc.Close($bDeliverOwnership)
-	Return SetError($__LOW_STATUS_SUCCESS, 3, $sDocPath)
+	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 
 EndFunc   ;==>_LOWriter_DocClose
 
@@ -516,22 +520,23 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	Local Const $STR_STRIPLEADING = 1
 	Local $aoConnectAll[1], $aoPartNameSearch[1]
 	Local $oEnumDoc, $oDoc, $oServiceManager, $oDesktop
+	Local $sServiceName = "com.sun.star.text.TextDocument"
 
-	If Not IsString($sFile) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bConnectCurrent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bConnectAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sFile) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bConnectCurrent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bConnectAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
-	If Not IsObj($oDesktop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LOW_STATUS_DOC_ERROR, 3, 0) ; no L.O open
+	If Not $oDesktop.getComponents.hasElements() Then Return SetError($__LO_STATUS_DOC_ERROR, 3, 0) ; no L.O open
 	$oEnumDoc = $oDesktop.getComponents.createEnumeration()
-	If Not IsObj($oEnumDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	If $bConnectCurrent Then
 		$oDoc = $oDesktop.currentComponent()
-		Return ($oDoc.supportsService("com.sun.star.text.TextDocument")) ? (SetError($__LOW_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LOW_STATUS_DOC_ERROR, 2, 0))
+		Return ($oDoc.supportsService($sServiceName)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_DOC_ERROR, 2, 0))
 	EndIf
 
 	If $bConnectAll Then
@@ -540,7 +545,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
-			If $oDoc.supportsService("com.sun.star.text.TextDocument") Then
+			If $oDoc.supportsService($sServiceName) Then
 
 				ReDim $aoConnectAll[$iCount + 1][3]
 				$aoConnectAll[$iCount][0] = $oDoc
@@ -550,30 +555,30 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			EndIf
 			Sleep(10)
 		WEnd
-		Return SetError($__LOW_STATUS_SUCCESS, 2, $aoConnectAll)
+		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
 
 	EndIf
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
 	If StringInStr($sFile, "\") Then $sFile = _LOWriter_PathConvert($sFile, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O File path.
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If StringInStr($sFile, "file:///") Then ; URL/Path and Name search
 
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 
-			If ($oDoc.getURL() == $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 3, $oDoc) ; Match
+			If ($oDoc.getURL() == $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 3, $oDoc) ; Match
 		WEnd
-		Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
+		Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 
 	Else
 		If Not StringInStr($sFile, "/") And StringInStr($sFile, ".") Then ; Name with extension only search
 			While $oEnumDoc.hasMoreElements()
 				$oDoc = $oEnumDoc.nextElement()
-				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LOW_STATUS_SUCCESS, 4, $oDoc) ; Match
+				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 4, $oDoc) ; Match
 			WEnd
-			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
 		$iCount = 0 ; partial name or partial url search
@@ -602,13 +607,13 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		WEnd
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then
-				Return SetError($__LOW_STATUS_SUCCESS, 5, $aoPartNameSearch[0][0]) ; matches
+				Return SetError($__LO_STATUS_SUCCESS, 5, $aoPartNameSearch[0][0]) ; matches
 			Else
-				Return SetError($__LOW_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
+				Return SetError($__LO_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
 			EndIf
 
 		Else
-			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0) ; no match
+			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
 	EndIf
@@ -654,44 +659,44 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	Local $asCellNames
 	Local $oServiceManager, $oDispatcher, $oCellTextCursor, $oViewCursor, $oViewCursorBackup
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sDelimiter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sDelimiter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$aArgs[0] = __LOWriter_SetPropertyValue("Delimiter", $sDelimiter)
 
 	$asCellNames = $oTable.getCellNames()
-	If Not IsArray($asCellNames) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	; Retrieve the ViewCursor.
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 	If Not IsObj($oViewCursorBackup) Then
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 	EndIf
 
 	; Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
 	$oCellTextCursor = $oTable.getCellByName($asCellNames[0]).Text.createTextCursor()
-	If Not IsObj($oCellTextCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCellTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$oViewCursor.gotoRange($oCellTextCursor, False)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTableToText", "", 0, $aArgs)
 
 	; Restore the ViewCursor to its previous location.
 	$oViewCursor.gotoRange($oViewCursorBackup, False)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 EndFunc   ;==>_LOWriter_DocConvertTableToText
 
@@ -747,16 +752,16 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	Local $oServiceManager, $oDispatcher, $oViewCursor, $oViewCursorBackup, $oTables, $oTable
 	Local $iCursorType
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sDelimiter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bHeader) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsInt($iRepeatHeaderLines) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsBool($bBorder) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If Not IsBool($bDontSplitTable) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sDelimiter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bHeader) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iRepeatHeaderLines) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bBorder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bDontSplitTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	ReDim $asTables[$oTables.getCount()]
 	; Store all current Table Names.
 	For $i = 0 To $oTables.getCount() - 1
@@ -765,17 +770,17 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	Next
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	; If Cursor has no data selected, return error.
-	If $oCursor.isCollapsed() Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+	If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$atArgs[0] = __LOWriter_SetPropertyValue("Delimiter", $sDelimiter)
 	$atArgs[1] = __LOWriter_SetPropertyValue("WithHeader", $bHeader)
@@ -787,11 +792,11 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 		; Retrieve the ViewCursor.
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
-		If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 		; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 5, 0)
+		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 		$oViewCursor.gotoRange($oCursor, False)
 
@@ -820,7 +825,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 		EndIf
 	Next
 
-	Return (IsObj($oTable)) ? (SetError($__LOW_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0))
+	Return (IsObj($oTable)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOWriter_DocConvertTextToTable
 
 ; #FUNCTION# ====================================================================================================================
@@ -861,33 +866,33 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	Local $iError = 0
 	Local $oServiceManager, $oDesktop, $oDoc, $oEnumDoc
 
-	If Not IsBool($bForceNew) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bForceNew) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$aArgs[0] = __LOWriter_SetPropertyValue("Hidden", $bHidden)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
-	If Not IsObj($oDesktop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	; If not force new, and L.O pages exist then see if there are any blank writer documents to use.
 	If Not $bForceNew And $oDesktop.getComponents.hasElements() Then
 		$oEnumDoc = $oDesktop.getComponents.createEnumeration()
-		If Not IsObj($oEnumDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 			If $oDoc.supportsService("com.sun.star.text.TextDocument") _
 					And Not ($oDoc.hasLocation() And $oDoc.isReadOnly()) And ($oDoc.WordCount() = 0) Then
 				$oDoc.CurrentController.Frame.ContainerWindow.Visible = ($bHidden) ? (False) : (True) ; opposite value of $bHidden.
 				$iError = ($oDoc.CurrentController.Frame.isHidden() = $bHidden) ? ($iError) : (BitOR($iError, 1))
-				Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LOW_STATUS_SUCCESS, 1, $oDoc))
+				Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
 			EndIf
 		WEnd
 	EndIf
 
 	If Not IsObj($aArgs[0]) Then Return $iError = BitOR($iError, 1)
 	$oDoc = $oDesktop.loadComponentFromURL("private:factory/swriter", "_blank", $iURLFrameCreate, $aArgs)
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LOW_STATUS_SUCCESS, 2, $oDoc))
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 2, $oDoc))
 
 EndFunc   ;==>_LOWriter_DocCreate
 
@@ -935,27 +940,27 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 	Local $oCursor, $oText, $oViewCursor
 	Local $iCursorType = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bCreateAtEnd) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bCreateAtViewCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($bCreateAtEnd = True) And ($bCreateAtViewCursor = True) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bCreateAtEnd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bCreateAtViewCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($bCreateAtEnd = True) And ($bCreateAtViewCursor = True) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If ($bCreateAtViewCursor = True) Then
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
-		If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 		$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$iCursorType = @extended
-		If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		If __LOWriter_IntIsBetween($iCursorType, $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_HEADER_FOOTER) Then
 			$oCursor = $oText.createTextCursorByRange($oViewCursor)
 		Else
-			Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; ViewCursor in unknown data type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; ViewCursor in unknown data type.
 		EndIf
 
 	Else
 		$oText = $oDoc.getText
-		If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		$oCursor = $oText.createTextCursor()
 		$iCursorType = $LOW_CURDATA_BODY_TEXT
 
@@ -966,9 +971,9 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 		EndIf
 	EndIf
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, $iCursorType, $oCursor)
+	Return SetError($__LO_STATUS_SUCCESS, $iCursorType, $oCursor)
 EndFunc   ;==>_LOWriter_DocCreateTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1017,40 +1022,40 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 	Local $iError = 0
 	Local $avDescription[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sTitle, $sSubject, $asKeywords, $sComments) Then
 		__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avDescription)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avDescription)
 	EndIf
 
 	If ($sTitle <> Null) Then
-		If Not IsString($sTitle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.Title = $sTitle
 		$iError = ($oDocProp.Title() = $sTitle) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sSubject <> Null) Then
-		If Not IsString($sSubject) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sSubject) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDocProp.Subject = $sSubject
 		$iError = ($oDocProp.Subject() = $sSubject) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($asKeywords <> Null) Then
-		If Not IsArray($asKeywords) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsArray($asKeywords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oDocProp.Keywords = $asKeywords
 		$iError = (UBound($oDocProp.Keywords()) = UBound($asKeywords)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sComments <> Null) Then
-		If Not IsString($sComments) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDocProp.Description = $sComments
 		$iError = ($oDocProp.Description() = $sComments) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocDescription
 
 ; #FUNCTION# ====================================================================================================================
@@ -1089,23 +1094,23 @@ Func _LOWriter_DocEnumPrinters($bDefaultOnly = False)
 	Local $sDefault
 	Local $asPrinters[0]
 
-	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsBool($bDefaultOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
-	If Not IsObj($oPrintServer) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If $bDefaultOnly Then
-		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 2, 0)
+		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
 		$sDefault = $oPrintServer.getDefaultPrinterName()
-		If IsString($sDefault) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $sDefault)
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
 	$asPrinters = $oPrintServer.getPrinterNames()
-	If IsArray($asPrinters) Then Return SetError($__LOW_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-	Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 EndFunc   ;==>_LOWriter_DocEnumPrinters
 
@@ -1151,13 +1156,13 @@ Func _LOWriter_DocEnumPrintersAlt($sPrinterName = "", $bReturnDefault = False)
 	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
 	Local $oWMIService, $oPrinters
 
-	If Not IsString($sPrinterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnDefault) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
 	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
-	If Not IsObj($oWMIService) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
-	If Not IsObj($oPrinters) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	For $oPrinter In $oPrinters
 		Switch $bReturnDefault
@@ -1167,12 +1172,12 @@ Func _LOWriter_DocEnumPrintersAlt($sPrinterName = "", $bReturnDefault = False)
 				$iCount += 1
 
 			Case True
-				If $oPrinter.Default Then Return SetError($__LOW_STATUS_SUCCESS, 2, $oPrinter.Name)
+				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 2, $oPrinter.Name)
 		EndSwitch
 	Next
-	If $bReturnDefault Then Return SetError($__LOW_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
 	ReDim $asPrinterNames[$iCount]
-	Return SetError($__LOW_STATUS_SUCCESS, $iCount, $asPrinterNames)
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
 EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
 
 ; #FUNCTION# ====================================================================================================================
@@ -1236,18 +1241,18 @@ Func _LOWriter_DocExecuteDispatch(ByRef $oDoc, $sDispatch)
 	Local $aArray[0]
 	Local $oServiceManager, $oDispatcher
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sDispatch) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sDispatch) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), "." & $sDispatch, "", 0, $aArray)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 EndFunc   ;==>_LOWriter_DocExecuteDispatch
 
@@ -1296,52 +1301,52 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 	Local $aProperties[3]
 	Local $sOriginalPath, $sSavePath
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFilePath) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bSamePath) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sFilterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bSamePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sFilterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If $bSamePath Then
 		If $oDoc.hasLocation() Then
 			$sOriginalPath = $oDoc.getURL()
 			$sOriginalPath = StringLeft($sOriginalPath, StringInStr($sOriginalPath, "/", 0, -1)) ; Cut the original name off.
 			If StringInStr($sFilePath, "\") Then $sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O. URL
-			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 			$sFilePath = $sOriginalPath & $sFilePath ; combine the path with the new name.
 		Else
-			Return SetError($__LOW_STATUS_DOC_ERROR, 1, 0)
+			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
 		EndIf
 	EndIf
 
 	If Not $bSamePath Then $sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($sFilterName = "") Or ($sFilterName = " ") Then $sFilterName = __LOWriter_FilterNameGet($sFilePath, True)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aProperties[0] = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
-	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 
 	If ($bOverwrite <> Null) Then
-		If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOWriter_SetPropertyValue("Overwrite", $bOverwrite)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
 	EndIf
 
 	If ($sPassword <> Null) Then
-		If Not IsString($sPassword) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOWriter_SetPropertyValue("Password", $sPassword)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
 	EndIf
 
 	$oDoc.storeToURL($sFilePath, $aProperties)
 
 	$sSavePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_PCPATH_RETURN)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $sSavePath)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOWriter_DocExport
 
 ; #FUNCTION# ====================================================================================================================
@@ -1386,19 +1391,19 @@ Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByR
 	Local $oResults
 	Local $aoResults[0]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sSearchString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oSrchDescript.setSearchAttributes($atFindFormat)
 	$oSrchDescript.SearchString = $sSearchString
 
 	$oResults = $oDoc.findAll($oSrchDescript)
-	If Not IsObj($oResults) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oResults.getCount() > 0) Then
 		ReDim $aoResults[$oResults.getCount]
@@ -1408,7 +1413,7 @@ Func _LOWriter_DocFindAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, ByR
 		Next
 	EndIf
 
-	Return (UBound($aoResults) > 0) ? (SetError($__LOW_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocFindAll
 
 ; #FUNCTION# ====================================================================================================================
@@ -1460,17 +1465,17 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	Local $aoResults[0]
 	Local $iCount = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sSearchString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	$oSrchDescript.setSearchAttributes($atFindFormat)
 
-	If Not IsObj($oRange) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-	If ($oRange.IsCollapsed()) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	$oSrchDescript.SearchString = $sSearchString
 
@@ -1481,7 +1486,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	EndIf
 
 	$oResults = $oDoc.findAll($oSrchDescript)
-	If Not IsObj($oResults) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oResults.getCount() > 0) Then
 		ReDim $aoResults[$oResults.getCount]
@@ -1525,7 +1530,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 		ReDim $aoResults[$iCount]
 	EndIf
 
-	Return (UBound($aoResults) > 0) ? (SetError($__LOW_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 
 EndFunc   ;==>_LOWriter_DocFindAllInRange
 
@@ -1582,16 +1587,16 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	Local $oResult, $oRangeRegion, $oResultRegion, $oText, $oFindRange
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sSearchString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 	$oSrchDescript.setSearchAttributes($atFindFormat)
 
-	If ($oRange <> Null) And Not IsObj($oRange) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If ($oRange <> Null) And Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If ($oRange = Null) Then
 		$oRange = $oDoc.getText.createTextCursor()
@@ -1599,18 +1604,18 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 		$oRange.gotoEnd(True)
 	EndIf
 
-	If ($oRange.IsCollapsed()) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginnign or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oRange.Start()) : ($oRange.End())
 	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
-		If Not IsObj($oLastFind) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		If Not ($oLastFind.supportsService("com.sun.star.text.TextCursor")) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not IsObj($oLastFind) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not ($oLastFind.supportsService("com.sun.star.text.TextCursor")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		; If Search Backwards is False, then retrieve the end of the last result's range, else get the Start.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oLastFind.End()) : ($oLastFind.Start())
 	EndIf
 
-	If Not IsBool($bExhaustive) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+	If Not IsBool($bExhaustive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 	$oSrchDescript.SearchString = $sSearchString
 
@@ -1668,7 +1673,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	WEnd
 
-	Return (IsObj($oResult)) ? (SetError($__LOW_STATUS_SUCCESS, 1, $oResult)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return (IsObj($oResult)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oResult)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocFindNext
 
 ; #FUNCTION# ====================================================================================================================
@@ -1708,12 +1713,12 @@ Func _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle, $bFooter = False, $bFir
 	Local $aoReturn[1]
 	Local $vReturn
 
-	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bFooter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bFirstPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bLeftPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bRightPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($bFooter = False) And ($bFirstPage = False) And ($bLeftPage = False) And ($bRightPage = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bFooter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bFirstPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bLeftPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bRightPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($bFooter = False) And ($bFirstPage = False) And ($bLeftPage = False) And ($bRightPage = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	If $bFooter Then $aoReturn[0] = $oPageStyle.FooterText.createTextCursor()
 
@@ -1734,7 +1739,7 @@ Func _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle, $bFooter = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
 EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1790,50 +1795,50 @@ Func _LOWriter_DocGenProp(ByRef $oDoc, $sNewAuthor = Null, $iRevisions = Null, $
 	Local $iError = 0
 	Local $avGenProp[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
-	If Not IsObj($oSettings) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If ($bResetUserData = True) Then
-		If Not IsString($sNewAuthor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sNewAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.resetUserData($sNewAuthor)
-		Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If __LOWriter_VarsAreNull($sNewAuthor, $iRevisions, $iEditDuration, $bApplyUserData) Then
 		__LOWriter_ArrayFill($avGenProp, $oDocProp.Author(), $oDocProp.EditingCycles(), $oDocProp.EditingDuration(), $oSettings.getPropertyValue("ApplyUserData"))
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGenProp)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avGenProp)
 	EndIf
 
 	If ($sNewAuthor <> Null) Then
-		If Not IsString($sNewAuthor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sNewAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDocProp.Author = $sNewAuthor
 		$iError = ($oDocProp.Author() = $sNewAuthor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRevisions <> Null) Then
-		If Not IsInt($iRevisions) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsInt($iRevisions) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oDocProp.EditingCycles = $iRevisions
 		$iError = ($oDocProp.EditingCycles() = $iRevisions) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iEditDuration <> Null) Then
-		If Not IsInt($iEditDuration) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iEditDuration) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDocProp.EditingDuration = $iEditDuration
 		$iError = ($oDocProp.EditingDuration() = $iEditDuration) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bApplyUserData <> Null) Then
-		If Not IsBool($bApplyUserData) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bApplyUserData) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oSettings.setPropertyValue("ApplyUserData", $bApplyUserData)
 		$iError = ($oSettings.getPropertyValue("ApplyUserData") = $bApplyUserData) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocGenProp
 
 ; #FUNCTION# ====================================================================================================================
@@ -1874,28 +1879,28 @@ Func _LOWriter_DocGenPropCreation(ByRef $oDoc, $sAuthor = Null, $tDateStruct = N
 	Local $iError = 0
 	Local $avCreate[2]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sAuthor, $tDateStruct) Then
 		__LOWriter_ArrayFill($avCreate, $oDocProp.Author(), $oDocProp.CreationDate())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avCreate)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avCreate)
 	EndIf
 
 	If ($sAuthor <> Null) Then
-		If Not IsString($sAuthor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.Author = $sAuthor
 		$iError = ($oDocProp.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
-		If Not IsObj($tDateStruct) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDocProp.CreationDate = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDocProp.CreationDate(), $tDateStruct)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocGenPropCreation
 
 ; #FUNCTION# ====================================================================================================================
@@ -1935,28 +1940,28 @@ Func _LOWriter_DocGenPropModification(ByRef $oDoc, $sModifiedBy = Null, $tDateSt
 	Local $iError = 0
 	Local $avMod[2]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sModifiedBy, $tDateStruct) Then
 		__LOWriter_ArrayFill($avMod, $oDocProp.ModifiedBy(), $oDocProp.ModificationDate())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avMod)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avMod)
 	EndIf
 
 	If ($sModifiedBy <> Null) Then
-		If Not IsString($sModifiedBy) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sModifiedBy) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.ModifiedBy = $sModifiedBy
 		$iError = ($oDocProp.ModifiedBy() = $sModifiedBy) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
-		If Not IsObj($tDateStruct) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDocProp.ModificationDate = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDocProp.ModificationDate(), $tDateStruct)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocGenPropModification
 
 ; #FUNCTION# ====================================================================================================================
@@ -1997,28 +2002,28 @@ Func _LOWriter_DocGenPropPrint(ByRef $oDoc, $sPrintedBy = Null, $tDateStruct = N
 	Local $iError = 0
 	Local $avPrint[2]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sPrintedBy, $tDateStruct) Then
 		__LOWriter_ArrayFill($avPrint, $oDocProp.PrintedBy(), $oDocProp.PrintDate())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPrint)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPrint)
 	EndIf
 
 	If ($sPrintedBy <> Null) Then
-		If Not IsString($sPrintedBy) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sPrintedBy) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.PrintedBy = $sPrintedBy
 		$iError = ($oDocProp.PrintedBy() = $sPrintedBy) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
-		If Not IsObj($tDateStruct) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDocProp.PrintDate = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDocProp.PrintDate(), $tDateStruct)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocGenPropPrint
 
 ; #FUNCTION# ====================================================================================================================
@@ -2066,37 +2071,37 @@ Func _LOWriter_DocGenPropTemplate(ByRef $oDoc, $sTemplateName = Null, $sTemplate
 	Local $iError = 0
 	Local $avTemplate[3]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sTemplateName, $sTemplateURL, $tDateStruct) Then
 		__LOWriter_ArrayFill($avTemplate, $oDocProp.TemplateName(), _LOWriter_PathConvert($oDocProp.TemplateURL(), $LOW_PATHCONV_PCPATH_RETURN), _
 				$oDocProp.TemplateDate())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avTemplate)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avTemplate)
 	EndIf
 
 	If ($sTemplateName <> Null) Then
-		If Not IsString($sTemplateName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sTemplateName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocProp.TemplateName = $sTemplateName
 		$iError = ($oDocProp.TemplateName() = $sTemplateName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sTemplateURL <> Null) Then
-		If Not IsString($sTemplateURL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sTemplateURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$sTemplateURL = _LOWriter_PathConvert($sTemplateURL, $LOW_PATHCONV_OFFICE_RETURN)
-		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$oDocProp.TemplateURL = $sTemplateURL
 		$iError = ($oDocProp.TemplateURL() = $sTemplateURL) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
-		If Not IsObj($tDateStruct) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oDocProp.TemplateDate = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDocProp.TemplateDate(), $tDateStruct)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocGenPropTemplate
 
 ; #FUNCTION# ====================================================================================================================
@@ -2125,13 +2130,13 @@ Func _LOWriter_DocGetCounts(ByRef $oDoc)
 
 	Local $aiCounts[9], $avDocStats
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	__LOWriter_ArrayFill($aiCounts, $oDoc.CurrentController.PageCount(), $oDoc.CurrentController.LineCount(), $oDoc.ParagraphCount(), _
 			$oDoc.WordCount(), $oDoc.CharacterCount())
 
 	$avDocStats = $oDoc.DocumentProperties.DocumentStatistics()
-	If Not IsArray($avDocStats) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($avDocStats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	For $i = 0 To UBound($avDocStats) - 1
 		If ($avDocStats[$i].Name() = "NonWhitespaceCharacterCount") Then $aiCounts[5] = $avDocStats[$i].Value()
@@ -2141,7 +2146,7 @@ Func _LOWriter_DocGetCounts(ByRef $oDoc)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $aiCounts)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $aiCounts)
 EndFunc   ;==>_LOWriter_DocGetCounts
 
 ; #FUNCTION# ====================================================================================================================
@@ -2171,12 +2176,12 @@ Func _LOWriter_DocGetName(ByRef $oDoc, $bReturnFull = False)
 
 	Local $sName
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnFull) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnFull) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$sName = ($bReturnFull = True) ? ($oDoc.CurrentController.Frame.Title()) : ($oDoc.Title())
 
-	Return ($bReturnFull = True) ? (SetError($__LOW_STATUS_SUCCESS, 1, $sName)) : (SetError($__LOW_STATUS_SUCCESS, 0, $sName))
+	Return ($bReturnFull = True) ? (SetError($__LO_STATUS_SUCCESS, 1, $sName)) : (SetError($__LO_STATUS_SUCCESS, 0, $sName))
 EndFunc   ;==>_LOWriter_DocGetName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2209,19 +2214,19 @@ Func _LOWriter_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 
 	Local $sPath
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnLibreURL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oDoc.hasLocation() Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnLibreURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If ($bReturnLibreURL = True) Then
 		$sPath = $oDoc.URL()
 	Else
 		$sPath = $oDoc.URL()
 		$sPath = _LOWriter_PathConvert($sPath, $LOW_PATHCONV_PCPATH_RETURN)
-		If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
-	Return ($bReturnLibreURL = True) ? (SetError($__LOW_STATUS_SUCCESS, 1, $sPath)) : (SetError($__LOW_STATUS_SUCCESS, 0, $sPath))
+	Return ($bReturnLibreURL = True) ? (SetError($__LO_STATUS_SUCCESS, 1, $sPath)) : (SetError($__LO_STATUS_SUCCESS, 0, $sPath))
 EndFunc   ;==>_LOWriter_DocGetPath
 
 ; #FUNCTION# ====================================================================================================================
@@ -2254,14 +2259,14 @@ Func _LOWriter_DocGetString(ByRef $oObj)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oObj.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If $oObj.supportsService("com.sun.star.text.TextCursor") Or $oObj.supportsService("com.sun.star.text.TextViewCursor") Then
 		Local $iCursorType = __LOWriter_Internal_CursorGetType($oObj)
-		If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-		If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oObj.getString())
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oObj.getString())
 EndFunc   ;==>_LOWriter_DocGetString
 
 ; #FUNCTION# ====================================================================================================================
@@ -2290,9 +2295,9 @@ Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 
 	Local $oViewCursor
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	Return (IsObj($oViewCursor)) ? (SetError($__LOW_STATUS_SUCCESS, 0, $oViewCursor)) : (SetError($__LOW_STATUS_INIT_ERROR, 1, 0)) ; Failed to Create ViewCursor
+	Return (IsObj($oViewCursor)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oViewCursor)) : (SetError($__LO_STATUS_INIT_ERROR, 1, 0)) ; Failed to Create ViewCursor
 EndFunc   ;==>_LOWriter_DocGetViewCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2326,30 +2331,30 @@ Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 
 	Local $oFrames, $oShapes
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
+	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
 	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
 			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
 				If ($oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text")) And _
 						($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
-						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LOW_STATUS_SUCCESS, 2, True)
+						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LO_STATUS_SUCCESS, 2, True)
 			EndIf
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_DocHasFrameName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2377,12 +2382,12 @@ Func _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sImageName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sImageName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
+	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
 EndFunc   ;==>_LOWriter_DocHasImageName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2407,9 +2412,9 @@ Func _LOWriter_DocHasPath(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.hasLocation())
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.hasLocation())
 EndFunc   ;==>_LOWriter_DocHasPath
 
 ; #FUNCTION# ====================================================================================================================
@@ -2441,21 +2446,21 @@ Func _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sShapeName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
-			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
 EndFunc   ;==>_LOWriter_DocHasShapeName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2487,14 +2492,14 @@ Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
 
 	Local $oTables
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sTableName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If ($oTables.hasByName($sTableName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, True)
+	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False) ; No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_DocHasTableName
 
 ; #FUNCTION# ====================================================================================================================
@@ -2534,12 +2539,12 @@ Func _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle, $bHeader = False, $bFir
 	Local $aoReturn[1]
 	Local $vReturn
 
-	If Not IsObj($oPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bHeader) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bFirstPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bLeftPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bRightPage) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($bHeader = False) And ($bFirstPage = False) And ($bLeftPage = False) And ($bRightPage = False) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bHeader) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bFirstPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bLeftPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bRightPage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($bHeader = False) And ($bFirstPage = False) And ($bLeftPage = False) And ($bRightPage = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	If $bHeader Then $aoReturn[0] = $oPageStyle.HeaderText.createTextCursor()
 
@@ -2560,7 +2565,7 @@ Func _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle, $bHeader = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $vReturn)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
 EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2607,34 +2612,34 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 	Local $oText, $oTextCursor
 	Local $iCursorType = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) And ($oCursor <> Default) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sLinkText) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sLinkAddress) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsBool($bInsertAtViewCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If IsObj($oCursor) And $bInsertAtViewCursor Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) And ($oCursor <> Default) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sLinkText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sLinkAddress) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bInsertAtViewCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If IsObj($oCursor) And $bInsertAtViewCursor Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If IsObj($oCursor) Or $bInsertAtViewCursor Then
 		$iCursorType = (IsObj($oCursor)) ? (__LOWriter_Internal_CursorGetType($oCursor)) : (0)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-		If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		If $bInsertAtViewCursor Or ($iCursorType = $LOW_CURTYPE_VIEW_CURSOR) Then
 			$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True) ; create new Text cursor at ViewCursor
-			If Not IsObj($oTextCursor) Or @error Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oTextCursor) Or @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 		EndIf
 
 		$oTextCursor = ($iCursorType = $LOW_CURTYPE_TEXT_CURSOR) ? ($oCursor) : ($oTextCursor) ; If already was a TextCursor transfer to $oTextCursor
 
 		$oText = __LOWriter_CursorGetText($oDoc, $oTextCursor)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
-		If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 	Else
 		$oText = $oDoc.getText
-		If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		$oTextCursor = $oText.createTextCursor()
-		If Not IsObj($oTextCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 		$oTextCursor.gotoEnd(False)
 	EndIf
 
@@ -2646,7 +2651,7 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 		.collapseToEnd()
 		.goRight(1, False)
 	EndWith
-	Return SetError($__LOW_STATUS_SUCCESS, 1, $oTextCursor)
+	Return SetError($__LO_STATUS_SUCCESS, 1, $oTextCursor)
 EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 
 ; #FUNCTION# ====================================================================================================================
@@ -2686,19 +2691,19 @@ Func _LOWriter_DocInsertControlChar(ByRef $oDoc, ByRef $oCursor, $iConChar, $bOv
 	Local $iCursorType
 	Local $oTextCursor = $oCursor
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_IntIsBetween($iConChar, 0, 5) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iConChar, 0, 5) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If ($iCursorType = $LOW_CURTYPE_VIEW_CURSOR) Then $oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 
-	If Not IsObj($oTextCursor) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oTextCursor.Text.insertControlCharacter($oTextCursor, $iConChar, $bOverwrite)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocInsertControlChar
 
 ; #FUNCTION# ====================================================================================================================
@@ -2738,20 +2743,20 @@ Func _LOWriter_DocInsertString(ByRef $oDoc, ByRef $oCursor, $sString, $bOverwrit
 	Local $iCursorType
 	Local $oTextCursor = $oCursor
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If ($iCursorType = $LOW_CURTYPE_VIEW_CURSOR) Then $oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 
-	If Not IsObj($oTextCursor) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oTextCursor.Text.insertString($oTextCursor, $sString, $bOverwrite)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocInsertString
 
 ; #FUNCTION# ====================================================================================================================
@@ -2776,8 +2781,8 @@ Func _LOWriter_DocIsActive(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.CurrentController.Frame.isActive())
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.CurrentController.Frame.isActive())
 EndFunc   ;==>_LOWriter_DocIsActive
 
 ; #FUNCTION# ====================================================================================================================
@@ -2802,8 +2807,8 @@ Func _LOWriter_DocIsModified(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.isModified())
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.isModified())
 EndFunc   ;==>_LOWriter_DocIsModified
 
 ; #FUNCTION# ====================================================================================================================
@@ -2828,8 +2833,8 @@ Func _LOWriter_DocIsReadOnly(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.isReadOnly())
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.isReadOnly())
 EndFunc   ;==>_LOWriter_DocIsReadOnly
 
 ; #FUNCTION# ====================================================================================================================
@@ -2858,14 +2863,14 @@ Func _LOWriter_DocMaximize(ByRef $oDoc, $bMaximize = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bMaximize = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.IsMaximized())
+	If ($bMaximize = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.IsMaximized())
 
-	If Not IsBool($bMaximize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bMaximize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.IsMaximized = $bMaximize
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocMaximize
 
 ; #FUNCTION# ====================================================================================================================
@@ -2894,14 +2899,14 @@ Func _LOWriter_DocMinimize(ByRef $oDoc, $bMinimize = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($bMinimize = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.IsMinimized())
+	If ($bMinimize = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.IsMinimized())
 
-	If Not IsBool($bMinimize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bMinimize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.IsMinimized = $bMinimize
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocMinimize
 
 ; #FUNCTION# ====================================================================================================================
@@ -2957,47 +2962,47 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 
 	Local $oComError = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
 
-	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$sFileURL = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN)
-	If @error Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bConnectIfOpen) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If @error Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bConnectIfOpen) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
-	If Not IsObj($oDesktop) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If Not __LOWriter_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate, $sFilterName) Then
 
 		If ($bHidden <> Null) Then
-			If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vProperty = __LOWriter_SetPropertyValue("Hidden", $bHidden)
 			If @error Then $iError = BitOR($iError, 1)
 			If Not BitAND($iError, 1) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($bReadOnly <> Null) Then
-			If Not IsBool($bReadOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+			If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 			$vProperty = __LOWriter_SetPropertyValue("ReadOnly", $bReadOnly)
 			If @error Then $iError = BitOR($iError, 2)
 			If Not BitAND($iError, 2) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($sPassword <> Null) Then
-			If Not IsString($sPassword) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+			If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 			$vProperty = __LOWriter_SetPropertyValue("Password", $sPassword)
 			If @error Then $iError = BitOR($iError, 4)
 			If Not BitAND($iError, 4) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($bLoadAsTemplate <> Null) Then
-			If Not IsBool($bLoadAsTemplate) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+			If Not IsBool($bLoadAsTemplate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 			$vProperty = __LOWriter_SetPropertyValue("AsTemplate", $bLoadAsTemplate)
 			If @error Then $iError = BitOR($iError, 8)
 			If Not BitAND($iError, 8) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
 
 		If ($sFilterName <> Null) Then
-			If Not IsString($sFilterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+			If Not IsString($sFilterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 			$vProperty = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
 			If @error Then $iError = BitOR($iError, 16)
 			If Not BitAND($iError, 16) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
@@ -3009,13 +3014,13 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	If StringInStr($oComError.description, """type detection failed""") And $bConnectIfOpen Then
 		ReDim $aoProperties[0]
 		$oDoc = $oDesktop.loadComponentFromURL($sFileURL, "_default", $iURLFrameCreate, $aoProperties)
-		If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-		Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LOW_STATUS_SUCCESS, 1, $oDoc))
+		Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
 	EndIf
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LOW_STATUS_SUCCESS, 2, $oDoc))
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 2, $oDoc))
 EndFunc   ;==>_LOWriter_DocOpen
 
 ; #FUNCTION# ====================================================================================================================
@@ -3066,47 +3071,47 @@ Func _LOWriter_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null
 	Local $iError = 0
 	Local $aiWinPosSize[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iX, $iY, $iWidth, $iHeight) Then
 		__LOWriter_ArrayFill($aiWinPosSize, $tWindowSize.X(), $tWindowSize.Y(), $tWindowSize.Width(), $tWindowSize.Height())
-		Return SetError($__LOW_STATUS_SUCCESS, 2, $aiWinPosSize)
+		Return SetError($__LO_STATUS_SUCCESS, 2, $aiWinPosSize)
 	EndIf
 
 	If ($iX <> Null) Then
-		If Not IsInt($iX) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tWindowSize.X = $iX
 	EndIf
 
 	If ($iY <> Null) Then
-		If Not IsInt($iY) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tWindowSize.Y = $iY
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tWindowSize.Width = $iWidth
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not IsInt($iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tWindowSize.Height = $iHeight
 	EndIf
 
 	$oDoc.CurrentController.Frame.ContainerWindow.setPosSize($tWindowSize.X, $tWindowSize.Y, $tWindowSize.Width, $tWindowSize.Height, $iPosSize)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$iError = ($iX = Null) ? ($iError) : (($tWindowSize.X() = $iX) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iY = Null) ? ($iError) : (($tWindowSize.Y() = $iY) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iWidth = Null) ? ($iError) : (($tWindowSize.Width() = $iWidth) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iHeight = Null) ? ($iError) : (($tWindowSize.Height() = $iHeight) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0))
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
 EndFunc   ;==>_LOWriter_DocPosAndSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -3164,49 +3169,49 @@ Func _LOWriter_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "
 	Local Const $STR_STRIPLEADING = 1, $STR_STRIPTRAILING = 2, $STR_STRIPALL = 8
 	Local $avPrintOpt[4], $asSetPrinterOpt[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iCopies) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bCollate) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iCopies) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bCollate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	If Not IsInt($vPages) And Not IsString($vPages) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($vPages) And Not IsString($vPages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	$vPages = (IsString($vPages)) ? (StringStripWS($vPages, $STR_STRIPALL)) : ($vPages)
 	If IsString($vPages) And Not ($vPages = "ALL") Then
-		If StringRegExp($vPages, "[[:alpha:]]|[\.]") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If StringRegExp($vPages, "[[:alpha:]]|[\.]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	EndIf
-	If Not IsBool($bWait) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If Not __LOWriter_IntIsBetween($iDuplexMode, $LOW_DUPLEX_OFF, $LOW_DUPLEX_SHORT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-	If Not IsString($sPrinter) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsBool($bWait) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not __LOWriter_IntIsBetween($iDuplexMode, $LOW_DUPLEX_OFF, $LOW_DUPLEX_SHORT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsString($sPrinter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 	$sPrinter = StringStripWS(StringStripWS($sPrinter, $STR_STRIPTRAILING), $STR_STRIPLEADING)
-	If Not IsString($sFilePathName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+	If Not IsString($sFilePathName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 	$sFilePathName = StringStripWS(StringStripWS($sFilePathName, $STR_STRIPTRAILING), $STR_STRIPLEADING)
 	If $sPrinter <> "" Then
 		$asSetPrinterOpt[0] = __LOWriter_SetPropertyValue("Name", $sPrinter)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 		$oDoc.setPrinter($asSetPrinterOpt)
 	EndIf
 	$avPrintOpt[0] = __LOWriter_SetPropertyValue("CopyCount", $iCopies)
-	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0)
 	$avPrintOpt[1] = __LOWriter_SetPropertyValue("Collate", $bCollate)
-	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 3, 0)
+	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0)
 	$avPrintOpt[2] = __LOWriter_SetPropertyValue("Wait", $bWait)
-	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 4, 0)
+	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0)
 	$avPrintOpt[3] = __LOWriter_SetPropertyValue("DuplexMode", $iDuplexMode)
-	If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 5, 0)
+	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 5, 0)
 	If $vPages <> "ALL" Then
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LOWriter_SetPropertyValue("Pages", $vPages)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 6, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 6, 0)
 	EndIf
 	If $sFilePathName <> "" Then
 		$sFilePathName = $sFilePathName & ".prn"
 		$sFilePathName = _LOWriter_PathConvert($sFilePathName, $LOW_PATHCONV_OFFICE_RETURN)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 7, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 7, 0)
 		ReDim $avPrintOpt[UBound($avPrintOpt) + 1]
 		$avPrintOpt[UBound($avPrintOpt) - 1] = __LOWriter_SetPropertyValue("FileName", $sFilePathName)
-		If @error Then Return SetError($__LOW_STATUS_PROP_SETTING_ERROR, 8, 0)
+		If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 8, 0)
 	EndIf
 	$oDoc.print($avPrintOpt)
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocPrint
 
 ; #FUNCTION# ====================================================================================================================
@@ -3256,47 +3261,47 @@ Func _LOWriter_DocPrintIncludedSettings(ByRef $oDoc, $bGraphics = Null, $bContro
 	Local $iError = 0
 	Local $abPrintSettings[5]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
-	If Not IsObj($oSettings) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bGraphics, $bControls, $bDrawings, $bTables, $bHiddenText) Then
 		__LOWriter_ArrayFill($abPrintSettings, $oSettings.getPropertyValue("PrintGraphics"), $oSettings.getPropertyValue("PrintControls"), _
 				$oSettings.getPropertyValue("PrintDrawings"), $oSettings.getPropertyValue("PrintTables"), $oSettings.getPropertyValue("PrintHiddenText"))
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $abPrintSettings)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abPrintSettings)
 	EndIf
 
 	If ($bGraphics <> Null) Then
-		If Not IsBool($bGraphics) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oSettings.setPropertyValue("PrintGraphics", $bGraphics)
 		$iError = ($oSettings.getPropertyValue("PrintGraphics") = $bGraphics) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bControls <> Null) Then
-		If Not IsBool($bControls) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bControls) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oSettings.setPropertyValue("PrintControls", $bControls)
 		$iError = ($oSettings.getPropertyValue("PrintControls") = $bControls) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bDrawings <> Null) Then
-		If Not IsBool($bDrawings) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bDrawings) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oSettings.setPropertyValue("PrintDrawings", $bDrawings)
 		$iError = ($oSettings.getPropertyValue("PrintDrawings") = $bDrawings) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bTables <> Null) Then
-		If Not IsBool($bTables) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bTables) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oSettings.setPropertyValue("PrintTables", $bTables)
 		$iError = ($oSettings.getPropertyValue("PrintTables") = $bTables) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bHiddenText <> Null) Then
-		If Not IsBool($bHiddenText) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bHiddenText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oSettings.setPropertyValue("PrintHiddenText", $bHiddenText)
 		$iError = ($oSettings.getPropertyValue("PrintHiddenText") = $bHiddenText) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 
 EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 
@@ -3357,34 +3362,34 @@ Func _LOWriter_DocPrintMiscSettings(ByRef $oDoc, $iPaperOrient = Null, $sPrinter
 	Local $aoSetting[1]
 	Local $avPrintSettings[6]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
-	If Not IsObj($oSettings) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iPaperOrient, $sPrinterName, $iCommentsMode, $bBrochure, $bReversed) Then
 		__LOWriter_ArrayFill($avPrintSettings, __LOWriter_GetPrinterSetting($oDoc, "PaperOrientation"), _
 				__LOWriter_GetPrinterSetting($oDoc, "Name"), $oSettings.getPropertyValue("PrintAnnotationMode"), _
 				$oSettings.getPropertyValue("PrintProspect"), $oSettings.getPropertyValue("PrintProspectRTL"), _
 				$oSettings.getPropertyValue("PrintReversed"))
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPrintSettings)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPrintSettings)
 	EndIf
 
 	$bCanSetPaperOrientation = __LOWriter_GetPrinterSetting($oDoc, "CanSetPaperOrientation")
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($iPaperOrient <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPaperOrient, $LOW_PAPER_ORIENT_PORTRAIT, $LOW_PAPER_ORIENT_LANDSCAPE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iPaperOrient, $LOW_PAPER_ORIENT_PORTRAIT, $LOW_PAPER_ORIENT_LANDSCAPE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If $bCanSetPaperOrientation Then
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperOrientation", $iPaperOrient)
 			$oDoc.setPrinter($aoSetting)
 			$iError = (__LOWriter_GetPrinterSetting($oDoc, "PaperOrientation") = $iPaperOrient) ? ($iError) : (BitOR($iError, 1))
 		Else
-			Return SetError($__LOW_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+			Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
 		EndIf
 	EndIf
 
 	If ($sPrinterName <> Null) Then
-		If Not IsString($sPrinterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$sPrinterName = StringStripWS(StringStripWS($sPrinterName, $STR_STRIPTRAILING), $STR_STRIPLEADING)
 		$aoSetting[0] = __LOWriter_SetPropertyValue("Name", $sPrinterName)
 		$oDoc.setPrinter($aoSetting)
@@ -3392,30 +3397,30 @@ Func _LOWriter_DocPrintMiscSettings(ByRef $oDoc, $iPaperOrient = Null, $sPrinter
 	EndIf
 
 	If ($iCommentsMode <> Null) Then
-		If Not __LOWriter_IntIsBetween($iCommentsMode, $LOW_PRINT_NOTES_NONE, $LOW_PRINT_NOTES_NEXT_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iCommentsMode, $LOW_PRINT_NOTES_NONE, $LOW_PRINT_NOTES_NEXT_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oSettings.setPropertyValue("PrintAnnotationMode", $iCommentsMode)
 		$iError = ($oSettings.getPropertyValue("PrintAnnotationMode") = $iCommentsMode) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bBrochure <> Null) Then
-		If Not IsBool($bBrochure) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bBrochure) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oSettings.setPropertyValue("PrintProspect", $bBrochure)
 		$iError = ($oSettings.getPropertyValue("PrintProspect") = $bBrochure) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bBrochureRTL <> Null) Then
-		If Not IsBool($bBrochureRTL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bBrochureRTL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oSettings.setPropertyValue("PrintProspectRTL", $bBrochureRTL)
 		$iError = ($oSettings.getPropertyValue("PrintProspectRTL") = $bBrochureRTL) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bReversed <> Null) Then
-		If Not IsBool($bReversed) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsBool($bReversed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oSettings.setPropertyValue("PrintReversed", $bReversed)
 		$iError = ($oSettings.getPropertyValue("PrintReversed") = $bReversed) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocPrintMiscSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -3466,47 +3471,47 @@ Func _LOWriter_DocPrintPageSettings(ByRef $oDoc, $bBlackOnly = Null, $bLeftOnly 
 	Local $oSettings
 	Local $abPrintSettings[5]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
-	If Not IsObj($oSettings) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bBlackOnly, $bLeftOnly, $bRightOnly, $bBackground, $bEmptyPages) Then
 		__LOWriter_ArrayFill($abPrintSettings, $oSettings.getPropertyValue("PrintBlackFonts"), $oSettings.getPropertyValue("PrintLeftPages"), _
 				$oSettings.getPropertyValue("PrintRightPages"), $oSettings.getPropertyValue("PrintPageBackground"), $oSettings.getPropertyValue("PrintEmptyPages"))
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $abPrintSettings)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abPrintSettings)
 	EndIf
 
 	If ($bBlackOnly <> Null) Then
-		If Not IsBool($bBlackOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bBlackOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oSettings.setPropertyValue("PrintBlackFonts", $bBlackOnly)
 		$iError = ($oSettings.getPropertyValue("PrintBlackFonts") = $bBlackOnly) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bLeftOnly <> Null) Then
-		If Not IsBool($bLeftOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bLeftOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oSettings.setPropertyValue("PrintLeftPages", $bLeftOnly)
 		$iError = ($oSettings.getPropertyValue("PrintLeftPages") = $bLeftOnly) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bRightOnly <> Null) Then
-		If Not IsBool($bRightOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bRightOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oSettings.setPropertyValue("PrintRightPages", $bRightOnly)
 		$iError = ($oSettings.getPropertyValue("PrintRightPages") = $bRightOnly) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bBackground <> Null) Then
-		If Not IsBool($bBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bBackground) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oSettings.setPropertyValue("PrintPageBackground", $bBackground)
 		$iError = ($oSettings.getPropertyValue("PrintPageBackground") = $bBackground) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bEmptyPages <> Null) Then
-		If Not IsBool($bEmptyPages) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bEmptyPages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oSettings.setPropertyValue("PrintEmptyPages", $bEmptyPages)
 		$iError = ($oSettings.getPropertyValue("PrintEmptyPages") = $bEmptyPages) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 
 EndFunc   ;==>_LOWriter_DocPrintPageSettings
 
@@ -3558,53 +3563,53 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 	Local $aoSetting[1]
 	Local $aiPrintSettings[3]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iPaperFormat, $iPaperWidth, $iPaperHeight) Then
 		__LOWriter_ArrayFill($aiPrintSettings, __LOWriter_GetPrinterSetting($oDoc, "PaperFormat"), _
-				__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOWCONST_CONVERT_TWIPS_UM), _
-				__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOWCONST_CONVERT_TWIPS_UM))
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiPrintSettings)
+				__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM), _
+				__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM))
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiPrintSettings)
 	EndIf
 
 	$bCanSetPaperFormat = __LOWriter_GetPrinterSetting($oDoc, "CanSetPaperFormat")
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$bCanSetPaperSize = __LOWriter_GetPrinterSetting($oDoc, "CanSetPaperSize")
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If ($iPaperFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPaperFormat, $LOW_PAPER_A3, $LOW_PAPER_USER_DEFINED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iPaperFormat, $LOW_PAPER_A3, $LOW_PAPER_USER_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If $bCanSetPaperFormat Then
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperFormat", $iPaperFormat)
 			$oDoc.setPrinter($aoSetting)
 			$iError = (__LOWriter_GetPrinterSetting($oDoc, "PaperFormat") = $iPaperFormat) ? ($iError) : (BitOR($iError, 1))
 		Else
-			Return SetError($__LOW_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+			Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
 		EndIf
 	EndIf
 
 	If ($iPaperWidth <> Null) Or ($iPaperHeight <> Null) Then
 		If $bCanSetPaperSize Then
-			If Not IsInt($iPaperWidth) And ($iPaperWidth <> Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-			If Not IsInt($iPaperHeight) And ($iPaperHeight <> Null) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+			If Not IsInt($iPaperWidth) And ($iPaperWidth <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+			If Not IsInt($iPaperHeight) And ($iPaperHeight <> Null) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 			; Set in uM but retrieved in TWIPS
 			$tSize = __LOWriter_CreateStruct("com.sun.star.awt.Size")
-			If Not IsObj($tSize) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-			$tSize.Width = ($iPaperWidth = Null) ? (__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOWCONST_CONVERT_TWIPS_UM)) : ($iPaperWidth)
-			$tSize.Height = ($iPaperWidth = Null) ? (__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOWCONST_CONVERT_TWIPS_UM)) : ($iPaperHeight)
+			If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			$tSize.Width = ($iPaperWidth = Null) ? (__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM)) : ($iPaperWidth)
+			$tSize.Height = ($iPaperWidth = Null) ? (__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM)) : ($iPaperHeight)
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperSize", $tSize)
 			$oDoc.setPrinter($aoSetting)
 
-			$iError = ($iPaperWidth = Null) ? ($iError) : (__LOWriter_IntIsBetween(__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOWCONST_CONVERT_TWIPS_UM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
-			$iError = ($iPaperHeight = Null) ? ($iError) : (__LOWriter_IntIsBetween(__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOWCONST_CONVERT_TWIPS_UM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
+			$iError = ($iPaperWidth = Null) ? ($iError) : (__LOWriter_IntIsBetween(__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Width(), $__LOCONST_CONVERT_TWIPS_UM), $iPaperWidth - 2, $iPaperWidth + 2)) ? ($iError) : (BitOR($iError, 2))
+			$iError = ($iPaperHeight = Null) ? ($iError) : (__LOWriter_IntIsBetween(__LOWriter_UnitConvert(__LOWriter_GetPrinterSetting($oDoc, "PaperSize").Height(), $__LOCONST_CONVERT_TWIPS_UM), $iPaperHeight - 2, $iPaperHeight + 2)) ? ($iError) : (BitOR($iError, 4))
 
 		Else
-			Return SetError($__LOW_STATUS_PRINTER_RELATED_ERROR, 2, 0)
+			Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 2, 0)
 		EndIf
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 
 EndFunc   ;==>_LOWriter_DocPrintSizeSettings
 
@@ -3632,13 +3637,13 @@ Func _LOWriter_DocRedo(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		$oDoc.UndoManager.Redo()
-		Return SetError($__LOW_STATUS_SUCCESS, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 1, 0)
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_DocRedo
 
@@ -3666,12 +3671,12 @@ Func _LOWriter_DocRedoCurActionTitle(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isRedoPossible()) Then
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 
@@ -3699,12 +3704,12 @@ Func _LOWriter_DocRedoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isRedoPossible()) Then
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_DocRedoGetAllActionTitles
 
@@ -3730,9 +3735,9 @@ Func _LOWriter_DocRedoIsPossible(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.isRedoPossible())
+	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isRedoPossible())
 EndFunc   ;==>_LOWriter_DocRedoIsPossible
 
 ; #FUNCTION# ====================================================================================================================
@@ -3778,18 +3783,18 @@ Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, 
 
 	Local $iReplacements
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sSearchString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsString($sReplaceString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If Not IsArray($atReplaceFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 	$oSrchDescript.setSearchAttributes($atFindFormat)
 
-	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 	$oSrchDescript.setReplaceAttributes($atReplaceFormat)
 
 	$oSrchDescript.SearchString = $sSearchString
@@ -3797,7 +3802,7 @@ Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, 
 
 	$iReplacements = $oDoc.replaceAll($oSrchDescript)
 
-	Return SetError($__LOW_STATUS_SUCCESS, $iReplacements, 1)
+	Return SetError($__LO_STATUS_SUCCESS, $iReplacements, 1)
 
 EndFunc   ;==>_LOWriter_DocReplaceAll
 
@@ -3890,28 +3895,28 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 	Local $iResults
 	Local $bFormat = False
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSrchDescript) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsObj($oRange) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($oRange.IsCollapsed()) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsString($sSearchString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If Not IsString($sReplaceString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
-	If Not IsArray($atFindFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-	If Not IsArray($atReplaceFormat) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsArray($atFindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsArray($atReplaceFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
-	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+	If (UBound($atFindFormat) > 0) And Not IsObj($atFindFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+	If (UBound($atReplaceFormat) > 0) And Not IsObj($atReplaceFormat[0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 	If (UBound($atReplaceFormat) > 0) Then $bFormat = True
 
 	; If Find/Replace using a Regular expression is True, and replace formatting is set, convert the regular expressions for my
 	; alternate replacement function to use.
 	If ($oSrchDescript.SearchRegularExpression() = True) And ($bFormat = True) Then __LOWriter_RegExpConvert($sReplaceString)
-	If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$aoResults = _LOWriter_DocFindAllInRange($oDoc, $oSrchDescript, $sSearchString, $atFindFormat, $oRange)
 	$iResults = @extended
-	If (@error > 0) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; Error performing search
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Error performing search
 
 	If ($oSrchDescript.SearchRegularExpression() = True) Then
 
@@ -3931,20 +3936,20 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 		Else ;No Replacement formatting, use UNO Execute method instead.
 
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
-			If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			; Backup the ViewCursor location and selection.
 			$oViewCursorBackup = $oDoc.Text.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			; Move the View Cursor to the input range.
 			$oViewCursor.gotoRange($oRange, False)
 
 			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-			If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-			If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 4, 0)
+			If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 			$atArgs[0] = __LOWriter_SetPropertyValue("SearchItem.Backward", $oSrchDescript.SearchBackwards())
 			$atArgs[1] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType", $LOW_SEARCHFLAG_ABSOLUTE)
@@ -3962,7 +3967,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 		EndIf
 
 	ElseIf ($oSrchDescript.SearchStyles() = True) And ((UBound($atFindFormat) = 0) And (UBound($atReplaceFormat) = 0)) Then ; If Style Search is active and no formatting is set, then search and replace Paragraph style.
-		If Not _LOWriter_ParStyleExists($oDoc, $sReplaceString) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
+		If Not _LOWriter_ParStyleExists($oDoc, $sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		For $i = 0 To $iResults - 1
 			$aoResults[$i].ParaStyleName = $sReplaceString
 
@@ -3981,7 +3986,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, $iResults, 1)
+	Return SetError($__LO_STATUS_SUCCESS, $iResults, 1)
 EndFunc   ;==>_LOWriter_DocReplaceAllInRange
 
 ; #FUNCTION# ====================================================================================================================
@@ -4008,10 +4013,10 @@ Func _LOWriter_DocSave(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oDoc.hasLocation Or $oDoc.isReadOnly Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oDoc.hasLocation Or $oDoc.isReadOnly Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$oDoc.store()
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocSave
 
 ; #FUNCTION# ====================================================================================================================
@@ -4053,37 +4058,37 @@ Func _LOWriter_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite
 	Local $aProperties[1]
 	Local $sSavePath
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFilePath) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sFilterName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sFilterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($sFilterName = "") Or ($sFilterName = " ") Then $sFilterName = __LOWriter_FilterNameGet($sFilePath)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	$aProperties[0] = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($bOverwrite <> Null) Then
-		If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOWriter_SetPropertyValue("Overwrite", $bOverwrite)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 4, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	If $sPassword <> Null Then
-		If Not IsString($sPassword) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		ReDim $aProperties[UBound($aProperties) + 1]
 		$aProperties[UBound($aProperties) - 1] = __LOWriter_SetPropertyValue("Password", $sPassword)
-		If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 5, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oDoc.storeAsURL($sFilePath, $aProperties)
 
 	$sSavePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_PCPATH_RETURN)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $sSavePath)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOWriter_DocSaveAs
 
 ; #FUNCTION# ====================================================================================================================
@@ -4108,11 +4113,11 @@ Func _LOWriter_DocToFront(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.toFront()
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocToFront
 
 ; #FUNCTION# ====================================================================================================================
@@ -4139,13 +4144,13 @@ Func _LOWriter_DocUndo(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		$oDoc.UndoManager.Undo()
-		Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_DocUndo
 
@@ -4173,12 +4178,12 @@ Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isUndoPossible()) Then
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
 EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
@@ -4207,12 +4212,12 @@ Func _LOWriter_DocUndoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($oDoc.UndoManager.isUndoPossible()) Then
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
 	Else
-		Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_DocUndoGetAllActionTitles
 
@@ -4238,9 +4243,9 @@ Func _LOWriter_DocUndoIsPossible(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.UndoManager.isUndoPossible())
+	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isUndoPossible())
 EndFunc   ;==>_LOWriter_DocUndoIsPossible
 
 ; #FUNCTION# ====================================================================================================================
@@ -4270,13 +4275,13 @@ Func _LOWriter_DocViewCursorGetPosition(ByRef $oCursor)
 
 	Local $iCursorType
 
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, $oCursor.getPosition().X(), $oCursor.getPosition().Y())
+	Return SetError($__LO_STATUS_SUCCESS, $oCursor.getPosition().X(), $oCursor.getPosition().Y())
 
 EndFunc   ;==>_LOWriter_DocViewCursorGetPosition
 
@@ -4309,15 +4314,15 @@ Func _LOWriter_DocVisible(ByRef $oDoc, $bVisible = Null)
 
 	Local $iError = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If ($bVisible = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.isVisible())
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If ($bVisible = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.Frame.ContainerWindow.isVisible())
 
-	If Not IsBool($bVisible) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.Visible = $bVisible
 	$iError = ($oDoc.CurrentController.Frame.ContainerWindow.isVisible() = $bVisible) ? (0) : (1)
 
-	Return ($iError = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_DocVisible
 
 ; #FUNCTION# ====================================================================================================================
@@ -4355,17 +4360,17 @@ Func _LOWriter_DocZoom(ByRef $oDoc, $iZoom = Null)
 	Local $oServiceManager, $oDispatcher
 	Local $aArgs[3]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iZoom = Null) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oDoc.CurrentController.ViewSettings.ZoomValue())
+	If ($iZoom = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.ViewSettings.ZoomValue())
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not __LOWriter_IntIsBetween($iZoom, 20, 600) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iZoom, 20, 600) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$aArgs[0] = __LOWriter_SetPropertyValue("Zoom.Value", $iZoom)
 	$aArgs[1] = __LOWriter_SetPropertyValue("Zoom.ValueSet", 28703)
@@ -4374,5 +4379,5 @@ Func _LOWriter_DocZoom(ByRef $oDoc, $iZoom = Null)
 	$oDispatcher.executeDispatch($oDoc.CurrentController, ".uno:Zoom", "", 0, $aArgs)
 	$iError = ($oDoc.CurrentController.ViewSettings.ZoomValue() = $iZoom) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocZoom
