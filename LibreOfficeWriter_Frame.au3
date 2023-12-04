@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -107,26 +111,26 @@ Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null, $bBackTranspare
 	Local $iError = 0
 	Local $avColor[2]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oFrame.BackColor(), $oFrame.BackTransparent())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.BackColor = $iBackColor
 		$iError = ($oFrame.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.BackTransparent = $bBackTransparent
 		$iError = ($oFrame.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -202,10 +206,10 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	Local $avGradient[11]
 	Local $sGradName
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tStyleGradient = $oFrame.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iBorder, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -213,13 +217,13 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 				$oFrame.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
 	If ($oFrame.FillStyle() <> $__LOWCONST_FILL_STYLE_GRADIENT) Then $oFrame.FillStyle = $__LOWCONST_FILL_STYLE_GRADIENT
 
 	If ($sGradientName <> Null) Then
-		If Not IsString($sGradientName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		__LOWriter_GradientPresets($oDoc, $oFrame, $tStyleGradient, $sGradientName)
 		$iError = ($oFrame.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -228,67 +232,67 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 			$oFrame.FillGradientName = ""
-			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
-		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
 		$iError = ($oFrame.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.Border = $iBorder
 	EndIf
 
 	If ($iFromColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.StartColor = $iFromColor
 	EndIf
 
 	If ($iToColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.EndColor = $iToColor
 	EndIf
 
 	If ($iFromIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
 	If ($oFrame.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oFrame.FillGradientName = $sGradName
-		If ($oFrame.FillGradientName <> $sGradName) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrame.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
 
 	$oFrame.FillGradient = $tStyleGradient
@@ -304,7 +308,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	$iError = ($iFromIntense = Null) ? ($iError) : (($oFrame.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
 	$iError = ($iToIntense = Null) ? ($iError) : (($oFrame.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameAreaGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -355,12 +359,12 @@ Func _LOWriter_FrameBorderColor(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 
 	Local $vReturn
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -412,45 +416,45 @@ Func _LOWriter_FrameBorderPadding(ByRef $oFrame, $iAll = Null, $iTop = Null, $iB
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oFrame.BorderDistance(), $oFrame.TopBorderDistance(), $oFrame.BottomBorderDistance(), _
 				$oFrame.LeftBorderDistance(), $oFrame.RightBorderDistance())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiBPadding)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
 	If ($iAll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.BorderDistance = $iAll
 		$iError = (__LOWriter_IntIsBetween($oFrame.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.TopBorderDistance = $iTop
 		$iError = (__LOWriter_IntIsBetween($oFrame.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.BottomBorderDistance = $iBottom
 		$iError = (__LOWriter_IntIsBetween($oFrame.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.LeftBorderDistance = $iLeft
 		$iError = (__LOWriter_IntIsBetween($oFrame.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.RightBorderDistance = $iRight
 		$iError = (__LOWriter_IntIsBetween($oFrame.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameBorderPadding
 
 ; #FUNCTION# ====================================================================================================================
@@ -500,12 +504,12 @@ Func _LOWriter_FrameBorderStyle(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 
 	Local $vReturn
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -554,12 +558,12 @@ Func _LOWriter_FrameBorderWidth(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 
 	Local $vReturn
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -617,55 +621,55 @@ Func _LOWriter_FrameColumnSeparator(ByRef $oFrame, $bSeparatorOn = Null, $iStyle
 	Local $iError = 0
 	Local $avColumnLine[6]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColumnLine)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
 	EndIf
 
 	If ($bSeparatorOn <> Null) Then
-		If Not IsBool($bSeparatorOn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bSeparatorOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oTextColumns.SeparatorLineIsOn = $bSeparatorOn
 		$iError = ($oTextColumns.SeparatorLineIsOn() = $bSeparatorOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oTextColumns.SeparatorLineStyle = $iStyle
 		$iError = ($oTextColumns.SeparatorLineStyle() = $iStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oTextColumns.SeparatorLineWidth = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oTextColumns.SeparatorLineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextColumns.SeparatorLineColor = $iColor
 		$iError = ($oTextColumns.SeparatorLineColor() = $iColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTextColumns.SeparatorLineRelativeHeight = $iHeight
 		$iError = ($oTextColumns.SeparatorLineRelativeHeight() = $iHeight) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iPosition <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oTextColumns.SeparatorLineVerticalAlignment = $iPosition
 		$iError = ($oTextColumns.SeparatorLineVerticalAlignment() = $iPosition) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	$oFrame.TextColumns = $oTextColumns
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameColumnSeparator
 
 ; #FUNCTION# ====================================================================================================================
@@ -702,19 +706,19 @@ Func _LOWriter_FrameColumnSettings(ByRef $oFrame, $iColumns = Null)
 	Local $oTextColumns
 	Local $iError = 0
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
+	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
-	If Not __LOWriter_IntIsBetween($iColumns, 1, $iColumns) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iColumns, 1, $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns.ColumnCount = $iColumns
 	$oFrame.TextColumns = $oTextColumns
 
 	$iError = ($oFrame.TextColumns.ColumnCount() = $iColumns) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameColumnSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -776,15 +780,15 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	Local $iError = 0, $iRightMargin, $iLeftMargin
 	Local $avColumnSize[4]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$atColumns = $oTextColumns.Columns()
-	If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
 
@@ -798,11 +802,11 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
 		EndIf
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColumnSize)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnSize)
 	EndIf
 
 	If ($bAutoWidth <> Null) Then
-		If Not IsBool($bAutoWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then
 
@@ -825,7 +829,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	EndIf
 
 	If ($iGlobalSpacing <> Null) Then
-		If Not IsInt($iGlobalSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iGlobalSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextColumns.AutomaticDistance = $iGlobalSpacing
 		$oFrame.TextColumns = $oTextColumns
 
@@ -836,7 +840,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	EndIf
 
 	If ($iSpacing <> Null) Then
-		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If the requested column is the last column (furthest right), then set property setting error.
 			; because spacing can't be set for the last column.
@@ -857,7 +861,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
-			If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			; See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
@@ -866,7 +870,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$atColumns[$iColumn].Width = $iWidth
 
 		; Set the settings into the document.
@@ -875,11 +879,11 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrame.TextColumns.Columns()
-		If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameColumnSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -924,36 +928,36 @@ Func _LOWriter_FrameCreate(ByRef $oDoc, ByRef $oCursor, $sFrameName = Null, $iWi
 	Local Const $iCONST_AutoHW_OFF = 1
 	Local $oFrame
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bOverwrite) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oFrame = $oDoc.createInstance("com.sun.star.text.TextFrame")
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($sFrameName <> Null) Then
-		If Not IsString($sFrameName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sFrameName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If _LOWriter_DocHasFrameName($oDoc, $sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oFrame.Name = $sFrameName
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.WidthType = $iCONST_AutoHW_OFF
 		$oFrame.Width = $iWidth
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrame.SizeType = $iCONST_AutoHW_OFF
 		$oFrame.Height = $iHeight
 	EndIf
 
 	$oDoc.Text.insertTextContent($oCursor, $oFrame, $bOverwrite)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFrame)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrame)
 EndFunc   ;==>_LOWriter_FrameCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -979,9 +983,9 @@ Func _LOWriter_FrameCreateTextCursor(ByRef $oFrame)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFrame.Text.createTextCursor())
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrame.Text.createTextCursor())
 
 EndFunc   ;==>_LOWriter_FrameCreateTextCursor
 
@@ -1013,12 +1017,12 @@ Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 
 	Local $sFrameName
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$sFrameName = $oFrame.getName()
 	$oFrame.dispose()
-	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Frame named the same.
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Frame named the same.
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FrameDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -1047,12 +1051,12 @@ Func _LOWriter_FrameGetAnchor(ByRef $oFrame)
 
 	Local $oAnchor
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oAnchor = $oFrame.Anchor.Text.createTextCursorByRange($oFrame.Anchor())
-	If Not IsObj($oAnchor) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oAnchor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oAnchor)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oAnchor)
 EndFunc   ;==>_LOWriter_FrameGetAnchor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1081,11 +1085,11 @@ Func _LOWriter_FrameGetObjByCursor(ByRef $oDoc, ByRef $oCursor)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCursor) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If (__LOWriter_Internal_CursorGetDataType($oDoc, $oCursor) <> $LOW_CURDATA_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0) ; Cursor not in Frame
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If (__LOWriter_Internal_CursorGetDataType($oDoc, $oCursor) <> $LOW_CURDATA_FRAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Cursor not in Frame
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oDoc.TextFrames.getByName($oCursor.TextFrame.Name))
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.TextFrames.getByName($oCursor.TextFrame.Name))
 EndFunc   ;==>_LOWriter_FrameGetObjByCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1119,28 +1123,28 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 
 	Local $oFrames, $oShapes
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oFrames.getByName($sFrameName))
+	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrames.getByName($sFrameName))
 
 	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
 			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
-				If ($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") Then Return SetError($__LOW_STATUS_SUCCESS, 2, $oShapes.getByIndex($i))
+				If ($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") Then Return SetError($__LO_STATUS_SUCCESS, 2, $oShapes.getByIndex($i))
 			EndIf
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 0) ; No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, 0) ; No matches
 EndFunc   ;==>_LOWriter_FrameGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1185,45 +1189,45 @@ Func _LOWriter_FrameHyperlink(ByRef $oFrame, $sURL = Null, $sName = Null, $sFram
 	Local $iError = 0
 	Local $avHyperlink[4]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sURL, $sName, $sFrameTarget, $bServerSideMap) Then
 		__LOWriter_ArrayFill($avHyperlink, $oFrame.HyperLinkURL(), $oFrame.HyperLinkName(), $oFrame.HyperLinkTarget(), $oFrame.ServerMap())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avHyperlink)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avHyperlink)
 	EndIf
 
 	If ($sURL <> Null) Then
-		If Not IsString($sURL) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.HyperLinkURL = $sURL
 		$iError = ($oFrame.HyperLinkURL() = $sURL) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sName <> Null) Then
-		If Not IsString($sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.HyperLinkName = $sName
 		$iError = ($oFrame.HyperLinkName = $sName) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	; "" ; "_top" ; "_parent" ; "_blank" ; "_self"
 	If ($sFrameTarget <> Null) Then
-		If Not IsString($sFrameTarget) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsString($sFrameTarget) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If ($sFrameTarget <> "") Then
 			If ($sFrameTarget <> $LOW_FRAME_TARGET_TOP) And _
 					($sFrameTarget <> $LOW_FRAME_TARGET_PARENT) And _
 					($sFrameTarget <> $LOW_FRAME_TARGET_BLANK) And _
-					($sFrameTarget <> $LOW_FRAME_TARGET_SELF) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+					($sFrameTarget <> $LOW_FRAME_TARGET_SELF) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		EndIf
 		$oFrame.HyperLinkTarget = $sFrameTarget
 		$iError = ($oFrame.HyperLinkTarget() = $sFrameTarget) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bServerSideMap <> Null) Then
-		If Not IsBool($bServerSideMap) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bServerSideMap) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.ServerMap = $bServerSideMap
 		$iError = ($oFrame.ServerMap() = $bServerSideMap) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameHyperlink
 
 ; #FUNCTION# ====================================================================================================================
@@ -1276,57 +1280,57 @@ Func _LOWriter_FrameOptions(ByRef $oFrame, $bProtectContent = Null, $bProtectPos
 	Local $iError = 0
 	Local $avOptions[7]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bProtectContent, $bProtectPos, $bProtectSize, $iVertAlign, $bEditInRead, $bPrint, $iTxtDirection) Then
 		__LOWriter_ArrayFill($avOptions, $oFrame.ContentProtected(), $oFrame.PositionProtected(), $oFrame.SizeProtected(), _
 				$oFrame.TextVerticalAdjust(), $oFrame.EditInReadOnly(), $oFrame.Print(), $oFrame.WritingMode())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avOptions)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avOptions)
 	EndIf
 
 	If ($bProtectContent <> Null) Then
-		If Not IsBool($bProtectContent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bProtectContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.ContentProtected = $bProtectContent
 		$iError = ($oFrame.ContentProtected() = $bProtectContent) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bProtectPos <> Null) Then
-		If Not IsBool($bProtectPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.PositionProtected = $bProtectPos
 		$iError = ($oFrame.PositionProtected() = $bProtectPos) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bProtectSize <> Null) Then
-		If Not IsBool($bProtectSize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bProtectSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.SizeProtected = $bProtectSize
 		$iError = ($oFrame.SizeProtected() = $bProtectSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_TXT_ADJ_VERT_TOP, $LOW_TXT_ADJ_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_TXT_ADJ_VERT_TOP, $LOW_TXT_ADJ_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.TextVerticalAdjust = $iVertAlign
 		$iError = ($oFrame.TextVerticalAdjust() = $iVertAlign) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bEditInRead <> Null) Then
-		If Not IsBool($bEditInRead) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bEditInRead) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.EditInReadOnly = $bEditInRead
 		$iError = ($oFrame.EditInReadOnly() = $bEditInRead) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bPrint <> Null) Then
-		If Not IsBool($bPrint) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsBool($bPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.Print = $bPrint
 		$iError = ($oFrame.Print() = $bPrint) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iTxtDirection <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrame.WritingMode = $iTxtDirection
 		$iError = ($oFrame.WritingMode() = $iTxtDirection) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameOptions
 
 ; #FUNCTION# ====================================================================================================================
@@ -1375,42 +1379,42 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 	Local $iError = 0
 	Local $asName[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sName, $sDesc, $sPrevLink, $sNextLink) Then
 		__LOWriter_ArrayFill($asName, $oFrame.Name(), $oFrame.Description(), $oFrame.ChainPrevName(), $oFrame.ChainNextName())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $asName)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $asName)
 	EndIf
 
 	If ($sName <> Null) Then
-		If Not IsString($sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If _LOWriter_DocHasFrameName($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.Name = $sName
 		$iError = ($oFrame.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sDesc <> Null) Then
-		If Not IsString($sDesc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.Description = $sDesc
 		$iError = ($oFrame.Description = $sDesc) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($sPrevLink <> Null) Then
-		If Not IsString($sPrevLink) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		If ($sPrevLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sPrevLink) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsString($sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If ($sPrevLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.ChainPrevName = $sPrevLink
 		$iError = ($oFrame.ChainPrevName() = $sPrevLink) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sNextLink <> Null) Then
-		If Not IsString($sNextLink) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-		If ($sNextLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sNextLink) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not IsString($sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If ($sNextLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrame.ChainNextName = $sNextLink
 		$iError = ($oFrame.ChainNextName() = $sNextLink) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameOptionsName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1445,10 +1449,10 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 	Local $oFrames, $oShapes
 	Local $iCount = 0, $iEndofArray
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bSearchShapes) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bSearchShapes) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $oFrames.hasElements() Then
 		ReDim $asFrameNames[$oFrames.getCount()]
@@ -1460,7 +1464,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 
 	If ($bSearchShapes = True) Then
 		$oShapes = $oDoc.DrawPage()
-		If Not IsObj($oShapes) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		If $oShapes.hasElements() Then
 			ReDim $asShapes[$oShapes.getCount()]
@@ -1489,7 +1493,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 
 	EndIf
 
-	Return SetError($__LOW_STATUS_SUCCESS, UBound($asFrameNames), $asFrameNames)
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asFrameNames), $asFrameNames)
 
 EndFunc   ;==>_LOWriter_FramesGetNames
 
@@ -1541,46 +1545,46 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 	Local $iError = 0
 	Local $avShadow[4]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$tShdwFrmt = $oFrame.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avShadow)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
 	$oFrame.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oFrame.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameShadow
 
 ; #FUNCTION# ====================================================================================================================
@@ -1621,27 +1625,27 @@ Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null, $bBac
 	Local $iError = 0
 	Local $avColor[2]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oFrameStyle.BackColor(), $oFrameStyle.BackTransparent())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColor)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.BackColor = $iBackColor
 		$iError = ($oFrameStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
-		If Not IsBool($bBackTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bBackTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.BackTransparent = $bBackTransparent
 		$iError = ($oFrameStyle.BackTransparent() = $bBackTransparent) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1719,11 +1723,11 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	Local $avGradient[11]
 	Local $sGradName
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oFrameStyle.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iBorder, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -1731,13 +1735,13 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 				$oFrameStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avGradient)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
 	If ($oFrameStyle.FillStyle() <> $__LOWCONST_FILL_STYLE_GRADIENT) Then $oFrameStyle.FillStyle = $__LOWCONST_FILL_STYLE_GRADIENT
 
 	If ($sGradientName <> Null) Then
-		If Not IsString($sGradientName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		__LOWriter_GradientPresets($oDoc, $oFrameStyle, $tStyleGradient, $sGradientName)
 		$iError = ($oFrameStyle.FillGradientName() = $sGradientName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1746,67 +1750,67 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 			$oFrameStyle.FillGradientName = ""
-			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iIncrement <> Null) Then
-		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iIncrement, 3, 256, "", 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrameStyle.FillGradientStepCount = $iIncrement
 		$tStyleGradient.StepCount = $iIncrement ; Must set both of these in order for it to take effect.
 		$iError = ($oFrameStyle.FillGradientStepCount() = $iIncrement) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.Border = $iBorder
 	EndIf
 
 	If ($iFromColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.StartColor = $iFromColor
 	EndIf
 
 	If ($iToColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$tStyleGradient.EndColor = $iToColor
 	EndIf
 
 	If ($iFromIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iFromIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$tStyleGradient.StartIntensity = $iFromIntense
 	EndIf
 
 	If ($iToIntense <> Null) Then
-		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 14, 0)
+		If Not __LOWriter_IntIsBetween($iToIntense, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$tStyleGradient.EndIntensity = $iToIntense
 	EndIf
 
 	If ($oFrameStyle.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oFrameStyle.FillGradientName = $sGradName
-		If ($oFrameStyle.FillGradientName <> $sGradName) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrameStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
 
 	$oFrameStyle.FillGradient = $tStyleGradient
@@ -1822,7 +1826,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	$iError = ($iFromIntense = Null) ? ($iError) : (($oFrameStyle.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512)))
 	$iError = ($iToIntense = Null) ? ($iError) : (($oFrameStyle.FillGradient.EndIntensity() = $iToIntense) ? ($iError) : (BitOR($iError, 1024)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleAreaGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -1874,13 +1878,13 @@ Func _LOWriter_FrameStyleBorderColor(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -1933,46 +1937,46 @@ Func _LOWriter_FrameStyleBorderPadding(ByRef $oFrameStyle, $iAll = Null, $iTop =
 	Local $iError = 0
 	Local $aiBPadding[5]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oFrameStyle.BorderDistance(), $oFrameStyle.TopBorderDistance(), _
 				$oFrameStyle.BottomBorderDistance(), $oFrameStyle.LeftBorderDistance(), $oFrameStyle.RightBorderDistance())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiBPadding)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
 	If ($iAll <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.BorderDistance = $iAll
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.BorderDistance(), $iAll - 1, $iAll + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.TopBorderDistance = $iTop
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.TopBorderDistance(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.BottomBorderDistance = $iBottom
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.BottomBorderDistance(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrameStyle.LeftBorderDistance = $iLeft
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.LeftBorderDistance(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.RightBorderDistance = $iRight
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.RightBorderDistance(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleBorderPadding
 
 ; #FUNCTION# ====================================================================================================================
@@ -2023,13 +2027,13 @@ Func _LOWriter_FrameStyleBorderStyle(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -2079,13 +2083,13 @@ Func _LOWriter_FrameStyleBorderWidth(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -2143,56 +2147,56 @@ Func _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle, $bSeparatorOn = Nul
 	Local $iError = 0
 	Local $avColumnLine[6]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColumnLine)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
 	EndIf
 
 	If ($bSeparatorOn <> Null) Then
-		If Not IsBool($bSeparatorOn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bSeparatorOn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oTextColumns.SeparatorLineIsOn = $bSeparatorOn
 		$iError = ($oTextColumns.SeparatorLineIsOn() = $bSeparatorOn) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iStyle, $LOW_LINE_STYLE_NONE, $LOW_LINE_STYLE_DASHED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oTextColumns.SeparatorLineStyle = $iStyle
 		$iError = ($oTextColumns.SeparatorLineStyle() = $iStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 5, 180) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextColumns.SeparatorLineWidth = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oTextColumns.SeparatorLineWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTextColumns.SeparatorLineColor = $iColor
 		$iError = ($oTextColumns.SeparatorLineColor() = $iColor) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iHeight, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oTextColumns.SeparatorLineRelativeHeight = $iHeight
 		$iError = ($oTextColumns.SeparatorLineRelativeHeight() = $iHeight) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iPosition <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iPosition, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oTextColumns.SeparatorLineVerticalAlignment = $iPosition
 		$iError = ($oTextColumns.SeparatorLineVerticalAlignment() = $iPosition) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	$oFrameStyle.TextColumns = $oTextColumns
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleColumnSeparator
 
 ; #FUNCTION# ====================================================================================================================
@@ -2230,20 +2234,20 @@ Func _LOWriter_FrameStyleColumnSettings(ByRef $oFrameStyle, $iColumns = Null)
 	Local $oTextColumns
 	Local $iError = 0
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
+	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
-	If Not __LOWriter_IntIsBetween($iColumns, 1, $iColumns) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_IntIsBetween($iColumns, 1, $iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oTextColumns.ColumnCount = $iColumns
 	$oFrameStyle.TextColumns = $oTextColumns
 
 	$iError = ($oFrameStyle.TextColumns.ColumnCount() = $iColumns) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -2306,16 +2310,16 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	Local $iError = 0, $iRightMargin, $iLeftMargin
 	Local $avColumnSize[4]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iColumn) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$atColumns = $oTextColumns.Columns()
-	If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
-	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
 
@@ -2329,11 +2333,11 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
 		EndIf
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avColumnSize)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnSize)
 	EndIf
 
 	If ($bAutoWidth <> Null) Then
-		If Not IsBool($bAutoWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then
 
@@ -2355,7 +2359,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 		EndIf
 
 		If ($iGlobalSpacing <> Null) Then
-			If Not IsInt($iGlobalSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+			If Not IsInt($iGlobalSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 			$oTextColumns.AutomaticDistance = $iGlobalSpacing
 			$oFrameStyle.TextColumns = $oTextColumns
 
@@ -2368,7 +2372,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	EndIf
 
 	If ($iSpacing <> Null) Then
-		If Not IsInt($iSpacing) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsInt($iSpacing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If the requested column is the last column (furthest right), then set property setting error.
 			; because spacing can't be set for the last column.
@@ -2389,7 +2393,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
-			If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			; See if setting spacing worked. Spacing is equally divided between the two ajoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
@@ -2398,7 +2402,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not IsInt($iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$atColumns[$iColumn].Width = $iWidth
 
 		; Set the settings into the document.
@@ -2407,11 +2411,11 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrameStyle.TextColumns.Columns()
-		If Not IsArray($atColumns) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleColumnSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -2447,22 +2451,22 @@ Func _LOWriter_FrameStyleCreate(ByRef $oDoc, $sFrameStyle)
 
 	Local $oFrameStyles, $oStyle, $oFrameStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrameStyles = $oDoc.StyleFamilies().getByName("FrameStyles")
-	If Not IsObj($oFrameStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-	If _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.FrameStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oFrameStyles.insertByName($sFrameStyle, $oStyle)
 
-	If Not $oFrameStyles.hasByName($sFrameStyle) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oFrameStyles.hasByName($sFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oFrameStyle = $oFrameStyles.getByName($sFrameStyle)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFrameStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrameStyle)
 EndFunc   ;==>_LOWriter_FrameStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -2505,26 +2509,26 @@ Func _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle, $bForceDelete = False
 	Local $oFrameStyles
 	Local $sFrameStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bForceDelete) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsString($sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($sReplacementStyle <> "") And Not _LOWriter_FrameStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bForceDelete) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($sReplacementStyle <> "") And Not _LOWriter_FrameStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oFrameStyles = $oDoc.StyleFamilies().getByName("FrameStyles")
-	If Not IsObj($oFrameStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$sFrameStyle = $oFrameStyle.Name()
-	If Not IsString($sFrameStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not $oFrameStyle.isUserDefined() Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oFrameStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oFrameStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oFrameStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oFrameStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Frame") Then $oFrameStyle.setParentStyle($sReplacementStyle)
 	; If Parent style is blank set it to "Frame" style, Or if not but User has called a specific style set it to that.
 
 	$oFrameStyles.removeByName($sFrameStyle)
-	Return ($oFrameStyles.hasByName($sFrameStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($oFrameStyles.hasByName($sFrameStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -2551,11 +2555,11 @@ Func _LOWriter_FrameStyleExists(ByRef $oDoc, $sFrameStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If $oDoc.StyleFamilies.getByName("FrameStyles").hasByName($sFrameStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If $oDoc.StyleFamilies.getByName("FrameStyles").hasByName($sFrameStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>_LOWriter_FrameStyleExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -2587,13 +2591,13 @@ Func _LOWriter_FrameStyleGetObj(ByRef $oDoc, $sFrameStyle)
 
 	Local $oFrameStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFrameStyle = $oDoc.StyleFamilies().getByName("FrameStyles").getByName($sFrameStyle)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oFrameStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrameStyle)
 EndFunc   ;==>_LOWriter_FrameStyleGetObj
 
 ; #FUNCTION# ====================================================================================================================
@@ -2647,58 +2651,58 @@ Func _LOWriter_FrameStyleOptions(ByRef $oFrameStyle, $bProtectContent = Null, $b
 	Local $iError = 0
 	Local $avOptions[7]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bProtectContent, $bProtectPos, $bProtectSize, $iVertAlign, $bEditInRead, $bPrint, $iTxtDirection) Then
 		__LOWriter_ArrayFill($avOptions, $oFrameStyle.ContentProtected(), $oFrameStyle.PositionProtected(), $oFrameStyle.SizeProtected(), _
 				$oFrameStyle.TextVerticalAdjust(), $oFrameStyle.EditInReadOnly(), $oFrameStyle.Print(), $oFrameStyle.WritingMode())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avOptions)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avOptions)
 	EndIf
 
 	If ($bProtectContent <> Null) Then
-		If Not IsBool($bProtectContent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bProtectContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.ContentProtected = $bProtectContent
 		$iError = ($oFrameStyle.ContentProtected() = $bProtectContent) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bProtectPos <> Null) Then
-		If Not IsBool($bProtectPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.PositionProtected = $bProtectPos
 		$iError = ($oFrameStyle.PositionProtected() = $bProtectPos) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bProtectSize <> Null) Then
-		If Not IsBool($bProtectSize) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bProtectSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.SizeProtected = $bProtectSize
 		$iError = ($oFrameStyle.SizeProtected() = $bProtectSize) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_TXT_ADJ_VERT_TOP, $LOW_TXT_ADJ_VERT_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_TXT_ADJ_VERT_TOP, $LOW_TXT_ADJ_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrameStyle.TextVerticalAdjust = $iVertAlign
 		$iError = ($oFrameStyle.TextVerticalAdjust() = $iVertAlign) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bEditInRead <> Null) Then
-		If Not IsBool($bEditInRead) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsBool($bEditInRead) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.EditInReadOnly = $bEditInRead
 		$iError = ($oFrameStyle.EditInReadOnly() = $bEditInRead) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($bPrint <> Null) Then
-		If Not IsBool($bPrint) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not IsBool($bPrint) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrameStyle.Print = $bPrint
 		$iError = ($oFrameStyle.Print() = $bPrint) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iTxtDirection <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iTxtDirection, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrameStyle.WritingMode = $iTxtDirection
 		$iError = ($oFrameStyle.WritingMode() = $iTxtDirection) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleOptions
 
 ; #FUNCTION# ====================================================================================================================
@@ -2749,9 +2753,9 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 	Local $iError = 0
 	Local $avOrganizer[4]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($sNewFrameStyleName, $sParentStyle, $bAutoUpdate, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
@@ -2761,20 +2765,20 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 			__LOWriter_ArrayFill($avOrganizer, $oFrameStyle.Name(), __LOWriter_ParStyleNameToggle($oFrameStyle.ParentStyle(), True), _
 					$oFrameStyle.IsAutoUpdate())
 		EndIf
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avOrganizer)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
 	If ($sNewFrameStyleName <> Null) Then
-		If Not IsString($sNewFrameStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		If _LOWriter_FrameStyleExists($oDoc, $sNewFrameStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sNewFrameStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_FrameStyleExists($oDoc, $sNewFrameStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.Name = $sNewFrameStyleName
 		$iError = ($oFrameStyle.Name() = $sNewFrameStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
-		If Not IsString($sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If ($sParentStyle <> "") Then
-			If Not _LOWriter_FrameStyleExists($oDoc, $sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+			If Not _LOWriter_FrameStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 			$sParentStyle = __LOWriter_ParStyleNameToggle($sParentStyle)
 		EndIf
 		$oFrameStyle.ParentStyle = $sParentStyle
@@ -2782,19 +2786,19 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 	EndIf
 
 	If ($bAutoUpdate <> Null) Then
-		If Not IsBool($bAutoUpdate) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not IsBool($bAutoUpdate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrameStyle.IsAutoUpdate = $bAutoUpdate
 		$iError = ($oFrameStyle.IsAutoUpdate() = $bAutoUpdate) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bHidden <> Null) Then
-		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oFrameStyle.Hidden = $bHidden
 		$iError = ($oFrameStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -2827,13 +2831,13 @@ Func _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameObj.supportsService("com.sun.star.text.BaseFrame") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameObj.supportsService("com.sun.star.text.BaseFrame") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$oFrameObj.FrameStyleName = $sFrameStyle
-	Return ($oFrameObj.FrameStyleName() = $sFrameStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return ($oFrameObj.FrameStyleName() = $sFrameStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_FrameStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -2874,11 +2878,11 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bUserOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bAppliedOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("FrameStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -2886,7 +2890,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-		Return SetError($__LOW_STATUS_SUCCESS, UBound($aStyles), $aStyles)
+		Return SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles)
 	EndIf
 
 	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
@@ -2903,7 +2907,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 
 	ReDim $aStyles[$iCount]
 
-	Return (UBound($aStyles) = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 0)) : (SetError($__LOW_STATUS_SUCCESS, UBound($aStyles), $aStyles))
+	Return (UBound($aStyles) = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 0)) : (SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles))
 EndFunc   ;==>_LOWriter_FrameStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================
@@ -2954,47 +2958,47 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	Local $iError = 0
 	Local $avShadow[4]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tShdwFrmt = $oFrameStyle.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avShadow)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsInt($iWidth) Or ($iWidth < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tShdwFrmt.Color = $iColor
 	EndIf
 
 	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 
 	If ($iLocation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iLocation, $LOW_SHADOW_NONE, $LOW_SHADOW_BOTTOM_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tShdwFrmt.Location = $iLocation
 	EndIf
 
 	$oFrameStyle.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oFrameStyle.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($bTransparent = Null) ? ($iError) : (($tShdwFrmt.IsTransparent() = $bTransparent) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iLocation = Null) ? ($iError) : (($tShdwFrmt.Location() = $iLocation) ? ($iError) : (BitOR($iError, 8)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleShadow
 
 ; #FUNCTION# ====================================================================================================================
@@ -3029,17 +3033,17 @@ Func _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle, $iTransparency = Null)
 
 	Local $iError = 0
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
 
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFrameStyle.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
 	$oFrameStyle.FillTransparence = $iTransparency
 	$iError = ($oFrameStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleTransparency
 
 ; #FUNCTION# ====================================================================================================================
@@ -3105,65 +3109,65 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 	Local $sTGradName
 	Local $aiTransparent[7]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oFrameStyle.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillTransparenceGradientName = ""
-			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tStyleGradient.Border = $iBorder
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 	EndIf
 
 	If ($oFrameStyle.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oFrameStyle.FillTransparenceGradientName = $sTGradName
-		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
 
 	$oFrameStyle.FillTransparenceGradient = $tStyleGradient
@@ -3176,7 +3180,7 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 	$iError = ($iStart = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iEnd = Null) ? ($iError) : (($oFrameStyle.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -3299,56 +3303,56 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 	Local $iError = 0, $iCurrentAnchor
 	Local $avPosition[9]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, _
 			$iAnchorPos) Then
 		__LOWriter_ArrayFill($avPosition, $oFrameStyle.HoriOrient(), $oFrameStyle.HoriOrientPosition(), $oFrameStyle.HoriOrientRelation(), _
 				$oFrameStyle.PageToggle(), $oFrameStyle.VertOrient(), $oFrameStyle.VertOrientPosition(), $oFrameStyle.VertOrientRelation(), _
 				$oFrameStyle.IsFollowingTextFlow(), $oFrameStyle.AnchorType())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
-		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.HoriOrient = $iHorAlign
 		$iError = ($oFrameStyle.HoriOrient() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHorPos <> Null) Then
-		If Not IsInt($iHorPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsInt($iHorPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.HoriOrientPosition = $iHorPos
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.HoriOrientPosition(), $iHorPos - 1, $iHorPos + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iHorRelation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.HoriOrientRelation = $iHorRelation
 		$iError = ($oFrameStyle.HoriOrientRelation() = $iHorRelation) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bMirror <> Null) Then
-		If Not IsBool($bMirror) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bMirror) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrameStyle.PageToggle = $bMirror
 		$iError = ($oFrameStyle.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	; Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.VertOrient = $iVertAlign
 		$iError = ($oFrameStyle.VertOrient() = $iVertAlign) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iVertPos <> Null) Then
-		If Not IsInt($iVertPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not IsInt($iVertPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrameStyle.VertOrientPosition = $iVertPos
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.VertOrientPosition(), $iVertPos - 1, $iVertPos + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertRelation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oFrameStyle.AnchorType())
 
 		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
@@ -3410,18 +3414,18 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 	EndIf
 
 	If ($bKeepInside <> Null) Then
-		If Not IsBool($bKeepInside) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not IsBool($bKeepInside) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oFrameStyle.IsFollowingTextFlow = $bKeepInside
 		$iError = ($oFrameStyle.IsFollowingTextFlow() = $bKeepInside) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iAnchorPos <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER, $LOW_ANCHOR_AT_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER, $LOW_ANCHOR_AT_FRAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oFrameStyle.AnchorType = $iAnchorPos
 		$iError = ($oFrameStyle.AnchorType() = $iAnchorPos) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 
 ; #FUNCTION# ====================================================================================================================
@@ -3491,9 +3495,9 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 	Local $avSize[7]
 	Local Const $iCONST_AutoHW_OFF = 1, $iCONST_AutoHW_ON = 2
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, _
 			$bAutoHeight, $bKeepRatio) Then
@@ -3508,17 +3512,17 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 					$oFrameStyle.RelativeHeight(), ($oFrameStyle.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrameStyle.IsSyncHeightToWidth() And $oFrameStyle.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avSize)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
 	If ($iWidth <> Null) Then ; Min 51
-		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRelativeWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRelativeWidth, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iRelativeWidth, 0, 254) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.RelativeWidth = $iRelativeWidth
 		$iError = ($oFrameStyle.RelativeWidth() = $iRelativeWidth) ? ($iError) : (BitOR($iError, 2))
 
@@ -3528,26 +3532,26 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 	EndIf
 
 	If ($iWidthRelativeTo <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidthRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not __LOWriter_IntIsBetween($iWidthRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oFrameStyle.RelativeWidthRelation = $iWidthRelativeTo
 		$iError = ($oFrameStyle.RelativeWidthRelation() = $iWidthRelativeTo) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoWidth <> Null) Then
-		If Not IsBool($bAutoWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.WidthType = ($bAutoWidth) ? ($iCONST_AutoHW_ON) : ($iCONST_AutoHW_OFF)
 		$iError = ($oFrameStyle.WidthType() = (($bAutoWidth) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrameStyle.Height = $iHeight
 		$iError = ($oFrameStyle.Height() = $iHeight) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iRelativeHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRelativeHeight, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iRelativeHeight, 0, 254) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrameStyle.RelativeHeight = $iRelativeHeight
 		$iError = ($oFrameStyle.RelativeHeight() = $iRelativeHeight) ? ($iError) : (BitOR($iError, 32))
 
@@ -3557,26 +3561,26 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 	EndIf
 
 	If ($iHeightRelativeTo <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeightRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
-		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not __LOWriter_IntIsBetween($iHeightRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oFrameStyle.RelativeHeightRelation = $iHeightRelativeTo
 		$iError = ($oFrameStyle.RelativeHeightRelation() = $iHeightRelativeTo) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
-		If Not IsBool($bAutoHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+		If Not IsBool($bAutoHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oFrameStyle.SizeType = ($bAutoHeight) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF
 		$iError = ($oFrameStyle.SizeType = (($bAutoHeight) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($bKeepRatio <> Null) Then
-		If Not IsBool($bKeepRatio) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 12, 0)
+		If Not IsBool($bKeepRatio) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oFrameStyle.IsSyncHeightToWidth = $bKeepRatio
 		$oFrameStyle.IsSyncWidthToHeight = $bKeepRatio
 		$iError = (($oFrameStyle.IsSyncHeightToWidth() = $bKeepRatio) And ($oFrameStyle.IsSyncWidthToHeight() = $bKeepRatio)) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -3627,10 +3631,10 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 	Local $iError = 0
 	Local $avWrap[5]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oPropInfo = $oFrameStyle.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 
@@ -3642,11 +3646,11 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 					$oFrameStyle.BottomMargin())
 		EndIf
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avWrap)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avWrap)
 	EndIf
 
 	If ($iWrapType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWrapType, $LOW_WRAP_MODE_NONE, $LOW_WRAP_MODE_RIGHT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iWrapType, $LOW_WRAP_MODE_NONE, $LOW_WRAP_MODE_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If $oPropInfo.hasPropertyByName("Surround") Then $oFrameStyle.Surround = $iWrapType
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oFrameStyle.TextWrap = $iWrapType
 		If $oPropInfo.hasPropertyByName("Surround") Then
@@ -3657,30 +3661,30 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not IsInt($iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsInt($iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.LeftMargin = $iLeft
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not IsInt($iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.RightMargin = $iRight
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not IsInt($iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsInt($iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrameStyle.TopMargin = $iTop
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not IsInt($iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsInt($iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrameStyle.BottomMargin = $iBottom
 		$iError = (__LOWriter_IntIsBetween($oFrameStyle.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleWrap
 
 ; #FUNCTION# ====================================================================================================================
@@ -3723,34 +3727,34 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 	Local $iError = 0
 	Local $abWrapOptions[3]
 
-	If Not IsObj($oFrameStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrameStyle.SurroundAnchorOnly(), (($oFrameStyle.Opaque()) ? (False) : (True)), _
 				$oFrameStyle.AllowOverlap()) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $abWrapOptions)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
 	If ($bFirstPar <> Null) Then
-		If Not IsBool($bFirstPar) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bFirstPar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrameStyle.SurroundAnchorOnly = $bFirstPar
 		$iError = ($oFrameStyle.SurroundAnchorOnly() = $bFirstPar) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bInBackground <> Null) Then
-		If Not IsBool($bInBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bInBackground) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrameStyle.Opaque = (($bInBackground) ? False : True)
 		$iError = ($oFrameStyle.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 2)) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then
-		If Not IsBool($bAllowOverlap) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bAllowOverlap) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrameStyle.AllowOverlap = $bAllowOverlap
 		$iError = ($oFrameStyle.AllowOverlap() = $bAllowOverlap) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 
 ; #FUNCTION# ====================================================================================================================
@@ -3784,16 +3788,16 @@ Func _LOWriter_FrameTransparency(ByRef $oFrame, $iTransparency = Null)
 
 	Local $iError = 0
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LOW_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
+	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
 
-	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrame.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
 	$oFrame.FillTransparence = $iTransparency
 	$iError = ($oFrame.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameTransparency
 
 ; #FUNCTION# ====================================================================================================================
@@ -3858,64 +3862,64 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 	Local $iError = 0
 	Local $aiTransparent[7]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tGradient = $oFrame.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
 				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $aiTransparent)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillTransparenceGradientName = ""
-			Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iBorder <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tGradient.Border = $iBorder
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 	EndIf
 
 	If ($oFrame.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$oFrame.FillTransparenceGradientName = $sTGradName
-		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndIf
 
 	$oFrame.FillTransparenceGradient = $tGradient
@@ -3928,7 +3932,7 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 	$iError = ($iStart = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iEnd = Null) ? ($iError) : (($oFrame.FillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
@@ -4050,55 +4054,55 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 	Local $iError = 0, $iCurrentAnchor
 	Local $avPosition[9]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iHorAlign, $iHorPos, $iHorRelation, $bMirror, $iVertAlign, $iVertPos, $iVertRelation, $bKeepInside, _
 			$iAnchorPos) Then
 		__LOWriter_ArrayFill($avPosition, $oFrame.HoriOrient(), $oFrame.HoriOrientPosition(), $oFrame.HoriOrientRelation(), _
 				$oFrame.PageToggle(), $oFrame.VertOrient(), $oFrame.VertOrientPosition(), $oFrame.VertOrientRelation(), _
 				$oFrame.IsFollowingTextFlow(), $oFrame.AnchorType())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avPosition)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
-		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.HoriOrient = $iHorAlign
 		$iError = ($oFrame.HoriOrient() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iHorPos <> Null) Then
-		If Not IsInt($iHorPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsInt($iHorPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.HoriOrientPosition = $iHorPos
 		$iError = (__LOWriter_IntIsBetween($oFrame.HoriOrientPosition(), $iHorPos - 1, $iHorPos + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iHorRelation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iHorRelation, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PAGE_PRINT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.HoriOrientRelation = $iHorRelation
 		$iError = ($oFrame.HoriOrientRelation() = $iHorRelation) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bMirror <> Null) Then
-		If Not IsBool($bMirror) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsBool($bMirror) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.PageToggle = $bMirror
 		$iError = ($oFrame.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	; Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.VertOrient = $iVertAlign
 		$iError = ($oFrame.VertOrient() = $iVertAlign) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iVertPos <> Null) Then
-		If Not IsInt($iVertPos) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsInt($iVertPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.VertOrientPosition = $iVertPos
 		$iError = (__LOWriter_IntIsBetween($oFrame.VertOrientPosition(), $iVertPos - 1, $iVertPos + 1)) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($iVertRelation <> Null) Then
-		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? $iAnchorPos : $oFrame.AnchorType())
 
 		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting
@@ -4160,18 +4164,18 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 	EndIf
 
 	If ($bKeepInside <> Null) Then
-		If Not IsBool($bKeepInside) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
+		If Not IsBool($bKeepInside) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrame.IsFollowingTextFlow = $bKeepInside
 		$iError = ($oFrame.IsFollowingTextFlow() = $bKeepInside) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($iAnchorPos <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER, $LOW_ANCHOR_AT_FRAME) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iAnchorPos, $LOW_ANCHOR_AT_PARAGRAPH, $LOW_ANCHOR_AT_CHARACTER, $LOW_ANCHOR_AT_FRAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oFrame.AnchorType = $iAnchorPos
 		$iError = ($oFrame.AnchorType() = $iAnchorPos) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameTypePosition
 
 ; #FUNCTION# ====================================================================================================================
@@ -4239,8 +4243,8 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 	Local $avSize[7]
 	Local Const $iCONST_AutoHW_OFF = 1, $iCONST_AutoHW_ON = 2
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth, $iWidthRelativeTo, $bAutoWidth, $iHeight, $iRelativeHeight, $iHeightRelativeTo, _
 			$bAutoHeight, $bKeepRatio) Then
@@ -4255,17 +4259,17 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 					$oFrame.RelativeHeight(), ($oFrame.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrame.IsSyncHeightToWidth() And $oFrame.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avSize)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
 	If ($iWidth <> Null) Then ; Min 51
-		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 51, $iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oFrame.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRelativeWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRelativeWidth, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iRelativeWidth, 0, 254) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.RelativeWidth = $iRelativeWidth
 		$iError = ($oFrame.RelativeWidth() = $iRelativeWidth) ? ($iError) : (BitOR($iError, 2))
 
@@ -4275,26 +4279,26 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 	EndIf
 
 	If ($iWidthRelativeTo <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidthRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not __LOWriter_IntIsBetween($iWidthRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oFrame.RelativeWidthRelation = $iWidthRelativeTo
 		$iError = ($oFrame.RelativeWidthRelation() = $iWidthRelativeTo) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($bAutoWidth <> Null) Then
-		If Not IsBool($bAutoWidth) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.WidthType = ($bAutoWidth) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF
 		$iError = ($oFrame.WidthType() = (($bAutoWidth) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iHeight, 51, $iHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.Height = $iHeight
 		$iError = ($oFrame.Height() = $iHeight) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
 	If ($iRelativeHeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRelativeHeight, 0, 254) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iRelativeHeight, 0, 254) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFrame.RelativeHeight = $iRelativeHeight
 		$iError = ($oFrame.RelativeHeight() = $iRelativeHeight) ? ($iError) : (BitOR($iError, 32))
 
@@ -4304,26 +4308,26 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 	EndIf
 
 	If ($iHeightRelativeTo <> Null) Then
-		If Not __LOWriter_IntIsBetween($iHeightRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 9, 0)
-		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not __LOWriter_IntIsBetween($iHeightRelativeTo, $LOW_RELATIVE_PARAGRAPH, $LOW_RELATIVE_PARAGRAPH, "", $LOW_RELATIVE_PAGE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_VersionCheck(4.3) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oFrame.RelativeHeightRelation = $iHeightRelativeTo
 		$iError = ($oFrame.RelativeHeightRelation() = $iHeightRelativeTo) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
 	If ($bAutoHeight <> Null) Then
-		If Not IsBool($bAutoHeight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 10, 0)
+		If Not IsBool($bAutoHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oFrame.SizeType = ($bAutoHeight) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF
 		$iError = ($oFrame.SizeType = (($bAutoHeight) ? $iCONST_AutoHW_ON : $iCONST_AutoHW_OFF)) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
 	If ($bKeepRatio <> Null) Then
-		If Not IsBool($bKeepRatio) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 11, 0)
+		If Not IsBool($bKeepRatio) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oFrame.IsSyncHeightToWidth = $bKeepRatio
 		$oFrame.IsSyncWidthToHeight = $bKeepRatio
 		$iError = (($oFrame.IsSyncHeightToWidth() = $bKeepRatio) And ($oFrame.IsSyncWidthToHeight() = $bKeepRatio)) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameTypeSize
 
 ; #FUNCTION# ====================================================================================================================
@@ -4373,9 +4377,9 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 	Local $iError = 0
 	Local $avWrap[5]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oPropInfo = $oFrame.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 
@@ -4387,11 +4391,11 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 					$oFrame.BottomMargin())
 		EndIf
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avWrap)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avWrap)
 	EndIf
 
 	If ($iWrapType <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWrapType, $LOW_WRAP_MODE_NONE, $LOW_WRAP_MODE_RIGHT) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOWriter_IntIsBetween($iWrapType, $LOW_WRAP_MODE_NONE, $LOW_WRAP_MODE_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		If $oPropInfo.hasPropertyByName("Surround") Then $oFrame.Surround = $iWrapType
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oFrame.TextWrap = $iWrapType
 
@@ -4404,30 +4408,30 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not IsInt($iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsInt($iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.LeftMargin = $iLeft
 		$iError = (__LOWriter_IntIsBetween($oFrame.LeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not IsInt($iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsInt($iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.RightMargin = $iRight
 		$iError = (__LOWriter_IntIsBetween($oFrame.RightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not IsInt($iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFrame.TopMargin = $iTop
 		$iError = (__LOWriter_IntIsBetween($oFrame.TopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not IsInt($iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsInt($iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFrame.BottomMargin = $iBottom
 		$iError = (__LOWriter_IntIsBetween($oFrame.BottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameWrap
 
 ; #FUNCTION# ====================================================================================================================
@@ -4470,32 +4474,32 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 	Local $iError = 0
 	Local $abWrapOptions[3]
 
-	If Not IsObj($oFrame) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrame.SurroundAnchorOnly(), (($oFrame.Opaque()) ? (False) : (True)), $oFrame.AllowOverlap())
 		; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $abWrapOptions)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
 	If ($bFirstPar <> Null) Then
-		If Not IsBool($bFirstPar) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bFirstPar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oFrame.SurroundAnchorOnly = $bFirstPar
 		$iError = ($oFrame.SurroundAnchorOnly() = $bFirstPar) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($bInBackground <> Null) Then
-		If Not IsBool($bInBackground) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bInBackground) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFrame.Opaque = (($bInBackground) ? False : True)
 		$iError = ($oFrame.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 2)) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then
-		If Not IsBool($bAllowOverlap) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bAllowOverlap) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.AllowOverlap = $bAllowOverlap
 		$iError = ($oFrame.AllowOverlap() = $bAllowOverlap) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameWrapOptions
 

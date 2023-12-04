@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -92,14 +96,14 @@ Func _LOWriter_CharStyleBorderColor(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -154,9 +158,9 @@ Func _LOWriter_CharStyleBorderPadding(ByRef $oCharStyle, $iAll = Null, $iTop = N
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharBorderPadding($oCharStyle, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -210,14 +214,14 @@ Func _LOWriter_CharStyleBorderStyle(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -268,14 +272,14 @@ Func _LOWriter_CharStyleBorderWidth(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -314,22 +318,22 @@ Func _LOWriter_CharStyleCreate(ByRef $oDoc, $sCharStyle)
 
 	Local $oCharStyles, $oStyle, $oCharStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oCharStyles = $oDoc.StyleFamilies().getByName("CharacterStyles")
-	If Not IsObj($oCharStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
-	If _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.CharacterStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oCharStyles.insertByName($sCharStyle, $oStyle)
 
-	If Not $oCharStyles.hasByName($sCharStyle) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oCharStyles.hasByName($sCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oCharStyle = $oCharStyles.getByName($sCharStyle)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCharStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCharStyle)
 EndFunc   ;==>_LOWriter_CharStyleCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -372,26 +376,26 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	Local $oCharStyles
 	Local $sCharStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsBool($bForceDelete) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not IsString($sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($sReplacementStyle <> "") And Not _LOWriter_CharStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bForceDelete) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($sReplacementStyle <> "") And Not _LOWriter_CharStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oCharStyles = $oDoc.StyleFamilies().getByName("CharacterStyles")
-	If Not IsObj($oCharStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$sCharStyle = $oCharStyle.Name()
-	If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	If Not $oCharStyle.isUserDefined() Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oCharStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oCharStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oCharStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($sReplacementStyle <> "") Then $oCharStyle.setParentStyle($sReplacementStyle)
 	; If User has called a specific style to replace this style, set it to that.
 
 	$oCharStyles.removeByName($sCharStyle)
-	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -439,8 +443,8 @@ Func _LOWriter_CharStyleEffect(ByRef $oCharStyle, $iRelief = Null, $iCase = Null
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharEffect($oCharStyle, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
 	Return SetError(@error, @extended, $vReturn)
@@ -470,12 +474,12 @@ Func _LOWriter_CharStyleExists(ByRef $oDoc, $sCharStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If $oDoc.StyleFamilies.getByName("CharacterStyles").hasByName($sCharStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, True)
+	If $oDoc.StyleFamilies.getByName("CharacterStyles").hasByName($sCharStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>_LOWriter_CharStyleExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -526,10 +530,10 @@ Func _LOWriter_CharStyleFont(ByRef $oDoc, ByRef $oCharStyle, $sFontName = Null, 
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_CharFont($oCharStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
 	Return SetError(@error, @extended, $vReturn)
@@ -577,8 +581,8 @@ Func _LOWriter_CharStyleFontColor(ByRef $oCharStyle, $iFontColor = Null, $iTrans
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharFontColor($oCharStyle, $iFontColor, $iTransparency, $iHighlight)
 	Return SetError(@error, @extended, $vReturn)
@@ -613,13 +617,13 @@ Func _LOWriter_CharStyleGetObj(ByRef $oDoc, $sCharStyle)
 
 	Local $oCharStyle
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oCharStyle = $oDoc.StyleFamilies().getByName("CharacterStyles").getByName($sCharStyle)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $oCharStyle)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCharStyle)
 EndFunc   ;==>_LOWriter_CharStyleGetObj
 
 ; #FUNCTION# ====================================================================================================================
@@ -667,9 +671,9 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 	Local $iError = 0
 	Local $avOrganizer[2]
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($sNewCharStyleName, $sParentStyle, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
@@ -678,20 +682,20 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 			__LOWriter_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True))
 		EndIf
 
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $avOrganizer)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
 	If ($sNewCharStyleName <> Null) Then
-		If Not IsString($sNewCharStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-		If _LOWriter_CharStyleExists($oDoc, $sNewCharStyleName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsString($sNewCharStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_CharStyleExists($oDoc, $sNewCharStyleName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oCharStyle.Name = $sNewCharStyleName
 		$iError = ($oCharStyle.Name() = $sNewCharStyleName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sParentStyle <> Null) Then
-		If Not IsString($sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If ($sParentStyle <> "") Then
-			If Not _LOWriter_CharStyleExists($oDoc, $sParentStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+			If Not _LOWriter_CharStyleExists($oDoc, $sParentStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 			$sParentStyle = __LOWriter_CharStyleNameToggle($sParentStyle)
 		EndIf
 		$oCharStyle.ParentStyle = $sParentStyle
@@ -699,13 +703,13 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 	EndIf
 
 	If ($bHidden <> Null) Then
-		If Not IsBool($bHidden) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 8, 0)
-		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+		If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_VersionCheck(4.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$oCharStyle.Hidden = $bHidden
 		$iError = ($oCharStyle.Hidden() = $bHidden) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	Return ($iError > 0) ? (SetError($__LOW_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LOW_STATUS_SUCCESS, 0, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleOrganizer
 
 ; #FUNCTION# ====================================================================================================================
@@ -753,8 +757,8 @@ Func _LOWriter_CharStyleOverLine(ByRef $oCharStyle, $bWordOnly = Null, $iOverLin
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharOverLine($oCharStyle, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 	Return SetError(@error, @extended, $vReturn)
@@ -814,8 +818,8 @@ Func _LOWriter_CharStylePosition(ByRef $oCharStyle, $bAutoSuper = Null, $iSuperS
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharPosition($oCharStyle, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
 	Return SetError(@error, @extended, $vReturn)
@@ -857,8 +861,8 @@ Func _LOWriter_CharStyleRotateScale(ByRef $oCharStyle, $iRotation = Null, $iScal
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharRotateScale($oCharStyle, $iRotation, $iScaleWidth)
 	Return SetError(@error, @extended, $vReturn)
@@ -898,16 +902,16 @@ Func _LOWriter_CharStyleSet(ByRef $oDoc, ByRef $oObj, $sCharStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oObj) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oObj.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsString($sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oObj.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$sCharStyle = __LOWriter_CharStyleNameToggle($sCharStyle)
 
 	$oObj.CharStyleName = $sCharStyle
 
-	Return ($oObj.CharStyleName() = $sCharStyle) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_PROP_SETTING_ERROR, 1, 0))
+	Return ($oObj.CharStyleName() = $sCharStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_CharStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -952,11 +956,11 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	Local $iCount = 0
 	Local $sExecute = ""
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bUserOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bAppliedOnly) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("CharacterStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -964,7 +968,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-		Return SetError($__LOW_STATUS_SUCCESS, $i, $aStyles)
+		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
 	$sExecute = ($bUserOnly) ? ("($oStyles.getByIndex($i).isUserDefined())") : ($sExecute)
@@ -980,7 +984,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LOW_STATUS_SUCCESS, 0, 1)) : (SetError($__LOW_STATUS_SUCCESS, $iCount, $aStyles))
+	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles))
 EndFunc   ;==>_LOWriter_CharStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================
@@ -1033,9 +1037,9 @@ Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharShadow($oCharStyle, $iWidth, $iColor, $bTransparent, $iLocation)
 	Return SetError(@error, @extended, $vReturn)
@@ -1088,8 +1092,8 @@ Func _LOWriter_CharStyleSpacing(ByRef $oCharStyle, $bAutoKerning = Null, $nKerni
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharSpacing($oCharStyle, $bAutoKerning, $nKerning)
 	Return SetError(@error, @extended, $vReturn)
@@ -1135,8 +1139,8 @@ Func _LOWriter_CharStyleStrikeOut(ByRef $oCharStyle, $bWordOnly = Null, $bStrike
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharStrikeOut($oCharStyle, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -1186,8 +1190,8 @@ Func _LOWriter_CharStyleUnderLine(ByRef $oCharStyle, $bWordOnly = Null, $iUnderL
 
 	Local $vReturn
 
-	If Not IsObj($oCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharUnderLine($oCharStyle, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 	Return SetError(@error, @extended, $vReturn)

@@ -1,6 +1,10 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
 #include-once
+
+; Main LibreOffice Includes
+#include "LibreOffice_Constants.au3"
+
 ; Common includes for Writer
 #include "LibreOfficeWriter_Constants.au3"
 #include "LibreOfficeWriter_Helper.au3"
@@ -113,21 +117,21 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -189,14 +193,14 @@ Func _LOWriter_DirFrmtCharBorderPadding(ByRef $oSelection, $iAll = Null, $iTop =
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		; Resetting any one of these settings causes all to reset; reset the "All" setting for quickness.
 		$oSelection.setPropertyToDefault("CharBorderDistance")
-		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
@@ -259,22 +263,22 @@ Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -331,22 +335,22 @@ Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom 
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharTopBorder")
 		$oSelection.setPropertyToDefault("CharBottomBorder") ; Resetting one truly resets all, but just to be sure, reset all.
 		$oSelection.setPropertyToDefault("CharLeftBorder")
 		$oSelection.setPropertyToDefault("CharRightBorder")
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -404,8 +408,8 @@ Func _LOWriter_DirFrmtCharEffect(ByRef $oSelection, $iRelief = Null, $iCase = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then
 		If ($iRelief = Default) Then
@@ -433,7 +437,7 @@ Func _LOWriter_DirFrmtCharEffect(ByRef $oSelection, $iRelief = Null, $iCase = Nu
 			$bShadow = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharEffect($oSelection, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
@@ -501,13 +505,13 @@ Func _LOWriter_DirFrmtCharPosition(ByRef $oSelection, $bAutoSuper = Null, $iSupe
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharEscapement")
-		If __LOWriter_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharPosition($oSelection, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
@@ -561,8 +565,8 @@ Func _LOWriter_DirFrmtCharRotateScale(ByRef $oSelection, $iRotation = Null, $iSc
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		If ($iRotation = Default) Then
@@ -580,13 +584,13 @@ Func _LOWriter_DirFrmtCharRotateScale(ByRef $oSelection, $iRotation = Null, $iSc
 			$bRotateFitLine = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		$vReturn = __LOWriter_CharRotateScale($oSelection, $iRotation, $iScaleWidth, $bRotateFitLine)
 		__LOWriter_AddTo1DArray($vReturn, $oSelection.CharRotationIsFitToLine())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $vReturn)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 	EndIf
 
 	$vReturn = __LOWriter_CharRotateScale($oSelection, $iRotation, $iScaleWidth, $bRotateFitLine)
@@ -651,13 +655,13 @@ Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nu
 
 	Local $vReturn
 
-	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("CharShadowFormat")
-		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
@@ -717,8 +721,8 @@ Func _LOWriter_DirFrmtCharSpacing(ByRef $oSelection, $bAutoKerning = Null, $nKer
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bAutoKerning, $nKerning) Then
 		If ($bAutoKerning = Default) Then
@@ -730,7 +734,7 @@ Func _LOWriter_DirFrmtCharSpacing(ByRef $oSelection, $bAutoKerning = Null, $nKer
 			$oSelection.setPropertyToDefault("CharKerning")
 			$nKerning = Null
 		EndIf
-		If __LOWriter_VarsAreNull($bAutoKerning, $nKerning) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bAutoKerning, $nKerning) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharSpacing($oSelection, $bAutoKerning, $nKerning)
@@ -779,19 +783,19 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 	Local $oServiceManager, $oDispatcher, $oText, $oViewCursor, $oViewCursorBackup
 	Local $iCursorType
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LOW_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LOW_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oSelection)
-	If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 1, 0)
-	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iCursorType
 
@@ -799,14 +803,14 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 
 			; Retrieve the ViewCursor.
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
-			If Not IsObj($oViewCursor) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 2, 0)
+			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
 			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
-			If @error Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 3, 0)
-			If Not IsObj($oText) Then Return SetError($__LOW_STATUS_INIT_ERROR, 3, 0)
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 			$oViewCursorBackup = $oText.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LOW_STATUS_PROCESSING_ERROR, 4, 0)
+			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			$oViewCursor.gotoRange($oSelection, False)
 
@@ -820,7 +824,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 			$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ResetAttributes", "", 0, $aArray)
 	EndSwitch
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DirFrmtClear
 
 ; #FUNCTION# ====================================================================================================================
@@ -878,9 +882,9 @@ Func _LOWriter_DirFrmtFont(ByRef $oDoc, ByRef $oSelection, $sFontName = Null, $n
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_AnyAreDefault($sFontName, $nFontSize, $iPosture, $iWeight) Then
 		If ($sFontName = Default) Then
@@ -903,10 +907,10 @@ Func _LOWriter_DirFrmtFont(ByRef $oDoc, ByRef $oSelection, $sFontName = Null, $n
 			$iWeight = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_CharFont($oSelection, $sFontName, $nFontSize, $iPosture, $iWeight)
 	Return SetError(@error, @extended, $vReturn)
@@ -961,8 +965,8 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($iFontColor, $iTransparency, $iHighlight) Then
 		If ($iFontColor = Default) Then
@@ -971,7 +975,7 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 		EndIf
 
 		If ($iTransparency = Default) Then
-			If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+			If Not __LOWriter_VersionCheck(7.0) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 			$oSelection.setPropertyToDefault("CharTransparence")
 			$iTransparency = Null
 		EndIf
@@ -982,7 +986,7 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 			$iHighlight = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharFontColor($oSelection, $iFontColor, $iTransparency, $iHighlight)
@@ -1018,15 +1022,15 @@ Func _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 
 	Local $asStyles[4]
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oSelection.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oSelection.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oSelection.supportsService("com.sun.star.style.ParagraphProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSelection.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	__LOWriter_ArrayFill($asStyles, __LOWriter_ParStyleNameToggle($oSelection.ParaStyleName(), True), _
 			__LOWriter_CharStyleNameToggle($oSelection.CharStyleName(), True), _
 			__LOWriter_PageStyleNameToggle($oSelection.PageStyleName(), True), _
 			$oSelection.NumberingStyleName())
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, $asStyles)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $asStyles)
 EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 
 ; #FUNCTION# ====================================================================================================================
@@ -1080,9 +1084,9 @@ Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineS
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then
 		If ($bWordOnly = Default) Then
@@ -1105,7 +1109,7 @@ Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineS
 			$iOLColor = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharOverLine($oSelection, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
@@ -1170,8 +1174,8 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then
 		If ($iHorAlign = Default) Then
@@ -1204,7 +1208,7 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 			$iTxtDirection = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParAlignment($oSelection, $iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection)
@@ -1255,12 +1259,12 @@ Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBack
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaBackColor")
-		If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParBackColor($oSelection, $iBackColor, $bBackTransparent)
@@ -1323,8 +1327,8 @@ Func _LOWriter_DirFrmtParBorderColor(ByRef $oSelection, $iTop = Null, $iBottom =
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("TopBorder")
@@ -1332,13 +1336,13 @@ Func _LOWriter_DirFrmtParBorderColor(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -1398,12 +1402,12 @@ Func _LOWriter_DirFrmtParBorderPadding(ByRef $oSelection, $iAll = Null, $iTop = 
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("BorderDistance")
-		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
@@ -1465,8 +1469,8 @@ Func _LOWriter_DirFrmtParBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom =
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("TopBorder")
@@ -1474,13 +1478,13 @@ Func _LOWriter_DirFrmtParBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -1541,8 +1545,8 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("TopBorder")
@@ -1550,25 +1554,25 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 		$oSelection.setPropertyToDefault("LeftBorder")
 		$oSelection.setPropertyToDefault("RightBorder")
 
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($bConnectBorder = Default) Then
 		$oSelection.setPropertyToDefault("ParaIsConnectBorder")
 		$bConnectBorder = Null
-		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 3)
+		If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then Return SetError($__LO_STATUS_SUCCESS, 0, 3)
 	EndIf
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 6, 0)
-	If ($bConnectBorder <> Null) And Not IsBool($bConnectBorder) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 7, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($bConnectBorder <> Null) And Not IsBool($bConnectBorder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
 		$vReturn = __LOWriter_Border($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		__LOWriter_AddTo1DArray($vReturn, $oSelection.ParaIsConnectBorder())
-		Return SetError($__LOW_STATUS_SUCCESS, 1, $vReturn)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		$vReturn = __LOWriter_Border($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 
@@ -1576,7 +1580,7 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 	EndIf
 	If ($bConnectBorder <> Null) Then $oSelection.ParaIsConnectBorder = $bConnectBorder
 
-	Return SetError($__LOW_STATUS_SUCCESS, 0, 1)
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 
 ; #FUNCTION# ====================================================================================================================
@@ -1643,16 +1647,16 @@ Func _LOWriter_DirFrmtParDropCaps(ByRef $oDoc, ByRef $oSelection, $iNumChar = Nu
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("DropCapFormat")
-		If __LOWriter_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParDropCaps($oSelection, $iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -1713,12 +1717,12 @@ Func _LOWriter_DirFrmtParHyphenation(ByRef $oSelection, $bAutoHyphen = Null, $bH
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaIsHyphenation") ; Resetting one resets all.
-		If __LOWriter_VarsAreNull($bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParHyphenation($oSelection, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
@@ -1776,15 +1780,15 @@ Func _LOWriter_DirFrmtParIndent(ByRef $oSelection, $iBeforeTxt = Null, $iAfterTx
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaLeftMargin") ; Resetting one resets all -- but just in case reset the rest.
 		$oSelection.setPropertyToDefault("ParaRightMargin")
 		$oSelection.setPropertyToDefault("ParaFirstLineIndent")
 		$oSelection.setPropertyToDefault("ParaIsAutoFirstLineIndent")
-		If __LOWriter_VarsAreNull($iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParIndent($oSelection, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
@@ -1847,9 +1851,9 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_AnyAreDefault($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then
 		If ($iOutline = Default) Then
@@ -1873,10 +1877,10 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 			$iLineCountVal = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParOutLineAndList($oSelection, $iOutline, $sNumStyle, $bParLineCount, $iLineCountVal)
 	Return SetError(@error, @extended, $vReturn)
@@ -1939,9 +1943,9 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.PageDescName = ""
@@ -1950,10 +1954,10 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 		$oSelection.setPropertyToDefault("PageNumberOffset")
 		$oSelection.setPropertyToDefault("PageDescName")
 
-		If __LOWriter_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
-	If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParPageBreak($oSelection, $iBreakType, $iPgNumOffSet, $sPageStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -2014,12 +2018,12 @@ Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nul
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If $bClearDirFrmt Then
 		$oSelection.setPropertyToDefault("ParaShadowFormat")
-		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
@@ -2090,8 +2094,8 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then
 		If ($iAbovePar = Default) Then
@@ -2105,7 +2109,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 		EndIf
 
 		If ($bAddSpace = Default) Then
-			If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LOW_STATUS_VER_ERROR, 1, 0)
+			If Not __LOWriter_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 			$oSelection.setPropertyToDefault("ParaContextMargin")
 			$bAddSpace = Null
 		EndIf
@@ -2125,7 +2129,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 			$bPageLineSpc = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParSpace($oSelection, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
@@ -2188,11 +2192,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ; ===============================================================================================================================
 Func _LOWriter_DirFrmtParTabStopCreate(ByRef $oSelection, $iPosition, $iFillChar = Null, $iAlignment = Null, $iDecChar = Null)
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If Not IsInt($iPosition) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If __LOWriter_ParHasTabStop($oSelection, $iPosition) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If __LOWriter_ParHasTabStop($oSelection, $iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iPosition = __LOWriter_ParTabStopCreate($oSelection, $iPosition, $iAlignment, $iFillChar, $iDecChar)
 	Return SetError(@error, @extended, $iPosition)
@@ -2231,11 +2235,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 Func _LOWriter_DirFrmtParTabStopDelete(ByRef $oDoc, ByRef $oSelection, $iTabStop)
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsInt($iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_ParTabStopDelete($oSelection, $oDoc, $iTabStop)
 	Return SetError(@error, @extended, $vReturn)
@@ -2270,7 +2274,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 Func _LOWriter_DirFrmtParTabStopList(ByRef $oSelection)
 	Local $aiTabList
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$aiTabList = __LOWriter_ParTabStopList($oSelection)
 
@@ -2344,16 +2348,16 @@ Func _LOWriter_DirFrmtParTabStopMod(ByRef $oSelection, $iTabStop, $iPosition = N
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($iTabStop = Default) Then
 		$oSelection.setPropertyToDefault("ParaTabStops")
-		Return SetError($__LOW_STATUS_SUCCESS, 0, 3)
+		Return SetError($__LO_STATUS_SUCCESS, 0, 3)
 	EndIf
 
-	If Not IsInt($iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParTabStopMod($oSelection, $iTabStop, $iPosition, $iFillChar, $iAlignment, $iDecChar)
 	Return SetError(@error, @extended, $vReturn)
@@ -2409,8 +2413,8 @@ Func _LOWriter_DirFrmtParTxtFlowOpt(ByRef $oSelection, $bParSplit = Null, $bKeep
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then
 		If ($bParSplit = Default) Then
@@ -2433,7 +2437,7 @@ Func _LOWriter_DirFrmtParTxtFlowOpt(ByRef $oSelection, $bParSplit = Null, $bKeep
 			$iParWidows = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_ParTxtFlowOpt($oSelection, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
@@ -2487,8 +2491,8 @@ Func _LOWriter_DirFrmtStrikeOut(ByRef $oSelection, $bWordOnly = Null, $bStrikeOu
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then
 		If ($bWordOnly = Default) Then
@@ -2506,7 +2510,7 @@ Func _LOWriter_DirFrmtStrikeOut(ByRef $oSelection, $bWordOnly = Null, $bStrikeOu
 			$iStrikeLineStyle = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharStrikeOut($oSelection, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
@@ -2564,8 +2568,8 @@ Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLin
 
 	Local $vReturn
 
-	If Not IsObj($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LOW_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_DirFrmtCheck($oSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_AnyAreDefault($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then
 		If ($bWordOnly = Default) Then
@@ -2588,7 +2592,7 @@ Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLin
 			$iULColor = Null
 		EndIf
 
-		If __LOWriter_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then Return SetError($__LOW_STATUS_SUCCESS, 0, 2)
+		If __LOWriter_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	$vReturn = __LOWriter_CharUnderLine($oSelection, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
