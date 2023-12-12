@@ -54,6 +54,6 @@ Please complete the following information.
 
 - OS: [e.g. Windows 10]
 - OS Arch.: [e.g. X64]
-- LibreOffice Component [e.g. Main, Writer, Calc, ]
-- LibreOffice version [e.g. 7.3.4.2]
+- LibreOffice Component: [e.g. Main, Writer, Calc]
+- LibreOffice version: [e.g. 7.3.4.2]
 
