@@ -9,7 +9,63 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [?.?.?] - 2023-
+## [?.?.?] - 2024-
+
+**LibreOfficeCalc**
+
+### Added 
+
+- Initial Document Functions and Examples
+	- _LOCalc_DocClose
+	- _LOCalc_DocConnect
+	- _LOCalc_DocCreate
+	- _LOCalc_DocExport
+	- _LOCalc_DocGetName
+	- _LOCalc_DocGetPath
+	- _LOCalc_DocHasPath
+	- _LOCalc_DocHasSheetName
+	- _LOCalc_DocIsActive
+	- _LOCalc_DocIsModified
+	- _LOCalc_DocIsReadOnly
+	- _LOCalc_DocMaximize
+	- _LOCalc_DocMinimize
+	- _LOCalc_DocOpen
+	- _LOCalc_DocPosAndSize
+	- _LOCalc_DocRedo
+	- _LOCalc_DocRedoCurActionTitle
+	- _LOCalc_DocRedoGetAllActionTitles
+	- _LOCalc_DocRedoIsPossible
+	- _LOCalc_DocSave
+	- _LOCalc_DocSaveAs
+	- _LOCalc_DocToFront
+	- _LOCalc_DocUndo
+	- _LOCalc_DocUndoCurActionTitle
+	- _LOCalc_DocUndoGetAllActionTitles
+	- _LOCalc_DocUndoIsPossible
+	- _LOCalc_DocVisible
+	- _LOCalc_DocZoom
+
+- Sheet Functions and Examples
+	- _LOCalc_SheetActivate
+	- _LOCalc_SheetAdd
+	- _LOCalc_SheetCopy
+	- _LOCalc_SheetGetActive
+	- _LOCalc_SheetGetCellByName
+	- _LOCalc_SheetGetCellByPosition
+	- _LOCalc_SheetGetObjByName
+	- _LOCalc_SheetIsActive
+	- _LOCalc_SheetMove
+	- _LOCalc_SheetName
+	- _LOCalc_SheetRemove
+	- _LOCalc_SheetsGetCount
+	- _LOCalc_SheetsGetNames
+	- _LOCalc_SheetVisible
+
+- Cell Functions and Examples
+	- _LOCalc_CellFormula
+	- _LOCalc_CellGetType
+	- _LOCalc_CellText
+	- _LOCalc_CellValue
 
 **LibreOfficeWriter**
 

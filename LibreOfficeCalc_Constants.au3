@@ -20,6 +20,12 @@ Global Const $__LOCCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=65
 
+; Cell Type
+Global Const _
+		$LOC_CELL_TYPE_EMPTY = 0, _                             ; Cell is empty.
+		$LOC_CELL_TYPE_VALUE = 1, _                             ; Cell contains a value.
+		$LOC_CELL_TYPE_TEXT = 2, _                              ; Cell contains text.
+		$LOC_CELL_TYPE_FORMULA = 3                              ; Cell contains a formula.
 
 ; Color in Long Color Format
 Global Const _

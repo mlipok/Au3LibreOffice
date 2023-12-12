@@ -8,8 +8,9 @@
 #include "LibreOfficeCalc_Internal.au3"
 
 ; Other includes for Calc
+#include "LibreOfficeCalc_Cell.au3"
 #include "LibreOfficeCalc_Doc.au3"
-
+#include "LibreOfficeCalc_Sheet.au3"
 
 
 ; #INDEX# =======================================================================================================================

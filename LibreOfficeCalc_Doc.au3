@@ -28,18 +28,29 @@
 ; _LOCalc_DocGetName
 ; _LOCalc_DocGetPath
 ; _LOCalc_DocHasPath
+; _LOCalc_DocHasSheetName
 ; _LOCalc_DocIsActive
+; _LOCalc_DocIsModified
 ; _LOCalc_DocIsReadOnly
 ; _LOCalc_DocMaximize
 ; _LOCalc_DocMinimize
 ; _LOCalc_DocOpen
 ; _LOCalc_DocPosAndSize
+; _LOCalc_DocRedo
+; _LOCalc_DocRedoCurActionTitle
+; _LOCalc_DocRedoGetAllActionTitles
+; _LOCalc_DocRedoIsPossible
 ; _LOCalc_DocSave
 ; _LOCalc_DocSaveAs
 ; _LOCalc_DocToFront
+; _LOCalc_DocUndo
+; _LOCalc_DocUndoCurActionTitle
+; _LOCalc_DocUndoGetAllActionTitles
+; _LOCalc_DocUndoIsPossible
 ; _LOCalc_DocVisible
 ; _LOCalc_DocZoom
 ; ===============================================================================================================================
+
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocClose
@@ -546,6 +557,45 @@ Func _LOCalc_DocHasPath(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_DocHasPath
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocHasSheetName
+; Description ...: Check whether a Calc document has a Sheet with a specific name.
+; Syntax ........: _LOCalc_DocHasSheetName(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sName               - a string value. The sheet name to check for.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Sheet matching $sName, True is returned. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocHasSheetName(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheets
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oSheets = $oDoc.Sheets()
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_Success, 0, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>_LOCalc_DocHasSheetName
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsActive
 ; Description ...: Tests if called document is the active document of other Libre windows.
 ; Syntax ........: _LOCalc_DocIsActive(Byref $oDoc)
@@ -570,6 +620,32 @@ Func _LOCalc_DocIsActive(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.CurrentController.Frame.isActive())
 EndFunc   ;==>_LOCalc_DocIsActive
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocIsModified
+; Description ...: Test whether the document has been modified since being created or since the last save.
+; Syntax ........: _LOCalc_DocIsModified(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document has been modified since last being saved.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocIsModified(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.isModified())
+EndFunc   ;==>_LOCalc_DocIsModified
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsReadOnly
@@ -875,6 +951,133 @@ Func _LOCalc_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null, 
 EndFunc   ;==>_LOCalc_DocPosAndSize
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocRedo
+; Description ...: Perform one Redo action for a document.
+; Syntax ........: _LOCalc_DocRedo(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have a redo action to perform.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Successfully performed a redo action.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocUndo, _LOCalc_DocRedoIsPossible, _LOCalc_DocRedoGetAllActionTitles, _LOCalc_DocRedoCurActionTitle
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocRedo(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isRedoPossible()) Then
+		$oDoc.UndoManager.Redo()
+		Return SetError($__LO_STATUS_SUCCESS, 1, 0)
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+EndFunc   ;==>_LOCalc_DocRedo
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocRedoCurActionTitle
+; Description ...: Retrieve the current Redo action Title.
+; Syntax ........: _LOCalc_DocRedoCurActionTitle(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: String
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have a redo action available.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Returns the current available redo action Title as a String.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocRedo, _LOCalc_DocRedoGetAllActionTitles
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isRedoPossible()) Then
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+EndFunc   ;==>_LOCalc_DocRedoCurActionTitle
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocRedoGetAllActionTitles
+; Description ...: Retrieve all available Redo action Titles.
+; Syntax ........: _LOCalc_DocRedoGetAllActionTitles(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have any redo actions available.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Array = Returns all available redo action Titles in an array of Strings.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocRedo, _LOCalc_DocRedoCurActionTitle
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocRedoGetAllActionTitles(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isRedoPossible()) Then
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+EndFunc   ;==>_LOCalc_DocRedoGetAllActionTitles
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocRedoIsPossible
+; Description ...: Test whether a Redo action is available to perform for a document.
+; Syntax ........: _LOCalc_DocRedoIsPossible(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = If the document has a redo action to perform, True is returned, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocRedo
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocRedoIsPossible(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isRedoPossible())
+EndFunc   ;==>_LOCalc_DocRedoIsPossible
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocSave
 ; Description ...: Save any changes made to a Document.
 ; Syntax ........: _LOCalc_DocSave(Byref $oDoc)
@@ -1004,6 +1207,134 @@ Func _LOCalc_DocToFront(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_DocToFront
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndo
+; Description ...: Perform one Undo action for a document.
+; Syntax ........: _LOCalc_DocUndo(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have an undo action to perform.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Successfully performed an undo action.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocUndoIsPossible, _LOCalc_DocUndoGetAllActionTitles, _LOCalc_DocUndoCurActionTitle, _LOCalc_DocRedo
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndo(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isUndoPossible()) Then
+		$oDoc.UndoManager.Undo()
+		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+EndFunc   ;==>_LOCalc_DocUndo
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoCurActionTitle
+; Description ...: Retrieve the current Undo action Title.
+; Syntax ........: _LOCalc_DocUndoCurActionTitle(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: String
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have an undo action available.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Returns the current available undo action Title in String format.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocUndo, _LOCalc_DocUndoGetAllActionTitles
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isUndoPossible()) Then
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+
+EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoGetAllActionTitles
+; Description ...: Retrieve all available Undo action Titles.
+; Syntax ........: _LOCalc_DocUndoGetAllActionTitles(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Document does not have any undo actions available.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Array = Returns all available undo action Titles in an array of Strings.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocUndo, _LOCalc_DocUndoCurActionTitle
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoGetAllActionTitles(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($oDoc.UndoManager.isUndoPossible()) Then
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+EndFunc   ;==>_LOCalc_DocUndoGetAllActionTitles
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoIsPossible
+; Description ...: Test whether a Undo action is available to perform for a document.
+; Syntax ........: _LOCalc_DocUndoIsPossible(Byref $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = If the document has an undo action to perform, True is returned, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_DocUndo
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoIsPossible(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isUndoPossible())
+EndFunc   ;==>_LOCalc_DocUndoIsPossible
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocVisible
