@@ -4322,23 +4322,23 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParPageBreak
 ; Description ...: Set or Retrieve Page Break Settings.
-; Syntax ........: __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyle)
+; Syntax ........: __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $sPageStyle, $iPgNumOffSet)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ;                  $iBreakType          - an integer value (0-6). The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iPgNumOffSet        - an integer value. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $sPageStyle          - a string value. Creates a page break before the paragraph it belongs to and assigns the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
+;                  $iPgNumOffSet        - an integer value. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0, or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
-;				   @Error 1 @Extended 8 Return 0 = $sPageStyle not a String.
+;				   @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
+;				   @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBreakType
-;				   |								2 = Error setting $iPgNumOffSet
-;				   |								4 = Error setting $sPageStyle
+;				   |								2 = Error setting $sPageStyle
+;				   |								4 = Error setting $iPgNumOffSet
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -4355,7 +4355,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyle)
+Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $sPageStyle, $iPgNumOffSet)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4364,8 +4364,8 @@ Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyl
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
-	If __LOWriter_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then
-		__LOWriter_ArrayFill($avPageBreak, $oObj.BreakType(), $oObj.PageNumberOffset(), $oObj.PageDescName())
+	If __LOWriter_VarsAreNull($iBreakType, $sPageStyle, $iPgNumOffSet) Then
+		__LOWriter_ArrayFill($avPageBreak, $oObj.BreakType(), $oObj.PageDescName(), $oObj.PageNumberOffset())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPageBreak)
 	EndIf
 
@@ -4375,16 +4375,16 @@ Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $iPgNumOffSet, $sPageStyl
 		$iError = ($oObj.BreakType = $iBreakType) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($iPgNumOffSet <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0, $iPgNumOffSet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-		$oObj.PageNumberOffset = $iPgNumOffSet
-		$iError = ($oObj.PageNumberOffset = $iPgNumOffSet) ? ($iError) : (BitOR($iError, 2))
+	If ($sPageStyle <> Null) Then
+		If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oObj.PageDescName = $sPageStyle
+		$iError = ($oObj.PageDescName = $sPageStyle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($sPageStyle <> Null) Then
-		If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		$oObj.PageDescName = $sPageStyle
-		$iError = ($oObj.PageDescName = $sPageStyle) ? ($iError) : (BitOR($iError, 4))
+	If ($iPgNumOffSet <> Null) Then
+		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0, $iPgNumOffSet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oObj.PageNumberOffset = $iPgNumOffSet
+		$iError = ($oObj.PageNumberOffset = $iPgNumOffSet) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

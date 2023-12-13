@@ -29,9 +29,8 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_DOWN, 1)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	; Set the paragraph at the current cursor's location Page break settings, Break type = $LOW_BREAK_PAGE_BEFORE, Page number offset = 2,
-	; Page style = "Landscape".
-	_LOWriter_DirFrmtParPageBreak($oDoc, $oViewCursor, $LOW_BREAK_PAGE_BEFORE, 2, "Landscape")
+	; Set the paragraph at the current cursor's location Page break settings, Break type = $LOW_BREAK_PAGE_BEFORE, Page style = "Landscape", Page number offset = 2.
+	_LOWriter_DirFrmtParPageBreak($oDoc, $oViewCursor, $LOW_BREAK_PAGE_BEFORE, "Landscape", 2)
 	If @error Then _ERROR("Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
@@ -40,8 +39,8 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The current Paragraph Page break settings are as follows: " & @CRLF & _
 			"What type of Page break, if any is used? (see UDF constants): " & $avSettings[0] & @CRLF & _
-			"What is the Page number offset, if any?: " & $avSettings[1] & @CRLF & _
-			"What different page style, if any, is used: " & $avSettings[2] & @CRLF & @CRLF & _
+			"What different page style, if any, is used: " & $avSettings[1] & @CRLF & _
+			"What is the Page number offset, if any?: " & $avSettings[2] & @CRLF & @CRLF & _
 			"Press ok to remove direct formating.")
 
 	; Remove direct formatting
