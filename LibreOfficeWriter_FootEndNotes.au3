@@ -42,7 +42,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteDelete
 ; Description ...: Delete a Endnote.
-; Syntax ........: _LOWriter_EndnoteDelete(Byref $oEndNote)
+; Syntax ........: _LOWriter_EndnoteDelete(ByRef $oEndNote)
 ; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -72,7 +72,7 @@ EndFunc   ;==>_LOWriter_EndnoteDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Endnote Anchor position.
-; Syntax ........: _LOWriter_EndnoteGetAnchor(Byref $oEndNote)
+; Syntax ........: _LOWriter_EndnoteGetAnchor(ByRef $oEndNote)
 ; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -106,7 +106,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Endnote to modify the text therein.
-; Syntax ........: _LOWriter_EndnoteGetTextCursor(Byref $oEndNote)
+; Syntax ........: _LOWriter_EndnoteGetTextCursor(ByRef $oEndNote)
 ; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -140,7 +140,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteInsert
 ; Description ...: Insert a Endnote into a Document.
-; Syntax ........: _LOWriter_EndnoteInsert(Byref $oDoc, Byref $oCursor, $bOverwrite[, $sLabel = Null])
+; Syntax ........: _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite[, $sLabel = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
@@ -202,7 +202,7 @@ EndFunc   ;==>_LOWriter_EndnoteInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteModifyAnchor
 ; Description ...: Modify a Specific Endnote's settings.
-; Syntax ........: _LOWriter_EndnoteModifyAnchor(Byref $oEndNote[, $sLabel = Null])
+; Syntax ........: _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote[, $sLabel = Null])
 ; Parameters ....: $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
@@ -250,7 +250,7 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteSettingsAutoNumber
 ; Description ...: Set or Retrieve Endnote Autonumbering settings.
-; Syntax ........: _LOWriter_EndnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null]]]])
+; Syntax ........: _LOWriter_EndnoteSettingsAutoNumber(ByRef $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Endnote numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iStartAt            - [optional] an integer value (1-9999). Default is Null. The Number to begin Endnote counting from.
@@ -326,7 +326,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteSettingsStyles
 ; Description ...: Set or Retrieve Document Endnote Style settings.
-; Syntax ........: _LOWriter_EndnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sEndnoteArea = Null]]]])
+; Syntax ........: _LOWriter_EndnoteSettingsStyles(ByRef $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sEndnoteArea = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParagraph          - [optional] a string value. Default is Null. The Endnote Text Paragraph Style to use.
 ;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Endnote pages.
@@ -416,7 +416,7 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnotesGetList
 ; Description ...: Retrieve an array of Endnote Objects contained in a Document.
-; Syntax ........: _LOWriter_EndnotesGetList(Byref $oDoc)
+; Syntax ........: _LOWriter_EndnotesGetList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -465,7 +465,7 @@ EndFunc   ;==>_LOWriter_EndnotesGetList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteDelete
 ; Description ...: Delete a Footnote.
-; Syntax ........: _LOWriter_FootnoteDelete(Byref $oFootNote)
+; Syntax ........: _LOWriter_FootnoteDelete(ByRef $oFootNote)
 ; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -494,7 +494,7 @@ EndFunc   ;==>_LOWriter_FootnoteDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteGetAnchor
 ; Description ...: Create a Text Cursor at the Footnote Anchor position.
-; Syntax ........: _LOWriter_FootnoteGetAnchor(Byref $oFootNote)
+; Syntax ........: _LOWriter_FootnoteGetAnchor(ByRef $oFootNote)
 ; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -528,7 +528,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteGetTextCursor
 ; Description ...: Create a Text Cursor in a Footnote to modify the text therein.
-; Syntax ........: _LOWriter_FootnoteGetTextCursor(Byref $oFootNote)
+; Syntax ........: _LOWriter_FootnoteGetTextCursor(ByRef $oFootNote)
 ; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -562,7 +562,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteInsert
 ; Description ...: Insert a Footnote into a Document.
-; Syntax ........: _LOWriter_FootnoteInsert(Byref $oDoc, Byref $oCursor, $bOverwrite[, $sLabel = Null])
+; Syntax ........: _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite[, $sLabel = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
@@ -625,7 +625,7 @@ EndFunc   ;==>_LOWriter_FootnoteInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteModifyAnchor
 ; Description ...: Modify a Footnote's Anchor Character.
-; Syntax ........: _LOWriter_FootnoteModifyAnchor(Byref $oFootNote[, $sLabel = Null])
+; Syntax ........: _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote[, $sLabel = Null])
 ; Parameters ....: $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Footnote. Set to "" for automatic numbering.
 ; Return values .: Success: 1 or String.
@@ -672,7 +672,7 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteSettingsAutoNumber
 ; Description ...: Set or Retrieve Footnote Autonumbering settings.
-; Syntax ........: _LOWriter_FootnoteSettingsAutoNumber(Byref $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null[, $iCounting = Null[, $bEndOfDoc = Null]]]]]])
+; Syntax ........: _LOWriter_FootnoteSettingsAutoNumber(ByRef $oDoc[, $iNumFormat = Null[, $iStartAt = Null[, $sBefore = Null[, $sAfter = Null[, $iCounting = Null[, $bEndOfDoc = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Footnote numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iStartAt            - [optional] an integer value (1-9999). Default is Null. The Number to begin Footnote counting from, this is labeled "Counting" in the L.O. User Interface.
@@ -768,7 +768,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteSettingsContinuation
 ; Description ...: Set or Retrieve Footnote continuation settings.
-; Syntax ........: _LOWriter_FootnoteSettingsContinuation(Byref $oDoc[, $sEnd = Null[, $sBegin = Null]])
+; Syntax ........: _LOWriter_FootnoteSettingsContinuation(ByRef $oDoc[, $sEnd = Null[, $sBegin = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sEnd                - [optional] a string value. Default is Null. The text to display at the end of a Footnote before it continues on the next page.
 ;                  $sBegin              - [optional] a string value. Default is Null. The text to display at the beginning of a Footnote that has continued on the next page.
@@ -825,7 +825,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteSettingsStyles
 ; Description ...: Set or Retrieve Document Footnote Style settings.
-; Syntax ........: _LOWriter_FootnoteSettingsStyles(Byref $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sFootnoteArea = Null]]]])
+; Syntax ........: _LOWriter_FootnoteSettingsStyles(ByRef $oDoc[, $sParagraph = Null[, $sPage = Null[, $sTextArea = Null[, $sFootnoteArea = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParagraph          - [optional] a string value. Default is Null. The Footnote Text Paragraph Style.
 ;                  $sPage               - [optional] a string value. Default is Null. The Page Style to use for the Footnote pages. Only valid if the footnotes are set to End of Document, instead of per page.
@@ -915,7 +915,7 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnotesGetList
 ; Description ...: Retrieve an array of Footnote Objects contained in a Document.
-; Syntax ........: _LOWriter_FootnotesGetList(Byref $oDoc)
+; Syntax ........: _LOWriter_FootnotesGetList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.

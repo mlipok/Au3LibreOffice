@@ -18,7 +18,7 @@
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; Description ...: Provides basic functionality through AutoIt for Modifying and Applying Direct Character and Paragraph formating in L.O. Writer.
+; Description ...: Provides basic functionality through AutoIt for Modifying and Applying Direct Character and Paragraph formatting in L.O. Writer.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ;
@@ -97,7 +97,7 @@
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -174,7 +174,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -243,7 +243,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -289,10 +289,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ; Description ...: Set and Retrieve the Character Style Border Line Width by Direct Formatting. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_DirFrmtCharBorderWidth(Byref $oSelection[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bClearDirFrmt = False]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Character Style in MicroMeters. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Character Style in MicroMeters. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Character Style in MicroMeters. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Character Style in MicroMeters. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Sets the Top Border Line width of the Character Style in Micrometers. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Character Style in Micrometers. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Character Style in Micrometers. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Character Style in Micrometers. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -315,7 +315,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -390,7 +390,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -449,10 +449,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtCharPosition(Byref $oSelection[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null[, $bClearDirFrmt = False]]]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
-;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for SuperScript is active.
-;                  $iSuperScript        - [optional] an integer value (0-100,14000). Default is Null. The SuperScript percentage value. See Remarks.
-;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for SubScript is active.
-;                  $iSubScript          - [optional] an integer value (-100-100,14000,-14000). Default is Null. SubScript percentage value. See Remarks.
+;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for Superscript is active.
+;                  $iSuperScript        - [optional] an integer value (0-100,14000). Default is Null. The Superscript percentage value. See Remarks.
+;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for Subscript is active.
+;                  $iSubScript          - [optional] an integer value (-100-100,14000,-14000). Default is Null. Subscript percentage value. See Remarks.
 ;                  $iRelativeSize       - [optional] an integer value (1-100). Default is Null. The size percentage relative to current font size.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Super/Sub Script settings.
 ; Return values .: Success: Integer or Array.
@@ -477,21 +477,21 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;				   The way LibreOffice is set up Super/SubScript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), SubScript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for SubScript, if a positive number
-;						is called for SubScript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto SubScript has a integer value of -14000. There is no settable setting of Automatic
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
+;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
+;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
+;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
+;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
 ;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set SuperScript or
-;						SubScript. If you set both Auto SuperScript to True and Auto SubScript to True, or $iSuperScript
+;						separate parameters to be able to determine if the user wants to automatically set Superscript or
+;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript
 ;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
-;						line to be set in this function, and thus will over-write any SuperScript settings.
+;						line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -547,7 +547,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -634,7 +634,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -693,7 +693,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -805,7 +805,7 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
 			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-			; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+			; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -861,7 +861,7 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......:Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -946,7 +946,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1005,10 +1005,10 @@ EndFunc   ;==>_LOWriter_DirFrmtFontColor
 ;				   @Error 1 @Extended 2 Return 0 = $oSelection does not support Paragraph Properties service.
 ;				   @Error 1 @Extended 3 Return 0 = $oSelection does not support Character Properties service.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order: Paragraph StyleName, Character StyleName, Page StyleName, Numbering StyleName. See Remarks.
+;				   @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order: Paragraph Style Name, Character Style Name, Page Style Name, Numbering Style Name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Some of the returned style values may be blank if they are not set, particularly Numberingstyle.
+; Remarks .......: Some of the returned style values may be blank if they are not set, particularly Numbering style.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
 ;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
@@ -1064,7 +1064,7 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1154,7 +1154,7 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1241,7 +1241,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1307,7 +1307,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1383,7 +1383,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1450,7 +1450,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1524,7 +1524,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;				   @Error 0 @Extended 0 Return 3 = Success. $bConnectBorder parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1623,7 +1623,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1699,7 +1699,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1761,7 +1761,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1829,7 +1829,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1918,7 +1918,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1926,7 +1926,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;					paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph
 ;					style's original settings even though it returns a success, you will need to reset each paragraph one at
 ;					a time if this is the case.
-;					Note: Break Type must be set before PageStyle will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;					Note: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
 ;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
 ;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
 ;						 though I'm not sure if they will work correctly.
@@ -1998,7 +1998,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;				   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -2074,7 +2074,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -2142,9 +2142,9 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ; Syntax ........: _LOWriter_DirFrmtParTabStopCreate(Byref $oSelection, $iPosition[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Micrometers (uM). See Remarks.
-;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc value (see autoit function) of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
+;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc value (see AutoIt function) of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
+;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value (See AutoIt Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2173,13 +2173,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;				   @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
 ;					This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
 ;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
 ;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC Autoit Function and "ASCII Character Codes" in the Autoit help file.
+;						also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete,
 ;					_LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
@@ -2288,9 +2288,9 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iTabStop            - an integer value. The TabStop position of the TabStop to modify. See Remarks.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the TabStop called in $iTabStop to. Set in Micrometers (uM). See Remarks.
-;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see autoit function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
+;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See Autoit Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
+;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See AutoIt Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2322,7 +2322,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   @Error 0 @Extended 0 Return 3 = Success. $iTabStop parameter was set to Default, and rest of parameters were set to Null. Direct formatting inserted TabStops have been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -2332,7 +2332,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
 ;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC Autoit Func. and "ASCII Character Codes" in the Autoit help file.
+;						also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate,
 ;					_LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
@@ -2394,7 +2394,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -2472,7 +2472,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -2519,7 +2519,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtUnderLine
-; Description ...: Set and retrieve the UnderLine settings by Direct Formatting.
+; Description ...: Set and retrieve the Underline settings by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtUnderLine(Byref $oSelection[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
@@ -2548,7 +2548,7 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by Autoit automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.

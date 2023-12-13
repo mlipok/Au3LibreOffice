@@ -96,7 +96,7 @@
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkDelete
-; Description ...: Selete a Bookmark.
+; Description ...: Delete a Bookmark.
 ; Syntax ........: _LOWriter_DocBookmarkDelete(Byref $oDoc, Byref $oBookmark)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oBookmark           - [in/out] an object. A Bookmark Object from a previous _LOWriter_DocBookmarkInsert, or _LOWriter_DocBookmarkGetObj function to delete.
@@ -581,7 +581,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
-		$iCount = 0 ; partial name or partial url search
+		$iCount = 0 ; partial name or partial URL search
 		ReDim $aoPartNameSearch[$iCount + 1][3]
 
 		While $oEnumDoc.hasMoreElements()
@@ -672,7 +672,7 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
 	If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+	; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 	If Not IsObj($oViewCursorBackup) Then
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
@@ -736,7 +736,7 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;				   @Error 0 @Extended 0 Return Object = Success. Text was successfully converted to a Table, returning the new Table's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function temporarily moves the Viewcursor to and selectes the Text, and then attempts to restore the ViewCursor to its former position.
+; Remarks .......: This function temporarily moves the ViewCursor to and selects the Text, and then attempts to restore the ViewCursor to its former position.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
@@ -794,7 +794,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
 		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
-		; Create a Text cursor at the current viewCursor position to move the Viewcursor back to.
+		; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
@@ -1134,7 +1134,7 @@ EndFunc   ;==>_LOWriter_DocEnumPrinters
 ;				   --Printer Related Errors--
 ;				   @Error 6 @Extended 1 Return 0 = No default printer found.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Returnin an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
+;				   @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
 ;				   @Error 0 @Extended 2 Return String = Returning the default printer name. See remarks.
 ; Author ........: jguinch (_PrintMgr_EnumPrinter)
 ; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
@@ -1195,10 +1195,10 @@ EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
 ;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Succesfully executed dispatch command.
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully executed dispatch command.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: A Dispatch is essentialy a simulation of the user performing an action, such as pressing Ctrl+A to select all, etc.
+; Remarks .......: A Dispatch is essentially a simulation of the user performing an action, such as pressing Ctrl+A to select all, etc.
 ; Dispatch Commands: uno:FullScreen -- Toggles full screen mode.
 ;					 uno:ChangeCaseToLower -- Changes all selected text to lower case.  Text must be selected with the ViewCursor.
 ;					 uno:ChangeCaseToUpper -- Changes all selected text to upper case.  Text must be selected with the ViewCursor.
@@ -1418,7 +1418,7 @@ EndFunc   ;==>_LOWriter_DocFindAll
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocFindAllInRange
-; Description ...: Find all occurences of a Search String in a Document in a specific selection.
+; Description ...: Find all occurrences of a Search String in a Document in a specific selection.
 ; Syntax ........: _LOWriter_DocFindAllInRange(Byref $oDoc, Byref $oSrchDescript, $sSearchString, Byref $atFindFormat, Byref $oRange)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
@@ -1567,7 +1567,7 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ; Remarks .......: When a search is performed inside of a selection, the search may miss any footnotes/ Endnotes/ Frames
 ;					contained in that selection as the text of these are counted as being located at the very end/beginning of
 ;					a Document, thus if you are searching in the center of a document, the search will begin in the center,
-;					reach the end of the selection, and stop, never reaching the foot/EndNotes etc. If $bExhaustive is set to
+;					reach the end of the selection, and stop, never reaching the foot/Endnotes etc. If $bExhaustive is set to
 ;					True, the search continues until the whole document has been searched, but, if the search has many
 ;					hits, this could slow the search considerably. There is no use setting this to True in a full document
 ;					search.
@@ -1606,7 +1606,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	If ($oRange.IsCollapsed()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginnign or end, depending on SearchBackwards value.
+	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginning or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oRange.Start()) : ($oRange.End())
 	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
 		If Not IsObj($oLastFind) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
@@ -2588,7 +2588,7 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;				   @Error 1 @Extended 5 Return 0 = $bInsertAtViewCursor not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor is set to an Object variable, and $bInsertAtViewCursor is set to True. Change $oCursor to Default or set $bInsertAtViewCursor to False.
 ;				   @Error 1 @Extended 7 Return 0 = $oCursor is a TableCursor, and is not supported.
-;				    --Initialiazation Errors--
+;				    --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create Cursor Object.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
 ;				    --Processing Errors--
@@ -3055,7 +3055,7 @@ EndFunc   ;==>_LOWriter_DocOpen
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Note, X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
-;				   If you want more accurate functionality, use the "WinMove" Autoit function.
+;				   If you want more accurate functionality, use the "WinMove" AutoIt function.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -3859,7 +3859,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;						for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's
 ;						RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new
 ;						string to that result. However I have had to create a separate function to convert the ReplaceString
-;						to be compatible with AutoIt's Regular Expression formatting. A BackSlash (\) must be doubled(\\) in
+;						to be compatible with AutoIt's Regular Expression formatting. A Backslash (\) must be doubled(\\) in
 ;						order to be literally inserted, at the beginning of the conversion process all double Backslashes
 ;						are replaced with a specific flag to aid in identifying commented and non-commented keywords
 ;						(\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double

@@ -202,7 +202,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			; Determine Hue
 			$nHue = 0
 			Select
-				Case $nRed = $nGreen = $nBlue ; Red, Green, and BLue are equal.
+				Case $nRed = $nGreen = $nBlue ; Red, Green, and Blue are equal.
 					$nHue = 0
 				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ; Red Highest, Blue Lowest
 					$nHue = (60 * (($nGreen - $nBlue) / ($nRed - $nBlue)))
@@ -564,7 +564,7 @@ EndFunc   ;==>_LOWriter_ConvertToMicrometer
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateFormatKeyCreate
 ; Description ...: Create a Date/Time Format Key.
-; Syntax ........: _LOWriter_DateFormatKeyCreate(Byref $oDoc, $sFormat)
+; Syntax ........: _LOWriter_DateFormatKeyCreate(ByRef $oDoc, $sFormat)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFormat             - a string value. The Date/Time format String to create.
 ; Return values .: Success: Integer
@@ -612,7 +612,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateFormatKeyDelete
 ; Description ...: Delete a User-Created Date/Time Format Key from a Document.
-; Syntax ........: _LOWriter_DateFormatKeyDelete(Byref $oDoc, $iFormatKey)
+; Syntax ........: _LOWriter_DateFormatKeyDelete(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The User-Created Date/Time format Key to delete.
 ; Return values .: Success: 1
@@ -660,7 +660,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateFormatKeyExists
 ; Description ...: Check if a Document contains a Date/Time Format Key Already or not.
-; Syntax ........: _LOWriter_DateFormatKeyExists(Byref $oDoc, $iFormatKey)
+; Syntax ........: _LOWriter_DateFormatKeyExists(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Date Format Key to check for.
 ; Return values .: Success: Boolean
@@ -696,7 +696,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateFormatKeyGetString
 ; Description ...: Retrieve a Date/Time Format Key String.
-; Syntax ........: _LOWriter_DateFormatKeyGetString(Byref $oDoc, $iFormatKey)
+; Syntax ........: _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Date/Time Format Key to retrieve the string for.
 ; Return values .: Success: String
@@ -734,7 +734,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateFormatKeyList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOWriter_DateFormatKeyList(Byref $oDoc[, $bIsUser = False[, $bUserOnly = False[, $bDateOnly = False[, $bTimeOnly = False]]]])
+; Syntax ........: _LOWriter_DateFormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $bDateOnly = False[, $bTimeOnly = False]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Date/Time Format Keys are returned.
@@ -929,7 +929,7 @@ EndFunc   ;==>_LOWriter_DateStructCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DateStructModify
 ; Description ...: Set or retrieve Date Structure settings.
-; Syntax ........: _LOWriter_DateStructModify(Byref $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
+; Syntax ........: _LOWriter_DateStructModify(ByRef $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
 ; Parameters ....: $tDateStruct         - [in/out] a dll struct value. The Date Structure to modify, returned from a _LOWriter_DateStructCreate, or setting retrieval function. Structure will be directly modified.
 ;                  $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
 ;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Set to 0 for Void date.
@@ -1052,7 +1052,7 @@ EndFunc   ;==>_LOWriter_DateStructModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyAlignment
 ; Description ...: Modify or Add Find Format Alignment Settings.
-; Syntax ........: _LOWriter_FindFormatModifyAlignment(Byref $atFormat[, $iHorAlign = Null[, $iVertAlign = Null[, $iLastLineAlign = Null[, $bExpandSingleWord = Null[, $bSnapToGrid = Null[, $iTxtDirection = Null]]]]]])
+; Syntax ........: _LOWriter_FindFormatModifyAlignment(ByRef $atFormat[, $iHorAlign = Null[, $iVertAlign = Null[, $iLastLineAlign = Null[, $bExpandSingleWord = Null[, $bSnapToGrid = Null[, $iTxtDirection = Null]]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of dll structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The Horizontal alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVertAlign          - [optional] an integer value (0-4). Default is Null. The Vertical alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3. In my personal testing, searching for the Vertical Alignment setting using this parameter causes any results matching the searched for string to be replaced, whether they contain the Vert. Align format or not, this is supposed to be fixed in L.O. 7.6.
@@ -1147,7 +1147,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyAlignment
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyEffects
 ; Description ...: Modify or Add Find Format Effects Settings.
-; Syntax ........: _LOWriter_FindFormatModifyEffects(Byref $atFormat[,$iRelief  = Null[, $iCase = Null[, $bOutline = Null[, $bShadow = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyEffects(ByRef $atFormat[,$iRelief  = Null[, $iCase = Null[, $bOutline = Null[, $bShadow = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3. In my personal testing, searching for the Relief setting using this parameter causes any results matching the searched for string to be replaced, whether they contain the Relief format or not, this is supposed to be fixed in L.O. 7.6.
 ;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3
@@ -1220,7 +1220,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyEffects
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyFont
 ; Description ...: Modify or Add Find Format Font Settings.
-; Syntax ........: _LOWriter_FindFormatModifyFont(Byref $oDoc, Byref $atFormat[, $sFontName = Null[, $iFontSize = Null[, $iFontWeight = Null[, $iFontPosture = Null[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]]]]]])
+; Syntax ........: _LOWriter_FindFormatModifyFont(ByRef $oDoc, ByRef $atFormat[, $sFontName = Null[, $iFontSize = Null[, $iFontWeight = Null[, $iFontPosture = Null[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified. See Remarks.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font name to search for.
@@ -1341,7 +1341,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyFont
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyHyphenation
 ; Description ...: Modify or Add Find Format Hyphenation Settings. See Remarks.
-; Syntax ........: _LOWriter_FindFormatModifyHyphenation(Byref $atFormat[, $bAutoHyphen = Null[, $bHyphenNoCaps = Null[, $iMaxHyphens = Null[, $iMinLeadingChar = Null[, $iMinTrailingChar = Null]]]]])
+; Syntax ........: _LOWriter_FindFormatModifyHyphenation(ByRef $atFormat[, $bAutoHyphen = Null[, $bHyphenNoCaps = Null[, $iMaxHyphens = Null[, $iMinLeadingChar = Null[, $iMinTrailingChar = Null]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $bAutoHyphen         - [optional] a boolean value. Default is Null. If True, automatic hyphenation is applied.
 ;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null. If True, hyphenation will be disabled for words written in CAPS for this paragraph. Libre 6.4 and up.
@@ -1430,11 +1430,11 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyIndent
 ; Description ...: Modify or Add Find Format Indent Settings.
-; Syntax ........: _LOWriter_FindFormatModifyIndent(Byref $atFormat[, $iBeforeText = Null[, $iAfterText = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyIndent(ByRef $atFormat[, $iBeforeText = Null[, $iAfterText = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iBeforeText         - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Micrometers(uM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
 ;                  $iAfterText          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space that you want to indent the paragraph from the page margin. Set in Micrometers(uM). Both $iBeforeText and $iAfterText must be set to perform a search for either.
-;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph, Set in MicroMeters(uM). Both $iBeforeText and $iAfterText must be set to perform a search for $iFirstLine.
+;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. Indentation distance of the first line of a paragraph, Set in Micrometers(uM). Both $iBeforeText and $iAfterText must be set to perform a search for $iFirstLine.
 ;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. If True, the first line will be indented automatically. Both $iBeforeText and $iAfterText must be set to perform a search for $bAutoFirstLine.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1481,7 +1481,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 		EndIf
 	EndIf
 
-	; mx 17094min;-57785
+	; max 17094; min;-57785
 	If ($iFirstLine <> Null) Then
 		If ($iFirstLine = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "ParaFirstLineIndent")
@@ -1506,7 +1506,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyOverline
 ; Description ...: Modify or Add Find Format Overline Settings.
-; Syntax ........: _LOWriter_FindFormatModifyOverline(Byref $atFormat[, $iOverLineStyle = Null[, $bWordOnly = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyOverline(ByRef $atFormat[, $iOverLineStyle = Null[, $bWordOnly = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See remarks. Overline style must be set before any of the other parameters can be searched for.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined. See remarks.
@@ -1581,7 +1581,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyOverline
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyPageBreak
 ; Description ...: Modify or Add Find Format Page Break Settings. See Remarks.
-; Syntax ........: _LOWriter_FindFormatModifyPageBreak(Byref $oDoc, Byref $atFormat[, $iBreakType = Null[, $sPageStyle = Null[, $iPgNumOffSet = Null]]])
+; Syntax ........: _LOWriter_FindFormatModifyPageBreak(ByRef $oDoc, ByRef $atFormat[, $iBreakType = Null[, $sPageStyle = Null[, $iPgNumOffSet = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3..
@@ -1650,12 +1650,12 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyPosition
 ; Description ...: Modify or Add Find Format Position Settings.
-; Syntax ........: _LOWriter_FindFormatModifyPosition(Byref $atFormat[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
+; Syntax ........: _LOWriter_FindFormatModifyPosition(ByRef $atFormat[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
-;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for SuperScript is active. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
-;                  $iSuperScript        - [optional] an integer value (0-100,14000) Default is Null. The SuperScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
-;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for SubScript is active. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
-;                  $iSubScript          - [optional] an integer value (-100-100,-14000,14000) Default is Null. The SubScript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/SubScript settings.
+;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for Superscript is active. Note: $iRelativeSize must be set to be able to search for Super/Subscript settings.
+;                  $iSuperScript        - [optional] an integer value (0-100,14000) Default is Null. The Superscript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/Subscript settings.
+;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for Subscript is active. Note: $iRelativeSize must be set to be able to search for Super/Subscript settings.
+;                  $iSubScript          - [optional] an integer value (-100-100,-14000,14000) Default is Null. The Subscript percentage value. See Remarks. Note: $iRelativeSize must be set to be able to search for Super/Subscript settings.
 ;                  $iRelativeSize       - [optional] an integer value (1-100). Default is Null. The size percentage relative to current font size.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1674,16 +1674,16 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   0 is the normal $iSubScript or $iSuperScript setting.
-;					The way LibreOffice is set up Super/SubScript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), SubScript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for SubScript, if a positive number
-;						is called for SubScript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto SubScript has a integer value of -14000. There is no settable setting of Automatic
+;					The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
+;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
+;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
+;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
+;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
 ;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set SuperScript or
-;						SubScript. If you set both Auto SuperScript to True and Auto SubScript to True, or $iSuperScript to an
+;						separate parameters to be able to determine if the user wants to automatically set Superscript or
+;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an
 ;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
-;						this function, and thus will over-write any SuperScript settings.
+;						this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll
 ;					_LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1699,9 +1699,9 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharEscapement")
 		Else
 			If Not IsBool($bAutoSuper) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-			; If $bAutoSuper = True set it to 14000 (automatic superScript) else if $iSuperScript is set, let that overwrite
+			; If $bAutoSuper = True set it to 14000 (automatic Superscript) else if $iSuperScript is set, let that overwrite
 			;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
-			; else set SubScript to 1
+			; else set Subscript to 1
 			$iSuperScript = ($bAutoSuper) ? (14000) : ((IsInt($iSuperScript)) ? $iSuperScript : ((IsInt($iSubScript) Or ($bAutoSub = True)) ? ($iSuperScript) : (1)))
 		EndIf
 	EndIf
@@ -1711,7 +1711,7 @@ Func _LOWriter_FindFormatModifyPosition(ByRef $atFormat, $bAutoSuper = Null, $iS
 			__LOWriter_FindFormatDeleteSetting($atFormat, "CharEscapement")
 		Else
 			If Not IsBool($bAutoSub) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-			; If $bAutoSub = True set it to -14000 (automatic SubScript) else if $iSubScript is set, let that overwrite
+			; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 			;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 			$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
 		EndIf
@@ -1751,7 +1751,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPosition
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyRotateScaleSpace
 ; Description ...: Modify or Add Find Format Rotate, Scale, and Space Settings.
-; Syntax ........: _LOWriter_FindFormatModifyRotateScaleSpace(Byref $atFormat[, $iRotation = Null[, $iScaleWidth = Null[, $bAutoKerning = Null[, $nKerning = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat[, $iRotation = Null[, $iScaleWidth = Null[, $bAutoKerning = Null[, $nKerning = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iRotation           - [optional] an integer value (0,90,270). Default is Null. Degrees to rotate the text. See remarks.
 ;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to horizontally stretch or compress the text. 100 is normal sizing. See remarks.
@@ -1776,7 +1776,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPosition
 ;				   There is a bug in Libre Office, where searching for the Scale Width setting using the $iScaleWidth parameter causes any results matching the searched for string to be replaced, whether they contain the Scale Width format or not, this is supposed to be fixed in L.O. 7.6.
 ;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
 ;						Display, however the internal setting is measured in MicroMeters. They will be automatically converted
-;						from Points to MicroMeters and back for retrieval of settings.
+;						from Points to Micrometers and back for retrieval of settings.
 ;						The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
 ;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
 ;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
@@ -1839,7 +1839,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifySpacing
 ; Description ...: Modify or Add Find Format Spacing Settings.
-; Syntax ........: _LOWriter_FindFormatModifySpacing(Byref $atFormat[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null]]]]])
+; Syntax ........: _LOWriter_FindFormatModifySpacing(ByRef $atFormat[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null]]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Micrometers.
 ;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space below a paragraph, in Micrometers.
@@ -1872,7 +1872,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
 ;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;					The values accepted by $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 MicroMeter once set.
+;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll,
 ;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1952,7 +1952,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifySpacing
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyStrikeout
 ; Description ...: Modify or Add Find Format Strikeout Settings.
-; Syntax ........: _LOWriter_FindFormatModifyStrikeout(Byref $atFormat[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
+; Syntax ........: _LOWriter_FindFormatModifyStrikeout(ByRef $atFormat[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined. See remarks.
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. If True, a strikeout is applied to characters.
@@ -2015,7 +2015,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyStrikeout
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyTxtFlowOpt
 ; Description ...: Modify or Add Find Format Text Flow Settings.
-; Syntax ........: _LOWriter_FindFormatModifyTxtFlowOpt(Byref $atFormat[, $bParSplit = Null[, $bKeepTogether = Null[, $iParOrphans = Null[, $iParWidows = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyTxtFlowOpt(ByRef $atFormat[, $bParSplit = Null[, $bKeepTogether = Null[, $iParOrphans = Null[, $iParWidows = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $bParSplit           - [optional] a boolean value. Default is Null. If False, prevents the paragraph from getting split into two pages or columns
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, prevents page or column breaks between this and the following paragraph.
@@ -2089,7 +2089,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyUnderline
 ; Description ...: Modify or Add Find Format Underline Settings.
-; Syntax ........: _LOWriter_FindFormatModifyUnderline(Byref $atFormat[, $iUnderLineStyle = Null[, $bWordOnly = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyUnderline(ByRef $atFormat[, $iUnderLineStyle = Null[, $bWordOnly = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The line style of the Underline, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. Underline style must be set before any of the other parameters can be searched for.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined. See remarks.
@@ -2163,7 +2163,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyCreate
 ; Description ...: Create a Format Key.
-; Syntax ........: _LOWriter_FormatKeyCreate(Byref $oDoc, $sFormat)
+; Syntax ........: _LOWriter_FormatKeyCreate(ByRef $oDoc, $sFormat)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFormat             - a string value. The format key String to create.
 ; Return values .: Success: Integer
@@ -2211,7 +2211,7 @@ EndFunc   ;==>_LOWriter_FormatKeyCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyDelete
 ; Description ...: Delete a User-Created Format Key from a Document.
-; Syntax ........: _LOWriter_FormatKeyDelete(Byref $oDoc, $iFormatKey)
+; Syntax ........: _LOWriter_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The User-Created format Key to delete.
 ; Return values .: Success: 1
@@ -2259,10 +2259,10 @@ EndFunc   ;==>_LOWriter_FormatKeyDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyExists
 ; Description ...: Check if a Document contains a certain Format Key.
-; Syntax ........: _LOWriter_FormatKeyExists(Byref $oDoc, $iFormatKey, Const $iFormatType)
+; Syntax ........: _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, Const $iFormatType)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
-;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOW_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr's together. See Constants, $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOW_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2312,7 +2312,7 @@ EndFunc   ;==>_LOWriter_FormatKeyExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyGetString
 ; Description ...: Retrieve a Format Key String.
-; Syntax ........: _LOWriter_FormatKeyGetString(Byref $oDoc, $iFormatKey)
+; Syntax ........: _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to retrieve the string for.
 ; Return values .:Success: String
@@ -2350,11 +2350,11 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOWriter_FormatKeyList(Byref $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = Null]]])
+; Syntax ........: _LOWriter_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
-;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOW_FORMAT_KEYS_ALL. The Format Key type to retrieve a list for. Values can be BitOr's together. See Constants, $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3..
+;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOW_FORMAT_KEYS_ALL. The Format Key type to retrieve a list for. Values can be BitOr'd together. See Constants, $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3..
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2509,7 +2509,7 @@ EndFunc   ;==>_LOWriter_PathConvert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_SearchDescriptorCreate
 ; Description ...: Create a Search Descriptor for searching a document.
-; Syntax ........: _LOWriter_SearchDescriptorCreate(Byref $oDoc[, $bBackwards = False[, $bMatchCase = False[, $bWholeWord = False[, $bRegExp = False[, $bStyles = False[, $bSearchPropValues = False]]]]]])
+; Syntax ........: _LOWriter_SearchDescriptorCreate(ByRef $oDoc[, $bBackwards = False[, $bMatchCase = False[, $bWholeWord = False[, $bRegExp = False[, $bStyles = False[, $bSearchPropValues = False]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
@@ -2572,7 +2572,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_SearchDescriptorModify
 ; Description ...: Modify Search Descriptor settings of an existing Search Descriptor Object.
-; Syntax ........: _LOWriter_SearchDescriptorModify(Byref $oSrchDescript[, $bBackwards = Null[, $bMatchCase = Null[, $bWholeWord = Null[, $bRegExp = Null[, $bStyles = Null[, $bSearchPropValues = Null]]]]]])
+; Syntax ........: _LOWriter_SearchDescriptorModify(ByRef $oSrchDescript[, $bBackwards = Null[, $bMatchCase = Null[, $bWholeWord = Null[, $bRegExp = Null[, $bStyles = Null[, $bSearchPropValues = Null]]]]]])
 ; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
 ;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
@@ -2657,7 +2657,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_SearchDescriptorSimilarityModify
 ; Description ...: Modify Similarity Search Settings for an existing Search Descriptor Object.
-; Syntax ........: _LOWriter_SearchDescriptorSimilarityModify(Byref $oSrchDescript[, $bSimilarity = Null[, $bCombine = Null[, $iRemove = Null[, $iAdd = Null[, $iExchange = Null]]]]])
+; Syntax ........: _LOWriter_SearchDescriptorSimilarityModify(ByRef $oSrchDescript[, $bSimilarity = Null[, $bCombine = Null[, $iRemove = Null[, $iAdd = Null[, $iExchange = Null]]]]])
 ; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $bSimilarity         - [optional] a boolean value. Default is Null. If True, a "similarity search" is performed.
 ;                  $bCombine            - [optional] a boolean value. Default is Null. If True, all similarity rules ($iRemove, $iAdd, and $iExchange) are applied together.
@@ -2754,7 +2754,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorSimilarityModify
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
 ; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
-; Modified ......: donnyh13, modified for Autoit ccompatibility and error checking.
+; Modified ......: donnyh13, modified for AutoIt compatibility and error checking.
 ; Remarks .......: From Macro code by Zizi64 found at: https://forum.openoffice.org/en/forum/viewtopic.php?t=91542&sid=7f452d65e58ac1cd3cc6063350b5ada0
 ;				   And Andrew Pitonyak in "Useful Macro Information For OpenOffice.org" Pages 49, 50.
 ; Related .......:

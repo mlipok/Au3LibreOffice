@@ -490,8 +490,8 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ;                  $sContent            - [optional] a string value. Default is Null. The content of the comment.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The author of the comment.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate. If left as Null, the current date is used.
-;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Offive version 4.0 and up only.
-;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Offive version 4.0 and up only.
+;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Office version 4.0 and up only.
+;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Office version 4.0 and up only.
 ;                  $bResolved           - [optional] a boolean value. Default is Null. If True, the comment is marked as resolved.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -588,8 +588,8 @@ EndFunc   ;==>_LOWriter_FieldCommentInsert
 ;                  $sContent            - [optional] a string value. Default is Null. The content of the comment.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The author of the comment.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate.
-;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Offive version 4.0 and up only.
-;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Offive version 4.0 and up only.
+;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Office version 4.0 and up only.
+;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Office version 4.0 and up only.
 ;                  $bResolved           - [optional] a boolean value. Default is Null. If True, the comment is marked as resolved.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3413,9 +3413,6 @@ EndFunc   ;==>_LOWriter_FieldInputListInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
 ; Related .......: _LOWriter_FieldInputListInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3545,7 +3542,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldPageNumberModify
-; Description ...: Set or Retrieve Page NUmber Field settings.
+; Description ...: Set or Retrieve Page Number Field settings.
 ; Syntax ........: _LOWriter_FieldPageNumberModify(Byref $oDoc, Byref $oPageNumField[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageNumField       - [in/out] an object. A Page Number field Object from a previous _LOWriter_FieldPageNumberInsert, or _LOWriter_FieldsGetList function.
@@ -3893,7 +3890,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 			Next
 
 		EndIf
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving ENote Obj
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving EndNote Obj
 	EndIf
 
 	If ($oEndNote <> Null) Then
@@ -4034,7 +4031,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 			Next
 
 		EndIf
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FNote Obj
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FndNote Obj
 	EndIf
 
 	If ($oFootNote <> Null) Then

@@ -48,7 +48,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeAreaColor
 ; Description ...: Set or Retrieve the Fill color settings for a Shape.
-; Syntax ........: _LOWriter_ShapeAreaColor(Byref $oShape[, $iColor = Null])
+; Syntax ........: _LOWriter_ShapeAreaColor(ByRef $oShape[, $iColor = Null])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Fill color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
 ; Return values .: Success: 1 or Integer.
@@ -95,8 +95,8 @@ EndFunc   ;==>_LOWriter_ShapeAreaColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeAreaGradient
-; Description ...: Modify or retrieve the settings for Shape BackGround color Gradient.
-; Syntax ........: _LOWriter_ShapeAreaGradient(Byref $oDoc, Byref $oShape[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
+; Description ...: Modify or retrieve the settings for Shape Background color Gradient.
+; Syntax ........: _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See remarks. See constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3.
@@ -314,7 +314,7 @@ EndFunc   ;==>_LOWriter_ShapeDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeGetAnchor
 ; Description ...: Create a Text Cursor at the Shape Anchor position.
-; Syntax ........: _LOWriter_ShapeGetAnchor(Byref $oShape)
+; Syntax ........: _LOWriter_ShapeGetAnchor(ByRef $oShape)
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -409,7 +409,7 @@ EndFunc   ;==>_LOWriter_ShapeGetObjByName
 ;				   @Error 3 @Extended 2 Return 0 = Failed to identify what type of "com.sun.star.drawing.EllipseShape" called shape is.
 ;				   @Error 3 @Extended 3 Return 0 = Called Shape is a unknown shape type.
 ;				   --Success--
-;				   @Error 0 @Extended 1 Return Integer = Success. Shape is a Custom Shape Type. Returning appropriate Constant for shape type if successfully identified, else -1 if identifcation failed. See Remarks #1. See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;				   @Error 0 @Extended 1 Return Integer = Success. Shape is a Custom Shape Type. Returning appropriate Constant for shape type if successfully identified, else -1 if identification failed. See Remarks #1. See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;				   @Error 0 @Extended 2 Return Integer = Success. Shape is a *_BASIC_CIRCLE_SEGMENT or *_BASIC_ARC Type Shape. Returning appropriate Constant, See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;				   @Error 0 @Extended 3 Return Integer = Success. Shape is a *_LINE_CURVE or *_LINE_FREEFORM_LINE Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE Constant Value. See Remarks #2.
 ;				   @Error 0 @Extended 4 Return Integer = Success. Shape is a *_LINE_CURVE_FILLED or *_LINE_FREEFORM_LINE_FILLED Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE_FILLED Constant Value. See Remarks #2.
@@ -961,7 +961,7 @@ EndFunc   ;==>_LOWriter_ShapeLineProperties
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeName
 ; Description ...: Set or Retrieve a Shape's Name.
-; Syntax ........: _LOWriter_ShapeName(Byref $oDoc, Byref $oShape[, $sName = Null])
+; Syntax ........: _LOWriter_ShapeName(ByRef $oDoc, ByRef $oShape[, $sName = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $sName               - [optional] a string value. Default is Null. The new Name for the Shape.
@@ -1145,7 +1145,7 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapesGetNames
 ; Description ...: Return a list of Shape names contained in a document.
-; Syntax ........: _LOWriter_ShapesGetNames(Byref $oDoc)
+; Syntax ........: _LOWriter_ShapesGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 2D Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1300,11 +1300,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			ReDim $avArray[UBound($atPoints) + 3]
 			ReDim $avArray2[UBound($aiFlags) + 3]
-			; Make the control Point's Coordinates the new Point's Coords, plus half the difference between this new point and the next point, which will be the first element in the Points array.
+			; Make the control Point's Coordinates the new Point's Coordinates, plus half the difference between this new point and the next point, which will be the first element in the Points array.
 			$tControlPoint1 = __LOWriter_CreatePoint(Int(($iX + (($atPoints[0]).X() - $iX) * .5)), Int(($iY + (($atPoints[0]).Y() - $iY) * .5)))
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
-			; Make the next control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be the first element in the Points array.
+			; Make the next control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be the first element in the Points array.
 			$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[0].X() - (($atPoints[0].X() - $iX) * .5)), Int($atPoints[0].Y() - (($atPoints[0].Y() - $iY) * .5)))
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
@@ -1393,7 +1393,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			; the point I am inserting after is not a regular point.
 			If ($aiFlags[$iArrayElement + 1] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 
-				$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y()) ; If the point I am inserting after is normal, the control point has the same coords.
+				$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y()) ; If the point I am inserting after is normal, the control point has the same coordinates.
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 			Else
@@ -1406,11 +1406,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$iSymmetricalPointXValue = ((($iX - $atPoints[$iArrayElement].X()) * .5) < (($atPoints[$iNextArrayElement].X() - $iX) * .5)) ? Int((($iX - $atPoints[$iArrayElement].X()) * .5)) : Int(($atPoints[$iNextArrayElement].X() - $iX) * .5)
 			$iSymmetricalPointYValue = (((($iY - $atPoints[$iArrayElement].Y()) * .5)) < (($atPoints[$iNextArrayElement].Y() - $iY) * .5)) ? Int((($iY - $atPoints[$iArrayElement].Y()) * .5)) : Int((($atPoints[$iNextArrayElement].Y() - $iY) * .5))
 
-			; Make the Second control Point's Coordinates the New Point's Coords, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+			; Make the Second control Point's Coordinates the New Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 			$tControlPoint2 = __LOWriter_CreatePoint(($iX - $iSymmetricalPointXValue), ($iY - $iSymmetricalPointYValue))
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
-			; Make the Third control Point's Coordinates the New Point's Coords, plus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+			; Make the Third control Point's Coordinates the New Point's Coordinates, plus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 			$tControlPoint3 = __LOWriter_CreatePoint(($iX + $iSymmetricalPointXValue), ($iY + ($iSymmetricalPointYValue)))
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
@@ -1420,7 +1420,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			Else
 
-				; Make the Fourth control Point's Coordinates the Next Point's Coords, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
+				; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 				$tControlPoint4 = __LOWriter_CreatePoint(($atPoints[$iNextArrayElement].X() - $iSymmetricalPointXValue), ($atPoints[$iNextArrayElement].Y() - $iSymmetricalPointYValue))
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
 
@@ -1479,13 +1479,13 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after the point I am inserting my point at is a control point. I need to determine which point is a curve, and adjust as needed.
 
-				; If the Point I am inserting after is not a normal Point, or if it is a normal point but the coords of the Point and the first control point after it are not identical,
+				; If the Point I am inserting after is not a normal Point, or if it is a normal point but the coordintes of the Point and the first control point after it are not identical,
 				; (Indicating the Normal Point is set to "Create Curve"), modify the control points accordingly.
 				If ($aiFlags[$iArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Or _
 						(($atPoints[$iArrayElement].X() <> $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() <> $atPoints[$iArrayElement + 1].Y())) Then
 					$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the first Control Point.
 
-					; Make the Second control Point's Coordinates the New Point's Coords, minus half the difference between this new point and the previous point, which will be in the $iArrayElement of the Points array.
+					; Make the Second control Point's Coordinates the New Point's Coordintes, minus half the difference between this new point and the previous point, which will be in the $iArrayElement of the Points array.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($iX - (($iX - $atPoints[$iArrayElement].X()) * .5)), Int($iY - (($iY - $atPoints[$iArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
@@ -1493,7 +1493,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If next Point after the one I am inserting is not a normal Point, modify the control points accordingly.
 
-					; Make the Third control Point's Coordinates the New Point's Coords
+					; Make the Third control Point's Coordinates the New Point's Coordintes
 					$tControlPoint3 = __LOWriter_CreatePoint($iX, $iY)
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
@@ -1503,7 +1503,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 					Else ; Create the fourth point.
 
-						; Make the Fourth control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+						; Make the Fourth control Point's Coordinates the Next Point's Coordintes, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
 					EndIf
@@ -1512,13 +1512,13 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then either modify the third Control Point or create two new ones.
 
-					; Make the Third control Point's Coordinates the New Point's Coords, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					; Make the Third control Point's Coordinates the New Point's Coordinates, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint3 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
 					If Not IsObj($tControlPoint4) Then ; If I haven't already made Control Point 4, create #4 and add two elements to the main array.
 
-						; Make the Fourth control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+						; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
 
@@ -1530,7 +1530,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$iForOffset = 0
 				$iReDimCount = 1 ; Add one element to the array for the new point,
 
-				;If I have created 4 control points add 4 to the RedimCount, else add two if either one or the other set have been created.
+				;If I have created 4 control points add 4 to the Redim Count, else add two if either one or the other set have been created.
 				If (IsObj($tControlPoint1) And IsObj($tControlPoint3)) Then
 					$iReDimCount += 4
 
@@ -1604,11 +1604,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then create two new control Points.
 
-					; Make the First control Point's Coordinates the New Point's Coords, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					; Make the First control Point's Coordinates the New Point's Coordinates, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint1 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
-					; Make the Second control Point's Coordinates the Next Point's Coords, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
+					; Make the Second control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
@@ -2020,7 +2020,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 					$tControlPoint2 = $atPoints[$iNextArrayElement - 1]
 
 				Else ; Point before the next Point is not a control point, create a new one.
-					; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+					; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -2028,7 +2028,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 			Else ; Previous Point is a normal point.
 
-				; If the X and Y Coord of the previous point, and the control point after it do not match, the previous point is a "Curve".
+				; If the X and Y Coordinate of the previous point, and the control point after it do not match, the previous point is a "Curve".
 				If ($atPoints[$iPreviousArrayElement].X() <> $atPoints[$iPreviousArrayElement + 1].X()) And ($atPoints[$iPreviousArrayElement].Y() <> $atPoints[$iPreviousArrayElement + 1].Y()) Then
 
 					$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1] ; Copy the first control point after the previous point.
@@ -2037,7 +2037,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 						$tControlPoint2 = $atPoints[$iNextArrayElement - 1]
 
 					Else ; Point before the next Point is not a control point, create a new one.
-						; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+						; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 						$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
@@ -2108,7 +2108,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				$tControlPoint4 = $atPoints[$iNextArrayElement - 1]
 
 			Else
-				; Make the New control Point's Coordinates the Next Point's Coords, minus half the difference between the next point and the previous point.
+				; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 				$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
@@ -2268,8 +2268,6 @@ Func _LOWriter_ShapeTextBox(ByRef $oShape, $bTextBox = Null, $sContent = Null)
 		If Not IsBool($bTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oShape.TextBox = $bTextBox
 		$iError = ($oShape.TextBox() = $bTextBox) ? ($iError) : (BitOR($iError, 1))
-
-		;TextVertical Adjust = center
 	EndIf
 
 	If ($sContent <> Null) Then
@@ -2284,7 +2282,7 @@ EndFunc   ;==>_LOWriter_ShapeTextBox
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTransparency
 ; Description ...: Set or retrieve Transparency settings for a Shape.
-; Syntax ........: _LOWriter_ShapeTransparency(Byref $oShape[, $iTransparency = Null])
+; Syntax ........: _LOWriter_ShapeTransparency(ByRef $oShape[, $iTransparency = Null])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
@@ -2327,7 +2325,7 @@ EndFunc   ;==>_LOWriter_ShapeTransparency
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTransparencyGradient
 ; Description ...: Set or retrieve the Shape transparency gradient settings.
-; Syntax ........: _LOWriter_ShapeTransparencyGradient(Byref $oDoc, Byref $oShape[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Syntax ........: _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
@@ -2462,7 +2460,7 @@ EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTypePosition
 ; Description ...: Set or Retrieve Shape Position Settings.
-; Syntax ........: _LOWriter_ShapeTypePosition(Byref $oShape[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ShapeTypePosition(ByRef $oShape[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Shape. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Shape. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
@@ -2542,7 +2540,7 @@ EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 ;							$LOW_RELATIVE_PAGE (7),
 ;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;					The behaviour of each Relation constant is described below.
+;					The behavior of each Relation constant is described below.
 ;							$LOW_RELATIVE_ROW(-1), This option will position the Shape considering the height of the row where the anchor is placed.
 ;							$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the Shape is positioned considering the whole width available for the paragraph, including indent spaces.
 ;								[$LOW_RELATIVE_PARAGRAPH for Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the Shape is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the Shape considering the text baseline over which all characters are placed. ("As Character" anchoring.)
@@ -2578,7 +2576,7 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 				$oShape.IsFollowingTextFlow(), $oShape.AnchorType())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
-	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
+	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oShape.HoriOrient = $iHorAlign
@@ -2603,7 +2601,7 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 		$iError = ($oShape.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	; Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
+	; Accepts Orient Top, Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oShape.VertOrient = $iVertAlign
@@ -2773,7 +2771,7 @@ EndFunc   ;==>_LOWriter_ShapeTypeSize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeWrap
 ; Description ...: Set or Retrieve Shape Wrap and Spacing settings.
-; Syntax ........: _LOWriter_ShapeWrap(Byref $oShape[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
+; Syntax ........: _LOWriter_ShapeWrap(ByRef $oShape[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iWrapType           - [optional] an integer value (0-5). Default is Null. The way you want text to wrap around the Shape. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Shape and the text. Set in Micrometers.
@@ -2877,7 +2875,7 @@ EndFunc   ;==>_LOWriter_ShapeWrap
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeWrapOptions
 ; Description ...: Set or Retrieve Shape Wrap Options.
-; Syntax ........: _LOWriter_ShapeWrapOptions(Byref $oShape[, $bFirstPar = Null[, $bInBackground = Null[, $bAllowOverlap = Null]]])
+; Syntax ........: _LOWriter_ShapeWrapOptions(ByRef $oShape[, $bFirstPar = Null[, $bInBackground = Null[, $bAllowOverlap = Null]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $bFirstPar           - [optional] a boolean value. Default is Null. If True, Starts a new paragraph below the object.
 ;                  $bInBackground       - [optional] a boolean value. Default is Null. If True, Moves the selected object to the background. This option is only available with the "Through" wrap type.
