@@ -60,8 +60,8 @@
 ;							$oMyError.windescription The FormatWinError() text derived from .number
 ;							$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
 ;							$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;							$oMyError.helpfile Source Object's helpfile for the error (contents from ExcepInfo.helpfile)
-;							$oMyError.helpcontext Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)
+;							$oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
+;							$oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
 ;							$oMyError.lastdllerror The number returned from GetLastError()
 ;							$oMyError.scriptline The script line on which the error was generated
 ;				    		NOTE: Not all properties will necessarily contain data, some will be blank.
@@ -174,7 +174,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			; Determine Hue
 			$nHue = 0
 			Select
-				Case $nRed = $nGreen = $nBlue ; Red, Green, and BLue are equal.
+				Case $nRed = $nGreen = $nBlue ; Red, Green, and Blue are equal.
 					$nHue = 0
 				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ; Red Highest, Blue Lowest
 					$nHue = (60 * (($nGreen - $nBlue) / ($nRed - $nBlue)))
@@ -630,7 +630,7 @@ EndFunc   ;==>_LOCalc_PathConvert
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
 ; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
-; Modified ......: donnyh13, modified for Autoit ccompatibility and error checking.
+; Modified ......: donnyh13, modified for AutoIt compatibility and error checking.
 ; Remarks .......: From Macro code by Zizi64 found at: https://forum.openoffice.org/en/forum/viewtopic.php?t=91542&sid=7f452d65e58ac1cd3cc6063350b5ada0
 ;				   And Andrew Pitonyak in "Useful Macro Information For OpenOffice.org" Pages 49, 50.
 ; Related .......:

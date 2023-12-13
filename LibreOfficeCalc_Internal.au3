@@ -38,7 +38,7 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_AddTo1DArray
 ; Description ...: Add data to a 1 Dimensional array.
-; Syntax ........: __LOCalc_AddTo1DArray(Byref $aArray, $vData[, $bCountInFirst = False])
+; Syntax ........: __LOCalc_AddTo1DArray(ByRef $aArray, $vData[, $bCountInFirst = False])
 ; Parameters ....: $aArray              - [in/out] an array of unknowns. The Array to directly add data to. Array will be directly modified.
 ;                  $vData               - a variant value. The Data to add to the Array.
 ;                  $bCountInFirst       - [optional] a boolean value. Default is False. If True the first element of the array is a count of contained elements.
@@ -80,7 +80,7 @@ EndFunc   ;==>__LOCalc_AddTo1DArray
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_ArrayFill
 ; Description ...: Fill an Array with data.
-; Syntax ........: __LOCalc_ArrayFill(Byref $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null]]]]]]]]]]]]]]]]]])
+; Syntax ........: __LOCalc_ArrayFill(ByRef $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null]]]]]]]]]]]]]]]]]])
 ; Parameters ....: $aArrayToFill        - [in/out] an array of unknowns. The Array to Fill. Array will be directly modified.
 ;                  $vVar1               - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar2               - [optional] a variant value. Default is Null. The Data to add to the Array.
@@ -157,7 +157,7 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_FilterNameGet
 ; Description ...: Retrieves the correct L.O. Filtername for use in SaveAs and Export.
-; Syntax ........: __LOCalc_FilterNameGet(Byref $sDocSavePath[, $bIncludeExportFilters = False])
+; Syntax ........: __LOCalc_FilterNameGet(ByRef $sDocSavePath[, $bIncludeExportFilters = False])
 ; Parameters ....: $sDocSavePath           - [in/out] a string value. Full path with extension.
 ;                  $bIncludeExportFilters  - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
 ; Return values .:Success: String.
@@ -266,7 +266,7 @@ EndFunc   ;==>__LOCalc_FilterNameGet
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_InternalComErrorHandler
 ; Description ...: ComError Handler
-; Syntax ........: __LOCalc_InternalComErrorHandler(Byref $oComError)
+; Syntax ........: __LOCalc_InternalComErrorHandler(ByRef $oComError)
 ; Parameters ....: $oComError           - [in/out] an object. The Com Error Object passed by Autoit.Error.
 ; Return values .: None
 ; Author ........: mLipok
@@ -544,7 +544,7 @@ Func __LOCalc_UnitConvert($nValue, $iReturnType)
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to MicroMeter
+		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to Micrometer
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)

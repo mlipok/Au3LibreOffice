@@ -55,7 +55,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocClose
 ; Description ...: Close an existing Calc Document, returning its save path if applicable.
-; Syntax ........: _LOCalc_DocClose(Byref $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
+; Syntax ........: _LOCalc_DocClose(ByRef $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
 ; Parameters ....: $oDoc           		- [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bSaveChanges        - [optional] a boolean value. Default is True. If true, saves changes if any were made before closing. See remarks.
 ;                  $sSaveName           - [optional] a string value. Default is "". The file name to save the file as, if the file hasn't been saved before. See Remarks.
@@ -334,7 +334,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	; If not force new, and L.O pages exist then see if there are any blank calcdocuments to use.
+	; If not force new, and L.O pages exist then see if there are any blank calc documents to use.
 	If Not $bForceNew And $oDesktop.getComponents.hasElements() Then
 		$oEnumDoc = $oDesktop.getComponents.createEnumeration()
 		If Not IsObj($oEnumDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -359,7 +359,7 @@ EndFunc   ;==>_LOCalc_DocCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocExport
 ; Description ...: Export a Document with the specified file name to the path specified, with any parameters used.
-; Syntax ........: _LOCalc_DocExport(Byref $oDoc, $sFilePath[, $bSamePath = False[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]]])
+; Syntax ........: _LOCalc_DocExport(ByRef $oDoc, $sFilePath[, $bSamePath = False[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]]])
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sFilePath      - a string value. Full path to save the document to, including Filename and extension. See Remarks.
 ;                  $bSamePath      - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
@@ -452,9 +452,9 @@ EndFunc   ;==>_LOCalc_DocExport
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocGetName
 ; Description ...: Retrieve the document's name.
-; Syntax ........: _LOCalc_DocGetName(Byref $oDoc[, $bReturnFull = False])
+; Syntax ........: _LOCalc_DocGetName(ByRef $oDoc[, $bReturnFull = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $bReturnFull         - [optional] a boolean value. Default is False. If True, the full window title is returned, such as is used by Autoit window related functions.
+;                  $bReturnFull         - [optional] a boolean value. Default is False. If True, the full window title is returned, such as is used by AutoIt window related functions.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -487,7 +487,7 @@ EndFunc   ;==>_LOCalc_DocGetName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocGetPath
 ; Description ...: Returns a Document's current save path.
-; Syntax ........: _LOCalc_DocGetPath(Byref $oDoc[, $bReturnLibreURL = False])
+; Syntax ........: _LOCalc_DocGetPath(ByRef $oDoc[, $bReturnLibreURL = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bReturnLibreURL     - [optional] a boolean value. Default is False. If True, returns a path in Libre Office URL format, else false returns a regular Windows path.
 ; Return values .: Success: String
@@ -532,7 +532,7 @@ EndFunc   ;==>_LOCalc_DocGetPath
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocHasPath
 ; Description ...: Returns whether a document has been saved to a location already or not.
-; Syntax ........: _LOCalc_DocHasPath(Byref $oDoc)
+; Syntax ........: _LOCalc_DocHasPath(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -598,7 +598,7 @@ EndFunc   ;==>_LOCalc_DocHasSheetName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsActive
 ; Description ...: Tests if called document is the active document of other Libre windows.
-; Syntax ........: _LOCalc_DocIsActive(Byref $oDoc)
+; Syntax ........: _LOCalc_DocIsActive(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -624,7 +624,7 @@ EndFunc   ;==>_LOCalc_DocIsActive
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsModified
 ; Description ...: Test whether the document has been modified since being created or since the last save.
-; Syntax ........: _LOCalc_DocIsModified(Byref $oDoc)
+; Syntax ........: _LOCalc_DocIsModified(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -649,8 +649,8 @@ EndFunc   ;==>_LOCalc_DocIsModified
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsReadOnly
-; Description ...: Tests whether a document is currently set to ReadOnly.
-; Syntax ........: _LOCalc_DocIsReadOnly(Byref $oDoc)
+; Description ...: Tests whether a document is currently set to Read Only.
+; Syntax ........: _LOCalc_DocIsReadOnly(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -676,7 +676,7 @@ EndFunc   ;==>_LOCalc_DocIsReadOnly
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocMaximize
 ; Description ...: Maximize or restore a document.
-; Syntax ........: _LOCalc_DocMaximize(Byref $oDoc[, $bMaximize = Null])
+; Syntax ........: _LOCalc_DocMaximize(ByRef $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if false, document is restored to its previous size and location.
 ;				   +						If Null, returns a Boolean indicating if document is currently maximized (True).
@@ -712,7 +712,7 @@ EndFunc   ;==>_LOCalc_DocMaximize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocMinimize
 ; Description ...: Minimize or restore a document.
-; Syntax ........: _LOCalc_DocMinimize(Byref $oDoc[, $bMinimize = Null])
+; Syntax ........: _LOCalc_DocMinimize(ByRef $oDoc[, $bMinimize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if false, document is restored to its previous size and location.
 ;				   +						If Null, returns a Boolean indicating if document is currently minimized (True).
@@ -760,7 +760,7 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sFilePath not string, or file not found.
-;				   @Error 1 @Extended 2 Return 0 = Error converting filepath to URL path.
+;				   @Error 1 @Extended 2 Return 0 = Error converting file path to URL path.
 ;				   @Error 1 @Extended 3 Return 0 = $bConnectIfOpen not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $bHidden not a Boolean.
 ;				   @Error 1 @Extended 5 Return 0 = $bReadOnly not a Boolean.
@@ -862,7 +862,7 @@ EndFunc   ;==>_LOCalc_DocOpen
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocPosAndSize
 ; Description ...: Reposition and resize a document window.
-; Syntax ........: _LOCalc_DocPosAndSize(Byref $oDoc[, $iX = Null[, $iY = Null[, $iWidth = Null[, $iHeight = Null]]]])
+; Syntax ........: _LOCalc_DocPosAndSize(ByRef $oDoc[, $iX = Null[, $iY = Null[, $iWidth = Null[, $iHeight = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate of the window.
 ;                  $iY                  - [optional] an integer value. Default is Null. The Y coordinate of the window.
@@ -891,7 +891,7 @@ EndFunc   ;==>_LOCalc_DocOpen
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Note, X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
-;				   If you want more accurate functionality, use the "WinMove" Autoit function.
+;				   If you want more accurate functionality, use the "WinMove" AutoIt function.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -953,7 +953,7 @@ EndFunc   ;==>_LOCalc_DocPosAndSize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocRedo
 ; Description ...: Perform one Redo action for a document.
-; Syntax ........: _LOCalc_DocRedo(Byref $oDoc)
+; Syntax ........: _LOCalc_DocRedo(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -987,7 +987,7 @@ EndFunc   ;==>_LOCalc_DocRedo
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocRedoCurActionTitle
 ; Description ...: Retrieve the current Redo action Title.
-; Syntax ........: _LOCalc_DocRedoCurActionTitle(Byref $oDoc)
+; Syntax ........: _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1020,7 +1020,7 @@ EndFunc   ;==>_LOCalc_DocRedoCurActionTitle
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocRedoGetAllActionTitles
 ; Description ...: Retrieve all available Redo action Titles.
-; Syntax ........: _LOCalc_DocRedoGetAllActionTitles(Byref $oDoc)
+; Syntax ........: _LOCalc_DocRedoGetAllActionTitles(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1053,7 +1053,7 @@ EndFunc   ;==>_LOCalc_DocRedoGetAllActionTitles
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocRedoIsPossible
 ; Description ...: Test whether a Redo action is available to perform for a document.
-; Syntax ........: _LOCalc_DocRedoIsPossible(Byref $oDoc)
+; Syntax ........: _LOCalc_DocRedoIsPossible(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1080,14 +1080,14 @@ EndFunc   ;==>_LOCalc_DocRedoIsPossible
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocSave
 ; Description ...: Save any changes made to a Document.
-; Syntax ........: _LOCalc_DocSave(Byref $oDoc)
+; Syntax ........: _LOCalc_DocSave(ByRef $oDoc)
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document is ReadOnly or Document has no save location, try SaveAs.
+;				   @Error 3 @Extended 1 Return 0 = Document is Read Only or Document has no save location, try SaveAs.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Document Successfully saved.
 ; Author ........: donnyh13
@@ -1110,7 +1110,7 @@ EndFunc   ;==>_LOCalc_DocSave
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocSaveAs
 ; Description ...: Save a Document with the specified file name to the path specified with any parameters called.
-; Syntax ........: _LOCalc_DocSaveAs(Byref $oDoc, $sFilePath[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]])
+; Syntax ........: _LOCalc_DocSaveAs(ByRef $oDoc, $sFilePath[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension.
 ;                  $sFilterName         - [optional] a string value. Default is "". The filter name. Calling "" (blank string), means the filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .ods extension is used instead, with the filter name of "calc8".
@@ -1182,7 +1182,7 @@ EndFunc   ;==>_LOCalc_DocSaveAs
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocToFront
 ; Description ...: Bring the called document to the front of the other windows.
-; Syntax ........: _LOCalc_DocToFront(Byref $oDoc)
+; Syntax ........: _LOCalc_DocToFront(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1211,7 +1211,7 @@ EndFunc   ;==>_LOCalc_DocToFront
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocUndo
 ; Description ...: Perform one Undo action for a document.
-; Syntax ........: _LOCalc_DocUndo(Byref $oDoc)
+; Syntax ........: _LOCalc_DocUndo(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1245,7 +1245,7 @@ EndFunc   ;==>_LOCalc_DocUndo
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocUndoCurActionTitle
 ; Description ...: Retrieve the current Undo action Title.
-; Syntax ........: _LOCalc_DocUndoCurActionTitle(Byref $oDoc)
+; Syntax ........: _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1279,7 +1279,7 @@ EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocUndoGetAllActionTitles
 ; Description ...: Retrieve all available Undo action Titles.
-; Syntax ........: _LOCalc_DocUndoGetAllActionTitles(Byref $oDoc)
+; Syntax ........: _LOCalc_DocUndoGetAllActionTitles(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1312,7 +1312,7 @@ EndFunc   ;==>_LOCalc_DocUndoGetAllActionTitles
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocUndoIsPossible
 ; Description ...: Test whether a Undo action is available to perform for a document.
-; Syntax ........: _LOCalc_DocUndoIsPossible(Byref $oDoc)
+; Syntax ........: _LOCalc_DocUndoIsPossible(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1339,7 +1339,7 @@ EndFunc   ;==>_LOCalc_DocUndoIsPossible
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocVisible
 ; Description ...: Set or retrieve the current visibility of a document.
-; Syntax ........: _LOCalc_DocVisible(Byref $oDoc[, $bVisible = Null])
+; Syntax ........: _LOCalc_DocVisible(ByRef $oDoc[, $bVisible = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the document is visible.
 ; Return values .: Success: 1 or Boolean.
@@ -1397,7 +1397,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;				   @Error 0 @Extended 1 Return Array = All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Zoomtype always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the  ZoomType property being correctly set.
+; Remarks .......: Note: Zoom type always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the  Zoom Type property being correctly set.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:

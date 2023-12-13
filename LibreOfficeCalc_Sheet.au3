@@ -160,7 +160,7 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Object for new Sheet.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Succesfully copied the Sheet. Returning the new Sheet's Object.
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully copied the Sheet. Returning the new Sheet's Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $sNewName is left as Null, the original Sheet's name is used, with "_" and a digit appended.
