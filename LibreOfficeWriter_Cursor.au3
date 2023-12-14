@@ -30,7 +30,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CursorGetDataType
 ; Description ...: Determines what type of Text data a Cursor is currently in.
-; Syntax ........: _LOWriter_CursorGetType(Byref $oDoc, Byref $oCursor)
+; Syntax ........: _LOWriter_CursorGetType(ByRef $oDoc, ByRef $oCursor)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ; Return values .: Success: Integer.
@@ -67,7 +67,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CursorGetStatus
 ; Description ...: Retrieve the current status of a cursor.
-; Syntax ........: _LOWriter_CursorGetStatus(Byref $oCursor, $iFlag)
+; Syntax ........: _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $iFlag               - an integer value. The Requested status to return, see constants, $LOW_CURSOR_STAT_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
 ; Return values .: Success: Variable.
@@ -160,7 +160,7 @@ EndFunc   ;==>_LOWriter_CursorGetStatus
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CursorGetType
 ; Description ...: Determine what type a Cursor Object is, such as a TableCursor, Text Cursor or a ViewCursor.
-; Syntax ........: _LOWriter_CursorGetType(Byref $oCursor)
+; Syntax ........: _LOWriter_CursorGetType(ByRef $oCursor)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -194,7 +194,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CursorGoToRange
 ; Description ...: Moves a Text or View cursor to another View or Text Cursor Position or Range.
-; Syntax ........: _LOWriter_CursorGoToRange(Byref $oCursor, Byref $oRange[, $bSelect = False])
+; Syntax ........: _LOWriter_CursorGoToRange(ByRef $oCursor, ByRef $oRange[, $bSelect = False])
 ; Parameters ....: $oCursor             - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $oRange              - [in/out] an object. an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions to move $oCursor to.
 ;                  $bSelect             - [optional] a boolean value. Default is False. If True, the selection is expanded or created from original cursor location to Range location.
@@ -246,7 +246,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CursorMove
 ; Description ...: Move a Cursor object in a document. Also for creating/Expanding selections.
-; Syntax ........: _LOWriter_CursorMove(Byref $oCursor, $iMove[, $iCount = 1[, $bSelect = False]])
+; Syntax ........: _LOWriter_CursorMove(ByRef $oCursor, $iMove[, $iCount = 1[, $bSelect = False]])
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ;                  $iMove               - an integer value. The movement command. See remarks and Constants, $LOW_VIEWCUR_, $LOW_TEXTCUR_, $LOW_TABLECUR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCount              - [optional] an integer value. Default is 1. Number of movements to make. See remarks.

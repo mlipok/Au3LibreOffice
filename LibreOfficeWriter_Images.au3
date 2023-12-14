@@ -56,7 +56,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaColor
 ; Description ...: Set or Retrieve background color settings for an Image.
-; Syntax ........: _LOWriter_ImageAreaColor(Byref $oImage[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_ImageAreaColor(ByRef $oImage[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -113,8 +113,8 @@ EndFunc   ;==>_LOWriter_ImageAreaColor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaGradient
-; Description ...: Modify or retrieve the settings for an Image BackGround color Gradient.
-; Syntax ........: _LOWriter_ImageGradient(Byref $oDoc, Byref $oImage[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
+; Description ...: Modify or retrieve the settings for an Image Background color Gradient.
+; Syntax ........: _LOWriter_ImageGradient(ByRef $oDoc, ByRef $oImage[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See Constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
@@ -292,7 +292,7 @@ EndFunc   ;==>_LOWriter_ImageAreaGradient
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaTransparency
 ; Description ...: Modify or retrieve Transparency settings for an Image's background color.
-; Syntax ........: _LOWriter_ImageAreaTransparency(Byref $oDoc[, $iTransparency = Null])
+; Syntax ........: _LOWriter_ImageAreaTransparency(ByRef $oDoc[, $iTransparency = Null])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
@@ -335,7 +335,7 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparency
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaTransparencyGradient
 ; Description ...: Modify or retrieve the Image's background transparency gradient settings.
-; Syntax ........: _LOWriter_ImageAreaTransparencyGradient(Byref $oDoc, Byref $oImage[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Syntax ........: _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient that you want to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_GRAD_TYPE_OFF to turn Transparency Gradient off.
@@ -470,7 +470,7 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparencyGradient
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageBorderColor
 ; Description ...: Set or retrieve the Image Border Line Color. Libre Office Version 3.4 and Up.
-; Syntax ........: _LOWriter_ImageBorderColor(Byref $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
+; Syntax ........: _LOWriter_ImageBorderColor(ByRef $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Image in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Image in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -527,7 +527,7 @@ EndFunc   ;==>_LOWriter_ImageBorderColor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageBorderPadding
 ; Description ...: Set or retrieve the Image Border Padding settings.
-; Syntax ........: _LOWriter_ImageBorderPadding(Byref $oImage[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
+; Syntax ........: _LOWriter_ImageBorderPadding(ByRef $oImage[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Image in Micrometers(uM).
@@ -612,7 +612,7 @@ EndFunc   ;==>_LOWriter_ImageBorderPadding
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageBorderStyle
 ; Description ...: Set or Retrieve the Image Border Line style. Libre Office Version 3.4 and Up.
-; Syntax ........: _LOWriter_ImageBorderStyle(Byref $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
+; Syntax ........: _LOWriter_ImageBorderStyle(ByRef $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Image using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Image using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -669,12 +669,12 @@ EndFunc   ;==>_LOWriter_ImageBorderStyle
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageBorderWidth
 ; Description ...: Set or Retrieve the Image Border Line Width. Libre Office Version 3.4 and Up.
-; Syntax ........: _LOWriter_ImageBorderWidth(Byref $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
+; Syntax ........: _LOWriter_ImageBorderWidth(ByRef $oImage[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
-;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Image in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Image in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Image in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Image in MicroMeters. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Image in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Image in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Image in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Image in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -727,7 +727,7 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ;                  $iGreen              - [optional] an integer value (-100-100). Default is Null. Changes the display of the Green color channel. As a percentage.
 ;                  $iBlue               - [optional] an integer value (-100-100). Default is Null. Changes the display of the Blue color channel. As a percentage.
 ;                  $iBrightness         - [optional] an integer value (-100-100). Default is Null. Adjust the brightness of the graphic.
-;                  $iContrast           - [optional] an integer value (-100-100). Default is Null. Adjust the constrast of the graphic.
+;                  $iContrast           - [optional] an integer value (-100-100). Default is Null. Adjust the contrast of the graphic.
 ;                  $nGamma              - [optional] a general number value (0.1-10). Default is Null. Set the gamma value of the graphic.
 ;                  $iColorMode          - [optional] an integer value (0-3). Default is Null. Set the color mode of the graphic. See constants, $LOW_COLORMODE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bInvert             - [optional] a boolean value. Default is Null. If true, the graphic is displayed in inverted colors. See remarks.
@@ -938,7 +938,7 @@ EndFunc   ;==>_LOWriter_ImageCrop
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageDelete
 ; Description ...: Delete an Image from the document.
-; Syntax ........: _LOWriter_ImageDelete(Byref $oDoc, Byref $oImage)
+; Syntax ........: _LOWriter_ImageDelete(ByRef $oDoc, ByRef $oImage)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ; Return values .: Success: 1
@@ -974,7 +974,7 @@ EndFunc   ;==>_LOWriter_ImageDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageGetAnchor
 ; Description ...: Create a Text Cursor at the Image Anchor position.
-; Syntax ........: _LOWriter_ImageGetAnchor(Byref $oImage)
+; Syntax ........: _LOWriter_ImageGetAnchor(ByRef $oImage)
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1052,7 +1052,7 @@ EndFunc   ;==>_LOWriter_ImageGetObjByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageHyperlink
 ; Description ...: Set or Retrieve Image Hyperlink settings.
-; Syntax ........: _LOWriter_ImageHyperlink(Byref $oImage[, $sURL = Null[, $sName = Null[, $sFrameTarget = Null[, $bServerSideMap = Null]]]])
+; Syntax ........: _LOWriter_ImageHyperlink(ByRef $oImage[, $sURL = Null[, $sName = Null[, $sFrameTarget = Null[, $bServerSideMap = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $sURL                - [optional] a string value. Default is Null. The complete path to the file that you want to open.
 ;                  $sName               - [optional] a string value. Default is Null. Name for the hyperlink.
@@ -1160,8 +1160,8 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ;				   @Error 3 @Extended 2 Return 0 = Error creating text cursor at ViewCursor location.
 ;				   @Error 3 @Extended 3 Return 0 = Error converting Image Path to Libre Office URL.
 ;				   @Error 3 @Extended 4 Return 0 = Error setting a property value for retrieving the Image's size.
-;				   @Error 3 @Extended 5 Return 0 = Error retrieving current PageStyle name at insertion point.
-;				   @Error 3 @Extended 6 Return 0 = Error retrieving PageStyle Object.
+;				   @Error 3 @Extended 5 Return 0 = Error retrieving current Page Style name at insertion point.
+;				   @Error 3 @Extended 6 Return 0 = Error retrieving Page Style Object.
 ;				   @Error 3 @Extended 7 Return 0 = Error calculating suggested image size.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object. = Success. Image was successfully inserted, returning image Object.
@@ -1240,8 +1240,8 @@ EndFunc   ;==>_LOWriter_ImageInsert
 ; Syntax ........: _LOWriter_ImageModify(ByRef $oImage[, $bFlipVert = Null[, $bFlipHoriOnRight = Null[, $bFlipHoriOnLeft = Null[, $nAngle = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bFlipVert           - [optional] a boolean value. Default is Null. If true, the image is flipped vertically.
-;                  $bFlipHoriOnRight    - [optional] a boolean value. Default is Null. If true, the image is flipped horizontlly on right (odd) pages. Set both this and $bFlipHoriOnLeft to true to flip on all pages.
-;                  $bFlipHoriOnLeft     - [optional] a boolean value. Default is Null. If true, the image is flipped horizontlly on left (even) pages. Set both this and $bFlipHoriOnRight to true to flip on all pages.
+;                  $bFlipHoriOnRight    - [optional] a boolean value. Default is Null. If true, the image is flipped horizontally on right (odd) pages. Set both this and $bFlipHoriOnLeft to true to flip on all pages.
+;                  $bFlipHoriOnLeft     - [optional] a boolean value. Default is Null. If true, the image is flipped horizontally on left (even) pages. Set both this and $bFlipHoriOnRight to true to flip on all pages.
 ;                  $nAngle              - [optional] a floating point value (0-360). Default is Null. The angle to rotate the image.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1314,7 +1314,7 @@ EndFunc   ;==>_LOWriter_ImageModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageOptions
 ; Description ...: Set or Retrieve Image Options.
-; Syntax ........: _LOWriter_ImageOptions(Byref $oImage[, $bProtectContent = Null[, $bProtectPos = Null[, $bProtectSize = Null[, $iVertAlign = Null[, $bEditInRead = Null[, $bPrint = Null[, $iTxtDirection = Null]]]]]]])
+; Syntax ........: _LOWriter_ImageOptions(ByRef $oImage[, $bProtectContent = Null[, $bProtectPos = Null[, $bProtectSize = Null[, $iVertAlign = Null[, $bEditInRead = Null[, $bPrint = Null[, $iTxtDirection = Null]]]]]]])
 ; Parameters ....: $oImage           - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bProtectContent     - [optional] a boolean value. Default is Null. If True, Prevents changes to the contents of the Image.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, Locks the position of the Image in the current document.
@@ -1544,7 +1544,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageShadow
 ; Description ...: Set or Retrieve the shadow settings for an Image.
-; Syntax ........: _LOWriter_ImageShadow(Byref $oImage[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
+; Syntax ........: _LOWriter_ImageShadow(ByRef $oImage[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The Width of the Image Shadow set in Micrometers.
 ;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Color of the Image shadow, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1791,7 +1791,7 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImagePosition
 ; Description ...: Set or Retrieve Image Position Settings.
-; Syntax ........: _LOWriter_ImagePosition(Byref $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[,  $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ImagePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[,  $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Image. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Image. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
@@ -1898,7 +1898,7 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 				$oImage.IsFollowingTextFlow(), $oImage.AnchorType())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
-	;Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
+	;Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
 	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.HoriOrient = $iHorAlign
@@ -1923,7 +1923,7 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 		$iError = ($oImage.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	;Accepts Orient Top,Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
+	;Accepts Orient Top, Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.VertOrient = $iVertAlign
@@ -2016,7 +2016,7 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageTypeSize
 ; Description ...: Set or Retrieve Image Size related settings.
-; Syntax ........: _LOWriter_ImageTypeSize(Byref $oDoc, Byref $oImage[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $bAutoWidth = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bAutoHeight = Null[, $bKeepRatio = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $bAutoWidth = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bAutoHeight = Null[, $bKeepRatio = Null]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Image, in Micrometers(uM). Min. 51.
@@ -2141,7 +2141,7 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageWrap
 ; Description ...: Set or Retrieve Image Wrap and Spacing settings.
-; Syntax ........: _LOWriter_ImageWrap(Byref $oImage[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
+; Syntax ........: _LOWriter_ImageWrap(ByRef $oImage[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
 ; Parameters ....: $oImage           - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWrapType           - [optional] an integer value (0-5). Default is Null. The way to wrap text around the Image. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Image and the text. Set in Micrometers.

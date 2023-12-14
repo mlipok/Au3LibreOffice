@@ -27,7 +27,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontExists
 ; Description ...: Tests whether a Document has a specific font available by name.
-; Syntax ........: _LOWriter_FontExists(Byref $oDoc, $sFontName)
+; Syntax ........: _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFontName           - a string value. The Font name to search for.
 ; Return values .: Success: Boolean.
@@ -67,7 +67,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontsList
 ; Description ...: Retrieve a list of currently available fonts.
-; Syntax ........: _LOWriter_FontsList(Byref $oDoc)
+; Syntax ........: _LOWriter_FontsList(ByRef $oDoc)
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.

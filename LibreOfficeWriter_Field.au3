@@ -118,7 +118,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldAuthorInsert
 ; Description ...: Insert a Author Field.
-; Syntax ........: _LOWriter_FieldAuthorInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null[, $bFullName = Null]]]])
+; Syntax ........: _LOWriter_FieldAuthorInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null[, $bFullName = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -191,7 +191,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldAuthorModify
 ; Description ...: Set or Retrieve a Author Field's settings.
-; Syntax ........: _LOWriter_FieldAuthorModify(Byref $oAuthField[, $bIsFixed = Null[, $sAuthor = Null[, $bFullName = Null]]])
+; Syntax ........: _LOWriter_FieldAuthorModify(ByRef $oAuthField[, $bIsFixed = Null[, $sAuthor = Null[, $bFullName = Null]]])
 ; Parameters ....: $oAuthField          - [in/out] an object. A Author field Object from _LOWriter_FieldAuthorInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The Author Name to insert. Note, $bIsFixed must be set to True for this value to stay the same as set.
@@ -259,7 +259,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldChapterInsert
 ; Description ...: Insert a Chapter Field.
-; Syntax ........: _LOWriter_FieldChapterInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $iChapFrmt = Null[, $iLevel = Null]]])
+; Syntax ........: _LOWriter_FieldChapterInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $iChapFrmt = Null[, $iLevel = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -321,7 +321,7 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldChapterModify
 ; Description ...: Set or Retrieve a Chapter Field's settings.
-; Syntax ........: _LOWriter_FieldChapterModify(Byref $oChapField[, $iChapFrmt = Null[, $iLevel = Null]])
+; Syntax ........: _LOWriter_FieldChapterModify(ByRef $oChapField[, $iChapFrmt = Null[, $iLevel = Null]])
 ; Parameters ....: $oChapField          - [in/out] an object. A Chapter field Object from a previous_LOWriter_FieldChapterInsert,  or _LOWriter_FieldsGetList function.
 ;                  $iChapFrmt           - [optional] an integer value (0-4). Default is Null. The Display format for the Chapter Field. See Constants, $LOW_FIELD_CHAP_FRMT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLevel              - [optional] an integer value (1-10). Default is Null. The Chapter level to display.
@@ -380,7 +380,7 @@ EndFunc   ;==>_LOWriter_FieldChapterModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCombCharInsert
 ; Description ...: Insert a Combined Character Field.
-; Syntax ........: _LOWriter_FieldCombCharInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sCharacters = Null]])
+; Syntax ........: _LOWriter_FieldCombCharInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sCharacters = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -437,7 +437,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCombCharModify
 ; Description ...: Set or Retrieve a Combined Character Field's settings.
-; Syntax ........: _LOWriter_FieldCombCharModify(Byref $oCombCharField[, $sCharacters = Null])
+; Syntax ........: _LOWriter_FieldCombCharModify(ByRef $oCombCharField[, $sCharacters = Null])
 ; Parameters ....: $oCombCharField      - [in/out] an object. A Combined Character field Object from a previous _LOWriter_FieldCombCharInsert, or _LOWriter_FieldsGetList( function.
 ;                  $sCharacters         - [optional] a string value. Default is Null. The Characters to insert in a combined character field. Max 6 character String Length.
 ; Return values .: Success: 1 or String.
@@ -483,15 +483,15 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCommentInsert
 ; Description ...: Insert a Comment field into a document at a cursor's position.
-; Syntax ........: _LOWriter_FieldCommentInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sContent = Null[, $sAuthor = Null[, $tDateStruct = Null[, $sInitials = Null[, $sName = Null[, $bResolved = Null]]]]]]])
+; Syntax ........: _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sContent = Null[, $sAuthor = Null[, $tDateStruct = Null[, $sInitials = Null[, $sName = Null[, $bResolved = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $sContent            - [optional] a string value. Default is Null. The content of the comment.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The author of the comment.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate. If left as Null, the current date is used.
-;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Offive version 4.0 and up only.
-;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Offive version 4.0 and up only.
+;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Office version 4.0 and up only.
+;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Office version 4.0 and up only.
 ;                  $bResolved           - [optional] a boolean value. Default is Null. If True, the comment is marked as resolved.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -582,14 +582,14 @@ EndFunc   ;==>_LOWriter_FieldCommentInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCommentModify
 ; Description ...: Set or retrieve Comment settings.
-; Syntax ........: _LOWriter_FieldCommentModify(Byref $oDoc, Byref $oCommentField[, $sContent = Null[, $sAuthor = Null[, $tDateStruct = Null[, $sInitials = Null[, $sName = Null[, $bResolved = Null]]]]]])
+; Syntax ........: _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField[, $sContent = Null[, $sAuthor = Null[, $tDateStruct = Null[, $sInitials = Null[, $sName = Null[, $bResolved = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCommentField       - [in/out] an object. A Comment field Object from a previous _LOWriter_FieldCommentInsert, or _LOWriter_FieldsGetList function.
 ;                  $sContent            - [optional] a string value. Default is Null. The content of the comment.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The author of the comment.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display for the comment, created previously by _LOWriter_DateStructCreate.
-;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Offive version 4.0 and up only.
-;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Offive version 4.0 and up only.
+;                  $sInitials           - [optional] a string value. Default is Null. The Initials of the creator. Libre Office version 4.0 and up only.
+;                  $sName               - [optional] a string value. Default is Null. The name of the creator. Libre Office version 4.0 and up only.
 ;                  $bResolved           - [optional] a boolean value. Default is Null. If True, the comment is marked as resolved.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -695,7 +695,7 @@ EndFunc   ;==>_LOWriter_FieldCommentModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCondTextInsert
 ; Description ...: Insert a Conditional Text Field.
-; Syntax ........: _LOWriter_FieldCondTextInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sCondition = Null[, $sThen = Null[, $sElse = Null]]]])
+; Syntax ........: _LOWriter_FieldCondTextInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sCondition = Null[, $sThen = Null[, $sElse = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -764,7 +764,7 @@ EndFunc   ;==>_LOWriter_FieldCondTextInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCondTextModify
 ; Description ...: Set or Retrieve a Conditional Text Field's settings.
-; Syntax ........: _LOWriter_FieldCondTextModify(Byref $oCondTextField[, $sCondition = Null[, $sThen = Null[, $sElse = Null]]])
+; Syntax ........: _LOWriter_FieldCondTextModify(ByRef $oCondTextField[, $sCondition = Null[, $sThen = Null[, $sElse = Null]]])
 ; Parameters ....: $oCondTextField      - [in/out] an object. A Conditional Text field Object from a previous _LOWriter_FieldCondTextInsert, or _LOWriter_FieldsGetList function.
 ;                  $sCondition          - [optional] a string value. Default is Null. The condition to test.
 ;                  $sThen               - [optional] a string value. Default is Null. The text to display if the condition is True.
@@ -833,7 +833,7 @@ EndFunc   ;==>_LOWriter_FieldCondTextModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldCurrentDisplayGet
 ; Description ...: Retrieve the current data displayed by a field.
-; Syntax ........: _LOWriter_FieldCurrentDisplayGet(Byref $oField)
+; Syntax ........: _LOWriter_FieldCurrentDisplayGet(ByRef $oField)
 ; Parameters ....: $oField              - [in/out] an object. A Field Object returned from a previous insert, _LOWriter_FieldsGetList, _LOWriter_FieldsDocInfoGetList function.
 ; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -871,7 +871,7 @@ EndFunc   ;==>_LOWriter_FieldCurrentDisplayGet
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDateTimeInsert
 ; Description ...: Insert a Date and/or Time Field.
-; Syntax ........: _LOWriter_FieldDateTimeInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $tDateStruct = Null[, $bIsDate = Null[, $iOffset = Null[, $iDateFormatKey = Null]]]]]])
+; Syntax ........: _LOWriter_FieldDateTimeInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $tDateStruct = Null[, $bIsDate = Null[, $iOffset = Null[, $iDateFormatKey = Null]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -963,7 +963,7 @@ EndFunc   ;==>_LOWriter_FieldDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDateTimeModify
 ; Description ...: Set or Retrieve a Date/Time Field's settings.
-; Syntax ........: _LOWriter_FieldDateTimeModify(Byref $oDoc, Byref $oDateTimeField[, $bIsFixed = Null[, $tDateStruct = Null[, $bIsDate = Null[, $iOffset = Null[, $iDateFormatKey = Null]]]]])
+; Syntax ........: _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField[, $bIsFixed = Null[, $tDateStruct = Null[, $bIsDate = Null[, $iOffset = Null[, $iDateFormatKey = Null]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDateTimeField      - [in/out] an object. A Date/Time field Object from a previous _LOWriter_FieldDateTimeInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
@@ -1065,7 +1065,7 @@ EndFunc   ;==>_LOWriter_FieldDateTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDelete
 ; Description ...: Delete a Field from a Document.
-; Syntax ........: _LOWriter_FieldDelete(Byref $oDoc, Byref $oField[, $bDeleteMaster = False])
+; Syntax ........: _LOWriter_FieldDelete(ByRef $oDoc, ByRef $oField[, $bDeleteMaster = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oField              - [in/out] an object. A Field Object from a previous Insert, _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bDeleteMaster       - [optional] a boolean value. Default is False. If True, and the field has a Master Field, the MasterField (With any other dependent fields) will be deleted.
@@ -1125,7 +1125,7 @@ EndFunc   ;==>_LOWriter_FieldDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCommentsInsert
 ; Description ...: Insert a Document Information Comments Field.
-; Syntax ........: _LOWriter_FieldDocInfoCommentsInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sComments = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoCommentsInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sComments = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1192,7 +1192,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCommentsModify
 ; Description ...: Set or Retrieve a Document Information Comments Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoCommentsModify(Byref $oDocInfoCommentField[, $bIsFixed = Null[, $sComments = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoCommentField[, $bIsFixed = Null[, $sComments = Null]])
 ; Parameters ....: $oDocInfoCommentField  - [in/out] an object. A Doc Info Comments field Object from a previous _LOWriter_FieldDocInfoCommentsInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sComments             - [optional] a string value. Default is Null. The Comments text to display, note, $bIsFixed must be True for this to be displayed.
@@ -1251,7 +1251,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateAuthInsert
 ; Description ...: Insert a Document Information Create Author Field.
-; Syntax ........: _LOWriter_FieldDocInfoCreateAuthInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoCreateAuthInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1318,7 +1318,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateAuthModify
 ; Description ...: Set or Retrieve a Document Information Create Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoCreateAuthModify(Byref $oDocInfoCreateAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
 ; Parameters ....: $oDocInfoCreateAuthField  - [in/out] an object. A Created By Author field Object from a previous _LOWriter_FieldDocInfoCreateAuthInsert or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed                 - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sAuthor                  - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
@@ -1377,7 +1377,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateDateTimeInsert
 ; Description ...: Insert a Document Information Create Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1442,7 +1442,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Create Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeModify(Byref $oDoc, Byref $oDocInfoCreateDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCreateDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
 ; Parameters ....: $oDoc                     - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoCreateDtTmField  - [in/out] an object. A Created at Date/Time field Object from a previous _LOWriter_FieldDocInfoCreateDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed                 - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
@@ -1513,7 +1513,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoEditTimeInsert
 ; Description ...: Insert a Document Information Total Editing Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoEditTimeInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iTimeFormatKey = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoEditTimeInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iTimeFormatKey = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1578,7 +1578,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoEditTimeModify
 ; Description ...: Set or Retrieve a Document Information Total Editing Time Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(Byref $oDoc, Byref $oDocInfoEditTimeField[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeField[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
 ; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoEditTimeField - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
@@ -1649,7 +1649,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoKeywordsInsert
 ; Description ...: Insert a Document Information Keywords Field.
-; Syntax ........: _LOWriter_FieldDocInfoKeywordsInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sKeywords = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoKeywordsInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sKeywords = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1716,7 +1716,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoKeywordsModify
 ; Description ...: Set or Retrieve a Document Information Keywords Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoKeywordsModify(Byref $oDocInfoKeywordField[, $bIsFixed = Null[, $sKeywords = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeywordField[, $bIsFixed = Null[, $sKeywords = Null]])
 ; Parameters ....: $oDocInfoKeywordField  - [in/out] an object. A Doc Info Keywords field Object from a previous _LOWriter_FieldDocInfoKeywordsInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sKeywords             - [optional] a string value. Default is Null. The Keywords text to display, note, $bIsFixed must be True for this to be displayed.
@@ -1775,7 +1775,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModAuthInsert
 ; Description ...: Insert a Document Information Modification Author Field.
-; Syntax ........: _LOWriter_FieldDocInfoModAuthInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoModAuthInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1842,7 +1842,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModAuthModify
 ; Description ...: Set or Retrieve a Document Information Modification Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoModAuthModify(Byref $oDocInfoModAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
 ; Parameters ....: $oDocInfoModAuthField  - [in/out] an object. A Modified By Author field Object from a previous _LOWriter_FieldDocInfoModAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sAuthor               - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
@@ -1901,7 +1901,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModDateTimeInsert
 ; Description ...: Insert a Document Information Modification Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoModDateTimeInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoModDateTimeInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -1967,7 +1967,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Modification Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoModDateTimeModify(Byref $oDoc, Byref $oDocInfoModDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
 ; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoModDtTmField  - [in/out] an object. A Modified at Date/Time field Object from a previous _LOWriter_FieldDocInfoModDateTimeInsert,  or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
@@ -2037,7 +2037,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintAuthInsert
 ; Description ...: Insert a Document Information Last Print Author Field.
-; Syntax ........: _LOWriter_FieldDocInfoPrintAuthInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoPrintAuthInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sAuthor = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2104,7 +2104,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintAuthModify
 ; Description ...: Set or Retrieve a Document Information Last Print Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoPrintAuthModify(Byref $oDocInfoPrintAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
 ; Parameters ....: $oDocInfoPrintAuthField  - [in/out] an object. A Printed By Author field Object from a previous _LOWriter_FieldDocInfoPrintAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed                - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sAuthor                 - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
@@ -2163,7 +2163,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintDateTimeInsert
 ; Description ...: Insert a Document Information Last Print Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iDateFormatKey = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2228,7 +2228,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Last Print Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeModify(Byref $oDoc, Byref $oDocInfoPrintDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrintDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
 ; Parameters ....: $oDoc                    - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oDocInfoPrintDtTmField  - [in/out] an object. A Printed at Date/Time field Object from a previous _LOWriter_FieldDocInfoPrintDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed                - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
@@ -2299,7 +2299,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoRevNumInsert
 ; Description ...: Insert a Document Information Revision Number Field.
-; Syntax ........: _LOWriter_FieldDocInfoRevNumInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iRevNum = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoRevNumInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iRevNum = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2366,7 +2366,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoRevNumModify
 ; Description ...: Set or Retrieve a Document Information Revision Number Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoRevNumModify(Byref $oDocInfoRevNumField[, $bIsFixed = Null[, $iRevNum = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNumField[, $bIsFixed = Null[, $iRevNum = Null]])
 ; Parameters ....: $oDocInfoRevNumField - [in/out] an object. A Doc Info Revision Number field Object from a previous _LOWriter_FieldDocInfoRevNumInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $iRevNum             - [optional] a Integer value. Default is Null. The Revision Number Integer to display, note, $bIsFixed must be True for this to be displayed.
@@ -2425,7 +2425,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoSubjectInsert
 ; Description ...: Insert a Document Information Subject Field.
-; Syntax ........: _LOWriter_FieldDocInfoSubjectInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sSubject = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoSubjectInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sSubject = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2492,7 +2492,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoSubjectModify
 ; Description ...: Set or Retrieve a Document Information Subject Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoSubjectModify(Byref $oDocInfoSubField[, $bIsFixed = Null[, $sSubject = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSubField[, $bIsFixed = Null[, $sSubject = Null]])
 ; Parameters ....: $oDocInfoSubField    - [in/out] an object. A Doc Info Subject field Object from a previous _LOWriter_FieldDocInfoSubjectInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sSubject            - [optional] a string value. Default is Null. The Subject text to display, note, $bIsFixed must be True for this to be displayed.
@@ -2551,7 +2551,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoTitleInsert
 ; Description ...: Insert a Document Information Title Field.
-; Syntax ........: _LOWriter_FieldDocInfoTitleInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sTitle = Null]]])
+; Syntax ........: _LOWriter_FieldDocInfoTitleInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sTitle = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2618,7 +2618,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoTitleModify
 ; Description ...: Set or Retrieve a Document Information Title Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoTitleModify(Byref $oDocInfoTitleField[, $bIsFixed = Null[, $sTitle = Null]])
+; Syntax ........: _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitleField[, $bIsFixed = Null[, $sTitle = Null]])
 ; Parameters ....: $oDocInfoTitleField  - [in/out] an object. A Doc Info Title field Object from a previous _LOWriter_FieldDocInfoTitleInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sTitle              - [optional] a string value. Default is Null. The Title text to display, note, $bIsFixed must be True for this to be displayed.
@@ -2677,7 +2677,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFileNameInsert
 ; Description ...: Insert a File Name Field.
-; Syntax ........: _LOWriter_FieldFileNameInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iFormat = Null]]])
+; Syntax ........: _LOWriter_FieldFileNameInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $iFormat = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2740,7 +2740,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFileNameModify
 ; Description ...: Set or Retrieve a File Name Field's settings.
-; Syntax ........: _LOWriter_FieldFileNameModify(Byref $oFileNameField[, $bIsFixed = Null[, $iFormat = Null]])
+; Syntax ........: _LOWriter_FieldFileNameModify(ByRef $oFileNameField[, $bIsFixed = Null[, $iFormat = Null]])
 ; Parameters ....: $oFileNameField      - [in/out] an object. A File Name field Object from a previous _LOWriter_FieldFileNameInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;				   $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2802,7 +2802,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncHiddenParInsert
 ; Description ...: Insert a Hidden Paragraph Field.
-; Syntax ........: _LOWriter_FieldFuncHiddenParInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sCondition = Null]])
+; Syntax ........: _LOWriter_FieldFuncHiddenParInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sCondition = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2857,7 +2857,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncHiddenParModify
 ; Description ...: Set or Retrieve a Hidden Paragraph Field's settings.
-; Syntax ........: _LOWriter_FieldFuncHiddenParModify(Byref $oHidParField[, $sCondition = Null])
+; Syntax ........: _LOWriter_FieldFuncHiddenParModify(ByRef $oHidParField[, $sCondition = Null])
 ; Parameters ....: $oHidParField        - [in/out] an object. A Hidden Paragraph field Object from a previous _LOWriter_FieldFuncHiddenParInsert, or _LOWriter_FieldsGetList function.
 ;                  $sCondition          - [optional] a string value. Default is Null. The condition to evaluate.
 ; Return values .: Success: 1 or Array.
@@ -2907,7 +2907,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncHiddenTextInsert
 ; Description ...: Insert a Hidden Text Field.
-; Syntax ........: _LOWriter_FieldFuncHiddenTextInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sCondition = Null[, $sText = Null]]])
+; Syntax ........: _LOWriter_FieldFuncHiddenTextInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sCondition = Null[, $sText = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -2969,7 +2969,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncHiddenTextModify
 ; Description ...: Set or Retrieve a Hidden Text Field's settings.
-; Syntax ........: _LOWriter_FieldFuncHiddenTextModify(Byref $oHidTxtField[, $sCondition = Null[, $sText = Null]])
+; Syntax ........: _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField[, $sCondition = Null[, $sText = Null]])
 ; Parameters ....: $oHidTxtField        - [in/out] an object. A Hidden Text field Object from a previous _LOWriter_FieldFuncHiddenTextInsert, or _LOWriter_FieldsGetList function.
 ;                  $sCondition          - [optional] a string value. Default is Null. The Condition to evaluate.
 ;                  $sText               - [optional] a string value. Default is Null. The Text to show if the condition evaluates as true.
@@ -3028,7 +3028,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncInputInsert
 ; Description ...: Insert a Input Field.
-; Syntax ........: _LOWriter_FieldFuncInputInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $sReference = Null[, $sText = Null]]])
+; Syntax ........: _LOWriter_FieldFuncInputInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sReference = Null[, $sText = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -3090,7 +3090,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncInputModify
 ; Description ...: Set or Retrieve a Input Field's settings.
-; Syntax ........: _LOWriter_FieldFuncInputModify(Byref $oInputField[, $sReference = Null[, $sText = Null]])
+; Syntax ........: _LOWriter_FieldFuncInputModify(ByRef $oInputField[, $sReference = Null[, $sText = Null]])
 ; Parameters ....: $oInputField         - [in/out] an object. A Input field Object from a previous _LOWriter_FieldFuncInputInsert, or _LOWriter_FieldsGetList function.
 ;                  $sReference          - [optional] a string value. Default is Null. The Reference to display for the input field.
 ;                  $sText               - [optional] a string value. Default is Null. The Text to insert in the Input Field.
@@ -3149,7 +3149,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncPlaceholderInsert
 ; Description ...: Insert a Placeholder Field.
-; Syntax ........: _LOWriter_FieldFuncPlaceholderInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $iPHolderType = Null[, $sPHolderName = Null[, $sReference = Null]]]])
+; Syntax ........: _LOWriter_FieldFuncPlaceholderInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $iPHolderType = Null[, $sPHolderName = Null[, $sReference = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -3218,7 +3218,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldFuncPlaceholderModify
 ; Description ...: Set or Retrieve a Placeholder Field's settings.
-; Syntax ........: _LOWriter_FieldFuncPlaceholderModify(Byref $oPHolderField[, $iPHolderType = Null[, $sPHolderName = Null[, $sReference = Null]]])
+; Syntax ........: _LOWriter_FieldFuncPlaceholderModify(ByRef $oPHolderField[, $iPHolderType = Null[, $sPHolderName = Null[, $sReference = Null]]])
 ; Parameters ....: $oPHolderField       - [in/out] an object. A Placeholder field Object from a previous _LOWriter_FieldFuncPlaceholderInsert, or _LOWriter_FieldsGetList function.
 ;                  $iPHolderType        - [optional] an integer value (0-4). Default is Null. The type of Placeholder to insert. See Constants, $LOW_FIELD_PLACEHOLD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPHolderName        - [optional] a string value. Default is Null. The Placeholder's name.
@@ -3286,7 +3286,7 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldGetAnchor
 ; Description ...: Retrieve the Anchor Cursor Object for a Field inserted in a document.
-; Syntax ........: _LOWriter_FieldGetAnchor(Byref $oField)
+; Syntax ........: _LOWriter_FieldGetAnchor(ByRef $oField)
 ; Parameters ....: $oField              - [in/out] an object. A Field Object returned from a previous Insert, _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, or _LOWriter_FieldsDocInfoGetList function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3320,7 +3320,7 @@ EndFunc   ;==>_LOWriter_FieldGetAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldInputListInsert
 ; Description ...: Insert a Input List Field.
-; Syntax ........: _LOWriter_FieldInputListInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $asItems = Null[, $sName = Null[, $sSelectedItem = Null]]]])
+; Syntax ........: _LOWriter_FieldInputListInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $asItems = Null[, $sName = Null[, $sSelectedItem = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -3389,7 +3389,7 @@ EndFunc   ;==>_LOWriter_FieldInputListInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldInputListModify
 ; Description ...: Set or Retrieve a Input List Field's settings.
-; Syntax ........: _LOWriter_FieldInputListModify(Byref $oInputField[, $asItems = Null[, $sName = Null[, $sSelectedItem = Null]]])
+; Syntax ........: _LOWriter_FieldInputListModify(ByRef $oInputField[, $asItems = Null[, $sName = Null[, $sSelectedItem = Null]]])
 ; Parameters ....: $oInputField         - [in/out] an object. A Input List field Object from a previous _LOWriter_FieldInputListInsert, or _LOWriter_FieldsGetList function.
 ;                  $asItems             - [optional] an array of strings. Default is Null. A single column Array of Strings to colonize the List with.
 ;                  $sName               - [optional] a string value. Default is Null. The name of the Input List Field.
@@ -3413,9 +3413,6 @@ EndFunc   ;==>_LOWriter_FieldInputListInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
 ; Related .......: _LOWriter_FieldInputListInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -3460,7 +3457,7 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldPageNumberInsert
 ; Description ...: Insert a Page number field.
-; Syntax ........: _LOWriter_FieldPageNumberInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]]])
+; Syntax ........: _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -3545,8 +3542,8 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldPageNumberModify
-; Description ...: Set or Retrieve Page NUmber Field settings.
-; Syntax ........: _LOWriter_FieldPageNumberModify(Byref $oDoc, Byref $oPageNumField[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]])
+; Description ...: Set or Retrieve Page Number Field settings.
+; Syntax ........: _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField[, $iNumFormat = Null[, $iOffset = Null[, $iPageNumType = Null[, $sUserText = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oPageNumField       - [in/out] an object. A Page Number field Object from a previous _LOWriter_FieldPageNumberInsert, or _LOWriter_FieldsGetList function.
 ;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Page numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3646,7 +3643,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefBookMarkInsert
 ; Description ...: Insert a Bookmark Reference Field.
-; Syntax ........: _LOWriter_FieldRefBookMarkInsert(Byref $oDoc, Byref $oCursor, $sBookmarkName[, $bOverwrite = False[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefBookMarkInsert(ByRef $oDoc, ByRef $oCursor, $sBookmarkName[, $bOverwrite = False[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sBookmarkName       - a string value. The Bookmark name to Reference.
@@ -3711,7 +3708,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefBookMarkModify
 ; Description ...: Set or Retrieve a Bookmark Reference Field's settings.
-; Syntax ........: _LOWriter_FieldRefBookMarkModify(Byref $oDoc, Byref $oBookmarkRefField[, $sBookmarkName = Null[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField[, $sBookmarkName = Null[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oBookmarkRefField   - [in/out] an object. A Bookmark Reference field Object from a previous _LOWriter_FieldRefBookMarkInsert, or _LOWriter_FieldsGetList function.
 ;                  $sBookmarkName       - [optional] a string value. Default is Null. The Bookmark name to Reference.
@@ -3777,7 +3774,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefEndnoteInsert
 ; Description ...: Insert a Endnote Reference Field.
-; Syntax ........: _LOWriter_FieldRefEndnoteInsert(Byref $oDoc, Byref $oCursor, Byref $oEndNote[, $bOverwrite = False[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefEndnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oEndNote[, $bOverwrite = False[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $oEndNote            - [in/out] an object. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
@@ -3840,7 +3837,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefEndnoteModify
 ; Description ...: Set or Retrieve a Endnote Reference Field's settings.
-; Syntax ........: _LOWriter_FieldRefEndnoteModify(Byref $oDoc, Byref $oEndNoteRefField[, $oEndNote = Null[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField[, $oEndNote = Null[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oEndNoteRefField    - [in/out] an object. A Endnote Reference field Object from a previous _LOWriter_FieldRefEndnoteInsert, or _LOWriter_FieldsGetList function.
 ;                  $oEndNote            - [optional] an object. Default is Null. A Endnote Object from a previous _LOWriter_EndnoteInsert, or _LOWriter_EndnotesGetList function.
@@ -3893,7 +3890,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 			Next
 
 		EndIf
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving ENote Obj
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving EndNote Obj
 	EndIf
 
 	If ($oEndNote <> Null) Then
@@ -3918,7 +3915,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefFootnoteInsert
 ; Description ...: Insert a Footnote Reference Field.
-; Syntax ........: _LOWriter_FieldRefFootnoteInsert(Byref $oDoc, Byref $oCursor, Byref $oFootNote[, $bOverwrite = False[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefFootnoteInsert(ByRef $oDoc, ByRef $oCursor, ByRef $oFootNote[, $bOverwrite = False[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $oFootNote           - [in/out] an object. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
@@ -3981,7 +3978,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefFootnoteModify
 ; Description ...: Set or Retrieve a Footnote Reference Field's settings.
-; Syntax ........: _LOWriter_FieldRefFootnoteModify(Byref $oDoc, Byref $oFootNoteRefField[, $oFootNote = Null[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField[, $oFootNote = Null[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oFootNoteRefField   - [in/out] an object. A Footnote Reference field Object from a previous _LOWriter_FieldRefFootnoteInsert, or _LOWriter_FieldsGetList function.
 ;                  $oFootNote           - [optional] an object. Default is Null. A Footnote Object from a previous _LOWriter_FootnoteInsert, Or _LOWriter_FootnotesGetList function.
@@ -4034,7 +4031,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 			Next
 
 		EndIf
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FNote Obj
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FndNote Obj
 	EndIf
 
 	If ($oFootNote <> Null) Then
@@ -4059,7 +4056,7 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefGetType
 ; Description ...: Retrieve the type of Data a Reference Field is Referencing.
-; Syntax ........: _LOWriter_FieldRefGetType(Byref $oRefField)
+; Syntax ........: _LOWriter_FieldRefGetType(ByRef $oRefField)
 ; Parameters ....: $oRefField           - [in/out] an object. a Reference Field Object from a previous Insert or _LOWriter_FieldsGetList function.
 ; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4086,7 +4083,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefInsert
 ; Description ...: Insert a Reference Field.
-; Syntax ........: _LOWriter_FieldRefInsert(Byref $oDoc, Byref $oCursor, $sRefMarkName[, $bOverwrite = False[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefInsert(ByRef $oDoc, ByRef $oCursor, $sRefMarkName[, $bOverwrite = False[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sRefMarkName        - a string value. The Reference Mark Name to reference.
@@ -4155,7 +4152,7 @@ EndFunc   ;==>_LOWriter_FieldRefInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkDelete
 ; Description ...: Delete a Reference Mark by name.
-; Syntax ........: _LOWriter_FieldRefMarkDelete(Byref $oDoc, $sName)
+; Syntax ........: _LOWriter_FieldRefMarkDelete(ByRef $oDoc, $sName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sName               - a string value. The Reference Mark name to delete.
 ; Return values .: Success: 1
@@ -4203,7 +4200,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkGetAnchor
 ; Description ...: Retrieve the Anchor Cursor Object of a Reference Mark by Name.
-; Syntax ........: _LOWriter_FieldRefMarkGetAnchor(Byref $oDoc, $sName)
+; Syntax ........: _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sName               - a string value. The Reference Mark name to retrieve the anchor for.
 ; Return values .: Success: Object
@@ -4247,7 +4244,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkList
 ; Description ...: Retrieve an Array of Reference Mark names.
-; Syntax ........: _LOWriter_FieldRefMarkList(Byref $oDoc)
+; Syntax ........: _LOWriter_FieldRefMarkList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4287,7 +4284,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefMarkSet
 ; Description ...: Create and Insert a Reference Mark at a Cursor position.
-; Syntax ........: _LOWriter_FieldRefMarkSet(Byref $oDoc, Byref $oCursor, $sName[, $bOverwrite = False])
+; Syntax ........: _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName[, $bOverwrite = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sName               - a string value. The name of the Reference Mark to create.
@@ -4345,7 +4342,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldRefModify
 ; Description ...: Set or Retrieve a Reference Field's settings.
-; Syntax ........: _LOWriter_FieldRefModify(Byref $oDoc, Byref $oRefField[, $sRefMarkName = Null[, $iRefUsing = Null]])
+; Syntax ........: _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField[, $sRefMarkName = Null[, $iRefUsing = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oRefField           - [in/out] an object. A Reference field Object from a previous _LOWriter_FieldRefInsert or _LOWriter_FieldsGetList function.
 ;                  $sRefMarkName        - [optional] a string value. Default is Null. The Reference Mark Name to Reference.
@@ -4415,7 +4412,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldsAdvGetList
 ; Description ...: Retrieve an Array of Advanced Field Objects contained in a document.
-; Syntax ........: _LOWriter_FieldsAdvGetList(Byref $oDoc[, $iType = $LOW_FIELD_ADV_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
+; Syntax ........: _LOWriter_FieldsAdvGetList(ByRef $oDoc[, $iType = $LOW_FIELD_ADV_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iType               - [optional] an integer value (1-1023). Default is $LOW_FIELD_ADV_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
@@ -4478,7 +4475,7 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldsDocInfoGetList
 ; Description ...: Retrieve an Array of Document Information Field Objects contained in a document.
-; Syntax ........: _LOWriter_FieldsDocInfoGetList(Byref $oDoc[, $iType = $LOW_FIELD_DOCINFO_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
+; Syntax ........: _LOWriter_FieldsDocInfoGetList(ByRef $oDoc[, $iType = $LOW_FIELD_DOCINFO_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iType               - [optional] an integer value (1-16383). Default is $LOW_FIELD_DOCINFO_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
@@ -4542,7 +4539,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSenderInsert
 ; Description ...: Insert a Sender Field.
-; Syntax ........: _LOWriter_FieldSenderInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sContent = Null[, $iDataType = Null]]]])
+; Syntax ........: _LOWriter_FieldSenderInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bIsFixed = Null[, $sContent = Null[, $iDataType = Null]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -4615,7 +4612,7 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSenderModify
 ; Description ...: Set or Retrieve a Sender Field's settings.
-; Syntax ........: _LOWriter_FieldSenderModify(Byref $oSenderField[, $bIsFixed = Null[, $sContent = Null[, $iDataType = Null]]])
+; Syntax ........: _LOWriter_FieldSenderModify(ByRef $oSenderField[, $bIsFixed = Null[, $sContent = Null[, $iDataType = Null]]])
 ; Parameters ....: $oSenderField        - [in/out] an object. A Sender field Object from a previous _LOWriter_FieldSenderInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sContent            - [optional] a string value. Default is Null. The Content to Display, only valid if $bIsFixed is set to True.
@@ -4683,7 +4680,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarInsert
 ; Description ...: Insert a Set Variable Field.
-; Syntax ........: _LOWriter_FieldSetVarInsert(Byref $oDoc, Byref $oCursor, $sName, $sValue[, $bOverwrite = False[, $iNumFormatKey = Null[, $bIsVisible = Null]]])
+; Syntax ........: _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue[, $bOverwrite = False[, $iNumFormatKey = Null[, $bIsVisible = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sName               - a string value. The name of the Set Variable Field to Create, If the name matches an already existing Set Variable Master Field, that Master will be used, else a new Set Variable Masterfield will be created.
@@ -4771,7 +4768,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterCreate
 ; Description ...: Create a Set Variable Master Field.
-; Syntax ........: _LOWriter_FieldSetVarMasterCreate(Byref $oDoc, $sMasterFieldName)
+; Syntax ........: _LOWriter_FieldSetVarMasterCreate(ByRef $oDoc, $sMasterFieldName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sMasterFieldName    - a string value. The Set Variable Master Field name to create.
 ; Return values .: Success: Object
@@ -4819,7 +4816,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterDelete
 ; Description ...: Delete a Set Variable Master Field.
-; Syntax ........: _LOWriter_FieldSetVarMasterDelete(Byref $oDoc, $vMasterField)
+; Syntax ........: _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $vMasterField        - a variant value. The Set Variable Master Field name or object from _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterGetObj, or _LOWriter_FieldSetVarMasterList to delete.
 ; Return values .: Success: 1
@@ -4875,7 +4872,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterExists
 ; Description ...: Check if a document contains a Set Variable Master Field by name.
-; Syntax ........: _LOWriter_FieldSetVarMasterExists(Byref $oDoc, $sMasterFieldName)
+; Syntax ........: _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sMasterFieldName    - a string value. The Set Variable Master Field name to look for.
 ; Return values .: Success: Boolean
@@ -4915,7 +4912,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterGetObj
 ; Description ...: Retrieve a Set Variable Master Field Object.
-; Syntax ........: _LOWriter_FieldSetVarMasterGetObj(Byref $oDoc, $sMasterFieldName)
+; Syntax ........: _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sMasterFieldName    - a string value. The Set Variable Master Field to retrieve the Object for.
 ; Return values .: Success: Object
@@ -4960,7 +4957,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterList
 ; Description ...: Retrieve a List of current Set Variable Master Fields in a document.
-; Syntax ........: _LOWriter_FieldSetVarMasterList(Byref $oDoc)
+; Syntax ........: _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -5014,7 +5011,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterListFields
 ; Description ...: Return an Array of Objects of dependent fields for a specific Master Field.
-; Syntax ........: _LOWriter_FieldSetVarMasterListFields(Byref $oDoc, Byref $oMasterfield)
+; Syntax ........: _LOWriter_FieldSetVarMasterListFields(ByRef $oDoc, ByRef $oMasterfield)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oMasterfield        - [in/out] an object. The Set Variable Master Field Object returned from a previous _LOWriter_FieldSetVarMasterCreate, or _LOWriter_FieldSetVarMasterGetObj function.
 ; Return values .: Success: 1 or Array
@@ -5052,7 +5049,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterListFields
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarModify
 ; Description ...: Set or Retrieve a Set Variable Field's settings.
-; Syntax ........: _LOWriter_FieldSetVarModify(Byref $oDoc, Byref $oSetVarField[, $sValue = Null[, $iNumFormatKey = Null[, $bIsVisible = Null]]])
+; Syntax ........: _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField[, $sValue = Null[, $iNumFormatKey = Null[, $bIsVisible = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSetVarField        - [in/out] an object. A Set Variable field Object from a previous _LOWriter_FieldSetVarInsert, or _LOWriter_FieldsGetList function.
 ;                  $sValue              - [optional] a string value. Default is Null. The Set Variable Field's value.
@@ -5131,7 +5128,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldsGetList
 ; Description ...: Retrieve an Array of Field Objects contained in a document.
-; Syntax ........: _LOWriter_FieldsGetList(Byref $oDoc[, $iType = $LOW_FIELD_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
+; Syntax ........: _LOWriter_FieldsGetList(ByRef $oDoc[, $iType = $LOW_FIELD_TYPE_ALL[, $bSupportedServices = True[, $bFieldType = True[, $bFieldTypeNum = True]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iType               - [optional] an integer value (1-2147483647). Default is $LOW_FIELD_TYPE_ALL. The type of Field to search for. See Constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Can be BitOr'd together.
 ;                  $bSupportedServices  - [optional] a boolean value. Default is True. If True, adds a column to the array that has the supported service String for that particular Field, To assist in identifying the Field type.
@@ -5194,7 +5191,7 @@ EndFunc   ;==>_LOWriter_FieldsGetList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldShowVarInsert
 ; Description ...: Insert a Show Variable Field.
-; Syntax ........: _LOWriter_FieldShowVarInsert(Byref $oDoc, Byref $oCursor, $sSetVarName[, $bOverwrite = False[, $iNumFormatKey = Null[, $bShowName = Null]]])
+; Syntax ........: _LOWriter_FieldShowVarInsert(ByRef $oDoc, ByRef $oCursor, $sSetVarName[, $bOverwrite = False[, $iNumFormatKey = Null[, $bShowName = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $sSetVarName         - a string value. The Set Variable name to show the value of.
@@ -5268,7 +5265,7 @@ EndFunc   ;==>_LOWriter_FieldShowVarInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldShowVarModify
 ; Description ...:Set or Retrieve a Show Variable Field's settings.
-; Syntax ........: _LOWriter_FieldShowVarModify(Byref $oDoc, Byref $oShowVarField[, $sSetVarName = Null[, $iNumFormatKey = Null[, $bShowName = Null]]])
+; Syntax ........: _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField[, $sSetVarName = Null[, $iNumFormatKey = Null[, $bShowName = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShowVarField       - [in/out] an object. A Show Variable field Object from a previous _LOWriter_FieldShowVarInsert, or _LOWriter_FieldsGetList function.
 ;                  $sSetVarName         - [optional] a string value. Default is Null. The Set Variable name to show the value of.
@@ -5350,7 +5347,7 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldStatCountInsert
 ; Description ...: Insert a Count Field.
-; Syntax ........: _LOWriter_FieldStatCountInsert(Byref $oDoc, Byref $oCursor, $iCountType[, $bOverwrite = False[, $iNumFormat = Null]])
+; Syntax ........: _LOWriter_FieldStatCountInsert(ByRef $oDoc, ByRef $oCursor, $iCountType[, $bOverwrite = False[, $iNumFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $iCountType          - an integer value (0-6). The Type of Data to Count. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -5418,7 +5415,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldStatCountModify
 ; Description ...: Set or Retrieve a Count Field's settings.
-; Syntax ........: _LOWriter_FieldStatCountModify(Byref $oDoc, Byref $oCountField[, $iCountType = Null[, $iNumFormat = Null]])
+; Syntax ........: _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField[, $iCountType = Null[, $iNumFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCountField         - [in/out] an object. A Count field Object from a previous _LOWriter_FieldStatCountInsert, or _LOWriter_FieldsGetList function.
 ;                  $iCountType          - [optional] an integer value (0-6). Default is Null. The type of data to count. See Constants, $LOW_FIELD_COUNT_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -5509,7 +5506,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldStatTemplateInsert
 ; Description ...: Insert a Template Field.
-; Syntax ........: _LOWriter_FieldStatTemplateInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $iFormat = Null]])
+; Syntax ........: _LOWriter_FieldStatTemplateInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $iFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -5565,7 +5562,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldStatTemplateModify
 ; Description ...: Set or Retrieve a Template Field's settings.
-; Syntax ........: _LOWriter_FieldStatTemplateModify(Byref $oTemplateField[, $iFormat = Null])
+; Syntax ........: _LOWriter_FieldStatTemplateModify(ByRef $oTemplateField[, $iFormat = Null])
 ; Parameters ....: $oTemplateField      - [in/out] an object. A Template field Object from a previous _LOWriter_FieldStatTemplateInsert, or _LOWriter_FieldsGetList function.
 ;                  $iFormat             - [optional] an integer value (0-5). Default is Null. The Format to display the template data in. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer.
@@ -5609,7 +5606,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldUpdate
 ; Description ...: Update a Field or all fields in a document.
-; Syntax ........: _LOWriter_FieldUpdate(Byref $oDoc[, $oField = Null[, $bForceUpdate = False]])
+; Syntax ........: _LOWriter_FieldUpdate(ByRef $oDoc[, $oField = Null[, $bForceUpdate = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oField              - [optional] an object. Default is Null. A Field Object returned from a previous Insert, _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, or _LOWriter_FieldsDocInfoGetList function. If left as Null, all Fields will be updated.
 ;                  $bForceUpdate        - [optional] a boolean value. Default is False. If True, Field(s) will be updated whether fixed or not. See remarks.
@@ -5685,7 +5682,7 @@ EndFunc   ;==>_LOWriter_FieldUpdate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldVarSetPageInsert
 ; Description ...: Insert a Set Page Variable Field.
-; Syntax ........: _LOWriter_FieldVarSetPageInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $bRefOn = Null[, $iOffset = Null]]])
+; Syntax ........: _LOWriter_FieldVarSetPageInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $bRefOn = Null[, $iOffset = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -5747,7 +5744,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldVarSetPageModify
 ; Description ...: Set or retrieve a Set Page Variable Field's settings.
-; Syntax ........: _LOWriter_FieldVarSetPageModify(Byref $oPageVarSetField[, $bRefOn = Null[, $iOffset = Null]]])
+; Syntax ........: _LOWriter_FieldVarSetPageModify(ByRef $oPageVarSetField[, $bRefOn = Null[, $iOffset = Null]]])
 ; Parameters ....: $oPageVarSetField    - [in/out] an object. A Set Page Variable field Object from a previous _LOWriter_FieldVarSetPageInsert, or _LOWriter_FieldsGetList function.
 ;                  $bRefOn              - [optional] a boolean value. Default is Null. If True, Reference point is enabled, else disabled.
 ;                  $iOffset             - [optional] an integer value. Default is Null. The offset to start the page count from.
@@ -5806,7 +5803,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldVarShowPageInsert
 ; Description ...: Insert a Show Page Variable Field.
-; Syntax ........: _LOWriter_FieldVarShowPageInsert(Byref $oDoc, Byref $oCursor[, $bOverwrite = False[, $iNumFormat = Null]])
+; Syntax ........: _LOWriter_FieldVarShowPageInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $iNumFormat = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
@@ -5863,7 +5860,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldVarShowPageModify
 ; Description ...: Set or Retrieve a Show Page Variable Field's settings.
-; Syntax ........: _LOWriter_FieldVarShowPageModify(Byref $oPageShowField[, $iNumFormat = Null])
+; Syntax ........: _LOWriter_FieldVarShowPageModify(ByRef $oPageShowField[, $iNumFormat = Null])
 ; Parameters ....: $oPageShowField        - [in/out] an object. A Show Page Variable field Object from a previous _LOWriter_FieldVarShowPageInsert, or _LOWriter_FieldsGetList function.
 ;                  $iNumFormat            - [optional] an integer value (0-71). Default is Null. The numbering format to use for Show Page Variable numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer.

@@ -389,9 +389,9 @@ Global Const _
 ; Line Spacing
 Global Const _
 		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
-		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.]  Min 0, Max 10008 MicroMeters (uM)
-		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line. Min 0, Max 10008 MicroMeters (uM)
-		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height. Min 51 MicroMeters, Max 10008 MicroMeters (uM)
+		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.]  Min 0, Max 10008 Micrometers (uM)
+		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line. Min 0, Max 10008 Micrometers (uM)
+		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height. Min 51 Micrometers, Max 10008 Micrometers (uM)
 
 ; Line Style
 Global Const _
@@ -629,7 +629,7 @@ Global Const _
 
 ; Path Convert Constants.
 Global Const _
-		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input path, determined by StringinStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
+		$LOW_PATHCONV_AUTO_RETURN = 0, _                        ; Automatically returns the opposite of the input path, determined by StringInStr search for either "File:///"(L.O.Office URL) or "[A-Z]:\" (Windows File Path).
 		$LOW_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
 		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
@@ -764,7 +764,7 @@ Global Enum _
 		$LOW_SHAPE_LINE_STYLE_2_DOTS_1_DASH, _                  ; 30 -- A Line consisting of 2 Dots and 1 Dash.
 		$LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS               ; 31 -- A Line with Fine Dots.
 
-; PolygonFlags
+; Polygon Flags
 Global Const _
 		$LOW_SHAPE_POINT_TYPE_NORMAL = 0, _                     ; the point is normal, from the curve discussion view.
 		$LOW_SHAPE_POINT_TYPE_SMOOTH = 1, _                     ; the point is smooth, the first derivation from the curve discussion view.
@@ -776,27 +776,27 @@ Global Enum _
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY, _                   ; 0 -- A Four-way Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_4_WAY, _           ; 1 -- A Four-way Callout Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_DOWN, _            ; 2 -- A Downward Callout Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT, _            ; 3 -- A Lefthand Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT, _            ; 3 -- A Left hand Callout Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT_RIGHT, _      ; 4 -- A Left and Right Callout Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT, _           ; 5 -- A Righthand Callout Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT, _           ; 5 -- A Right hand Callout Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP, _              ; 6 -- A Upward Callout Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN, _         ; 7 -- A Upward and Downward Callout Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, _        ; 8 -- Upward and Righthand Callout Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, _        ; 8 -- Upward and Right hand Callout Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_CIRCULAR, _                ; 9 -- A Circular Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, _            ; 10 -- A Righthand Corner Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, _            ; 10 -- A Right hand Corner Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_DOWN, _                    ; 11 -- A Downward Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT, _                    ; 12 -- A Lefthand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT, _                    ; 12 -- A Left hand Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT_RIGHT, _              ; 13 -- A Left and Right Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_NOTCHED_RIGHT, _           ; 14 -- A Notched Right Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT, _                   ; 15 -- A Righthand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT, _                   ; 15 -- A Right hand Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, _           ; 16 -- A Right or Left Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, _                ; 17 -- A "S"-Shaped Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, _                   ; 18 -- A Split Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, _           ; 19 -- A Striped Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP, _                      ; 20 -- A Upward Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_DOWN, _                 ; 21 -- A Up and Down Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, _                ; 22 -- A Upward and Righthand Arrow.
-		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, _           ; 23 -- A Upward, Righthand and Downward Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, _                ; 22 -- A Upward and Right hand Arrow.
+		$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, _           ; 23 -- A Upward, Right hand and Downward Arrow. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_ARROWS_CHEVRON, _                       ; 24 -- A Chevron Shape Arrow.
 		$LOW_SHAPE_TYPE_ARROWS_PENTAGON, _                      ; 25 -- A Pentagon Shape Arrow.
 		$LOW_SHAPE_TYPE_BASIC_ARC, _                            ; 26 -- An Arc Shape.
@@ -813,7 +813,7 @@ Global Enum _
 		$LOW_SHAPE_TYPE_BASIC_FRAME, _                          ; 37 -- A Frame Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_BASIC_HEXAGON, _                        ; 38 -- A Hexagon Shape.
 		$LOW_SHAPE_TYPE_BASIC_OCTAGON, _                        ; 39 -- A Octagon Shape.
-		$LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM, _                  ; 40 -- A Paallelogram Shape.
+		$LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM, _                  ; 40 -- A Parallelogram Shape.
 		$LOW_SHAPE_TYPE_BASIC_RECTANGLE, _                      ; 41 -- A Rectangle.
 		$LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED, _              ; 42 -- A Rectangle with rounded corners.
 		$LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON, _               ; 43 -- A regular Pentagon.
@@ -823,7 +823,7 @@ Global Enum _
 		$LOW_SHAPE_TYPE_BASIC_TRAPEZOID, _                      ; 47 -- A Trapezoid Shape.
 		$LOW_SHAPE_TYPE_BASIC_TRIANGLE_ISOSCELES, _             ; 48 -- An Isosceles Triangle.
 		$LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT, _                 ; 49 -- A Right Angle Triangle.
-		$LOW_SHAPE_TYPE_CALLOUT_CLOUD, _                        ; 50 -- A Cloud Shaoed Callout.
+		$LOW_SHAPE_TYPE_CALLOUT_CLOUD, _                        ; 50 -- A Cloud Shaped Callout.
 		$LOW_SHAPE_TYPE_CALLOUT_LINE_1, _                       ; 51 -- A Callout with Line style #1.
 		$LOW_SHAPE_TYPE_CALLOUT_LINE_2, _                       ; 52 -- A Callout with Line style #2.
 		$LOW_SHAPE_TYPE_CALLOUT_LINE_3, _                       ; 53 -- A Callout with Line style #3.
@@ -846,7 +846,7 @@ Global Enum _
 		$LOW_SHAPE_TYPE_FLOWCHART_MANUAL_INPUT, _               ; 70 -- A Manual Input Flowchart.
 		$LOW_SHAPE_TYPE_FLOWCHART_MANUAL_OPERATION, _           ; 71 -- A Manual Operation Flowchart.
 		$LOW_SHAPE_TYPE_FLOWCHART_MERGE, _                      ; 72 -- A Merge Flowchart.
-		$LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT, _              ; 73 -- A Multidocument Flowchart.
+		$LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT, _              ; 73 -- A Multi-document Flowchart.
 		$LOW_SHAPE_TYPE_FLOWCHART_OR, _                         ; 74 -- A Or Flowchart.
 		$LOW_SHAPE_TYPE_FLOWCHART_PREPARATION, _                ; 75 -- A Preparation Flowchart.
 		$LOW_SHAPE_TYPE_FLOWCHART_PROCESS, _                    ; 76 -- A Process Flowchart.
@@ -861,7 +861,7 @@ Global Enum _
 		$LOW_SHAPE_TYPE_LINE_CURVE, _                           ; 85 -- A Curve.
 		$LOW_SHAPE_TYPE_LINE_CURVE_FILLED, _                    ; 86 -- A Filled Curve.
 		$LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, _                   ; 87 -- A Freeform Line.
-		$LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, _            ; 88 -- A Filled Freform Line.
+		$LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, _            ; 88 -- A Filled Freeform Line.
 		$LOW_SHAPE_TYPE_LINE_LINE, _                            ; 89 -- A Line.
 		$LOW_SHAPE_TYPE_LINE_POLYGON, _                         ; 90 -- A Polygon.
 		$LOW_SHAPE_TYPE_LINE_POLYGON_45, _                      ; 91 -- A 45 degree Polygon.
@@ -882,17 +882,17 @@ Global Enum _
 		$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, _                 ; 106 -- A Octagon Bevel. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_SYMBOL_BEVEL_SQUARE, _                  ; 107 -- A Square Bevel.
 		$LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE, _                  ; 108 -- A Double Brace.
-		$LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT, _                    ; 109 -- A Lefthand Brace.
-		$LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT, _                   ; 110 -- A Righthand Brace.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT, _                    ; 109 -- A Left hand Brace.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT, _                   ; 110 -- A Right hand Brace.
 		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE, _                ; 111 -- A Double Bracket.
-		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT, _                  ; 112 -- A Lefthand Bracket.
-		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT, _                 ; 113 -- A Righthand Bracket.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT, _                  ; 112 -- A Left hand Bracket.
+		$LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT, _                 ; 113 -- A Right hand Bracket.
 		$LOW_SHAPE_TYPE_SYMBOL_CLOUD, _                         ; 114 -- A Cloud Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_SYMBOL_FLOWER, _                        ; 115 -- A Flower Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 		$LOW_SHAPE_TYPE_SYMBOL_HEART, _                         ; 116 -- A Heart Shape.
 		$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, _                     ; 117 -- A Lightning Shape. ## Note: Lightning is visually different than the one available in L.O. Shapes U.I.
 		$LOW_SHAPE_TYPE_SYMBOL_MOON, _                          ; 118 -- A Moon Shape.
-		$LOW_SHAPE_TYPE_SYMBOL_SMILEY, _                        ; 119 -- A Smily Shape.
+		$LOW_SHAPE_TYPE_SYMBOL_SMILEY, _                        ; 119 -- A Smiley Shape.
 		$LOW_SHAPE_TYPE_SYMBOL_SUN, _                           ; 120 -- A Sun Shape.
 		$LOW_SHAPE_TYPE_SYMBOL_PROHIBITED, _                    ; 121 -- A Prohibited Shape.
 		$LOW_SHAPE_TYPE_SYMBOL_PUZZLE                           ; 122 -- A Puzzle Piece Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
