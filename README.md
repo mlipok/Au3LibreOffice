@@ -8,8 +8,8 @@ This AutoIt UDF for LibreOffice API/SDK provides tools for the automation of tas
 
 Au3LibreOffice UDF currently provides support for the following LibreOffice components:<br>
 - **Writer**<br> 
-- ~~Calc~~ ***In Development***
-- ~~Draw~~ ***In Development*** 
+- **Calc** ***In Development***
+- ~~Draw~~ ***Pending Development*** 
 <br>
 Support for other components will be provided as time permits.<br>
 
@@ -29,8 +29,8 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
 
 - This UDF currently works **only** with the **INSTALLED** version of LibreOffice. The **Portable** version will **Not work**.
 - For those using AutoIt versions **older** than **_3.3.16.1,_** one internal function used for “Saving as” and “Exporting” documents uses Maps, which will **Not** be recognized as proper syntax in AutoIt. 
-- LibreOffice uses Micrometers for sizing internally, all functions in this UDF, unless otherwise stated, use Micrometers. A converter has been created for converting to/from Inches, Centimeters, Printer’s Points, and Millimeters to/from Micrometers, for all sizing needs. _LOWriter_ConvertFromMicrometer, and  _LOWriter_ConvertToMicrometer.
-- LibreOffice uses the Long color format for all color settings, A converter has also been created for converting from/to Hex; (R)ed, (G)reen, (Blue); (H)ue, (S)aturation, and (B)rightness; and (C)yan, (M)agenta, (Y)ellow, Blac(K); to/from long color format. _LOWriter_ConvertColorFromLong, and _LOWriter_ConvertColorToLong.
+- LibreOffice uses Micrometers for sizing internally, all functions in this UDF, unless otherwise stated, use Micrometers. A converter has been created for converting to/from Inches, Centimeters, Printer’s Points, and Millimeters to/from Micrometers, for all sizing needs. _ConvertFromMicrometer, and _ConvertToMicrometer. Either for Writer (LOWriter) or Calc (LOCalc).
+- LibreOffice uses the Long color format for all color settings, A converter has also been created for converting from/to Hex; (R)ed, (G)reen, (Blue); (H)ue, (S)aturation, and (B)rightness; and (C)yan, (M)agenta, (Y)ellow, Blac(K); to/from long color format. _ConvertColorFromLong, and _ConvertColorToLong. Either for Writer (LOWriter) or Calc (LOCalc).
 - This UDF was first made public here: https://www.autoitscript.com/forum/index.php?showtopic=210514
 
 ## Acknowledgements
@@ -44,6 +44,7 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
   - *Word* UDF supplied with AutoIt by @water.
 - Thanks to Andrew Pitonyak for his invaluable book on writing Open Office/ Libre Office Macros, and his Macro collection document.
   - [OpenOffice.org Macros Explained — OOME Third Edition](https://www.pitonyak.org/OOME_3_0.pdf)
+  - [OpenOffice.org Macros Explained — OOME Fourth Edition](https://www.pitonyak.org/OOME_4_1.odt)
   - [Useful Macro Information For OpenOffice.org](https://www.pitonyak.org/AndrewMacro.pdf)
   - Andrew Pitonyak's website: https://www.pitonyak.org/oo.php
 - Thanks to the maintainers

@@ -36,4 +36,4 @@ Global Enum _
 		$__LOCONST_CONVERT_INCH_UM, _                          ; 7 Convert from Inches To Micrometer (100th of a millimeter).
 		$__LOCONST_CONVERT_UM_INCH, _                          ; 8 Convert from Micrometer (100th of a millimeter) To Inches.
 		$__LOCONST_CONVERT_PT_UM, _                            ; 9 Convert from Printers Point to Micrometers.
-		$__LOCONST_CONVERT_UM_PT                               ; 10 Convert from MicroMeters to Printers Point.
+		$__LOCONST_CONVERT_UM_PT                               ; 10 Convert from Micrometers to Printers Point.
