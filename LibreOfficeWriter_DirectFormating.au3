@@ -745,7 +745,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ; Name ..........: _LOWriter_DirFrmtClear
 ; Description ...: Clear any Direct formatting in a Cursor or Text Object.
 ; Syntax ........: _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -831,7 +831,7 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ; Name ..........: _LOWriter_DirFrmtFont
 ; Description ...: Set and Retrieve the Font Settings by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtFont(ByRef $oDoc, ByRef $oSelection[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
@@ -1587,7 +1587,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ; Name ..........: _LOWriter_DirFrmtParDropCaps
 ; Description ...: Set or Retrieve DropCaps settings for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParDropCaps(ByRef $oDoc, ByRef $oSelection[, $iNumChar = Null[, $iLines = Null[, $iSpcTxt = Null[, $bWholeWord = Null[, $sCharStyle = Null[, $bClearDirFrmt = False]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iNumChar            - [optional] an integer value (0-9). Default is Null. The number of characters to make into DropCaps.
 ;                  $iLines              - [optional] an integer value (0,2-9). Default is Null. The number of lines to drop down.
@@ -1799,7 +1799,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ; Name ..........: _LOWriter_DirFrmtParOutLineAndList
 ; Description ...: Set and Retrieve the Outline and List settings for a paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection[, $iOutline = Null[, $sNumStyle = Null[, $bParLineCount = Null[, $iLineCountVal = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iOutline            - [optional] an integer value (0-10). Default is Null. The Outline Level, see Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sNumStyle           - [optional] a string value. Default is Null. The name of the Numbering Style for the Paragraph numbering. Set to "" for None.
@@ -1890,7 +1890,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ; Name ..........: _LOWriter_DirFrmtParPageBreak
 ; Description ...: Set or Retrieve Page Break Settings for a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection[, $iBreakType = Null[, $iPgNumOffSet = Null[, $sPageStyle = Null[, $bClearDirFrmt = False]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
@@ -2206,7 +2206,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ; Name ..........: _LOWriter_DirFrmtParTabStopDelete
 ; Description ...: Delete a TabStop from a Paragraph by Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParTabStopDelete(ByRef $oDoc, ByRef $oSelection, $iTabStop)
-; Parameters ....: $oDoc            - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc            - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection      - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iTabStop        - an integer value. The TabStop position of the TabStop to modify. See Remarks.
 ; Return values .: Success: Boolean.

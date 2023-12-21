@@ -72,7 +72,7 @@
 ; Name ..........: _LOWriter_ParObjCopy
 ; Description ...: "Copies" data selected by the ViewCursor, returning an Object for use in inserting later.
 ; Syntax ........: _LOWriter_ParObjCopy(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -217,7 +217,7 @@ EndFunc   ;==>_LOWriter_ParObjDelete
 ; Name ..........: _LOWriter_ParObjPaste
 ; Description ...: Inserts a ParObjCopy Object at the current ViewCursor location.
 ; Syntax ........: _LOWriter_ParObjPaste(ByRef $oDoc, ByRef $oParObj)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oParObj             - [in/out] an object. A Object returned from _LOWriter_ParObjCopy to insert.
 ; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -312,7 +312,7 @@ EndFunc   ;==>_LOWriter_ParObjSectionsGet
 ; Name ..........: _LOWriter_ParObjSelect
 ; Description ...: Causes a Paragraph Object to be selected by the ViewCursor.
 ; Syntax ........: _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
-; Parameters ....: $oDoc             - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc             - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oObj             - [in/out] an object. A Paragraph Object returned from _LOWriter_ParObjCreateList, a Table or Frame Object, or a Text Cursor with data selected, can be used.
 ; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -366,7 +366,7 @@ EndFunc   ;==>_LOWriter_ParObjSelect
 ; Name ..........: _LOWriter_ParStyleAlignment
 ; Description ...: Set and Retrieve Alignment settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleAlignment(ByRef $oParStyle[, $iHorAlign = Null[, $iVertAlign = Null[, $iLastLineAlign = Null[, $bExpandSingleWord = Null[, $bSnapToGrid = Null[, $iTxtDirection = Null]]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The Horizontal alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $iVertAlign          - [optional] an integer value (0-4). Default is Null. The Vertical alignment of the paragraph. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLastLineAlign      - [optional] an integer value (0-3). Default is Null. The last line alignment for the paragraph. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
@@ -424,7 +424,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; Name ..........: _LOWriter_ParStyleBackColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleBackColor(ByRef $oDoc, $sParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1), to turn Background color off.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
@@ -468,7 +468,7 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ; Name ..........: _LOWriter_ParStyleBorderColor
 ; Description ...: Set and Retrieve the Paragraph Style Border Line Color. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_ParStyleBorderColor(ByRef $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTop                - [optional] an integer value (0-16777215). Default is Null. Set the Top Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -530,7 +530,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 ; Name ..........: _LOWriter_ParStyleBorderPadding
 ; Description ...: Set or retrieve the Border Padding (spacing between the Paragraph and border) settings.
 ; Syntax ........: _LOWriter_ParStyleBorderPadding(ByRef $oParStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iAll                - [optional] an integer value. Default is Null. Set all four padding distances to one distance in Micrometers (uM).
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Distance between the Border and Paragraph in Micrometers(uM).
 ;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Distance between the Border and Paragraph in Micrometers(uM).
@@ -584,7 +584,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ; Name ..........: _LOWriter_ParStyleBorderStyle
 ; Description ...: Set and retrieve the Paragraph Style Border Line style. Libre Office Version 3.4 and Up.
 ; Syntax ........: _LOWriter_ParStyleBorderStyle(ByRef $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -645,7 +645,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ; Name ..........: _LOWriter_ParStyleBorderWidth
 ; Description ...: Set and retrieve the Paragraph Style Border Line Width, or the Paragraph Style Connect Border option.
 ; Syntax ........: _LOWriter_ParStyleBorderWidth(ByRef $oParStyle[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $bConnectBorder = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top Border Line width of the Paragraph Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom Border Line Width of the Paragraph Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Paragraph Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
@@ -714,7 +714,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 ; Name ..........: _LOWriter_ParStyleCreate
 ; Description ...: Create a new Paragraph Style in a Document.
 ; Syntax ........: _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParStyle           - a string value. The Name of the new Paragraph Style to Create.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -765,8 +765,8 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ; Name ..........: _LOWriter_ParStyleDelete
 ; Description ...: Delete a User-Created Paragraph Style from a Document.
 ; Syntax ........: _LOWriter_ParStyleDelete(ByRef $oDoc, $oParStyle[, $bForceDelete = False[, $sReplacementStyle = "Default Paragraph Style"]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function. Must be a User-Created Style, not a built-in Style native to LibreOffice.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function. Must be a User-Created Style, not a built-in Style native to LibreOffice.
 ;                  $bForceDelete        - [optional] a boolean value. Default is False. If True, Paragraph style will be deleted regardless of whether it is in use or not.
 ;                  $sReplacementStyle   - [optional] a string value. Default is "Default Paragraph Style". The Paragraph style to use instead of the one being deleted if the paragraph style being deleted is applied to text in the document.
 ; Return values .: Success: 1
@@ -827,8 +827,8 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ; Name ..........: _LOWriter_ParStyleDropCaps
 ; Description ...: Set or Retrieve DropCaps settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleDropCaps(ByRef $oDoc, $oParStyle[, $iNumChar = Null[, $iLines = Null[, $iSpcTxt = Null[, $bWholeWord = Null[, $sCharStyle = Null]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iNumChar            - [optional] an integer value (0-9). Default is Null. The number of characters to make into DropCaps.
 ;                  $iLines              - [optional] an integer value (0,2-9). Default is Null. The number of lines to drop down.
 ;                  $iSpcTxt             - [optional] an integer value. Default is Null. The distance between the drop cap and the following text. in Micrometers.
@@ -893,7 +893,7 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ; Name ..........: _LOWriter_ParStyleEffect
 ; Description ...: Set or Retrieve the Font Effect settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleEffect(ByRef $oParStyle[, $iRelief = Null[, $iCase = Null[, $bHidden = Null[, $bOutline = Null[, $bShadow = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If True, the Characters are hidden.
@@ -946,7 +946,7 @@ EndFunc   ;==>_LOWriter_ParStyleEffect
 ; Name ..........: _LOWriter_ParStyleExists
 ; Description ...: Check whether a Document contains a specific Paragraph Style by name.
 ; Syntax ........: _LOWriter_ParStyleExists(ByRef $oDoc, $sParStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParStyle           - a string value. The Paragraph Style Name to search for.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -977,8 +977,8 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Name ..........: _LOWriter_ParStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. The Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
@@ -1035,7 +1035,7 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 ; Name ..........: _LOWriter_ParStyleFontColor
 ; Description ...: Set or retrieve the font color, transparency and highlighting of a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleFontColor(ByRef $oParStyle[, $iFontColor = Null[, $iTransparency = Null[, $iHighlight = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iFontColor          - [optional] an integer value (-1-16777215). Default is Null. the desired Color value in Long Integer format, to make the font, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
 ;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. A Color value in Long Integer format, to highlight the text in, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
@@ -1085,7 +1085,7 @@ EndFunc   ;==>_LOWriter_ParStyleFontColor
 ; Name ..........: _LOWriter_ParStyleGetObj
 ; Description ...: Retrieve a Paragraph Style Object for use with other ParStyle functions.
 ; Syntax ........: _LOWriter_ParStyleGetObj(ByRef $oDoc, $sParStyle)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sParStyle           - a string value. The Paragraph Style name to retrieve the Object for.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1123,7 +1123,7 @@ EndFunc   ;==>_LOWriter_ParStyleGetObj
 ; Name ..........: _LOWriter_ParStyleHyphenation
 ; Description ...: Set or Retrieve Hyphenation settings for a paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleHyphenation(ByRef $oParStyle[, $bAutoHyphen = Null[, $bHyphenNoCaps = Null[, $iMaxHyphens = Null[, $iMinLeadingChar = Null[, $iMinTrailingChar = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoHyphen         - [optional] a boolean value. Default is Null. If True, automatic hyphenation is applied.
 ;                  $bHyphenNoCaps       - [optional] a boolean value. Default is Null. If True, hyphenation of words written in CAPS is disabled for this paragraph. Libre 6.4 and up.
 ;                  $iMaxHyphens         - [optional] an integer value (0-99). Default is Null. The maximum number of consecutive hyphens.
@@ -1178,7 +1178,7 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ; Name ..........: _LOWriter_ParStyleIndent
 ; Description ...: Set or Retrieve Indent settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleIndent(ByRef $oParStyle[, $iBeforeTxt = Null[, $iAfterTxt = Null[, $iFirstLine = Null[, $bAutoFirstLine = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBeforeTxt          - [optional] an integer value (-9998989-17094). Default is Null. The amount of space to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM).
 ;                  $iAfterTxt           - [optional] an integer value (-9998989-17094). Default is Null. The amount of space to indent the paragraph from the page margin. If you want the paragraph to extend into the page margin, enter a negative number. Set in Micrometers(uM).
 ;                  $iFirstLine          - [optional] an integer value (-57785-17094). Default is Null. The amount to Indent the first line of a paragraph. Set in Micrometers(uM).
@@ -1229,8 +1229,8 @@ EndFunc   ;==>_LOWriter_ParStyleIndent
 ; Name ..........: _LOWriter_ParStyleOrganizer
 ; Description ...: Set or retrieve the Organizer settings of a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleOrganizer(ByRef $oDoc, $oParStyle[, $sNewParStyleName = Null[, $sFollowStyle = Null[, $sParentStyle = Null[, $bAutoUpdate = Null[, $bHidden = Null]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sNewParStyleName    - [optional] a string value. Default is Null. The new name to set the paragraph style called in $oParStyle to.
 ;                  $sFollowStyle        - [optional] a string value. Default is Null. The Paragraph Style name to apply to the following paragraph.
 ;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing  paragraph style (or an Empty String ("") = - None -) to apply its settings to the current style. Use the other settings to modify the inherited style settings.
@@ -1339,8 +1339,8 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ; Name ..........: _LOWriter_ParStyleOutLineAndList
 ; Description ...: Set and Retrieve the Outline and List settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleOutLineAndList(ByRef $oDoc, $oParStyle[, $iOutline = Null[, $sNumStyle = Null[, $bParLineCount = Null[, $iLineCountVal = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iOutline            - [optional] an integer value (0-10). Default is Null. The Outline Level, see Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sNumStyle           - [optional] a string value. Default is Null. Specifies the Numbering Style name for Paragraph numbering. Set to "" for None.
 ;                  $bParLineCount       - [optional] a boolean value. Default is Null. If True, the paragraph is included in the line numbering.
@@ -1393,7 +1393,7 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ; Name ..........: _LOWriter_ParStyleOverLine
 ; Description ...: Set and retrieve the OverLine settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleOverLine(ByRef $oParStyle[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not Overlined.
 ;                  $iOverLineStyle      - [optional] an integer value (0-18). Default is Null. The style of the Overline line, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3. See Remarks.
 ;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored, must be set to true in order to set the Overline color.
@@ -1445,8 +1445,8 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ; Name ..........: _LOWriter_ParStylePageBreak
 ; Description ...: Set or Retrieve Page Break Settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStylePageBreak(ByRef $oDoc, $oParStyle[, $iBreakType = Null[, $iPgNumOffSet = Null[, $sPageStyle = Null]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $sPageStyle          - [optional] a string value. Default is Null. Creates a page break before the paragraph it belongs to and assigns the value as the name of the new page style to use. See remarks.
@@ -1500,7 +1500,7 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ; Name ..........: _LOWriter_ParStylePosition
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: _LOWriter_ParStylePosition(ByRef $oParStyle[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for Superscript is active.
 ;                  $iSuperScript        - [optional] an integer value (0-100,14000) Default is Null. The Superscript percentage value. See Remarks.
 ;                  $bAutoSub            - [optional] a boolean value. Default is Null. If True, automatic sizing for Subscript is active.
@@ -1557,7 +1557,7 @@ EndFunc   ;==>_LOWriter_ParStylePosition
 ; Name ..........: _LOWriter_ParStyleRotateScale
 ; Description ...: Set or retrieve the character rotational and Scale settings for a paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleRotateScale(ByRef $oParStyle[, $iRotation = Null[, $iScaleWidth = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iRotation           - [optional] an integer value (0,90,270). Default is Null. Degrees to rotate the text.
 ;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to  horizontally stretch or compress the text. 100 is normal sizing.
 ; Return values .: Success: 1 or Array.
@@ -1600,7 +1600,7 @@ EndFunc   ;==>_LOWriter_ParStyleRotateScale
 ; Name ..........: _LOWriter_ParStyleSet
 ; Description ...: Set a Paragraph style for a paragraph by Cursor or paragraph Object.
 ; Syntax ........: _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oObj           - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
 ;                  $sParStyle      - a string value. The Paragraph Style name to set the paragraph to.
 ; Return values .: Success: 1
@@ -1642,7 +1642,7 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; Name ..........: _LOWriter_ParStylesGetNames
 ; Description ...: Retrieve a list of all Paragraph Style names available for a document.
 ; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly      - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
 ;                  $bAppliedOnly   - [optional] a boolean value. Default is False. If True only Applied paragraph Styles are returned.
 ; Return values .: Success: Integer or Array
@@ -1713,7 +1713,7 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ; Name ..........: _LOWriter_ParStyleShadow
 ; Description ...: Set or Retrieve the Shadow settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleShadow(ByRef $oParStyle[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The shadow width, set in Micrometers.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The color of the shadow, set in Long Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the shadow is transparent.
@@ -1767,7 +1767,7 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ; Name ..........: _LOWriter_ParStyleSpace
 ; Description ...: Set and Retrieve Line Spacing settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleSpace(ByRef $oParStyle[, $iAbovePar = Null[, $iBelowPar = Null[, $bAddSpace = Null[, $iLineSpcMode = Null[, $iLineSpcHeight = Null[, $bPageLineSpc = Null]]]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iAbovePar           - [optional] an integer value (0-10008). Default is Null. The Space above a paragraph, in Micrometers.
 ;                  $iBelowPar           - [optional] an integer value (0-10008). Default is Null. The Space Below a paragraph, in Micrometers.
 ;                  $bAddSpace           - [optional] a boolean value. Default is Null. If true, the top and bottom margins of the paragraph should not be applied when the previous and next paragraphs have the same style. Libre Office Version 3.6 and Up.
@@ -1836,7 +1836,7 @@ EndFunc   ;==>_LOWriter_ParStyleSpace
 ; Name ..........: _LOWriter_ParStyleSpacing
 ; Description ...: Set and retrieve the spacing between characters (Kerning) for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleSpacing(ByRef $oParStyle[, $bAutoKerning = Null[, $nKerning = Null]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bAutoKerning        - [optional] a boolean value. Default is Null. If True, applies a spacing in between certain pairs of characters.
 ;                  $nKerning            - [optional] a general number value (-2-928.8). Default is Null. The kerning value of the characters. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: 1 or Array.
@@ -1887,7 +1887,7 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 ; Name ..........: _LOWriter_ParStyleStrikeOut
 ; Description ...: Set or Retrieve the StrikeOut settings for a Paragraph style.
 ; Syntax ........: _LOWriter_ParStyleStrikeOut(ByRef $oParStyle[, $bWordOnly = Null[, $bStrikeOut = Null[, $iStrikeLineStyle = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If True, strike out is applied to words only, skipping whitespaces.
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. If True, strikeout is applied to characters.
 ;                  $iStrikeLineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1934,7 +1934,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ; Name ..........: _LOWriter_ParStyleTabStopCreate
 ; Description ...: Create a new TabStop for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition[, $iAlignment = Null[, $iFillChar = Null[, $iDecChar = Null]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Micrometers (uM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1996,8 +1996,8 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ; Name ..........: _LOWriter_ParStyleTabStopDelete
 ; Description ...: Delete a TabStop from a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopDelete(ByRef $oDoc, $oParStyle, $iTabStop)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
 ; Return values .: Success: Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2044,7 +2044,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 ; Name ..........: _LOWriter_ParStyleTabStopList
 ; Description ...: Retrieve a List of TabStops available in a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2081,7 +2081,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ; Name ..........: _LOWriter_ParStyleTabStopMod
 ; Description ...: Modify or retrieve the properties of an existing TabStop in a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopMod(ByRef $oParStyle, $iTabStop[, $iPosition = Null[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iTabStop            - an integer value. The Tab position of the TabStop to modify. See Remarks.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The New position to set the called Tab Stop position to. Set in Micrometers (uM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.
@@ -2154,7 +2154,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopMod
 ; Name ..........: _LOWriter_ParStyleTxtFlowOpt
 ; Description ...: Set and Retrieve Text Flow settings for a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTxtFlowOpt(ByRef $oParStyle[, $bParSplit = Null[, $bKeepTogether = Null[, $iParOrphans = Null[, $iParWidows = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bParSplit           - [optional] a boolean value. Default is Null. If False, prevents the paragraph from splitting between two pages or columns
 ;                  $bKeepTogether       - [optional] a boolean value. Default is Null. If True, prevents page or column breaks between this and the following paragraph
 ;                  $iParOrphans         - [optional] an integer value (0,2-9). Default is Null. The minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. 0 = (disabled).
@@ -2204,7 +2204,7 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ; Name ..........: _LOWriter_ParStyleUnderLine
 ; Description ...: Set and retrieve the Underline settings for a paragraph style.
 ; Syntax ........: _LOWriter_ParStyleUnderLine(ByRef $oParStyle[, $bWordOnly = Null[, $iUnderLineStyle = Null[, $bULHasColor = Null[, $iULColor = Null]]]])
-; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $bWordOnly           - [optional] a boolean value. Default is Null. If true, white spaces are not underlined.
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The Underline line style, see constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
