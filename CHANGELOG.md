@@ -71,6 +71,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ### Added
 
+- More Undo Functions and Examples
+	- _LOWriter_DocRedoClear
+	- _LOWriter_DocUndoActionBegin
+	- _LOWriter_DocUndoActionEnd
+	- _LOWriter_DocUndoClear
+	- _LOWriter_DocUndoReset
 - Shape Functions and Examples
 	- _LOWriter_DocHasShapeName
 	- _LOWriter_ShapeAreaColor
@@ -111,14 +117,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ShapeLineStyleName
 	- __LOWriter_ShapePointGetSettings
 	- __LOWriter_ShapePointModify
-
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 
 ### Changed
 
+- Undo/Redo Action Title retrieval functions to no longer return an error when Undo/Redo Action Titles are unavailable, instead they  return an empty string or array, respectively.
+	- _LOWriter_DocRedoCurActionTitle;
+	- _LOWriter_DocRedoGetAllActionTitles;
+	- _LOWriter_DocUndoGetAllActionTitles;
+	- _LOWriter_DocUndoCurActionTitle.
 - Minor documentation adjustments.
 - Filled in ReadMe.
-- Moved Search Descriptor functions from LibreOfficeWriter.au3 to LibreOfficeWriter_Helper.au3. 
+- Moved Search Descriptor functions from LibreOfficeWriter.au3 to LibreOfficeWriter_Helper.au3.
 	- _LOWriter_SearchDescriptorCreate
 	- _LOWriter_SearchDescriptorModify
 	- _LOWriter_SearchDescriptorSimilarityModify
