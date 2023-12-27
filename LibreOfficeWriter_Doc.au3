@@ -77,6 +77,7 @@
 ; _LOWriter_DocPrintPageSettings
 ; _LOWriter_DocPrintSizeSettings
 ; _LOWriter_DocRedo
+; _LOWriter_DocRedoClear
 ; _LOWriter_DocRedoCurActionTitle
 ; _LOWriter_DocRedoGetAllActionTitles
 ; _LOWriter_DocRedoIsPossible
@@ -86,9 +87,13 @@
 ; _LOWriter_DocSaveAs
 ; _LOWriter_DocToFront
 ; _LOWriter_DocUndo
+; _LOWriter_DocUndoActionBegin
+; _LOWriter_DocUndoActionEnd
+; _LOWriter_DocUndoClear
 ; _LOWriter_DocUndoCurActionTitle
 ; _LOWriter_DocUndoGetAllActionTitles
 ; _LOWriter_DocUndoIsPossible
+; _LOWriter_DocUndoReset
 ; _LOWriter_DocViewCursorGetPosition
 ; _LOWriter_DocVisible
 ; _LOWriter_DocZoom
@@ -3648,6 +3653,35 @@ Func _LOWriter_DocRedo(ByRef $oDoc)
 EndFunc   ;==>_LOWriter_DocRedo
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocRedoClear
+; Description ...: Clear all Redo Actions in the Redo Action List.
+; Syntax ........: _LOWriter_DocRedoClear(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Redo Actions.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Related .......: _LOWriter_DocUndoClear
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocRedoClear(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.clearRedo()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_DocRedoClear
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocRedoCurActionTitle
 ; Description ...: Retrieve the current Redo action Title.
 ; Syntax ........: _LOWriter_DocRedoCurActionTitle(ByRef $oDoc)
@@ -3656,10 +3690,9 @@ EndFunc   ;==>_LOWriter_DocRedo
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have a redo action available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Returns the current available redo action Title as a String.
+;				   @Error 0 @Extended 0 Return String = No Current Redo Action available. Returning Empty String.
+;				   @Error 0 @Extended 1 Return String = Returns the current available redo action Title as a String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3676,7 +3709,7 @@ Func _LOWriter_DocRedoCurActionTitle(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	EndIf
 EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 
@@ -3689,10 +3722,9 @@ EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have any redo actions available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Returns all available redo action Titles in an array of Strings.
+;				   @Error 0 @Extended 0 Return Array = No Redo Actions currently available. Returning empty array.
+;				   @Error 0 @Extended 1 Return Array = Returns all available redo action Titles in an array of Strings.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3709,7 +3741,7 @@ Func _LOWriter_DocRedoGetAllActionTitles(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllRedoActionTitles())
 	EndIf
 EndFunc   ;==>_LOWriter_DocRedoGetAllActionTitles
 
@@ -4155,6 +4187,98 @@ Func _LOWriter_DocUndo(ByRef $oDoc)
 EndFunc   ;==>_LOWriter_DocUndo
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocUndoActionBegin
+; Description ...: Begin an Undo Action group.
+; Syntax ........: _LOWriter_DocUndoActionBegin(ByRef $oDoc[, $sName = "AU3LO-Automation"])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sName               - [optional] a string value. Default is "AU3LO-Automation". The name of the Undo Action to display in the UI when completed.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully began an Undo Action group recording.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This begins an Undo Action Group, any functions and actions done after this function is called will be grouped together, and if undone, all actions will be undone together at once.
+;				   _LOWriter_DocUndoActionEnd must be called after this function before this undo group will become available in the Undo Action list.
+;				   _LOWriter_DocUndoActionBegin can be nested, i.e. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOWriter_DocUndoActionEnd will appear.
+; Related .......: _LOWriter_DocUndoActionEnd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocUndoActionBegin(ByRef $oDoc, $sName = "AU3LO-Automation")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.UndoManager.enterUndoContext($sName)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_DocUndoActionBegin
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocUndoActionEnd
+; Description ...: End the last started Undo Action Group.
+; Syntax ........: _LOWriter_DocUndoActionEnd(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully ended the last Undo Action group recording.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This stops the grouping of actions into the last created Undo Action Group.
+; Related .......: _LOWriter_DocUndoActionBegin
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocUndoActionEnd(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.leaveUndoContext()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_DocUndoActionEnd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocUndoClear
+; Description ...: Clear all Undo and Redo Actions in the Undo/Redo Action List.
+; Syntax ........: _LOWriter_DocUndoClear(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Undo and Redo Actions.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Related .......: _LOWriter_DocRedoClear
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocUndoClear(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.clear()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_DocUndoClear
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocUndoCurActionTitle
 ; Description ...: Retrieve the current Undo action Title.
 ; Syntax ........: _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
@@ -4163,10 +4287,9 @@ EndFunc   ;==>_LOWriter_DocUndo
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have an undo action available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Returns the current available undo action Title in String format.
+;				   @Error 0 @Extended 0 Return String = No Current Undo Action available. Returning Empty String.
+;				   @Error 0 @Extended 1 Return String = Returns the current available undo action Title in String format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4183,7 +4306,7 @@ Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf
 
 EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
@@ -4197,10 +4320,9 @@ EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have any undo actions available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Returns all available undo action Titles in an array of Strings.
+;				   @Error 0 @Extended 0 Return Array = No Undo Actions currently available. Returning empty array.
+;				   @Error 0 @Extended 1 Return Array = Returns all available undo action Titles in an array of Strings.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4217,7 +4339,7 @@ Func _LOWriter_DocUndoGetAllActionTitles(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllUndoActionTitles())
 	EndIf
 EndFunc   ;==>_LOWriter_DocUndoGetAllActionTitles
 
@@ -4247,6 +4369,35 @@ Func _LOWriter_DocUndoIsPossible(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isUndoPossible())
 EndFunc   ;==>_LOWriter_DocUndoIsPossible
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocUndoReset
+; Description ...: Reset the UndoManager.
+; Syntax ........: _LOWriter_DocUndoReset(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully reset the undo manager.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Calling this function does the following: remove all locks from the undo manager; closes all open undo group actions, clears all undo actions, clears all redo actions.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocUndoReset(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.reset()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_DocUndoReset
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocViewCursorGetPosition
