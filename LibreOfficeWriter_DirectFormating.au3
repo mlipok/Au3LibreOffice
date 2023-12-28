@@ -1889,12 +1889,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtParPageBreak
 ; Description ...: Set or Retrieve Page Break Settings for a Paragraph by Direct Formatting.
-; Syntax ........: _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection[, $iBreakType = Null[, $iPgNumOffSet = Null[, $sPageStyle = Null[, $bClearDirFrmt = False]]]])
+; Syntax ........: _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection[, $iBreakType = Null[, $sPageStyle = Null[, $iPgNumOffSet = Null[, $bClearDirFrmt = False]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iBreakType          - [optional] an integer value (0-6). Default is Null. The Page Break Type. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
-;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $sPageStyle          - [optional] a string value. Default is Null. Creates a page break before the paragraph it belongs to and assigns the new page style to use. Note: If you set this parameter, to remove the page break setting you must set this to "".
+;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Page Break, including Type, Number offset and Page Style. See Remarks.
 ; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1905,13 +1905,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;				   @Error 1 @Extended 4 Return 0 = Page Style called in $sPageStyle not found in document.
 ;				   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
 ;				   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 7 Return 0 = $iPgNumOffSet not an Integer or less than 0.
-;				   @Error 1 @Extended 8 Return 0 = $sPageStyle not a String.
+;				   @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
+;				   @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $iBreakType
-;				   |								2 = Error setting $iPgNumOffSet
-;				   |								4 = Error setting $sPageStyle
+;				   |								2 = Error setting $sPageStyle
+;				   |								4 = Error setting $iPgNumOffSet
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1937,7 +1937,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType = Null, $iPgNumOffSet = Null, $sPageStyle = Null, $bClearDirFrmt = False)
+Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType = Null, $sPageStyle = Null, $iPgNumOffSet = Null, $bClearDirFrmt = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1951,15 +1951,15 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 		$oSelection.PageDescName = ""
 		$oSelection.BreakType = $LOW_BREAK_NONE
 		$oSelection.setPropertyToDefault("BreakType")
-		$oSelection.setPropertyToDefault("PageNumberOffset")
 		$oSelection.setPropertyToDefault("PageDescName")
+		$oSelection.setPropertyToDefault("PageNumberOffset")
 
 		If __LOWriter_VarsAreNull($iBreakType, $iPgNumOffSet, $sPageStyle) Then Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 	EndIf
 
 	If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$vReturn = __LOWriter_ParPageBreak($oSelection, $iBreakType, $iPgNumOffSet, $sPageStyle)
+	$vReturn = __LOWriter_ParPageBreak($oSelection, $iBreakType, $sPageStyle, $iPgNumOffSet)
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 

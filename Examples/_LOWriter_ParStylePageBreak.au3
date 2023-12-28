@@ -24,8 +24,8 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR("Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended)
 
-	; Set "Default Paragraph Style" Page break settings, Break type = $LOW_BREAK_PAGE_BEFORE, Page number offset = 2, Page style = "Landscape".
-	_LOWriter_ParStylePageBreak($oDoc, $oParStyle, $LOW_BREAK_PAGE_BEFORE, 2, "Landscape")
+	; Set "Default Paragraph Style" Page break settings, Break type = $LOW_BREAK_PAGE_BEFORE, Page style = "Landscape", Page number offset = 2.
+	_LOWriter_ParStylePageBreak($oDoc, $oParStyle, $LOW_BREAK_PAGE_BEFORE, "Landscape", 2)
 	If @error Then _ERROR("Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
@@ -34,8 +34,8 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The Paragraph's current Page break settings are as follows: " & @CRLF & _
 			"What type of Page break, if any is used? (see UDF constants): " & $avParStyleSettings[0] & @CRLF & _
-			"What is the Page number offset, if any?: " & $avParStyleSettings[1] & @CRLF & _
-			"What different page style, if any, is used: " & $avParStyleSettings[2])
+			"What different page style, if any, is used: " & $avParStyleSettings[1] & @CRLF & _
+			"What is the Page number offset, if any?: " & $avParStyleSettings[2])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

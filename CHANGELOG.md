@@ -44,7 +44,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocUndoIsPossible
 	- _LOCalc_DocVisible
 	- _LOCalc_DocZoom
-
 - Sheet Functions and Examples
 	- _LOCalc_SheetActivate
 	- _LOCalc_SheetAdd
@@ -60,7 +59,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
 	- _LOCalc_SheetVisible
-
 - Cell Functions and Examples
 	- _LOCalc_CellFormula
 	- _LOCalc_CellGetType
@@ -89,10 +87,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ShapeLineArrowStyles
 	- _LOWriter_ShapeLineProperties
 	- _LOWriter_ShapeName
- 	- _LOWriter_ShapePointsAdd
+	- _LOWriter_ShapePointsAdd
 	- _LOWriter_ShapePointsGetCount
- 	- _LOWriter_ShapePointsModify
- 	- _LOWriter_ShapePointsRemove
+	- _LOWriter_ShapePointsModify
+	- _LOWriter_ShapePointsRemove
 	- _LOWriter_ShapePosition
 	- _LOWriter_ShapeRotateSlant
 	- _LOWriter_ShapesGetNames
@@ -121,6 +119,23 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ### Changed
 
+- ReArranged Parameters in PageBreak functions to be more logically ordered. The previous order was:
+
+	> $iBreakType = Null, $iPgNumOffSet = Null, $sPageStyle = Null
+
+	However the functions stated:
+
+	> _Break Type_ must be set **before** _Page Style_ will be able to be set, and _page style_ needs set **before** _$iPgNumOffSet_ can be set.
+
+	Thus the parameters have been rearranged to:
+
+	> $iBreakType = Null, $sPageStyle = Null, $iPgNumOffSet
+
+	Affected functions are:
+	- _LOWriter_DirFrmtParPageBreak
+	- _LOWriter_ParStylePageBreak
+	- __LOWriter_ParPageBreak
+
 - Undo/Redo Action Title retrieval functions to no longer return an error when Undo/Redo Action Titles are unavailable, instead they  return an empty string or array, respectively.
 	- _LOWriter_DocRedoCurActionTitle;
 	- _LOWriter_DocRedoGetAllActionTitles;
@@ -134,7 +149,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_SearchDescriptorSimilarityModify
 - Default value of $__LOWCONST_SLEEP_DIV from 15 to 0.
 - Sorted Constants in LibreOfficeWriter_Constants alphabetically.
-- Renamed $LOW_FIELDADV_TYPE_ Constants to $LOW_FIELD_ADV_TYPE_ to match formatting of other Field Type Constants.
+- Renamed $LOW_FIELDADV_TYPE_* Constants to $LOW_FIELD_ADV_TYPE_* to match formatting of other Field Type Constants.
 
 ### Fixed
 
@@ -143,10 +158,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_EndnoteGetAnchor
 	- _LOWriter_FrameGetAnchor
 	- _LOWriter_ImageGetAnchor
-	
 - Missing Includes in LibreOfficeWriter file.
 - Ternary Operators missing Parenthesis in responses.
-- Export extension was incorrect, "jjpe" --> "jpe" 
+- Export extension was incorrect, "jjpe" --> "jpe"
 - Spell Checked the comments and Headers.
 
 ## [0.9.1] - 2023-10-28
@@ -160,6 +174,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 ## [0.9.0] - 2023-10-28
 
 **LibreOfficeWriter**
+
 ### Added 
 
 - directive for Au3Check to each UDF file branch. (@mLipok)
@@ -244,6 +259,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 ## [0.0.0.3] - 2023-08-10
 
 **LibreOfficeWriter**
+
 ### Added
 
 - Paragraph Object functions which allows the ability to copy and paste content without using the clipboard quickly. Thanks to user @Heiko for inspiration.
@@ -293,6 +309,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 ## [0.0.0.2] - 2023-07-16
 
 **LibreOfficeWriter**
+
 ### Added
 
 - UDF version number in the UDF Header.
@@ -320,6 +337,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 ## [0.0.0.1] - 2023-07-02
 
 **LibreOfficeWriter**
+
 ### Added
 
 - Initial UDF Release.
