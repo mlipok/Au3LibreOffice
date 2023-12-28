@@ -1,3 +1,5 @@
+![image](https://github.com/mlipok/Au3LibreOffice/assets/11089482/e7e0966b-2f25-41d9-b927-cb5661dc6c6b)
+
 # Au3LibreOffice
 
 ## Description
