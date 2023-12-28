@@ -4,7 +4,7 @@
 
 ## Description
 
-This AutoIt UDF for LibreOffice API/SDK provides tools for the automation of tasks in LibreOffice using the AutoIt Scripting language.
+This [AutoIt](https://www.autoitscript.com/) UDF for LibreOffice API/SDK provides tools for the automation of tasks in LibreOffice using the [AutoIt Scripting language](https://www.autoitscript.com/).
 
 ## Currently Supported
 
