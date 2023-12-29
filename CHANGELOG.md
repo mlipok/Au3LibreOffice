@@ -1,15 +1,15 @@
 # Changelog
 
-All notable changes to "Au3LibreOffice" SDK/API will be documented in this file.
+All notable changes to ["Au3LibreOffice"](https://github.com/mlipok/Au3LibreOffice/tree/main) SDK/API will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [?.?.?] - 2024-
+## [0.10.0] - 2024-
 
-**LibreOfficeCalc**
+> [!NOTE] **LibreOfficeCalc**
 
 ### Added
 
@@ -58,12 +58,29 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetsGetNames
 	- _LOCalc_SheetVisible
 - Cell Functions and Examples
+	- _LOCalc_CellBackColor
+	- _LOCalc_CellClearContents
 	- _LOCalc_CellFormula
 	- _LOCalc_CellGetType
-	- _LOCalc_CellText
+	- _LOCalc_CellQueryColumnDiff
+	- _LOCalc_CellQueryContents
+	- _LOCalc_CellQueryDependents
+	- _LOCalc_CellQueryEmpty
+	- _LOCalc_CellQueryFormula
+	- _LOCalc_CellQueryIntersection
+	- _LOCalc_CellQueryPrecedents
+	- _LOCalc_CellQueryRowDiff
+	- _LOCalc_CellQueryVisible
+	- _LOCalc_CellRangeCopyMove
+	- _LOCalc_CellRangeData
+	- _LOCalc_CellRangeDelete
+	- _LOCalc_CellRangeFormula
+	- _LOCalc_CellRangeInsert
+	- _LOCalc_CellRangeNumbers
+	- _LOCalc_CellString
 	- _LOCalc_CellValue
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Added
 
@@ -163,7 +180,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [0.9.1] - 2023-10-28
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Changed
 
@@ -171,7 +188,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [0.9.0] - 2023-10-28
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Added
 
@@ -256,7 +273,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 ## [0.0.0.3] - 2023-08-10
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Added
 
@@ -284,16 +301,16 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 ### Changed
 
 - Renamed Name functions and examples for consistency.
-	- _DocListTableNames --> _TablesGetNames
-	- _FramesListNames --> _FramesGetNames
-	- _ShapesListNames --> _ShapesGetNames 	
-	- _ParGetObjects --> _ParObjCreateList.
-	- _ParSectionsGet --> _ParObjSectionsGet.
-	- _TableGetByCursor --> _TableGetObjByCursor.
-	- _TableGetByName --> _TableGetObjByName.
-	- _TableGetCellByCursor --> _TableGetCellObjByCursor.
-	- _TableGetCellByName --> _TableGetCellObjByName.
-	- _TableGetCellByPosition --> _TableGetCellObjByPosition.
+	- `_DocListTableNames` --> `_TablesGetNames`
+	- `_FramesListNames` --> `_FramesGetNames`
+	- `_ShapesListNames` --> `_ShapesGetNames` 	
+	- `_ParGetObjects` --> `_ParObjCreateList`.
+	- `_ParSectionsGet` --> `_ParObjSectionsGet`.
+	- `_TableGetByCursor` --> `_TableGetObjByCursor`.
+	- `_TableGetByName` --> `_TableGetObjByName`.
+	- `_TableGetCellByCursor` --> `_TableGetCellObjByCursor`.
+	- `_TableGetCellByName` --> `_TableGetCellObjByName`.
+	- `_TableGetCellByPosition` --> `_TableGetCellObjByPosition`.
 - Removed "IsCollpased" check and error from _DocGetString.
 - _FramesListNames to have an option to search for Frames listed under shapes.
 - _ShapesGetNames, Corrected an error that could occur if images are present.
@@ -306,7 +323,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 ## [0.0.0.2] - 2023-07-16
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Added
 
@@ -334,7 +351,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 ## [0.0.0.1] - 2023-07-02
 
-**LibreOfficeWriter**
+> [!NOTE] **LibreOfficeWriter**
 
 ### Added
 
@@ -342,8 +359,14 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 ---
 
-[Unreleased]: https://github.com/mlipok/Au3LibreOffice/compare/v1.0.0...v0.0.0.3
-[0.0.0.3]:    https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3
+## Version Releases
+
+[v0.10.0-Unreleased](https://github.com/mlipok/Au3LibreOffice/compare/0.9.1...main)  
+[v0.9.1](https://github.com/mlipok/Au3LibreOffice/compare/v0.9.0...0.9.1)  
+[v0.9.0](https://github.com/mlipok/Au3LibreOffice/compare/v0.0.0.3...v0.9.0)  
+[v0.0.0.3](https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3)  
+
+---
 
 ### Legend - Types of changes
 
