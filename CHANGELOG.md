@@ -9,7 +9,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## [0.10.0] - 2024-
 
-> [!NOTE] **LibreOfficeCalc**
+> [!NOTE] 
+> **LibreOfficeCalc**
 
 ### Added
 
