@@ -31,7 +31,7 @@
 ; Name ..........: _LOCalc_CellFormula
 ; Description ...: Set or Retrieve a Cell's Formula.
 ; Syntax ........: _LOCalc_CellFormula(ByRef $oCell[, $sFormula = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
 ;                  $sFormula            - [optional] a string value. Default is Null. The Formula to set the Cell to. Overwrites any previous data.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -74,7 +74,7 @@ EndFunc   ;==>_LOCalc_CellFormula
 ; Name ..........: _LOCalc_CellGetType
 ; Description ...: Retrieve the type of data that is contained in a Cell.
 ; Syntax ........: _LOCalc_CellGetType(ByRef $oCell)
-; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
 ; Return values .: Success: Integer
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -110,7 +110,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ; Name ..........: _LOCalc_CellText
 ; Description ...: Set or Retrieve a Cell's Text content.
 ; Syntax ........: _LOCalc_CellText(ByRef $oCell[, $sText = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
 ;                  $sText               - [optional] a string value. Default is Null. The Text to set the Cell contents to. Overwrites any previous data.
 ; Return values .: Success: 1 or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -153,7 +153,7 @@ EndFunc   ;==>_LOCalc_CellText
 ; Name ..........: _LOCalc_CellValue
 ; Description ...: Set or Retrieve a Cell's Value.
 ; Syntax ........: _LOCalc_CellValue(ByRef $oCell[, $nValue = Null])
-; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_SheetGetCellByName, or _LOCalc_SheetGetCellByPosition function.
 ;                  $nValue              - [optional] a general number value. Default is Null. The Value to set the Cell to. Overwrites any previous data.
 ; Return values .: Success: 1 or Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
