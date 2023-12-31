@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve B2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set B2 Cell text to "Equals"
-	_LOCalc_CellText($oCell, "Equals")
+	_LOCalc_CellString($oCell, "Equals")
 	If @error Then _ERROR("Failed to Set B2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the 2, 2, or C3 Cell.

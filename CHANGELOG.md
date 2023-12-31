@@ -7,14 +7,31 @@ This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
+## Releases
+
+|    Version       |    Changes                   |    Download                            |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------:|:--------------------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]                     | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]                       | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]                       | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]                   | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]                   | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]                   | 2023-07-02     |                            |
+
 ## [0.10.0] - 2024-
 
-> [!NOTE] 
+### Project
+
+- Added logo to ReadMe.
+- Filled in ReadMe.
+- Formatted Changelog
+
+> [!NOTE]
 > **LibreOfficeCalc**
 
 ### Added
 
-- Initial Document Functions and Examples
+- Document Functions and Examples
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
@@ -31,6 +48,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
 	- _LOCalc_DocRedo
+	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
 	- _LOCalc_DocRedoGetAllActionTitles
 	- _LOCalc_DocRedoIsPossible
@@ -38,14 +56,27 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocSaveAs
 	- _LOCalc_DocToFront
 	- _LOCalc_DocUndo
+	- _LOCalc_DocUndoActionBegin
+	- _LOCalc_DocUndoActionEnd
+	- _LOCalc_DocUndoClear
 	- _LOCalc_DocUndoCurActionTitle
 	- _LOCalc_DocUndoGetAllActionTitles
 	- _LOCalc_DocUndoIsPossible
+	- _LOCalc_DocUndoReset
 	- _LOCalc_DocVisible
 	- _LOCalc_DocZoom
 - Sheet Functions and Examples
 	- _LOCalc_SheetActivate
 	- _LOCalc_SheetAdd
+	- _LOCalc_SheetColumnDelete
+	- _LOCalc_SheetColumnGetName
+	- _LOCalc_SheetColumnGetObjByName
+	- _LOCalc_SheetColumnGetObjByPosition
+	- _LOCalc_SheetColumnInsert
+	- _LOCalc_SheetColumnPageBreak
+	- _LOCalc_SheetColumnsGetCount
+	- _LOCalc_SheetColumnVisible
+	- _LOCalc_SheetColumnWidth
 	- _LOCalc_SheetCopy
 	- _LOCalc_SheetGetActive
 	- _LOCalc_SheetGetCellByName
@@ -55,6 +86,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
 	- _LOCalc_SheetRemove
+	- _LOCalc_SheetRowDelete
+	- _LOCalc_SheetRowGetObjByPosition
+	- _LOCalc_SheetRowHeight
+	- _LOCalc_SheetRowInsert
+	- _LOCalc_SheetRowPageBreak
+	- _LOCalc_SheetRowsGetCount
+	- _LOCalc_SheetRowVisible
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
 	- _LOCalc_SheetVisible
@@ -81,7 +119,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellString
 	- _LOCalc_CellValue
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -158,7 +197,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_DocUndoGetAllActionTitles;
 	- _LOWriter_DocUndoCurActionTitle.
 - Minor documentation adjustments.
-- Filled in ReadMe.
 - Moved Search Descriptor functions from LibreOfficeWriter.au3 to LibreOfficeWriter_Helper.au3.
 	- _LOWriter_SearchDescriptorCreate
 	- _LOWriter_SearchDescriptorModify
@@ -179,17 +217,23 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Export extension was incorrect, "jjpe" --> "jpe"
 - Spell Checked the comments and Headers.
 
+[To Top](##Releases)
+
 ## [0.9.1] - 2023-10-28
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Changed
 
 - Minor documentation adjustments.
 
+[To Top](##Releases)
+
 ## [0.9.0] - 2023-10-28
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -272,9 +316,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from <https://github.com/Danp2/au3WebDriver>.
 
+[To Top](##Releases)
+
 ## [0.0.0.3] - 2023-08-10
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -322,9 +369,12 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 	- _DocInsertControlChar,
 	- _DocInsertString.
 
+[To Top](##Releases)
+
 ## [0.0.0.2] - 2023-07-16
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -350,22 +400,18 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Updated function documentation to reflect the changes.
 
+[To Top](##Releases)
+
 ## [0.0.0.1] - 2023-07-02
 
-> [!NOTE] **LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
 - Initial UDF Release.
 
----
-
-## Version Releases
-
-[v0.10.0-Unreleased](https://github.com/mlipok/Au3LibreOffice/compare/0.9.1...main)  
-[v0.9.1](https://github.com/mlipok/Au3LibreOffice/compare/v0.9.0...0.9.1)  
-[v0.9.0](https://github.com/mlipok/Au3LibreOffice/compare/v0.0.0.3...v0.9.0)  
-[v0.0.0.3](https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3)  
+[To Top](##Releases)
 
 ---
 
@@ -379,4 +425,19 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 - `Security` in case of vulnerabilities.
 - `Project` for documentation or overall project improvements.
 
-[To the top](#)
+[To the top](#changelog)
+
+---
+
+[v0.10.0-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/0.9.1...main
+[v0.9.1-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/v0.9.0...0.9.1
+[v0.9.0-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/v0.0.0.3...v0.9.0
+[v0.0.0.3-Compare]:	https://github.com/donnyh13/Au3LibreOffice/compare/v0.0.0.2...v0.0.0.3
+[v0.0.0.2-Compare]:	https://github.com/donnyh13/Au3LibreOffice/compare/v0.0.0.1...v0.0.0.2
+
+[v0.10.0]:	https://github.com/mlipok/Au3LibreOffice
+[v0.9.1]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/0.9.1
+[v0.9.0]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.9.0
+[v0.0.0.3]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3
+[v0.0.0.2]:	https://github.com/donnyh13/Au3LibreOffice/releases/tag/v0.0.0.2
+[v0.0.0.1]:	https://github.com/donnyh13/Au3LibreOffice/releases/tag/v0.0.0.1

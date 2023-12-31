@@ -3666,7 +3666,7 @@ EndFunc   ;==>_LOWriter_DocRedo
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
-; Related .......: _LOWriter_DocUndoClear
+; Related .......: _LOWriter_DocUndoClear, _LOWriter_DocUndoReset
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4384,7 +4384,7 @@ EndFunc   ;==>_LOWriter_DocUndoIsPossible
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling this function does the following: remove all locks from the undo manager; closes all open undo group actions, clears all undo actions, clears all redo actions.
-; Related .......:
+; Related .......: _LOWriter_DocUndoClear, _LOWriter_DocRedoClear
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

@@ -35,7 +35,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve B2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set B2 Cell text to "This is Cell B2"
-	_LOCalc_CellText($oCell, "This is Cell B2")
+	_LOCalc_CellString($oCell, "This is Cell B2")
 	If @error Then _ERROR("Failed to Set B2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B2's Value.

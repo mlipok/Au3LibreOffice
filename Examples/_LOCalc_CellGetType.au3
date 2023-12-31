@@ -53,7 +53,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve A3 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A3 Cell text to "Equals"
-	_LOCalc_CellText($oCell, "Equals")
+	_LOCalc_CellString($oCell, "Equals")
 	If @error Then _ERROR("Failed to Set A3 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A3's Type

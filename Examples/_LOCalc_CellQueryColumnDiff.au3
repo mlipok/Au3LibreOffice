@@ -1,0 +1,144 @@
+#include <MsgBoxConstants.au3>
+
+#include "..\LibreOfficeCalc.au3"
+
+Example()
+
+Func Example()
+	Local $oDoc, $oSheet, $oCellRange, $oCell
+	Local $aoRanges[0]
+	Local $iResults
+
+	; Create a New, visible, Blank Libre Office Document.
+	$oDoc = _LOCalc_DocCreate(True, False)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+
+	; Retrieve the presently active Sheet.
+	$oSheet = _LOCalc_SheetGetActive($oDoc)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+
+	_FillCells($oDoc, $oSheet)
+
+	; Retrieve Cell range A1 to C6
+	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "C6")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+
+	; Retrieve Cell A3
+	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A3")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
+
+	; Query the Column Differences in Cell Range A1 to C6, based on Cell A3, which means I will be looking for differences per Column based on Row 3.
+	$aoRanges = _LOCalc_CellQueryColumnDiff($oCellRange, $oCell)
+	If @error Then _ERROR($oDoc, "Failed to Query Cell Range Differences. Error:" & @error & " Extended:" & @extended)
+	$iResults = @extended
+
+	MsgBox($MB_OK, "", "I will now highlight the cell ranges returned as differing from Row 3.")
+
+	; Cycle through the results and set the background color to yellow for each Cell range found
+	For $i = 0 To $iResults - 1
+		_LOCalc_CellBackColor($aoRanges[$i], $LOC_COLOR_YELLOW)
+		If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended)
+	Next
+
+	MsgBox($MB_OK, "", "Press ok to close the document.")
+
+	; Close the document.
+	_LOCalc_DocClose($oDoc, False)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+
+EndFunc   ;==>Example
+
+Func _FillCells(ByRef $oDoc, ByRef $oSheet)
+	Local $oCellRange
+	Local $aavData[6]
+	Local $avRowData[1]
+
+	; Fill my arrays with the desired Number Values I want in A Column.
+	$avRowData[0] = 1 ; A1
+	$aavData[0] = $avRowData
+
+	$avRowData[0] = 2 ; A2
+	$aavData[1] = $avRowData
+
+	$avRowData[0] = 1 ; A3
+	$aavData[2] = $avRowData
+
+	$avRowData[0] = 18 ; A4
+	$aavData[3] = $avRowData
+
+	$avRowData[0] = 1 ; A5
+	$aavData[4] = $avRowData
+
+	$avRowData[0] = 5 ; A6
+	$aavData[5] = $avRowData
+
+	; Retrieve Cell range A1 to A6
+	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+
+	; Fill the range with my numbers
+	_LOCalc_CellRangeNumbers($oCellRange, $aavData)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+
+	; Prepare data to fill Row B with Numbers
+	$avRowData[0] = 2 ; B1
+	$aavData[0] = $avRowData
+
+	$avRowData[0] = 1 ; B2
+	$aavData[1] = $avRowData
+
+	$avRowData[0] = 2 ; B3
+	$aavData[2] = $avRowData
+
+	$avRowData[0] = 18 ; B4
+	$aavData[3] = $avRowData
+
+	$avRowData[0] = 2 ; B5
+	$aavData[4] = $avRowData
+
+	$avRowData[0] = 5 ; B6
+	$aavData[5] = $avRowData
+
+	; Retrieve Cell range B1 to B6
+	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "B1", "B6")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+
+	; Fill the range with the Numberss
+	_LOCalc_CellRangeNumbers($oCellRange, $aavData)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+
+	; Fill my arrays with the desired Number Values to fill Column C with.
+	$avRowData[0] = 1 ; C1
+	$aavData[0] = $avRowData
+
+	$avRowData[0] = 0 ; C2
+	$aavData[1] = $avRowData
+
+	$avRowData[0] = 1 ; C3
+	$aavData[2] = $avRowData
+
+	$avRowData[0] = 7 ; C4
+	$aavData[3] = $avRowData
+
+	$avRowData[0] = 1 ; C5
+	$aavData[4] = $avRowData
+
+	$avRowData[0] = 6 ; C6
+	$aavData[5] = $avRowData
+
+	; Retrieve Cell range C1 to C6
+	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "C1", "C6")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+
+	; Fill the range with my numbers
+	_LOCalc_CellRangeNumbers($oCellRange, $aavData)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+
+EndFunc   ;==>_FillCells
+
+
+Func _ERROR($oDoc, $sErrorText)
+	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
+	Exit
+EndFunc   ;==>_ERROR

@@ -27,7 +27,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell text to "A1"
-	_LOCalc_CellText($oCell, "A1")
+	_LOCalc_CellString($oCell, "A1")
 	If @error Then _ERROR("Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Check if the document has been modified since being saved or created.

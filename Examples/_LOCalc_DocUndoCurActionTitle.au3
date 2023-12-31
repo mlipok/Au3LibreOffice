@@ -21,7 +21,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell text to "A1"
-	_LOCalc_CellText($oCell, "A1")
+	_LOCalc_CellString($oCell, "A1")
 	If @error Then _ERROR("Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the C2 Cell.
@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve C2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set C2 Cell text to "C2"
-	_LOCalc_CellText($oCell, "C2")
+	_LOCalc_CellString($oCell, "C2")
 	If @error Then _ERROR("Failed to Set C2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Perform one undo action.

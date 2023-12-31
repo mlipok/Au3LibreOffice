@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR("Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A1's Text.
-	$sContent = _LOCalc_CellText($oCell)
+	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR("Failed to Retrieve A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Cell A1 currently contains the following content: " & $sContent)
@@ -35,11 +35,11 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve B2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set B2 Cell text to "This is Cell B2"
-	_LOCalc_CellText($oCell, "This is Cell B2")
+	_LOCalc_CellString($oCell, "This is Cell B2")
 	If @error Then _ERROR("Failed to Set B2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B2's Text.
-	$sContent = _LOCalc_CellText($oCell)
+	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR("Failed to Retrieve B2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Cell B2 currently contains the following content: " & $sContent)
@@ -53,7 +53,7 @@ Func Example()
 	If @error Then _ERROR("Failed to Set D1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell D1's Text.
-	$sContent = _LOCalc_CellText($oCell)
+	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR("Failed to Retrieve D1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Cell D1 currently contains the following content: " & $sContent)
