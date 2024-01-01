@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell Range A1-C6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "C6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set the background Color of Range A1-C6 to Blue
@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell Range B3-C3
-	$oCellRange2 = _LOCalc_SheetGetCellByName($oSheet, "B3", "E5")
+	$oCellRange2 = _LOCalc_RangeGetCellByName($oSheet, "B3", "E5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set the background Color of Range B3-E5 to Red
@@ -34,7 +34,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended)
 
 	; Query Cell Range 1 and Cell Range 2 for intersecting cells .
-	$aoRanges = _LOCalc_CellQueryIntersection($oCellRange, $oCellRange2)
+	$aoRanges = _LOCalc_RangeQueryIntersection($oCellRange, $oCellRange2)
 	If @error Then _ERROR($oDoc, "Failed to Query Cells that Intersect in the ranges. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 

@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the top left most cell, 0, 0, or A1.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 0, 0)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell Value to 20
@@ -35,7 +35,7 @@ Func Example()
 			"$LOC_CELL_TYPE_FORMULA = 3")
 
 	; Retrieve the A2 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A2")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A2")
 	If @error Then _ERROR("Failed to retrieve A2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A2's Type
@@ -49,7 +49,7 @@ Func Example()
 			"$LOC_CELL_TYPE_FORMULA = 3")
 
 	; Retrieve the A3 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A3")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A3")
 	If @error Then _ERROR("Failed to retrieve A3 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A3 Cell text to "Equals"
@@ -67,7 +67,7 @@ Func Example()
 			"$LOC_CELL_TYPE_FORMULA = 3")
 
 	; Retrieve the A4 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A4")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A4")
 	If @error Then _ERROR("Failed to retrieve A4 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A4 Cell formula to "=A1 * A2 + 2

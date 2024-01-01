@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the top left most cell, 0, 0, or A1.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 0, 0)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell text to "A1"

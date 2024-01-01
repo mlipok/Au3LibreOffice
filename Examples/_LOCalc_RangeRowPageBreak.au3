@@ -17,17 +17,17 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 3's Object. Remember L.O. Rows are 0 based.
-	$oRow = _LOCalc_SheetRowGetObjByPosition($oSheet, 2)
+	$oRow = _LOCalc_RangeRowGetObjByPosition($oSheet, 2)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Row Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Row page break
-	_LOCalc_SheetRowPageBreak($oRow, True)
+	_LOCalc_RangeRowPageBreak($oRow, True)
 	If @error Then _ERROR($oDoc, "Failed to set Row Page Break Settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have inserted a manual Page Break at Row 3.")
 
 	; Retrieve the Page Break Settings for Row 3. Return will be an array with setting values in order of Function parameters.
-	$abSettings = _LOCalc_SheetRowPageBreak($oRow)
+	$abSettings = _LOCalc_RangeRowPageBreak($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Page Break Settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Row 3's current Page Break settings are:" & @CRLF & _

@@ -5,7 +5,8 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oSheet, $oColumn
+	Local $oDoc, $oSheet
+	Local $iCount = 0
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -15,13 +16,11 @@ Func Example()
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the Row 3, which is in position 2 because L.O. Rows are 0 based.
-	$oColumn = _LOCalc_SheetRowGetObjByPosition($oSheet, 2)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Row Object. Error:" & @error & " Extended:" & @extended)
+	; Retrieve the count of Columns contained in the Sheet.
+	$iCount = _LOCalc_RangeColumnsGetCount($oSheet)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Count of columns contained in Sheet. Error:" & @error & " Extended:" & @extended)
 
-	; Set Column D's Background color to Black.
-	_LOCalc_CellBackColor($oColumn, $LOC_COLOR_BLACK)
-	If @error Then _ERROR($oDoc, "Failed to set Row's Background color. Error:" & @error & " Extended:" & @extended)
+	MsgBox($MB_OK, "", "The Number of columns contained in this sheet is: " & $iCount)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

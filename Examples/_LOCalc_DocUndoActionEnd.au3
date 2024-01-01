@@ -26,7 +26,7 @@ Func Example()
 	For $i = 0 To 2
 		For $j = 0 To 2
 			; Retrieve the Cell Object
-			$oCell = _LOCalc_SheetGetCellByPosition($oSheet, $i, $j)
+			$oCell = _LOCalc_RangeGetCellByPosition($oSheet, $i, $j)
 			If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 			; Set the Cell to a Number
@@ -57,7 +57,7 @@ Func Example()
 	For $i = 1 To 2
 		For $j = 4 To 5
 			; Retrieve the Cell Object
-			$oCell = _LOCalc_SheetGetCellByPosition($oSheet, $i, $j)
+			$oCell = _LOCalc_RangeGetCellByPosition($oSheet, $i, $j)
 			If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 			; Set the Cell to a Number

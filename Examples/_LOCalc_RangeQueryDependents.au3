@@ -19,16 +19,16 @@ Func Example()
 
 	_FillCells($oDoc, $oSheet)
 
-	; Retrieve Cell C6
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "C6")
+	; Retrieve Cell A6
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
-	; Query Cell C6 for precedent cells, set Recursive to False.
-	$aoRanges = _LOCalc_CellQueryPrecedents($oCell, False)
-	If @error Then _ERROR($oDoc, "Failed to Query Cell for precedent Cells. Error:" & @error & " Extended:" & @extended)
+	; Query Cell A6 for dependent cells, set Recursive to False.
+	$aoRanges = _LOCalc_RangeQueryDependents($oCell, False)
+	If @error Then _ERROR($oDoc, "Failed to Query Cell for dependent Cells. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I will now highlight in yellow the cell ranges returned that Cell C6 is dependent upon (precedent).")
+	MsgBox($MB_OK, "", "I will now highlight in yellow the cell ranges returned that are dependent on Cell A6.")
 
 	; Cycle through the results and set the background color to yellow for each Cell range found
 	For $i = 0 To $iResults - 1
@@ -36,12 +36,12 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended)
 	Next
 
-	; Query Cell C6 for Precedent cells, this time set Recursive to True.
-	$aoRanges = _LOCalc_CellQueryPrecedents($oCell, True)
-	If @error Then _ERROR($oDoc, "Failed to Query Cell Range for precedent Cells. Error:" & @error & " Extended:" & @extended)
+	; Query Cell A6 for dependent cells, this time set Recursive to True.
+	$aoRanges = _LOCalc_RangeQueryDependents($oCell, True)
+	If @error Then _ERROR($oDoc, "Failed to Query Cell Range for dependent Cells. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I will now highlight in Red the cell ranges returned that Cell C6 is dependent upon, searching recursively.")
+	MsgBox($MB_OK, "", "I will now highlight in Red the cell ranges returned that are depedent on Cell A6, searching recursively.")
 
 	; Cycle through the results and set the background color to Red for each Cell range found
 	For $i = 0 To $iResults - 1
@@ -82,15 +82,15 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range A1 to A6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with my Data
-	_LOCalc_CellRangeNumbers($oCellRange, $aavData)
+	_LOCalc_RangeNumbers($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A6
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A6")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A6 to a Formula
@@ -117,15 +117,15 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range B1 to B6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "B1", "B6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B1", "B6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with the Numbers
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B5
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B5")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell B5 to a Formula
@@ -152,15 +152,15 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range C1 to C6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "C1", "C6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "C1", "C6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with my numbers
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell C6
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "C6")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "C6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell C6 to a Formula

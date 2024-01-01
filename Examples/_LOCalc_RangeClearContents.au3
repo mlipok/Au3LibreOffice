@@ -16,7 +16,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the top left most cell, A1.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A1")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A1")
 	If @error Then _ERROR($oDoc, "Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell Value to 20
@@ -24,7 +24,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the A2 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A2")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A2")
 	If @error Then _ERROR($oDoc, "Failed to retrieve A2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A2 Cell Value to .50
@@ -32,7 +32,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Set A2 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the A3 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A3")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve A3 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A3 Cell text to "String"
@@ -40,7 +40,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Set A3 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the A4 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A4")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve A4 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A4 Cell formula to "=10 - 5 + 2
@@ -48,13 +48,13 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Set A4 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell range A1 to A4
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A4")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to remove numbers and strings from the cell Range A1:A4. Notice Cell A4 contains a formula, and will remain.")
 
 	; Remove Strings and numbers from the cell range, BitOR the two constants together.
-	_LOCalc_CellClearContents($oCellRange, BitOR($LOC_CELL_FLAG_VALUE, $LOC_CELL_FLAG_STRING))
+	_LOCalc_RangeClearContents($oCellRange, BitOR($LOC_CELL_FLAG_VALUE, $LOC_CELL_FLAG_STRING))
 	If @error Then _ERROR($oDoc, "Failed to clear Cell contents. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

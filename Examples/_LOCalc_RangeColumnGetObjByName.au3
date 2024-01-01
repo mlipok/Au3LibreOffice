@@ -6,7 +6,6 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oColumn
-	Local $sName
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -16,15 +15,13 @@ Func Example()
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the third over column, which is column C.
-	$oColumn = _LOCalc_SheetColumnGetObjByPosition($oSheet, 2)
+	; Retrieve the column C.
+	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "C")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column Object. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the Column's Name.
-	$sName = _LOCalc_SheetColumnGetName($oColumn)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Column's name. Error:" & @error & " Extended:" & @extended)
-
-	MsgBox($MB_OK, "", "The Column's name is: " & $sName)
+	; Set Column C's Background color to Black.
+	_LOCalc_CellBackColor($oColumn, $LOC_COLOR_BLACK)
+	If @error Then _ERROR($oDoc, "Failed to set Column's Background color. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

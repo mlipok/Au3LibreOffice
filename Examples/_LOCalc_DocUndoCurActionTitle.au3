@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the top left most cell, 0, 0, or A1.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 0, 0)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell text to "A1"
@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR("Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the C2 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "C2")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "C2")
 	If @error Then _ERROR("Failed to retrieve C2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set C2 Cell text to "C2"

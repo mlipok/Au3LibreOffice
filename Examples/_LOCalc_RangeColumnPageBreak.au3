@@ -17,17 +17,17 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column E's Object.
-	$oColumn = _LOCalc_SheetColumnGetObjByName($oSheet, "E")
+	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "E")
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Column Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set the column page break
-	_LOCalc_SheetColumnPageBreak($oColumn, True)
+	_LOCalc_RangeColumnPageBreak($oColumn, True)
 	If @error Then _ERROR($oDoc, "Failed to set Column Page Break Settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have inserted a manual Page Break at Column E.")
 
 	; Retrieve the Page Break Settings for Column E. Return will be an array with setting values in order of Function parameters.
-	$abSettings = _LOCalc_SheetColumnPageBreak($oColumn)
+	$abSettings = _LOCalc_RangeColumnPageBreak($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column Page Break Settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Column E's current Page Break settings are:" & @CRLF & _

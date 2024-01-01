@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oSheet, $oCellRange
+	Local $oDoc, $oSheet, $oCellRange, $oCell
 	Local $sData
 	Local $aavData[4]
 	Local $avRowData[2]
@@ -23,12 +23,12 @@ Func Example()
 	$avRowData[1] = 0 ; B1
 	$aavData[0] = $avRowData
 
-	$avRowData[0] = "String" ; A2
-	$avRowData[1] = "" ; B2 ; This will leave the cell blank, but still recognized as a Cell containing a String.
+	$avRowData[0] = 457 ; A2
+	$avRowData[1] = 2300 ; B2
 	$aavData[1] = $avRowData
 
-	$avRowData[0] = "=A1 + A2" ; A3
-	$avRowData[1] = "String 2" ; B3
+	$avRowData[0] = 0 ; A3
+	$avRowData[1] = 31 ; B3
 	$aavData[2] = $avRowData
 
 	$avRowData[0] = 18 ; A4
@@ -36,27 +36,35 @@ Func Example()
 	$aavData[3] = $avRowData
 
 	; Retrieve Cell range A1 to B4
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "B4")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "B4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "I will now fill Cell Range A1 to B4 with Data, Notice Cell A3 is written as a formula, but Calc doesn't recognize it as one, and leaves it as text." & @CRLF & _
-			"I will also set Cell B1 to a proper formula, notice what _LOCalc_CellRangeData returns for it.")
+	MsgBox($MB_OK, "", "I will now fill Cell Range A1 to B4 with Numbers." & @CRLF & _
+			"I will then replace Cell A3 with a String, and B1 with a formula, to demonstrate what is returned by _LOCalc_RangeNumbers when it encounters these data types.")
 
 	; Fill the range with Data
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeNumbers($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve Cell B1
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B1")
+	; Retrieve Cell A3
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
-	; Set Cell B1 to a proper Formula
-	_LOCalc_CellFormula($oCell, "=A4 + B4")
+	; Set Cell A3 to a String
+	_LOCalc_CellString($oCell, "A String")
 	If @error Then _ERROR($oDoc, "Failed to fill Cell with text. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the Data from the same Cell Range, A1-B4. Return will be an array of Arrays
-	$aavData = _LOCalc_CellRangeData($oCellRange)
-	If @error Then _ERROR($oDoc, "Failed to data in Cell Range. Error:" & @error & " Extended:" & @extended)
+	; Retrieve Cell B1
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B1")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
+
+	; Set Cell B1 to a Formula
+	_LOCalc_CellFormula($oCell, "=A2 + B2")
+	If @error Then _ERROR($oDoc, "Failed to fill Cell with text. Error:" & @error & " Extended:" & @extended)
+
+	; Retrieve the Numbers from the Cell Range A1-B4. Return will be an array of Arrays
+	$aavData = _LOCalc_RangeNumbers($oCellRange)
+	If @error Then _ERROR($oDoc, "Failed to numbers in Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	For $i = 0 To UBound($aavData) - 1
 
@@ -65,7 +73,7 @@ Func Example()
 
 		Next
 
-		MsgBox($MB_OK, "", "Array $aavData[" & $i & "] contains the following Data:" & @CRLF & $sData)
+		MsgBox($MB_OK, "", "Array $aavData[" & $i & "] contains the following Numbers:" & @CRLF & $sData)
 		$sData = ""
 	Next
 

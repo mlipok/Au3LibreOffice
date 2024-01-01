@@ -1004,7 +1004,7 @@ EndFunc   ;==>_LOCalc_DocRedo
 ; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
 ; Related .......: _LOCalc_DocUndoClear, _LOCalc_DocUndoReset
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocRedoClear(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
@@ -1293,7 +1293,7 @@ EndFunc   ;==>_LOCalc_DocUndo
 ;				   _LOCalc_DocUndoActionBegin can be nested, i.e. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOCalc_DocUndoActionEnd will appear.
 ; Related .......:
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocUndoActionBegin(ByRef $oDoc, $sName = "AU3LO-Automation")
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
@@ -1323,7 +1323,7 @@ EndFunc   ;==>_LOCalc_DocUndoActionBegin
 ; Remarks .......: This stops the grouping of actions into the last created Undo Action Group.
 ; Related .......: _LOCalc_DocUndoActionBegin
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocUndoActionEnd(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
@@ -1352,7 +1352,7 @@ EndFunc   ;==>_LOCalc_DocUndoActionEnd
 ; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
 ; Related .......: _LOCalc_DocRedoClear, _LOCalc_DocUndoReset
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocUndoClear(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
@@ -1473,7 +1473,7 @@ EndFunc   ;==>_LOCalc_DocUndoIsPossible
 ; Remarks .......: Calling this function does the following: remove all locks from the undo manager; closes all open undo group actions, clears all undo actions, clears all redo actions.
 ; Related .......: _LOCalc_DocRedoClear, _LOCalc_DocUndoClear
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocUndoReset(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)

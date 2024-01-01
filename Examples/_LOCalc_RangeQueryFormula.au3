@@ -20,11 +20,11 @@ Func Example()
 	_FillCells($oDoc, $oSheet)
 
 	; Retrieve Cell Range A1-A6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Query Cell Range A1-A6 for Formula Errors.
-	$aoRanges = _LOCalc_CellQueryFormula($oCellRange, $LOC_FORMULA_RESULT_TYPE_ERROR)
+	$aoRanges = _LOCalc_RangeQueryFormula($oCellRange, $LOC_FORMULA_RESULT_TYPE_ERROR)
 	If @error Then _ERROR($oDoc, "Failed to Query Cell for Formula Cells with errors. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
@@ -69,11 +69,11 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range A1 to A6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with my Data
-	_LOCalc_CellRangeFormula($oCellRange, $aavData)
+	_LOCalc_RangeFormula($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 EndFunc   ;==>_FillCells

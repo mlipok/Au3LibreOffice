@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B5
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B5")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell B5's Background color to yellow.
@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell range A1 to A6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A1-A6's Background color to Blue.

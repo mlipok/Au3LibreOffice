@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's Object. Remember L.O. Rows are 0 based.
-	$oRow = _LOCalc_SheetRowGetObjByPosition($oSheet, 4)
+	$oRow = _LOCalc_RangeRowGetObjByPosition($oSheet, 4)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Row Object. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/2 an inch to Micrometers
@@ -26,11 +26,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Set Row 5's Height to 1/2 inch.
-	_LOCalc_SheetRowHeight($oRow, Null, $iMicrometers)
+	_LOCalc_RangeRowHeight($oRow, Null, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's current height settings. Return will be an array with setting values in order of Function parameters.
-	$avHeight = _LOCalc_SheetRowHeight($oRow)
+	$avHeight = _LOCalc_RangeRowHeight($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Row 5's Height settings are:" & @CRLF & _
@@ -39,11 +39,11 @@ Func Example()
 			"Press Ok to set Row 5 to optimal height now.")
 
 	; Set Row 5's Height to Optimal.
-	_LOCalc_SheetRowHeight($oRow, True)
+	_LOCalc_RangeRowHeight($oRow, True)
 	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's height settings again.
-	$avHeight = _LOCalc_SheetRowHeight($oRow)
+	$avHeight = _LOCalc_RangeRowHeight($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Row 5's new Height settings are:" & @CRLF & _

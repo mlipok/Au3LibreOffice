@@ -20,11 +20,11 @@ Func Example()
 	_FillCells($oDoc, $oSheet)
 
 	; Retrieve Cell Range A1-C3
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "C3")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Query the Cell Range for empty cells.
-	$aoRanges = _LOCalc_CellQueryEmpty($oCellRange)
+	$aoRanges = _LOCalc_RangeQueryEmpty($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to Query Cell for Empty Cells. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
@@ -48,7 +48,7 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	Local $oCell
 
 	; Retrieve Cell A1
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A1")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A1")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A1 to a Number
@@ -56,7 +56,7 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to set Cell Number. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A3
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A3")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A3 to a Number
@@ -64,7 +64,7 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to set Cell Number. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B2
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B2")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B2")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell B2 to a Number

@@ -18,7 +18,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column C's Object.
-	$oColumn = _LOCalc_SheetColumnGetObjByName($oSheet, "C")
+	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "C")
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Column Object. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/2 an inch to Micrometers
@@ -26,11 +26,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Set Column C's Width to 1/2 inch.
-	_LOCalc_SheetColumnWidth($oColumn, Null, $iMicrometers)
+	_LOCalc_RangeColumnWidth($oColumn, Null, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column C's current Width settings. Return will be an array with setting values in order of Function parameters.
-	$avWidth = _LOCalc_SheetColumnWidth($oColumn)
+	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Width settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Column C's Width settings are:" & @CRLF & _
@@ -40,11 +40,11 @@ Func Example()
 			"If I set Optimal Width to True again the Column's width will return to its automatically determined value.")
 
 	; Set Column C's Width to Optimal = True again.
-	_LOCalc_SheetColumnWidth($oColumn, True)
+	_LOCalc_RangeColumnWidth($oColumn, True)
 	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column C's Width settings again.
-	$avWidth = _LOCalc_SheetColumnWidth($oColumn)
+	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column Width settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Column C's new Width settings are:" & @CRLF & _

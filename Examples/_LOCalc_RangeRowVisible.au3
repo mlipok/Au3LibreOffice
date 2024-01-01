@@ -17,21 +17,21 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's Object. Remember L.O. Rows are 0 based.
-	$oRow = _LOCalc_SheetRowGetObjByPosition($oSheet, 4)
+	$oRow = _LOCalc_RangeRowGetObjByPosition($oSheet, 4)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Row Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's current visibility setting.
-	$bVisible = _LOCalc_SheetRowVisible($oRow)
+	$bVisible = _LOCalc_RangeRowVisible($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row's current visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Is Row 5 currently visible? True/False: " & $bVisible)
 
 	; Set Row 5 to invisible.
-	_LOCalc_SheetRowVisible($oRow, False)
+	_LOCalc_RangeRowVisible($oRow, False)
 	If @error Then _ERROR($oDoc, "Failed to set Row's visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row 5's visibility setting again.
-	$bVisible = _LOCalc_SheetRowVisible($oRow)
+	$bVisible = _LOCalc_RangeRowVisible($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row's current visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Now is Row 5 visible? True/False: " & $bVisible)

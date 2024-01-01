@@ -17,7 +17,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the top left most cell, 0, 0, or A1.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 0, 0)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set A1 Cell Value to 55
@@ -31,7 +31,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Cell A1 currently contains the following Value: " & $nValue)
 
 	; Retrieve the B2 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B2")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B2")
 	If @error Then _ERROR("Failed to retrieve B2 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set B2 Cell text to "This is Cell B2"
@@ -45,7 +45,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Cell B2 currently contains the following Value: " & $nValue)
 
 	; Retrieve the D1 Cell.
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "D1")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "D1")
 	If @error Then _ERROR("Failed to retrieve D1 Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set D1 Cell Formula to "=2+2"

@@ -36,18 +36,18 @@ Func Example()
 	$aavData[3] = $avRowData
 
 	; Retrieve Cell range A1 to B4
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "B4")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "B4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now fill Cell Range A1 to B4 with Formulas." & @CRLF & _
-			"I will then replace Cell A4 with a String, and B3 with a Number, to demonstrate what is returned by _LOCalc_CellRangeFormula when it encounters these data types.")
+			"I will then replace Cell A4 with a String, and B3 with a Number, to demonstrate what is returned by _LOCalc_RangeFormula when it encounters these data types.")
 
 	; Fill the range with Data
-	_LOCalc_CellRangeFormula($oCellRange, $aavData)
+	_LOCalc_RangeFormula($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A4
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A4")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A4 to a String
@@ -55,7 +55,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to fill Cell with text. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B3
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B3")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell B3 to a Number
@@ -63,7 +63,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to fill Cell with text. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the formulas from the Cell Range A1-B4. Return will be an array of Arrays
-	$aavData = _LOCalc_CellRangeFormula($oCellRange)
+	$aavData = _LOCalc_RangeFormula($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to numbers in Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	For $i = 0 To UBound($aavData) - 1

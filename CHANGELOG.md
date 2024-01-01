@@ -68,54 +68,55 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Sheet Functions and Examples
 	- _LOCalc_SheetActivate
 	- _LOCalc_SheetAdd
-	- _LOCalc_SheetColumnDelete
-	- _LOCalc_SheetColumnGetName
-	- _LOCalc_SheetColumnGetObjByName
-	- _LOCalc_SheetColumnGetObjByPosition
-	- _LOCalc_SheetColumnInsert
-	- _LOCalc_SheetColumnPageBreak
-	- _LOCalc_SheetColumnsGetCount
-	- _LOCalc_SheetColumnVisible
-	- _LOCalc_SheetColumnWidth
 	- _LOCalc_SheetCopy
 	- _LOCalc_SheetGetActive
-	- _LOCalc_SheetGetCellByName
-	- _LOCalc_SheetGetCellByPosition
 	- _LOCalc_SheetGetObjByName
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
 	- _LOCalc_SheetRemove
-	- _LOCalc_SheetRowDelete
-	- _LOCalc_SheetRowGetObjByPosition
-	- _LOCalc_SheetRowHeight
-	- _LOCalc_SheetRowInsert
-	- _LOCalc_SheetRowPageBreak
-	- _LOCalc_SheetRowsGetCount
-	- _LOCalc_SheetRowVisible
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
 	- _LOCalc_SheetVisible
+- Cell and/or Cell Range Functions and Examples
+	- _LOCalc_RangeClearContents
+	- _LOCalc_RangeColumnDelete
+	- _LOCalc_RangeColumnGetName
+	- _LOCalc_RangeColumnGetObjByName
+	- _LOCalc_RangeColumnGetObjByPosition
+	- _LOCalc_RangeColumnInsert
+	- _LOCalc_RangeColumnPageBreak
+	- _LOCalc_RangeColumnsGetCount
+	- _LOCalc_RangeColumnVisible
+	- _LOCalc_RangeColumnWidth
+	- _LOCalc_RangeCopyMove
+	- _LOCalc_RangeData
+	- _LOCalc_RangeDelete
+	- _LOCalc_RangeFormula
+	- _LOCalc_RangeGetCellByName
+	- _LOCalc_RangeGetCellByPosition
+	- _LOCalc_RangeInsert
+	- _LOCalc_RangeNumbers
+	- _LOCalc_RangeQueryColumnDiff
+	- _LOCalc_RangeQueryContents
+	- _LOCalc_RangeQueryDependents
+	- _LOCalc_RangeQueryEmpty
+	- _LOCalc_RangeQueryFormula
+	- _LOCalc_RangeQueryIntersection
+	- _LOCalc_RangeQueryPrecedents
+	- _LOCalc_RangeQueryRowDiff
+	- _LOCalc_RangeQueryVisible
+	- _LOCalc_RangeRowDelete
+	- _LOCalc_RangeRowGetObjByPosition
+	- _LOCalc_RangeRowHeight
+	- _LOCalc_RangeRowInsert
+	- _LOCalc_RangeRowPageBreak
+	- _LOCalc_RangeRowsGetCount
+	- _LOCalc_RangeRowVisible
 - Cell Functions and Examples
 	- _LOCalc_CellBackColor
-	- _LOCalc_CellClearContents
 	- _LOCalc_CellFormula
 	- _LOCalc_CellGetType
-	- _LOCalc_CellQueryColumnDiff
-	- _LOCalc_CellQueryContents
-	- _LOCalc_CellQueryDependents
-	- _LOCalc_CellQueryEmpty
-	- _LOCalc_CellQueryFormula
-	- _LOCalc_CellQueryIntersection
-	- _LOCalc_CellQueryPrecedents
-	- _LOCalc_CellQueryRowDiff
-	- _LOCalc_CellQueryVisible
-	- _LOCalc_CellRangeCopyMove
-	- _LOCalc_CellRangeData
-	- _LOCalc_CellRangeDelete
-	- _LOCalc_CellRangeFormula
-	- _LOCalc_CellRangeInsert
-	- _LOCalc_CellRangeNumbers
 	- _LOCalc_CellString
 	- _LOCalc_CellValue
 

@@ -20,11 +20,11 @@ Func Example()
 	_FillCells($oDoc, $oSheet)
 
 	; Retrieve Cell range A1 to C6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "C6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Query the Cell Range for cells containing Strings
-	$aoRanges = _LOCalc_CellQueryContents($oCellRange, $LOC_CELL_FLAG_STRING)
+	$aoRanges = _LOCalc_RangeQueryContents($oCellRange, $LOC_CELL_FLAG_STRING)
 	If @error Then _ERROR($oDoc, "Failed to Query Cell Range Contents. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
@@ -37,7 +37,7 @@ Func Example()
 	Next
 
 	; Query the Cell Range for cells containing Numbers and Formulas
-	$aoRanges = _LOCalc_CellQueryContents($oCellRange, BitOR($LOC_CELL_FLAG_VALUE, $LOC_CELL_FLAG_FORMULA))
+	$aoRanges = _LOCalc_RangeQueryContents($oCellRange, BitOR($LOC_CELL_FLAG_VALUE, $LOC_CELL_FLAG_FORMULA))
 	If @error Then _ERROR($oDoc, "Failed to Query Cell Range Contents. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
@@ -82,15 +82,15 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range A1 to A6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "A6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with my Data
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell A6
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "A6")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell A6 to a Formula
@@ -117,15 +117,15 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range B1 to B6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "B1", "B6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B1", "B6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with the Data
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell B5
-	$oCell = _LOCalc_SheetGetCellByName($oSheet, "B5")
+	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Cell B5 to a Formula
@@ -152,11 +152,11 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$aavData[5] = $avRowData
 
 	; Retrieve Cell range C1 to C6
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "C1", "C6")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "C1", "C6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	; Fill the range with Data
-	_LOCalc_CellRangeData($oCellRange, $aavData)
+	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 
 EndFunc   ;==>_FillCells

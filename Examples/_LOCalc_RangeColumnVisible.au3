@@ -17,21 +17,21 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column D's Object.
-	$oColumn = _LOCalc_SheetColumnGetObjByName($oSheet, "D")
+	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "D")
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Column Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column D's current visibility setting.
-	$bVisible = _LOCalc_SheetColumnVisible($oColumn)
+	$bVisible = _LOCalc_RangeColumnVisible($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's current visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Is Column D currently visible? True/False: " & $bVisible)
 
 	; Set Column D to invisible.
-	_LOCalc_SheetColumnVisible($oColumn, False)
+	_LOCalc_RangeColumnVisible($oColumn, False)
 	If @error Then _ERROR($oDoc, "Failed to set Column's visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Column D's current visibility setting again.
-	$bVisible = _LOCalc_SheetColumnVisible($oColumn)
+	$bVisible = _LOCalc_RangeColumnVisible($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's current visibility setting. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Now is Column D visible? True/False: " & $bVisible)

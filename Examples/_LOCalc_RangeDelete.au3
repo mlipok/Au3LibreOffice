@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oSheet, $oCell
+	Local $oDoc, $oSheet, $oCellRange, $oCell
 	Local $iCount = 0
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -16,11 +16,11 @@ Func Example()
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
-	; Fill the Cell Range of A1 to C5 with numbers, one cell at a time. (Remember Columns and Rows are 0 based.)
-	For $i = 0 To 2
+	; Fill the Cell Range of A1 to D5 with numbers, one cell at a time. (Remember Columns and Rows are 0 based.)
+	For $i = 0 To 4
 		For $j = 0 To 4
 			; Retrieve the Cell Object
-			$oCell = _LOCalc_SheetGetCellByPosition($oSheet, $i, $j)
+			$oCell = _LOCalc_RangeGetCellByPosition($oSheet, $i, $j)
 			If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 			; Set the Cell to a Number
@@ -33,11 +33,21 @@ Func Example()
 
 	Next
 
-	MsgBox($MB_OK, "", "I will now Insert 2 new Rows starting at Row 2.")
+	; Retrieve the Cell Range B2 to C3
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B2", "C3")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
-	; Insert new Rows at Row 2, Row 2 is counted as Row 1 because L.O. Rows are 0 based.
-	_LOCalc_SheetRowInsert($oSheet, 1, 2)
-	If @error Then _ERROR($oDoc, "Failed to delete rows. Error:" & @error & " Extended:" & @extended)
+	MsgBox($MB_OK, "", "I will now delete the range B2 to C3, shifting the cells below up.")
+
+	; Delete the Cell Range
+	_LOCalc_RangeDelete($oSheet, $oCellRange, $LOC_CELL_DELETE_MODE_UP)
+	If @error Then _ERROR($oDoc, "Failed to delete Cell Range Object. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "I will now delete the range B2 to C3 again, shifting the cells right of the range, to the left.")
+
+	; Delete the Cell Range
+	_LOCalc_RangeDelete($oSheet, $oCellRange, $LOC_CELL_DELETE_MODE_LEFT)
+	If @error Then _ERROR($oDoc, "Failed to delete Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

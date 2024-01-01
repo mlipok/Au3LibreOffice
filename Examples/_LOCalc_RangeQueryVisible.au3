@@ -18,29 +18,33 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Row Object for Row 2 (numbers Row 1 because L.O. Rows are internally 0 based.)
-	$oRow = _LOcalc_SheetRowGetObjByPosition($oSheet, 1)
+	$oRow = _LOCalc_RangeRowGetObjByPosition($oSheet, 1)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Object for Row 2 (1). Error:" & @error & " Extended:" & @extended)
 
 	; Set Row 2's Visibility to False (Invisible).
-	_LOCalc_SheetRowVisible($oRow, False)
+	_LOCalc_RangeRowVisible($oRow, False)
 	If @error Then _ERROR($oDoc, "Failed to row's Visibility. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve Cell Range A1-C3
-	$oCellRange = _LOCalc_SheetGetCellByName($oSheet, "A1", "C3")
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C3")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
 
 	; Query the Cell Range for Visible cells.
-	$aoRanges = _LOCalc_CellQueryVisible($oCellRange)
+	$aoRanges = _LOCalc_RangeQueryVisible($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to Query Cell for Visible Cells. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I will now highlight in yellow the cell ranges that are Visible in the Cell Range. Take note of the Row numbers on the left.")
+	MsgBox($MB_OK, "", "I will now highlight in yellow the cell ranges that are Visible in the Cell Range, and then set Row 2 to visible again. Take note that Row 2 is not highlighted.")
 
 	; Cycle through the results and set the background color to yellow for each Cell range found
 	For $i = 0 To $iResults - 1
 		_LOCalc_CellBackColor($aoRanges[$i], $LOC_COLOR_YELLOW)
 		If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended)
 	Next
+
+	; Set Row 2's Visibility to True (Visible).
+	_LOCalc_RangeRowVisible($oRow, True)
+	If @error Then _ERROR($oDoc, "Failed to row's Visibility. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
