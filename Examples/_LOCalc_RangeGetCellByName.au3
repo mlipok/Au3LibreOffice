@@ -6,7 +6,6 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oCell
-	Local $iCellType
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
