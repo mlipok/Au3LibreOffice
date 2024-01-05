@@ -3182,9 +3182,8 @@ EndFunc   ;==>__LOWriter_NumIsBetween
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving Standard Macro Library.
-;				   @Error 2 @Extended 2 Return 0 = Document already contains the Macro.
-;				   @Error 2 @Extended 3 Return 0 = Error creating Macro in Document.
-;				   @Error 2 @Extended 4 Return 0 = Error retrieving Script Object.
+;				   @Error 2 @Extended 2 Return 0 = Error creating Macro in Document.
+;				   @Error 2 @Extended 3 Return 0 = Error retrieving Script Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object = Success. Function successfully created the Macro in Document. Returning Script Object.
 ; Author ........: donnyh13
@@ -3212,13 +3211,13 @@ Func __LOWriter_NumStyleCreateScript(ByRef $oDoc)
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
 	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	If $oStandardLibrary.hasByName("NumStyleModifierDH13") Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
-	$oStandardLibrary.insertByName("NumStyleModifierDH13", $sNumStyleScript)
-	If Not $oStandardLibrary.hasByName("NumStyleModifierDH13") Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sNumStyleScript)
+	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	$oScript = $oDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.NumStyleModifierDH13.ReplaceByIndex?language=Basic&location=document")
-	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	$oScript = $oDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex?language=Basic&location=document")
+	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oScript)
 EndFunc   ;==>__LOWriter_NumStyleCreateScript
@@ -3259,9 +3258,9 @@ Func __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
 	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	If $oStandardLibrary.hasByName("NumStyleModifierDH13") Then $oStandardLibrary.removeByName("NumStyleModifierDH13")
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
-	If $oStandardLibrary.hasByName("NumStyleModifierDH13") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_NumStyleDeleteScript
@@ -3278,7 +3277,7 @@ EndFunc   ;==>__LOWriter_NumStyleDeleteScript
 ;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.Desktop" Object.
 ;				   @Error 2 @Extended 3 Return 0 = Error Creating document.
 ;				   @Error 2 @Extended 4 Return 0 = Error retrieving standard Macro Library Object from Document.
-;				   @Error 2 @Extended 5 Return 0 = Error creating NumStyleModifierDH13 Module in document.
+;				   @Error 2 @Extended 5 Return 0 = Error creating AU3LibreOffice_UDF_Macros Module in document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting Hidden
@@ -3409,7 +3408,7 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ;				   @Error 1 @Extended 4 Return 0 = $avSettings not an array.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error opening new document, and inserting ReplaceByIndex Script.
-;				   @Error 2 @Extended 2 Return 0 = Error retrieving "Standard.NumStyleModifierDH13.ReplaceByIndex" Macro in new document.
+;				   @Error 2 @Extended 2 Return 0 = Error retrieving "Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex" Macro in new document.
 ;				   @Error 2 @Extended 3 Return 0 = Error retrieving Numbering Rules level.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error deleting ReplaceByIndex Macro from Document.
@@ -3447,7 +3446,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 	If Not IsObj($oScript) Then ; If creating my Mod. Script fails, open a new document and create a script in there.
 		$oNumStyleDoc = __LOWriter_NumStyleInitiateDocument()
 		If Not IsObj($oNumStyleDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-		$oScript = $oNumStyleDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.NumStyleModifierDH13.ReplaceByIndex?language=Basic&location=document")
+		$oScript = $oNumStyleDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex?language=Basic&location=document")
 		If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		$bNumDocOpen = True
 	EndIf
