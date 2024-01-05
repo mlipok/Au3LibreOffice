@@ -20,6 +20,36 @@ Global Const $__LOCCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=65
 
+; Cell Delete Mode Constants
+Global Const _
+		$LOC_CELL_DELETE_MODE_NONE = 0, _ ; No cells are moved -- Nothing happens.
+		$LOC_CELL_DELETE_MODE_UP = 1, _ ; The cells below the inserted Cells are moved up.
+		$LOC_CELL_DELETE_MODE_LEFT = 2, _ ; The cells to the right of the inserted cells are moved left.
+		$LOC_CELL_DELETE_MODE_ROWS = 3, _ ; Entire rows below the inserted cells are moved up.
+		$LOC_CELL_DELETE_MODE_COLUMNS = 4 ; Entire columns to the right of the inserted cells are moved left.
+
+; Cell Content Type Flag Constants
+Global Const _
+		$LOC_CELL_FLAG_VALUE = 1, _ ; Cell Contents that are numeric values but are not formatted as dates or times.
+		$LOC_CELL_FLAG_DATE_TIME = 2, _ ; Cell Contents that are numeric values that have a date or time number format.
+		$LOC_CELL_FLAG_STRING = 4, _ ; Cell Contents that are Strings.
+		$LOC_CELL_FLAG_ANNOTATION = 8, _ ; Cell Annotations
+		$LOC_CELL_FLAG_FORMULA = 16, _ ; Cell Contents that are Formulas.
+		$LOC_CELL_FLAG_HARD_ATTR = 32, _ ; Cells with explicit formatting, but not the formatting which is applied implicitly through styles.
+		$LOC_CELL_FLAG_STYLES = 64, _ ; Cells with Styles applied.
+		$LOC_CELL_FLAG_OBJECTS = 128, _ ; Cell Contents that are Drawing Objects.
+		$LOC_CELL_FLAG_EDIT_ATTR = 256, _ ; Cells containing formatting within parts of the cell contents.
+		$LOC_CELL_FLAG_FORMATTED = 512, _ ; Cells with formatting within the cells or cells with more than one paragraph within the cells.
+		$LOC_CELL_FLAG_ALL = 1023 ; All flags listed above.
+
+; Cell Insert Mode Constants
+Global Const _
+		$LOC_CELL_INSERT_MODE_NONE = 0, _ ; No cells are moved -- Nothing happens.
+		$LOC_CELL_INSERT_MODE_DOWN = 1, _ ; The cells below the inserted Cells are moved down.
+		$LOC_CELL_INSERT_MODE_RIGHT = 2, _ ; The cells to the right of the inserted cells are moved right.
+		$LOC_CELL_INSERT_MODE_ROWS = 3, _ ; Entire rows below the inserted cells are moved down.
+		$LOC_CELL_INSERT_MODE_COLUMNS = 4 ; Entire columns to the right of the inserted cells are moved right.
+
 ; Cell Type
 Global Const _
 		$LOC_CELL_TYPE_EMPTY = 0, _                             ; Cell is empty.
@@ -48,6 +78,13 @@ Global Const _
 		$LOC_COLOR_GREEN = 43315, _                             ; Green color.
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
 		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
+
+; Formula Result Type Constants
+Global Const _
+		$LOC_FORMULA_RESULT_TYPE_VALUE = 1, _ ; The formula's result is a number.
+		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _ ; The formula's result is a string.
+		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _ ; The formula has an error of some form.
+		$LOC_FORMULA_RESULT_TYPE_ALL = 7 ; All of the above types.
 
 ; Path Convert Constants.
 Global Const _

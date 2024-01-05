@@ -10,8 +10,8 @@
 ; Other includes for Calc
 #include "LibreOfficeCalc_Cell.au3"
 #include "LibreOfficeCalc_Doc.au3"
+#include "LibreOfficeCalc_Range.au3"
 #include "LibreOfficeCalc_Sheet.au3"
-
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -27,7 +27,7 @@
 ; Note...........: Tips/templates taken from OOoCalc UDF written by user GMK; also from Word UDF by user water.
 ;				   I found the book by Andrew Pitonyak very helpful also, titled, "OpenOffice.org Macros Explained; OOME Third Edition".
 ;				   Of course, this UDF is written using the English version of LibreOffice, and may only work for the English version of LibreOffice installations.
-;				   Many functions in this UDF may or may not work with OpenOffice Writer, however some settings are definitely for LibreOffice only.
+;				   Many functions in this UDF may or may not work with OpenOffice Calc, however some settings are definitely for LibreOffice only.
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================

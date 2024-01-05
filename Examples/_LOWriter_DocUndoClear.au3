@@ -44,7 +44,7 @@ Func Example()
 	; Display the available Undo action titles.
 	_ArrayDisplay($asUndo)
 
-	; Display the available Undo action titles.
+	; Display the available Redo action titles.
 	_ArrayDisplay($asRedo)
 
 	; Clear the Undo/Redo list.
@@ -64,7 +64,7 @@ Func Example()
 	; Display the available Undo action titles again, if any.
 	_ArrayDisplay($asUndo)
 
-	; Display the available Undo action titles.
+	; Display the available Redo action titles.
 	_ArrayDisplay($asRedo)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

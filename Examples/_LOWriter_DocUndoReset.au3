@@ -33,6 +33,10 @@ Func Example()
 	_LOWriter_DocUndo($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to Undo the last action. Error:" & @error & " Extended:" & @extended)
 
+	; Begin a Undo Action Group record. Name it "AutoIt Write Data"
+	_LOWriter_DocUndoActionBegin($oDoc, "AutoIt Write Data")
+	If @error Then _ERROR($oDoc, "Failed to begin an Undo Group record. Error:" & @error & " Extended:" & @extended)
+
 	; Retrieve an array of available undo action titles.
 	$asUndo = _LOWriter_DocUndoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of undo action titles. Error:" & @error & " Extended:" & @extended)
@@ -40,6 +44,8 @@ Func Example()
 	; Retrieve an array of available Redo action titles.
 	$asRedo = _LOWriter_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "Here is a list of the available Undo actions, and the available Redo actions. Notice I also started an Undo Action group, which is listed in the Undo list.")
 
 	; Display the available Undo action titles.
 	_ArrayDisplay($asUndo)

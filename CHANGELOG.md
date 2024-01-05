@@ -1,21 +1,37 @@
-#####
-
 # Changelog
 
-All notable changes to "Au3LibreOffice" SDK/API will be documented in this file.
+All notable changes to ["Au3LibreOffice"](https://github.com/mlipok/Au3LibreOffice/tree/main) SDK/API will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 This project also adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Go to [legend](#legend---types-of-changes) for further information about the types of changes.
 
-## [?.?.?] - 2024-
+## Releases
 
-**LibreOfficeCalc**
+|    Version       |    Changes                   |    Download                            |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------:|:--------------------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]                     | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]                       | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]                       | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]                   | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]                   | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]                   | 2023-07-02     |                            |
 
-### Added 
+## [0.10.0] - 2024-
 
-- Initial Document Functions and Examples
+### Project
+
+- Added logo to ReadMe.
+- Filled in ReadMe.
+- Formatted Changelog
+
+> [!NOTE]
+> **LibreOfficeCalc**
+
+### Added
+
+- Document Functions and Examples
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
@@ -32,6 +48,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
 	- _LOCalc_DocRedo
+	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
 	- _LOCalc_DocRedoGetAllActionTitles
 	- _LOCalc_DocRedoIsPossible
@@ -39,9 +56,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocSaveAs
 	- _LOCalc_DocToFront
 	- _LOCalc_DocUndo
+	- _LOCalc_DocUndoActionBegin
+	- _LOCalc_DocUndoActionEnd
+	- _LOCalc_DocUndoClear
 	- _LOCalc_DocUndoCurActionTitle
 	- _LOCalc_DocUndoGetAllActionTitles
 	- _LOCalc_DocUndoIsPossible
+	- _LOCalc_DocUndoReset
 	- _LOCalc_DocVisible
 	- _LOCalc_DocZoom
 - Sheet Functions and Examples
@@ -49,8 +70,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetAdd
 	- _LOCalc_SheetCopy
 	- _LOCalc_SheetGetActive
-	- _LOCalc_SheetGetCellByName
-	- _LOCalc_SheetGetCellByPosition
 	- _LOCalc_SheetGetObjByName
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetMove
@@ -59,13 +78,50 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
 	- _LOCalc_SheetVisible
+- Cell and/or Cell Range Functions and Examples
+	- _LOCalc_RangeClearContents
+	- _LOCalc_RangeColumnDelete
+	- _LOCalc_RangeColumnGetName
+	- _LOCalc_RangeColumnGetObjByName
+	- _LOCalc_RangeColumnGetObjByPosition
+	- _LOCalc_RangeColumnInsert
+	- _LOCalc_RangeColumnPageBreak
+	- _LOCalc_RangeColumnsGetCount
+	- _LOCalc_RangeColumnVisible
+	- _LOCalc_RangeColumnWidth
+	- _LOCalc_RangeCopyMove
+	- _LOCalc_RangeData
+	- _LOCalc_RangeDelete
+	- _LOCalc_RangeFormula
+	- _LOCalc_RangeGetCellByName
+	- _LOCalc_RangeGetCellByPosition
+	- _LOCalc_RangeInsert
+	- _LOCalc_RangeNumbers
+	- _LOCalc_RangeQueryColumnDiff
+	- _LOCalc_RangeQueryContents
+	- _LOCalc_RangeQueryDependents
+	- _LOCalc_RangeQueryEmpty
+	- _LOCalc_RangeQueryFormula
+	- _LOCalc_RangeQueryIntersection
+	- _LOCalc_RangeQueryPrecedents
+	- _LOCalc_RangeQueryRowDiff
+	- _LOCalc_RangeQueryVisible
+	- _LOCalc_RangeRowDelete
+	- _LOCalc_RangeRowGetObjByPosition
+	- _LOCalc_RangeRowHeight
+	- _LOCalc_RangeRowInsert
+	- _LOCalc_RangeRowPageBreak
+	- _LOCalc_RangeRowsGetCount
+	- _LOCalc_RangeRowVisible
 - Cell Functions and Examples
+	- _LOCalc_CellBackColor
 	- _LOCalc_CellFormula
 	- _LOCalc_CellGetType
-	- _LOCalc_CellText
+	- _LOCalc_CellString
 	- _LOCalc_CellValue
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -142,7 +198,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_DocUndoGetAllActionTitles;
 	- _LOWriter_DocUndoCurActionTitle.
 - Minor documentation adjustments.
-- Filled in ReadMe.
 - Moved Search Descriptor functions from LibreOfficeWriter.au3 to LibreOfficeWriter_Helper.au3.
 	- _LOWriter_SearchDescriptorCreate
 	- _LOWriter_SearchDescriptorModify
@@ -163,71 +218,77 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Export extension was incorrect, "jjpe" --> "jpe"
 - Spell Checked the comments and Headers.
 
+[To Top](##Releases)
+
 ## [0.9.1] - 2023-10-28
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Changed
 
 - Minor documentation adjustments.
 
+[To Top](##Releases)
+
 ## [0.9.0] - 2023-10-28
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
-### Added 
+### Added
 
 - directive for Au3Check to each UDF file branch. (@mLipok)
 - Image functions. (@donnyh13)
-	- _ImageAreaColor, 
-	- _ImageAreaGradient, 
-	- _ImageAreaTransparency, 
-	- _ImageAreaTransparencyGradient, 
-	- _ImageBorderColor, 
-	- _ImageBorderPadding, 
-	- _ImageBorderStyle, 
-	- _ImageBorderWidth, 
-	- _ImageColorAdjust, 
-	- _ImageCrop, 
-	- _ImageDelete, 
-	- _ImageGetAnchor, 
-	- _ImageGetObjByName, 
-	- _ImageHyperlink, 
-	- _ImageInsert, 
-	- _ImageModify, 
-	- _ImageOptions, 
-	- _ImageOptionsName, 
-	- _ImageReplace, 
-	- _ImagesGetNames, 
-	- _ImageShadow, 
-	- _ImageSize, 
-	- _ImageTransparency, 
-	- _ImageTypePosition, 
-	- _ImageTypeSize, 
-	- _ImageWrap, 
+	- _ImageAreaColor,
+	- _ImageAreaGradient,
+	- _ImageAreaTransparency,
+	- _ImageAreaTransparencyGradient,
+	- _ImageBorderColor,
+	- _ImageBorderPadding,
+	- _ImageBorderStyle,
+	- _ImageBorderWidth,
+	- _ImageColorAdjust,
+	- _ImageCrop,
+	- _ImageDelete,
+	- _ImageGetAnchor,
+	- _ImageGetObjByName,
+	- _ImageHyperlink,
+	- _ImageInsert,
+	- _ImageModify,
+	- _ImageOptions,
+	- _ImageOptionsName,
+	- _ImageReplace,
+	- _ImagesGetNames,
+	- _ImageShadow,
+	- _ImageSize,
+	- _ImageTransparency,
+	- _ImageTypePosition,
+	- _ImageTypeSize,
+	- _ImageWrap,
 	- _ImageWrapOptions
 
 ### Changed
 
-- Original LibreOffice UDF file split into individual elements, per specific usages. (@mLipok.) 
-	- LibreOfficeWriter_Cell, 
-	- LibreOfficeWriter_Char, 
-	- LibreOfficeWriter_Constants, 
-	- LibreOfficeWriter_Cursor, 
-	- LibreOfficeWriter_DirectFormating, 
-	- LibreOfficeWriter_Doc, 
-	- LibreOfficeWriter_Field, 
-	- LibreOfficeWriter_Font, 
-	- LibreOfficeWriter_FootEndNotes, 
-	- LibreOfficeWriter_Frame, 
-	- LibreOfficeWriter_Helper, 
+- Original LibreOffice UDF file split into individual elements, per specific usages. (@mLipok.)
+	- LibreOfficeWriter_Cell,
+	- LibreOfficeWriter_Char,
+	- LibreOfficeWriter_Constants,
+	- LibreOfficeWriter_Cursor,
+	- LibreOfficeWriter_DirectFormating,
+	- LibreOfficeWriter_Doc,
+	- LibreOfficeWriter_Field,
+	- LibreOfficeWriter_Font,
+	- LibreOfficeWriter_FootEndNotes,
+	- LibreOfficeWriter_Frame,
+	- LibreOfficeWriter_Helper,
 	- LibreOfficeWriter_Images,
-	- LibreOfficeWriter_Internal, 
-	- LibreOfficeWriter_Num, 
-	- LibreOfficeWriter_Page, 
-	- LibreOfficeWriter_Par, 
+	- LibreOfficeWriter_Internal,
+	- LibreOfficeWriter_Num,
+	- LibreOfficeWriter_Page,
+	- LibreOfficeWriter_Par,
 	- LibreOfficeWriter_Shapes,
-	- LibreOfficeWriter_Table. 
+	- LibreOfficeWriter_Table.
 - Renamed Constants:
 	- $LOW_PAPER_PORTRAIT --> $LOW_PAPER_ORIENT_PORTRAIT
 	- $LOW_PAPER_LANDSCAPE --> $LOW_PAPER_ORIENT_LANDSCAPE
@@ -242,7 +303,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Errors caused by residual function calls from filling in "Related" section of the header. (@mLipok.)
 	- _LOWriter_DocFindAllInRange,
 	- _LOWriter_DocGenPropTemplate.
-	
+
 ### Project
 
 - @mLipok and @donnyh13 began jointly working on this project. — Thanks to @mLipok for his tireless work cleaning up many things in this UDF.
@@ -254,18 +315,21 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Added CODE_OF_CONDUCT.md (@donnyh13)
 - Added CONTRIBUTING.md. (@donnyh13)
 
-Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from https://github.com/Danp2/au3WebDriver.
+Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from <https://github.com/Danp2/au3WebDriver>.
+
+[To Top](##Releases)
 
 ## [0.0.0.3] - 2023-08-10
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
 - Paragraph Object functions which allows the ability to copy and paste content without using the clipboard quickly. Thanks to user @Heiko for inspiration.
-	- _ParObjSelect, 
-	- _ParObjCopy, 
-	- _ParObjPaste, 
+	- _ParObjSelect,
+	- _ParObjCopy,
+	- _ParObjPaste,
 	- _ParObjDelete.
 - _DocExecuteDispatch function, adding some shortcuts to certain commands, such as select all, copy/paste content to/from clipboard.
 - _DocConvertTextToTable.
@@ -274,41 +338,44 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 - "Related" functions section for most function headers.
 - Warning to _ShapesGetNames, about Images inserted in a document also being called "TextFrames".
 - processing error check.
-	- _DocInsertString, 
+	- _DocInsertString,
 	- _DocInsertControlChar.
-- a missing Datatype for possible Cursor data position types, $LOW_CURDATA_HEADER_FOOTER, previously attempting to insert a content while the insertion point was located in a Header/Footer would have failed. — Thanks to user @Heiko for helping me locate this error. The affected functions are: 
+- a missing Datatype for possible Cursor data position types, $LOW_CURDATA_HEADER_FOOTER, previously attempting to insert a content while the insertion point was located in a Header/Footer would have failed. — Thanks to user @Heiko for helping me locate this error. The affected functions are:
 	- _CursorGetDataType.
-	- _DocCreateTextCursor, 
-	- _EndnoteInsert, 
-	- _FootnoteInsert,	
-	- _TableInsert, 
+	- _DocCreateTextCursor,
+	- _EndnoteInsert,
+	- _FootnoteInsert,
+	- _TableInsert,
 
 ### Changed
 
 - Renamed Name functions and examples for consistency.
-	- _DocListTableNames --> _TablesGetNames 
-	- _FramesListNames --> _FramesGetNames 
-	- _ShapesListNames --> _ShapesGetNames 	
-	- _ParGetObjects --> _ParObjCreateList. 
-	- _ParSectionsGet --> _ParObjSectionsGet. 
-	- _TableGetByCursor --> _TableGetObjByCursor. 
-	- _TableGetByName --> _TableGetObjByName. 
-	- _TableGetCellByCursor --> _TableGetCellObjByCursor. 
-	- _TableGetCellByName --> _TableGetCellObjByName. 
-	- _TableGetCellByPosition --> _TableGetCellObjByPosition. 
+	- `_DocListTableNames` --> `_TablesGetNames`
+	- `_FramesListNames` --> `_FramesGetNames`
+	- `_ShapesListNames` --> `_ShapesGetNames` 	
+	- `_ParGetObjects` --> `_ParObjCreateList`.
+	- `_ParSectionsGet` --> `_ParObjSectionsGet`.
+	- `_TableGetByCursor` --> `_TableGetObjByCursor`.
+	- `_TableGetByName` --> `_TableGetObjByName`.
+	- `_TableGetCellByCursor` --> `_TableGetCellObjByCursor`.
+	- `_TableGetCellByName` --> `_TableGetCellObjByName`.
+	- `_TableGetCellByPosition` --> `_TableGetCellObjByPosition`.
 - Removed "IsCollpased" check and error from _DocGetString.
 - _FramesListNames to have an option to search for Frames listed under shapes.
 - _ShapesGetNames, Corrected an error that could occur if images are present.
 
 ### Fixed
 
--  An error where a COM error would be produced when attempting to insert a string or control character in certain data types. — Thanks to user @Heiko for helping me locate this error.
+- An error where a COM error would be produced when attempting to insert a string or control character in certain data types. — Thanks to user @Heiko for helping me locate this error.
 	- _DocInsertControlChar,
 	- _DocInsertString.
-	
+
+[To Top](##Releases)
+
 ## [0.0.0.2] - 2023-07-16
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
@@ -318,34 +385,36 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - _DocReplaceAllInRange to have two methods of performing a Regular Expression find and replace.
 - Removed the if/else block in $atFindFormat parameter checking.
-	- _DocReplaceAll, 
-	- _DocReplaceAllInRange, 
-	- _DocFindNext, 
-	- _DocFindAll, 
+	- _DocReplaceAll,
+	- _DocReplaceAllInRange,
+	- _DocFindNext,
+	- _DocFindAll,
 	- _DocFindAllInRange.
 
 ### Fixed
 
 - Method for skipping $atFindFormat and $atReplaceFormat, now uses an empty array called in each parameter to skip.
-	- _DocReplaceAll, 
+	- _DocReplaceAll,
 	- _DocReplaceAllInRange.
 
-### Project 
+### Project
 
 - Updated function documentation to reflect the changes.
 
+[To Top](##Releases)
+
 ## [0.0.0.1] - 2023-07-02
 
-**LibreOfficeWriter**
+> [!NOTE]
+> **LibreOfficeWriter**
 
 ### Added
 
 - Initial UDF Release.
 
----
+[To Top](##Releases)
 
-[Unreleased]: https://github.com/mlipok/Au3LibreOffice/compare/v1.0.0...v0.0.0.3
-[0.0.0.3]:    https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3
+---
 
 ### Legend - Types of changes
 
@@ -357,6 +426,19 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 - `Security` in case of vulnerabilities.
 - `Project` for documentation or overall project improvements.
 
-##
+[To the top](#changelog)
 
-[To the top](#)
+---
+
+[v0.10.0-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/0.9.1...main
+[v0.9.1-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/v0.9.0...0.9.1
+[v0.9.0-Compare]:	https://github.com/mlipok/Au3LibreOffice/compare/v0.0.0.3...v0.9.0
+[v0.0.0.3-Compare]:	https://github.com/donnyh13/Au3LibreOffice/compare/v0.0.0.2...v0.0.0.3
+[v0.0.0.2-Compare]:	https://github.com/donnyh13/Au3LibreOffice/compare/v0.0.0.1...v0.0.0.2
+
+[v0.10.0]:	https://github.com/mlipok/Au3LibreOffice
+[v0.9.1]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/0.9.1
+[v0.9.0]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.9.0
+[v0.0.0.3]:	https://github.com/mlipok/Au3LibreOffice/releases/tag/v0.0.0.3
+[v0.0.0.2]:	https://github.com/donnyh13/Au3LibreOffice/releases/tag/v0.0.0.2
+[v0.0.0.1]:	https://github.com/donnyh13/Au3LibreOffice/releases/tag/v0.0.0.1
