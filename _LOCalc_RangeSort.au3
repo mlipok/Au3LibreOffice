@@ -62,7 +62,7 @@ If @error Then ConsoleWrite("Range Sort -- Error = " & @error & @CRLF & "Ext. = 
 ;#########################
 
 
-ConsoleWrite(@CRLF & "! Letters Test" & @CRLF )
+ConsoleWrite(@CRLF & "! Letters Test" & @CRLF)
 ; Get Cell Range to fill with Letters
 $oCellRange = _LOCalc_RangeGetCellByName($oSheet, "D1", "D5")
 If @error Then ConsoleWrite("Cell Range 1 -- Error = " & @error & @CRLF & "Ext. = " & @extended & @CRLF)
@@ -114,38 +114,38 @@ Exit
 
 
 Func _LOCalc_SortDescriptorCreate($iIndex, $iDataType = $LOC_SORT_DATA_TYPE_AUTO, $bAscending = True, $bCaseSensitive = False)
-Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $tSortField
 
-If Not IsInt($iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-$tSortField = __LOCalc_CreateStruct("com.sun.star.table.TableSortField")
-If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$tSortField = __LOCalc_CreateStruct("com.sun.star.table.TableSortField")
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-With $tSortField
-.Field = $iIndex
-.FieldType = $iDataType
-.IsAscending = $bAscending
-.IsCaseSensitive = $bCaseSensitive
-EndWith
+	With $tSortField
+		.Field = $iIndex
+		.FieldType = $iDataType
+		.IsAscending = $bAscending
+		.IsCaseSensitive = $bCaseSensitive
+	EndWith
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tSortField)
-EndFunc
+EndFunc   ;==>_LOCalc_SortDescriptorCreate
 
 Func _LOCalc_RangeSort(ByRef $oRange, ByRef $tSortDesc, $bSortColumns = False, $bHasHeader = False, $bBindFormat = True, $bCopyOutput = False, $oCellOutput = Null, $tSortDesc2 = Null, $tSortDesc3 = Null)
-Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-Local $avSortDesc
-Local $atSortField[1]
-Local $tCellInputAddr, $tCellAddr, $tSortRangeAddr
+	Local $avSortDesc
+	Local $atSortField[1]
+	Local $tCellInputAddr, $tCellAddr, $tSortRangeAddr
 
-; Error check
+	; Error check
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($tSortDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bSortColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -153,89 +153,95 @@ Local $tCellInputAddr, $tCellAddr, $tSortRangeAddr
 	If Not IsBool($bBindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	If Not IsBool($bCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
-; Retrieve Sort Descriptor for calling sort with.
+	; Retrieve Sort Descriptor for calling sort with.
 	$avSortDesc = $oRange.createSortDescriptor()
 	If Not IsArray($avSortDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-If $bSortColumns Then
-If Not __LOCalc_IntIsBetween($tSortDesc.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-Else
-	If Not __LOCalc_IntIsBetween($tSortDesc.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-EndIf
+	; Make sure Requested Row/ Column isn't out of range.
+	If $bSortColumns Then
+		If Not __LOCalc_IntIsBetween($tSortDesc.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	Else
+		If Not __LOCalc_IntIsBetween($tSortDesc.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
 
-$atSortField[0] = $tSortDesc
+	$atSortField[0] = $tSortDesc
 
-If ($tSortDesc2 <> Null) Then
-If Not IsObj($tSortDesc2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	; If more than 1 Sort desc, make sure Requested Row/ Column isn't out of range.
+	If ($tSortDesc2 <> Null) Then
+		If Not IsObj($tSortDesc2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
-If $bSortColumns Then
-If Not __LOCalc_IntIsBetween($tSortDesc2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-Else
-	If Not __LOCalc_IntIsBetween($tSortDesc2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-EndIf
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortDesc2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortDesc2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		EndIf
 
-ReDim $atSortField[2]
-$atSortField[1] = $tSortDesc2
+		ReDim $atSortField[2]
+		$atSortField[1] = $tSortDesc2
 
-EndIf
+	EndIf
 
-If ($tSortDesc3 <> Null) Then
-If Not IsObj($tSortDesc3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	; If more than 2 Sort desc, make sure Requested Row/ Column isn't out of range.
+	If ($tSortDesc3 <> Null) Then
+		If Not IsObj($tSortDesc3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-If $bSortColumns Then
-If Not __LOCalc_IntIsBetween($tSortDesc3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-Else
-	If Not __LOCalc_IntIsBetween($tSortDesc3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-EndIf
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortDesc3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortDesc3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		EndIf
 
-ReDim $atSortField[UBound($atSortField) + 1]
-$atSortField[UBound($atSortField) - 1] = $tSortDesc3
+		ReDim $atSortField[UBound($atSortField) + 1]
+		$atSortField[UBound($atSortField) - 1] = $tSortDesc3
 
-EndIf
+	EndIf
 
-If ($bCopyOutput = True) Then
-If Not IsObj($oCellOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	; If Output copy of sort data, get first cell's address.
+	If ($bCopyOutput = True) Then
+		If Not IsObj($oCellOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
-$tCellInputAddr = $oCellOutput.RangeAddress()
-If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		$tCellInputAddr = $oCellOutput.RangeAddress()
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	$tCellAddr.Sheet = $tCellInputAddr.Sheet()
-	$tCellAddr.Column = $tCellInputAddr.StartColumn()
-	$tCellAddr.Row = $tCellInputAddr.StartRow()
+		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
+		$tCellAddr.Column = $tCellInputAddr.StartColumn()
+		$tCellAddr.Row = $tCellInputAddr.StartRow()
 
-EndIf
+	EndIf
 
-For $i  = 0 To UBound($avSortDesc) - 1
+	; Cycle through sort desc and fill in data
+	For $i = 0 To UBound($avSortDesc) - 1
 
-Switch $avSortDesc[$i].Name()
+		Switch $avSortDesc[$i].Name()
 
-	Case "IsSortColumns"
-	$avSortDesc[$i].Value = $bSortColumns
+			Case "IsSortColumns"
+				$avSortDesc[$i].Value = $bSortColumns
 
-	Case "ContainsHeader"
-		$avSortDesc[$i].Value = $bHasHeader
+			Case "ContainsHeader"
+				$avSortDesc[$i].Value = $bHasHeader
 
-	Case "SortFields"
-		$avSortDesc[$i].Value = $atSortField
+			Case "SortFields"
+				$avSortDesc[$i].Value = $atSortField
 
-	Case "BindFormatsToContent"
-$avSortDesc[$i].Value = $bBindFormat
+			Case "BindFormatsToContent"
+				$avSortDesc[$i].Value = $bBindFormat
 
-	Case "CopyOutputData"
-$avSortDesc[$i].Value = $bCopyOutput
+			Case "CopyOutputData"
+				$avSortDesc[$i].Value = $bCopyOutput
 
-	Case "OutputPosition"
-		If ($bCopyOutput = True) Then $avSortDesc[$i].Value = $tCellAddr
+			Case "OutputPosition"
+				If ($bCopyOutput = True) Then $avSortDesc[$i].Value = $tCellAddr
 
-	EndSwitch
+		EndSwitch
 
-Next
+	Next
 
-$oRange.Sort($avSortDesc)
+	; Perform the sort.
+	$oRange.Sort($avSortDesc)
 
-Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-EndFunc
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeSort
 
