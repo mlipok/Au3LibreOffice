@@ -55,7 +55,7 @@ Func Example()
 			"Search for whole words only? True/False: " & $abSearch[2] & @CRLF & _
 			"Search using Regular Expressions? True/False: " & $abSearch[3] & @CRLF & _
 			"Search for Paragraph Styles or for format settings in Styles? True/False: " & $abSearch[3] & @CRLF & _
-			"Search words only with specific paragrapgh format settings?: " & $abSearch[4])
+			"Search words only with specific paragraph format settings?: " & $abSearch[4])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

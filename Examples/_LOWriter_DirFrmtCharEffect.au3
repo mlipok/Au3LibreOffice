@@ -62,7 +62,7 @@ Func Example()
 			"Are the words hidden? True/False: " & $avSettings[2] & @CRLF & _
 			"Are the words outlined? True/False: " & $avSettings[3] & @CRLF & _
 			"Do the words have a shadow? True/False: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharEffect($oViewCursor, Default, Default, Default, Default, Default)

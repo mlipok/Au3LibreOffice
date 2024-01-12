@@ -39,7 +39,7 @@ Func Example()
 			"What Numbering style is used, If any?: " & $avSettings[1] & @CRLF & _
 			"Is this paragraph included in line numbering? True/False: " & $avSettings[2] & @CRLF & _
 			"Should line counting restart at this paragraph? If so, what number should it start at? (If not, value will be 0): " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParOutLineAndList($oDoc, $oViewCursor, Default, Default, Default, Default)

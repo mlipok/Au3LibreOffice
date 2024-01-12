@@ -50,7 +50,7 @@ Func Example()
 			"Shadow color in long color format: " & $avSettings[1] & @CRLF & _
 			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"Shadow location, (see UDF Constants): " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharShadow($oViewCursor, Null, Null, Null, Null, True)

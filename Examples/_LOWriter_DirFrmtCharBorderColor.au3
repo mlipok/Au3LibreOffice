@@ -49,7 +49,7 @@ Func Example()
 			"Bottom color, in Long Color Format: " & $avSettings[1] & @CRLF & _
 			"Left color, in Long Color Format: " & $avSettings[2] & @CRLF & _
 			"Right color, in Long Color Format: " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting from selection.
 	_LOWriter_DirFrmtCharBorderColor($oViewCursor, Null, Null, Null, Null, True)

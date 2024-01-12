@@ -54,7 +54,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The current Paragraph break settings table are: " & @CRLF & _
 			"Paragraph Break Type (See UDF Constants): " & $avTableBreak[0] & @CRLF & _
 			"Page Style to use after the break: " & $avTableBreak[1] & @CRLF & _
-			"The page number offSet for after the break: " & $avTableBreak[2])
+			"The page number offset for after the break: " & $avTableBreak[2])
 
 	; Change the Table Break settings to: Page break before the Table, $LOW_BREAK_PAGE_BEFORE,  Use the page style "Landscape" for after the break,
 	; And start page numbering at 2.
@@ -69,7 +69,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The new Paragraph break settings table are: " & @CRLF & _
 			"Paragraph Break Type (See UDF Constants): " & $avTableBreak[0] & @CRLF & _
 			"Page Style to use after the break: " & $avTableBreak[1] & @CRLF & _
-			"The page number offSet for after the break: " & $avTableBreak[2])
+			"The page number offset for after the break: " & $avTableBreak[2])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

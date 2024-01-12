@@ -59,7 +59,7 @@ Func Example()
 			"The current Font color, in Long color format: " & $avSettings[0] & @CRLF & _
 			"Transparency of the font color, in percentage: " & $avSettings[1] & @CRLF & @CRLF & _
 			"Current Font highlight color, in long color format: " & $avSettings[2] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtFontColor($oViewCursor, Default, Default, Default)

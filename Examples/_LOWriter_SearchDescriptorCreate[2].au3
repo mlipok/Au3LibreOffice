@@ -64,7 +64,7 @@ Func Example()
 	$oSrchDesc2 = _LOWriter_SearchDescriptorCreate($oDoc, False, False, False, True)
 	If @error Then _ERROR("Failed to create a search descriptor. Error:" & @error & " Extended:" & @extended)
 
-	; Search for the regular expression \b[a-z]{8}\b, which means find a word 8 letters long, \b means word boundry, meaning the result will start at
+	; Search for the regular expression \b[a-z]{8}\b, which means find a word 8 letters long, \b means word boundary, meaning the result will start at
 	; the beginning of  a whole word, and end at the end of a whole word.
 	$oResult = _LOWriter_DocFindNext($oDoc, $oSrchDesc2, "\b[a-z]{8}\b", $aAnEmptyArray)
 	If @error Then _ERROR("Failed to perform search in the document. Error:" & @error & " Extended:" & @extended)

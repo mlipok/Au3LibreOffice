@@ -56,7 +56,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The selected text's current kerning settings are as follows: " & @CRLF & _
 			"Automatically adjust kerning? True/False: " & $avSettings[0] & @CRLF & _
 			"Kerning value in Printer's Points: " & $avSettings[1] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharSpacing($oViewCursor, Default, Default)

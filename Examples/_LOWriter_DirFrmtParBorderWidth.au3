@@ -37,7 +37,7 @@ Func Example()
 			"Bottom width, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Left width, in Micrometers: " & $avSettings[2] & @CRLF & _
 			"Right width, in Micrometers: " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParBorderWidth($oViewCursor, Null, Null, Null, Null, Null, True)

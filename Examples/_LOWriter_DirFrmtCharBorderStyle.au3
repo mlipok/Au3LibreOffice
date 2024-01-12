@@ -50,7 +50,7 @@ Func Example()
 			"Bottom Style, (see UDF constants): " & $avSettings[1] & @CRLF & _
 			"Left Style, (see UDF constants): " & $avSettings[2] & @CRLF & _
 			"Right Style, (see UDF constants): " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharBorderStyle($oViewCursor, Null, Null, Null, Null, True)

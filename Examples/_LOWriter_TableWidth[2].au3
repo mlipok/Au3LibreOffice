@@ -24,7 +24,7 @@ Func Example()
 	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
 	If @error Then _ERROR("Failed to insert Text Table. Error:" & @error & " Extended:" & @extended)
 
-	; Set the Table ALignment to $LOW_ORIENT_HORI_LEFT so I can set Table relative width.
+	; Set the Table Alignment to $LOW_ORIENT_HORI_LEFT so I can set Table relative width.
 	_LOWriter_TableProperties($oTable, $LOW_ORIENT_HORI_LEFT)
 	If @error Then _ERROR("Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended)
 

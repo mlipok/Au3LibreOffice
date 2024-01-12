@@ -41,7 +41,7 @@ Func Example()
 			"What type of Page break, if any is used? (see UDF constants): " & $avSettings[0] & @CRLF & _
 			"What different page style, if any, is used: " & $avSettings[1] & @CRLF & _
 			"What is the Page number offset, if any?: " & $avSettings[2] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParPageBreak($oDoc, $oViewCursor, Null, Null, Null, True)

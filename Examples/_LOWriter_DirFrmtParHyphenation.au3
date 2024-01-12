@@ -44,7 +44,7 @@ Func Example()
 			"Maximum number of consecutive hyphens: " & $avSettings[2] & @CRLF & _
 			"Minimum number of characters to remain before the hyphen character: " & $avSettings[3] & @CRLF & _
 			"Minimum number of characters to remain after the hyphen character: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParHyphenation($oViewCursor, Null, Null, Null, Null, Null, True)

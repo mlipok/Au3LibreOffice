@@ -62,7 +62,7 @@ Func Example()
 			"Is Auto-SubScript? True/False: " & $avSettings[2] & @CRLF & _
 			"Current SubScript percentage (If Auto, then it will be -14000): " & $avSettings[3] & @CRLF & _
 			"Relative size percentage: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharPosition($oViewCursor, Null, Null, Null, Null, Null, True)

@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Shape's wrap option settings are as follows: " & @CRLF & _
-			"Create a new paragrpah below the Shape? True/False: " & $avSettings[0] & @CRLF & _
+			"Create a new paragraph below the Shape? True/False: " & $avSettings[0] & @CRLF & _
 			"Place the Shape in the background? True/False: " & $avSettings[1] & @CRLF & _
 			"Allow multiple Shapes to overlap? True/False: " & $avSettings[2])
 

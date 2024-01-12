@@ -32,7 +32,7 @@ Func Example()
 	$iTransparency = _LOWriter_ShapeTransparency($oShape)
 	If @error Then _ERROR("Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Shape's current Transparecny percentage is: " & $iTransparency)
+	MsgBox($MB_OK, "", "The Shape's current Transparency percentage is: " & $iTransparency)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

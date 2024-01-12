@@ -47,7 +47,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Third Point to no longer be a curve.")
 
-	; Modify the Shape's Third point to be a normal point agin
+	; Modify the Shape's Third point to be a normal point again
 	_LOWriter_ShapePointsModify($oShape, 3, Null, Null, Null, False)
 	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
 

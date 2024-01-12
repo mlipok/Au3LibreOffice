@@ -35,7 +35,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The current Paragraph Shadow settings are as follows: " & @CRLF & _
 			"The current background color, in Long Color format: " & $avSettings[0] & @CRLF & _
 			"Is the background color transparent? True/False: " & $avSettings[1] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtParBackColor($oViewCursor, Null, Null, True)

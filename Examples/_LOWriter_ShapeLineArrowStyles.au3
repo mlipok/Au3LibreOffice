@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Shape Arrow Style settings to: Set the Start Arrowhead to $LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45_UNFILLED, Start width = 1/4",
-	; Start Center = True, Syncronize Start and End = True.
+	; Start Center = True, Synchronize Start and End = True.
 	_LOWriter_ShapeLineArrowStyles($oShape, $LOW_SHAPE_LINE_ARROW_TYPE_SQUARE_45_UNFILLED, $iMicrometers, True, True)
 	If @error Then _ERROR("Failed to set Shape settings. Error:" & @error & " Extended:" & @extended)
 

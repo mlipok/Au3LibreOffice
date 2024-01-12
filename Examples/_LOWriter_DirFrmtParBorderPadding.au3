@@ -69,7 +69,7 @@ Func Example()
 			"Bottom Padding distance, in Micrometers: " & $avSettings[2] & @CRLF & _
 			"Left Padding distance, in Micrometers: " & $avSettings[3] & @CRLF & @CRLF & _
 			"Right Padding distance, in Micrometers: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct Formatting.
 	_LOWriter_DirFrmtParBorderPadding($oViewCursor, Null, Null, Null, Null, Null, True)

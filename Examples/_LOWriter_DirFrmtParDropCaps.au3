@@ -45,7 +45,7 @@ Func Example()
 			"How much distance between the DropCaps and the rest of the text? In micrometers: " & $avSettings[2] & @CRLF & _
 			"Is the whole word DropCapped? True/False: " & $avSettings[3] & @CRLF & _
 			"What character style will be used for the DropCaps, if any?: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParDropCaps($oDoc, $oViewCursor, Null, Null, Null, Null, Null, True)

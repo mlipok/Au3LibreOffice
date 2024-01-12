@@ -46,7 +46,7 @@ Func Example()
 			"Expand a single word on the last line? True/False: " & $avSettings[3] & @CRLF & _
 			"Snap to grid, if one is active? True/False: " & $avSettings[4] & @CRLF & _
 			"Text Direction, (See UDF constants): " & $avSettings[5] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtParAlignment($oViewCursor, Default, Default, Default, Default, Default, Default)

@@ -44,7 +44,7 @@ Func Example()
 			"Rotation in degrees: " & $avSettings[0] & @CRLF & _
 			"Scale width, in percentage: " & $avSettings[1] & @CRLF & _
 			"Rotation fit to line? True/False: " & $avSettings[2] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtCharRotateScale($oViewCursor, Default, Default, Default)

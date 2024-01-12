@@ -53,7 +53,7 @@ Func Example()
 			"Do not apply spacing if above and/or below paragraph are the same style? True/False: " & $avSettings[2] & @CRLF & _
 			"Line spacing mode, (See UDF constants): " & $avSettings[3] & @CRLF & _
 			"Line spacing distance, in micrometers except for $LOW_LINE_SPC_MODE_PROP(0), which is a percentage: " & $avSettings[4] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParSpace($oViewCursor, Default, Default, Default, Default, Default, Default)

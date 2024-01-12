@@ -46,7 +46,7 @@ Func Example()
 			"Underline style (See UDF constants): " & $avSettings[1] & @CRLF & _
 			"Underline has color? True/False: " & $avSettings[2] & @CRLF & _
 			"Underline color, in long color format: " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtUnderLine($oViewCursor, Default, Default, Default, Default)

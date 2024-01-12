@@ -46,7 +46,7 @@ Func Example()
 			"Font size: " & $avSettings[1] & @CRLF & _
 			"Italic/Posture setting (See UDF Constants): " & $avSettings[2] & @CRLF & _
 			"Weight/Bold setting (See UDF Constants): " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtFont($oDoc, $oViewCursor, Default, Default, Default, Default)

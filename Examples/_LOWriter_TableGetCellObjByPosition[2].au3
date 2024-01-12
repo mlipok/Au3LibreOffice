@@ -40,7 +40,7 @@ Func Example()
 
 	; Retrieve how many Columns the Table currently contains.
 	$iColumns = _LOWriter_TableColumnGetCount($oTable)
-	If @error Then _ERROR("Failed to retrieve Text Table Column COunt. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve Text Table Column Count. Error:" & @error & " Extended:" & @extended)
 
 	For $iRow = 0 To $iRows - 1
 

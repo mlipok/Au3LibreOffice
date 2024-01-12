@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR("Failed to insert Text Table. Error:" & @error & " Extended:" & @extended)
 
 	; Set the table settings to: Table Alignment = $LOW_ORIENT_HORI_NONE, Keep Table with next Paragraph = False, Set a New Table Name,
-	; allow the Table to split across pages, Dont Allow the Rows to Split, and do repeat the Table heading, and include 3 rows as the heading.
+	; allow the Table to split across pages, Don't Allow the Rows to Split, and do repeat the Table heading, and include 3 rows as the heading.
 	_LOWriter_TableProperties($oTable, $LOW_ORIENT_HORI_NONE, False, "NewName", True, True, True, 3)
 	If @error Then _ERROR("Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended)
 

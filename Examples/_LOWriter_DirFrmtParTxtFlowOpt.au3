@@ -42,7 +42,7 @@ Func Example()
 			"Allow a Break between this and the next paragraph? True/False: " & $avSettings[1] & @CRLF & _
 			"How many orphans are allowed? (0 means orphan control is off): " & $avSettings[2] & @CRLF & _
 			"How many widows are allowed? (0 means widow control is off): " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtParTxtFlowOpt($oViewCursor, Default, Default, Default, Default)

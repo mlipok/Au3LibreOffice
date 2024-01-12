@@ -47,7 +47,7 @@ Func Example()
 	Next
 
 	; There  are two ways to set the Table data, I can retrieve an array of data in the table and modify that array, or I can create all new
-	; arrays to fill it with. I will demonstrate retrieving the existing data array and modifiying that.
+	; arrays to fill it with. I will demonstrate retrieving the existing data array and modifying that.
 
 	; Retrieve Table data,
 	$avData = _LOWriter_TableGetData($oTable)

@@ -46,7 +46,7 @@ Func Example()
 			"Overline style (See UDF constants): " & $avSettings[1] & @CRLF & _
 			"Overline has color? True/False: " & $avSettings[2] & @CRLF & _
 			"Overline color, in long color format: " & $avSettings[3] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
 	_LOWriter_DirFrmtOverLine($oViewCursor, Default, Default, Default, Default)

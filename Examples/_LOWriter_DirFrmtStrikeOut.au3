@@ -44,7 +44,7 @@ Func Example()
 			"Strikeout words only? True/False: " & $avSettings[0] & @CRLF & _
 			"Strike out words? True/False: " & $avSettings[1] & @CRLF & _
 			"Strikeout line style, (See UDF Constants): " & $avSettings[2] & @CRLF & @CRLF & _
-			"Press ok to remove direct formating.")
+			"Press ok to remove direct formatting.")
 
 	; Remove direct formatting
 	_LOWriter_DirFrmtStrikeOut($oViewCursor, Default, Default, Default)
