@@ -103,7 +103,7 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B1", "B6")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
 
-	; Fill the range with the Numberss
+	; Fill the range with the Numbers
 	_LOCalc_RangeNumbers($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
 

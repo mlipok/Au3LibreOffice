@@ -393,7 +393,7 @@ EndFunc   ;==>_LOCalc_DocCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Does not alter the original save path (if there was one), saves a copy of the document to the new path, in the new file format if one is chosen.
-;				   If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
+;				   If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "$sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
 ; Related .......: _LOCalc_DocSave, _LOCalc_DocSaveAs
 ; Link ..........:
 ; Example .......: Yes

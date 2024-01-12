@@ -36,7 +36,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Column C's Width settings are:" & @CRLF & _
 			"Is the Column's Width set to optimal? True/False: " & $avWidth[0] & @CRLF & _
 			"Column C's current Width is, in Micrometers: " & $avWidth[1] & @CRLF & _
-			"Notice that the Column Width is still showing Oprimal Width is True, this is the only value it will return." & @CRLF & _
+			"Notice that the Column Width is still showing Optimal Width is True, this is the only value it will return." & @CRLF & _
 			"If I set Optimal Width to True again the Column's width will return to its automatically determined value.")
 
 	; Set Column C's Width to Optimal = True again.

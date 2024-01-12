@@ -41,7 +41,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Query Cell Range for dependent Cells. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I will now highlight in Red the cell ranges returned that are depedent on Cell A6, searching recursively.")
+	MsgBox($MB_OK, "", "I will now highlight in Red the cell ranges returned that are dependent on Cell A6, searching recursively.")
 
 	; Cycle through the results and set the background color to Red for each Cell range found
 	For $i = 0 To $iResults - 1

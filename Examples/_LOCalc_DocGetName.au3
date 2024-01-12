@@ -23,8 +23,8 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve document information. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The document's full name is: " & $sName & @CRLF & @CRLF & _
-			"This is the name you would use for Autoit Window functions, such as WinMove etc." & @CRLF & @CRLF & _
-			"Does the Document window exist in Autoit's eyes? (0 = False, 1 = True) --  " & WinExists($sName))
+			"This is the name you would use for AutoIt Window functions, such as WinMove etc." & @CRLF & @CRLF & _
+			"Does the Document window exist in AutoIt's eyes? (0 = False, 1 = True) --  " & WinExists($sName))
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

@@ -13,7 +13,7 @@
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
-; Description ...: Provides basic functionality through AutoIt for Creating, Modifying, or applying settings to, L.O. Calc Cell Ranges.
+; Description ...: Provides basic functionality through AutoIt for Creating, Modifying, or applying settings to L.O. Calc Cell Ranges.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
 ;
@@ -1440,7 +1440,7 @@ EndFunc   ;==>_LOCalc_RangeQueryVisible
 ; Description ...: Delete Rows from a Sheet.
 ; Syntax ........: _LOCalc_RangeRowDelete(ByRef $oRange, $iRow[, $iCount = 1])
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iRow                - an integer value. The Row to begin deleteing at. The Row called will be deleted. See remarks.
+;                  $iRow                - an integer value. The Row to begin deleting at. The Row called will be deleted. See remarks.
 ;                  $iCount              - [optional] an integer value. Default is 1. The number of rows to delete, including the row called in $iRow.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
