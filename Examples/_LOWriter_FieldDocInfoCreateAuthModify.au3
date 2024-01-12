@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Doc Info Create Author Field settings. Set Fixed to True, Set author to "You".
 	_LOWriter_FieldDocInfoCreateAuthModify($oField, True, "You")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an array, with elements in order of function parameters.
 	$avSettings = _LOWriter_FieldDocInfoCreateAuthModify($oField)

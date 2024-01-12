@@ -29,14 +29,14 @@ Func Example()
 	$oCell = _LOWriter_TableGetCellObjByName($oTable, "A1")
 	If @error Then _ERROR("Failed to retrieve Text Table cell Object. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve current BackGround Color and Back Transparent settings. Return will be an Array with elements in order of function parameters.
+	; Retrieve current Background Color and Back Transparent settings. Return will be an Array with elements in order of function parameters.
 	$aCellBackGround = _LOWriter_CellBackColor($oCell)
 	If @error Then _ERROR("Failed to retrieve current Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now demonstrate modifying a cell's background color settings. The current Background color value is: " & $aCellBackGround[0] & _
 			@CRLF & " And the current Background Transparency setting is: " & $aCellBackGround[1])
 
-	; Set the cell Background color to $LOW_COLOR_INDIGO, and BackTransparent to False.
+	; Set the cell Background color to $LOW_COLOR_INDIGO, and Background Transparent to False.
 	_LOWriter_CellBackColor($oCell, $LOW_COLOR_INDIGO, False)
 	If @error Then _ERROR("Failed to set Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
@@ -44,14 +44,14 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text with a colorful background.")
 	If @error Then _ERROR("Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve current BackGround Color and Back Transparent settings.
+	; Retrieve current Background Color and Back Transparent settings.
 	$aCellBackGround = _LOWriter_CellBackColor($oCell)
 	If @error Then _ERROR("Failed to retrieve current Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have set the cell's background color to $LOW_COLOR_INDIGO. The current Background color value is: " & $aCellBackGround[0] & _
 			@CRLF & " And the current Background Transparency setting is: " & $aCellBackGround[1])
 
-	; Set the cell BackTransparent to True.
+	; Set the cell Background Transparent to True.
 	_LOWriter_CellBackColor($oCell, Null, True)
 	If @error Then _ERROR("Failed to set Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
@@ -59,7 +59,7 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text without a colorful background.")
 	If @error Then _ERROR("Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve current BackGround Color and Back Transparent settings.
+	; Retrieve current Background Color and Back Transparent settings.
 	$aCellBackGround = _LOWriter_CellBackColor($oCell)
 	If @error Then _ERROR("Failed to retrieve current Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
@@ -67,7 +67,7 @@ Func Example()
 			"The current Background color value is: " & $aCellBackGround[0] & _
 			@CRLF & " And the current Background Transparency setting is: " & $aCellBackGround[1])
 
-	; Set the cell Background color to a random number, and BackTransparent to False.
+	; Set the cell Background color to a random number, and Background Transparent to False.
 	_LOWriter_CellBackColor($oCell, Random(0, 16777215, $iIntegerFlag), False)
 	If @error Then _ERROR("Failed to set Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 
@@ -75,7 +75,7 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text with a random colorful background.")
 	If @error Then _ERROR("Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve current BackGround Color and Back Transparent settings.
+	; Retrieve current Background Color and Back Transparent settings.
 	$aCellBackGround = _LOWriter_CellBackColor($oCell)
 	If @error Then _ERROR("Failed to retrieve current Text Table Cell Background settings. Error:" & @error & " Extended:" & @extended)
 

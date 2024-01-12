@@ -33,12 +33,12 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Paragraph's current position settings are as follows: " & @CRLF & _
-			"Is Auto-SuperScript? True/False: " & $avParStyleSettings[0] & @CRLF & _
-			"Current SuperScript percentage (If Auto, then it will be 14000): " & $avParStyleSettings[1] & @CRLF & _
-			"Is Auto-SubScript? True/False: " & $avParStyleSettings[2] & @CRLF & _
-			"Current SubScript percentage (If Auto, then it will be -14000): " & $avParStyleSettings[3] & @CRLF & _
+			"Is Auto-Superscript? True/False: " & $avParStyleSettings[0] & @CRLF & _
+			"Current Superscript percentage (If Auto, then it will be 14000): " & $avParStyleSettings[1] & @CRLF & _
+			"Is Auto-Subscript? True/False: " & $avParStyleSettings[2] & @CRLF & _
+			"Current Subscript percentage (If Auto, then it will be -14000): " & $avParStyleSettings[3] & @CRLF & _
 			"Relative size percentage: " & $avParStyleSettings[4] & @CRLF & @CRLF & _
-			"Press ok and I will set SubScript next.")
+			"Press ok and I will set Subscript next.")
 
 	; Set "Default Paragraph Style" font position to 75% Subscript
 	_LOWriter_ParStylePosition($oParStyle, Null, Null, Null, 75)
@@ -49,10 +49,10 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Paragraph's new position settings are as follows: " & @CRLF & _
-			"Is Auto-SuperScript? True/False: " & $avParStyleSettings[0] & @CRLF & _
-			"Current SuperScript percentage (If Auto, then it will be 14000): " & $avParStyleSettings[1] & @CRLF & _
-			"Is Auto-SubScript? True/False: " & $avParStyleSettings[2] & @CRLF & _
-			"Current SubScript percentage (If Auto, then it will be -14000): " & $avParStyleSettings[3] & @CRLF & _
+			"Is Auto-Superscript? True/False: " & $avParStyleSettings[0] & @CRLF & _
+			"Current Superscript percentage (If Auto, then it will be 14000): " & $avParStyleSettings[1] & @CRLF & _
+			"Is Auto-Subscript? True/False: " & $avParStyleSettings[2] & @CRLF & _
+			"Current Subscript percentage (If Auto, then it will be -14000): " & $avParStyleSettings[3] & @CRLF & _
 			"Relative size percentage: " & $avParStyleSettings[4])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

@@ -20,26 +20,26 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Placeholder Field at the View Cursor. Set the PlaceHolder type to $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, Name = "A Graphic PlaceHolder.",
+	; Insert a Placeholder Field at the View Cursor. Set the Placeholder type to $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, Name = "A Graphic Placeholder.",
 	; Reference = "Click Me"
-	$oField = _LOWriter_FieldFuncPlaceholderInsert($oDoc, $oViewCursor, False, $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, "A Graphic PlaceHolder.", "Click Me")
+	$oField = _LOWriter_FieldFuncPlaceholderInsert($oDoc, $oViewCursor, False, $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, "A Graphic Placeholder.", "Click Me")
 	If @error Then _ERROR("Failed to insert a Field. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the PlaceHolder Field settings.")
+	MsgBox($MB_OK, "", "Press Ok to modify the Placeholder Field settings.")
 
-	; Modify the PlaceHolder Field settings. Set the PlaceHolder type to $LOW_FIELD_PLACEHOLD_TYPE_TABLE, Set the Name to "A Table PlaceHolder",
+	; Modify the Placeholder Field settings. Set the Placeholder type to $LOW_FIELD_PLACEHOLD_TYPE_TABLE, Set the Name to "A Table Placeholder",
 	; And Reference to "Hover Me"
-	_LOWriter_FieldFuncPlaceholderModify($oField, $LOW_FIELD_PLACEHOLD_TYPE_TABLE, "A Table PlaceHolder", "Hover Me")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	_LOWriter_FieldFuncPlaceholderModify($oField, $LOW_FIELD_PLACEHOLD_TYPE_TABLE, "A Table Placeholder", "Hover Me")
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldFuncPlaceholderModify($oField)
 	If @error Then _ERROR("Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
-			"The PlaceHolder Field Type is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
-			"The PlaceHolder Field name is: " & $avSettings[1] & @CRLF & _
-			"The PlaceHolder Field's Reference Text is: " & $avSettings[2])
+			"The Placeholder Field Type is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
+			"The Placeholder Field name is: " & $avSettings[1] & @CRLF & _
+			"The Placeholder Field's Reference Text is: " & $avSettings[2])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

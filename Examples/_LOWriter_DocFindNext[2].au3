@@ -57,7 +57,7 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END_OF_LINE, 1, True)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	; Search the word "search" within the viewcursor selection.
+	; Search the word "search" within the ViewCursor selection.
 	$oResult = _LOWriter_DocFindNext($oDoc, $oSrchDesc, "search", $aAnEmptyArray, $oViewCursor)
 	If @error Then _ERROR("Failed to perform search in the document. Error:" & @error & " Extended:" & @extended)
 
@@ -87,7 +87,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The search was successful, I searched, and found the following words within the selection: " & $sResultString & @CRLF & @CRLF & _
 			"Did you notice the search didn't find the word ""SEarCH"" in the footnote? I will search again, this time with Exhaustive set to True.")
 
-	; Search the word "search" within the viewcursor selection exhaustively.
+	; Search the word "search" within the ViewCursor selection exhaustively.
 	$oResult = _LOWriter_DocFindNext($oDoc, $oSrchDesc, "search", $aAnEmptyArray, $oViewCursor, Null, True)
 	If @error Then _ERROR("Failed to perform search in the document. Error:" & @error & " Extended:" & @extended)
 

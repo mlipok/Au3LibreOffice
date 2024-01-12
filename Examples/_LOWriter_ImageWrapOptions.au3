@@ -30,7 +30,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve Image settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Image's wrap option settings are as follows: " & @CRLF & _
-			"Create a new paragrpah below the Image? True/False: " & $avSettings[0] & @CRLF & _
+			"Create a new paragraph below the Image? True/False: " & $avSettings[0] & @CRLF & _
 			"Contour Text around the Image? True/False: " & $avSettings[1] & @CRLF & _
 			"Contour text only around the outside of the Image? True/False: " & $avSettings[2] & @CRLF & _
 			"Place the Image in the background? True/False: " & $avSettings[3] & @CRLF & _

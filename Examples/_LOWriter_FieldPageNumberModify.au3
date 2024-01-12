@@ -39,7 +39,7 @@ Func Example()
 
 	; Modify the Page Number Field settings. Number format = $LOW_NUM_STYLE_TEXT_CARDINAL, Offset = -1,
 	_LOWriter_FieldPageNumberModify($oDoc, $oField, $LOW_NUM_STYLE_TEXT_CARDINAL, -1)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldPageNumberModify($oDoc, $oField)

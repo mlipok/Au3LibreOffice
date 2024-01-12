@@ -17,7 +17,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Frame into the document at the Viewcursor position, and 6000x6000 Micrometers wide.
+	; Insert a Frame into the document at the ViewCursor position, and 6000x6000 Micrometers wide.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 6000, 6000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
@@ -35,7 +35,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The Frame's Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, is Micrometers: " & $avSettings[0] & @CRLF & _
-			"The Shdaow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
+			"The Shadow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avSettings[3])
 

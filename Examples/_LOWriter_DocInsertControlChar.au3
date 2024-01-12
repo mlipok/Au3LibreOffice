@@ -15,11 +15,11 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate inserting control characters into a document." & @CR & @CR)
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "This is a $LOW_CON_CHAR_PAR_BREAK --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -27,7 +27,7 @@ Func Example()
 	_LOWriter_DocInsertControlChar($oDoc, $oViewCursor, $LOW_CON_CHAR_PAR_BREAK)
 	If @error Then _ERROR("Failed to insert Control character. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "This is a $LOW_CON_CHAR_LINE_BREAK --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -35,7 +35,7 @@ Func Example()
 	_LOWriter_DocInsertControlChar($oDoc, $oViewCursor, $LOW_CON_CHAR_LINE_BREAK)
 	If @error Then _ERROR("Failed to insert Control character. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "This is a $LOW_CON_CHAR_HARD_HYPHEN --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -43,7 +43,7 @@ Func Example()
 	_LOWriter_DocInsertControlChar($oDoc, $oViewCursor, $LOW_CON_CHAR_HARD_HYPHEN)
 	If @error Then _ERROR("Failed to insert Control character. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "This is a $LOW_CON_CHAR_SOFT_HYPHEN --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -51,7 +51,7 @@ Func Example()
 	_LOWriter_DocInsertControlChar($oDoc, $oViewCursor, $LOW_CON_CHAR_SOFT_HYPHEN)
 	If @error Then _ERROR("Failed to insert Control character. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "This is a $LOW_CON_CHAR_HARD_SPACE --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -59,7 +59,7 @@ Func Example()
 	_LOWriter_DocInsertControlChar($oDoc, $oViewCursor, $LOW_CON_CHAR_HARD_SPACE)
 	If @error Then _ERROR("Failed to insert Control character. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "This is a $LOW_CON_CHAR_APPEND_PAR --> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 

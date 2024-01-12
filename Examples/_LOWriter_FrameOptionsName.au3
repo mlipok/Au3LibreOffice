@@ -16,11 +16,11 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Frame into the document at the Viewcursor position, and 3000x3000 Micrometers wide.
+	; Insert a Frame into the document at the ViewCursor position, and 3000x3000 Micrometers wide.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some @CR's to move the Viewcursor down a few lines.
+	; Insert some @CR's to move the ViewCursor down a few lines.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & @CR & @CR & @CR & @CR & @CR & @CR & @CR & @CR)
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -28,13 +28,13 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
 	If @error Then _ERROR("Error performing cursor Move. Error:" & @error & " Extended:" & @extended)
 
-	; Insert another Frame into the document at the Viewcursor position, Named "AutoitTest", and 3000x3000 Micrometers wide.
-	_LOWriter_FrameCreate($oDoc, $oViewCursor, "AutoitTest", 3000, 3000)
+	; Insert another Frame into the document at the ViewCursor position, Named "AutoItTest", and 3000x3000 Micrometers wide.
+	_LOWriter_FrameCreate($oDoc, $oViewCursor, "AutoItTest", 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
-	; Modify the Frame Name Option settings. Set the Lower Frame name to "AutoitTest2", Set the description to
+	; Modify the Frame Name Option settings. Set the Lower Frame name to "AutoItTest2", Set the description to
 	; "This is a Frame to demonstrate _LOWriter_FrameOptionsName.", set Previous link to the upper Frame's name,
-	_LOWriter_FrameOptionsName($oDoc, $oFrame, "AutoitTest2", "This is a Frame to demonstrate _LOWriter_FrameOptionsName.", "AutoitTest")
+	_LOWriter_FrameOptionsName($oDoc, $oFrame, "AutoItTest2", "This is a Frame to demonstrate _LOWriter_FrameOptionsName.", "AutoItTest")
 	If @error Then _ERROR("Failed to set Frame settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Frame settings. Return will be an array in order of function parameters.

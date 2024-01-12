@@ -23,7 +23,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Create a Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nano = 765, UTC =True
+	; Create a Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nanoseconds = 765, UTC =True
 	$tDateStruct = _LOWriter_DateStructCreate(1992, 03, 28, 15, 43, 25, 765, True)
 	If @error Then _ERROR("Failed to create a Date structure. Error:" & @error & " Extended:" & @extended)
 

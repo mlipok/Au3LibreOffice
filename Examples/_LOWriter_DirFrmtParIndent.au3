@@ -42,7 +42,7 @@ Func Example()
 	$iMicrometers3 = _LOWriter_ConvertToMicrometer(1)
 	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
-	; Set the paragraph at the current cursor's location Indent settings to, 1/4" Before paragraph, 1/2" afterparagraph, First line indent = 1",
+	; Set the paragraph at the current cursor's location Indent settings to, 1/4" Before paragraph, 1/2" after paragraph, First line indent = 1",
 	; Auto First line = False
 	_LOWriter_DirFrmtParIndent($oViewCursor, $iMicrometers, $iMicrometers2, $iMicrometers3, False)
 	If @error Then _ERROR("Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)

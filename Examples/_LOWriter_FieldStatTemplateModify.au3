@@ -32,7 +32,7 @@ Func Example()
 
 	; Modify the Template Field settings. Set the display format to $LOW_FIELD_FILENAME_NAME_AND_EXT
 	_LOWriter_FieldStatTemplateModify($oField, $LOW_FIELD_FILENAME_NAME_AND_EXT)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an integer.
 	$iSetting = _LOWriter_FieldStatTemplateModify($oField)

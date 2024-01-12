@@ -34,7 +34,7 @@ Func Example()
 
 	; Modify the Hidden Paragraph Field settings. Set the condition to the user set condition.
 	_LOWriter_FieldFuncHiddenParModify($oField, $sNewCondition)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldFuncHiddenParModify($oField)

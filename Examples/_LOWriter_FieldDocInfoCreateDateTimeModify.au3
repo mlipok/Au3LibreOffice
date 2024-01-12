@@ -44,9 +44,9 @@ Func Example()
 	$iDateFormatKey = _LOWriter_DateFormatKeyCreate($oDoc, "YY/DDD/MMM HH:MM:SS")
 	If @error Then _ERROR("Failed to create a Date Format Key. Error:" & @error & " Extended:" & @extended)
 
-	; Modify the Doc Info Creation Date/Time Field settings. Set Fixed to False, Set the Date/TIme Format to the new Key I just created.
+	; Modify the Doc Info Creation Date/Time Field settings. Set Fixed to False, Set the Date/Time Format to the new Key I just created.
 	_LOWriter_FieldDocInfoCreateDateTimeModify($oDoc, $oField, False, $iDateFormatKey)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an array, with elements in order of function parameters.
 	$avSettings = _LOWriter_FieldDocInfoCreateDateTimeModify($oDoc, $oField)

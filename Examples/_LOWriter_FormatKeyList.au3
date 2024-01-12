@@ -21,7 +21,7 @@ Func Example()
 	_LOWriter_FormatKeyCreate($oDoc, "#,##0.000")
 	If @error Then _ERROR("Failed to create a Format Key. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve an Array of Format Keys. With Boolean value of whether each is a UserCreated key or not., search for all Format Key types.
+	; Retrieve an Array of Format Keys. With Boolean value of whether each is a User-Created key or not., search for all Format Key types.
 	$avKeys = _LOWriter_FormatKeyList($oDoc, True, False, $LOW_FORMAT_KEYS_ALL)
 	If @error Then _ERROR("Failed to retrieve an array of Date/Time Format Keys. Error:" & @error & " Extended:" & @extended)
 	$iResults = @extended

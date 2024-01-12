@@ -25,7 +25,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press ok to convert the Table to Text.")
 
-	; Convert the Text to a Table, seperate each column at "%", set borders to True.
+	; Convert the Text to a Table, separate each column at "%", set borders to True.
 	_LOWriter_DocConvertTextToTable($oDoc, $oViewCursor, "%", False, 0, True)
 	If @error Then _ERROR("Failed to Convert Table to Text. Error:" & @error & " Extended:" & @extended)
 

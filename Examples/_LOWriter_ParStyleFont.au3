@@ -24,7 +24,7 @@ Func Example()
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
 	If @error Then _ERROR("Failed to retrieve Paragraph style object. Error:" & @error & " Extended:" & @extended)
 
-	; Set "Default Paragraph Style" Font to "Arial", Font size to 18,Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
+	; Set "Default Paragraph Style" Font to "Arial", Font size to 18, Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
 	; to $LOW_WEIGHT_BOLD
 	_LOWriter_ParStyleFont($oDoc, $oParStyle, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR("Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)

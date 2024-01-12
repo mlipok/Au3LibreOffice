@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Input Field settings. Set the Reference to "An Input", and Text to "Different Text"
 	_LOWriter_FieldFuncInputModify($oField, "An Input", "Different Text")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldFuncInputModify($oField)

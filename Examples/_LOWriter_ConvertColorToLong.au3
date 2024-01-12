@@ -57,7 +57,7 @@ Func Example()
 			"Hex->Long = " & $iHEX_TO_LONG & @CRLF & _
 			"CMYK->Long = " & $iCMYK_TO_LONG & @CRLF & _
 			"HSB->Long = " & $iHSB_TO_LONG & @CRLF & @CRLF & _
-			"HSB is a little off, however that is as close as I can mathematically get it. It shouldn't cause a noticable color difference.")
+			"HSB is a little off, however that is as close as I can mathematically get it. It shouldn't cause a noticeable color difference.")
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

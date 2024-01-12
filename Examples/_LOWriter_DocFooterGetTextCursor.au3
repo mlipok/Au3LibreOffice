@@ -15,7 +15,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text for demonstration purposes. Scroll down and look in the footer." & @CR & @CR)
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 

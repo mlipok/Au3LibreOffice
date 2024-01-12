@@ -29,7 +29,7 @@ Func Example()
 
 	; Modify the Count Field settings. Set the Count type to $LOW_FIELD_COUNT_TYPE_PARAGRAPHS, set Numbering format to  $LOW_NUM_STYLE_ARABIC
 	_LOWriter_FieldStatCountModify($oDoc, $oField, $LOW_FIELD_COUNT_TYPE_PARAGRAPHS, $LOW_NUM_STYLE_ARABIC)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an array, with elements in order of function parameters.
 	$avSettings = _LOWriter_FieldStatCountModify($oDoc, $oField)

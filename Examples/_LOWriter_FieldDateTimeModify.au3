@@ -49,7 +49,7 @@ Func Example()
 	; Modify the Date/Time Field settings. Fixed= True, Modify the Date to the one just created, Is Date = False, Off set (in minutes) = 20, Use my new
 	; DateFormat Key.
 	_LOWriter_FieldDateTimeModify($oDoc, $oField, True, $tDateStruct, False, 20, $iDateFormatKey)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldDateTimeModify($oDoc, $oField)
@@ -72,7 +72,7 @@ Func Example()
 	Next
 
 	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
-			"Is the Date/Time Fixed at that time? Ture/False: " & $avSettings[0] & @CRLF & _
+			"Is the Date/Time Fixed at that time? True/False: " & $avSettings[0] & @CRLF & _
 			"The Date/Time Field is set to the current Date and Time: " & $sDateTime & @CRLF & _
 			"Is this set as a Date, and not a time? True/False: " & $avSettings[2] & @CRLF & _
 			"The Offset is set to: " & $avSettings[3] & @CRLF & _

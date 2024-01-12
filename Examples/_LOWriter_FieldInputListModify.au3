@@ -44,9 +44,9 @@ Func Example()
 	; Modify the Input List Field settings. Change our input List to contain our new array of options. The New Name is: "Three Choices", and
 	; the selected item is "Choice 2"
 	_LOWriter_FieldInputListModify($oField, $asNewItems, "Three Choices", "Choice 2")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "Pick an Option in the INput List and then press ok.")
+	MsgBox($MB_OK, "", "Pick an Option in the Input List and then press ok.")
 
 	; Retrieve current Field settings.
 	$avSettings = _LOWriter_FieldInputListModify($oField)
@@ -58,7 +58,7 @@ Func Example()
 	Next
 
 	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
-			"The Input List's avalable choices are: " & $sChoices & @CRLF & _
+			"The Input List's available choices are: " & $sChoices & @CRLF & _
 			"The Input List's name is: " & $avSettings[1] & @CRLF & _
 			"The currently selected item is: " & $avSettings[2])
 

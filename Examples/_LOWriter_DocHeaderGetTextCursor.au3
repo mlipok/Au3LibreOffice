@@ -15,7 +15,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text for demonstration purposes." & @CR & @CR)
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -27,7 +27,7 @@ Func Example()
 	_LOWriter_PageStyleHeader($oPageStyle, True)
 	If @error Then _ERROR("Failed to turn Headers on for this Page Style. Error:" & @error & " Extended:" & @extended)
 
-	; Create a text cursor for the page style headerer.
+	; Create a text cursor for the page style header.
 	$oHeaderTextCursor = _LOWriter_DocHeaderGetTextCursor($oPageStyle, True)
 	If @error Then _ERROR("Failed to create a TextCursor in the Page Style's Header. Error:" & @error & " Extended:" & @extended)
 

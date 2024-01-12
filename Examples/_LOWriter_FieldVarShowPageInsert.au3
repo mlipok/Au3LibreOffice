@@ -19,7 +19,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Show Page Field at the View Cursor. Set NumberFormat to: $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N
+	; Insert a Show Page Field at the View Cursor. Set Numbering Format to: $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N
 	_LOWriter_FieldVarShowPageInsert($oDoc, $oViewCursor, False, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N)
 	If @error Then _ERROR("Failed to insert a Field. Error:" & @error & " Extended:" & @extended)
 

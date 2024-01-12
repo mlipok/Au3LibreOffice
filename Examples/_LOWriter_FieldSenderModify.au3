@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Sender Field settings. Fixed = False, Skip Content, User data = $LOW_FIELD_USER_DATA_FIRST_NAME
 	_LOWriter_FieldSenderModify($oField, False, Null, $LOW_FIELD_USER_DATA_FIRST_NAME)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldSenderModify($oField)

@@ -51,7 +51,7 @@ Func Example()
 	MsgBox($MB_OK, "", "The Tab stop, having the position of " & $iTabStop & " has the following settings: " & @CRLF & _
 			"The Current position is, in micrometers: " & $avTabStop[0] & @CRLF & _
 			"The Current Fill Character is, in ASC value: " & $avTabStop[1] & " and looks like: " & Chr($avTabStop[1]) & @CRLF & _
-			"The Current Alignment setting is, (See UDF constans): " & $avTabStop[2] & @CRLF & _
+			"The Current Alignment setting is, (See UDF constants): " & $avTabStop[2] & @CRLF & _
 			"The Current Decimal Character is, in ASC value: " & $avTabStop[3] & " and looks like: " & Chr($avTabStop[3]))
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

@@ -33,7 +33,7 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 6, True)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	; Set the selected text to SubScript, 50%, and Relative size to 85%
+	; Set the selected text to Subscript, 50%, and Relative size to 85%
 	_LOWriter_DirFrmtCharPosition($oViewCursor, Null, Null, Null, 50, 85)
 	If @error Then _ERROR("Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
@@ -42,7 +42,7 @@ Func Example()
 	$oSrchDesc = _LOWriter_SearchDescriptorCreate($oDoc, False, False, False, False, False, True)
 	If @error Then _ERROR("Failed to create a search descriptor. Error:" & @error & " Extended:" & @extended)
 
-	; Create a Find Format Search Array for any 50% subScript, at 85% relative font
+	; Create a Find Format Search Array for any 50% Subscript, at 85% relative font
 	_LOWriter_FindFormatModifyPosition($atFindFormat, Null, Null, Null, 50, 85)
 	If @error Then _ERROR("Failed to modify a Find format array. Error:" & @error & " Extended:" & @extended)
 

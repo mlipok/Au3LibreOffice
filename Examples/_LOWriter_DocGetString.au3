@@ -16,7 +16,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate retrieving text from a document.")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -24,7 +24,7 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	; Move the View Cursor Right 13 spaces, don't seelect text.
+	; Move the View Cursor Right 13 spaces, don't select text.
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 13)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 

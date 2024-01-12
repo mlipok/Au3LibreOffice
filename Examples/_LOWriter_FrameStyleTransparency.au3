@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
@@ -40,7 +40,7 @@ Func Example()
 	$iTransparency = _LOWriter_FrameStyleTransparency($oFrameStyle)
 	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Frame style's current Transparecny percentage is: " & $iTransparency)
+	MsgBox($MB_OK, "", "The Frame style's current Transparency percentage is: " & $iTransparency)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

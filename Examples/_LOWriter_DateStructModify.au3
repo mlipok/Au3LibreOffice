@@ -17,7 +17,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nano = 765, UTC =True
+	; Create a Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nanoseconds = 765, UTC =True
 	$tDateStruct = _LOWriter_DateStructCreate(1992, 03, 28, 15, 43, 25, 765, True)
 	If @error Then _ERROR("Failed to create a Date structure. Error:" & @error & " Extended:" & @extended)
 
@@ -34,7 +34,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR)
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Modify the Date Structure, Year = 2023, Month = 06, Day = 16, Hour = 8, Minute = 45, Second = 55, Nano = 75, UTC = False
+	; Modify the Date Structure, Year = 2023, Month = 06, Day = 16, Hour = 8, Minute = 45, Second = 55, Nanoseconds = 75, UTC = False
 	_LOWriter_DateStructModify($tDateStruct, 2023, 06, 16, 8, 45, 55, 75, False)
 	If @error Then _ERROR("Failed to modify a Date structure. Error:" & @error & " Extended:" & @extended)
 

@@ -22,7 +22,7 @@ Func Example()
 
 	; Set Page style Footer Gradient settings to: skip pre-set gradient name,, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
 	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
-	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL,Starting color intensity = 100%, ending color intensity = 68%
+	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
 	_LOWriter_PageStyleFooterAreaGradient($oDoc, $oPageStyle, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LOW_COLOR_ORANGE, $LOW_COLOR_TEAL, 100, 68)
 	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 

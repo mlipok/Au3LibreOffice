@@ -31,7 +31,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The Page Style's current Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, is Micrometers: " & $avPageStyleSettings[0] & @CRLF & _
-			"The Shdaow color is, in Long Color format: " & $avPageStyleSettings[1] & @CRLF & _
+			"The Shadow color is, in Long Color format: " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avPageStyleSettings[3])
 

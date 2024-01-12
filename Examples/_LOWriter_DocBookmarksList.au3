@@ -22,7 +22,7 @@ Func Example()
 
 	; Insert a Bookmark at the ViewCursor, named "New Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some more text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & "I have inserted another Bookmark at the end of this line.--> ")
@@ -30,7 +30,7 @@ Func Example()
 
 	; Insert another Bookmark at the ViewCursor, named "Second Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "Second Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some more text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & "I have inserted a third Bookmark at the end of this line.--> ")
@@ -38,7 +38,7 @@ Func Example()
 
 	; Insert another Bookmark at the ViewCursor, named "Third Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "Third Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "The Bookmark names currently contained in this document are:" & @CR)

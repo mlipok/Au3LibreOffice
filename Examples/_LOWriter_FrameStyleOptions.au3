@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
@@ -29,7 +29,7 @@ Func Example()
 			"Protect the Frame's contents from changes? True/False: " & $avSettings[0] & @CRLF & _
 			"Protect the Frame's position from changes? True/False: " & $avSettings[1] & @CRLF & _
 			"Protect the Frame's Size from changes? True/False: " & $avSettings[2] & @CRLF & _
-			"The Vertical alingment of the frame is, (see UDF constants): " & $avSettings[3] & @CRLF & _
+			"The Vertical alignment of the frame is, (see UDF constants): " & $avSettings[3] & @CRLF & _
 			"Allow the Frame's contents to be changed in Read-Only mode? True/False: " & $avSettings[4] & @CRLF & _
 			"Print frames with this frame style when the document is printed? True/False: " & $avSettings[5] & @CRLF & _
 			"The text direction for this frame style is, (See UDF constants): " & $avSettings[6])

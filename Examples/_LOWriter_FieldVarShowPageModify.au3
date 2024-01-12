@@ -20,7 +20,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Show Page Field at the View Cursor. Set NumberFormat to: $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N
+	; Insert a Show Page Field at the View Cursor. Set Numbering Format to: $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N
 	$oField = _LOWriter_FieldVarShowPageInsert($oDoc, $oViewCursor, False, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N)
 	If @error Then _ERROR("Failed to insert a Field. Error:" & @error & " Extended:" & @extended)
 
@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Show Page Field settings. Set the Number format to $LOW_NUM_STYLE_ROMAN_UPPER
 	_LOWriter_FieldVarShowPageModify($oField, $LOW_NUM_STYLE_ROMAN_UPPER)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an integer.
 	$iSetting = _LOWriter_FieldVarShowPageModify($oField)

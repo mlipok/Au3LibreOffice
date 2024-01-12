@@ -45,7 +45,7 @@ Func Example()
 
 	; Modify the Endnote Reference Field settings. Set the Referenced Endnote to Second Endnote, and Refer using $LOW_FIELD_REF_USING_ABOVE_BELOW
 	_LOWriter_FieldRefEndnoteModify($oDoc, $oField, $oEndnote2, $LOW_FIELD_REF_USING_REF_TEXT)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldRefEndnoteModify($oDoc, $oField)

@@ -13,7 +13,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
@@ -43,7 +43,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The Frame style's current Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, is Micrometers: " & $avSettings[0] & @CRLF & _
-			"The Shdaow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
+			"The Shadow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avSettings[3])
 

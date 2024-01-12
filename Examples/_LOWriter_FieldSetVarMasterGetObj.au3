@@ -20,7 +20,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press ok to delete the newly created Set Variable Master Field.")
 
-	; Retrieve the Set Var. MasterField Object to use for deleteing it.
+	; Retrieve the Set Var. MasterField Object to use for deleting it.
 	$oMaster = _LOWriter_FieldSetVarMasterGetObj($oDoc, $sMasterFieldName)
 	If @error Then _ERROR("Failed to retrieve a Set Variable Master Object. Error:" & @error & " Extended:" & @extended)
 

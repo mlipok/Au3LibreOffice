@@ -18,7 +18,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert an Image into the document at the Viewcursor position.
+	; Insert an Image into the document at the ViewCursor position.
 	$oImage = _LOWriter_ImageInsert($oDoc, $sImage, $oViewCursor)
 	If @error Then _ERROR("Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
 
@@ -36,7 +36,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The Image's Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, is Micrometers: " & $avSettings[0] & @CRLF & _
-			"The Shdaow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
+			"The Shadow color is, in Long Color format: " & $avSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avSettings[3])
 

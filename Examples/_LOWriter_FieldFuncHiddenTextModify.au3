@@ -36,7 +36,7 @@ Func Example()
 
 	; Modify the Hidden Text Field settings. Set the condition to the user set condition, and the Text to the New User Text.
 	_LOWriter_FieldFuncHiddenTextModify($oField, $sNewCondition, $sNewText)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldFuncHiddenTextModify($oField)

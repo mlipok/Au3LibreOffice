@@ -38,7 +38,7 @@ Func Example()
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END_OF_LINE, 1, True)
 	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
-	; Search the word "search" within the viewcursor selection.
+	; Search the word "search" within the ViewCursor selection.
 	$aoResults = _LOWriter_DocFindAllInRange($oDoc, $oSrchDesc, "search", $aAnEmptyArray, $oViewCursor)
 	If @error Then _ERROR("Failed to perform search in the document. Error:" & @error & " Extended:" & @extended)
 

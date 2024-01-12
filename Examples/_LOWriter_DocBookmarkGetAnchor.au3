@@ -21,7 +21,7 @@ Func Example()
 
 	; Insert a Bookmark at the ViewCursor, named "New Bookmark".
 	$oBookmark = _LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will retrieve the anchor for ""New Bookmark"" and insert some text after it.")
 

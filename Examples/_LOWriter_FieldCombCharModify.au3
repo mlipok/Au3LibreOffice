@@ -26,15 +26,15 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press Ok to modify the Combined Character Field.")
 
-	; Modify the COmbined Character Field settings. Set the characters to "XYZ*"
+	; Modify the Combined Character Field settings. Set the characters to "XYZ*"
 	_LOWriter_FieldCombCharModify($oField, "XYZ*")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be a string.
 	$sSetting = _LOWriter_FieldCombCharModify($oField)
 	If @error Then _ERROR("Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Combined Character Field constains the following characters: " & $sSetting)
+	MsgBox($MB_OK, "", "The Combined Character Field contains the following characters: " & $sSetting)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

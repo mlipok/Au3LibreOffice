@@ -20,9 +20,9 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Bookmark at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a BookMark at the ViewCursor, named "New Bookmark".
+	; Insert a Bookmark at the ViewCursor, named "New Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve an array of all Bookmarks.
 	$asBookmarks = _LOWriter_DocBookmarksList($oDoc)

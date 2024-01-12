@@ -24,7 +24,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "I will create a text cursor now.")
 
-	; Create a TextCursor, I called false for bCreateAtEnd, the cursor will be created at the beginning of the document.
+	; Create a TextCursor, I called false for $bCreateAtEnd, the cursor will be created at the beginning of the document.
 	$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False)
 	If @error Then _ERROR("Failed to create Text Cursor. Error:" & @error & " Extended:" & @extended)
 

@@ -44,7 +44,7 @@ Func Example()
 	If @error Then _ERROR("Failed to select the table. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have selected the Table. I could go forward and use _LOWriter_ParObjCopy to copy it, etc." & _
-			" I could also use ViewCursor moves, such as GoTo_Start to locate the viewcursor at the beginning of the Table. But " & _
+			" I could also use ViewCursor moves, such as GoTo_Start to locate the Viewcursor at the beginning of the Table. But " & _
 			"I will now demonstrate selecting the same content a TextCursor has selected by inputting the TextCursor Object.")
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START, 1, False)
 

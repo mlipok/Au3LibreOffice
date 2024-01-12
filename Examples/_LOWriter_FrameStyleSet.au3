@@ -11,7 +11,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 

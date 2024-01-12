@@ -17,13 +17,13 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert an Image into the document at the Viewcursor position.
+	; Insert an Image into the document at the ViewCursor position.
 	$oImage = _LOWriter_ImageInsert($oDoc, $sImage, $oViewCursor)
 	If @error Then _ERROR("Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
 
-	; Modify the Image Name Option settings. Set the Image name to "AutoitTest", Set the Alternate text to "This is a Plain Image", Set the description to
+	; Modify the Image Name Option settings. Set the Image name to "AutotTest", Set the Alternate text to "This is a Plain Image", Set the description to
 	; "This is an Image to demonstrate _LOWriter_ImageOptionsName."
-	_LOWriter_ImageOptionsName($oDoc, $oImage, "AutoitTest", "This is a Plain Image", "This is an Image to demonstrate _LOWriter_ImageOptionsName.")
+	_LOWriter_ImageOptionsName($oDoc, $oImage, "AutoItTest", "This is a Plain Image", "This is an Image to demonstrate _LOWriter_ImageOptionsName.")
 	If @error Then _ERROR("Failed to set Image settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Image settings. Return will be an array in order of function parameters.

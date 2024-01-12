@@ -36,7 +36,7 @@ Func Example()
 
 	; Modify the File Name Field settings. Skip Fixed, File Name Format = $LOW_FIELD_FILENAME_FULL_PATH
 	_LOWriter_FieldFileNameModify($oField, Null, $LOW_FIELD_FILENAME_FULL_PATH)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldFileNameModify($oField)
@@ -44,7 +44,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
 			"Is the File Name Field's content fixed? True/False: " & $avSettings[0] & @CRLF & _
-			"The File Name Field's display format is, (see UDF COnstants): " & $avSettings[1])
+			"The File Name Field's display format is, (see UDF Constants): " & $avSettings[1])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

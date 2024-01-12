@@ -21,7 +21,7 @@ Func Example()
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve an array of statistical counts of the following, in this order: Page count; Line Count; Paragraph Count;
-	; Word Count; Character Count; NonWhiteSpace Character Count; Table Count; Image Count; Object Count.
+	; Word Count; Character Count; Non-WhiteSpace Character Count; Table Count; Image Count; Object Count.
 	$aiCounts = _LOWriter_DocGetCounts($oDoc)
 	If @error Then _ERROR("Failed to retrieve document counts. Error:" & @error & " Extended:" & @extended)
 

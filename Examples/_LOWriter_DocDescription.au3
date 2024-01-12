@@ -7,16 +7,16 @@ Example()
 Func Example()
 	Local $oDoc
 	Local $sKeywords
-	Local $asKeywords[3] = ["Autoit", "LibreOffice", "Writer"]
+	Local $asKeywords[3] = ["AutoIt", "LibreOffice", "Writer"]
 	Local $avReturn, $asReturnedKeywords
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Set the Document's Description settings, Title = "Autoit Example", Subject = "Doc Description Demonstration", Keywords to Keywords Array,
+	; Set the Document's Description settings, Title = "AutoIt Example", Subject = "Doc Description Demonstration", Keywords to Keywords Array,
 	; Comments To two lines of comments.
-	_LOWriter_DocDescription($oDoc, "Autoit Example", "Doc Description Demonstration", $asKeywords, "This is a comment." & @CR & "This is a second comment line.")
+	_LOWriter_DocDescription($oDoc, "AutoIt Example", "Doc Description Demonstration", $asKeywords, "This is a comment." & @CR & "This is a second comment line.")
 	If @error Then _ERROR("Failed to modify Document settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Document's description. Return will be an Array in order of function parameters.

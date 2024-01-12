@@ -56,7 +56,7 @@ Func Example()
 	If IsObj($oResult) Then
 		$sResultString = _LOWriter_DocGetString($oResult)
 		If @error Then _ERROR("Failed to retrieve String. Error:" & @error & " Extended:" & @extended)
-		MsgBox($MB_OK, "", "The search was successful, I searched using a Find Format, looking for a boldened word, and found the following: " & $sResultString)
+		MsgBox($MB_OK, "", "The search was successful, I searched using a Find Format, looking for a bold word, and found the following: " & $sResultString)
 	Else
 		MsgBox($MB_OK, "", "The search was successful, but returned no results.")
 	EndIf

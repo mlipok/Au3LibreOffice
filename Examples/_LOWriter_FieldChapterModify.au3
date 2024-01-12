@@ -26,7 +26,7 @@ Func Example()
 
 	; Modify the Chapter Field settings. Set Chapter Format to $LOW_FIELD_CHAP_FRMT_DIGIT, and level to 3.
 	_LOWriter_FieldChapterModify($oField, $LOW_FIELD_CHAP_FRMT_DIGIT, 3)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings.
 	$avSettings = _LOWriter_FieldChapterModify($oField)

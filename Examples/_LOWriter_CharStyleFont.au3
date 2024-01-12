@@ -40,7 +40,7 @@ Func Example()
 	$oCharStyle = _LOWriter_CharStyleGetObj($oDoc, "Example")
 	If @error Then _ERROR("Failed to retrieve Character style object. Error:" & @error & " Extended:" & @extended)
 
-	; Set "Example" Character style Font to "Arial", Font size to 18,Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
+	; Set "Example" Character style Font to "Arial", Font size to 18, Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
 	; to $LOW_WEIGHT_BOLD
 	_LOWriter_CharStyleFont($oDoc, $oCharStyle, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR("Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)

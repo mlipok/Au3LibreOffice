@@ -38,7 +38,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Is the ViewCursor at the end of a line? True/False: " & $bReturn)
 
-	; Retrieve the page number the Viewcursor is currently on.
+	; Retrieve the page number the ViewCursor is currently on.
 	$iPage = _LOWriter_CursorGetStatus($oViewCursor, $LOW_CURSOR_STAT_GET_PAGE)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Status. Error:" & @error & " Extended:" & @extended)
 

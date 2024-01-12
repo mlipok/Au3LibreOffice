@@ -17,7 +17,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert an Image into the document at the Viewcursor position.
+	; Insert an Image into the document at the ViewCursor position.
 	$oImage = _LOWriter_ImageInsert($oDoc, $sImage, $oViewCursor)
 	If @error Then _ERROR("Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
 
@@ -33,7 +33,7 @@ Func Example()
 	$iTransparency = _LOWriter_ImageAreaTransparency($oImage)
 	If @error Then _ERROR("Failed to retrieve Image settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Image's current Background Transparecny percentage is: " & $iTransparency)
+	MsgBox($MB_OK, "", "The Image's current Background Transparency percentage is: " & $iTransparency)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

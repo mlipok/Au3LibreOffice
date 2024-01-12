@@ -15,10 +15,10 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate inserting text into a document." & @CR & "This is a New line. Note:" & _
-			" In Libre Office, Autoit's @CR is used for a paragraph break (such as is inserted by pressing Enter key), " & @LF & _
-			"and @LF is used for a Line break, Such as when you press Shift + Enter. If you use the standard Autoit @CRLF," & @CRLF & _
+			" In Libre Office, AutoIt's @CR is used for a paragraph break (such as is inserted by pressing Enter key), " & @LF & _
+			"and @LF is used for a Line break, Such as when you press Shift + Enter. If you use the standard AutoIt @CRLF," & @CRLF & _
 			" this double space, with a paragraph break and a line break results. Try turning on Formatting marks to see the difference, normally " & _
 			"done by pressing CTRL + F10.")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)

@@ -31,7 +31,7 @@ Func Example()
 	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Set the paragraph at the current cursor's location Drop cap settings to, Number of Characters to DropCap, 3, Lines to drop down, 2,
-	; Spc To text To 1/4 ", whole word to False, and Character style to "Example".
+	; Space To text To 1/4 ", whole word to False, and Character style to "Example".
 	_LOWriter_DirFrmtParDropCaps($oDoc, $oViewCursor, 3, 2, $iMicrometers, False, "Example")
 	If @error Then _ERROR("Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 

@@ -16,13 +16,13 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Frame into the document at the Viewcursor position, and 3000x3000 Micrometers wide.
+	; Insert a Frame into the document at the ViewCursor position, and 3000x3000 Micrometers wide.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Frame Gradient settings to: skip pre-set gradient name, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
 	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
-	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL,Starting color intensity = 100%, ending color intensity = 68%
+	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
 	_LOWriter_FrameAreaGradient($oDoc, $oFrame, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LOW_COLOR_ORANGE, $LOW_COLOR_TEAL, 100, 68)
 	If @error Then _ERROR("Failed to set Frame settings. Error:" & @error & " Extended:" & @extended)
 

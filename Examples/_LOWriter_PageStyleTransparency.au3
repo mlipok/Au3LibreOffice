@@ -28,7 +28,7 @@ Func Example()
 	$iTransparency = _LOWriter_PageStyleTransparency($oPageStyle)
 	If @error Then _ERROR("Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Page Style's current Header Transparecny percentage is: " & $iTransparency)
+	MsgBox($MB_OK, "", "The Page Style's current Header Transparency percentage is: " & $iTransparency)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

@@ -28,7 +28,7 @@ Func Example()
 	$iReturn = _LOWriter_DocViewCursorGetPosition($oViewCursor)
 	If @error Then _ERROR("Failed to retrieve the View Cursor position. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The ViewCursor is located at the following positions:" & @CRLF & _
+	MsgBox($MB_OK, "", "The ViewCursor is located at the following position:" & @CRLF & _
 			"Horizontal, measured in Micrometers: " & $iReturn & @CRLF & _
 			"Vertical, measured in Micrometers: " & @extended & @CRLF & @CRLF & _
 			"Press ok, and I will now move the cursor to the end of the document.")
@@ -41,7 +41,7 @@ Func Example()
 	$iReturn = _LOWriter_DocViewCursorGetPosition($oViewCursor)
 	If @error Then _ERROR("Failed to retrieve the View Cursor position. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The ViewCursor's is now located at the following positions:" & @CRLF & _
+	MsgBox($MB_OK, "", "The ViewCursor is now located at the following position:" & @CRLF & _
 			"Horizontal, measured in Micrometers: " & $iReturn & @CRLF & _
 			"Vertical, measured in Micrometers: " & @extended)
 

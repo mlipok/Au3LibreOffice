@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Conditional Text Field settings. Set the New condition to If the Page Count = 1 Then display "There is 1 Page" , else display "There are many pages"
 	_LOWriter_FieldCondTextModify($oField, "PAGE == 1", "There is 1 Page", "There are many pages")
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings.
 	$avSettings = _LOWriter_FieldCondTextModify($oField)

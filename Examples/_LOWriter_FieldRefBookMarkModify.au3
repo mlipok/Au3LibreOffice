@@ -20,9 +20,9 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Bookmark at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a BookMark at the ViewCursor, named "New Bookmark".
+	; Insert a Bookmark at the ViewCursor, named "New Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "I have inserted a field at the end of this line.--> ")
@@ -36,15 +36,15 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "I have inserted a Bookmark at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a BookMark at the ViewCursor, named "Second Bookmark".
+	; Insert a Book Mark at the ViewCursor, named "Second Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "Second Bookmark")
-	If @error Then _ERROR("Failed to insert a BookMark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to insert a Book Mark. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press Ok to modify the Reference Field.")
 
 	; Modify the Bookmark Reference Field settings. Set the Referenced Bookmark to "Second Bookmark", and Refer using $LOW_FIELD_REF_USING_ABOVE_BELOW
 	_LOWriter_FieldRefBookMarkModify($oDoc, $oField, "Second Bookmark", $LOW_FIELD_REF_USING_ABOVE_BELOW)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldRefBookMarkModify($oDoc, $oField)

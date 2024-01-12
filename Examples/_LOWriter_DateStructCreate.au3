@@ -21,7 +21,7 @@ Func Example()
 	$tDateStruct1 = _LOWriter_DateStructCreate()
 	If @error Then _ERROR("Failed to create a Date structure. Error:" & @error & " Extended:" & @extended)
 
-	; Create a second Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nano = 765, UTC =True
+	; Create a second Date Structure, Year = 1992, Month = 03, Day = 28, Hour = 15, Minute = 43, Second = 25, Nanoseconds = 765, UTC =True
 	$tDateStruct2 = _LOWriter_DateStructCreate(1992, 03, 28, 15, 43, 25, 765, True)
 	If @error Then _ERROR("Failed to create a Date structure. Error:" & @error & " Extended:" & @extended)
 

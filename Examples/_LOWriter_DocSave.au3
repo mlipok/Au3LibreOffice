@@ -46,7 +46,7 @@ Func Example()
 	$oDoc = _LOWriter_DocOpen($sPath)
 	If @error Then _ERROR("Failed to open Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Document was succesfully opened. Press OK to close and delete it.")
+	MsgBox($MB_OK, "", "The Document was successfully opened. Press OK to close and delete it.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)

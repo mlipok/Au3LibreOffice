@@ -29,7 +29,7 @@ Func Example()
 	$iMicrometers2 = _LOWriter_ConvertToMicrometer(.5)
 	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
-	; Set Page style Footer settings to: Footer on = True, Same content on left and right pages = False, Same content on the first page = Ture,
+	; Set Page style Footer settings to: Footer on = True, Same content on left and right pages = False, Same content on the first page = True,
 	; Left & Right margins = 1/4", Spacing between Footer content and Page content = 1/2", Dynamic spacing = False, Skip Height and set AutoHeight to True.
 	_LOWriter_PageStyleFooter($oPageStyle, True, False, True, $iMicrometers, $iMicrometers, $iMicrometers2, False, Null, True)
 	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
@@ -39,7 +39,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Page Style's current Footer settings are as follows: " & @CRLF & _
-			"Is the Footer on for this PageStyle? True/False: " & $avPageStyleSettings[0] & @CRLF & _
+			"Is the Footer on for this Page Style? True/False: " & $avPageStyleSettings[0] & @CRLF & _
 			"Is the content on Left and Right pages the same? True/False: " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the content on the first page the same? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Left Margin Width is, in Micrometers: " & $avPageStyleSettings[3] & @CRLF & _

@@ -13,7 +13,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
@@ -37,7 +37,7 @@ Func Example()
 	$iMicrometers = _LOWriter_ConvertToMicrometer(.0625)
 	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
-	; Set the Frame Style Column Separator line settings to: Seperator on (True), Line Style = $LOW_LINE_STYLE_SOLID, Line width to 1/16"
+	; Set the Frame Style Column Separator line settings to: Separator on (True), Line Style = $LOW_LINE_STYLE_SOLID, Line width to 1/16"
 	; Line Color to $LOW_COLOR_RED, Height to 75%, Line Position to $LOW_ALIGN_VERT_MIDDLE
 	_LOWriter_FrameStyleColumnSeparator($oFrameStyle, True, $LOW_LINE_STYLE_SOLID, $iMicrometers, $LOW_COLOR_RED, 75, $LOW_ALIGN_VERT_MIDDLE)
 	If @error Then _ERROR("Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
@@ -46,13 +46,13 @@ Func Example()
 	$avSettings = _LOWriter_FrameStyleColumnSeparator($oFrameStyle)
 	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Frame style's current Column Seperator Line settings are as follows: " & @CRLF & _
-			"Is Column seperated by a line? True/False: " & $avSettings[0] & @CRLF & _
-			"The Seperator Line style is, (see UDF constants): " & $avSettings[1] & @CRLF & _
-			"The Seperator Line width is, in Micrometers: " & $avSettings[2] & @CRLF & _
-			"The Seperator Line color is, in Long color format: " & $avSettings[3] & @CRLF & _
-			"The Seperator Line length percentage is: " & $avSettings[4] & @CRLF & _
-			"The Seperator Line position is, (see UDF constants): " & $avSettings[5])
+	MsgBox($MB_OK, "", "The Frame style's current Column Separator Line settings are as follows: " & @CRLF & _
+			"Is Column separated by a line? True/False: " & $avSettings[0] & @CRLF & _
+			"The Separator Line style is, (see UDF constants): " & $avSettings[1] & @CRLF & _
+			"The Separator Line width is, in Micrometers: " & $avSettings[2] & @CRLF & _
+			"The Separator Line color is, in Long color format: " & $avSettings[3] & @CRLF & _
+			"The Separator Line length percentage is: " & $avSettings[4] & @CRLF & _
+			"The Separator Line position is, (see UDF constants): " & $avSettings[5])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

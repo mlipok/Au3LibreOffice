@@ -19,9 +19,9 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Placeholder Field at the View Cursor. Set the PlaceHolder type to $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, Name = "A Graphic PlaceHolder.",
+	; Insert a Placeholder Field at the View Cursor. Set the Placeholder type to $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, Name = "A Graphic Placeholder.",
 	; Reference = "Click Me"
-	_LOWriter_FieldFuncPlaceholderInsert($oDoc, $oViewCursor, False, $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, "A Graphic PlaceHolder.", "Click Me")
+	_LOWriter_FieldFuncPlaceholderInsert($oDoc, $oViewCursor, False, $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, "A Graphic Placeholder.", "Click Me")
 	If @error Then _ERROR("Failed to insert a Field. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

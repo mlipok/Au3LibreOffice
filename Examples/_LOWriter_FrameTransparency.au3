@@ -16,7 +16,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Frame into the document at the Viewcursor position, and 3000x3000 Micrometers wide.
+	; Insert a Frame into the document at the ViewCursor position, and 3000x3000 Micrometers wide.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
@@ -32,7 +32,7 @@ Func Example()
 	$iTransparency = _LOWriter_FrameTransparency($oFrame)
 	If @error Then _ERROR("Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Frame's current Transparecny percentage is: " & $iTransparency)
+	MsgBox($MB_OK, "", "The Frame's current Transparency percentage is: " & $iTransparency)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

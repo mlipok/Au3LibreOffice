@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new NumberingStyle named "Test Style"
+	; Create a new Numbering Style named "Test Style"
 	$oNumStyle = _LOWriter_NumStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Numbering Style. Error:" & @error & " Extended:" & @extended)
 
@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Numbering Style Customization settings: Modify Level 2, Numbering format = $LOW_NUM_STYLE_ARABIC, Start at 3, Char Style = "Emphasis",
-	; Sub levels = 2, Seperator before = ~ , Seperator after = #, Consecutive Num = False.
+	; Sub levels = 2, Separator before = ~ , Separator after = #, Consecutive Numbering = False.
 	_LOWriter_NumStyleCustomize($oDoc, $oNumStyle, 2, $LOW_NUM_STYLE_ARABIC, 4, "Emphasis", 2, "~", "#", False)
 	If @error Then _ERROR("Failed to set Numbering Style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -59,8 +59,8 @@ Func Example()
 			"The Numbering starts at: " & $avSettings[1] & @CRLF & _
 			"The Character Style to use is: " & $avSettings[2] & @CRLF & _
 			"The number of sub levels to include is: " & $avSettings[3] & @CRLF & _
-			"The Seperator before the Numbering symbol is: " & $avSettings[4] & @CRLF & _
-			"The Seperator After the Numbering symbol is: " & $avSettings[5] & @CRLF & _
+			"The Separator before the Numbering symbol is: " & $avSettings[4] & @CRLF & _
+			"The Separator After the Numbering symbol is: " & $avSettings[5] & @CRLF & _
 			"Consecutively number levels? True/False: " & $avSettings[6])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

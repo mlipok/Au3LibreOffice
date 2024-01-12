@@ -26,13 +26,13 @@ Func Example()
 
 	MsgBox($MB_OK, "", "Press Ok to modify the Doc Info Field settings.")
 
-	; Set the Document's Description settings, Set the Title to, "Autoit-Demonstration."
-	_LOWriter_DocDescription($oDoc, "Autoit-Demonstration.")
+	; Set the Document's Description settings, Set the Title to, "AutoIt-Demonstration."
+	_LOWriter_DocDescription($oDoc, "AutoIt-Demonstration.")
 	If @error Then _ERROR("Failed to modify Document settings. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Doc Info Title Field settings. Set Fixed to False.
 	_LOWriter_FieldDocInfoTitleModify($oField, False)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an array, with elements in order of function parameters.
 	$avSettings = _LOWriter_FieldDocInfoTitleModify($oField)

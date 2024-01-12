@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Set the Document's general properties settings to: NewAuthor = "Daniel, Revisions = 8, Editing time = 840 seconds, Apply User Data = True)
+	; Set the Document's general properties settings to: New Author = "Daniel, Revisions = 8, Editing time = 840 seconds, Apply User Data = True)
 	_LOWriter_DocGenProp($oDoc, "Daniel", 8, 840, True)
 	If @error Then _ERROR("Failed to modify Document settings. Error:" & @error & " Extended:" & @extended)
 

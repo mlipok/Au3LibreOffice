@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new NumberingStyle named "Test Style"
+	; Create a new Numbering Style named "Test Style"
 	_LOWriter_NumStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Numbering Style. Error:" & @error & " Extended:" & @extended)
 

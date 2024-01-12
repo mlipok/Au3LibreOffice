@@ -25,7 +25,7 @@ Func Example()
 	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Set Page style Header Border Style settings to: Top = $LOW_BORDERSTYLE_DASH_DOT_DOT, Bottom = $LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP
-	; Left = $LOW_BORDERSTYLE_DOUBLE, RIght = $LOW_BORDERSTYLE_DASHED
+	; Left = $LOW_BORDERSTYLE_DOUBLE, Right = $LOW_BORDERSTYLE_DASHED
 	_LOWriter_PageStyleHeaderBorderStyle($oPageStyle, $LOW_BORDERSTYLE_DASH_DOT_DOT, $LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP, $LOW_BORDERSTYLE_DOUBLE, $LOW_BORDERSTYLE_DASHED)
 	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 

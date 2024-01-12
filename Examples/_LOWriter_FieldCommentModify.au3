@@ -22,11 +22,11 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a field at the end of this line.--> ")
 	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Create a Date Structure, Year = 1844, Month = 10, Day = 22, Hour = 8, minutes = 14, Seconds = 0 , NanoSeconds = 0, UTC= True.
+	; Create a Date Structure, Year = 1844, Month = 10, Day = 22, Hour = 8, minutes = 14, Seconds = 0 , Nanoseconds = 0, UTC= True.
 	$tDateStruct = _LOWriter_DateStructCreate(1844, 10, 22, 8, 14, 0, 0, True)
 	If @error Then _ERROR("Failed to create a Date structure. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Comment Field at the View Cursor. Set content to "This is a note", Author to "Daniel", Date to my previouse Date Structure I created.
+	; Insert a Comment Field at the View Cursor. Set content to "This is a note", Author to "Daniel", Date to my previous Date Structure I created.
 	; Initials to "D.", Author to "A Name", Resolved = True
 	$oField = _LOWriter_FieldCommentInsert($oDoc, $oViewCursor, False, "This is a note", "Daniel", $tDateStruct, "D.", "A Name", True)
 	If @error Then _ERROR("Failed to insert a field. Error:" & @error & " Extended:" & @extended)
@@ -40,7 +40,7 @@ Func Example()
 	; Modify the Comment Field settings. Set content to "New Content", Author to "Anon", Date to my new Date Structure I created.
 	; Initials to "A.", Author to "A-Non-Mouse", Resolved = False
 	_LOWriter_FieldCommentModify($oDoc, $oField, "New Content", "Anon", $tDateStruct, "A.", "A-Non-Mouse", False)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings.
 	$avSettings = _LOWriter_FieldCommentModify($oDoc, $oField)

@@ -53,7 +53,7 @@ Func Example()
 
 	; Modify the Reference Field settings. Set the Referenced Mark to "Ref. 2", and Refer using $LOW_FIELD_REF_USING_ABOVE_BELOW
 	_LOWriter_FieldRefModify($oDoc, $oField, "Ref. 2", $LOW_FIELD_REF_USING_ABOVE_BELOW)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldRefModify($oDoc, $oField)

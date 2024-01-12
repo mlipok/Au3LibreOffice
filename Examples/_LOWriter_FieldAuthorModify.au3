@@ -28,7 +28,7 @@ Func Example()
 
 	; Modify the Author Field settings. Set Is Fixed to False.
 	_LOWriter_FieldAuthorModify($oField, False)
-	If @error Then _ERROR("Failed to modfiy field. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an Array with elements in the order of function parameters.
 	$avSettings = _LOWriter_FieldAuthorModify($oField)

@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Create a new FrameStyle named "Test Style"
+	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
 	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
@@ -30,7 +30,7 @@ Func Example()
 
 	; Modify the Frame Style Gradient settings to: skip pre-set gradient name, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
 	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
-	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL,Starting color intensity = 100%, ending color intensity = 68%
+	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
 	_LOWriter_FrameStyleAreaGradient($oDoc, $oFrameStyle, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LOW_COLOR_ORANGE, $LOW_COLOR_TEAL, 100, 68)
 	If @error Then _ERROR("Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
 

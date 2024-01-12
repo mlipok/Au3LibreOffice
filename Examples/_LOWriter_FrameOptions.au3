@@ -16,7 +16,7 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert a Frame into the document at the Viewcursor position, and 3000x3000 Micrometers wide.
+	; Insert a Frame into the document at the ViewCursor position, and 3000x3000 Micrometers wide.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
@@ -33,7 +33,7 @@ Func Example()
 			"Protect the Frame's contents from changes? True/False: " & $avSettings[0] & @CRLF & _
 			"Protect the Frame's position from changes? True/False: " & $avSettings[1] & @CRLF & _
 			"Protect the Frame's Size from changes? True/False: " & $avSettings[2] & @CRLF & _
-			"The Vertical alingment of the frame is, (see UDF constants): " & $avSettings[3] & @CRLF & _
+			"The Vertical alignment of the frame is, (see UDF constants): " & $avSettings[3] & @CRLF & _
 			"Allow the Frame's contents to be changed in Read-Only mode? True/False: " & $avSettings[4] & @CRLF & _
 			"Print this frame when the document is printed? True/False: " & $avSettings[5] & @CRLF & _
 			"The text direction for this frame is, (See UDF constants): " & $avSettings[6])
