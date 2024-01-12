@@ -217,6 +217,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Ternary Operators missing Parenthesis in responses.
 - Export extension was incorrect, "jjpe" --> "jpe"
 - Spell Checked the comments and Headers.
+- Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
 
 [To Top](##Releases)
 
