@@ -42,10 +42,10 @@ Func Example()
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc
