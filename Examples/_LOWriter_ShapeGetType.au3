@@ -20,7 +20,7 @@ Func Example()
 	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_SYMBOL_SMILEY, 3000, 3000)
 	If @error Then _ERROR("Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the Shape type.
+	; Retrieve the Shape type.
 	$iReturn = _LOWriter_ShapeGetType($oShape)
 	If @error Then _ERROR("Failed to identify Shape type. Error:" & @error & " Extended:" & @extended)
 

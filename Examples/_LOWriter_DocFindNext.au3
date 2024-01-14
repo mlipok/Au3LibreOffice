@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $oDoc, $oViewCursor, $oSrchDesc, $oResult
 	Local $sResultString
-	Local $aAnEmptyArray[0] ;Create an empty array to skip FindFormat parameter.
+	Local $aAnEmptyArray[0] ; Create an empty array to skip FindFormat parameter.
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)

@@ -11,7 +11,7 @@ Func Example()
 	$oDoc = _LOCalc_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the Object for the Sheet called "Sheet1".
+	; Retrieve the Object for the Sheet called "Sheet1".
 	$oSheet = _LOCalc_SheetGetObjByName($oDoc, "Sheet1")
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet Object. Error:" & @error & " Extended:" & @extended)
 

@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor, $oSrchDesc
-	Local $atFindFormat[0], $atReplaceFormat[0] ;Create two Empty Arrays to fill.
+	Local $atFindFormat[0], $atReplaceFormat[0] ; Create two Empty Arrays to fill.
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)

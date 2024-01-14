@@ -20,7 +20,7 @@ Func Example()
 	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_BASIC_RECTANGLE, 3000, 6000)
 	If @error Then _ERROR("Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
 
-	;Rotate the Shape 45 degrees.
+	; Rotate the Shape 45 degrees.
 	_LOWriter_ShapeRotateSlant($oShape, 45)
 	If @error Then _ERROR("Failed to Rotate the Shape. Error:" & @error & " Extended:" & @extended)
 
@@ -32,7 +32,7 @@ Func Example()
 			"The Shape is rotated " & $avSettings[0] & " degrees" & @CRLF & _
 			"The Shape has a " & $avSettings[1] & " degree slant applied to it")
 
-	;Rotate the Shape back to 0 degrees and apply a 23 degree slant to it.
+	; Rotate the Shape back to 0 degrees and apply a 23 degree slant to it.
 	_LOWriter_ShapeRotateSlant($oShape, 0, 23)
 	If @error Then _ERROR("Failed to Rotate the Shape and apply a slant. Error:" & @error & " Extended:" & @extended)
 

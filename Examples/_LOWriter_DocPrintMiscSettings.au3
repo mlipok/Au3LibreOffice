@@ -28,7 +28,7 @@ Func Example()
 			"I will now modify the settings and show the result.")
 
 	; Changes the print settings to Landscape, Skip the printer setting, Print comments Only, Print in brochure,
-	;	print Brochure in Right to Left mode, and print in reverse.
+	; print Brochure in Right to Left mode, and print in reverse.
 	_LOWriter_DocPrintMiscSettings($oDoc, $LOW_PAPER_ORIENT_LANDSCAPE, Null, $LOW_PRINT_NOTES_ONLY, True, True, True)
 	If @error Then _ERROR("Error setting Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 

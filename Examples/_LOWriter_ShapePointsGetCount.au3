@@ -27,7 +27,7 @@ Func Example()
 
 	MsgBox($MB_OK, "", "The number of points in this shape is: " & $iCount)
 
-	;Retrieve the Shape's current settings for its first point.
+	; Retrieve the Shape's current settings for its first point.
 	$avArray = _LOWriter_ShapePointsModify($oShape, 1)
 	If @error Then _ERROR("Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
 

@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $oDoc, $oViewCursor, $oSrchDesc
 	Local $sResultString
-	Local $atFindFormat[0] ;Create an Empty Array to fill.
+	Local $atFindFormat[0] ; Create an Empty Array to fill.
 	Local $aoResults
 
 	; Create a New, visible, Blank Libre Office Document.
