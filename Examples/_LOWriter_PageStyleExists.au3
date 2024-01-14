@@ -10,21 +10,21 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create a new Page Style to use for demonstration.
 	_LOWriter_PageStyleCreate($oDoc, "NewPageStyle")
-	If @error Then _ERROR("Failed to Create a new Page Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Page Style. Error:" & @error & " Extended:" & @extended)
 
 	; Check if the page style exists.
 	$bExists = _LOWriter_PageStyleExists($oDoc, "NewPageStyle")
-	If @error Then _ERROR("Failed to test for Page Style existing in document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to test for Page Style existing in document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does a Page style called ""NewPageStyle"" exist in the document? True/False: " & $bExists)
 
 	; Check if a fake page style exists.
 	$bExists = _LOWriter_PageStyleExists($oDoc, "FakePageStyle")
-	If @error Then _ERROR("Failed to test for Page Style existing in document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to test for Page Style existing in document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does a Page style called ""FakePageStyle"" exist in the document? True/False: " & $bExists)
 
@@ -32,11 +32,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR
