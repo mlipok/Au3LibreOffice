@@ -41,8 +41,8 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Background color. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Cell B5's Background color is, in Long integer format: " & $avColor[0] & @CRLF & _
-			"Is Cell B5's Background color transparent? True/False: " & $avColor[1]  & @CRLF & _
-			"Cell Range A1-A6's Background color is, in Long integer format: " & $avColor2[0]& @CRLF & _
+			"Is Cell B5's Background color transparent? True/False: " & $avColor[1] & @CRLF & _
+			"Cell Range A1-A6's Background color is, in Long integer format: " & $avColor2[0] & @CRLF & _
 			"Is Cell Range A1-A6's Background color transparent? True/False: " & $avColor2[1])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
@@ -55,6 +55,7 @@ EndFunc   ;==>Example
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc   ;==>_ERROR

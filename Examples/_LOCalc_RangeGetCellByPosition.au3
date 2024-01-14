@@ -51,7 +51,7 @@ Func Example()
 
 	; Set Cell's Background color to Red.
 	_LOCalc_CellBackColor($oCell, $LOC_COLOR_RED)
-	If @error Then _ERROR( $oDoc, "Failed to set Cell's Background color. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Cell's Background color. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 

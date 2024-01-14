@@ -161,7 +161,6 @@ Func _FillCells(ByRef $oDoc, ByRef $oSheet)
 
 EndFunc   ;==>_FillCells
 
-
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)

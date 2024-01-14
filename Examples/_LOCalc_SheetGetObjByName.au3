@@ -9,11 +9,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
 
 	;Retrieve the Object for the Sheet called "Sheet1".
 	$oSheet = _LOCalc_SheetGetObjByName($oDoc, "Sheet1")
-	If @error Then _ERROR("Failed to retrieve the Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet Object. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Sheet's name is: " & _LOCalc_SheetName($oDoc, $oSheet))
 
@@ -21,11 +21,12 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc   ;==>_ERROR
