@@ -165,6 +165,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Spell Checked the comments and Headers.
 - Spell Checked Examples
 - Examples on Error now close any documents opened by the example.
+- Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
+
 
 ## [0.9.1] - 2023-10-28
 
