@@ -26,7 +26,7 @@ Func Example()
 	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have created and exported the document as a PDF to your Desktop, found at the following Path: " _
-			 & $sPath & @CRLF & "Press Ok to delete it.")
+			& $sPath & @CRLF & "Press Ok to delete it.")
 
 	; Delete the file.
 	FileDelete($sPath)

@@ -27,7 +27,7 @@ Func Example()
 	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have created and saved a blank L.O. Calc Doc to your Temporary Directory, found at the following Path: " _
-			 & $sPath & @CRLF & "I will now open it.")
+			& $sPath & @CRLF & "I will now open it.")
 
 	; Open the document.
 	$oDoc = _LOCalc_DocOpen($sPath)
