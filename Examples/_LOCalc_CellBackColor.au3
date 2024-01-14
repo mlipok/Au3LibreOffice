@@ -56,6 +56,5 @@ EndFunc
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
-	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc
