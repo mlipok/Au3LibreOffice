@@ -11,15 +11,15 @@ Func Example()
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
 
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve what type of Data the cursor is presently in.
 	$iCursorDataType = _LOWriter_CursorGetDataType($oDoc, $oViewCursor)
-	If @error Then _ERROR("Failed to retrieve Cursor Data type. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cursor Data type. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The possible cursor data type values are: " & @CRLF & _
 			"$LOW_CURDATA_BODY_TEXT (1)" & @CRLF & _
@@ -52,12 +52,13 @@ Func Example()
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
 
-	If @error Then _ERROR("Failed to close opened L.O. Document. Following Error codes returned: Error:" & _
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & _
 			@error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

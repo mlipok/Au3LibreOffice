@@ -10,43 +10,43 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text before I modify the Character style.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate modifying a Character style.")
-	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Move the View Cursor to the start of the document
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START)
-	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
 	; Move the cursor right 13 spaces
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 13)
-	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
 	; Select the word "Demonstrate".
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GO_RIGHT, 11, True)
-	If @error Then _ERROR("Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to move ViewCursor. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Character style to "Example" Character style.
 	_LOWriter_CharStyleSet($oDoc, $oViewCursor, "Example")
-	If @error Then _ERROR("Failed to set the Character style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set the Character style. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the "Example" object.
 	$oCharStyle = _LOWriter_CharStyleGetObj($oDoc, "Example")
-	If @error Then _ERROR("Failed to retrieve Character style object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Character style object. Error:" & @error & " Extended:" & @extended)
 
 	; Set "Example" Character style Font effects to shadow = True.
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, Null, Null, True)
-	If @error Then _ERROR("Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
-	If @error Then _ERROR("Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Character style's current Font effects settings are as follows: " & @CRLF & _
 			"Relief style (See UDF Constants): " & $avCharStyleSettings[0] & @CRLF & _
@@ -58,11 +58,11 @@ Func Example()
 
 	; Set "Example" Character Style Font effects to shadow = False and Outline = True.
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, Null, True, False)
-	If @error Then _ERROR("Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
-	If @error Then _ERROR("Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Character style's current Font effects settings are as follows: " & @CRLF & _
 			"Relief style (See UDF Constants): " & $avCharStyleSettings[0] & @CRLF & _
@@ -74,11 +74,11 @@ Func Example()
 
 	; Set "Example" Character Style Font effects Outline to False, and Hidden to true.
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, True, False, Null)
-	If @error Then _ERROR("Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
-	If @error Then _ERROR("Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Character style's current Font effects settings are as follows: " & @CRLF & _
 			"Relief style (See UDF Constants): " & $avCharStyleSettings[0] & @CRLF & _
@@ -91,11 +91,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

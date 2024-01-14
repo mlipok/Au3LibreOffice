@@ -29,9 +29,9 @@ Func Example()
 			"2540 Micrometers to Printer's Points = " & $iPt_From_MicroM & @CRLF & @CRLF & _
 			"a Micrometer is 1000th of a centimeter.")
 
-EndFunc
+EndFunc   ;==>Example
 
 Func _ERROR($sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR
