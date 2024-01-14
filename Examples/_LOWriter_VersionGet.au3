@@ -23,9 +23,9 @@ Func Example()
 			"Your current full Libre Office version is: " & $sFullVersion & @CRLF & _
 			"Your current simple Libre Office version is: " & $sSimpleVersion)
 
-EndFunc
+EndFunc   ;==>Example
 
 Func _ERROR($sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR
