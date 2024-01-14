@@ -10,31 +10,31 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
-	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Frame into the document for demonstration.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, Null, 3000, 3000)
-	If @error Then _ERROR("Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Frame's style to my created style, "Test Style"
 	_LOWriter_FrameStyleSet($oDoc, $oFrame, "Test Style")
-	If @error Then _ERROR("Failed to set Frame style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Frame style. Error:" & @error & " Extended:" & @extended)
 
 	; Set Frame style Border Width settings to: $LOW_BORDERWIDTH_MEDIUM on all four sides.
 	_LOWriter_FrameStyleBorderWidth($oFrameStyle, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM)
-	If @error Then _ERROR("Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Frame Style settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameStyleBorderWidth($oFrameStyle)
-	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame style's current Border Width settings are as follows: " & @CRLF & _
 			"The Top Border Width is, in Micrometers, (see UDF constants): " & $avSettings[0] & @CRLF & _
@@ -46,11 +46,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

@@ -10,20 +10,20 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
-	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Frame Style options. Set Protect content to True, Protect Position to True, Protect size to True, Vertical alignment to
 	; $LOW_TXT_ADJ_VERT_CENTER, Edit in Read-Only to True, Print to False, Text direction to $LOW_TXT_DIR_TB_LR
 	_LOWriter_FrameStyleOptions($oFrameStyle, True, True, True, $LOW_TXT_ADJ_VERT_CENTER, True, False, $LOW_TXT_DIR_TB_LR)
-	If @error Then _ERROR("Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Frame Style settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameStyleOptions($oFrameStyle)
-	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame style's option settings are as follows: " & @CRLF & _
 			"Protect the Frame's contents from changes? True/False: " & $avSettings[0] & @CRLF & _
@@ -38,11 +38,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

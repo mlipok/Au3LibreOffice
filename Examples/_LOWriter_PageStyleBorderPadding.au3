@@ -11,31 +11,31 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Default Page Style's Object, to modify its settings.
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, "Default Page Style")
-	If @error Then _ERROR("Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style Object. Error:" & @error & " Extended:" & @extended)
 
 	; Set Page style Border Width settings to: $LOW_BORDERWIDTH_MEDIUM on all four sides.
 	_LOWriter_PageStyleBorderWidth($oPageStyle, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM, $LOW_BORDERWIDTH_MEDIUM)
-	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/8" to Micrometers
 	$iMicrometers = _LOWriter_ConvertToMicrometer(.125)
-	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/4" to Micrometers
 	$iMicrometers2 = _LOWriter_ConvertToMicrometer(.25)
-	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Set Page style Border Padding Width settings to: 1/8" in all sides, and then 1/4" on the bottom.
 	_LOWriter_PageStyleBorderPadding($oPageStyle, $iMicrometers, Null, $iMicrometers2)
-	If @error Then _ERROR("Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current settings. Return will be an array with elements in order of function parameters.
 	$avPageStyleSettings = _LOWriter_PageStyleBorderPadding($oPageStyle)
-	If @error Then _ERROR("Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Page Style's current Border Padding Width settings are as follows: " & @CRLF & _
 			"The ""All"" Border Padding Width is, in Micrometers, (see UDF constants): " & $avPageStyleSettings[0] & @CRLF & _
@@ -48,11 +48,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

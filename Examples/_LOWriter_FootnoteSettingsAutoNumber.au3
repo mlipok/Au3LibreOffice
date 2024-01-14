@@ -10,28 +10,28 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Footnote at the end of this line. ")
-	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Footnote at the ViewCursor.
 	_LOWriter_FootnoteInsert($oDoc, $oViewCursor)
-	If @error Then _ERROR("Failed to insert a Footnote. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert a Footnote. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Document's Footnote settings to: Number format = $LOW_NUM_STYLE_ROMAN_UPPER, Start Numbering at 5, Before the Footnote label, Place
 	; a Emdash and after the footnote label place a Colon, Counting type = $LOW_FOOTNOTE_COUNT_PER_DOC
 	_LOWriter_FootnoteSettingsAutoNumber($oDoc, $LOW_NUM_STYLE_ROMAN_UPPER, 5, "—", ":", $LOW_FOOTNOTE_COUNT_PER_DOC)
-	If @error Then _ERROR("Failed to modify Footnote settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to modify Footnote settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Footnote settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FootnoteSettingsAutoNumber($oDoc)
-	If @error Then _ERROR("Failed to retrieve Footnote settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Footnote settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Document's current Footnote Auto Numbering settings are as follows: " & @CRLF & _
 			"The Auto Numbering Number Style used for Footnotes is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
@@ -45,11 +45,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

@@ -11,25 +11,25 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert an Image into the document at the ViewCursor position.
 	$oImage = _LOWriter_ImageInsert($oDoc, $sImage, $oViewCursor)
-	If @error Then _ERROR("Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Image Gradient settings to: skip pre-set gradient name, Gradient type = $LOW_GRAD_TYPE_SQUARE, increment steps = 150,
 	; horizontal (X) offset = 25%, vertical offset (Y) = 56%, rotational angle = 135 degrees, percentage not covered by "From" color = 50%
 	; Starting color = $LOW_COLOR_ORANGE, Ending color = $LOW_COLOR_TEAL, Starting color intensity = 100%, ending color intensity = 68%
 	_LOWriter_ImageAreaGradient($oDoc, $oImage, Null, $LOW_GRAD_TYPE_SQUARE, 150, 25, 56, 135, 50, $LOW_COLOR_ORANGE, $LOW_COLOR_TEAL, 100, 68)
-	If @error Then _ERROR("Failed to set Image settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Image settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Image settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_ImageAreaGradient($oDoc, $oImage)
-	If @error Then _ERROR("Failed to retrieve Image settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Image settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Image's Gradient settings are as follows: " & @CRLF & _
 			"The Gradient name is: " & $avSettings[0] & @CRLF & _
@@ -48,11 +48,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

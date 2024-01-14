@@ -11,27 +11,27 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Create a new Frame Style named "Test Style"
 	$oFrameStyle = _LOWriter_FrameStyleCreate($oDoc, "Test Style")
-	If @error Then _ERROR("Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Frame Style. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1/2" to Micrometers
 	$iMicrometers = _LOWriter_ConvertToMicrometer(.5)
-	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Convert 1" to Micrometers
 	$iMicrometers2 = _LOWriter_ConvertToMicrometer(1)
-	If @error Then _ERROR("Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert from inches to Micrometers. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Frame Style wrap type settings. Set wrap type to $LOW_WRAP_MODE_LEFT, Left and Right  Spacing to 1/2", and Top and Bottom spacing to 1"
 	_LOWriter_FrameStyleWrap($oFrameStyle, $LOW_WRAP_MODE_LEFT, $iMicrometers, $iMicrometers, $iMicrometers2, $iMicrometers2)
-	If @error Then _ERROR("Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Frame Style settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_FrameStyleWrap($oFrameStyle)
-	If @error Then _ERROR("Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Frame Style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Frame style's wrap settings are as follows: " & @CRLF & _
 			"The Wrap style is, (see UDF constants): " & $avSettings[0] & @CRLF & _
@@ -44,11 +44,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR
