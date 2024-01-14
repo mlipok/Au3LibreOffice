@@ -45,4 +45,4 @@ Func Example()
 			"Original Path: " & @CRLF & $sOfficePath & @CRLF & "Result: " & @CRLF & _
 			_LOWriter_PathConvert($sOfficePath, $LOW_PATHCONV_OFFICE_RETURN))
 
-EndFunc   ;==>Example
+EndFunc

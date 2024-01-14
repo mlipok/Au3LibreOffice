@@ -16,10 +16,7 @@ Func Example()
 
 	; Make the document invisible by setting visible to False
 	_LOWriter_DocVisible($oDoc, False)
-	If (@error > 0) Then
-		_LOWriter_DocClose($oDoc, False)
-		_ERROR($oDoc, "Failed to change Document visibility settings. Error:" & @error & " Extended:" & @extended)
-	EndIf
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Document visibility settings. Error:" & @error & " Extended:" & @extended)
 
 	; Test if the document is Visible
 	$bReturn = _LOWriter_DocVisible($oDoc)
@@ -30,10 +27,7 @@ Func Example()
 
 	; Make the document visible by setting visible to True
 	_LOWriter_DocVisible($oDoc, True)
-	If (@error > 0) Then
-		_LOWriter_DocClose($oDoc, False)
-		_ERROR($oDoc, "Failed to change Document visibility settings. Error:" & @error & " Extended:" & @extended)
-	EndIf
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Document visibility settings. Error:" & @error & " Extended:" & @extended)
 
 	; Test if the document is Visible
 	$bReturn = _LOWriter_DocVisible($oDoc)
@@ -47,10 +41,10 @@ Func Example()
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

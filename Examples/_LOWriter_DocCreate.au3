@@ -16,10 +16,10 @@ Func Example()
 	_LOWriter_DocClose($oDoc, False)
 	If (@error > 0) Then MsgBox($MB_OK, "Error", "Failed to close opened L.O. Document.")
 
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

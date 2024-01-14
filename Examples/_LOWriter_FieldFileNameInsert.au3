@@ -39,10 +39,10 @@ Func Example()
 
 	; Delete the file.
 	FileDelete($sPath)
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

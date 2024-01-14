@@ -10,7 +10,7 @@ Func Example()
 	Local $sSavePath, $sPath
 
 	MsgBox($MB_OK, "", "I will Create and Save a new Calc Doc to begin this example, a screen will flash up and disappear after " _
-			 & "pressing OK.")
+			& "pressing OK.")
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -28,7 +28,7 @@ Func Example()
 	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have created and saved a blank L.O. Calc Doc to your Desktop, found at the following Path: " _
-			 & $sPath & @CRLF & "Press Ok to delete it.")
+			& $sPath & @CRLF & "Press Ok to delete it.")
 
 	; Delete the file.
 	FileDelete($sPath)
