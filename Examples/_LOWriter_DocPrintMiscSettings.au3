@@ -9,13 +9,13 @@ Func Example()
 	Local $avSettings, $avSettingsNew
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now show your current miscellaneous print settings.")
 
 	; Call the function with all optional settings left as Null to retrieve the current settings.
 	$avSettings = _LOWriter_DocPrintMiscSettings($oDoc)
-	If @error Then _ERROR("Error retrieving Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "Current Settings", "Your current miscellaneous print settings are as follows: " & @CRLF & @CRLF & _
 			"Paper Orientation:— " & $avSettings[0] & @CRLF & " 0 = $LOW_PAPER_ORIENT_PORTRAIT, 1 = $LOW_PAPER_ORIENT_LANDSCAPE" & @CRLF & @CRLF & _
@@ -30,11 +30,11 @@ Func Example()
 	; Changes the print settings to Landscape, Skip the printer setting, Print comments Only, Print in brochure,
 	;	print Brochure in Right to Left mode, and print in reverse.
 	_LOWriter_DocPrintMiscSettings($oDoc, $LOW_PAPER_ORIENT_LANDSCAPE, Null, $LOW_PRINT_NOTES_ONLY, True, True, True)
-	If @error Then _ERROR("Error setting Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error setting Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Now retrieve the settings again.
 	$avSettingsNew = _LOWriter_DocPrintMiscSettings($oDoc)
-	If @error Then _ERROR("Error retrieving Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Display the new settings.
 	MsgBox($MB_OK, "Current Settings", "Your new miscellaneous print settings are as follows: " & @CRLF & @CRLF & _
@@ -49,15 +49,16 @@ Func Example()
 
 	; Return the settings to their original values by using the previous array of settings I retrieved.
 	_LOWriter_DocPrintMiscSettings($oDoc, $avSettings[0], Null, $avSettings[2], $avSettings[3], $avSettings[4], $avSettings[5])
-	If @error Then _ERROR("Error restoring Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error restoring Writer Document Misc Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

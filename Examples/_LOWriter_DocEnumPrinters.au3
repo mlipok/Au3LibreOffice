@@ -44,9 +44,9 @@ Func Example()
 		MsgBox($MB_OK, "", "Your default printer is: " & $sDefault)
 	EndIf
 
-EndFunc
+EndFunc   ;==>Example
 
 Func _ERROR($sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

@@ -11,7 +11,7 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now export the new Writer Document as a pdf to the desktop folder.")
 
@@ -19,20 +19,21 @@ Func Example()
 
 	; Export The New Blank Doc To Desktop Directory as a PDF using a unique temporary name.
 	$sPath = _LOWriter_DocExport($oDoc, $sFilePathName, False)
-	If @error Then _ERROR("Failed to Export the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Export the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I have created and exported the document as a PDF to your Desktop, found at the following Path: " _
-			 & $sPath & @CRLF & "Press Ok to delete it.")
+			& $sPath & @CRLF & "Press Ok to delete it.")
 
 	; Delete the file.
 	FileDelete($sPath)
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

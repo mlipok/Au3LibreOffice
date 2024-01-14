@@ -43,9 +43,9 @@ Func Example()
 
 	_ArrayDisplay($asPrinters)
 
-EndFunc
+EndFunc   ;==>Example
 
 Func _ERROR($sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

@@ -9,13 +9,13 @@ Func Example()
 	Local $avSettings, $avSettingsNew
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now show your current print Size settings.")
 
 	; Call the function with all optional settings left as Null to retrieve the current settings.
 	$avSettings = _LOWriter_DocPrintSizeSettings($oDoc)
-	If @error Then _ERROR("Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "Current Settings", "Your current print size settings are as follows: " & @CRLF & @CRLF & _
 			"Paper format:— " & $avSettings[0] & @CRLF & _
@@ -38,11 +38,11 @@ Func Example()
 
 	; Changes the print size settings to Tabloid.
 	_LOWriter_DocPrintSizeSettings($oDoc, $LOW_PAPER_TABLOID)
-	If @error Then _ERROR("Error setting Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error setting Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Now retrieve the settings again.
 	$avSettingsNew = _LOWriter_DocPrintSizeSettings($oDoc)
-	If @error Then _ERROR("Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Display the new settings.
 	MsgBox($MB_OK, "Current Settings", "Your new print size settings are as follows: " & @CRLF & @CRLF & _
@@ -66,11 +66,11 @@ Func Example()
 
 	; Changes the print size settings to Tabloid, but set width to Japanese Postcard.
 	_LOWriter_DocPrintSizeSettings($oDoc, Null, $LOW_PAPER_WIDTH_TABLOID, $LOW_PAPER_HEIGHT_JAP_POSTCARD)
-	If @error Then _ERROR("Error setting Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error setting Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Now retrieve the settings again.
 	$avSettingsNew = _LOWriter_DocPrintSizeSettings($oDoc)
-	If @error Then _ERROR("Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Display the new settings.
 	MsgBox($MB_OK, "Current Settings", "Your new print size settings are as follows: " & @CRLF & @CRLF & _
@@ -94,15 +94,16 @@ Func Example()
 
 	; Restore the original settings
 	_LOWriter_DocPrintSizeSettings($oDoc, $avSettings[0], $avSettings[1], $avSettings[2])
-	If @error Then _ERROR("Error restoring Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Error restoring Writer Document Print settings. Error:" & @error & " Extended:" & @extended)
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR

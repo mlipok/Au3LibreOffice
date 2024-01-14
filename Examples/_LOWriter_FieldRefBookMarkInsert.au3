@@ -9,23 +9,23 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Bookmark at the end of this line.--> ")
-	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Bookmark at the ViewCursor, named "New Bookmark".
 	_LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
-	If @error Then _ERROR("Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "I have inserted a field at the end of this line.--> ")
-	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Bookmark Reference Field. "New Bookmark" Bookmark, do not overwrite any content selected by the cursor, and refer using
 	; $LOW_FIELD_REF_USING_ABOVE_BELOW
@@ -35,11 +35,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc
+EndFunc   ;==>Example
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc
+EndFunc   ;==>_ERROR
