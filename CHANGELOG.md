@@ -205,6 +205,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Default value of $__LOWCONST_SLEEP_DIV from 15 to 0.
 - Sorted Constants in LibreOfficeWriter_Constants alphabetically.
 - Renamed $LOW_FIELDADV_TYPE_* Constants to $LOW_FIELD_ADV_TYPE_* to match formatting of other Field Type Constants.
+- Renamed $LibreOfficeWriter_DirectFormating.au3 to LibreOfficeWriter_DirectFormatting.au3 (misspelling correction)
 
 ### Fixed
 
@@ -217,6 +218,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Ternary Operators missing Parenthesis in responses.
 - Export extension was incorrect, "jjpe" --> "jpe"
 - Spell Checked the comments and Headers.
+- Spell Checked Examples
+- Examples on Error now close any documents opened by the example.
 - Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
 
 [To Top](##Releases)

@@ -11,25 +11,25 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a FreeForm Line Shape into the document, 5000 Wide by 6000 High.
 	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, 5000, 6000)
-	If @error Then _ERROR("Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current number of points in the shape.
 	$iCount = _LOWriter_ShapePointsGetCount($oShape)
-	If @error Then _ERROR("Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The number of points in this shape is: " & $iCount)
 
 	; Retrieve the Shape's current settings for its first point.
 	$avArray = _LOWriter_ShapePointsModify($oShape, 1)
-	If @error Then _ERROR("Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
 
 	; I will retrieve the first point's current position, and add to its X and Y values to determine my new point's new X and Y values.
 
@@ -43,11 +43,11 @@ Func Example()
 
 	; Add the new Point using the new X and Y coordinates. The new point will be added after the called point (1), The point's type will be Symmetrical.
 	_LOWriter_ShapePointsAdd($oShape, 1, $iNewX, $iNewY, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
-	If @error Then _ERROR("Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to modify Shape point. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the new number of points in the shape.
 	$iCount = _LOWriter_ShapePointsGetCount($oShape)
-	If @error Then _ERROR("Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The new number of points in this shape is: " & $iCount)
 
@@ -55,11 +55,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc   ;==>Example
+EndFunc
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

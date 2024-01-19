@@ -10,28 +10,28 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR("Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "I have inserted a Endnote at the end of this line. ")
-	If @error Then _ERROR("Failed to insert text. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Insert a Endnote at the ViewCursor
 	_LOWriter_EndnoteInsert($oDoc, $oViewCursor)
-	If @error Then _ERROR("Failed to insert a Endnote. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to insert a Endnote. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Document's Endnote Style settings to: Paragraph Style to use = "Marginalia", Page style = "HTML", Text area = "Definition" Character style
 	; Endnote Area = "Source Text"
 	_LOWriter_EndnoteSettingsStyles($oDoc, "Marginalia", "HTML", "Definition", "Source Text")
-	If @error Then _ERROR("Failed to modify Endnote settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to modify Endnote settings. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the current Endnote settings. Return will be an array in order of function parameters.
 	$avSettings = _LOWriter_EndnoteSettingsStyles($oDoc)
-	If @error Then _ERROR("Failed to retrieve Endnote settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Endnote settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Document's current Endnote Style settings are as follows: " & @CRLF & _
 			"The Paragraph Style to use for Endnote content is: " & $avSettings[0] & @CRLF & _
@@ -43,11 +43,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -10,7 +10,7 @@
 #include "LibreOfficeWriter_Cell.au3"
 #include "LibreOfficeWriter_Char.au3"
 #include "LibreOfficeWriter_Cursor.au3"
-#include "LibreOfficeWriter_DirectFormating.au3"
+#include "LibreOfficeWriter_DirectFormatting.au3"
 #include "LibreOfficeWriter_Doc.au3"
 #include "LibreOfficeWriter_Field.au3"
 #include "LibreOfficeWriter_Font.au3"

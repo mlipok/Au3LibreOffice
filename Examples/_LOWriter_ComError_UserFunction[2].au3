@@ -23,7 +23,7 @@ Func Example()
 	; The First Parameter is my User function I want called any time there is a COM Error.
 	; the second function parameter is my first optional Parameter, a String, my second optional Parameter is an integer, my third
 	; optional parameter is a boolean, the fourth optional parameter is a String, and the fifth optional parameter  is an integer.
-	_LOWriter_ComError_UserFunction($MyFunc, "My First Param", 05, False, "Another String", 100)
+	_LOWriter_ComError_UserFunction($MyFunc, "My First Parameter", 05, False, "Another String", 100)
 	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will now cause a COM Error, to demonstrate the function.")
@@ -32,7 +32,7 @@ Func Example()
 	$oServiceManager.FakeMethod()
 
 	; I will now set the function again, this time with less Parameters.
-	_LOWriter_ComError_UserFunction($MyFunc, "My First Param", 2023, "I have only three Parameters now.")
+	_LOWriter_ComError_UserFunction($MyFunc, "My First Parameter", 2023, "I have only three Parameters now.")
 	If @error Then _ERROR("Error Assigning User COM Error Function. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "I will cause another COM Error, to demonstrate the function.")
@@ -82,7 +82,7 @@ Func _FunctionForErrors($oObjectError, $vParam1 = Null, $vParam2 = Null, $vParam
 			"Parameter 3: " & $vParam3 & @CRLF & _
 			"Parameter 4: " & $vParam4 & @CRLF & _
 			"Parameter 5: " & $vParam5 & @CRLF & @CRLF & _
-			"Your own User function dowsn't need to use any, or all Parameters other than a place for $oObjectError, if you like, " & _
+			"Your own User function doesn't need to use any, or all Parameters other than a place for $oObjectError, if you like, " & _
 			"its just so the option is there.")
 
 EndFunc
