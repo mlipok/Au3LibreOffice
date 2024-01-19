@@ -17,11 +17,11 @@ Func Example()
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some text at the Viewcursor.
+	; Insert some text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
-	; Insert some more text at the Viewcursor.
+	; Insert some more text at the ViewCursor.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & "Some more text")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
@@ -55,10 +55,10 @@ Func Example()
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc

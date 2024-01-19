@@ -10,11 +10,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR("Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; See if a Frame Style called "Labels" exists.
 	$bReturn = _LOWriter_FrameStyleExists($oDoc, "Labels")
-	If @error Then _ERROR("Failed to query for Frame Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to query for Frame Style. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Does a frame style called ""Labels"" exist for this document? True/False: " & $bReturn)
 
@@ -22,11 +22,12 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR("Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 
-Func _ERROR($sErrorText)
+Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
+	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

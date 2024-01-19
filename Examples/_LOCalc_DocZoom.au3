@@ -22,7 +22,7 @@ Func Example()
 	; Zoom cannot be less than 20% or greater than 600%, if my value is outside of this, set it to 140%
 	If ($iZoom < 20) Or ($iZoom > 600) Then $iZoom = 140
 
-	MsgBox($MB_OK, "", "Your current zoom value is: " & $aiArray[1] & "%. The Zoom type currently is: " & $aiArray[0] & @CRLF &_
+	MsgBox($MB_OK, "", "Your current zoom value is: " & $aiArray[1] & "%. The Zoom type currently is: " & $aiArray[0] & @CRLF & _
 			". I will now set the zoom value to: " & $iZoom & "%.")
 
 	; Skip zoom type and set the zoom to my new value.

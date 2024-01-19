@@ -59,9 +59,9 @@ Func Example()
 
 	; Delete the file.
 	FileDelete($sPath)
-EndFunc   ;==>Example
+EndFunc
 
 Func _ERROR($sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	Exit
-EndFunc   ;==>_ERROR
+EndFunc
