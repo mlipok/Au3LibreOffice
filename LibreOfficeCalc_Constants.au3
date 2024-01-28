@@ -53,58 +53,58 @@ Global Const _
 
 ; Cell Content Horizontal Alignment
 Global Const _
-	$LOC_CELL_ALIGN_HORI_DEFAULT = 0, _ ; The default alignment is used (left for numbers, right for text).
-	$LOC_CELL_ALIGN_HORI_LEFT = 1, _ ; The contents are printed from left to right.
-	$LOC_CELL_ALIGN_HORI_CENTER = 2, _ ; The contents are horizontally centered.
-	$LOC_CELL_ALIGN_HORI_RIGHT = 3, _ ; The contents are aligned to the right edge of the cell.
-	$LOC_CELL_ALIGN_HORI_JUSTIFIED = 4, _ ; The contents are justified to the cell width.
-	$LOC_CELL_ALIGN_HORI_FILLED = 5, _ ; The contents are repeated to fill the cell.
-	$LOC_CELL_ALIGN_HORI_DISTRIBUTED = 6 ; The contents are evenly aligned across the whole cell. Unlike Justified, it justifies the very last line of text, too.
+		$LOC_CELL_ALIGN_HORI_DEFAULT = 0, _                     ; The default alignment is used (left for numbers, right for text).
+		$LOC_CELL_ALIGN_HORI_LEFT = 1, _                        ; The contents are printed from left to right.
+		$LOC_CELL_ALIGN_HORI_CENTER = 2, _                      ; The contents are horizontally centered.
+		$LOC_CELL_ALIGN_HORI_RIGHT = 3, _                       ; The contents are aligned to the right edge of the cell.
+		$LOC_CELL_ALIGN_HORI_JUSTIFIED = 4, _                   ; The contents are justified to the cell width.
+		$LOC_CELL_ALIGN_HORI_FILLED = 5, _                      ; The contents are repeated to fill the cell.
+		$LOC_CELL_ALIGN_HORI_DISTRIBUTED = 6                    ; The contents are evenly aligned across the whole cell. Unlike Justified, it justifies the very last line of text, too.
 
 ; Cell Content Vertical Alignment
 Global Const _
-		$LOC_CELL_ALIGN_VERT_DEFAULT = 0, _ ; The default alignment is used.
-		$LOC_CELL_ALIGN_VERT_TOP = 1, _ ; The contents are aligned with the upper edge of the cell.
-		$LOC_CELL_ALIGN_VERT_MIDDLE = 2, _ ; The contents are aligned to the vertical middle of the cell.
-		$LOC_CELL_ALIGN_VERT_BOTTOM = 3, _ ; The contents are aligned to the lower edge of the cell.
-		$LOC_CELL_ALIGN_VERT_JUSTIFIED = 4, _; The contents are justified to the cell height.
-		$LOC_CELL_ALIGN_VERT_DISTRIBUTED = 5 ; The same as Justified, unless the text orientation is vertical. Then it behaves similarly to the horizontal Distributed setting, i.e. the very last line is justified, too.
+		$LOC_CELL_ALIGN_VERT_DEFAULT = 0, _                     ; The default alignment is used.
+		$LOC_CELL_ALIGN_VERT_TOP = 1, _                         ; The contents are aligned with the upper edge of the cell.
+		$LOC_CELL_ALIGN_VERT_MIDDLE = 2, _                      ; The contents are aligned to the vertical middle of the cell.
+		$LOC_CELL_ALIGN_VERT_BOTTOM = 3, _                      ; The contents are aligned to the lower edge of the cell.
+		$LOC_CELL_ALIGN_VERT_JUSTIFIED = 4, _                   ; The contents are justified to the cell height.
+		$LOC_CELL_ALIGN_VERT_DISTRIBUTED = 5                    ; The same as Justified, unless the text orientation is vertical. Then it behaves similarly to the horizontal Distributed setting, i.e. the very last line is justified, too.
 
 ; Cell Delete Mode Constants
 Global Const _
-		$LOC_CELL_DELETE_MODE_NONE = 0, _ ; No cells are moved -- Nothing happens.
-		$LOC_CELL_DELETE_MODE_UP = 1, _ ; The cells below the inserted Cells are moved up.
-		$LOC_CELL_DELETE_MODE_LEFT = 2, _ ; The cells to the right of the inserted cells are moved left.
-		$LOC_CELL_DELETE_MODE_ROWS = 3, _ ; Entire rows below the inserted cells are moved up.
-		$LOC_CELL_DELETE_MODE_COLUMNS = 4 ; Entire columns to the right of the inserted cells are moved left.
+		$LOC_CELL_DELETE_MODE_NONE = 0, _                       ; No cells are moved -- Nothing happens.
+		$LOC_CELL_DELETE_MODE_UP = 1, _                         ; The cells below the inserted Cells are moved up.
+		$LOC_CELL_DELETE_MODE_LEFT = 2, _                       ; The cells to the right of the inserted cells are moved left.
+		$LOC_CELL_DELETE_MODE_ROWS = 3, _                       ; Entire rows below the inserted cells are moved up.
+		$LOC_CELL_DELETE_MODE_COLUMNS = 4                       ; Entire columns to the right of the inserted cells are moved left.
 
 ; Cell Content Type Flag Constants
 Global Const _
-		$LOC_CELL_FLAG_VALUE = 1, _ ; Cell Contents that are numeric values but are not formatted as dates or times.
-		$LOC_CELL_FLAG_DATE_TIME = 2, _ ; Cell Contents that are numeric values that have a date or time number format.
-		$LOC_CELL_FLAG_STRING = 4, _ ; Cell Contents that are Strings.
-		$LOC_CELL_FLAG_ANNOTATION = 8, _ ; Cell Annotations
-		$LOC_CELL_FLAG_FORMULA = 16, _ ; Cell Contents that are Formulas.
-		$LOC_CELL_FLAG_HARD_ATTR = 32, _ ; Cells with explicit formatting, but not the formatting which is applied implicitly through styles.
-		$LOC_CELL_FLAG_STYLES = 64, _ ; Cells with Styles applied.
-		$LOC_CELL_FLAG_OBJECTS = 128, _ ; Cell Contents that are Drawing Objects.
-		$LOC_CELL_FLAG_EDIT_ATTR = 256, _ ; Cells containing formatting within parts of the cell contents.
-		$LOC_CELL_FLAG_FORMATTED = 512, _ ; Cells with formatting within the cells or cells with more than one paragraph within the cells.
-		$LOC_CELL_FLAG_ALL = 1023 ; All flags listed above.
+		$LOC_CELL_FLAG_VALUE = 1, _                             ; Cell Contents that are numeric values but are not formatted as dates or times.
+		$LOC_CELL_FLAG_DATE_TIME = 2, _                         ; Cell Contents that are numeric values that have a date or time number format.
+		$LOC_CELL_FLAG_STRING = 4, _                            ; Cell Contents that are Strings.
+		$LOC_CELL_FLAG_ANNOTATION = 8, _                        ; Cell Annotations
+		$LOC_CELL_FLAG_FORMULA = 16, _                          ; Cell Contents that are Formulas.
+		$LOC_CELL_FLAG_HARD_ATTR = 32, _                        ; Cells with explicit formatting, but not the formatting which is applied implicitly through styles.
+		$LOC_CELL_FLAG_STYLES = 64, _                           ; Cells with Styles applied.
+		$LOC_CELL_FLAG_OBJECTS = 128, _                         ; Cell Contents that are Drawing Objects.
+		$LOC_CELL_FLAG_EDIT_ATTR = 256, _                       ; Cells containing formatting within parts of the cell contents.
+		$LOC_CELL_FLAG_FORMATTED = 512, _                       ; Cells with formatting within the cells or cells with more than one paragraph within the cells.
+		$LOC_CELL_FLAG_ALL = 1023                               ; All flags listed above.
 
 ; Cell Insert Mode Constants
 Global Const _
-		$LOC_CELL_INSERT_MODE_NONE = 0, _ ; No cells are moved -- Nothing happens.
-		$LOC_CELL_INSERT_MODE_DOWN = 1, _ ; The cells below the inserted Cells are moved down.
-		$LOC_CELL_INSERT_MODE_RIGHT = 2, _ ; The cells to the right of the inserted cells are moved right.
-		$LOC_CELL_INSERT_MODE_ROWS = 3, _ ; Entire rows below the inserted cells are moved down.
-		$LOC_CELL_INSERT_MODE_COLUMNS = 4 ; Entire columns to the right of the inserted cells are moved right.
+		$LOC_CELL_INSERT_MODE_NONE = 0, _                       ; No cells are moved -- Nothing happens.
+		$LOC_CELL_INSERT_MODE_DOWN = 1, _                       ; The cells below the inserted Cells are moved down.
+		$LOC_CELL_INSERT_MODE_RIGHT = 2, _                      ; The cells to the right of the inserted cells are moved right.
+		$LOC_CELL_INSERT_MODE_ROWS = 3, _                       ; Entire rows below the inserted cells are moved down.
+		$LOC_CELL_INSERT_MODE_COLUMNS = 4                       ; Entire columns to the right of the inserted cells are moved right.
 
 ; Cell Content Rotation Reference
 Global Const _
-		$LOC_CELL_ROTATE_REF_LOWER_CELL_BORDER = 0, _ ; Writes the rotated text from the bottom cell edge outwards.
-		$LOC_CELL_ROTATE_REF_UPPER_CELL_BORDER = 1, _ ; Writes the rotated text from the top cell edge outwards.
-		$LOC_CELL_ROTATE_REF_INSIDE_CELLS = 3 ; Writes the rotated text only within the cell.
+		$LOC_CELL_ROTATE_REF_LOWER_CELL_BORDER = 0, _           ; Writes the rotated text from the bottom cell edge outwards.
+		$LOC_CELL_ROTATE_REF_UPPER_CELL_BORDER = 1, _           ; Writes the rotated text from the top cell edge outwards.
+		$LOC_CELL_ROTATE_REF_INSIDE_CELLS = 3                   ; Writes the rotated text only within the cell.
 
 ; Cell Type
 Global Const _
@@ -137,10 +137,10 @@ Global Const _
 
 ; Formula Result Type Constants
 Global Const _
-		$LOC_FORMULA_RESULT_TYPE_VALUE = 1, _ ; The formula's result is a number.
-		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _ ; The formula's result is a string.
-		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _ ; The formula has an error of some form.
-		$LOC_FORMULA_RESULT_TYPE_ALL = 7 ; All of the above types.
+		$LOC_FORMULA_RESULT_TYPE_VALUE = 1, _                   ; The formula's result is a number.
+		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _                  ; The formula's result is a string.
+		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _                   ; The formula has an error of some form.
+		$LOC_FORMULA_RESULT_TYPE_ALL = 7                        ; All of the above types.
 
 ; Path Convert Constants.
 Global Const _
@@ -183,9 +183,9 @@ Global Const _
 
 ; Text Direction
 Global Const _
-		$LOC_TXT_DIR_LR = 0, _                               ; Text within lines is written left-to-right. Typically, this is the writing mode for normal "alphabetic" text.
-		$LOC_TXT_DIR_RL = 1, _                               ; Text within a line are written right-to-left. Typically, this writing mode is used in Arabic and Hebrew text.
-		$LOC_TXT_DIR_CONTEXT = 4                            ; Obtain actual writing mode from the context of the object.
+		$LOC_TXT_DIR_LR = 0, _                                  ; Text within lines is written left-to-right. Typically, this is the writing mode for normal "alphabetic" text.
+		$LOC_TXT_DIR_RL = 1, _                                  ; Text within a line are written right-to-left. Typically, this writing mode is used in Arabic and Hebrew text.
+		$LOC_TXT_DIR_CONTEXT = 4                                ; Obtain actual writing mode from the context of the object.
 
 ; Underline/Overline
 Global Const _
