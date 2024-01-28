@@ -9,7 +9,9 @@
 
 ; Other includes for Calc
 #include "LibreOfficeCalc_Cell.au3"
+#include "LibreOfficeCalc_CellStyle.au3"
 #include "LibreOfficeCalc_Doc.au3"
+#include "LibreOfficeCalc_Font.au3"
 #include "LibreOfficeCalc_Range.au3"
 #include "LibreOfficeCalc_Sheet.au3"
 

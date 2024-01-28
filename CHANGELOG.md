@@ -22,63 +22,63 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ### Project
 
-- Added logo to ReadMe.
-- Filled in ReadMe.
+- Added logo to ReadMe. @mLipok
+- Filled in ReadMe. @mLipok
 - Formatted Changelog
+
+> [!NOTE]
+> **LibreOfficeUDF**
+
+### Added
+
+- Central Constants File
+	- LibreOffice_Constants.au3
+- Central UDF File for all components @mLipok
+	- LibreOffice.au3
+
+### Changed
+
+- All Internal Error Constants from $__LOW_STATUS_* or $__LOC_STATUS_* To $__LO_STATUS_*
 
 > [!NOTE]
 > **LibreOfficeCalc**
 
 ### Added
 
-- Document Functions and Examples
-	- _LOCalc_DocClose
-	- _LOCalc_DocConnect
-	- _LOCalc_DocCreate
-	- _LOCalc_DocExport
-	- _LOCalc_DocGetName
-	- _LOCalc_DocGetPath
-	- _LOCalc_DocHasPath
-	- _LOCalc_DocHasSheetName
-	- _LOCalc_DocIsActive
-	- _LOCalc_DocIsModified
-	- _LOCalc_DocIsReadOnly
-	- _LOCalc_DocMaximize
-	- _LOCalc_DocMinimize
-	- _LOCalc_DocOpen
-	- _LOCalc_DocPosAndSize
-	- _LOCalc_DocRedo
-	- _LOCalc_DocRedoClear
-	- _LOCalc_DocRedoCurActionTitle
-	- _LOCalc_DocRedoGetAllActionTitles
-	- _LOCalc_DocRedoIsPossible
-	- _LOCalc_DocSave
-	- _LOCalc_DocSaveAs
-	- _LOCalc_DocToFront
-	- _LOCalc_DocUndo
-	- _LOCalc_DocUndoActionBegin
-	- _LOCalc_DocUndoActionEnd
-	- _LOCalc_DocUndoClear
-	- _LOCalc_DocUndoCurActionTitle
-	- _LOCalc_DocUndoGetAllActionTitles
-	- _LOCalc_DocUndoIsPossible
-	- _LOCalc_DocUndoReset
-	- _LOCalc_DocVisible
-	- _LOCalc_DocZoom
-- Sheet Functions and Examples
-	- _LOCalc_SheetActivate
-	- _LOCalc_SheetAdd
-	- _LOCalc_SheetCopy
-	- _LOCalc_SheetGetActive
-	- _LOCalc_SheetGetObjByName
-	- _LOCalc_SheetIsActive
-	- _LOCalc_SheetMove
-	- _LOCalc_SheetName
-	- _LOCalc_SheetRemove
-	- _LOCalc_SheetsGetCount
-	- _LOCalc_SheetsGetNames
-	- _LOCalc_SheetVisible
-- Cell and/or Cell Range Functions and Examples
+- Main Calc File
+	- LibreOfficeCalc.au3
+- Individual Calc Element Files
+	- LibreOfficeCalc_Cell.au3
+	- LibreOfficeCalc_CellStyle.au3
+	- LibreOfficeCalc_Constants.au3
+	- LibreOfficeCalc_Doc.au3
+	- LibreOfficeCalc_Font.au3
+	- LibreOfficeCalc_Helper.au3
+	- LibreOfficeCalc_Internal.au3
+	- LibreOfficeCalc_Range.au3
+	- LibreOfficeCalc_Sheet.au3
+- Cell Formatting Functions and Examples
+	- _LOCalc_CellBackColor
+	- _LOCalc_CellBorderColor
+	- _LOCalc_CellBorderPadding
+	- _LOCalc_CellBorderStyle
+	- _LOCalc_CellBorderWidth
+	- _LOCalc_CellEffect
+	- _LOCalc_CellFont
+	- _LOCalc_CellFontColor
+	- _LOCalc_CellFormula
+	- _LOCalc_CellGetType
+	- _LOCalc_CellOverline
+	- _LOCalc_CellProtection
+	- _LOCalc_CellShadow
+	- _LOCalc_CellStrikeOut
+	- _LOCalc_CellString
+	- _LOCalc_CellTextAlign
+	- _LOCalc_CellTextOrient
+	- _LOCalc_CellTextProperties
+	- _LOCalc_CellUnderline
+	- _LOCalc_CellValue
+- Cell/Cell Range Functions and Examples
 	- _LOCalc_RangeClearContents
 	- _LOCalc_RangeColumnDelete
 	- _LOCalc_RangeColumnGetName
@@ -113,12 +113,137 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeRowPageBreak
 	- _LOCalc_RangeRowsGetCount
 	- _LOCalc_RangeRowVisible
-- Cell Functions and Examples
-	- _LOCalc_CellBackColor
-	- _LOCalc_CellFormula
-	- _LOCalc_CellGetType
-	- _LOCalc_CellString
-	- _LOCalc_CellValue
+- Cell Style Formatting Functions and Examples
+	- _LOCalc_CellStyleBackColor
+	- _LOCalc_CellStyleBorderColor
+	- _LOCalc_CellStyleBorderPadding
+	- _LOCalc_CellStyleBorderStyle
+	- _LOCalc_CellStyleBorderWidth
+	- _LOCalc_CellStyleCreate
+	- _LOCalc_CellStyleDelete
+	- _LOCalc_CellStyleEffect
+	- _LOCalc_CellStyleExists
+	- _LOCalc_CellStyleFont
+	- _LOCalc_CellStyleFontColor
+	- _LOCalc_CellStyleGetObj
+	- _LOCalc_CellStyleOrganizer
+	- _LOCalc_CellStyleOverline
+	- _LOCalc_CellStyleProtection
+	- _LOCalc_CellStyleSet
+	- _LOCalc_CellStylesGetNames
+	- _LOCalc_CellStyleShadow
+	- _LOCalc_CellStyleStrikeOut
+	- _LOCalc_CellStyleTextAlign
+	- _LOCalc_CellStyleTextOrient
+	- _LOCalc_CellStyleTextProperties
+	- _LOCalc_CellStyleUnderline
+- Document Functions and Examples
+	- _LOCalc_DocClose
+	- _LOCalc_DocConnect
+	- _LOCalc_DocCreate
+	- _LOCalc_DocExport
+	- _LOCalc_DocGetName
+	- _LOCalc_DocGetPath
+	- _LOCalc_DocHasPath
+	- _LOCalc_DocHasSheetName
+	- _LOCalc_DocIsActive
+	- _LOCalc_DocIsModified
+	- _LOCalc_DocIsReadOnly
+	- _LOCalc_DocMaximize
+	- _LOCalc_DocMinimize
+	- _LOCalc_DocOpen
+	- _LOCalc_DocPosAndSize
+	- _LOCalc_DocRedo
+	- _LOCalc_DocRedoClear
+	- _LOCalc_DocRedoCurActionTitle
+	- _LOCalc_DocRedoGetAllActionTitles
+	- _LOCalc_DocRedoIsPossible
+	- _LOCalc_DocSave
+	- _LOCalc_DocSaveAs
+	- _LOCalc_DocToFront
+	- _LOCalc_DocUndo
+	- _LOCalc_DocUndoActionBegin
+	- _LOCalc_DocUndoActionEnd
+	- _LOCalc_DocUndoClear
+	- _LOCalc_DocUndoCurActionTitle
+	- _LOCalc_DocUndoGetAllActionTitles
+	- _LOCalc_DocUndoIsPossible
+	- _LOCalc_DocUndoReset
+	- _LOCalc_DocVisible
+	- _LOCalc_DocZoom
+- Font Query Functions
+	- _LOCalc_FontExists
+	- _LOCalc_FontsList
+- Helper Functions
+	- _LOCalc_ComError_UserFunction
+	- _LOCalc_ConvertColorFromLong
+	- _LOCalc_ConvertColorToLong
+	- _LOCalc_ConvertFromMicrometer
+	- _LOCalc_ConvertToMicrometer
+	- _LOCalc_PathConvert
+	- _LOCalc_VersionGet
+- Internal Functions
+	- __LOCalc_AddTo1DArray
+	- __LOCalc_ArrayFill
+	- __LOCalc_CellBackColor
+	- __LOCalc_CellBorder
+	- __LOCalc_CellBorderPadding
+	- __LOCalc_CellEffect
+	- __LOCalc_CellFont
+	- __LOCalc_CellFontColor
+	- __LOCalc_CellOverLine
+	- __LOCalc_CellProtection
+	- __LOCalc_CellShadow
+	- __LOCalc_CellStrikeOut
+	- __LOCalc_CellStyleBorder
+	- __LOCalc_CellTextAlign
+	- __LOCalc_CellTextOrient
+	- __LOCalc_CellTextProperties
+	- __LOCalc_CellUnderLine
+	- __LOCalc_CreateStruct
+	- __LOCalc_FilterNameGet
+	- __LOCalc_InternalComErrorHandler
+	- __LOCalc_IntIsBetween
+	- __LOCalc_NumIsBetween
+	- __LOCalc_SetPropertyValue
+	- __LOCalc_UnitConvert
+	- __LOCalc_VarsAreDefault
+	- __LOCalc_VarsAreNull
+	- __LOCalc_VersionCheck
+- Sheet Functions and Examples
+	- _LOCalc_SheetActivate
+	- _LOCalc_SheetAdd
+	- _LOCalc_SheetCopy
+	- _LOCalc_SheetGetActive
+	- _LOCalc_SheetGetObjByName
+	- _LOCalc_SheetIsActive
+	- _LOCalc_SheetMove
+	- _LOCalc_SheetName
+	- _LOCalc_SheetRemove
+	- _LOCalc_SheetsGetCount
+	- _LOCalc_SheetsGetNames
+	- _LOCalc_SheetVisible
+- Calc Constants
+	- $LOC_BORDERSTYLE_*
+	- $LOC_BORDERWIDTH_*
+	- $LOC_CELL_ALIGN_HORI_*
+	- $LOC_CELL_ALIGN_VERT_*
+	- $LOC_CELL_DELETE_MODE_*
+	- $LOC_CELL_FLAG_*
+	- $LOC_CELL_INSERT_MODE_*
+	- $LOC_CELL_ROTATE_REF_*
+	- $LOC_CELL_TYPE_*
+	- $LOC_COLOR_*
+	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_PATHCONV_*
+	- $LOC_POSTURE_*
+	- $LOC_RELIEF_*
+	- $LOC_SHADOW_*
+	- $LOC_STRIKEOUT_*
+	- $LOC_TXT_DIR_*
+	- $LOC_UNDERLINE_*
+	- $LOC_WEIGHT_*
+	- $LOC_ZOOMTYPE_*
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -279,7 +404,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeWriter_Char,
 	- LibreOfficeWriter_Constants,
 	- LibreOfficeWriter_Cursor,
-	- LibreOfficeWriter_DirectFormating,
+	- LibreOfficeWriter_DirectFormatting,
 	- LibreOfficeWriter_Doc,
 	- LibreOfficeWriter_Field,
 	- LibreOfficeWriter_Font,
@@ -364,7 +489,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 	- `_TableGetCellByCursor` --> `_TableGetCellObjByCursor`.
 	- `_TableGetCellByName` --> `_TableGetCellObjByName`.
 	- `_TableGetCellByPosition` --> `_TableGetCellObjByPosition`.
-- Removed "IsCollpased" check and error from _DocGetString.
+- Removed "IsCollapsed" check and error from _DocGetString.
 - _FramesListNames to have an option to search for Frames listed under shapes.
 - _ShapesGetNames, Corrected an error that could occur if images are present.
 
