@@ -38,7 +38,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ### Changed
 
-- All Internal Error Constants from $__LOW_STATUS_* or $__LOC_STATUS_* To $__LO_STATUS_*
+- All Internal Error Constants from $__LOW_STATUS_ or $__LOC_STATUS_ To $__LO_STATUS_
 
 > [!NOTE]
 > **LibreOfficeCalc**
