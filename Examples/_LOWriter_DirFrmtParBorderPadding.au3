@@ -41,7 +41,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtParBorderPadding($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The current Paragraph Border color settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK, "", "The current Paragraph Border padding settings are as follows: " & @CRLF & _
 			"All Padding distance, in Micrometers: " & $avSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avSettings[1] & @CRLF & _
@@ -62,7 +62,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtParBorderPadding($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The current paragraph Border color settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK, "", "The current paragraph Border padding settings are as follows: " & @CRLF & _
 			"All Padding distance, in Micrometers: " & $avSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avSettings[1] & @CRLF & _

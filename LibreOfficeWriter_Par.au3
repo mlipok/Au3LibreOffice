@@ -782,11 +782,11 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving "ParagraphStyles" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Error retrieving Paragraph Style Name.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = $sParStyle is not a User-Created Paragraph Style and cannot be deleted.
-;				   @Error 3 @Extended 2 Return 0 = $sParStyle is in use and $bForceDelete is false.
-;				   @Error 3 @Extended 3 Return 0 = $sParStyle still exists after deletion attempt.
+;				   @Error 3 @Extended 1 Return 0 = $oParStyle is not a User-Created Paragraph Style and cannot be deleted.
+;				   @Error 3 @Extended 2 Return 0 = $oParStyle is in use and $bForceDelete is false.
+;				   @Error 3 @Extended 3 Return 0 = $oParStyle still exists after deletion attempt.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Paragraph Style called in $sParStyle was successfully deleted.
+;				   @Error 0 @Extended 0 Return 1 = Success. Paragraph Style called in $oParStyle was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -954,7 +954,7 @@ EndFunc   ;==>_LOWriter_ParStyleEffect
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $sParStyle not a String.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If the Document contains the Paragraph style calling in $sParStyle, True is returned, else False.
+;				   @Error 0 @Extended 0 Return Boolean = Success. If the Document contains the Paragraph style called in $sParStyle, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1644,7 +1644,7 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly      - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
-;                  $bAppliedOnly   - [optional] a boolean value. Default is False. If True only Applied paragraph Styles are returned.
+;                  $bAppliedOnly   - [optional] a boolean value. Default is False. If True only Applied Paragraph Styles are returned.
 ; Return values .: Success: Integer or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--

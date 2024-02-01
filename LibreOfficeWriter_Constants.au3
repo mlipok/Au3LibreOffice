@@ -671,7 +671,7 @@ Global Const _
 		$LOW_RELIEF_EMBOSSED = 1, _                             ; The font relief is embossed.
 		$LOW_RELIEF_ENGRAVED = 2                                ; The font relief is engraved.
 
-; Shadow
+; Shadow Location
 Global Const _
 		$LOW_SHADOW_NONE = 0, _                                 ; No shadow is applied.
 		$LOW_SHADOW_TOP_LEFT = 1, _                             ; Shadow is located along the upper and left sides.
