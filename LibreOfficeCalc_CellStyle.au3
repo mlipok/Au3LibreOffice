@@ -33,6 +33,7 @@
 ; _LOCalc_CellStyleFont
 ; _LOCalc_CellStyleFontColor
 ; _LOCalc_CellStyleGetObj
+; _LOCalc_CellStyleNumberFormat
 ; _LOCalc_CellStyleOrganizer
 ; _LOCalc_CellStyleOverline
 ; _LOCalc_CellStyleProtection
@@ -664,6 +665,50 @@ Func _LOCalc_CellStyleGetObj(ByRef $oDoc, $sCellStyle)
 EndFunc   ;==>_LOCalc_CellStyleGetObj
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_CellStyleNumberFormat
+; Description ...: Set or Retrieve Cell Style Number Format settings.
+; Syntax ........: _LOCalc_CellStyleNumberFormat(ByRef $oDoc, ByRef $oCellStyle[, $iFormatKey = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oCellStyle          - [in/out] an object. A Cell Style object returned by a previous _LOCalc_CellStyleCreate, or _LOCalc_CellStyleGetObj function.
+;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+; Return values .: Success: 1 or Integer.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oCellStyle not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
+;				   @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
+;				   @Error 1 @Extended 5 Return 0 = $iFormatKey not an Integer.
+;				   @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $iFormatKey
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current setting as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_CellNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeyList
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_CellStyleNumberFormat(ByRef $oDoc, ByRef $oCellStyle, $iFormatKey = Null)
+Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $vReturn
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCellStyle.supportsService("com.sun.star.style.CellStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCellStyle, $iFormatKey)
+	Return SetError(@error, @extended, $vReturn)
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStyleOrganizer
 ; Description ...: Set or retrieve the Organizer settings of a Cell Style.
 ; Syntax ........: _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle[, $sNewCellStyleName = Null[, $sParentStyle = Null[, $bHidden = Null]]])
@@ -829,7 +874,7 @@ EndFunc   ;==>_LOCalc_CellStyleOverline
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Cell protection only takes effect if you also protect the sheet.
+;				   Cell protection only takes effect if you also protect the sheet. (Tools - Protect Sheet)
 ; Related .......: _LOCalc_CellProtection
 ; Link ..........:
 ; Example .......: Yes

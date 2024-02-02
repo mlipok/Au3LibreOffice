@@ -135,6 +135,24 @@ Global Const _
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
 		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
 
+; Format Key Type
+Global Const _
+		$LOC_FORMAT_KEYS_ALL = 0, _                             ; Returns All number formats.
+		$LOC_FORMAT_KEYS_DEFINED = 1, _                         ; Returns Only user-defined number formats.
+		$LOC_FORMAT_KEYS_DATE = 2, _                            ; Returns Date formats.
+		$LOC_FORMAT_KEYS_TIME = 4, _                            ; Returns Time formats.
+		$LOC_FORMAT_KEYS_DATE_TIME = 6, _                       ; Returns Number formats which contain date and time.
+		$LOC_FORMAT_KEYS_CURRENCY = 8, _                        ; Returns Currency formats.
+		$LOC_FORMAT_KEYS_NUMBER = 16, _                         ; Returns Decimal number formats.
+		$LOC_FORMAT_KEYS_SCIENTIFIC = 32, _                     ; Returns Scientific number formats.
+		$LOC_FORMAT_KEYS_FRACTION = 64, _                       ; Returns Number formats for fractions.
+		$LOC_FORMAT_KEYS_PERCENT = 128, _                       ; Returns Percentage number formats.
+		$LOC_FORMAT_KEYS_TEXT = 256, _                          ; Returns Text number formats.
+		$LOC_FORMAT_KEYS_LOGICAL = 1024, _                      ; Returns Boolean number formats.
+		$LOC_FORMAT_KEYS_UNDEFINED = 2048, _                    ; Returns Is used as a return value if no format exists.
+		$LOC_FORMAT_KEYS_EMPTY = 4096, _                        ; Returns Empty Number formats (?)
+		$LOC_FORMAT_KEYS_DURATION = 8196                        ; Returns Duration number formats.
+
 ; Formula Result Type Constants
 Global Const _
 		$LOC_FORMULA_RESULT_TYPE_VALUE = 1, _                   ; The formula's result is a number.

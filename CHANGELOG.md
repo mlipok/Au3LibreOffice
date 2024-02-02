@@ -33,7 +33,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Central Constants File
 	- LibreOffice_Constants.au3
-- Central UDF File for all components @mLipok
+- Central UDF File for all components (@mLipok)
 	- LibreOffice.au3
 
 ### Changed
@@ -57,7 +57,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Internal.au3
 	- LibreOfficeCalc_Range.au3
 	- LibreOfficeCalc_Sheet.au3
-- Cell Formatting Functions and Examples
+- Cell/Cell Range Formatting Functions and Examples
 	- _LOCalc_CellBackColor
 	- _LOCalc_CellBorderColor
 	- _LOCalc_CellBorderPadding
@@ -68,6 +68,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellFontColor
 	- _LOCalc_CellFormula
 	- _LOCalc_CellGetType
+	- _LOCalc_CellNumberFormat
 	- _LOCalc_CellOverline
 	- _LOCalc_CellProtection
 	- _LOCalc_CellShadow
@@ -126,6 +127,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleFont
 	- _LOCalc_CellStyleFontColor
 	- _LOCalc_CellStyleGetObj
+	- _LOCalc_CellStyleNumberFormat
 	- _LOCalc_CellStyleOrganizer
 	- _LOCalc_CellStyleOverline
 	- _LOCalc_CellStyleProtection
@@ -180,6 +182,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_ConvertColorToLong
 	- _LOCalc_ConvertFromMicrometer
 	- _LOCalc_ConvertToMicrometer
+	- _LOCalc_FormatKeyCreate
+	- _LOCalc_FormatKeyDelete
+	- _LOCalc_FormatKeyExists
+	- _LOCalc_FormatKeyGetString
+	- _LOCalc_FormatKeyList
 	- _LOCalc_PathConvert
 	- _LOCalc_VersionGet
 - Internal Functions
@@ -191,6 +198,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellEffect
 	- __LOCalc_CellFont
 	- __LOCalc_CellFontColor
+	- __LOCalc_CellNumberFormat
 	- __LOCalc_CellOverLine
 	- __LOCalc_CellProtection
 	- __LOCalc_CellShadow

@@ -30,6 +30,7 @@
 ; _LOCalc_CellFontColor
 ; _LOCalc_CellFormula
 ; _LOCalc_CellGetType
+; _LOCalc_CellNumberFormat
 ; _LOCalc_CellOverline
 ; _LOCalc_CellProtection
 ; _LOCalc_CellShadow
@@ -580,6 +581,50 @@ Func _LOCalc_CellGetType(ByRef $oCell)
 EndFunc   ;==>_LOCalc_CellGetType
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_CellNumberFormat
+; Description ...: Set or Retrieve Cell or Cell Range Number Format settings.
+; Syntax ........: _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell[, $iFormatKey = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oCell               - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iFormatKey          - [optional] an integer value. Default is Null. A Format Key from a previous _LOCalc_FormatKeyCreate or _LOCalc_FormatKeyList function.
+; Return values .: Success: 1 or Integer.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oCell not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oCell does not support Character properties.
+;				   @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
+;				   @Error 1 @Extended 5 Return 0 = $iFormatKey not an Integer.
+;				   @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $iFormatKey
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current setting as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_CellStyleNumberFormat, _LOCalc_FormatKeyCreate, _LOCalc_FormatKeyList
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell, $iFormatKey = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $vReturn
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCell, $iFormatKey)
+	Return SetError(@error, @extended, $vReturn)
+EndFunc   ;==>_LOCalc_CellNumberFormat
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellOverline
 ; Description ...: Set and retrieve the Overline settings for a Cell or Cell Range.
 ; Syntax ........: _LOCalc_CellOverline(ByRef $oCell[, $bWordOnly = Null[, $iOverLineStyle = Null[, $bOLHasColor = Null[, $iOLColor = Null]]]])
@@ -663,7 +708,7 @@ EndFunc   ;==>_LOCalc_CellOverline
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Cell protection only takes effect if you also protect the sheet.
+;				   Cell protection only takes effect if you also protect the sheet. (Tools - Protect Sheet)
 ; Related .......: _LOCalc_CellStyleProtection
 ; Link ..........:
 ; Example .......: Yes
