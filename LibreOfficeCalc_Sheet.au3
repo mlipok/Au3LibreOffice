@@ -26,11 +26,14 @@
 ; _LOCalc_SheetGetActive
 ; _LOCalc_SheetGetObjByName
 ; _LOCalc_SheetIsActive
+; _LOCalc_SheetIsProtected
 ; _LOCalc_SheetMove
 ; _LOCalc_SheetName
+; _LOCalc_SheetProtect
 ; _LOCalc_SheetRemove
 ; _LOCalc_SheetsGetCount
 ; _LOCalc_SheetsGetNames
+; _LOCalc_SheetUnprotect
 ; _LOCalc_SheetVisible
 ; ===============================================================================================================================
 
@@ -334,6 +337,40 @@ Func _LOCalc_SheetIsActive(ByRef $oDoc, ByRef $oSheet)
 EndFunc   ;==>_LOCalc_SheetIsActive
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetIsProtected
+; Description ...: Check whether a Sheet is password protected or not.
+; Syntax ........: _LOCalc_SheetIsProtected(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to query Sheet's current protection status.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Successfully queried Sheet's protection status, returning a boolean indicating if the sheet is currently protected (True), or not (False).
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetProtect, _LOCalc_SheetUnprotect
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetIsProtected(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+$bReturn = $oSheet.isProtected()
+If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetMove
 ; Description ...: Move a Sheet's position in the list of Sheets in a Calc Document.
 ; Syntax ........: _LOCalc_SheetMove(ByRef $oDoc, ByRef $oSheet, $iPosition)
@@ -435,6 +472,42 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_SheetName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetProtect
+; Description ...: Password protect a sheet from modification.
+; Syntax ........: _LOCalc_SheetProtect(ByRef $oSheet, $sPassword)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sPassword           - a string value. The password to protect the sheet with.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to protect the sheet.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully protected with the called password.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetUnprotect, _LOCalc_SheetIsProtected
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetProtect(ByRef $oSheet, $sPassword)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($sPassword = "") Or Not StringRegExp($sPassword, "[\w]")  Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0); Password contains no letters, digits, or underscores.
+
+	$oSheet.Protect($sPassword)
+
+	Return ($oSheet.isProtected()) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetRemove
@@ -560,6 +633,45 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asNames), $asNames)
 EndFunc   ;==>_LOCalc_SheetsGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetUnprotect
+; Description ...: Remove password protection from a Sheet.
+; Syntax ........: _LOCalc_SheetUnprotect(ByRef $oSheet, $sPassword)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sPassword           - a string value. The password previously used to protect the sheet.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Password called in $sPassword is incorrect.
+;				   @Error 3 @Extended 2 Return 0 = Failed to unprotect the sheet.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully unprotected with the called password.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetProtect, _LOCalc_SheetIsProtected
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetUnprotect(ByRef $oSheet, $sPassword)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($sPassword = "") Or Not StringRegExp($sPassword, "[\w]")  Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0); Password contains no letters, digits, or underscores.
+
+	$oSheet.Unprotect($sPassword)
+
+	If ($oCOM_ErrorHandler.number() = -2147352567) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Wrong password
+
+	Return ($oSheet.isProtected()) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetVisible

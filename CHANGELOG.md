@@ -225,11 +225,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetGetActive
 	- _LOCalc_SheetGetObjByName
 	- _LOCalc_SheetIsActive
+	- _LOCalc_SheetIsProtected
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
+	- _LOCalc_SheetProtect
 	- _LOCalc_SheetRemove
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
+	- _LOCalc_SheetUnprotect
 	- _LOCalc_SheetVisible
 - Calc Constants
 	- $LOC_BORDERSTYLE_*
