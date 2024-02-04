@@ -245,6 +245,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_CELL_ROTATE_REF_*
 	- $LOC_CELL_TYPE_*
 	- $LOC_COLOR_*
+	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
 	- $LOC_PATHCONV_*
 	- $LOC_POSTURE_*
