@@ -185,6 +185,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FormatKeyCreate
 	- _LOCalc_FormatKeyDelete
 	- _LOCalc_FormatKeyExists
+	- _LOCalc_FormatKeyGetStandard
 	- _LOCalc_FormatKeyGetString
 	- _LOCalc_FormatKeyList
 	- _LOCalc_PathConvert
@@ -309,6 +310,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ShapePointGetSettings
 	- __LOWriter_ShapePointModify
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
+- Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
 
 ### Changed
 

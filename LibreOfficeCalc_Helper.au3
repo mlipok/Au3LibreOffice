@@ -11,7 +11,6 @@
 
 ; Other includes for Calc
 
-
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
@@ -29,6 +28,7 @@
 ; _LOCalc_FormatKeyCreate
 ; _LOCalc_FormatKeyDelete
 ; _LOCalc_FormatKeyExists
+; _LOCalc_FormatKeyGetStandard
 ; _LOCalc_FormatKeyGetString
 ; _LOCalc_FormatKeyList
 ; _LOCalc_PathConvert
@@ -406,7 +406,7 @@ EndFunc   ;==>_LOCalc_ConvertToMicrometer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_FormatKeyDelete
+; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -534,6 +534,53 @@ Func _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOC_FORMA
 EndFunc   ;==>_LOCalc_FormatKeyExists
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_FormatKeyGetStandard
+; Description ...: Retrieve the Standard Format for a specific Format Key Type.
+; Syntax ........: _LOCalc_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iFormatKeyType      - an integer value (1-8196). The Format Key type to retrieve the standard Format for. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: Integer
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Integer = Success. Returning the Standard Format for the requested Format Key Type.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFormats
+	Local $tLocale
+	Local $iStandard
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iFormatKeyType, $LOC_FORMAT_KEYS_DEFINED, $LOC_FORMAT_KEYS_DURATION) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
+	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oFormats = $oDoc.getNumberFormats()
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$iStandard = $oFormats.getStandardFormat($iFormatKeyType, $tLocale)
+	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iStandard)
+EndFunc   ;==>_LOCalc_FormatKeyGetStandard
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyGetString
 ; Description ...: Retrieve a Format Key String.
 ; Syntax ........: _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
@@ -599,7 +646,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetString
+; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetString, _LOCalc_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
