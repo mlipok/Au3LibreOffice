@@ -10,7 +10,6 @@
 
 ; Other includes for Calc
 
-
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
@@ -25,15 +24,16 @@
 ; _LOCalc_SheetAdd
 ; _LOCalc_SheetCopy
 ; _LOCalc_SheetGetActive
-; _LOCalc_SheetGetCellByName
-; _LOCalc_SheetGetCellByPosition
 ; _LOCalc_SheetGetObjByName
 ; _LOCalc_SheetIsActive
+; _LOCalc_SheetIsProtected
 ; _LOCalc_SheetMove
 ; _LOCalc_SheetName
+; _LOCalc_SheetProtect
 ; _LOCalc_SheetRemove
 ; _LOCalc_SheetsGetCount
 ; _LOCalc_SheetsGetNames
+; _LOCalc_SheetUnprotect
 ; _LOCalc_SheetVisible
 ; ===============================================================================================================================
 
@@ -42,7 +42,7 @@
 ; Description ...: Activate a Sheet in a Calc Document.
 ; Syntax ........: _LOCalc_SheetActivate(ByRef $oDoc, ByRef $oSheet)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -143,7 +143,7 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ; Description ...: Create a copy of a particular Sheet.
 ; Syntax ........: _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName, $iPosition)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sNewName            - a string value. The name to assign to the newly copied Sheet.
 ;                  $iPosition           - an integer value. The position to place the copied sheet at. 0 = the beginning.
 ; Return values .: Success: Object
@@ -254,110 +254,6 @@ Func _LOCalc_SheetGetActive(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_SheetGetActive
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_SheetGetCellByName
-; Description ...: Retrieve a Cell or Cell Range Object by Cell name.
-; Syntax ........: _LOCalc_SheetGetCellByName(ByRef $oSheet, $sFromCellName[, $sToCellName = Null])
-; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $sFromCellName       - a string value. The cell to retrieve the Object for, or to begin the Cell Range. See remarks.
-;                  $sToCellName         - [optional] a string value. Default is Null. The cell to end the Cell Range at.
-; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sFromCellName not a String.
-;				   @Error 1 @Extended 3 Return 0 = $sToCellName not set to Null, and not a String.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Cell or Cell Range Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully retrieved and returning requested Cell or Cell Range Object.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: $sFromCellName can be a Cell Name or a defined Cell Range name.
-; Related .......: _LOCalc_SheetGetCellByPosition
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_SheetGetCellByName(ByRef $oSheet, $sFromCellName, $sToCellName = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oCellRange
-	Local $sCellRange = $sFromCellName
-
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFromCellName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($sToCellName <> Null) And Not IsString($sToCellName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($sToCellName <> Null) Then $sCellRange &= ":" & $sToCellName
-
-	$oCellRange = $oSheet.getCellRangeByName($sCellRange)
-	If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $oCellRange)
-EndFunc   ;==>_LOCalc_SheetGetCellByName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_SheetGetCellByPosition
-; Description ...: Retrieve a Cell or Cell Range Object by position.
-; Syntax ........: _LOCalc_SheetGetCellByPosition(ByRef $oSheet, $iColumn, $iRow[, $iToColumn = Null[, $iToRow = Null]])
-; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $iColumn             - an integer value. The Column of the desired cell, or of the beginning of the Cell range. 0 Based.
-;                  $iRow                - an integer value. The Row of the desired cell, or of the beginning of the Cell range. 0 Based.
-;                  $iToColumn           - [optional] an integer value. Default is Null. The Column of the end of the Cell range. 0 Based. Must be greater or equal to $iColumn.
-;                  $iToRow              - [optional] an integer value. Default is Null. The Row of the end of the Cell range. 0 Based. Must be greater or equal to $iRow.
-; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0.
-;				   @Error 1 @Extended 3 Return 0 = $iRow not an Integer, or less than 0.
-;				   @Error 1 @Extended 4 Return 0 = $iToColumn not an Integer, or less than 0.
-;				   @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than 0.
-;				   @Error 1 @Extended 6 Return 0 = $iToColumn less than $iColumn.
-;				   @Error 1 @Extended 7 Return 0 = $iToRow less than $iRow.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve an individual Cell's Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve a Cell Range's Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully retrieved and returned an Individual Cell's Object.
-;				   @Error 0 @Extended 1 Return Object = Success. Successfully retrieved and returned a Cell Range's Object.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOCalc_SheetGetCellByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_SheetGetCellByPosition(ByRef $oSheet, $iColumn, $iRow, $iToColumn = Null, $iToRow = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oCell, $oCellRange
-
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsInt($iColumn) Or ($iColumn < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsInt($iRow) Or ($iRow < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	If ($iToColumn <> Null) Or ($iToRow <> Null) Then
-		If Not IsInt($iToColumn) Or ($iToColumn < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If Not IsInt($iToRow) Or ($iToRow < 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If ($iToColumn < $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If ($iToRow < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	EndIf
-
-	If ($iToColumn = Null) And ($iToRow = Null) Then
-		$oCell = $oSheet.getCellByPosition($iColumn, $iRow)
-		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
-
-	Else
-		$oCellRange = $oSheet.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow)
-		If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oCellRange)
-
-	EndIf
-EndFunc   ;==>_LOCalc_SheetGetCellByPosition
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetGetObjByName
 ; Description ...: Retrieve a Sheet Object for a specific Sheet by name.
 ; Syntax ........: _LOCalc_SheetGetObjByName(ByRef $oDoc, $sName)
@@ -406,7 +302,7 @@ EndFunc   ;==>_LOCalc_SheetGetObjByName
 ; Description ...: Check if a particular Sheet is the active Sheet.
 ; Syntax ........: _LOCalc_SheetIsActive(ByRef $oDoc, ByRef $oSheet)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -441,11 +337,45 @@ Func _LOCalc_SheetIsActive(ByRef $oDoc, ByRef $oSheet)
 EndFunc   ;==>_LOCalc_SheetIsActive
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetIsProtected
+; Description ...: Check whether a Sheet is password protected or not.
+; Syntax ........: _LOCalc_SheetIsProtected(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to query Sheet's current protection status.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Successfully queried Sheet's protection status, returning a boolean indicating if the sheet is currently protected (True), or not (False).
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetProtect, _LOCalc_SheetUnprotect
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetIsProtected(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+$bReturn = $oSheet.isProtected()
+If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetMove
 ; Description ...: Move a Sheet's position in the list of Sheets in a Calc Document.
 ; Syntax ........: _LOCalc_SheetMove(ByRef $oDoc, ByRef $oSheet, $iPosition)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $iPosition           - an integer value. The Position the move the Sheet to, 0 being the beginning.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -493,7 +423,7 @@ EndFunc   ;==>_LOCalc_SheetMove
 ; Description ...: Set or Retrieve a Sheet's name.
 ; Syntax ........: _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet[, $sName = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sName               - [optional] a string value. Default is Null. The new name for the Sheet.
 ; Return values .: Success: 1 or String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -544,11 +474,47 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 EndFunc   ;==>_LOCalc_SheetName
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetProtect
+; Description ...: Password protect a sheet from modification.
+; Syntax ........: _LOCalc_SheetProtect(ByRef $oSheet, $sPassword)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sPassword           - a string value. The password to protect the sheet with.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to protect the sheet.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully protected with the called password.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetUnprotect, _LOCalc_SheetIsProtected
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetProtect(ByRef $oSheet, $sPassword)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($sPassword = "") Or Not StringRegExp($sPassword, "[\w]")  Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0); Password contains no letters, digits, or underscores.
+
+	$oSheet.Protect($sPassword)
+
+	Return ($oSheet.isProtected()) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetRemove
 ; Description ...: Remove a Sheet from a Calc Document.
 ; Syntax ........: _LOCalc_SheetRemove(ByRef $oDoc, ByRef $oSheet)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -564,7 +530,7 @@ EndFunc   ;==>_LOCalc_SheetName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_DocSheetAdd, _LOCalc_SheetGetObjByName
+; Related .......: _LOCalc_SheetAdd, _LOCalc_SheetGetObjByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -669,10 +635,49 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_SheetsGetNames
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetUnprotect
+; Description ...: Remove password protection from a Sheet.
+; Syntax ........: _LOCalc_SheetUnprotect(ByRef $oSheet, $sPassword)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sPassword           - a string value. The password previously used to protect the sheet.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Password called in $sPassword is incorrect.
+;				   @Error 3 @Extended 2 Return 0 = Failed to unprotect the sheet.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully unprotected with the called password.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetProtect, _LOCalc_SheetIsProtected
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetUnprotect(ByRef $oSheet, $sPassword)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sPassword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($sPassword = "") Or Not StringRegExp($sPassword, "[\w]")  Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0); Password contains no letters, digits, or underscores.
+
+	$oSheet.Unprotect($sPassword)
+
+	If ($oCOM_ErrorHandler.number() = -2147352567) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Wrong password
+
+	Return ($oSheet.isProtected()) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetVisible
 ; Description ...: Set or Retrieve a Sheet's current visibility setting.
 ; Syntax ........: _LOCalc_SheetVisible(ByRef $oSheet[, $bVisible = Null])
-; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_DocSheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the Sheet is visible in the Libre Office UI.
 ; Return values .:  Success: 1 or Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.

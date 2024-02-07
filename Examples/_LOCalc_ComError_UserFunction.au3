@@ -19,7 +19,7 @@ Func Example()
 	$MyFunc = _FunctionForErrors
 
 	; Now set the User COM Error function
-	; The First Param is my User function I want called any time there is a COM Error.
+	; The First Parameter is my User function I want called any time there is a COM Error.
 	_LOCalc_ComError_UserFunction($MyFunc)
 	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
 

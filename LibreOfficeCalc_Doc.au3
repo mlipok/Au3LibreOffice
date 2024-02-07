@@ -37,6 +37,7 @@
 ; _LOCalc_DocOpen
 ; _LOCalc_DocPosAndSize
 ; _LOCalc_DocRedo
+; _LOCalc_DocRedoClear
 ; _LOCalc_DocRedoCurActionTitle
 ; _LOCalc_DocRedoGetAllActionTitles
 ; _LOCalc_DocRedoIsPossible
@@ -44,13 +45,16 @@
 ; _LOCalc_DocSaveAs
 ; _LOCalc_DocToFront
 ; _LOCalc_DocUndo
+; _LOCalc_DocUndoActionBegin
+; _LOCalc_DocUndoActionEnd
+; _LOCalc_DocUndoClear
 ; _LOCalc_DocUndoCurActionTitle
 ; _LOCalc_DocUndoGetAllActionTitles
 ; _LOCalc_DocUndoIsPossible
+; _LOCalc_DocUndoReset
 ; _LOCalc_DocVisible
 ; _LOCalc_DocZoom
 ; ===============================================================================================================================
-
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocClose
@@ -389,7 +393,7 @@ EndFunc   ;==>_LOCalc_DocCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Does not alter the original save path (if there was one), saves a copy of the document to the new path, in the new file format if one is chosen.
-;				   If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
+;				   If $bSamePath is set to True, the same save path as the current document is used. You must still fill in "$sFilePath" with the desired File Name and new extension, but you do not need to enter the file path.
 ; Related .......: _LOCalc_DocSave, _LOCalc_DocSaveAs
 ; Link ..........:
 ; Example .......: Yes
@@ -985,6 +989,35 @@ Func _LOCalc_DocRedo(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_DocRedo
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocRedoClear
+; Description ...: Clear all Redo Actions in the Redo Action List.
+; Syntax ........: _LOCalc_DocRedoClear(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Redo Actions.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Related .......: _LOCalc_DocUndoClear, _LOCalc_DocUndoReset
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocRedoClear(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.clearRedo()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocRedoClear
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocRedoCurActionTitle
 ; Description ...: Retrieve the current Redo action Title.
 ; Syntax ........: _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
@@ -993,10 +1026,9 @@ EndFunc   ;==>_LOCalc_DocRedo
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have a redo action available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Returns the current available redo action Title as a String.
+;				   @Error 0 @Extended 0 Return String = No Current Redo Action available. Returning Empty String.
+;				   @Error 0 @Extended 1 Return String = Returns the current available redo action Title as a String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1013,7 +1045,7 @@ Func _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	EndIf
 EndFunc   ;==>_LOCalc_DocRedoCurActionTitle
 
@@ -1026,10 +1058,9 @@ EndFunc   ;==>_LOCalc_DocRedoCurActionTitle
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have any redo actions available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Returns all available redo action Titles in an array of Strings.
+;				   @Error 0 @Extended 0 Return Array = No Redo Actions currently available. Returning empty array.
+;				   @Error 0 @Extended 1 Return Array = Returns all available redo action Titles in an array of Strings.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1046,7 +1077,7 @@ Func _LOCalc_DocRedoGetAllActionTitles(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllRedoActionTitles())
 	EndIf
 EndFunc   ;==>_LOCalc_DocRedoGetAllActionTitles
 
@@ -1243,6 +1274,98 @@ Func _LOCalc_DocUndo(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_DocUndo
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoActionBegin
+; Description ...: Begin an Undo Action group.
+; Syntax ........: _LOCalc_DocUndoActionBegin(ByRef $oDoc[, $sName = "AU3LO-Automation"])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sName               - [optional] a string value. Default is "AU3LO-Automation". The name of the Undo Action to display in the UI when completed.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully began an Undo Action group recording.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This begins an Undo Action Group, any functions and actions done after this function is called will be grouped together, and if undone, all actions will be undone together at once.
+;				   _LOCalc_DocUndoActionEnd must be called after this function before this undo group will become available in the Undo Action list.
+;				   _LOCalc_DocUndoActionBegin can be nested, i.e. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOCalc_DocUndoActionEnd will appear.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoActionBegin(ByRef $oDoc, $sName = "AU3LO-Automation")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.UndoManager.enterUndoContext($sName)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocUndoActionBegin
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoActionEnd
+; Description ...: End the last started Undo Action Group.
+; Syntax ........: _LOCalc_DocUndoActionEnd(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully ended the last Undo Action group recording.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This stops the grouping of actions into the last created Undo Action Group.
+; Related .......: _LOCalc_DocUndoActionBegin
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoActionEnd(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.leaveUndoContext()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocUndoActionEnd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoClear
+; Description ...: Clear all Undo and Redo Actions in the Undo/Redo Action List.
+; Syntax ........: _LOCalc_DocUndoClear(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully cleared all Undo and Redo Actions.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This will silently fail if there are any _LOWriter_DocUndoActionBegin still active.
+; Related .......: _LOCalc_DocRedoClear, _LOCalc_DocUndoReset
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoClear(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.clear()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocUndoClear
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocUndoCurActionTitle
 ; Description ...: Retrieve the current Undo action Title.
 ; Syntax ........: _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
@@ -1251,10 +1374,9 @@ EndFunc   ;==>_LOCalc_DocUndo
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have an undo action available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Returns the current available undo action Title in String format.
+;				   @Error 0 @Extended 0 Return String = No Current Undo Action available. Returning Empty String.
+;				   @Error 0 @Extended 1 Return String = Returns the current available undo action Title in String format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1271,7 +1393,7 @@ Func _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf
 
 EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
@@ -1285,10 +1407,9 @@ EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Document does not have any undo actions available.
 ;				   --Success--
-;				   @Error 0 @Extended 0 Return Array = Returns all available undo action Titles in an array of Strings.
+;				   @Error 0 @Extended 0 Return Array = No Undo Actions currently available. Returning empty array.
+;				   @Error 0 @Extended 1 Return Array = Returns all available undo action Titles in an array of Strings.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1305,7 +1426,7 @@ Func _LOCalc_DocUndoGetAllActionTitles(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
 	Else
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllUndoActionTitles())
 	EndIf
 EndFunc   ;==>_LOCalc_DocUndoGetAllActionTitles
 
@@ -1335,6 +1456,35 @@ Func _LOCalc_DocUndoIsPossible(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.isUndoPossible())
 EndFunc   ;==>_LOCalc_DocUndoIsPossible
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocUndoReset
+; Description ...: Reset the UndoManager.
+; Syntax ........: _LOCalc_DocUndoReset(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully reset the undo manager.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Calling this function does the following: remove all locks from the undo manager; closes all open undo group actions, clears all undo actions, clears all redo actions.
+; Related .......: _LOCalc_DocRedoClear, _LOCalc_DocUndoClear
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocUndoReset(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDoc.UndoManager.reset()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocUndoReset
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocVisible

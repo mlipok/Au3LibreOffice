@@ -13,12 +13,12 @@ Func Example()
 	; An example of a Libre Office URL
 	$sOfficePath = "file:///C:/A%20Folder%20With%20Spaces/FolderWithASemicolon%3B/%7BFolderWithBrackets%7D/TestDocument.ods"
 
-	; AutoReturn From a Computer Path
+	; Auto Return From a Computer Path
 	MsgBox($MB_OK, "Auto_Return -- Computer Path", "This is the result from converting a Computer path to Libre Office URL automatically." & @CRLF & _
 			"Original Path: " & @CRLF & $sPCPath & @CRLF & "Result: " & @CRLF & _
 			_LOCalc_PathConvert($sPCPath, $LOC_PATHCONV_AUTO_RETURN))
 
-	; AutoReturn From a Libre Office URL
+	; Auto Return From a Libre Office URL
 	MsgBox($MB_OK, "Auto_Return -- Libre Office URL", "This is the result from converting a Libre Office URL to Computer Path automatically." & @CRLF & _
 			"Original Path: " & @CRLF & $sOfficePath & @CRLF & "Result: " & @CRLF & _
 			_LOCalc_PathConvert($sOfficePath, $LOC_PATHCONV_AUTO_RETURN))

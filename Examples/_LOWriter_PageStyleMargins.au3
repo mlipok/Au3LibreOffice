@@ -35,7 +35,7 @@ Func Example()
 		_LOWriter_PageStyleMargins($oPageStyle, $iMicrometers, $iMicrometers, $iMicrometers2, $iMicrometers2, $iMicrometers3)
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	Else ;Set all other margins, except the Gutter margin.
+	Else ; Set all other margins, except the Gutter margin.
 		; Set Left and Right margins to 1", Top and Bottom Margins to 1/2".
 		_LOWriter_PageStyleMargins($oPageStyle, $iMicrometers, $iMicrometers, $iMicrometers2, $iMicrometers2)
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)

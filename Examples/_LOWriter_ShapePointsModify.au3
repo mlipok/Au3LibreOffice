@@ -21,7 +21,7 @@ Func Example()
 	$oShape = _LOWriter_ShapeInsert($oDoc, $oViewCursor, $LOW_SHAPE_TYPE_LINE_POLYGON, 5000, 7000)
 	If @error Then _ERROR($oDoc, "Failed to create a Shape. Error:" & @error & " Extended:" & @extended)
 
-	;Retrieve the Shape's current settings for its third point.
+	; Retrieve the Shape's current settings for its third point.
 	$avArray = _LOWriter_ShapePointsModify($oShape, 3)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended)
 

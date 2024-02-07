@@ -22,7 +22,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert an Image. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Image Size settings. Skip Width, set relative width to 50%, Relative to = $LOW_RELATIVE_PARAGRAPH,
-	;Skip height, Relative height = 70%, Relative to = $LOW_RELATIVE_PARAGRAPH, Keep Ratio = False
+	; Skip height, Relative height = 70%, Relative to = $LOW_RELATIVE_PARAGRAPH, Keep Ratio = False
 	_LOWriter_ImageTypeSize($oDoc, $oImage, Null, 50, $LOW_RELATIVE_PARAGRAPH, Null, 70, $LOW_RELATIVE_PARAGRAPH, False)
 	If @error Then _ERROR($oDoc, "Failed to set Image settings. Error:" & @error & " Extended:" & @extended)
 
