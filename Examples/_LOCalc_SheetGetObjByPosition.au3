@@ -6,7 +6,6 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet
-	Local $iPosition
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -20,29 +19,17 @@ Func Example()
 	$oSheet = _LOCalc_SheetAdd($oDoc, "First Sheet")
 	If @error Then _ERROR($oDoc, "Failed to create a new Sheet. Error:" & @error & " Extended:" & @extended)
 
-	; Move the sheet named "First Sheet" to the first position.
-	_LOCalc_SheetMove($oDoc, $oSheet, 0)
-	If @error Then _ERROR($oDoc, "Failed to move the Sheet. Error:" & @error & " Extended:" & @extended)
-
-	; Retrieve the Sheet Object for "Sheet1"
-	$oSheet = _LOCalc_SheetGetObjByName($oDoc, "Sheet1")
+	; Retrieve the Sheet Object for the sheet at position 0, called "Sheet1"
+	$oSheet = _LOCalc_SheetGetObjByPosition($oDoc, 0)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve the Sheet's Object. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current position for Sheet 1.
-	$iPosition = _LOCalc_SheetMove($oDoc, $oSheet)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet's current position. Error:" & @error & " Extended:" & @extended)
+	MsgBox($MB_OK, "", "The Sheet currently at position 0 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
 
-	MsgBox($MB_OK, "", "Sheet1 is currently in the position of: " & $iPosition)
+	; Retrieve the Sheet Object for the sheet at position 2
+	$oSheet = _LOCalc_SheetGetObjByPosition($oDoc, 2)
+	If @error Then _ERROR($oDoc, "Failed to Retrieve the Sheet's Object. Error:" & @error & " Extended:" & @extended)
 
-	; Move the sheet named "Sheet1" to the last position.
-	_LOCalc_SheetMove($oDoc, $oSheet, 3)
-	If @error Then _ERROR($oDoc, "Failed to move the Sheet. Error:" & @error & " Extended:" & @extended)
-
-	; Retrieve the new position for Sheet 1.
-	$iPosition = _LOCalc_SheetMove($oDoc, $oSheet)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet's current position. Error:" & @error & " Extended:" & @extended)
-
-	MsgBox($MB_OK, "", "Sheet1 is now in the position of: " & $iPosition)
+	MsgBox($MB_OK, "", "The Sheet currently at position 2 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
