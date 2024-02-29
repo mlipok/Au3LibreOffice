@@ -23,8 +23,13 @@
 ; #CURRENT# =====================================================================================================================
 ; _LOCalc_ComError_UserFunction
 ; _LOCalc_ConvertColorFromLong
+; _LOCalc_ConvertColorToLong
 ; _LOCalc_ConvertFromMicrometer
 ; _LOCalc_ConvertToMicrometer
+; _LOCalc_FilterDescriptorCreate
+; _LOCalc_FilterDescriptorModify
+; _LOCalc_FilterFieldCreate
+; _LOCalc_FilterFieldModify
 ; _LOCalc_FormatKeyCreate
 ; _LOCalc_FormatKeyDelete
 ; _LOCalc_FormatKeyExists
@@ -32,8 +37,10 @@
 ; _LOCalc_FormatKeyGetString
 ; _LOCalc_FormatKeyList
 ; _LOCalc_PathConvert
+; _LOCalc_SearchDescriptorCreate
+; _LOCalc_SearchDescriptorModify
+; _LOCalc_SearchDescriptorSimilarityModify
 ; _LOCalc_VersionGet
-; _LOCalc_ConvertColorToLong
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -244,6 +251,159 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 EndFunc   ;==>_LOCalc_ConvertColorFromLong
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_ConvertColorToLong
+; Description ...: Convert Hex, RGB, HSB or CMYK to Long color code.
+; Syntax ........: _LOCalc_ConvertColorToLong([$vVal1 = Null[, $vVal2 = Null[, $vVal3 = Null[, $vVal4 = Null]]]])
+; Parameters ....: $vVal1               - [optional] a variant value. Default is Null. See remarks.
+;                  $vVal2               - [optional] a variant value. Default is Null. See remarks.
+;                  $vVal3               - [optional] a variant value. Default is Null. See remarks.
+;                  $vVal4               - [optional] a variant value. Default is Null. See remarks.
+; Return values .: Success: Integer.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = No parameters set.
+;				   @Error 1 @Extended 2 Return 0 = One parameter called, but not in String format(Hex).
+;				   @Error 1 @Extended 3 Return 0 = Hex parameter contains non Hex characters.
+;				   @Error 1 @Extended 4 Return 0 = Hex parameter not 6 characters long.
+;				   @Error 1 @Extended 5 Return 0 = Hue parameter contains more than just digits.
+;				   @Error 1 @Extended 6 Return 0 = Saturation parameter contains more than just digits.
+;				   @Error 1 @Extended 7 Return 0 = Brightness parameter contains more than just digits.
+;				   @Error 1 @Extended 8 Return 0 = Three parameters called but not all Integers (RGB) and not all Strings (HSB).
+;				   @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
+;				   @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
+;				   --Success--
+;				   @Error 0 @Extended 1 Return Integer. Long Int. Color code converted from Hexadecimal.
+;				   @Error 0 @Extended 2 Return Integer. Long Int. Color code converted from Red, Green, Blue, (RGB).
+;				   @Error 0 @Extended 3 Return Integer. Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
+;				   @Error 0 @Extended 4 Return Integer. Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To Convert a Hex(adecimal) color code, call the Hex code in $vVal1 in String Format.
+;				   To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
+;				   To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
+;				   To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
+;				   Note: The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+; Related .......: _LOCalc_ConvertColorFromLong
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 = Null) ; RGB = Int, CMYK = Int, HSB = String, Hex = String.
+	Local Const $STR_STRIPALL = 8
+	Local $iRed, $iGreen, $iBlue, $iLong, $iHue, $iSaturation, $iBrightness
+	Local $dHex
+	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
+
+	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Switch @NumParams
+		Case 1 ;Hex
+			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
+			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
+			$dHex = $vVal1
+
+			; From Hex to RGB
+			If (StringLen($dHex) = 6) Then
+				If StringRegExp($dHex, "[^0-9a-fA-F]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; $dHex contains non Hex characters.
+
+				$iRed = BitAND(BitShift("0x" & $dHex, 16), 0xFF)
+				$iGreen = BitAND(BitShift("0x" & $dHex, 8), 0xFF)
+				$iBlue = BitAND("0x" & $dHex, 0xFF)
+
+				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+				Return SetError($__LO_STATUS_SUCCESS, 1, $iLong) ; Long from Hex
+
+			Else
+				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
+			EndIf
+
+		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
+			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
+				$iRed = $vVal1
+				$iGreen = $vVal2
+				$iBlue = $vVal3
+
+				; RGB to Long
+				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+				Return SetError($__LO_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
+
+			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
+
+				; HSB to RGB
+				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
+				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)
+				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ; Strip WS so I can check string length in HSB conversion.
+
+				$iHue = Number($vVal1)
+				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
+				$iSaturation = Number($vVal2)
+				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
+				$iBrightness = Number($vVal3)
+				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
+
+				$nMaxRGB = ($iBrightness / 100)
+				$nChroma = (($iSaturation / 100) * ($iBrightness / 100))
+				$nMinRGB = ($nMaxRGB - $nChroma)
+				$nHuePre = ($iHue >= 300) ? (($iHue - 360) / 60) : ($iHue / 60)
+
+				Switch $nHuePre
+					Case (-1) To 1.0
+						$iRed = $nMaxRGB
+						If $nHuePre < 0 Then
+							$iGreen = $nMinRGB
+							$iBlue = ($iGreen - $nHuePre * $nChroma)
+						Else
+							$iBlue = $nMinRGB
+							$iGreen = ($iBlue + $nHuePre * $nChroma)
+						EndIf
+					Case 1.1 To 3.0
+						$iGreen = $nMaxRGB
+						If (($nHuePre - 2) < 0) Then
+							$iBlue = $nMinRGB
+							$iRed = ($iBlue - ($nHuePre - 2) * $nChroma)
+						Else
+							$iRed = $nMinRGB
+							$iBlue = ($iRed + ($nHuePre - 2) * $nChroma)
+						EndIf
+					Case 3.1 To 5
+						$iBlue = $nMaxRGB
+						If (($nHuePre - 4) < 0) Then
+							$iRed = $nMinRGB
+							$iGreen = ($iRed - ($nHuePre - 4) * $nChroma)
+						Else
+							$iGreen = $nMinRGB
+							$iRed = ($iGreen + ($nHuePre - 4) * $nChroma)
+						EndIf
+				EndSwitch
+
+				$iRed = Round(($iRed * 255))
+				$iGreen = Round(($iGreen * 255))
+				$iBlue = Round(($iBlue * 255))
+
+				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+				Return SetError($__LO_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
+			Else
+				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
+			EndIf
+		Case 4 ;CMYK
+			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
+
+			; CMYK to RGB
+			$nCyan = ($vVal1 / 100)
+			$nMagenta = ($vVal2 / 100)
+			$nYellow = ($vVal3 / 100)
+			$nBlack = ($vVal4 / 100)
+
+			$iRed = Round((255 * (1 - $nBlack) * (1 - $nCyan)))
+			$iGreen = Round((255 * (1 - $nBlack) * (1 - $nMagenta)))
+			$iBlue = Round((255 * (1 - $nBlack) * (1 - $nYellow)))
+
+			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+			Return SetError($__LO_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
+		Case Else
+			Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
+	EndSwitch
+EndFunc   ;==>_LOCalc_ConvertColorToLong
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_ConvertFromMicrometer
 ; Description ...: Convert from Micrometer to Inch, Centimeter, Millimeter, or Printer's Points.
 ; Syntax ........: _LOCalc_ConvertFromMicrometer([$nInchOut = Null[, $nCentimeterOut = Null[, $nMillimeterOut = Null[, $nPointsOut = Null]]]])
@@ -383,6 +543,368 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
 
 EndFunc   ;==>_LOCalc_ConvertToMicrometer
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_FilterDescriptorCreate
+; Description ...: Create a Filter Descriptor to use in the Filter function.
+; Syntax ........: _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField[, $bCaseSensitive = False[, $bSkipDupl = False[, $bUseRegExp = False[, $bHeaders = False[, $bCopyOutput = False[, $oCopyOutput = Null[, $bSaveCriteria = True]]]]]]])
+; Parameters ....: $oRange              - [in/out] an object. The Range you intend to apply the Filter to. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $atFilterField       - an array of dll structs. A single column Array of Filter Fields previously created by _LOCalc_FilterFieldCreate. Maximum of 8 Fields allowed.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is False. If True, the Filtering operation will be case sensitive.
+;                  $bSkipDupl           - [optional] a boolean value. Default is False. If True, Duplicate values will be skipped in the list of filtered data.
+;                  $bUseRegExp          - [optional] a boolean value. Default is False. If True, the String Value set will be considered as using Regular expressions.
+;                  $bHeaders            - [optional] a boolean value. Default is False. If True, the Range contains column headers.
+;                  $bCopyOutput         - [optional] a boolean value. Default is False. If True, the filtering results are copied to another location in the Sheet.
+;                  $oCopyOutput         - [optional] an object. Default is Null. The location to copy filter data to. If a range is input, the first cell is used. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bSaveCriteria       - [optional] a boolean value. Default is True. If True, the output range remains linked to the source range, allowing for future re-application of the same filter to the range. Source Range must be previously defined as a Database range.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
+;				   @Error 1 @Extended 3 Return 0 = $bCaseSensitive not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bSkipDupl not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bUseRegExp not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $bHeaders not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object and not set to Null.
+;				   @Error 1 @Extended 9 Return 0 = $bSaveCriteria not a Boolean.
+;				   @Error 1 @Extended 10 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
+;				   @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
+;				   @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully created a Filter descriptor Object, returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_FilterDescriptorModify, _LOCalc_FilterFieldCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField, $bCaseSensitive = False, $bSkipDupl = False, $bUseRegExp = False, $bHeaders = False, $bCopyOutput = False, $oCopyOutput = Null, $bSaveCriteria = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFilterDesc
+	Local $tCellInputAddr, $tCellAddr
+	Local Const $__LOC_FILTER_ORIENTATION_ROWS = 1 ; Orientation isn't implemented in L.O. so Rows is the only option.
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsArray($atFilterField) Or (UBound($atFilterField) > 8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bSkipDupl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bUseRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If ($oCopyOutput <> Null) And Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsBool($bSaveCriteria) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+	$oFilterDesc = $oRange.createFilterDescriptor(True)
+	If Not IsObj($oFilterDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	For $i = 0 To UBound($atFilterField) - 1
+		If Not IsObj($atFilterField[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, $i)
+	Next
+
+	If ($bCopyOutput = True) Then
+		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		$tCellInputAddr = $oCopyOutput.RangeAddress()
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
+		$tCellAddr.Column = $tCellInputAddr.StartColumn()
+		$tCellAddr.Row = $tCellInputAddr.StartRow()
+
+	EndIf
+
+	; Orientation is only set to Rows. I tried setting it to columns, but it doesn't work. Seemingly Filtering Columns isn't implemented yet, which is confirmed by a
+	; post from 2009 by Villeroy on the OpenOffice Forums inside of a Macro posted.
+	; https://forum.openoffice.org/en/forum/viewtopic.php?p=78786&sid=1e046304b59035364caecb0ad0a10327#p78786
+
+	With $oFilterDesc
+		.setFilterFields2($atFilterField)
+		.IsCaseSensitive = $bCaseSensitive
+		.SkipDuplicates = $bSkipDupl
+		.UseRegularExpressions = $bUseRegExp
+		.ContainsHeader = $bHeaders
+		.Orientation = $__LOC_FILTER_ORIENTATION_ROWS
+		.CopyOutputData = $bCopyOutput
+		.SaveOutputPosition = $bSaveCriteria
+	EndWith
+
+	If IsObj($oCopyOutput) Then $oFilterDesc.OutputPosition = $tCellAddr
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFilterDesc)
+EndFunc   ;==>_LOCalc_FilterDescriptorCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_FilterDescriptorModify
+; Description ...: Set or Retrieve Filter Descriptor settings.
+; Syntax ........: _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc[, $atFilterField = Null[, $bCaseSensitive = Null[, $bSkipDupl = Null[, $bUseRegExp = Null[, $bHeaders = Null[, $bCopyOutput = Null[, $oCopyOutput = Null[, $bSaveCriteria = Null]]]]]]]])
+; Parameters ....: $oRange              - [in/out] an object. The Sheet the Filter Descriptor was Created with, or the Range you intend to apply the Filter to. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oFilterDesc         - [in/out] an object. A Filter Descriptor created by a previous _LOCalc_FilterDescriptorCreate function.
+;                  $atFilterField       - [optional] an array of dll structs. Default is Null. A single column Array of Filter Fields previously created by _LOCalc_FilterFieldCreate. Maximum of 8 Fields allowed.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is Null. If True, the Filtering operation will be case sensitive.
+;                  $bSkipDupl           - [optional] a boolean value. Default is Null. If True, Duplicate values will be skipped in the list of filtered data.
+;                  $bUseRegExp          - [optional] a boolean value. Default is Null. If True, the String Value set will be considered as using Regular expressions.
+;                  $bHeaders            - [optional] a boolean value. Default is Null. If True, the Range contains column headers.
+;                  $bCopyOutput         - [optional] a boolean value. Default is Null. If True, the filtering results are copied to another location in the Sheet.
+;                  $oCopyOutput         - [optional] an object. Default is Null. The location to copy filter data to. If a range is input, the first cell is used. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bSaveCriteria       - [optional] a boolean value. Default is Null. If True, the output range remains linked to the source range, allowing for future re-application of the same filter to the range. Source Range must be previously defined as a Database range.
+; Return values .: Success: 1 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oFilterDesc not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
+;				   @Error 1 @Extended 4 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
+;				   @Error 1 @Extended 5 Return 0 = $bCaseSensitive not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $bSkipDupl not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bUseRegExp not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bHeaders not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bCopyOutput not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;				   @Error 1 @Extended 11 Return 0 = $oCopyOutput not an Object.
+;				   @Error 1 @Extended 12 Return 0 = $bSaveCriteria not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Object for Cell referenced in $oCopyOutput.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
+;				   @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;				   --Success--
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Filter Descriptor was successfully modified.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: When retrieving the current settings for a filter descriptor, the Return value for $oCopyOutput is a single Cell Object.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_FilterDescriptorCreate, _LOCalc_FilterFieldCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilterField = Null, $bCaseSensitive = Null, $bSkipDupl = Null, $bUseRegExp = Null, $bHeaders = Null, $bCopyOutput = Null, $oCopyOutput = Null, $bSaveCriteria = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avFilter[8]
+	Local $tCellInputAddr, $tCellAddr
+	Local $oCell
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFilterDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp, $bHeaders, $bCopyOutput, $oCopyOutput, $bSaveCriteria) Then
+		$oCell = $oRange.Spreadsheet.getCellByPosition($oFilterDesc.OutputPosition.Column(), $oFilterDesc.OutputPosition.Row())
+		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		__LOCalc_ArrayFill($avFilter, $oFilterDesc.getFilterFields2(), $oFilterDesc.IsCaseSensitive(), $oFilterDesc.SkipDuplicates(), $oFilterDesc.UseRegularExpressions(), _
+				$oFilterDesc.ContainsHeader(), $oFilterDesc.CopyOutputData(), $oCell, $oFilterDesc.SaveOutputPosition())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
+	EndIf
+
+	If ($atFilterField <> Null) Then
+		If Not IsArray($atFilterField) Or Not (UBound($atFilterField) <= 8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		For $i = 0 To UBound($atFilterField) - 1
+			If Not IsObj($atFilterField[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
+		Next
+
+		$oFilterDesc.setFilterFields2($atFilterField)
+	EndIf
+
+	If ($bCaseSensitive <> Null) Then
+		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oFilterDesc.IsCaseSensitive = $bCaseSensitive
+	EndIf
+
+	If ($bSkipDupl <> Null) Then
+		If Not IsBool($bSkipDupl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oFilterDesc.SkipDuplicates = $bSkipDupl
+	EndIf
+
+	If ($bUseRegExp <> Null) Then
+		If Not IsBool($bUseRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oFilterDesc.UseRegularExpressions = $bUseRegExp
+	EndIf
+
+	If ($bHeaders <> Null) Then
+		If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oFilterDesc.ContainsHeader = $bHeaders
+	EndIf
+
+	If ($bCopyOutput <> Null) Then
+		If Not IsBool($bCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If ($bCopyOutput = True) And Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oFilterDesc.CopyOutputData = $bCopyOutput
+	EndIf
+
+	If ($oCopyOutput <> Null) Then
+		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		$tCellInputAddr = $oCopyOutput.RangeAddress()
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
+		$tCellAddr.Column = $tCellInputAddr.StartColumn()
+		$tCellAddr.Row = $tCellInputAddr.StartRow()
+
+		$oFilterDesc.OutputPosition = $tCellAddr
+	EndIf
+
+	If ($bSaveCriteria <> Null) Then
+		If Not IsBool($bSaveCriteria) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oFilterDesc.SaveOutputPosition = $bSaveCriteria
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_FilterDescriptorModify
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_FilterFieldCreate
+; Description ...: Create a Filter Field for defining Filter values and settings.
+; Syntax ........: _LOCalc_FilterFieldCreate($iColumn[, $bIsNumeric = False[, $nValue = 0[, $sString = ""[, $iCondition = $LOC_FILTER_CONDITION_EMPTY[, $iOperator = $LOC_FILTER_OPERATOR_AND]]]]])
+; Parameters ....: $iColumn             - an integer value. The 0 based Column number to perform the filtering operation upon counting from the beginning of the range.
+;                  $bIsNumeric          - [optional] a boolean value. Default is False. If True, the filter Value to search for is a number. If False, the filter value to search for is a string.
+;                  $nValue              - [optional] a general number value. Default is 0. The numerical Value to filter the Range for. Only valid if $bIsNumeric is set to True. Set to any number to skip, it will not be used unless $bIsNumeric is True.
+;                  $sString             - [optional] a string value. Default is "". The string Value to filter the Range for. Only valid if $bIsNumeric is set to False. Set to an empty string to skip, it will not be used unless $bIsNumeric is False.
+;                  $iCondition          - [optional] an integer value (0-17). Default is $LOC_FILTER_CONDITION_EMPTY. The comparative condition to test each cell and value by. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iOperator           - [optional] an integer value (0,1). Default is $LOC_FILTER_OPERATOR_AND. The connection this filter field has with the previous filter field. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: Struct
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $iColumn not an Integer.
+;				   @Error 1 @Extended 2 Return 0 = $bIsNumeric not a Boolean.
+;				   @Error 1 @Extended 3 Return 0 = $nValue not a number.
+;				   @Error 1 @Extended 4 Return 0 = $sString not a String.
+;				   @Error 1 @Extended 5 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.sheet.TableFilterField2" Struct.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Struct = Success. Successfully created and returned the Filter Field Structure.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: A Filter Descriptor can contain up to 8 of these Filter Fields. Once you create the Filter Field Structure, place it in an array before using it to create a Filter descriptor. Place each Filter Field Structure in a separate element of the Array.
+; Related .......: _LOCalc_FilterFieldModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_FilterFieldCreate($iColumn, $bIsNumeric = False, $nValue = 0, $sString = "", $iCondition = $LOC_FILTER_Condition_EMPTY, $iOperator = $LOC_FILTER_OPERATOR_AND)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tFilterField
+
+	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bIsNumeric) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOCalc_IntIsBetween($iCondition, $LOC_FILTER_CONDITION_EMPTY, $LOC_FILTER_CONDITION_DOES_NOT_END_WITH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LOCalc_IntIsBetween($iOperator, $LOC_FILTER_OPERATOR_AND, $LOC_FILTER_OPERATOR_OR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$tFilterField = __LOCalc_CreateStruct("com.sun.star.sheet.TableFilterField2")
+	If Not IsObj($tFilterField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	With $tFilterField
+		.Field = $iColumn
+		.IsNumeric = $bIsNumeric
+		.NumericValue = $nValue
+		.StringValue = $sString
+		.Operator = $iCondition ; L.O. calls Operator "Condition" in U.I.
+		.Connection = $iOperator ; L.O. calls Connection "Operator" in U.I.
+	EndWith
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $tFilterField)
+EndFunc   ;==>_LOCalc_FilterFieldCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_FilterFieldModify
+; Description ...: Set or Retrieve Filter Field structure settings.
+; Syntax ........: _LOCalc_FilterFieldModify(ByRef $tFilterField[, $iColumn = Null[, $bIsNumeric = Null[, $nValue = Null[, $sString = Null[, $iCondition = Null[, $iOperator = Null]]]]]])
+; Parameters ....: $tFilterField        - [in/out] a dll struct value. A Filter Field from a previous _LOCalc_FilterFieldCreate function call.
+;                  $iColumn             - [optional] an integer value. Default is Null. The 0 based Column number to perform the filtering operation upon counting from the beginning of the range.
+;                  $bIsNumeric          - [optional] a boolean value. Default is Null. If True, the filter Value to search for is a number. If False, the filter value to search for is a string.
+;                  $nValue              - [optional] a general number value. Default is Null. The numerical Value to filter the Range for. Only valid if $bIsNumeric is set to True.
+;                  $sString             - [optional] a string value. Default is Null. The string Value to filter the Range for. Only valid if $bIsNumeric is set to False.
+;                  $iCondition          - [optional] an integer value (0-17). Default is Null. The comparative condition to test each cell and value by.
+;                  $iOperator           - [optional] an integer value (0,1). Default is Null. The connection this filter field has with the previous filter field.
+; Return values .: Success: Struct
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $tFilterField not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $bIsNumeric not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $nValue not a number.
+;				   @Error 1 @Extended 5 Return 0 = $sString not a String.
+;				   @Error 1 @Extended 6 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Filter Field Structure was successfully modified.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: A Filter Descriptor can contain up to 8 of these Filter Fields. Once you create the Filter Field Structure, place it in an array before using it to create a Filter descriptor. Place each Filter Field Structure in a separate element of the Array.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_FilterFieldCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_FilterFieldModify(ByRef $tFilterField, $iColumn = Null, $bIsNumeric = Null, $nValue = Null, $sString = Null, $iCondition = Null, $iOperator = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avFilter[6]
+
+	If Not IsObj($tFilterField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iColumn, $bIsNumeric, $nValue, $sString, $iCondition, $iOperator) Then
+		__LOCalc_ArrayFill($avFilter, $tFilterField.Field(), $tFilterField.IsNumeric(), $tFilterField.NumericValue(), $tFilterField.StringValue(), $tFilterField.Operator(), $tFilterField.Connection())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
+	EndIf
+
+	If ($iColumn <> Null) Then
+		If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tFilterField.Field = $iColumn
+	EndIf
+
+	If ($bIsNumeric <> Null) Then
+		If Not IsBool($bIsNumeric) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tFilterField.IsNumeric = $bIsNumeric
+	EndIf
+
+	If ($nValue <> Null) Then
+		If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$tFilterField.NumericValue = $nValue
+	EndIf
+
+	If ($sString <> Null) Then
+		If Not IsString($sString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$tFilterField.StringValue = $sString
+	EndIf
+
+	If ($iCondition <> Null) Then ; L.O. calls Operator "Condition" in U.I.
+		If Not __LOCalc_IntIsBetween($iCondition, $LOC_FILTER_CONDITION_EMPTY, $LOC_FILTER_CONDITION_DOES_NOT_END_WITH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$tFilterField.Operator = $iCondition
+	EndIf
+
+	If ($iOperator <> Null) Then ; L.O. calls Connection "Operator" in U.I.
+		If Not __LOCalc_IntIsBetween($iOperator, $LOC_FILTER_OPERATOR_AND, $LOC_FILTER_OPERATOR_OR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$tFilterField.Connection = $iOperator
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_FilterFieldModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyCreate
@@ -777,6 +1299,261 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 EndFunc   ;==>_LOCalc_PathConvert
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SearchDescriptorCreate
+; Description ...: Create a Search Descriptor for searching a document.
+; Syntax ........: _LOCalc_SearchDescriptorCreate(ByRef $oRange[, $bBackwards = False[, $bSearchRows = True[, $bMatchCase = False[, $iSearchIn = $LOC_SEARCH_IN_FORMULAS[, $bEntireCell = False[, $bRegExp = False[, $bWildcards = False[, $bStyles = False]]]]]]]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bBackwards          - [optional] a boolean value. Default is False. If True, the document is searched backwards.
+;                  $bSearchRows         - [optional] a boolean value. Default is True. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
+;                  $bMatchCase          - [optional] a boolean value. Default is False. If True, the case of the letters is important for the Search.
+;                  $iSearchIn           - [optional] an integer value. Default is $LOC_SEARCH_IN_FORMULAS. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $bEntireCell         - [optional] a boolean value. Default is False. If True, Searches for whole words or cells that are identical to the search text.
+;                  $bRegExp             - [optional] a boolean value. Default is False. If True, the search string is evaluated as a regular expression.
+;                  $bWildcards          - [optional] a boolean value. Default is False. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
+;                  $bStyles             - [optional] a boolean value. Default is False. If True, the search string is considered a Cell Style name, and the search will return any Cell utilizing the specified name.
+; Return values .: Success: Object.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $bBackwards not a Boolean.
+;				   @Error 1 @Extended 3 Return 0 = $bSearchRows not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bMatchCase not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $bEntireCell not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bRegExp not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bWildcards not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bStyles not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = Both $bRegExp and $bWildcards are set to True, only one can be True at one time.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Note: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
+; Related .......: _LOCalc_SearchDescriptorModify, _LOCalc_SearchDescriptorSimilarityModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SearchDescriptorCreate(ByRef $oRange, $bBackwards = False, $bSearchRows = True, $bMatchCase = False, $iSearchIn = $LOC_SEARCH_IN_FORMULAS, $bEntireCell = False, $bRegExp = False, $bWildcards = False, $bStyles = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSrchDescript
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bBackwards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bSearchRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bMatchCase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOCalc_IntIsBetween($iSearchIn, $LOC_SEARCH_IN_FORMULAS, $LOC_SEARCH_IN_COMMENTS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bEntireCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsBool($bWildcards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsBool($bStyles) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If ($bWildcards = True) And ($bRegExp = True) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+	$oSrchDescript = $oRange.createSearchDescriptor()
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	With $oSrchDescript
+		.SearchBackwards = $bBackwards
+		.SearchByRow = $bSearchRows
+		.SearchCaseSensitive = $bMatchCase
+		.SearchType = $iSearchIn
+		.SearchWords = $bEntireCell
+		.SearchWildcard = $bWildcards
+		; Regular Expression setting MUST be after Wildcards, setting Wildcards to False, even when it is already set to False, changes RegExp to False no matter what.
+		; -- Slated to be fixed L.O. 24.8.0
+		.SearchRegularExpression = $bRegExp
+		.SearchStyles = $bStyles
+	EndWith
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSrchDescript)
+EndFunc   ;==>_LOCalc_SearchDescriptorCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SearchDescriptorModify
+; Description ...: Modify Search Descriptor settings of an existing Search Descriptor Object.
+; Syntax ........: _LOCalc_SearchDescriptorModify(ByRef $oSrchDescript[, $bBackwards = Null[, $bSearchRows = Null[, $bMatchCase = Null[, $iSearchIn = Null[, $bEntireCell = Null[, $bRegExp = Null[, $bWildcards = Null[, $bStyles = Null]]]]]]]])
+; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $bBackwards          - [optional] a boolean value. Default is Null. If True, the document is searched backwards.
+;                  $bSearchRows         - [optional] a boolean value. Default is Null. If True, Search is performed left to right along the rows, else if False, the search is performed top to bottom along the columns.
+;                  $bMatchCase          - [optional] a boolean value. Default is Null. If True, the case of the letters is important for the Search.
+;                  $iSearchIn           - [optional] an integer value. Default is Null. Set the Cell data type to search in. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $bEntireCell         - [optional] a boolean value. Default is Null. If True, Searches for whole words or cells that are identical to the search text.
+;                  $bRegExp             - [optional] a boolean value. Default is Null. If True, the search string is evaluated as a regular expression.
+;                  $bWildcards          - [optional] a boolean value. Default is Null. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
+;                  $bStyles             - [optional] a boolean value. Default is Null. If True, the search string is considered a Cell Style name, and the search will return any Cell utilizing the specified name.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
+;				   @Error 1 @Extended 3 Return 0 = $bBackwards not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bSearchRows not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bMatchCase not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 7 Return 0 = $bEntireCell not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bRegExp not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bWildcards not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = $bStyles not a Boolean.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: When setting $bRegExp or $bWildcards to True, if any of following three are set to True, they will be set to False: $bSimilarity(From the Similarity function), $bRegExp or $bWildcards.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_SearchDescriptorSimilarityModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, $bSearchRows = Null, $bMatchCase = Null, $iSearchIn = Null, $bEntireCell = Null, $bRegExp = Null, $bWildcards = Null, $bStyles = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avSrchDescript[8]
+
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($bBackwards, $bSearchRows, $bMatchCase, $iSearchIn, $bEntireCell, $bRegExp, $bWildcards, $bStyles) Then
+		__LOCalc_ArrayFill($avSrchDescript, $oSrchDescript.SearchBackwards(), $oSrchDescript.SearchByRow(), $oSrchDescript.SearchCaseSensitive(), _
+				$oSrchDescript.SearchType(), $oSrchDescript.SearchWords(), $oSrchDescript.SearchRegularExpression(), $oSrchDescript.SearchWildcard(), _
+				$oSrchDescript.SearchStyles())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
+	EndIf
+
+	If ($bBackwards <> Null) Then
+		If Not IsBool($bBackwards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oSrchDescript.SearchBackwards = $bBackwards
+	EndIf
+
+	If ($bSearchRows <> Null) Then
+		If Not IsBool($bSearchRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oSrchDescript.SearchByRow = $bSearchRows
+	EndIf
+
+	If ($bMatchCase <> Null) Then
+		If Not IsBool($bMatchCase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oSrchDescript.SearchCaseSensitive = $bMatchCase
+	EndIf
+
+	If ($iSearchIn <> Null) Then
+		If Not __LOCalc_IntIsBetween($iSearchIn, $LOC_SEARCH_IN_FORMULAS, $LOC_SEARCH_IN_COMMENTS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oSrchDescript.SearchType = $iSearchIn
+	EndIf
+
+	If ($bEntireCell <> Null) Then
+		If Not IsBool($bEntireCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oSrchDescript.SearchWords = $bEntireCell
+	EndIf
+
+	If ($bWildcards <> Null) Then
+		If Not IsBool($bWildcards) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If ($bWildcards = True) And ($oSrchDescript.SearchSimilarity = True) Then $oSrchDescript.SearchSimilarity = False
+		If ($bWildcards = True) And ($oSrchDescript.SearchRegularExpression = True) Then $oSrchDescript.SearchRegularExpression = False
+		$oSrchDescript.SearchWildcard = $bWildcards
+	EndIf
+	; Regular Expression setting MUST be after Wildcards, setting Wildcards to False, even when it is already set to False, changes RegExp to False no matter what.
+	; -- Slated to be fixed L.O. 24.8.0
+	If ($bRegExp <> Null) Then
+		If Not IsBool($bRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If ($bRegExp = True) And ($oSrchDescript.SearchSimilarity = True) Then $oSrchDescript.SearchSimilarity = False
+		$oSrchDescript.SearchRegularExpression = $bRegExp
+	EndIf
+
+	If ($bStyles <> Null) Then
+		If Not IsBool($bStyles) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oSrchDescript.SearchStyles = $bStyles
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_SearchDescriptorModify
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SearchDescriptorSimilarityModify
+; Description ...: Modify Similarity Search Settings for an existing Search Descriptor Object.
+; Syntax ........: _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript[, $bSimilarity = Null[, $bCombine = Null[, $iRemove = Null[, $iAdd = Null[, $iExchange = Null]]]]])
+; Parameters ....: $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $bSimilarity         - [optional] a boolean value. Default is Null. If True, a "similarity search" is performed.
+;                  $bCombine            - [optional] a boolean value. Default is Null. If True, all similarity rules ($iRemove, $iAdd, and $iExchange) are applied together.
+;                  $iRemove             - [optional] an integer value. Default is Null. Specifies the number of characters that may be ignored to match the search pattern.
+;                  $iAdd                - [optional] an integer value. Default is Null. Specifies the number of characters that must be added to match the search pattern.
+;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that must be replaced to match the search pattern.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
+;				   @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
+;				   @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
+;				   @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
+;				   @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   If $bSimilarity is set to True while Regular Expression, or Wildcards setting is set to True, those settings will be set to False.
+; Related .......: _LOCalc_SearchDescriptorCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity = Null, $bCombine = Null, $iRemove = Null, $iAdd = Null, $iExchange = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avSrchDescript[5]
+
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($bSimilarity, $bCombine, $iRemove, $iAdd, $iExchange) Then
+		__LOCalc_ArrayFill($avSrchDescript, $oSrchDescript.SearchSimilarity(), $oSrchDescript.SearchSimilarityRelax(), _
+				$oSrchDescript.SearchSimilarityRemove(), $oSrchDescript.SearchSimilarityAdd(), $oSrchDescript.SearchSimilarityExchange())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
+	EndIf
+
+	If ($bSimilarity <> Null) Then
+		If Not IsBool($bSimilarity) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If ($bSimilarity = True) And ($oSrchDescript.SearchRegularExpression = True) Then $oSrchDescript.SearchRegularExpression = False
+		If ($bSimilarity = True) And ($oSrchDescript.SearchWildcard = True) Then $oSrchDescript.SearchWildcard = False
+		$oSrchDescript.SearchSimilarity = $bSimilarity
+	EndIf
+
+	If ($bCombine <> Null) Then
+		If Not IsBool($bCombine) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oSrchDescript.SearchSimilarityRelax = $bCombine
+	EndIf
+
+	If Not __LOCalc_VarsAreNull($iRemove, $iAdd, $iExchange) Then
+		If ($oSrchDescript.SearchSimilarity() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If ($iRemove <> Null) Then
+			If Not IsInt($iRemove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$oSrchDescript.SearchSimilarityRemove = $iRemove
+		EndIf
+
+		If ($iAdd <> Null) Then
+			If Not IsInt($iAdd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$oSrchDescript.SearchSimilarityAdd = $iAdd
+		EndIf
+
+		If ($iExchange <> Null) Then
+			If Not IsInt($iExchange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$oSrchDescript.SearchSimilarityExchange = $iExchange
+		EndIf
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_SearchDescriptorSimilarityModify
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_VersionGet
 ; Description ...: Retrieve the current Office version.
 ; Syntax ........: _LOCalc_VersionGet([$bSimpleVersion = False[, $bReturnName = False]])
@@ -832,156 +1609,3 @@ Func _LOCalc_VersionGet($bSimpleVersion = False, $bReturnName = False)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sReturn)
 EndFunc   ;==>_LOCalc_VersionGet
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_ConvertColorToLong
-; Description ...: Convert Hex, RGB, HSB or CMYK to Long color code.
-; Syntax ........: _LOCalc_ConvertColorToLong([$vVal1 = Null[, $vVal2 = Null[, $vVal3 = Null[, $vVal4 = Null]]]])
-; Parameters ....: $vVal1               - [optional] a variant value. Default is Null. See remarks.
-;                  $vVal2               - [optional] a variant value. Default is Null. See remarks.
-;                  $vVal3               - [optional] a variant value. Default is Null. See remarks.
-;                  $vVal4               - [optional] a variant value. Default is Null. See remarks.
-; Return values .: Success: Integer.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = No parameters set.
-;				   @Error 1 @Extended 2 Return 0 = One parameter called, but not in String format(Hex).
-;				   @Error 1 @Extended 3 Return 0 = Hex parameter contains non Hex characters.
-;				   @Error 1 @Extended 4 Return 0 = Hex parameter not 6 characters long.
-;				   @Error 1 @Extended 5 Return 0 = Hue parameter contains more than just digits.
-;				   @Error 1 @Extended 6 Return 0 = Saturation parameter contains more than just digits.
-;				   @Error 1 @Extended 7 Return 0 = Brightness parameter contains more than just digits.
-;				   @Error 1 @Extended 8 Return 0 = Three parameters called but not all Integers (RGB) and not all Strings (HSB).
-;				   @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
-;				   @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return Integer. Long Int. Color code converted from Hexadecimal.
-;				   @Error 0 @Extended 2 Return Integer. Long Int. Color code converted from Red, Green, Blue, (RGB).
-;				   @Error 0 @Extended 3 Return Integer. Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
-;				   @Error 0 @Extended 4 Return Integer. Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: To Convert a Hex(adecimal) color code, call the Hex code in $vVal1 in String Format.
-;				   To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
-;				   To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
-;				   To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
-;				   Note: The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
-; Related .......: _LOCalc_ConvertColorFromLong
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vVal4 = Null) ; RGB = Int, CMYK = Int, HSB = String, Hex = String.
-	Local Const $STR_STRIPALL = 8
-	Local $iRed, $iGreen, $iBlue, $iLong, $iHue, $iSaturation, $iBrightness
-	Local $dHex
-	Local $nMaxRGB, $nMinRGB, $nChroma, $nHuePre, $nCyan, $nMagenta, $nYellow, $nBlack
-
-	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	Switch @NumParams
-		Case 1 ;Hex
-			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
-			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
-			$dHex = $vVal1
-
-			; From Hex to RGB
-			If (StringLen($dHex) = 6) Then
-				If StringRegExp($dHex, "[^0-9a-fA-F]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; $dHex contains non Hex characters.
-
-				$iRed = BitAND(BitShift("0x" & $dHex, 16), 0xFF)
-				$iGreen = BitAND(BitShift("0x" & $dHex, 8), 0xFF)
-				$iBlue = BitAND("0x" & $dHex, 0xFF)
-
-				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LO_STATUS_SUCCESS, 1, $iLong) ; Long from Hex
-
-			Else
-				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
-			EndIf
-
-		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
-			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
-				$iRed = $vVal1
-				$iGreen = $vVal2
-				$iBlue = $vVal3
-
-				; RGB to Long
-				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LO_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
-
-			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
-
-				; HSB to RGB
-				$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
-				$vVal2 = StringStripWS($vVal2, $STR_STRIPALL)
-				$vVal3 = StringStripWS($vVal3, $STR_STRIPALL) ; Strip WS so I can check string length in HSB conversion.
-
-				$iHue = Number($vVal1)
-				If (StringLen($vVal1)) <> (StringLen($iHue)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; String contained more than just digits
-				$iSaturation = Number($vVal2)
-				If (StringLen($vVal2)) <> (StringLen($iSaturation)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; String contained more than just digits
-				$iBrightness = Number($vVal3)
-				If (StringLen($vVal3)) <> (StringLen($iBrightness)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; String contained more than just digits
-
-				$nMaxRGB = ($iBrightness / 100)
-				$nChroma = (($iSaturation / 100) * ($iBrightness / 100))
-				$nMinRGB = ($nMaxRGB - $nChroma)
-				$nHuePre = ($iHue >= 300) ? (($iHue - 360) / 60) : ($iHue / 60)
-
-				Switch $nHuePre
-					Case (-1) To 1.0
-						$iRed = $nMaxRGB
-						If $nHuePre < 0 Then
-							$iGreen = $nMinRGB
-							$iBlue = ($iGreen - $nHuePre * $nChroma)
-						Else
-							$iBlue = $nMinRGB
-							$iGreen = ($iBlue + $nHuePre * $nChroma)
-						EndIf
-					Case 1.1 To 3.0
-						$iGreen = $nMaxRGB
-						If (($nHuePre - 2) < 0) Then
-							$iBlue = $nMinRGB
-							$iRed = ($iBlue - ($nHuePre - 2) * $nChroma)
-						Else
-							$iRed = $nMinRGB
-							$iBlue = ($iRed + ($nHuePre - 2) * $nChroma)
-						EndIf
-					Case 3.1 To 5
-						$iBlue = $nMaxRGB
-						If (($nHuePre - 4) < 0) Then
-							$iRed = $nMinRGB
-							$iGreen = ($iRed - ($nHuePre - 4) * $nChroma)
-						Else
-							$iGreen = $nMinRGB
-							$iRed = ($iGreen + ($nHuePre - 4) * $nChroma)
-						EndIf
-				EndSwitch
-
-				$iRed = Round(($iRed * 255))
-				$iGreen = Round(($iGreen * 255))
-				$iBlue = Round(($iBlue * 255))
-
-				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-				Return SetError($__LO_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
-			Else
-				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
-			EndIf
-		Case 4 ;CMYK
-			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
-
-			; CMYK to RGB
-			$nCyan = ($vVal1 / 100)
-			$nMagenta = ($vVal2 / 100)
-			$nYellow = ($vVal3 / 100)
-			$nBlack = ($vVal4 / 100)
-
-			$iRed = Round((255 * (1 - $nBlack) * (1 - $nCyan)))
-			$iGreen = Round((255 * (1 - $nBlack) * (1 - $nMagenta)))
-			$iBlue = Round((255 * (1 - $nBlack) * (1 - $nYellow)))
-
-			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
-			Return SetError($__LO_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
-		Case Else
-			Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
-	EndSwitch
-EndFunc   ;==>_LOCalc_ConvertColorToLong
