@@ -51,6 +51,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Cell.au3
 	- LibreOfficeCalc_CellStyle.au3
 	- LibreOfficeCalc_Constants.au3
+	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
@@ -63,6 +64,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellBorderPadding
 	- _LOCalc_CellBorderStyle
 	- _LOCalc_CellBorderWidth
+	- _LOCalc_CellCreateTextCursor
 	- _LOCalc_CellEffect
 	- _LOCalc_CellFont
 	- _LOCalc_CellFontColor
@@ -90,12 +92,23 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeColumnsGetCount
 	- _LOCalc_RangeColumnVisible
 	- _LOCalc_RangeColumnWidth
+	- _LOCalc_RangeCompute
 	- _LOCalc_RangeCopyMove
+	- _LOCalc_RangeCreateCursor
 	- _LOCalc_RangeData
 	- _LOCalc_RangeDelete
+	- _LOCalc_RangeFill
+	- _LOCalc_RangeFillSeries
+	- _LOCalc_RangeFilter
+	- _LOCalc_RangeFilterClear
+	- _LOCalc_RangeFindAll
+	- _LOCalc_RangeFindNext
 	- _LOCalc_RangeFormula
+	- _LOCalc_RangeGetAddressAsName
+	- _LOCalc_RangeGetAddressAsPosition
 	- _LOCalc_RangeGetCellByName
 	- _LOCalc_RangeGetCellByPosition
+	- _LOCalc_RangeGetSheet
 	- _LOCalc_RangeInsert
 	- _LOCalc_RangeNumbers
 	- _LOCalc_RangeQueryColumnDiff
@@ -107,6 +120,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeQueryPrecedents
 	- _LOCalc_RangeQueryRowDiff
 	- _LOCalc_RangeQueryVisible
+	- _LOCalc_RangeReplace
+	- _LOCalc_RangeReplaceAll
 	- _LOCalc_RangeRowDelete
 	- _LOCalc_RangeRowGetObjByPosition
 	- _LOCalc_RangeRowHeight
@@ -139,6 +154,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleTextOrient
 	- _LOCalc_CellStyleTextProperties
 	- _LOCalc_CellStyleUnderline
+- Cursor Functions and Examples
+	- _LOCalc_SheetCursorMove
+	- _LOCalc_TextCursorFont
+	- _LOCalc_TextCursorInsertString
+	- _LOCalc_TextCursorIsCollapsed
+	- _LOCalc_TextCursorMove
 - Document Functions and Examples
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
@@ -182,6 +203,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_ConvertColorToLong
 	- _LOCalc_ConvertFromMicrometer
 	- _LOCalc_ConvertToMicrometer
+	- _LOCalc_FilterDescriptorCreate
+	- _LOCalc_FilterDescriptorModify
+	- _LOCalc_FilterFieldCreate
+	- _LOCalc_FilterFieldModify
 	- _LOCalc_FormatKeyCreate
 	- _LOCalc_FormatKeyDelete
 	- _LOCalc_FormatKeyExists
@@ -189,6 +214,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_FormatKeyGetString
 	- _LOCalc_FormatKeyList
 	- _LOCalc_PathConvert
+	- _LOCalc_SearchDescriptorCreate
+	- _LOCalc_SearchDescriptorModify
+	- _LOCalc_SearchDescriptorSimilarityModify
 	- _LOCalc_VersionGet
 - Internal Functions
 	- __LOCalc_AddTo1DArray
@@ -211,28 +239,77 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellUnderLine
 	- __LOCalc_CreateStruct
 	- __LOCalc_FilterNameGet
+	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
 	- __LOCalc_IntIsBetween
 	- __LOCalc_NumIsBetween
+	- __LOCalc_PageStyleBorder
+	- __LOCalc_PageStyleFooterBorder
+	- __LOCalc_PageStyleHeaderBorder
 	- __LOCalc_SetPropertyValue
+	- __LOCalc_SheetCursorMove
+	- __LOCalc_TextCursorMove
 	- __LOCalc_UnitConvert
 	- __LOCalc_VarsAreDefault
 	- __LOCalc_VarsAreNull
 	- __LOCalc_VersionCheck
+- Page Style Functions and Examples
+	- _LOCalc_PageStyleAreaColor
+	- _LOCalc_PageStyleBorderColor
+	- _LOCalc_PageStyleBorderPadding
+	- _LOCalc_PageStyleBorderStyle
+	- _LOCalc_PageStyleBorderWidth
+	- _LOCalc_PageStyleCreate
+	- _LOCalc_PageStyleDelete
+	- _LOCalc_PageStyleExists
+	- _LOCalc_PageStyleFooter
+	- _LOCalc_PageStyleFooterAreaColor
+	- _LOCalc_PageStyleFooterBorderColor
+	- _LOCalc_PageStyleFooterBorderPadding
+	- _LOCalc_PageStyleFooterBorderStyle
+	- _LOCalc_PageStyleFooterBorderWidth
+	- _LOCalc_PageStyleFooterCreateTextCursor
+	- _LOCalc_PageStyleFooterObj
+	- _LOCalc_PageStyleFooterShadow
+	- _LOCalc_PageStyleGetObj
+	- _LOCalc_PageStyleHeader
+	- _LOCalc_PageStyleHeaderAreaColor
+	- _LOCalc_PageStyleHeaderBorderColor
+	- _LOCalc_PageStyleHeaderBorderPadding
+	- _LOCalc_PageStyleHeaderBorderStyle
+	- _LOCalc_PageStyleHeaderBorderWidth
+	- _LOCalc_PageStyleHeaderCreateTextCursor
+	- _LOCalc_PageStyleHeaderObj
+	- _LOCalc_PageStyleHeaderShadow
+	- _LOCalc_PageStyleLayout
+	- _LOCalc_PageStyleMargins
+	- _LOCalc_PageStyleOrganizer
+	- _LOCalc_PageStylePaperFormat
+	- _LOCalc_PageStyleSet
+	- _LOCalc_PageStylesGetNames
+	- _LOCalc_PageStyleShadow
+	- _LOCalc_PageStyleSheetPageOrder
+	- _LOCalc_PageStyleSheetPrint
+	- _LOCalc_PageStyleSheetScale
 - Sheet Functions and Examples
 	- _LOCalc_SheetActivate
 	- _LOCalc_SheetAdd
 	- _LOCalc_SheetCopy
+	- _LOCalc_SheetCreateCursor
 	- _LOCalc_SheetGetActive
 	- _LOCalc_SheetGetObjByName
+	- _LOCalc_SheetGetObjByPosition
+	- _LOCalc_SheetImport
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetIsProtected
+	- _LOCalc_SheetLink
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
 	- _LOCalc_SheetProtect
 	- _LOCalc_SheetRemove
 	- _LOCalc_SheetsGetCount
 	- _LOCalc_SheetsGetNames
+	- _LOCalc_SheetTabColor
 	- _LOCalc_SheetUnprotect
 	- _LOCalc_SheetVisible
 - Calc Constants
@@ -246,13 +323,30 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_CELL_ROTATE_REF_*
 	- $LOC_CELL_TYPE_*
 	- $LOC_COLOR_*
+	- $LOC_COMPUTE_*
+	- $LOC_CURTYPE_*
+	- $LOC_FILL_DATE_MODE_*
+	- $LOC_FILL_DIR_*
+	- $LOC_FILL_MODE_*
+	- $LOC_FILTER_CONNECTION_*
+	- $LOC_FILTER_OPERATOR_*
+	- $LOC_FILTER_ORIENTATION_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_NUM_STYLE_*
+	- $LOC_PAGE_LAYOUT_*
+	- $LOC_PAPER_HEIGHT_*
+	- $LOC_PAPER_WIDTH_*
 	- $LOC_PATHCONV_*
 	- $LOC_POSTURE_*
 	- $LOC_RELIEF_*
+	- $LOC_SCALE_*
+	- $LOC_SEARCH_IN_*
 	- $LOC_SHADOW_*
+	- $LOC_SHEET_LINK_MODE_*
+	- $LOC_SHEETCUR_*
 	- $LOC_STRIKEOUT_*
+	- $LOC_TEXTCUR_*
 	- $LOC_TXT_DIR_*
 	- $LOC_UNDERLINE_*
 	- $LOC_WEIGHT_*
@@ -360,6 +454,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Spell Checked Examples
 - Examples on Error now close any documents opened by the example.
 - Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
+- Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
 
 [To Top](##Releases)
 
