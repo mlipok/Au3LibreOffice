@@ -39,10 +39,16 @@
 ; __LOCalc_CellUnderLine
 ; __LOCalc_CreateStruct
 ; __LOCalc_FilterNameGet
+; __LOCalc_Internal_CursorGetType
 ; __LOCalc_InternalComErrorHandler
 ; __LOCalc_IntIsBetween
 ; __LOCalc_NumIsBetween
+; __LOCalc_PageStyleBorder
+; __LOCalc_PageStyleFooterBorder
+; __LOCalc_PageStyleHeaderBorder
 ; __LOCalc_SetPropertyValue
+; __LOCalc_SheetCursorMove
+; __LOCalc_TextCursorMove
 ; __LOCalc_UnitConvert
 ; __LOCalc_VarsAreDefault
 ; __LOCalc_VarsAreNull
@@ -1060,7 +1066,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oCellStyle.TopBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oCellStyle.TopBorder2.LineStyle()) ; copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? ($iTop) : ($oCellStyle.TopBorder2.Color()) ; copy Color over to new size structure
-		$oCellStyle.TopBorder = $tBL2
+		$oCellStyle.TopBorder2 = $tBL2
 	EndIf
 
 	If $iBottom <> Null Then
@@ -1069,7 +1075,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oCellStyle.BottomBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oCellStyle.BottomBorder2.LineStyle()) ; copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? ($iBottom) : ($oCellStyle.BottomBorder2.Color()) ; copy Color over to new size structure
-		$oCellStyle.BottomBorder = $tBL2
+		$oCellStyle.BottomBorder2 = $tBL2
 	EndIf
 
 	If $iLeft <> Null Then
@@ -1078,7 +1084,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oCellStyle.LeftBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oCellStyle.LeftBorder2.LineStyle()) ; copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? ($iLeft) : ($oCellStyle.LeftBorder2.Color()) ; copy Color over to new size structure
-		$oCellStyle.LeftBorder = $tBL2
+		$oCellStyle.LeftBorder2 = $tBL2
 	EndIf
 
 	If $iRight <> Null Then
@@ -1087,7 +1093,7 @@ Func __LOCalc_CellStyleBorder(ByRef $oCellStyle, $bWid, $bSty, $bCol, $iTop, $iB
 		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oCellStyle.RightBorder2.LineWidth()) ; copy Line Width over to new size structure
 		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oCellStyle.RightBorder2.LineStyle()) ; copy Line style over to new size structure
 		$tBL2.Color = ($bCol) ? ($iRight) : ($oCellStyle.RightBorder2.Color()) ; copy Color over to new size structure
-		$oCellStyle.RightBorder = $tBL2
+		$oCellStyle.RightBorder2 = $tBL2
 	EndIf
 
 	If $iTLBRDiag <> Null Then
@@ -1578,6 +1584,46 @@ Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = False)
 EndFunc   ;==>__LOCalc_FilterNameGet
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_Internal_CursorGetType
+; Description ...: Get what type of cursor the object is.
+; Syntax ........: __LOCalc_Internal_CursorGetType(ByRef $oCursor)
+; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
+; Return values .:Success: Integer.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Unknown Cursor type.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOC_CURTYPE_* as defined in LibreOfficeCalc_Constants.au3.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Returns what type of cursor the input Object is, such as a Text Cursor or a Sheet Cursor. Can also be a Paragraph or Text Portion.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_Internal_CursorGetType(ByRef $oCursor)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	Switch $oCursor.getImplementationName()
+		Case "SvxUnoTextCursor"
+			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_TEXT_CURSOR)
+		Case "ScCellCursorObj"
+			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_SHEET_CURSOR)
+		Case "SvxUnoTextContent"
+			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_PARAGRAPH)
+		Case "SvxUnoTextRange"
+			Return SetError($__LO_STATUS_SUCCESS, 0, $LOC_CURTYPE_TEXT_PORTION)
+		Case Else
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; unknown Cursor type.
+	EndSwitch
+EndFunc   ;==>__LOCalc_Internal_CursorGetType
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_InternalComErrorHandler
 ; Description ...: ComError Handler
 ; Syntax ........: __LOCalc_InternalComErrorHandler(ByRef $oComError)
@@ -1739,6 +1785,312 @@ Func __LOCalc_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
 EndFunc   ;==>__LOCalc_NumIsBetween
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_PageStyleBorder
+; Description ...: Internal function to Set and Retrieve the Page Style Border Line Width, Style, and Color. Libre Office Version 3.6 and Up.
+; Syntax ........: __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
+;                  $bWid                - a boolean value. If True, Border Width is being modified. Only one can be True at once.
+;                  $bSty                - a boolean value. If True, Border Style is being modified. Only one can be True at once.
+;                  $bCol                - a boolean value. If True, Border Color is being modified. Only one can be True at once.
+;                  $iTop                - an integer value. Modifies the top border line settings. See Width, Style or Color functions for values.
+;                  $iBottom             - an integer value. Modifies the bottom border line settings. See Width, Style or Color functions for values.
+;                  $iLeft               - an integer value. Modifies the left border line settings. See Width, Style or Color functions for values.
+;                  $iRight              - an integer value. Modifies the right border line settings. See Width, Style or Color functions for values.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;				   --Version Related Errors--
+;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_PageStyleBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avBorder[4]
+	Local $tBL2
+
+	If Not __LOCalc_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
+
+	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
+		If $bWid Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.LineWidth(), $oPageStyle.BottomBorder.LineWidth(), $oPageStyle.LeftBorder.LineWidth(), $oPageStyle.RightBorder.LineWidth())
+		ElseIf $bSty Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.LineStyle(), $oPageStyle.BottomBorder.LineStyle(), $oPageStyle.LeftBorder.LineStyle(), $oPageStyle.RightBorder.LineStyle())
+		ElseIf $bCol Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.TopBorder.Color(), $oPageStyle.BottomBorder.Color(), $oPageStyle.LeftBorder.Color(), $oPageStyle.RightBorder.Color())
+		EndIf
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
+	EndIf
+
+	$tBL2 = __LOCalc_CreateStruct("com.sun.star.table.BorderLine2")
+	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $iTop <> Null Then
+		If Not $bWid And ($oPageStyle.TopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		; Top Line
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.TopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.TopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oPageStyle.TopBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.TopBorder = $tBL2
+	EndIf
+
+	If $iBottom <> Null Then
+		If Not $bWid And ($oPageStyle.BottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		; Bottom Line
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.BottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.BottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oPageStyle.BottomBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.BottomBorder = $tBL2
+	EndIf
+
+	If $iLeft <> Null Then
+		If Not $bWid And ($oPageStyle.LeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		; Left Line
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.LeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.LeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oPageStyle.LeftBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.LeftBorder = $tBL2
+	EndIf
+
+	If $iRight <> Null Then
+		If Not $bWid And ($oPageStyle.RightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		; Right Line
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.RightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.RightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oPageStyle.RightBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.RightBorder = $tBL2
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>__LOCalc_PageStyleBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_PageStyleFooterBorder
+; Description ...: Internal function to Set and Retrieve the Page Style Footer Border Line Width, Style, and Color. Libre Office Version 3.6 and Up.
+; Syntax ........: __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
+;                  $bWid                - a boolean value. If True, Border Width is being modified. Only one can be True at once.
+;                  $bSty                - a boolean value. If True, Border Style is being modified. Only one can be True at once.
+;                  $bCol                - a boolean value. If True, Border Color is being modified. Only one can be True at once.
+;                  $iTop                - an integer value. Modifies the top border line settings. See Width, Style or Color functions for values.
+;                  $iBottom             - an integer value. Modifies the bottom border line settings. See Width, Style or Color functions for values.
+;                  $iLeft               - an integer value. Modifies the left border line settings. See Width, Style or Color functions for values.
+;                  $iRight              - an integer value. Modifies the right border line settings. See Width, Style or Color functions for values.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;				   --Version Related Errors--
+;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_PageStyleFooterBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avBorder[4]
+	Local $tBL2
+
+	If Not __LOCalc_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
+
+	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
+		If $bWid Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.LineWidth(), $oPageStyle.FooterBottomBorder.LineWidth(), $oPageStyle.FooterLeftBorder.LineWidth(), $oPageStyle.FooterRightBorder.LineWidth())
+		ElseIf $bSty Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.LineStyle(), $oPageStyle.FooterBottomBorder.LineStyle(), $oPageStyle.FooterLeftBorder.LineStyle(), $oPageStyle.FooterRightBorder.LineStyle())
+		ElseIf $bCol Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.FooterTopBorder.Color(), $oPageStyle.FooterBottomBorder.Color(), $oPageStyle.FooterLeftBorder.Color(), $oPageStyle.FooterRightBorder.Color())
+		EndIf
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
+	EndIf
+
+	$tBL2 = __LOCalc_CreateStruct("com.sun.star.table.BorderLine2")
+	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $iTop <> Null Then
+		If Not $bWid And ($oPageStyle.FooterTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		; Top Line
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.FooterTopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.FooterTopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oPageStyle.FooterTopBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.FooterTopBorder = $tBL2
+	EndIf
+
+	If $iBottom <> Null Then
+		If Not $bWid And ($oPageStyle.FooterBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		; Bottom Line
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oPageStyle.FooterBottomBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.FooterBottomBorder = $tBL2
+	EndIf
+
+	If $iLeft <> Null Then
+		If Not $bWid And ($oPageStyle.FooterLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		; Left Line
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oPageStyle.FooterLeftBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.FooterLeftBorder = $tBL2
+	EndIf
+
+	If $iRight <> Null Then
+		If Not $bWid And ($oPageStyle.FooterRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		; Right Line
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.FooterRightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.FooterRightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oPageStyle.FooterRightBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.FooterRightBorder = $tBL2
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>__LOCalc_PageStyleFooterBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_PageStyleHeaderBorder
+; Description ...: Internal function to Set and Retrieve the Page Style Header Border Line Width, Style, and Color. Libre Office Version 3.6 and Up.
+; Syntax ........: __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
+;                  $bWid                - a boolean value. If True, Border Width is being modified. Only one can be True at once.
+;                  $bSty                - a boolean value. If True, Border Style is being modified. Only one can be True at once.
+;                  $bCol                - a boolean value. If True, Border Color is being modified. Only one can be True at once.
+;                  $iTop                - an integer value. Modifies the top border line settings. See Width, Style or Color functions for values.
+;                  $iBottom             - an integer value. Modifies the bottom border line settings. See Width, Style or Color functions for values.
+;                  $iLeft               - an integer value. Modifies the left border line settings. See Width, Style or Color functions for values.
+;                  $iRight              - an integer value. Modifies the right border line settings. See Width, Style or Color functions for values.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
+;				   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
+;				   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style/Color when Left Border width not set.
+;				   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style/Color when Right Border width not set.
+;				   --Version Related Errors--
+;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft, $iRight)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avBorder[4]
+	Local $tBL2
+
+	If Not __LOCalc_VersionCheck(3.6) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
+
+	If __LOCalc_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
+		If $bWid Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.LineWidth(), $oPageStyle.HeaderBottomBorder.LineWidth(), $oPageStyle.HeaderLeftBorder.LineWidth(), $oPageStyle.HeaderRightBorder.LineWidth())
+		ElseIf $bSty Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.LineStyle(), $oPageStyle.HeaderBottomBorder.LineStyle(), $oPageStyle.HeaderLeftBorder.LineStyle(), $oPageStyle.HeaderRightBorder.LineStyle())
+		ElseIf $bCol Then
+			__LOCalc_ArrayFill($avBorder, $oPageStyle.HeaderTopBorder.Color(), $oPageStyle.HeaderBottomBorder.Color(), $oPageStyle.HeaderLeftBorder.Color(), $oPageStyle.HeaderRightBorder.Color())
+		EndIf
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
+	EndIf
+
+	$tBL2 = __LOCalc_CreateStruct("com.sun.star.table.BorderLine2")
+	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $iTop <> Null Then
+		If Not $bWid And ($oPageStyle.HeaderTopBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
+		; Top Line
+		$tBL2.LineWidth = ($bWid) ? ($iTop) : ($oPageStyle.HeaderTopBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iTop) : ($oPageStyle.HeaderTopBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iTop) : ($oPageStyle.HeaderTopBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.HeaderTopBorder = $tBL2
+	EndIf
+
+	If $iBottom <> Null Then
+		If Not $bWid And ($oPageStyle.HeaderBottomBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 2, 0) ; If Width not set, cant set color or style.
+		; Bottom Line
+		$tBL2.LineWidth = ($bWid) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iBottom) : ($oPageStyle.HeaderBottomBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.HeaderBottomBorder = $tBL2
+	EndIf
+
+	If $iLeft <> Null Then
+		If Not $bWid And ($oPageStyle.HeaderLeftBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 3, 0) ; If Width not set, cant set color or style.
+		; Left Line
+		$tBL2.LineWidth = ($bWid) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iLeft) : ($oPageStyle.HeaderLeftBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.HeaderLeftBorder = $tBL2
+	EndIf
+
+	If $iRight <> Null Then
+		If Not $bWid And ($oPageStyle.HeaderRightBorder.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 4, 0) ; If Width not set, cant set color or style.
+		; Right Line
+		$tBL2.LineWidth = ($bWid) ? ($iRight) : ($oPageStyle.HeaderRightBorder.LineWidth()) ; copy Line Width over to new size structure
+		$tBL2.LineStyle = ($bSty) ? ($iRight) : ($oPageStyle.HeaderRightBorder.LineStyle()) ; copy Line style over to new size structure
+		$tBL2.Color = ($bCol) ? ($iRight) : ($oPageStyle.HeaderRightBorder.Color()) ; copy Color over to new size structure
+		$oPageStyle.HeaderRightBorder = $tBL2
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>__LOCalc_PageStyleHeaderBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_SetPropertyValue
 ; Description ...: Creates a property value struct object.
 ; Syntax ........: __LOCalc_SetPropertyValue($sName, $vValue)
@@ -1773,6 +2125,193 @@ Func __LOCalc_SetPropertyValue($sName, $vValue)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tProperties)
 EndFunc   ;==>__LOCalc_SetPropertyValue
+
+
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_SheetCursorMove
+; Description ...: For Sheet Cursor related movements.
+; Syntax ........: __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount, $bSelect)
+; Parameters ....: $oCursor             - [in/out] an object. A Sheet Cursor Object returned from any Sheet Cursor creation functions.
+;                  $iMove               - an Integer value. The movement command constant. See remarks and Constants, $LOC_SHEETCUR* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iColumns            - an integer value. The Number of Columns either to contain in the Range, or to move, depending on the called move command.
+;                  $iRows               - an integer value. The Number of Rows either to contain in the Range, or to move, depending on the called move command.
+;                  $iCount              - an integer value. Number of movements to make.
+;                  $bSelect             - [optional] a boolean value. Default is False. If True, select data during this cursor movement.
+; Return values .: Success: 1.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Constants, $LOC_SHEETCUR* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iColumns not an integer.
+;				   @Error 1 @Extended 5 Return 0 = $iRows not an integer.
+;				   @Error 1 @Extended 6 Return 0 = $iCount not an integer or is a negative.
+;				   @Error 1 @Extended 7 Return 0 = $bSelect not a Boolean.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
+;				   --Success--
+;				   @Error 0 @Extended ? Return 1 = Success, Cursor object movement was processed successfully.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Only some movements accept Column and Row Values, creating/ extending a selection of cells, etc. They will be specified below.
+;					#Cursor Movement Constants which accept Column and Row values:
+;						$LOC_SHEETCUR_COLLAPSE_TO_SIZE,
+;						$LOC_SHEETCUR_GOTO_OFFSET
+;					#Cursor Movements which accept Selecting Only:
+;						$LOC_SHEETCUR_GOTO_USED_AREA_START,
+;						$LOC_SHEETCUR_GOTO_USED_AREA_END
+;					#Cursor Movements which accept nothing and are done once per call:
+;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
+;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
+;						$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
+;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
+;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
+;						$LOC_SHEETCUR_GOTO_START,
+;						$LOC_SHEETCUR_GOTO_END
+;					#Cursor Movements which accept only number of moves ($iCount):
+;						$LOC_SHEETCUR_GOTO_NEXT,
+;						$LOC_SHEETCUR_GOTO_PREV
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount, $bSelect)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCounted = 0
+	Local $asMoves[13]
+
+	$asMoves[$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY] = "collapseToCurrentArray"
+	$asMoves[$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION] = "collapseToCurrentRegion"
+	$asMoves[$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA] = "collapseToMergedArea"
+	$asMoves[$LOC_SHEETCUR_COLLAPSE_TO_SIZE] = "collapseToSize"
+	$asMoves[$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN] = "expandToEntireColumns"
+	$asMoves[$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW] = "expandToEntireRows"
+	$asMoves[$LOC_SHEETCUR_GOTO_OFFSET] = "gotoOffset"
+	$asMoves[$LOC_SHEETCUR_GOTO_START] = "gotoStart"
+	$asMoves[$LOC_SHEETCUR_GOTO_END] = "gotoEnd"
+	$asMoves[$LOC_SHEETCUR_GOTO_NEXT] = "gotoNext"
+	$asMoves[$LOC_SHEETCUR_GOTO_PREV] = "gotoPrevious"
+	$asMoves[$LOC_SHEETCUR_GOTO_USED_AREA_START] = "gotoStartOfUsedArea"
+	$asMoves[$LOC_SHEETCUR_GOTO_USED_AREA_END] = "gotoEndOfUsedArea"
+
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iMove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iMove, 0, UBound($asMoves) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsInt($iRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bSelect) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	Switch $iMove
+		Case $LOC_SHEETCUR_COLLAPSE_TO_SIZE, $LOC_SHEETCUR_GOTO_OFFSET
+			Execute("$oCursor." & $asMoves[$iMove] & "(" & $iColumns & "," & $iRows & ")")
+			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
+
+		Case $LOC_SHEETCUR_GOTO_NEXT, $LOC_SHEETCUR_GOTO_PREV
+			Do
+				Execute("$oCursor." & $asMoves[$iMove] & "()")
+				$iCounted += 1
+
+				Sleep((IsInt($iCounted / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Until ($iCounted >= $iCount)
+			Return SetError($__LO_STATUS_SUCCESS, $iCounted, 1)
+
+		Case $LOC_SHEETCUR_GOTO_USED_AREA_START, $LOC_SHEETCUR_GOTO_USED_AREA_END
+			Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
+			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
+
+		Case $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY, $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION, $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA, _
+				$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN, $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW, $LOC_SHEETCUR_GOTO_START, $LOC_SHEETCUR_GOTO_END
+			Execute("$oCursor." & $asMoves[$iMove] & "()")
+			Return SetError($__LO_STATUS_SUCCESS, 1, 1)
+		Case Else
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndSwitch
+
+EndFunc   ;==>__LOCalc_SheetCursorMove
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_TextCursorMove
+; Description ...: For Text Cursor related movements.
+; Syntax ........: __LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount[, $bSelect = False])
+; Parameters ....: $oCursor             - [in/out] an object. A Text Cursor Object returned from any Text Cursor creation functions.
+;                  $iMove               - an Integer value. The movement command constant. See remarks and Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iCount              - an integer value. Number of movements to make.
+;                  $bSelect             - [optional] a boolean value. Default is False. If True, select data during this cursor movement.
+; Return values .: Success: Boolean.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iMove not an Integer.
+;				   @Error 1 @Extended 3 Return 0 = $iMove less than 0 or greater than highest move Constant. See Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $iCount not an integer or is a negative.
+;				   @Error 1 @Extended 5 Return 0 = $bSelect not a Boolean.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
+;				   --Success--
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully.
+;				   +				Returns True if the full count of movements were successful, else false if none or only partially successful.
+;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Only some movements accept movement amounts and selecting (such as $LOC_TEXTCUR_GO_RIGHT 2, True) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
+;					 To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
+;					#Cursor Movement Constants which accept number of Moves and Selecting:
+;						$LOC_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;						$LOC_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;					#Cursor Movements which accept Selecting Only:
+;						$LOC_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;						$LOC_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;					#Cursor Movements which accept nothing and are done once per call:
+;						$LOC_TEXTCUR_COLLAPSE_TO_START,
+;						$LOC_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCounted = 0
+	Local $bMoved = False
+	Local $asMoves[6]
+
+	$asMoves[$LOC_TEXTCUR_COLLAPSE_TO_START] = "collapseToStart"
+	$asMoves[$LOC_TEXTCUR_COLLAPSE_TO_END] = "collapseToEnd"
+	$asMoves[$LOC_TEXTCUR_GO_LEFT] = "goLeft"
+	$asMoves[$LOC_TEXTCUR_GO_RIGHT] = "goRight"
+	$asMoves[$LOC_TEXTCUR_GOTO_START] = "gotoStart"
+	$asMoves[$LOC_TEXTCUR_GOTO_END] = "gotoEnd"
+
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsInt($iMove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iMove, 0, UBound($asMoves) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bSelect) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	Switch $iMove
+		Case $LOC_TEXTCUR_GO_LEFT, $LOC_TEXTCUR_GO_RIGHT
+			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
+			$iCounted = ($bMoved) ? ($iCount) : (0)
+			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
+		Case $LOC_TEXTCUR_GOTO_START, $LOC_TEXTCUR_GOTO_END
+			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
+			$iCounted = ($bMoved) ? (1) : (0)
+			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
+		Case $LOC_TEXTCUR_COLLAPSE_TO_START, $LOC_TEXTCUR_COLLAPSE_TO_END
+			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
+			$iCounted = ($bMoved) ? (1) : (0)
+			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+		Case Else
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndSwitch
+EndFunc   ;==>__LOCalc_TextCursorMove
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_UnitConvert
