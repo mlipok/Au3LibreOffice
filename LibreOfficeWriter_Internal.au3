@@ -2796,12 +2796,12 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Internal_CursorGetDataType
-; Description ...: Get what type of Text data the cursor object is currently in. Internal version of CursorGetType.
+; Description ...: Get what type of Text data the cursor object is currently in. Internal version of CursorGetDataType.
 ; Syntax ........: __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor[, $ReturnObject = False])
 ; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor              - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ;                  $bReturnObject        - [optional] a boolean value. Default is False. If True, return the object used for creating a Text Object etc.
-; Return values .:Success: Object or Integer.
+; Return values .: Success: Object or Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2911,7 +2911,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_Internal_CursorGetType
-; Description ...: Get what type of Text data the cursor object is currently in. Internal version of CursorGetType.
+; Description ...: Get what type of cursor the object is. Internal version of CursorGetType.
 ; Syntax ........: __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
 ; Return values .:Success: Integer.
@@ -2924,7 +2924,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ;				   @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Returns what type of cursor the input Object is, such as a TableCursor, Text Cursor or a ViewCursor. Can also be a Paragraph or Text Portion.
+; Remarks .......: Returns what type of cursor the input Object is, such as a Table Cursor, Text Cursor or a View Cursor. Can also be a Paragraph or Text Portion.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
