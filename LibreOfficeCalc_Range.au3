@@ -1,5 +1,5 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
-#Tidy_Parameters=/sf
+
 #include-once
 
 ; Main LibreOffice Includes
@@ -30,12 +30,23 @@
 ; _LOCalc_RangeColumnsGetCount
 ; _LOCalc_RangeColumnVisible
 ; _LOCalc_RangeColumnWidth
+; _LOCalc_RangeCompute
 ; _LOCalc_RangeCopyMove
+; _LOCalc_RangeCreateCursor
 ; _LOCalc_RangeData
 ; _LOCalc_RangeDelete
+; _LOCalc_RangeFill
+; _LOCalc_RangeFillSeries
+; _LOCalc_RangeFilter
+; _LOCalc_RangeFilterClear
+; _LOCalc_RangeFindAll
+; _LOCalc_RangeFindNext
 ; _LOCalc_RangeFormula
+; _LOCalc_RangeGetAddressAsName
+; _LOCalc_RangeGetAddressAsPosition
 ; _LOCalc_RangeGetCellByName
 ; _LOCalc_RangeGetCellByPosition
+; _LOCalc_RangeGetSheet
 ; _LOCalc_RangeInsert
 ; _LOCalc_RangeNumbers
 ; _LOCalc_RangeQueryColumnDiff
@@ -47,6 +58,8 @@
 ; _LOCalc_RangeQueryPrecedents
 ; _LOCalc_RangeQueryRowDiff
 ; _LOCalc_RangeQueryVisible
+; _LOCalc_RangeReplace
+; _LOCalc_RangeReplaceAll
 ; _LOCalc_RangeRowDelete
 ; _LOCalc_RangeRowGetObjByPosition
 ; _LOCalc_RangeRowHeight
@@ -272,7 +285,7 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Columns in L.O. Calc are 0 based, to add columns in Column "A" in the LibreOffice UI, you would call $iColumn with 0.
-;				   Inserting Columnss does not increase the Column count, it simply adds blanks in a specific area and shifts all after content further right.
+;				   Inserting Columns does not increase the Column count, it simply adds blanks in a specific area and shifts all after content further right.
 ; Related .......: _LOCalc_RangeColumnDelete
 ; Link ..........:
 ; Example .......: Yes
@@ -491,6 +504,43 @@ Func _LOCalc_RangeColumnWidth(ByRef $oColumn, $bOptimal = Null, $iWidth = Null)
 EndFunc   ;==>_LOCalc_RangeColumnWidth
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeCompute
+; Description ...: Perform a Computation function on a Range. See Remarks.
+; Syntax ........: _LOCalc_RangeCompute(ByRef $oRange, $iFunction)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iFunction           - an integer value (0-12). The Computation Function to perform. See Constants $LOC_COMPUTE_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: Number
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iFunction not an Integer, less than 0 or greater than 12. See Constants $LOC_COMPUTE_* as defined in LibreOfficeCalc_Constants.au3.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to perform computation.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Number = Success. Successfully performed the requested computation, returning the result as a Numerical value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This makes no changes in the document itself, it only returns the result of the computation.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeCompute(ByRef $oRange, $iFunction)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $nResult
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iFunction, $LOC_COMPUTE_NONE, $LOC_COMPUTE_VARP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$nResult = $oRange.computeFunction($iFunction)
+	If Not IsNumber($nResult) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $nResult)
+EndFunc   ;==>_LOCalc_RangeCompute
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeCopyMove
 ; Description ...: Copy or Move a Cell or Cell Range to another range.
 ; Syntax ........: _LOCalc_RangeCopyMove(ByRef $oSheet, ByRef $oRangeSrc, ByRef $oRangeDest[, $bMove = False])
@@ -554,6 +604,43 @@ Func _LOCalc_RangeCopyMove(ByRef $oSheet, ByRef $oRangeSrc, ByRef $oRangeDest, $
 
 	EndIf
 EndFunc   ;==>_LOCalc_RangeCopyMove
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeCreateCursor
+; Description ...: Create a Sheet Cursor for a particular range.
+; Syntax ........: _LOCalc_RangeCreateCursor(ByRef $oSheet, ByRef $oRange)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a Sheet Cursor.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully created a Sheet Cursor for the specified Range, returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: A Sheet Cursor can be used in functions accepting a range. When created, the Cursor will have the called range selected.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeCreateCursor(ByRef $oSheet, ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheetCursor
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oSheetCursor = $oSheet.createCursorByRange($oRange)
+	If Not IsObj($oSheetCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheetCursor)
+EndFunc   ;==>_LOCalc_RangeCreateCursor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeData
@@ -673,6 +760,283 @@ Func _LOCalc_RangeDelete(ByRef $oSheet, $oRange, $iMode)
 EndFunc   ;==>_LOCalc_RangeDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFill
+; Description ...: Automatically fill cells with a value. See Remarks.
+; Syntax ........: _LOCalc_RangeFill(ByRef $oRange, $iDirection[, $iCount = 1])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iDirection          - an integer value (0-3). The Direction to perform the Fill operation. See Constants $LOC_FILL_DIR_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iCount              - [optional] an integer value. Default is 1. The number of Cells to take into account at the beginning of the range to constitute the fill algorithm.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iDirection not an Integer, less than 0 or greater than 3. See Constants $LOC_FILL_DIR_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 0.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Fill operation was successfully processed.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Fill value is calculated based on the first value(s) in the Range, the first value location depends on the Fill direction. If Fill direction is set to Right, the initial value must be in the first cell(s) on the left, and vice versa.
+; Related .......: _LOCalc_RangeFillSeries
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFill(ByRef $oRange, $iDirection, $iCount = 1)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iDirection, $LOC_FILL_DIR_DOWN, $LOC_FILL_DIR_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 0, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oRange.fillAuto($iDirection, $iCount)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFill
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFillSeries
+; Description ...: Fill a Range of Cells with Data.
+; Syntax ........: _LOCalc_RangeFillSeries(ByRef $oRange, $iDirection, $iMode, $nStep, $nEnd[, $iDateMode = $LOC_FILL_DATE_MODE_DAY])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iDirection          - an integer value (0-3). The Direction of the Series Fill. See Constants $LOC_FILL_DIR_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iMode               - an integer value (0-4). The Fill Type. See Constants $LOC_FILL_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $nStep               - a general number value. The amount the beginning value increments per step.
+;                  $nEnd                - a general number value. The maximum Value the Fill series can insert.
+;                  $iDateMode           - [optional] an integer value (0-3). Default is $LOC_FILL_DATE_MODE_DAY. The mode to calculate dates if $iMode is set to $LOC_FILL_MODE_DATE. See Constants $LOC_FILL_DATE_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iDirection not an Integer, less than 0 or greater than 3. See Constants $LOC_FILL_DIR_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0 or greater than 4. See Constants $LOC_FILL_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 4 Return 0 = $nStep not a Number value.
+;				   @Error 1 @Extended 5 Return 0 = $nEnd not a Number value.
+;				   @Error 1 @Extended 6 Return 0 = $iDateMode not an Integer, less than 0 or greater than 3. See Constants $LOC_FILL_DATE_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Fill series was successfully processed.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeFill
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFillSeries(ByRef $oRange, $iDirection, $iMode, $nStep, $nEnd, $iDateMode = $LOC_FILL_DATE_MODE_DAY)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iDirection, $LOC_FILL_DIR_DOWN, $LOC_FILL_DIR_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iMode, $LOC_FILL_MODE_SIMPLE, $LOC_FILL_MODE_AUTO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsNumber($nStep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsNumber($nEnd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LOCalc_IntIsBetween($iDateMode, $LOC_FILL_DATE_MODE_DAY, $LOC_FILL_DATE_MODE_YEAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oRange.fillSeries($iDirection, $iMode, $iDateMode, $nStep, $nEnd)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFillSeries
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFilter
+; Description ...: Apply a Filter to a Range.
+; Syntax ........: _LOCalc_RangeFilter(ByRef $oRange, ByRef $oFilterDesc)
+; Parameters ....: $oRange              - [in/out] an object. The Range to Filter. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oFilterDesc         - [in/out] an object. A Filter Descriptor created by a previous _LOCalc_FilterDescriptorCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oFilterDesc not an Object.
+;				   @Error 1 @Extended 3 Return 0 = Object called in $oFilterDesc not a Filter Descriptor.
+;				   @Error 1 @Extended 4 Return ? = Column called in one Filter Field is greater than number of columns in the Range. Returning FilterFields Array element containing bad Filter Field, as an Integer.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Filter Fields array from Filter Descriptor.
+;				   @Error 3 @Extended 2 Return 0 = Failed to get count of columns contained in Range.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully processed Filter operation.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeFilterClear, _LOCalc_FilterDescriptorCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFilter(ByRef $oRange, ByRef $oFilterDesc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iColumns
+	Local $atFilterField[0]
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFilterDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oFilterDesc.supportsService("com.sun.star.sheet.SheetFilterDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$atFilterField = $oFilterDesc.getFilterFields2()
+	If Not IsArray($atFilterField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$iColumns = $oRange.Columns.Count()
+	If Not IsInt($iColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	For $i = 0 To UBound($atFilterField) - 1
+		If Not __LOCalc_IntIsBetween($atFilterField[$i].Field(), 0, $iColumns - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
+	Next
+
+	$oRange.filter($oFilterDesc)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFilter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFilterClear
+; Description ...: Clear any previous filters for a Range.
+; Syntax ........: _LOCalc_RangeFilterClear(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. The Range to clear filtering for. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a new, blank, Filter Descriptor.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully cleared any old Filters for the Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeFilter
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFilterClear(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFilterDesc
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oFilterDesc = $oRange.createFilterDescriptor(True)
+	If Not IsObj($oFilterDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oRange.filter($oFilterDesc) ; Calling filter with a blank Filter Desc clears any old filters applied.
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFilterClear
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFindAll
+; Description ...: Find all matches contained in a document of a specified Search String.
+; Syntax ........: _LOCalc_RangeFindAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $sSearchString       - a string value. A String of text or regular expression to search for.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oSrchDescriptObject not a Search Descriptor Object.
+;				   @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Search did not return an Object, something went wrong.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Search was Successful, but found no results.
+;				   @Error 0 @Extended ? Return Array = Success. Search was Successful, returning 1 dimensional array containing the objects to each match, @Exteneded is set to the number of matches.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Objects returned are Ranges and can be used in any of the functions accepting a Range Object etc., to modify their properties or even the text itself.
+;				   Only the Sheet that contains the Range is searched, to search all Sheets you will have to cycle through and perform a search for each.
+; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_RangeFindNext, _LOCalc_RangeReplaceAll, _LOCalc_RangeReplace
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFindAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oResults
+	Local $aoResults[0]
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$oSrchDescript.SearchString = $sSearchString
+
+	$oResults = $oRange.findAll($oSrchDescript)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oResults.getCount() > 0) Then
+		ReDim $aoResults[$oResults.getCount]
+		For $i = 0 To $oResults.getCount() - 1
+			$aoResults[$i] = $oResults.getByIndex($i)
+			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeFindAll
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFindNext
+; Description ...: Find a Search String in a Document once or one at a time.
+; Syntax ........: _LOCalc_RangeFindNext(ByRef $oRange, ByRef $oSrchDescript, $sSearchString[, $oLastFind = Null])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
+;                  $oLastFind           - [optional] an object. Default is Null. The last returned Object by a previous call to this function to begin the search from, if set to Null, the search begins at the start of the Range.
+; Return values .: Success: Object or 1.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
+;				   @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
+;				   @Error 1 @Extended 5 Return 0 = $oLastFind not an Object and not set to Null, or failed to retrieve starting position from $oRange.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Search was successful but found no matches.
+;				   @Error 0 @Extended 1 Return Object = Success. Search was successful, returning the resulting Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object returned is a Range and can be used in any of the functions accepting a Range Object etc., to modify their properties or even the text itself.
+;				   Only the Sheet that contains the Range is searched, to search all Sheets you will have to cycle through and perform a search for each.
+; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_RangeFindAll, _LOCalc_RangeReplaceAll, _LOCalc_RangeReplace
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFindNext(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $oLastFind = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oResult, $oFindRange
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If ($oLastFind <> Null) Then ; If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
+		If Not IsObj($oLastFind) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		; If Search Backwards is False, then retrieve the end of the last result's range, else get the Start.
+		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oRange.getCellByPosition($oLastFind.RangeAddress.EndColumn(), $oLastFind.RangeAddress.EndRow())) : ($oRange.getCellByPosition($oLastFind.RangeAddress.StartColumn(), $oLastFind.RangeAddress.StartRow()))
+	EndIf
+
+	$oSrchDescript.SearchString = $sSearchString
+
+	If IsObj($oLastFind) Then
+		$oResult = $oRange.findNext($oFindRange, $oSrchDescript)
+
+	Else ; If a search hasn't been done before, FindFirst must be used or a result could be missed in the first cell.
+		$oResult = $oRange.findFirst($oSrchDescript)
+	EndIf
+
+	Return (IsObj($oResult)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oResult)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeFindNext
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFormula
 ; Description ...: Set or Retrieve Formulas in a Range.
 ; Syntax ........: _LOCalc_RangeFormula(ByRef $oRange[, $aasFormulas = Null])
@@ -745,6 +1109,81 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeFormula
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeGetAddressAsName
+; Description ...: Retrieve the Name of the beginning and ending cells of the range.
+; Syntax ........: _LOCalc_RangeGetAddressAsName(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: String
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to Retrieve Range Address.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return String = Success. Successfully retrieved Range's address, returning it as a string.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Return will be like the following, including the dollar signs. "$Sheet1.$A$1:$F$18"
+; Related .......: _LOCalc_RangeGetAddressAsPosition
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeGetAddressAsName(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sName
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$sName = $oRange.AbsoluteName()
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $sName)
+EndFunc   ;==>_LOCalc_RangeGetAddressAsName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeGetAddressAsPosition
+; Description ...: Retrieve the Position of the beginning and ending cells of the range.
+; Syntax ........: _LOCalc_RangeGetAddressAsPosition(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to Retrieve Range Address.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Array = Success. Successfully retrieved Range's address, returning it as a 5 element Array. See remarks.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The return will be a 5 element array giving the Range's address in the following order: Sheet index number, Range's first Cell Column, First Cell Row, Last Cell Column, Last Cell Row.
+; Related .......: _LOCalc_RangeGetAddressAsName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeGetAddressAsPosition(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddr
+	Local $aiAddress[5]
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tRangeAddr = $oRange.RangeAddress()
+	If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$aiAddress[0] = $tRangeAddr.Sheet()
+	$aiAddress[1] = $tRangeAddr.StartColumn()
+	$aiAddress[2] = $tRangeAddr.StartRow()
+	$aiAddress[3] = $tRangeAddr.EndColumn()
+	$aiAddress[4] = $tRangeAddr.EndRow()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $aiAddress)
+EndFunc   ;==>_LOCalc_RangeGetAddressAsPosition
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeGetCellByName
@@ -850,6 +1289,40 @@ Func _LOCalc_RangeGetCellByPosition(ByRef $oRange, $iColumn, $iRow, $iToColumn =
 
 	EndIf
 EndFunc   ;==>_LOCalc_RangeGetCellByPosition
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeGetSheet
+; Description ...: Return the Sheet Object that contains the Range.
+; Syntax ........: _LOCalc_RangeGetSheet(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to Retrieve Sheet Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully retrieved Range's parent Sheet, returning the Sheet's Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeGetSheet(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheet
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oSheet = $oRange.Spreadsheet()
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
+EndFunc   ;==>_LOCalc_RangeGetSheet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeInsert
@@ -1434,6 +1907,120 @@ Func _LOCalc_RangeQueryVisible(ByRef $oRange)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($aoRanges), $aoRanges)
 EndFunc   ;==>_LOCalc_RangeQueryVisible
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeReplace
+; Description ...: Replace the first instances of a search within a Range.
+; Syntax ........: _LOCalc_RangeReplace(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $sReplaceString)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
+;                  $sReplaceString      - a string value. A String of text or a regular expression to replace the first result with.
+; Return values .: Success: 0 or Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
+;				   @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
+;				   @Error 1 @Extended 5 Return 0 = $sReplaceString not a String.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Found a result, but failed to replace it.
+;				   --Success--
+;				   @Error 0 @Extended 1 Return Object = Success. Search and Replace was successful, returning Object for Cell that the find and replace was performed upon.
+;				   @Error 0 @Extended 0 Return 0 = Success. Search and replace was successful, no results found.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Libre Office does not offer a Function to call to replace only one result within a Range, consequently I have had to create my own, which means this may not work exactly as expected.
+; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_RangeFindAll, _LOCalc_RangeFindNext, _LOCalc_RangeReplaceAll,
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeReplace(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $sReplaceString)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iReplacements
+	Local $oResult
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oSrchDescript.SearchString = $sSearchString
+	$oSrchDescript.ReplaceString = $sReplaceString
+
+	$oResult = $oRange.findFirst($oSrchDescript)
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_SUCCESS, 1, 0) ; No Results
+
+	$iReplacements = $oResult.replaceAll($oSrchDescript)
+
+	Return ($iReplacements > 0) ? (SetError($__LO_STATUS_SUCCESS, 1, $oResult)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+EndFunc   ;==>_LOCalc_RangeReplace
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeReplaceAll
+; Description ...: Replace all instances of a search.
+; Syntax ........: _LOCalc_RangeReplaceAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $sReplaceString)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOCalc_SearchDescriptorCreate function.
+;                  $sSearchString       - a string value. A String of text or a Regular Expression to Search for.
+;                  $sReplaceString      - a string value. A String of text or a Regular Expression to replace any results with.
+; Return values .: Success: 0 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oSrchDescript not a Search Descriptor Object.
+;				   @Error 1 @Extended 4 Return 0 = $sSearchString not a String.
+;				   @Error 1 @Extended 5 Return 0 = $sReplaceString not a String.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Results were found, but failed to perform the replacement.
+;				   --Success--
+;				   @Error 0 @Extended ? Return Array = Success. Search and Replace was successful, @Extended set to number of replacements made, returning array Cell/CellRange Objects of all Cells modified.
+;				   @Error 0 @Extended 0 Return 0 = Success. Search was successful, no results found.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Only the Sheet that contains the Range is searched, to search all Sheets you will have to cycle through and perform a search for each.
+;				   Number of Replacements DOESN'T mean that is the size of the Array. If replacements where in several cells connected, the return will be a Cell Range for that area instead of individual cells.
+; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_RangeFindAll, _LOCalc_RangeFindNext, _LOCalc_RangeReplace
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeReplaceAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $sReplaceString)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oResults
+	Local $aoResults[0]
+	Local $iReplacements
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oSrchDescript) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oSrchDescript.supportsService("com.sun.star.util.SearchDescriptor") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sSearchString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsString($sReplaceString) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oSrchDescript.SearchString = $sSearchString
+	$oSrchDescript.ReplaceString = $sReplaceString
+
+	$oResults = $oRange.findAll($oSrchDescript)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_SUCCESS, 0, 0)
+
+	If ($oResults.getCount() > 0) Then
+		ReDim $aoResults[$oResults.getCount]
+		For $i = 0 To $oResults.getCount() - 1
+			$aoResults[$i] = $oResults.getByIndex($i)
+			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	$iReplacements = $oRange.replaceAll($oSrchDescript)
+
+	Return ($iReplacements > 0) ? (SetError($__LO_STATUS_SUCCESS, $iReplacements, $aoResults)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+EndFunc   ;==>_LOCalc_RangeReplaceAll
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeRowDelete

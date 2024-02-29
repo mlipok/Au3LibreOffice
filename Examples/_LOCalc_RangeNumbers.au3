@@ -18,7 +18,7 @@ Func Example()
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
 
-	; Fill my arrays with the desired Number/String Values I want in Column A.
+	; Fill my arrays with the desired Number Values I want in Column A.
 	$avRowData[0] = 1 ; A1
 	$avRowData[1] = 0 ; B1
 	$aavData[0] = $avRowData
