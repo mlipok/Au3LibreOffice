@@ -156,10 +156,21 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleUnderline
 - Cursor Functions and Examples
 	- _LOCalc_SheetCursorMove
+	- _LOCalc_TextCursorCharPosition
+	- _LOCalc_TextCursorCharSpacing
+	- _LOCalc_TextCursorEffect
 	- _LOCalc_TextCursorFont
+	- _LOCalc_TextCursorFontColor
+	- _LOCalc_TextCursorGetString
+	- _LOCalc_TextCursorGoToRange
 	- _LOCalc_TextCursorInsertString
 	- _LOCalc_TextCursorIsCollapsed
 	- _LOCalc_TextCursorMove
+	- _LOCalc_TextCursorOverline
+	- _LOCalc_TextCursorParObjCreateList
+	- _LOCalc_TextCursorParObjSectionsGet
+	- _LOCalc_TextCursorStrikeOut
+	- _LOCalc_TextCursorUnderline
 - Document Functions and Examples
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
@@ -237,6 +248,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellTextOrient
 	- __LOCalc_CellTextProperties
 	- __LOCalc_CellUnderLine
+	- __LOCalc_CharPosition
+	- __LOCalc_CharSpacing
 	- __LOCalc_CreateStruct
 	- __LOCalc_FilterNameGet
 	- __LOCalc_Internal_CursorGetType
