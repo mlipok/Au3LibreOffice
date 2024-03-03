@@ -54,7 +54,7 @@ Func Example()
 
 	; Retrieve the current font settings. Return will be an array in order of function parameters.
 	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Filter descriptor settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
 			"The Font name is: " & $avSettings[0] & @CRLF & _
@@ -69,7 +69,7 @@ Func Example()
 
 	; Retrieve the current font settings. Return will be an array in order of function parameters.
 	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Filter descriptor settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
 			"The Font name is: " & $avSettings[0] & @CRLF & _

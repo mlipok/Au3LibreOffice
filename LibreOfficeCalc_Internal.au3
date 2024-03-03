@@ -37,6 +37,8 @@
 ; __LOCalc_CellTextOrient
 ; __LOCalc_CellTextProperties
 ; __LOCalc_CellUnderLine
+; __LOCalc_CharPosition
+; __LOCalc_CharSpacing
 ; __LOCalc_CreateStruct
 ; __LOCalc_FilterNameGet
 ; __LOCalc_Internal_CursorGetType
@@ -1439,6 +1441,173 @@ Func __LOCalc_CellUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHasCo
 EndFunc   ;==>__LOCalc_CellUnderLine
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CharPosition
+; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
+; Syntax ........: __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
+; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.style.CharacterProperties".
+;                  $bAutoSuper          -  a boolean value. If True, automatic sizing for Superscript is active.
+;                  $iSuperScript        -  an integer value. The Superscript percentage value. See Remarks.
+;                  $bAutoSub            -  a boolean value. If True, automatic sizing for Subscript is active.
+;                  $iSubScript          -  an integer value. The Subscript percentage value. See Remarks.
+;                  $iRelativeSize       -  an integer value (1-100). The size percentage relative to current font size.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, less than 0, higher than 100 and Not 14000.
+;				   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, less than -100, higher than 100 and Not 14000.
+;				   @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;				   |								1 = Error setting $iSuperScript
+;				   |								2 = Error setting $iSubScript
+;				   |								4 = Error setting $iRelativeSize.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
+;					The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from
+;						1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage. For the user's
+;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
+;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
+;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
+;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
+;						separate parameters to be able to determine if the user wants to automatically set Superscript or
+;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an
+;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
+;						this function, and thus will over-write any Superscript settings.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avPosition[5]
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LOCalc_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then
+		__LOCalc_ArrayFill($avPosition, ($oObj.CharEscapement() = 14000) ? (True) : (False), ($oObj.CharEscapement() > 0) ? ($oObj.CharEscapement()) : (0), _
+				($oObj.CharEscapement() = -14000) ? (True) : (False), ($oObj.CharEscapement() < 0) ? ($oObj.CharEscapement()) : (0), $oObj.CharEscapementHeight())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
+	EndIf
+
+	If ($bAutoSuper <> Null) Then
+		If Not IsBool($bAutoSuper) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		; If $bAutoSuper = True set it to 14000 (automatic Superscript) else if $iSuperScript is set, let that overwrite
+		;	the current setting, else if subscript is true or set to an integer, it will overwrite the setting. If nothing
+		; else set Subscript to 1
+		$iSuperScript = ($bAutoSuper) ? (14000) : ((IsInt($iSuperScript)) ? ($iSuperScript) : ((IsInt($iSubScript) Or ($bAutoSub = True)) ? ($iSuperScript) : (1)))
+	EndIf
+
+	If ($bAutoSub <> Null) Then
+		If Not IsBool($bAutoSub) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
+		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
+		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
+
+	EndIf
+
+	If ($iSuperScript <> Null) Then
+		If Not __LOCalc_IntIsBetween($iSuperScript, 0, 100, "", 14000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oObj.CharEscapement = $iSuperScript
+		$iError = ($oObj.CharEscapement() = $iSuperScript) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iSubScript <> Null) Then
+		If Not __LOCalc_IntIsBetween($iSubScript, -100, 100, "", "-14000:14000") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$iSubScript = ($iSubScript > 0) ? Int("-" & $iSubScript) : $iSubScript
+		$oObj.CharEscapement = $iSubScript
+		$iError = ($oObj.CharEscapement() = $iSubScript) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iRelativeSize <> Null) Then
+		If Not __LOCalc_IntIsBetween($iRelativeSize, 1, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oObj.CharEscapementHeight = $iRelativeSize
+		$iError = ($oObj.CharEscapementHeight() = $iRelativeSize) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOCalc_CharPosition
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CharSpacing
+; Description ...: Set and retrieve the spacing between characters (Kerning).
+; Syntax ........: __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
+; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.style.CharacterProperties".
+;                  $bAutoKerning        - a boolean value. If True, applies a spacing in between certain pairs of characters.
+;                  $nKerning            - a general number value (-2-928.8). The kerning value of the characters. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;				   |								1 = Error setting $bAutoKerning
+;				   |								2 = Error setting $nKerning.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;					The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
+;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
+;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
+;						value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
+;						;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
+;						kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to
+;						any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
+;						max settable kerning  is -2.0 Pt to 928.8 Pt.
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avKerning[2]
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If __LOCalc_VarsAreNull($bAutoKerning, $nKerning) Then
+		$nKerning = __LOCalc_UnitConvert($oObj.CharKerning(), $__LOCONST_CONVERT_UM_PT)
+		__LOCalc_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
+	EndIf
+
+	If ($bAutoKerning <> Null) Then
+		If Not IsBool($bAutoKerning) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oObj.CharAutoKerning = $bAutoKerning
+		$iError = ($oObj.CharAutoKerning() = $bAutoKerning) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($nKerning <> Null) Then
+		If Not __LOCalc_NumIsBetween($nKerning, -2, 928.8) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$nKerning = __LOCalc_UnitConvert($nKerning, $__LOCONST_CONVERT_PT_UM)
+		$oObj.CharKerning = $nKerning
+		$iError = ($oObj.CharKerning() = $nKerning) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOCalc_CharSpacing
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_CreateStruct
 ; Description ...: Creates a Struct.
 ; Syntax ........: __LOCalc_CreateStruct($sStructName)
@@ -2125,8 +2294,6 @@ Func __LOCalc_SetPropertyValue($sName, $vValue)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tProperties)
 EndFunc   ;==>__LOCalc_SetPropertyValue
-
-
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_SheetCursorMove
