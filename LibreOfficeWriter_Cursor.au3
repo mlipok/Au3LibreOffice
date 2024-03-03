@@ -206,7 +206,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bSelect not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $oCursor not a Text or View Cursor.
-;				   @Error 1 @Extended 5 Return 0 = $oRange not a Text or View Cursor.
+;				   @Error 1 @Extended 5 Return 0 = $oRange is a Table Cursor, and is not supported.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error determining $oCursor cursor type.
 ;				   @Error 3 @Extended 2 Return 0 = Error determining $oRange cursor type.
@@ -237,7 +237,7 @@ Func _LOWriter_CursorGoToRange(ByRef $oCursor, ByRef $oRange, $bSelect = False)
 	$iRangeType = __LOWriter_Internal_CursorGetType($oRange)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	If ($iCursorType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRangeType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iRangeType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRangeType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oCursor.gotoRange($oRange, $bSelect)
 
