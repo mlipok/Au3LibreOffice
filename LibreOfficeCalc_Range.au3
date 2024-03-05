@@ -645,30 +645,38 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeData
 ; Description ...: Set or Retrieve Data in a Range.
-; Syntax ........: _LOCalc_RangeData(ByRef $oRange[, $aavData = Null])
+; Syntax ........: _LOCalc_RangeData(ByRef $oRange[, $aavData = Null[, $bStrictSize = False]])
 ; Parameters ....: $oRange              - [in/out] an object. The Cell or Cell Range to set or retrieve data . A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $aavData             - [optional] an array of Arrays containing variants. Default is Null. An Array of Arrays containing data, strings or numbers, to fill the range with. See remarks.
+;                  $bStrictSize         - [optional] a boolean value. Default is False. If True, The Range size must explicitly match the array sizing. If False, The Range will be resized right or down to fit the Array sizing.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 or ? and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $aavData not an Array.
-;				   @Error 1 @Extended 3 Return 0 = $aavData array contains less or more elements than number of rows contained in the cell range.
-;				   @Error 1 @Extended 4 Return ? = Element of $aavData does not contain an array. Returning array element number of $aavData containing error.
-;				   @Error 1 @Extended 5 Return ? = Array contained in $aavData has less or more elements than number of columns in the cell range. Returning array element number of $aavData containing faulty array.
+;				   @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aavData array contains less or more elements than number of rows contained in the cell range.
+;				   @Error 1 @Extended 5 Return ? = Element of $aavData does not contain an array. Returning array element number of $aavData containing error.
+;				   @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aavData has less or more elements than number of columns in the cell range. Returning array element number of $aavData containing faulty array.
+;				   @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aavData has less or more elements than first Array contained in $aavData. Returning array element number of $aavData containing faulty array.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Data contained in the Cell Range.
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
+;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;				   @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;				   @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Data was successfully set for the cell range.
 ;				   @Error 0 @Extended 1 Return Array of Arrays = Success. $aavData set to Null, returning an array containing arrays, which contain any data content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return Strings and Numbers contained in the cell range when $aavData is called with Null keyword. Array will be an array of arrays. The internal arrays will contain numerical or string data, depending on cell content.
-;				   $aavData must be an array containing arrays. The main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill.
+;				   $aavData must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;				   Any data previously contained in the Cell Range will be overwritten.
 ;				   All array elements must contain appropriate data, strings or numbers.
 ;				   Formulas will be inserted as strings only, and will not be valid.
@@ -676,7 +684,7 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null)
+Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -692,6 +700,8 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null)
 
 	If Not IsArray($aavData) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
+	If Not IsBool($bStrictSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
 	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
@@ -699,18 +709,46 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null)
 	$iEnd = $oRange.RangeAddress.EndRow()
 	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	If (UBound($aavData) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If $bStrictSize Then ; If Array is wrongly sized, return an error.
+		If (UBound($aavData) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	Else ; Expand the Range to fit the Array
+		If (UBound($aavData) <> ($iEnd - $iStart + 1)) Then
+			If (($oRange.RangeAddress.StartRow() + UBound($aavData)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aavData) - 1))
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+		EndIf
+
+	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
-	For $i = 0 To UBound($aavData) - 1
-		If Not IsArray($aavData[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
-		If (UBound($aavData[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
-	Next
+	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
+
+		For $i = 0 To UBound($aavData) - 1
+			If Not IsArray($aavData[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aavData[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		Next
+
+	Else ; Check if the internal arrays are sized correctly, resize range if not.
+
+		For $i = 0 To UBound($aavData) - 1
+			If Not IsArray($aavData[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aavData[$i]) <> UBound($aavData[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
+		Next
+
+		If (UBound($aavData[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
+			If (($oRange.RangeAddress.StartColumn() + UBound($aavData[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aavData[0]) - 1), $oRange.RangeAddress.EndRow())
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+
+		EndIf
+
+	EndIf
 
 	$oRange.setDataArray($aavData)
 
@@ -1039,37 +1077,45 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFormula
 ; Description ...: Set or Retrieve Formulas in a Range.
-; Syntax ........: _LOCalc_RangeFormula(ByRef $oRange[, $aasFormulas = Null])
+; Syntax ........: _LOCalc_RangeFormula(ByRef $oRange[, $aasFormulas = Null[, $bStrictSize = False]])
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $aasFormulas         - [optional] an array or arrays containing strings. Default is Null. An Array of Arrays containing formula strings to fill the range with. See remarks.
+;                  $bStrictSize         - [optional] a boolean value. Default is False. If True, The Range size must explicitly match the array sizing. If False, The Range will be resized right or down to fit the Array sizing.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 or ? and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $aasFormulas not an Array.
-;				   @Error 1 @Extended 3 Return 0 = $aasFormulas array contains less or more elements than number of rows contained in the cell range.
-;				   @Error 1 @Extended 4 Return ? = Element of $aasFormulas does not contain an array. Returning array element number of $aasFormulas containing error.
-;				   @Error 1 @Extended 5 Return ? = Array contained in $aasFormulas has less or more elements than number of columns in the cell range. Returning array element number of $aasFormulas containing faulty array.
+;				   @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aasFormulas array contains less or more elements than number of rows contained in the cell range.
+;				   @Error 1 @Extended 5 Return ? = Element of $aasFormulas does not contain an array. Returning array element number of $aasFormulas containing error.
+;				   @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aasFormulas has less or more elements than number of columns in the cell range. Returning array element number of $aasFormulas containing faulty array.
+;				   @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aasFormulas has less or more elements than first Array contained in $aasFormulas. Returning array element number of $aasFormulas containing faulty array.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
+;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;				   @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;				   @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Formulas were successfully set for the cell range.
 ;				   @Error 0 @Extended 1 Return Array of Arrays = Success. $aasFormulas set to Null, returning an array containing arrays, which contain any Formula content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only formulas contained in the cell range when $aasFormulas is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or formula strings, depending on cell content.
-;				   $aasFormulas must be an array containing arrays. The main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill.
+;				   $aasFormulas must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;				   Any data previously contained in the Cell Range will be overwritten.
 ;				   All array elements must contain strings, blank or otherwise.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null)
+Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1084,6 +1130,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null)
 	EndIf
 
 	If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bStrictSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
@@ -1092,18 +1139,46 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null)
 	$iEnd = $oRange.RangeAddress.EndRow()
 	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	If (UBound($aasFormulas) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If $bStrictSize Then ; If Array is wrongly sized, return an error.
+		If (UBound($aasFormulas) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	Else ; Expand the Range to fit the Array
+		If (UBound($aasFormulas) <> ($iEnd - $iStart + 1)) Then
+			If (($oRange.RangeAddress.StartRow() + UBound($aasFormulas)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aasFormulas) - 1))
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+		EndIf
+
+	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
-	For $i = 0 To UBound($aasFormulas) - 1
-		If Not IsArray($aasFormulas[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
-		If (UBound($aasFormulas[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
-	Next
+	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
+
+		For $i = 0 To UBound($aasFormulas) - 1
+			If Not IsArray($aasFormulas[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aasFormulas[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		Next
+
+	Else ; Check if the internal arrays are sized correctly, resize range if not.
+
+		For $i = 0 To UBound($aasFormulas) - 1
+			If Not IsArray($aasFormulas[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aasFormulas[$i]) <> UBound($aasFormulas[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
+		Next
+
+		If (UBound($aasFormulas[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
+			If (($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0]) - 1), $oRange.RangeAddress.EndRow())
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+
+		EndIf
+
+	EndIf
 
 	$oRange.setFormulaArray($aasFormulas)
 
@@ -1371,37 +1446,45 @@ EndFunc   ;==>_LOCalc_RangeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNumbers
 ; Description ...: Set or Retrieve Numbers in a Range.
-; Syntax ........: _LOCalc_RangeNumbers(ByRef $oRange[, $aanNumbers = Null])
+; Syntax ........: _LOCalc_RangeNumbers(ByRef $oRange[, $aanNumbers = Null[, $bStrictSize = False]])
 ; Parameters ....: $oRange              - [in/out] an object. A cell or cell range to set or retrieve number values for. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $aanNumbers          - [optional] an array of arrays containing general numbers. Default is Null. An Array of Arrays containing numbers to fill the range with. See remarks.
+;                  $bStrictSize         - [optional] a boolean value. Default is False. If True, The Range size must explicitly match the array sizing. If False, The Range will be resized right or down to fit the Array sizing.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 or ? and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $aanNumbers not an Array.
-;				   @Error 1 @Extended 3 Return 0 = $aanNumbers array contains less or more elements than number of rows contained in the cell range.
-;				   @Error 1 @Extended 4 Return ? = Element of $aanNumbers does not contain an array. Returning array element number of $aanNumbers containing error.
-;				   @Error 1 @Extended 5 Return ? = Array contained in $aanNumbers has less or more elements than number of columns in the cell range. Returning array element number of $aanNumbers containing faulty array.
+;				   @Error 1 @Extended 3 Return 0 = $bStrictSize not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bStrictSize set to True, and $aanNumbers array contains less or more elements than number of rows contained in the cell range.
+;				   @Error 1 @Extended 5 Return ? = Element of $aanNumbers does not contain an array. Returning array element number of $aanNumbers containing error.
+;				   @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aanNumbers has less or more elements than number of columns in the cell range. Returning array element number of $aanNumbers containing faulty array.
+;				   @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aanNumbers has less or more elements than first Array contained in $aanNumbers. Returning array element number of $aanNumbers containing faulty array.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Numerical Data contained in the Cell Range.
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
+;				   @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;				   @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
+;				   @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;				   @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Values were successfully set for the cell range.
 ;				   @Error 0 @Extended 1 Return Array of Arrays = Success. $aanNumbers set to Null, returning an array containing arrays, which contain any numerical content contained in the cell range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only numbers contained in the cell range when $aanNumbers is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or numbers, depending on cell content.
-;				   $aanNumbers must be an array containing arrays. The main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill.
+;				   $aanNumbers must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;				   Any data previously contained in the Cell Range will be overwritten.
 ;				   All array elements must contain numbers.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null)
+Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1416,6 +1499,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null)
 	EndIf
 
 	If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bStrictSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
@@ -1424,18 +1508,46 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null)
 	$iEnd = $oRange.RangeAddress.EndRow()
 	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
-	If (UBound($aanNumbers) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If $bStrictSize Then ; If Array is wrongly sized, return an error.
+		If (UBound($aanNumbers) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	Else ; Expand the Range to fit the Array
+		If (UBound($aanNumbers) <> ($iEnd - $iStart + 1)) Then
+			If (($oRange.RangeAddress.StartRow() + UBound($aanNumbers)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aanNumbers) - 1))
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+		EndIf
+
+	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
 
-	For $i = 0 To UBound($aanNumbers) - 1
-		If Not IsArray($aanNumbers[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
-		If (UBound($aanNumbers[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
-	Next
+	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
+
+		For $i = 0 To UBound($aanNumbers) - 1
+			If Not IsArray($aanNumbers[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aanNumbers[$i]) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		Next
+
+	Else ; Check if the internal arrays are sized correctly, resize range if not.
+
+		For $i = 0 To UBound($aanNumbers) - 1
+			If Not IsArray($aanNumbers[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If (UBound($aanNumbers[$i]) <> UBound($aanNumbers[0])) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i) ; If all arrays aren't same size as first array, then error.
+		Next
+
+		If (UBound($aanNumbers[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
+			If (($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0]) - 1), $oRange.RangeAddress.EndRow())
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+
+		EndIf
+
+	EndIf
 
 	$oRange.setData($aanNumbers)
 

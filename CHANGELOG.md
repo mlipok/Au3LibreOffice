@@ -364,6 +364,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_UNDERLINE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
+- Autosize option to Range Data, Formulas, and Numbers.
 
 > [!NOTE]
 > **LibreOfficeWriter**
