@@ -498,7 +498,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidt,
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidth,
 ;					_LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -980,7 +980,7 @@ EndFunc   ;==>_LOWriter_PageStyleCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleDelete(ByRef $oDoc, $oPageStyle)
+Func _LOWriter_PageStyleDelete(ByRef $oDoc, ByRef $oPageStyle)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3152,7 +3152,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleLayout(ByRef $oDoc, $oPageStyle, $iLayout = Null, $iNumFormat = Null, $sRefStyle = Null, $bGutterOnRight = Null, $bGutterAtTop = Null, $bBackCoversMargins = Null, $sPaperTray = Null)
+Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, $iNumFormat = Null, $sRefStyle = Null, $bGutterOnRight = Null, $bGutterAtTop = Null, $bBackCoversMargins = Null, $sPaperTray = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3362,7 +3362,7 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, $oPageStyle, $sNewPageStyleName = Null, $bHidden = Null, $sFollowStyle = Null)
+Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyleName = Null, $bHidden = Null, $sFollowStyle = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3533,7 +3533,7 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_PageStylesGetNames
-; Description ...: Retrieve a list of all Paragraph Style names available for a document.
+; Description ...: Retrieve a list of all Page Style names available for a document.
 ; Syntax ........: _LOWriter_PageStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Page Styles are returned.

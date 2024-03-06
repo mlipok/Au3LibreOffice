@@ -153,7 +153,7 @@ Global Const _
 
 ; Cursor Status
 Global Enum _
-		$LOW_CURSOR_STAT_IS_COLLAPSED, _                        ; Test if the start and end positions are the same for a cursor selection, meaning the cursor has nothing selected..
+		$LOW_CURSOR_STAT_IS_COLLAPSED, _                        ; Test if the start and end positions are the same for a cursor selection, meaning the cursor has nothing selected.
 		$LOW_CURSOR_STAT_IS_START_OF_WORD, _                    ; Test if a cursor is at the start of a word. Returns True if so.
 		$LOW_CURSOR_STAT_IS_END_OF_WORD, _                      ; Test if a cursor is at the end of a word. Returns True if so.
 		$LOW_CURSOR_STAT_IS_START_OF_SENTENCE, _                ; Test if a cursor is at the start of a sentence. Returns True if so.
@@ -167,9 +167,9 @@ Global Enum _
 
 ; Cursor Type Related Constants
 Global Const _
-		$LOW_CURTYPE_TEXT_CURSOR = 1, _                         ; Cursor is a TextCursor type.
-		$LOW_CURTYPE_TABLE_CURSOR = 2, _                        ; Cursor is a TableCursor type.
-		$LOW_CURTYPE_VIEW_CURSOR = 3, _                         ; Cursor is a ViewCursor type.
+		$LOW_CURTYPE_TEXT_CURSOR = 1, _                         ; Cursor is a Text Cursor type.
+		$LOW_CURTYPE_TABLE_CURSOR = 2, _                        ; Cursor is a Table Cursor type.
+		$LOW_CURTYPE_VIEW_CURSOR = 3, _                         ; Cursor is a View Cursor type.
 		$LOW_CURTYPE_PARAGRAPH = 4, _                           ; Object is a Paragraph Object.
 		$LOW_CURTYPE_TEXT_PORTION = 5                           ; Object is a Paragraph Text Portion Object.
 

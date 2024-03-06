@@ -16,8 +16,7 @@ Func Example()
 	$oPageStyle = _LOWriter_PageStyleCreate($oDoc, "NewPageStyle")
 	If @error Then _ERROR($oDoc, "Failed to create a new Page Style. Error:" & @error & " Extended:" & @extended)
 
-	; Change the Page Style's name to "New-PageStyle-Name", hidden to False, Set the follow style to "HTML", the parent style to
-	; "Default Page Style".
+	; Change the Page Style's name to "New-PageStyle-Name", hidden to False, Set the follow style to "HTML"
 	_LOWriter_PageStyleOrganizer($oDoc, $oPageStyle, "New-PageStyle-Name", False, "HTML")
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 

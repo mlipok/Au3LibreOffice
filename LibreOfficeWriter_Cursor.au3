@@ -80,9 +80,10 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;				   @Error 1 @Extended 5 Return 0 = $iFlag  set to flag not available for "View" cursor.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor unknown cursor type.
 ;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error retrieving Status for Text Cursor.
-;				   @Error 3 @Extended 2 Return 0 = Error retrieving Status for Table Cursor.
-;				   @Error 3 @Extended 3 Return 0 = Error retrieving Status for View Cursor.
+;				   @Error 3 @Extended 1 Return 0 = Error retrieving Cursor Type.
+;				   @Error 3 @Extended 2 Return 0 = Error retrieving Status for Text Cursor.
+;				   @Error 3 @Extended 3 Return 0 = Error retrieving Status for Table Cursor.
+;				   @Error 3 @Extended 4 Return 0 = Error retrieving Status for View Cursor.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See called flag for expected return type.
 ; Author ........: donnyh13
@@ -139,17 +140,17 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_COLLAPSED, $LOW_CURSOR_STAT_IS_END_OF_PAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			If Not ($iFlag = $LOW_CURSOR_STAT_GET_RANGE_NAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
-			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
+			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
@@ -205,7 +206,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bSelect not a Boolean.
 ;				   @Error 1 @Extended 4 Return 0 = $oCursor not a Text or View Cursor.
-;				   @Error 1 @Extended 5 Return 0 = $oRange not a Text or View Cursor.
+;				   @Error 1 @Extended 5 Return 0 = $oRange is a Table Cursor, and is not supported.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error determining $oCursor cursor type.
 ;				   @Error 3 @Extended 2 Return 0 = Error determining $oRange cursor type.
@@ -236,7 +237,7 @@ Func _LOWriter_CursorGoToRange(ByRef $oCursor, ByRef $oRange, $bSelect = False)
 	$iRangeType = __LOWriter_Internal_CursorGetType($oRange)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	If ($iCursorType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRangeType <> $LOW_CURTYPE_TEXT_CURSOR) And ($iRangeType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iRangeType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oCursor.gotoRange($oRange, $bSelect)
 
@@ -353,6 +354,6 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
 		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor data type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorMove

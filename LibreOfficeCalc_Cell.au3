@@ -25,6 +25,7 @@
 ; _LOCalc_CellBorderPadding
 ; _LOCalc_CellBorderStyle
 ; _LOCalc_CellBorderWidth
+; _LOCalc_CellCreateTextCursor
 ; _LOCalc_CellEffect
 ; _LOCalc_CellFont
 ; _LOCalc_CellFontColor
@@ -357,6 +358,51 @@ Func _LOCalc_CellBorderWidth(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	$vReturn = __LOCalc_CellBorder($oCell, True, False, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori, $iTLBRDiag, $iBLTRDiag)
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBorderWidth
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_CellCreateTextCursor
+; Description ...: Create a Text Cursor in a single Cell.
+; Syntax ........: _LOCalc_CellCreateTextCursor(ByRef $oCell[, $bAtEnd = False])
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_RangeGetCellByName, or _LOCalc_RangeGetCellByPosition function.
+;                  $bAtEnd              - [optional] a boolean value. Default is False. If True, the Text Cursor is created at the end of the Text, else it will be created at the beginning.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oCell not a Single Cell Object. Only Single Cells supported.
+;				   @Error 1 @Extended 3 Return 0 = $bAtEnd not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Create Text Cursor.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully created a Text Cursor in the requested cell, returning the Text Cursor Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Cells that are considered Values instead of Strings may be considered Strings if you modify them using a text cursor.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_CellCreateTextCursor(ByRef $oCell, $bAtEnd = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oTextCursor
+
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
+	If Not IsBool($bAtEnd) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oTextCursor = $oCell.Text.createTextCursor()
+	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $bAtEnd Then
+		$oTextCursor.gotoEnd(False)
+	Else
+		$oTextCursor.gotoStart(False)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oTextCursor)
+EndFunc   ;==>_LOCalc_CellCreateTextCursor
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellEffect

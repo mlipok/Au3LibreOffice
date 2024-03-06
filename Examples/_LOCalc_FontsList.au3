@@ -5,7 +5,7 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oCell, $oSheet
+	Local $oDoc, $oCell, $oSheet, $oColumn
 	Local $asFonts
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -64,6 +64,14 @@ _LOCalc_CellValue($oCell, $asFonts[$i][3])
 If @error Then _ERROR($oDoc, "Failed to insert value. Error:" & @error & " Extended:" & @extended)
 
 Next
+
+	; Retrieve Column A's Object
+	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "A")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Column Object by name. Error:" & @error & " Extended:" & @extended)
+
+	; Set Column A's width to optimal.
+	_LOCalc_RangeColumnWidth($oColumn, True)
+	If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
