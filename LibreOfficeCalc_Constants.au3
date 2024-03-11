@@ -440,6 +440,12 @@ Global Enum _
 		$LOC_SHEETCUR_GOTO_USED_AREA_START, _                   ; Set the cursor to the start of the used area.
 		$LOC_SHEETCUR_GOTO_USED_AREA_END                        ; Set the cursor to the end of the used area.
 
+; Sort Data Type
+Global Const _
+		$LOC_SORT_DATA_TYPE_AUTO = 0, _                         ; Automatically determine Sort Data type.
+		$LOC_SORT_DATA_TYPE_NUMERIC = 1, _                      ; Sort Data type is Numerical.
+		$LOC_SORT_DATA_TYPE_ALPHANUMERIC = 2                    ; Sort Data type is Text.
+
 ; Strikeout
 Global Const _
 		$LOC_STRIKEOUT_NONE = 0, _                              ; No strike out.

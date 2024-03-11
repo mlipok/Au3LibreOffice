@@ -129,6 +129,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeRowPageBreak
 	- _LOCalc_RangeRowsGetCount
 	- _LOCalc_RangeRowVisible
+	- _LOCalc_RangeSort
+	- _LOCalc_RangeSortAlt
 - Cell Style Formatting Functions and Examples
 	- _LOCalc_CellStyleBackColor
 	- _LOCalc_CellStyleBorderColor
@@ -228,6 +230,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SearchDescriptorCreate
 	- _LOCalc_SearchDescriptorModify
 	- _LOCalc_SearchDescriptorSimilarityModify
+	- _LOCalc_SortFieldCreate
+	- _LOCalc_SortFieldModify
 	- _LOCalc_VersionGet
 - Internal Functions
 	- __LOCalc_AddTo1DArray
@@ -358,6 +362,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_SHADOW_*
 	- $LOC_SHEET_LINK_MODE_*
 	- $LOC_SHEETCUR_*
+	- $LOC_SORT_DATA_TYPE_*
 	- $LOC_STRIKEOUT_*
 	- $LOC_TEXTCUR_*
 	- $LOC_TXT_DIR_*

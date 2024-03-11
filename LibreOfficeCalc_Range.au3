@@ -67,6 +67,8 @@
 ; _LOCalc_RangeRowPageBreak
 ; _LOCalc_RangeRowsGetCount
 ; _LOCalc_RangeRowVisible
+; _LOCalc_RangeSort
+; _LOCalc_RangeSortAlt
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -2457,3 +2459,372 @@ Func _LOCalc_RangeRowVisible(ByRef $oRow, $bVisible = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_RangeRowVisible
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeSort
+; Description ...: Sort a Range of Data.
+; Syntax ........: _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField[, $bSortColumns = False[, $bHasHeader = False[, $bBindFormat = True[, $bCopyOutput = False[, $oCellOutput = Null[, $tSortField2 = Null[, $tSortField3 = Null]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $tSortField          - [in/out] a dll struct value. A Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $bSortColumns        - [optional] a boolean value. Default is False. If True, Columns contained in the Cell Range are sorted Left to Right. If False, Rows contained in the Cell Range are sorted top to bottom.
+;                  $bHasHeader          - [optional] a boolean value. Default is False. If True, the Row or Column has a header that will not be sorted.
+;                  $bBindFormat         - [optional] a boolean value. Default is True. If True, formatting will be moved with the data sorted.
+;                  $bCopyOutput         - [optional] a boolean value. Default is False. If True, the data remains unmodified and instead is copied to a Cell Range after sorting.
+;                  $oCellOutput         - [optional] an object. Default is Null. If $bCopyOutput is True, this is the Cell range where the data is copied to. See Remarks.
+;                  $tSortField2         - [optional] a dll struct value. Default is Null. Another Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $tSortField3         - [optional] a dll struct value. Default is Null. Another Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $tSortField not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $bSortColumns not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bHasHeader not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $bBindFormat not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $tSortField2 not set to Null, and not an Object.
+;				   @Error 1 @Extended 9 Return 0 = $tSortField3 not set to Null, and not an Object.
+;				   @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCellOutput not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a Sort Descriptor.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve output cell Range Address.
+;				   @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;				   @Error 2 @Extended 4 Return 0 = Failed to retrieve the Standard Macro library object.
+;				   @Error 2 @Extended 5 Return 0 = Failed to insert temporary Macro.
+;				   @Error 2 @Extended 6 Return 0 = Failed to retrieve temporary Macro Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Column called in $tSortField is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 2 Return 0 = Row called in $tSortField is greater than number of Rows contained in called Range.
+;				   @Error 3 @Extended 3 Return 0 = Column called in $tSortField2 is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 4 Return 0 = Row called in $tSortField2 is greater than number of Rows contained in called Range.
+;				   @Error 3 @Extended 5 Return 0 = Column called in $tSortField3 is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 6 Return 0 = Row called in $tSortField3 is greater than number of Rows contained in called Range.
+;				   @Error 3 @Extended 7 Return 0 = Failed to remove temporary Macro.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sort was successfully processed for requested Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: You can sort up to 3 Columns/Rows per Sort call by using $tSortField2 and $tSortField3.
+;				   Only one Sort Field per Column/Row per sort, may be used, otherwise only the first Sort Field for that Column/Row is used.
+;				   $oCellOutput indicates the cell to begin the output data, and does not need to be the same size as $oRange. Any data will be overwritten in order to output the copied Sort Data that is within range.
+;				   Due to some form of bug in LibreOffice, the sort function does not work appropriately when using the normal method, so a slight workaround has been implemented, this workaround involves inserting a temporary Macro into the Document, calling that Macro, and then deleting the Macro once finished.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColumns = False, $bHasHeader = False, $bBindFormat = True, $bCopyOutput = False, $oCellOutput = Null, $tSortField2 = Null, $tSortField3 = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avSortDesc
+	Local $atSortField[1]
+	Local $aoParam[3]
+	Local $aDummyArray[0]
+	Local $tCellInputAddr, $tCellAddr
+	Local $oStandardLibrary, $oScript
+	Local $sMacro
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bSortColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bHasHeader) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bBindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$avSortDesc = $oRange.createSortDescriptor()
+	If Not IsArray($avSortDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $bSortColumns Then
+		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	Else
+		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndIf
+
+	$atSortField[0] = $tSortField
+
+	If ($tSortField2 <> Null) Then
+		If Not IsObj($tSortField2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		EndIf
+
+		ReDim $atSortField[2]
+		$atSortField[1] = $tSortField2
+
+	EndIf
+
+	If ($tSortField3 <> Null) Then
+		If Not IsObj($tSortField3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+		EndIf
+
+		ReDim $atSortField[UBound($atSortField) + 1]
+		$atSortField[UBound($atSortField) - 1] = $tSortField3
+
+	EndIf
+
+	If ($bCopyOutput = True) Then
+		If Not IsObj($oCellOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$tCellInputAddr = $oCellOutput.RangeAddress()
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
+		$tCellAddr.Column = $tCellInputAddr.StartColumn()
+		$tCellAddr.Row = $tCellInputAddr.StartRow()
+
+	EndIf
+
+	For $i = 0 To UBound($avSortDesc) - 1
+
+		Switch $avSortDesc[$i].Name()
+
+			Case "IsSortColumns"
+				$avSortDesc[$i].Value = $bSortColumns
+
+			Case "ContainsHeader"
+				$avSortDesc[$i].Value = $bHasHeader
+
+			Case "SortFields"
+				$avSortDesc[$i].Value = $atSortField
+
+			Case "BindFormatsToContent"
+				$avSortDesc[$i].Value = $bBindFormat
+
+			Case "CopyOutputData"
+				$avSortDesc[$i].Value = $bCopyOutput
+
+			Case "OutputPosition"
+				If ($bCopyOutput = True) Then $avSortDesc[$i].Value = $tCellAddr
+
+		EndSwitch
+
+	Next
+
+;~ $oRange.Sort($avSortDesc); This doesn't sort properly, thus a work around method is required.
+
+	$sMacro = "REM Macro for Performing a Sort Function. Created By an AutoIt Script." & @CR & _ ; Just a description of the Macro
+			"Sub AU3LibreOffice_Sort(oRange, avSortDesc, atField)" & @CR & _ ; Macro header, Parameters, oRange = Range to Sort, avSortDesc = The array of Sort Descriptor settings,  atField = Sort Descriptor Column/Row settings.
+			@CR & _
+			"For i = LBound(avSortDesc) To UBound(avSortDesc) " & @CR & _ ; Loop through passed array, re-applying Array of Sort Fields, seems necessary to make sort work.
+			"If (avSortDesc(i).Name() = ""SortFields"") Then avSortDesc(i).Value = atField" & @CR & _
+			@CR & _
+			"Next " & @CR & _
+			@CR & _
+			"oRange.Sort(avSortDesc())" & @CR & _
+			"End Sub" & @CR
+
+	; Retrieving the BasicLibrary.Standard Object fails when using a newly opened document, I found a workaround by updating the
+	; following setting.
+	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
+
+	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
+	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
+
+	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sMacro)
+	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+
+	$oScript = $oDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.AU3LibreOffice_Sort?language=Basic&location=document")
+	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+
+	$aoParam[0] = $oRange
+	$aoParam[1] = $avSortDesc
+	$aoParam[2] = $atSortField
+
+	$oScript.Invoke($aoParam, $aDummyArray, $aDummyArray)
+
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeSort
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeSortAlt
+; Description ...: An alternate version of Sort Data function.
+; Syntax ........: _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField[, $bSortColumns = False[, $bHasHeader = False[, $bBindFormat = True[, $bNaturalOrder = True[, $bIncludeComments = False[, $bIncludeImages = False[, $tSortField2 = Null[, $tSortField3 = Null]]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $tSortField          - [in/out] a dll struct value. A Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $bSortColumns        - [optional] a boolean value. Default is False. If True, Columns contained in the Cell Range are sorted Left to Right. If False, Rows contained in the Cell Range are sorted top to bottom.
+;                  $bHasHeader          - [optional] a boolean value. Default is False. If True, the Row or Column has a header that will not be sorted.
+;                  $bBindFormat         - [optional] a boolean value. Default is True. If True, formatting will be moved with the data sorted.
+;                  $bNaturalOrder       - [optional] a boolean value. Default is True. If True, sort using natural order is enabled. See remarks.
+;                  $bIncludeComments    - [optional] a boolean value. Default is False. If True, boundary columns or boundary rows containing comments are also sorted.
+;                  $bIncludeImages      - [optional] a boolean value. Default is False. If True, boundary columns or boundary rows containing images are also sorted.
+;                  $tSortField2         - [optional] a dll struct value. Default is Null. Another Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $tSortField3         - [optional] a dll struct value. Default is Null. Another Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $tSortField not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $bSortColumns not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bHasHeader not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $bBindFormat not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bNaturalOrder not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bIncludeComments not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bIncludeImages not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = $tSortField2 not set to Null, and not an Object.
+;				   @Error 1 @Extended 11 Return 0 = $tSortField3 not set to Null, and not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create "Col1" Property.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create "Ascending1" Property.
+;				   @Error 2 @Extended 3 Return 0 = Failed to create "CaseSensitive" Property.
+;				   @Error 2 @Extended 4 Return 0 = Failed to create "ByRows" Property.
+;				   @Error 2 @Extended 5 Return 0 = Failed to create "HasHeader" Property.
+;				   @Error 2 @Extended 6 Return 0 = Failed to create "IncludeAttribs" Property.
+;				   @Error 2 @Extended 7 Return 0 = Failed to create "NaturalSort" Property.
+;				   @Error 2 @Extended 8 Return 0 = Failed to create "IncludeComments" Property.
+;				   @Error 2 @Extended 9 Return 0 = Failed to create "IncludeImages" Property.
+;				   @Error 2 @Extended 10 Return 0 = Failed to create "UserDefIndex" Property.
+;				   @Error 2 @Extended 11 Return 0 = Failed to create "Col2" Property.
+;				   @Error 2 @Extended 12 Return 0 = Failed to create "Ascending2" Property.
+;				   @Error 2 @Extended 13 Return 0 = Failed to create "Col3" Property.
+;				   @Error 2 @Extended 14 Return 0 = Failed to create "Ascending3" Property.
+;				   @Error 2 @Extended 15 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
+;				   @Error 2 @Extended 16 Return 0 = Failed to create instance of "com.sun.star.frame.DispatchHelper" Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Column called in $tSortField is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 2 Return 0 = Row called in $tSortField is greater than number of Rows contained in called Range.
+;				   @Error 3 @Extended 3 Return 0 = Column called in $tSortField2 is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 4 Return 0 = Row called in $tSortField2 is greater than number of Rows contained in called Range.
+;				   @Error 3 @Extended 5 Return 0 = Column called in $tSortField3 is greater than number of Columns contained in called Range.
+;				   @Error 3 @Extended 6 Return 0 = Row called in $tSortField3 is greater than number of Rows contained in called Range.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Sort was successfully processed for requested Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This version uses a UNO dispatch command as an alternative to the other sort function.
+;				   Any selections by the user will be lost after calling this function, and the called range will be selected instead.
+;				   The first Sort Field determines case sensitivity for the entire sort.
+;				   You can sort up to 3 Columns/Rows per Sort call by using $tSortField2 and $tSortField3.
+;				   Only one Sort Field per Column/Row per sort, may be used, otherwise only the first Sort Field for that Column/Row is used.
+;				   Natural sort is a sort algorithm that sorts string-prefixed numbers based on the value of the numerical element in each sorted number, instead of the traditional way of sorting them as ordinary strings.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColumns = False, $bHasHeader = False, $bBindFormat = True, $bNaturalOrder = True, $bIncludeComments = False, $bIncludeImages = False, $tSortField2 = Null, $tSortField3 = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oServiceManager, $oDispatcher
+	Local $iCount = 10
+	Local $avParam[10]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bSortColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bHasHeader) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bBindFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bNaturalOrder) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsBool($bIncludeComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsBool($bIncludeImages) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+	If $bSortColumns Then
+		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	Else
+		If Not __LOCalc_IntIsBetween($tSortField.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndIf
+
+	$avParam[0] = __LOCalc_SetPropertyValue("Col1", $tSortField.Field() + 1) ; UNO Execute seems to be 1 based.
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$avParam[1] = __LOCalc_SetPropertyValue("Ascending1", $tSortField.IsAscending())
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$avParam[2] = __LOCalc_SetPropertyValue("CaseSensitive", $tSortField.IsCaseSensitive())
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+	$avParam[3] = __LOCalc_SetPropertyValue("ByRows", ($bSortColumns) ? (False) : (True))
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
+	$avParam[4] = __LOCalc_SetPropertyValue("HasHeader", $bHasHeader)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+
+	$avParam[5] = __LOCalc_SetPropertyValue("IncludeAttribs", $bBindFormat)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+
+	$avParam[6] = __LOCalc_SetPropertyValue("NaturalSort", $bNaturalOrder)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+
+	$avParam[7] = __LOCalc_SetPropertyValue("IncludeComments", $bIncludeComments)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 8, 0)
+
+	$avParam[8] = __LOCalc_SetPropertyValue("IncludeImages", $bIncludeImages)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 9, 0)
+
+	$avParam[9] = __LOCalc_SetPropertyValue("UserDefIndex", 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 10, 0)
+
+	If ($tSortField2 <> Null) Then
+		If Not IsObj($tSortField2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortField2.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		EndIf
+
+		ReDim $avParam[UBound($avParam) + 2]
+
+		$avParam[$iCount] = __LOCalc_SetPropertyValue("Col2", $tSortField2.Field() + 1)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 11, 0)
+		$iCount += 1
+
+		$avParam[$iCount] = __LOCalc_SetPropertyValue("Ascending2", $tSortField2.IsAscending())
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 12, 0)
+		$iCount += 1
+
+	EndIf
+
+	If ($tSortField3 <> Null) Then
+		If Not IsObj($tSortField3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		If $bSortColumns Then
+			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Columns.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+		Else
+			If Not __LOCalc_IntIsBetween($tSortField3.Field(), 0, $oRange.Rows.Count() - 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+		EndIf
+
+		ReDim $avParam[UBound($avParam) + 2]
+
+		$avParam[$iCount] = __LOCalc_SetPropertyValue("Col3", $tSortField3.Field() + 1)
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 13, 0)
+		$iCount += 1
+
+		$avParam[$iCount] = __LOCalc_SetPropertyValue("Ascending3", $tSortField3.IsAscending())
+		If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 14, 0)
+		$iCount += 1
+
+	EndIf
+
+	$oDoc.CurrentController.Select($oRange)
+
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 15, 0)
+
+	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 16, 0)
+
+	$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:DataSort", "", 0, $avParam)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeSortAlt

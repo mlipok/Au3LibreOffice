@@ -40,6 +40,8 @@
 ; _LOCalc_SearchDescriptorCreate
 ; _LOCalc_SearchDescriptorModify
 ; _LOCalc_SearchDescriptorSimilarityModify
+; _LOCalc_SortFieldCreate
+; _LOCalc_SortFieldModify
 ; _LOCalc_VersionGet
 ; ===============================================================================================================================
 
@@ -1552,6 +1554,120 @@ Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_SearchDescriptorSimilarityModify
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SortFieldCreate
+; Description ...: Create a Sort Field for sorting a Range of data with.
+; Syntax ........: _LOCalc_SortFieldCreate($iIndex[, $iDataType = $LOC_SORT_DATA_TYPE_AUTO[, $bAscending = True[, $bCaseSensitive = False]]])
+; Parameters ....: $iIndex              - an integer value. The Column or Row to perform the sort upon. 0 Based. 0 is the first Column/Row in the Cell Range.
+;                  $iDataType           - [optional] an integer value (0-2). Default is $LOC_SORT_DATA_TYPE_AUTO. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $bAscending          - [optional] a boolean value. Default is True. If True, data will be sorted into ascending order.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is False. If True, sort will be case sensitive.
+; Return values .:  Success: Struct
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $iIndex not an Integer, or less than 0.
+;				   @Error 1 @Extended 2 Return 0 = $iDataType not an Integer, less than 0 or greater than 2. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;				   @Error 1 @Extended 3 Return 0 = $bAscending not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $bCaseSensitive not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.table.TableSortField" Struct.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Struct = Success. Successfully created and returned a Sort Field Struct.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SortFieldCreate($iIndex, $iDataType = $LOC_SORT_DATA_TYPE_AUTO, $bAscending = True, $bCaseSensitive = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tSortField
+
+	If Not __LOCalc_IntIsBetween($iIndex, 0, $iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$tSortField = __LOCalc_CreateStruct("com.sun.star.table.TableSortField")
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	With $tSortField
+		.Field = $iIndex
+		.FieldType = $iDataType
+		.IsAscending = $bAscending
+		.IsCaseSensitive = $bCaseSensitive
+	EndWith
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $tSortField)
+EndFunc   ;==>_LOCalc_SortFieldCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SortFieldModify
+; Description ...: Modify or retrieve the settings for a Sort Field previously created by _LOCalc_SortFieldCreate.
+; Syntax ........: _LOCalc_SortFieldModify(ByRef $tSortField[, $iIndex = Null[, $iDataType = Null[, $bAscending = Null[, $bCaseSensitive = Null]]]])
+; Parameters ....: $tSortField          - [in/out] a dll struct value. A Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $iIndex              - [optional] an integer value. Default is Null. The Column or Row to perform the sort upon. 0 Based. 0 is the first Column/Row in the Cell Range.
+;                  $iDataType           - [optional] an integer value. Default is Null. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $bAscending          - [optional] a boolean value. Default is Null. If True, data will be sorted into ascending order.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is Null. If True, sort will be case sensitive.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $tSortField not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $iIndex not an Integer, or less than 0.
+;				   @Error 1 @Extended 3 Return 0 = $iDataType not an Integer, less than 0 or greater than 2. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;				   @Error 1 @Extended 4 Return 0 = $bAscending not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bCaseSensitive not a Boolean.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SortFieldModify(ByRef $tSortField, $iIndex = Null, $iDataType = Null, $bAscending = Null, $bCaseSensitive = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avSort[4]
+
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iIndex, $iDataType, $bAscending, $bCaseSensitive) Then
+		__LOCalc_ArrayFill($avSort, $tSortField.Field(), $tSortField.FieldType(), $tSortField.IsAscending(), $tSortField.IsCaseSensitive())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSort)
+	EndIf
+
+	If ($iIndex <> Null) Then
+		If Not __LOCalc_IntIsBetween($iIndex, 0, $iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tSortField.Field = $iIndex
+	EndIf
+
+	If ($iDataType <> Null) Then
+		If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tSortField.FieldType = $iDataType
+	EndIf
+
+	If ($bAscending <> Null) Then
+		If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$tSortField.IsAscending = $bAscending
+	EndIf
+
+	If ($bCaseSensitive <> Null) Then
+		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$tSortField.IsCaseSensitive = $bCaseSensitive
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_SortFieldModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_VersionGet
