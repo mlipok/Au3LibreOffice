@@ -475,6 +475,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
 - Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
 
+### Removed
+
+- $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
+
 [To Top](##Releases)
 
 ## [0.9.1] - 2023-10-28

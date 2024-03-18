@@ -298,7 +298,6 @@ Global Enum Step *2 _
 		$LOW_FIELD_TYPE_SET_VAR, _                              ; A Set Variable field, found in the Fields Dialog, Variables tab..
 		$LOW_FIELD_TYPE_TABLE_COUNT, _                          ; A Table Count field, found in the Fields Dialog, Document tab, Statistics Type.
 		$LOW_FIELD_TYPE_TEMPLATE_NAME, _                        ; A Templates field, found in the Fields Dialog, Document tab.
-		$LOW_FIELD_TYPE_URL, _                                  ;
 		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field, found in the Fields Dialog, Document tab, Statistics Type.
 
 ; User Data Field Type

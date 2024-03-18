@@ -1773,7 +1773,7 @@ EndFunc   ;==>__LOWriter_FieldsGetList
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDocInfoServices = False)
-	Local $avFieldTypes[30][2] = [[$LOW_FIELD_TYPE_COMMENT, "com.sun.star.text.TextField.Annotation"], _
+	Local $avFieldTypes[29][2] = [[$LOW_FIELD_TYPE_COMMENT, "com.sun.star.text.TextField.Annotation"], _
 			[$LOW_FIELD_TYPE_AUTHOR, "com.sun.star.text.TextField.Author"], [$LOW_FIELD_TYPE_CHAPTER, "com.sun.star.text.TextField.Chapter"], _
 			[$LOW_FIELD_TYPE_CHAR_COUNT, "com.sun.star.text.TextField.CharacterCount"], [$LOW_FIELD_TYPE_COMBINED_CHAR, "com.sun.star.text.TextField.CombinedCharacters"], _
 			[$LOW_FIELD_TYPE_COND_TEXT, "com.sun.star.text.TextField.ConditionalText"], [$LOW_FIELD_TYPE_DATE_TIME, "com.sun.star.text.TextField.DateTime"], _
@@ -1787,8 +1787,7 @@ Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDoc
 			[$LOW_FIELD_TYPE_PAR_COUNT, "com.sun.star.text.TextField.ParagraphCount"], [$LOW_FIELD_TYPE_SHOW_PAGE_VAR, "com.sun.star.text.TextField.ReferencePageGet"], _
 			[$LOW_FIELD_TYPE_SET_PAGE_VAR, "com.sun.star.text.TextField.ReferencePageSet"], [$LOW_FIELD_TYPE_SCRIPT, "com.sun.star.text.TextField.Script"], _
 			[$LOW_FIELD_TYPE_SET_VAR, "com.sun.star.text.TextField.SetExpression"], [$LOW_FIELD_TYPE_TABLE_COUNT, "com.sun.star.text.TextField.TableCount"], _
-			[$LOW_FIELD_TYPE_TEMPLATE_NAME, "com.sun.star.text.TextField.TemplateName"], [$LOW_FIELD_TYPE_URL, "com.sun.star.text.TextField.URL"], _
-			[$LOW_FIELD_TYPE_WORD_COUNT, "com.sun.star.text.TextField.WordCount"]]
+			[$LOW_FIELD_TYPE_TEMPLATE_NAME, "com.sun.star.text.TextField.TemplateName"], [$LOW_FIELD_TYPE_WORD_COUNT, "com.sun.star.text.TextField.WordCount"]]
 
 	Local $avFieldAdvTypes[9][2] = [[$LOW_FIELD_ADV_TYPE_BIBLIOGRAPHY, "com.sun.star.text.TextField.Bibliography"], _
 			[$LOW_FIELD_ADV_TYPE_DATABASE, "com.sun.star.text.TextField.Database"], [$LOW_FIELD_ADV_TYPE_DATABASE_NAME, "com.sun.star.text.TextField.DatabaseName"], _
