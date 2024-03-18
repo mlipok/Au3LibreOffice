@@ -5174,8 +5174,8 @@ Func _LOWriter_FieldsGetList(ByRef $oDoc, $iType = $LOW_FIELD_TYPE_ALL, $bSuppor
 	Local $vReturn
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_TYPE_ALL, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	; 2147483647 is all possible Consts added together
+	If Not __LOWriter_IntIsBetween($iType, $LOW_FIELD_TYPE_ALL, 1073741823) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	; 1073741823 is all possible Consts added together
 	If Not IsBool($bSupportedServices) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bFieldType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
