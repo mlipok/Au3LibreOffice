@@ -30,7 +30,7 @@ Func Example()
 	_LOWriter_ParStyleAlignment($oParStyle, $LOW_PAR_ALIGN_HOR_JUSTIFIED, $LOW_PAR_ALIGN_VERT_CENTER, $LOW_PAR_LAST_LINE_JUSTIFIED, True, False, $LOW_TXT_DIR_LR_TB)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleAlignment($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

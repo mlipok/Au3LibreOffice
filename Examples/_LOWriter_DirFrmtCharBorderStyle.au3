@@ -41,7 +41,7 @@ Func Example()
 	_LOWriter_DirFrmtCharBorderStyle($oViewCursor, $LOW_BORDERSTYLE_DASH_DOT_DOT, $LOW_BORDERSTYLE_FINE_DASHED, $LOW_BORDERSTYLE_THICKTHIN_MEDIUMGAP, $LOW_BORDERSTYLE_SOLID)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOWriter_DirFrmtCharBorderStyle($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 

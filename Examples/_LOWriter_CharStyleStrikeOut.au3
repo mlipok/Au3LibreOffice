@@ -44,7 +44,7 @@ Func Example()
 	_LOWriter_CharStyleStrikeOut($oCharStyle, True, True, $LOW_STRIKEOUT_X)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleStrikeOut($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 

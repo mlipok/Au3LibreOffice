@@ -40,7 +40,7 @@ Func Example()
 	_LOCalc_CellStyleUnderLine($oCellStyle, True, $LOC_UNDERLINE_BOLD_DASH_DOT, True, $LOC_COLOR_BROWN)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell Style's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleUnderLine($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's settings. Error:" & @error & " Extended:" & @extended)
 

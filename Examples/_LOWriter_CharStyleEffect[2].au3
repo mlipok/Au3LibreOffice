@@ -44,7 +44,7 @@ Func Example()
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, Null, Null, True)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -60,7 +60,7 @@ Func Example()
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, Null, True, False)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -76,7 +76,7 @@ Func Example()
 	_LOWriter_CharStyleEffect($oCharStyle, Null, Null, True, False, Null)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleEffect($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 

@@ -28,7 +28,7 @@ Func Example()
 	_LOWriter_ParStyleEffect($oParStyle, $LOW_RELIEF_EMBOSSED)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleEffect($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -44,7 +44,7 @@ Func Example()
 	_LOWriter_ParStyleEffect($oParStyle, $LOW_RELIEF_NONE, $LOW_CASEMAP_SM_CAPS)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleEffect($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

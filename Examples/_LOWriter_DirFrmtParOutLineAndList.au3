@@ -30,7 +30,7 @@ Func Example()
 	_LOWriter_DirFrmtParOutLineAndList($oDoc, $oViewCursor, $LOW_OUTLINE_LEVEL_1, "Numbering 123", True, 1)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOWriter_DirFrmtParOutLineAndList($oDoc, $oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 

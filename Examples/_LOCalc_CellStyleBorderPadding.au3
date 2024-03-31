@@ -29,7 +29,7 @@ Func Example()
 	_LOCalc_CellStyleBorderPadding($oCellStyle, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set Cell style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleBorderPadding($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's current settings. Error:" & @error & " Extended:" & @extended)
 
@@ -48,7 +48,7 @@ Func Example()
 	_LOCalc_CellStyleBorderPadding($oCellStyle, Null, $iMicrometers, $iMicrometers2, $iMicrometers2, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set Cell style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleBorderPadding($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's current settings. Error:" & @error & " Extended:" & @extended)
 

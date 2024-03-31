@@ -26,7 +26,7 @@ Func Example()
 	_LOWriter_PageStyleFootnoteLine($oPageStyle, $LOW_ALIGN_HORI_CENTER, $LOW_LINE_STYLE_DOTTED, 1.25, $LOW_COLOR_BLACK, 75, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avPageStyleSettings = _LOWriter_PageStyleFootnoteLine($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 

@@ -20,7 +20,7 @@ Func Example()
 	_LOWriter_PageStyleOrganizer($oDoc, $oPageStyle, "New-PageStyle-Name", False, "HTML")
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avPageStyleSettings = _LOWriter_PageStyleOrganizer($oDoc, $oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 

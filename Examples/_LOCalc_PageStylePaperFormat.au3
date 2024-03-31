@@ -20,7 +20,7 @@ Func Example()
 	_LOCalc_PageStylePaperFormat($oPageStyle, $LOC_PAPER_WIDTH_10ENVELOPE, $LOC_PAPER_HEIGHT_TABLOID, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avPageStyleSettings = _LOCalc_PageStylePaperFormat($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 

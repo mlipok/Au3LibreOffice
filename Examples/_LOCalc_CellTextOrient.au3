@@ -29,7 +29,7 @@ Func Example()
 	_LOCalc_CellTextOrient($oCell, 90, $LOC_CELL_ROTATE_REF_UPPER_CELL_BORDER)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellTextOrient($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended)
 

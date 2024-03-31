@@ -36,7 +36,7 @@ Func Example()
 	_LOWriter_DirFrmtCharPosition($oViewCursor, Null, 75, Null, Null, 50)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOWriter_DirFrmtCharPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 
@@ -52,7 +52,7 @@ Func Example()
 	_LOWriter_DirFrmtCharPosition($oViewCursor, Null, Null, Null, 75)
 	If @error Then _ERROR($oDoc, "Failed to set the selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOWriter_DirFrmtCharPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 

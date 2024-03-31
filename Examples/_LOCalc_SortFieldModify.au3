@@ -71,7 +71,7 @@ Func Example()
 	_LOCalc_RangeSort($oDoc, $oCellRange, $tSortField, False, False, False)
 	If @error Then _ERROR($oDoc, "Failed to perform Sort Operation. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_SortFieldModify($tSortField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Sort Field's settings. Error:" & @error & " Extended:" & @extended)
 
