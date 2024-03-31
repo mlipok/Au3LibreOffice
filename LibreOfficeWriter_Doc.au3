@@ -1071,7 +1071,7 @@ EndFunc   ;==>_LOWriter_DocDescription
 ; Return values .: Success: An array or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $bDefaultOnly Not a Boolean.
+;				   @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
 ;				   @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
@@ -1123,18 +1123,15 @@ EndFunc   ;==>_LOWriter_DocEnumPrinters
 ; Name ..........: _LOWriter_DocEnumPrintersAlt
 ; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
 ; Syntax ........: _LOWriter_DocEnumPrintersAlt([$sPrinterName = ""[, $bReturnDefault = False]])
-; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list.
-;				   +						Default "" returns the list of all printers.
-;				   +						$sPrinterName can be a part of a printer name like "HP*". Remember the asterisk (*).
-;                  $bReturnDefault      - [optional] a boolean value. Default is False.
-;				   +						If True, returns only the name of the current default printer.
+; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
+;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
 ; Return values .: Success: Array or String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $sPrinterName - Not a String type variable.
-;				   @Error 1 @Extended 2 Return 0 = $bReturnDefault Not a Boolean (True/False) type variable.
+;				   @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
+;				   @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
 ;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failure Creating Object
+;				   @Error 2 @Extended 1 Return 0 = Failure Creating Object.
 ;				   @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
 ;				   --Printer Related Errors--
 ;				   @Error 6 @Extended 1 Return 0 = No default printer found.
@@ -3123,7 +3120,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Name ..........: _LOWriter_DocPrint
 ; Description ...: Print a document using the specified settings.
 ; Syntax ........: _LOWriter_DocPrint(ByRef $oDoc[, $iCopies = 1[, $bCollate = True[, $vPages = "ALL"[, $bWait = True[, $iDuplexMode = $LOW_DUPLEX_OFF[, $sPrinter = ""[, $sFilePathName = ""]]]]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iCopies             - [optional] an integer value. Default is 1. Specifies the number of copies to print.
 ;                  $bCollate            - [optional] a boolean value. Default is True. Advises the printer to collate the pages of the copies.
 ;                  $vPages              - [optional] a String or Integer value. Default is "ALL". Specifies which pages to print. See remarks.
@@ -3153,7 +3150,6 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;				   @Error 4 @Extended 6 Return 0 = Error setting "Pages".
 ;				   @Error 4 @Extended 7 Return 0 = Error converting PrintToFile Path.
 ;				   @Error 4 @Extended 8 Return 0 = Error setting "PrintToFile".
-;				   @Error 4 @Extended 3 Return 0 = Error setting "Collate".
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success Document was successfully printed.
 ; Author ........: donnyh13
