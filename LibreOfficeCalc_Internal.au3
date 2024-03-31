@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -44,10 +45,12 @@
 ; __LOCalc_Internal_CursorGetType
 ; __LOCalc_InternalComErrorHandler
 ; __LOCalc_IntIsBetween
+; __LOCalc_NamedRangeGetScopeObj
 ; __LOCalc_NumIsBetween
 ; __LOCalc_PageStyleBorder
 ; __LOCalc_PageStyleFooterBorder
 ; __LOCalc_PageStyleHeaderBorder
+; __LOCalc_RangeAddressIsSame
 ; __LOCalc_SetPropertyValue
 ; __LOCalc_SheetCursorMove
 ; __LOCalc_TextCursorMove
@@ -1901,6 +1904,62 @@ Func __LOCalc_IntIsBetween($iTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
 EndFunc   ;==>__LOCalc_IntIsBetween
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_NamedRangeGetScopeObj
+; Description ...: Retrieve the Scope Object that contains a particular Named Range.
+; Syntax ........: __LOCalc_NamedRangeGetScopeObj(ByRef $oDoc, $sName, $iTokenIndex, $sContent)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sName               - a string value. The name of the Named Range to retrieve the scope object for.
+;                  $iTokenIndex         - an integer value. The Token Index of the Named Range to retrieve the scope object for.
+;                  $sContent            - a string value. The Content of the Named Range to retrieve the scope object for.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 3 Return 0 = $iTokenIndex not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $sContent not a String.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to identify Scope Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning Scope object (Doc or Sheet) that contains the Named Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_NamedRangeGetScopeObj(ByRef $oDoc, $sName, $iTokenIndex, $sContent)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oObj
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsInt($iTokenIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If ($oDoc.NamedRanges.Count() >= $iTokenIndex) Then
+		$oObj = $oDoc.NamedRanges.getByIndex($iTokenIndex - 1)
+		If ($oObj.Name() == $sName) And ($oObj.Content = $sContent) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc)
+
+	EndIf
+
+	For $i = 0 To $oDoc.Sheets.Count() - 1
+		If ($oDoc.Sheets.getByIndex($i).NamedRanges.Count() >= $iTokenIndex) Then
+			$oObj = $oDoc.Sheets.getByIndex($i).NamedRanges.getByIndex($iTokenIndex - 1)
+			If ($oObj.Name() == $sName) And ($oObj.Content = $sContent) Then Return SetError($__LO_STATUS_SUCCESS, 2, $oDoc.Sheets.getByIndex($i))
+
+		EndIf
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+EndFunc   ;==>__LOCalc_NamedRangeGetScopeObj
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_NumIsBetween
 ; Description ...: Test whether an input is a Number and is between two Numbers.
 ; Syntax ........: __LOCalc_NumIsBetween($nTest, $nMin, $nMax[, $snNot = ""[, $snIncl = Default]])
@@ -2258,6 +2317,42 @@ Func __LOCalc_PageStyleHeaderBorder(ByRef $oPageStyle, $bWid, $bSty, $bCol, $iTo
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOCalc_PageStyleHeaderBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_RangeAddressIsSame
+; Description ...: Compare two Range Addresses to see if they are the same.
+; Syntax ........: __LOCalc_RangeAddressIsSame(ByRef $tRange1, ByRef $tRange2)
+; Parameters ....: $tRange1             - a dll struct value. The first Range Address Structure to compare.
+;                  $tRange2             - a dll struct value. The second Range Address Structure to compare.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $tRange1 not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $tRange2 not an Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. If the Range Addresses are identical, True is returned, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_RangeAddressIsSame($tRange1, $tRange2)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($tRange1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($tRange2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($tRange1.Sheet() = $tRange2.Sheet()) And _
+			($tRange1.StartColumn() = $tRange2.StartColumn()) And _
+			($tRange1.StartRow() = $tRange2.StartRow()) And _
+			($tRange1.EndColumn() = $tRange2.EndColumn()) And _
+			($tRange1.EndRow() = $tRange2.EndRow()) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOCalc_RangeAddressIsSame
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_SetPropertyValue

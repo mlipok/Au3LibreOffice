@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -34,6 +35,12 @@
 ; _LOCalc_RangeCopyMove
 ; _LOCalc_RangeCreateCursor
 ; _LOCalc_RangeData
+; _LOCalc_RangeDatabaseAdd
+; _LOCalc_RangeDatabaseDelete
+; _LOCalc_RangeDatabaseGetNames
+; _LOCalc_RangeDatabaseGetObjByName
+; _LOCalc_RangeDatabaseHasByName
+; _LOCalc_RangeDatabaseModify
 ; _LOCalc_RangeDelete
 ; _LOCalc_RangeFill
 ; _LOCalc_RangeFillSeries
@@ -48,6 +55,15 @@
 ; _LOCalc_RangeGetCellByPosition
 ; _LOCalc_RangeGetSheet
 ; _LOCalc_RangeInsert
+; _LOCalc_RangeIsMerged
+; _LOCalc_RangeMerge
+; _LOCalc_RangeNamedAdd
+; _LOCalc_RangeNamedChangeScope
+; _LOCalc_RangeNamedDelete
+; _LOCalc_RangeNamedGetNames
+; _LOCalc_RangeNamedGetObjByName
+; _LOCalc_RangeNamedHasByName
+; _LOCalc_RangeNamedModify
 ; _LOCalc_RangeNumbers
 ; _LOCalc_RangeQueryColumnDiff
 ; _LOCalc_RangeQueryContents
@@ -758,6 +774,396 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 EndFunc   ;==>_LOCalc_RangeData
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseAdd
+; Description ...:	Add a Database Range to a document.
+; Syntax ........: _LOCalc_RangeDatabaseAdd(ByRef $oDoc, $oRange, $sName[, $bColumnHeaders = True[, $bTotalsRow = False[, $bAddDeleteCells = True[, $bKeepFormatting = True[, $bDontSaveImport = False[, $bAutoFilter = False]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oRange              - an object. The Range to designate as a Database range. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sName               - a string value. The unique name of the Database Range to create.
+;                  $bColumnHeaders      - [optional] a boolean value. Default is True. If True, the top row is considered a Header/label.
+;                  $bTotalsRow          - [optional] a boolean value. Default is False. If True, the bottom row will be considered a totals row.
+;                  $bAddDeleteCells     - [optional] a boolean value. Default is True. If True, columns or rows are inserted or deleted when the size of the range is changed by an update operation.
+;                  $bKeepFormatting     - [optional] a boolean value. Default is True. If True, cell formats are extended when the size of the range is changed by an update operation.
+;                  $bDontSaveImport     - [optional] a boolean value. Default is False. If True, cell contents within the database range are left out when the document is saved.
+;                  $bAutoFilter         - [optional] a boolean value. Default is False. If True, the Auto Filter option is enabled.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 4 Return 0 = $bColumnHeaders not a Boolean.
+;				   @Error 1 @Extended 5 Return 0 = $bTotalsRow not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $bAddDeleteCells not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bKeepFormatting not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bDontSaveImport not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bAutoFilter not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = Document called in $oDoc already contains a Database Range named the same as called in $sName.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve new Database Range's Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully added a new Database Range, returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseAdd(ByRef $oDoc, $oRange, $sName, $bColumnHeaders = True, $bTotalsRow = False, $bAddDeleteCells = True, $bKeepFormatting = True, $bDontSaveImport = False, $bAutoFilter = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges, $oDatabaseRange
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bColumnHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bTotalsRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bAddDeleteCells) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not IsBool($bKeepFormatting) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not IsBool($bDontSaveImport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not IsBool($bAutoFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $oDatabaseRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+	$oDatabaseRanges.addNewByName($sName, $oRange.RangeAddress())
+
+	$oDatabaseRange = $oDatabaseRanges.getByName($sName)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	With $oDatabaseRange
+		.ContainsHeader = $bColumnHeaders
+		.TotalsRow = $bTotalsRow
+		.MoveCells = $bAddDeleteCells
+		.KeepFormats = $bKeepFormatting
+		.StripData = $bDontSaveImport
+		.AutoFilter = $bAutoFilter
+	EndWith
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDatabaseRange)
+EndFunc   ;==>_LOCalc_RangeDatabaseAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseDelete
+; Description ...: Delete a Database Range from the document.
+; Syntax ........: _LOCalc_RangeDatabaseDelete(ByRef $oDoc, $oDatabaseRange)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDatabaseRange      - an object. A Database Range Object as returned from _LOCalc_RangeDatabaseAdd or _LOCalc_RangeDatabaseGetObjByName.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oDatabaseRange not an Object and not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Database Range name.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to delete requested Database Range.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the requested Database Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeDatabaseAdd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseDelete(ByRef $oDoc, $oDatabaseRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges
+	Local $sDatabaseRange
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$sDatabaseRange = $oDatabaseRange.Name()
+	If Not IsString($sDatabaseRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$oDatabaseRanges.removeByName($sDatabaseRange)
+
+	If $oDatabaseRanges.hasByName($sDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeDatabaseDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseGetNames
+; Description ...: Retrieve an array of Database Range names for the document.
+; Syntax ........: _LOCalc_RangeDatabaseGetNames(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;				   --Success--
+;				   @Error 0 @Extended ? Return Array = Success. Returning an array of Database Ranges contained in the document. @extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeDatabaseGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseGetNames(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges
+	Local $asNames[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	ReDim $asNames[$oDatabaseRanges.Count()]
+
+	For $i = 0 To $oDatabaseRanges.Count() - 1
+		$asNames[$i] = $oDatabaseRanges.getByIndex($i).Name()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asNames), $asNames)
+EndFunc   ;==>_LOCalc_RangeDatabaseGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseGetObjByName
+; Description ...: Retrieve a Database Range Object by Name.
+; Syntax ........: _LOCalc_RangeDatabaseGetObjByName(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sName               - a string value. The name of the Database Range to retrieve the Object for.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 3 Return 0 = Document called in $oDoc does not contain a Database Range by the name called in $sName.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Database Range Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning requested Database Range Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseGetObjByName(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges, $oDatabaseRange
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If Not $oDatabaseRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oDatabaseRange = $oDatabaseRanges.getByName($sName)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oDatabaseRange)
+EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseHasByName
+; Description ...: Check if a Database Range exists in a document.
+; Syntax ........: _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object.
+;                  $sName               - a string value.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to query whether document contains the called name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges
+	Local $bExists
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$bExists = $oDatabaseRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseModify
+; Description ...: Set or Retrieve the settings for a Database Range.
+; Syntax ........: _LOCalc_RangeDatabaseModify(ByRef $oDoc, ByRef $oDatabaseRange[, $oRange = Null[, $sName = Null[, $bColumnHeaders = Null[, $bTotalsRow = Null[, $bAddDeleteCells = Null[, $bKeepFormatting = Null[, $bDontSaveImport = Null[, $bAutoFilter = Null]]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDatabaseRange      - [in/out] an object. A Database Range Object as returned from _LOCalc_RangeDatabaseAdd or _LOCalc_RangeDatabaseGetObjByName.
+;                  $oRange              - [optional] an object. Default is Null. The Range to designate as a Database range. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sName               - [optional] a string value. Default is Null. The new unique name to rename the Database Range to.
+;                  $bColumnHeaders      - [optional] a boolean value. Default is Null. If True, the top row is considered a Header/label.
+;                  $bTotalsRow          - [optional] a boolean value. Default is Null. If True, the bottom row will be considered a totals row.
+;                  $bAddDeleteCells     - [optional] a boolean value. Default is Null. If True, columns or rows are inserted or deleted when the size of the range is changed by an update operation.
+;                  $bKeepFormatting     - [optional] a boolean value. Default is Null. If True, cell formats are extended when the size of the range is changed by an update operation.
+;                  $bDontSaveImport     - [optional] a boolean value. Default is Null. If True, cell contents within the database range are left out when the document is saved.
+;                  $bAutoFilter         - [optional] a boolean value. Default is Null. If True, the Auto Filter option is enabled.
+; Return values .: Success: 1 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oDatabaseRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 5 Return 0 = Document already contains a Database Range with the name as called in $sName.
+;				   @Error 1 @Extended 6 Return 0 = $bColumnHeaders not a Boolean.
+;				   @Error 1 @Extended 7 Return 0 = $bTotalsRow not a Boolean.
+;				   @Error 1 @Extended 8 Return 0 = $bAddDeleteCells not a Boolean.
+;				   @Error 1 @Extended 9 Return 0 = $bKeepFormatting not a Boolean.
+;				   @Error 1 @Extended 10 Return 0 = $bDontSaveImport not a Boolean.
+;				   @Error 1 @Extended 11 Return 0 = $bAutoFilter not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve the Reference Position of Named Range.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $oRange
+;				   |								2 = Error setting $sName
+;				   |								4 = Error setting $bColumnHeaders
+;				   |								8 = Error setting $bTotalsRow
+;				   |								16 = Error setting $bAddDeleteCells
+;				   |								32 = Error setting $bKeepFormatting
+;				   |								64 = Error setting $bDontSaveImport
+;				   |								128 = Error setting $bAutoFilter
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   When retrieving the settings, $oRange will be a Range Object.
+; Related .......: _LOCalc_RangeDatabaseGetObjByName, _LOCalc_RangeDatabaseAdd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseModify(ByRef $oDoc, ByRef $oDatabaseRange, $oRange = Null, $sName = Null, $bColumnHeaders = Null, $bTotalsRow = Null, $bAddDeleteCells = Null, $bKeepFormatting = Null, $bDontSaveImport = Null, $bAutoFilter = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avDatabaseRange[8]
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($oRange, $sName, $bColumnHeaders, $bTotalsRow, $bAddDeleteCells, $bKeepFormatting, $bDontSaveImport, $bAutoFilter) Then
+		$oRange = $oDoc.Sheets.getByIndex($oDatabaseRange.DataArea.Sheet()).getCellRangeByPosition( _
+				$oDatabaseRange.DataArea.StartColumn(), $oDatabaseRange.DataArea.StartRow(), _
+				$oDatabaseRange.DataArea.EndColumn(), $oDatabaseRange.DataArea.EndRow())
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		__LOCalc_ArrayFill($avDatabaseRange, $oRange, $oDatabaseRange.Name(), $oDatabaseRange.ContainsHeader(), $oDatabaseRange.TotalsRow(), $oDatabaseRange.MoveCells(), _
+				$oDatabaseRange.KeepFormats(), $oDatabaseRange.StripData(), $oDatabaseRange.AutoFilter())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avDatabaseRange)
+	EndIf
+
+	If ($oRange <> Null) Then
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oDatabaseRange.DataArea = $oRange.RangeAddress()
+		$iError = (__LOCalc_RangeAddressIsSame($oDatabaseRange.DataArea(), $oRange.RangeAddress())) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If $oDoc.DatabaseRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$oDatabaseRange.Name = $sName
+		$iError = ($oDatabaseRange.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bColumnHeaders <> Null) Then
+		If Not IsBool($bColumnHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$oDatabaseRange.ContainsHeader = $bColumnHeaders
+		$iError = ($oDatabaseRange.ContainsHeader() = $bColumnHeaders) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bTotalsRow <> Null) Then
+		If Not IsBool($bTotalsRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+		$oDatabaseRange.TotalsRow = $bTotalsRow
+		$iError = ($oDatabaseRange.TotalsRow() = $bTotalsRow) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bAddDeleteCells <> Null) Then
+		If Not IsBool($bAddDeleteCells) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		$oDatabaseRange.MoveCells = $bAddDeleteCells
+		$iError = ($oDatabaseRange.MoveCells() = $bAddDeleteCells) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bKeepFormatting <> Null) Then
+		If Not IsBool($bKeepFormatting) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+		$oDatabaseRange.KeepFormats = $bKeepFormatting
+		$iError = ($oDatabaseRange.KeepFormats() = $bKeepFormatting) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($bDontSaveImport <> Null) Then
+		If Not IsBool($bDontSaveImport) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
+		$oDatabaseRange.StripData = $bDontSaveImport
+		$iError = ($oDatabaseRange.StripData() = $bDontSaveImport) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($bAutoFilter <> Null) Then
+		If Not IsBool($bAutoFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
+		$oDatabaseRange.AutoFilter = $bAutoFilter
+		$iError = ($oDatabaseRange.AutoFilter() = $bAutoFilter) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeDatabaseModify
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDelete
 ; Description ...: Delete a Range of cell contents and reposition surrounding cells.
 ; Syntax ........: _LOCalc_RangeDelete(ByRef $oSheet, $oRange, $iMode)
@@ -1444,6 +1850,573 @@ Func _LOCalc_RangeInsert(ByRef $oSheet, $oRange, $iMode)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeInsert
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeIsMerged
+; Description ...: Check if any part of a range contains merged cells.
+; Syntax ........: _LOCalc_RangeIsMerged(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to test if Range is Merged.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Returning True if Range is merged, else False. See remarks.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function will return True only in the following cases: If the called Range covers the entire area of a merged range of cells, OR if the top-left most cell of a merged range of cells is called alone, or included in the Range.
+; Related .......: _LOCalc_RangeMerge
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeIsMerged(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bMerged
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$bMerged = $oRange.getIsMerged()
+	If Not IsBool($bMerged) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bMerged)
+EndFunc   ;==>_LOCalc_RangeIsMerged
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeMerge
+; Description ...: Merge or Unmerge a Range of cells.
+; Syntax ........: _LOCalc_RangeMerge(ByRef $oRange, $bMerge)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bMerge              - a boolean value. If True, the Cells within the range are merged. If False, any merged cells intercepting the Range will be unmurged. See remarks.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $bMerge not a Boolean.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Range was successfully merged or unmerged.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Any merged cells that are part of the original merge will be unmerged, even if they aren't contained in the called range, as long as the top-left most cell of the merged range is contained in the called range, i.e., I merge Range A1:C5, if I then attempt to unmerge A1:A5, the entire range of A1:C5 will be unmerged, but if I attempt to unmerge B1:C3, nothing will be unmerged.
+; Related .......: _LOCalc_RangeIsMerged
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeMerge(ByRef $oRange, $bMerge)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bMerge) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oRange.Merge($bMerge)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeMerge
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedAdd
+; Description ...: Add a Named Range to a specific Scope.
+; Syntax ........: _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName[, $iOptions = $LOC_NAMED_RANGE_OPT_NONE[, $oRefCell = Null]])
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $vRange              - a variant value. See remarks. May be a String or a Cell Range object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sName               - a string value. The unique name of the Named Range to create. Must start with a letter, and ONLY contain Letters, Numbers and Underscores, no Spaces.
+;                  $iOptions            - [optional] an integer value (0-15). Default is $LOC_NAMED_RANGE_OPT_NONE. Any options to set for the Named Range, can be BitOR'd together. See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $oRefCell            - [optional] an object. Default is Null. The reference cell for the Range or Formula set in $vRange.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $vRange not an Object and not a String.
+;				   @Error 1 @Extended 3 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 4 Return 0 = $sName contains invalid characters.
+;				   @Error 1 @Extended 5 Return 0 = $iOptions not an Integer, less than 0 or greater than 15 (all constants added together). See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 6 Return 0 = $vRange is a String and $oRefCell is not an Object.
+;				   @Error 1 @Extended 7 Return 0 = Scope called in $oObj already contains a Named Range named the same as called in $sName.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve the Absolute Name of Range called in $vRange.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve new Named Range's Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Successfully added a new Named Range, returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj determines the scope you are inserting the new Named Range in, either Globally (Document Object), or locally (Sheet Object).
+;				   $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
+;				   If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
+;				   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
+;				   Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell  that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
+;					Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.
+; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_RANGE_OPT_NONE, $oRefCell = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local Const $__LOC_STR_STRIPLEADING = 1, $__LOC_STR_STRIPTRAILING = 2
+	Local $oNamedRanges, $oNamedRange
+	Local $sRange
+	Local $tCellAddr
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($vRange) And Not IsString($vRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	$sName = StringStripWS($sName, ($__LOC_STR_STRIPLEADING + $__LOC_STR_STRIPTRAILING))
+	If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOCalc_IntIsBetween($iOptions, $LOC_NAMED_RANGE_OPT_NONE, 15) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; 15 = all flags added together.
+	If IsString($vRange) And Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If $oNamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	If IsObj($vRange) Then
+
+		If IsObj($oRefCell) Then
+			$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
+			$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
+			$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
+
+		Else
+
+			$tCellAddr.Sheet = $vRange.RangeAddress.Sheet()
+			$tCellAddr.Column = $vRange.RangeAddress.StartColumn()
+			$tCellAddr.Row = $vRange.RangeAddress.StartRow()
+
+		EndIf
+
+		$sRange = $vRange.AbsoluteName()
+		If Not IsString($sRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Else
+
+		$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
+		$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
+		$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
+
+		$sRange = $vRange
+
+	EndIf
+
+	$oNamedRanges.addNewByName($sName, $sRange, $tCellAddr, $iOptions)
+
+	$oNamedRange = $oNamedRanges.getByName($sName)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
+EndFunc   ;==>_LOCalc_RangeNamedAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedChangeScope
+; Description ...: Change the scope a Named Range is located in.
+; Syntax ........: _LOCalc_RangeNamedChangeScope(ByRef $oDoc, ByRef $oNamedRange, ByRef $oNewScope[, $sNewName = ""])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oNamedRange         - [in/out] an object. A Named Range Object returned by a previous _LOCalc_RangeNamedGetObjByName, or _LOCalc_RangeNamedAdd function.
+;                  $oNewScope           - [in/out] an object. The new Scope to place the Named Range in. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sNewName            - [optional] a string value. Default is "". A new name for the Range. Empty String means the name is reused.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oNamedRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $oNewScope not an Object.
+;				   @Error 1 @Extended 4 Return 0 = $sNewName not a String.
+;				   @Error 1 @Extended 5 Return 0 = Name called in $sNewName already exists in $oNewScope.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = $oNewScope already contains a Named Range with the same name as Range called in $oNamedRange.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve Name of $oNamedRange.
+;				   @Error 3 @Extended 3 Return 0 = Failed to retrieve Content of $oNamedRange.
+;				   @Error 3 @Extended 4 Return 0 = Failed to retrieve Scope Object of $oNamedRange.
+;				   @Error 3 @Extended 5 Return 0 = Failed to retrieve Reference Position of $oNamedRange.
+;				   @Error 3 @Extended 6 Return 0 = Failed to retrieve Options applied to $oNamedRange.
+;				   @Error 3 @Extended 7 Return 0 = Failed to remove Named Range from old Scope.
+;				   @Error 3 @Extended 8 Return 0 = Failed to retrieve new Named Range Object in new scope.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully changed the scope of the Named Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangeNamedModify, _LOCalc_RangeNamedHasByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedChangeScope(ByRef $oDoc, ByRef $oNamedRange, ByRef $oNewScope, $sNewName = "")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oTempNamedRange, $oObj
+	Local $sNamedRange, $sContent
+	Local $tRefPos
+	Local $iType
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oNewScope) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If ($sNewName = "") Then
+		If $oNewScope.NamedRanges.hasByName($oNamedRange.Name()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		$sNewName = $oNamedRange.Name()
+
+	Else
+		If $oNewScope.NamedRanges.hasByName($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	EndIf
+
+	$sNamedRange = $oNamedRange.Name()
+	If Not IsString($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$sContent = $oNamedRange.Content()
+	If Not IsString($sContent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$oObj = __LOCalc_NamedRangeGetScopeObj($oDoc, $sNamedRange, $oNamedRange.TokenIndex(), $oNamedRange.Content())
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	$tRefPos = $oNamedRange.ReferencePosition()
+	If Not IsObj($tRefPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	$iType = $oNamedRange.Type()
+	If Not IsInt($iType) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+	$oObj.NamedRanges.removeByName($sNamedRange)
+	If $oObj.NamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+
+	$oNewScope.NamedRanges.addNewByName($sNewName, $sContent, $tRefPos, $iType)
+
+	$oTempNamedRange = $oNewScope.NamedRanges.getByName($sNewName)
+	If Not IsObj($oTempNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+
+	$oNamedRange = $oTempNamedRange
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeNamedChangeScope
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedDelete
+; Description ...: Delete a Named Range from a particular scope.
+; Syntax ........: _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $vNamedRange         - a variant value. The name of the Named Range to delete, as a string, or the NamedRange Object as returned from _LOCalc_RangeNamedAdd or _LOCalc_RangeNamedGetObjByName.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $vNamedRange not an Object and not a String.
+;				   @Error 1 @Extended 3 Return 0 = Scope called in $oObj does not contain a Named Range as called in $vNamedRange.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to delete requested Named Range.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the requested Named Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
+; Related .......: _LOCalc_RangeNamedAdd, _LOCalc_RangeNamedHasByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges
+	Local $sNamedRange
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If Not IsString($vNamedRange) And Not IsObj($vNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If IsObj($vNamedRange) Then
+		$sNamedRange = $vNamedRange.Name()
+		If Not IsString($sNamedRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	Else
+		$sNamedRange = $vNamedRange
+
+	EndIf
+
+	If Not $oNamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oNamedRanges.removeByName($sNamedRange)
+
+	If $oNamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeNamedDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedGetNames
+; Description ...: Retrieve an array of Named Range names for either the document or sheet.
+; Syntax ........: _LOCalc_RangeNamedGetNames(ByRef $oObj)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .:  Success: Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;				   --Success--
+;				   @Error 0 @Extended ? Return Array = Success. Returning an array of Named Ranges contained in the called scope. @extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj determines the scope you are retrieving the array of names for, either Globally (Document Object), or locally (Sheet Object).
+; Related .......: _LOCalc_RangeNamedGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedGetNames(ByRef $oObj)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges
+	Local $asNames[0]
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	ReDim $asNames[$oNamedRanges.Count()]
+
+	For $i = 0 To $oNamedRanges.Count() - 1
+		$asNames[$i] = $oNamedRanges.getByIndex($i).Name()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asNames), $asNames)
+EndFunc   ;==>_LOCalc_RangeNamedGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedGetObjByName
+; Description ...: Retrieve a Named Range Object by Name.
+; Syntax ........: _LOCalc_RangeNamedGetObjByName(ByRef $oObj, $sName)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The name of the Named Range to retrieve the Object for.
+; Return values .: Success: Object
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 3 Return 0 = Scope called in $oObj does not contain a Named Range by the name called in $sName.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Named Range Object.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Returning requested Named Range Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
+; Related .......: _LOCalc_RangeNamedGetNames, _LOCalc_RangeNamedHasByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedGetObjByName(ByRef $oObj, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges, $oNamedRange
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If Not $oNamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oNamedRange = $oNamedRanges.getByName($sName)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
+EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedHasByName
+; Description ...: Check if a Named Range exists in a particular scope.
+; Syntax ........: _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The Named Range name to look for.
+; Return values .: Success: Boolean
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to query whether Scope contains the called name.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges
+	Local $bExists
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$bExists = $oNamedRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeNamedHasByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedModify
+; Description ...: Set or Retrieve the settings for a Named Range.
+; Syntax ........: _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange[, $vRange = Null[, $sName = Null[, $iOptions = Null[, $oRefCell = Null]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oNamedRange         - [in/out] an object. A Named Range Object returned by a previous _LOCalc_RangeNamedGetObjByName, or _LOCalc_RangeNamedAdd function.
+;                  $vRange              - [optional] a variant value. Default is Null. See remarks. May be a String or a Cell Range object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sName               - [optional] a string value. Default is Null. The unique name of the Named Range to create. Must start with a letter, and ONLY contain Letters, Numbers and Underscores, no Spaces.
+;                  $iOptions            - [optional] an integer value (0-15). Default is Null. Any options to set for the Named Range, can be BitOR'd together. See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $oRefCell            - [optional] an object. Default is Null. The reference cell for the Range or Formula set in $vRange.
+; Return values .: Success: 1 or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oNamedRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $vRange not an Object and not a String.
+;				   @Error 1 @Extended 4 Return 0 = $sName not a String.
+;				   @Error 1 @Extended 5 Return 0 = $sName contains invalid characters.
+;				   @Error 1 @Extended 6 Return 0 = Scope containing Named Range already has a Named Range with the name as called in $sName.
+;				   @Error 1 @Extended 7 Return 0 = $iOptions not an Integer, less than 0 or greater than 15 (all constants added together). See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
+;				   @Error 1 @Extended 8 Return 0 = $oRefCell not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve the Reference Position of Named Range.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $vRange
+;				   |								2 = Error setting $sName
+;				   |								4 = Error setting $iOptions
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
+;				   If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
+;				   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
+;				   Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
+;					Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   When retrieving the settings, $vRange will be in a String format, either being a formula or Range Address String, i.e. $Sheet1.$A$1:$C$14.
+;				   When retrieving the settings, $oRefCell will be a Cell Object.
+; Related .......: _LOCalc_RangeNamedGetObjByName, _LOCalc_RangeNamedAdd
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $sName = Null, $iOptions = Null, $oRefCell = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local Const $__LOC_STR_STRIPLEADING = 1, $__LOC_STR_STRIPTRAILING = 2
+	Local $avNamedRange[4]
+	Local $oObj
+	Local $iError = 0
+	Local $tCellAddr
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($vRange, $sName, $iOptions, $oRefCell) Then
+		$oRefCell = $oDoc.Sheets.getByIndex($oNamedRange.ReferencePosition.Sheet()).getCellByPosition($oNamedRange.ReferencePosition.Column(), $oNamedRange.ReferencePosition.Row())
+		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		__LOCalc_ArrayFill($avNamedRange, $oNamedRange.Content(), $oNamedRange.Name(), $oNamedRange.Type(), $oRefCell)
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avNamedRange)
+	EndIf
+
+	If ($vRange <> Null) Then
+		If Not IsObj($vRange) And Not IsString($vRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		If IsObj($vRange) Then
+			$tCellAddr = $oNamedRange.ReferencePosition()
+			If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+			$tCellAddr.Sheet = $vRange.RangeAddress.Sheet()
+			$tCellAddr.Column = $vRange.RangeAddress.StartColumn()
+			$tCellAddr.Row = $vRange.RangeAddress.StartRow()
+
+			$oNamedRange.ReferencePosition = $tCellAddr
+			$oNamedRange.Content = $vRange.AbsoluteName()
+			$iError = ($oNamedRange.Content() = $vRange.AbsoluteName()) ? ($iError) : (BitOR($iError, 1))
+
+		Else ; $vRange is String
+
+			$oNamedRange.Content = $vRange
+			$iError = ($oNamedRange.Content() = $vRange) ? ($iError) : (BitOR($iError, 1))
+
+		EndIf
+
+	EndIf
+
+	If ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$sName = StringStripWS($sName, ($__LOC_STR_STRIPLEADING + $__LOC_STR_STRIPTRAILING))
+		If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+		$oObj = __LOCalc_NamedRangeGetScopeObj($oDoc, $oNamedRange.Name(), $oNamedRange.TokenIndex(), $oNamedRange.Content())
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If $oObj.NamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$oNamedRange.Name = $sName
+		$iError = ($oNamedRange.Name() = $sName) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iOptions <> Null) Then
+		If Not __LOCalc_IntIsBetween($iOptions, $LOC_NAMED_RANGE_OPT_NONE, 15) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; 15 = all flags added together.
+
+		$oNamedRange.Type = $iOptions
+		$iError = ($oNamedRange.Type() = $iOptions) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($oRefCell <> Null) Then
+		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$tCellAddr = $oNamedRange.ReferencePosition()
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
+		$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
+		$tCellAddr.Row = $oRefCell.RangeAddress.StartRow()
+
+		$oNamedRange.ReferencePosition = $tCellAddr
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeNamedModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNumbers
