@@ -56,6 +56,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
+	- LibreOfficeCalc_Page.au3
 	- LibreOfficeCalc_Range.au3
 	- LibreOfficeCalc_Sheet.au3
 - Cell/Cell Range Formatting Functions and Examples
@@ -96,6 +97,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeCopyMove
 	- _LOCalc_RangeCreateCursor
 	- _LOCalc_RangeData
+	- _LOCalc_RangeDatabaseAdd
+	- _LOCalc_RangeDatabaseDelete
+	- _LOCalc_RangeDatabaseGetNames
+	- _LOCalc_RangeDatabaseGetObjByName
+	- _LOCalc_RangeDatabaseHasByName
+	- _LOCalc_RangeDatabaseModify
 	- _LOCalc_RangeDelete
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
@@ -110,6 +117,15 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeGetCellByPosition
 	- _LOCalc_RangeGetSheet
 	- _LOCalc_RangeInsert
+	- _LOCalc_RangeIsMerged
+	- _LOCalc_RangeMerge
+	- _LOCalc_RangeNamedAdd
+	- _LOCalc_RangeNamedChangeScope
+	- _LOCalc_RangeNamedDelete
+	- _LOCalc_RangeNamedGetNames
+	- _LOCalc_RangeNamedGetObjByName
+	- _LOCalc_RangeNamedHasByName
+	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNumbers
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
@@ -177,6 +193,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
+	- _LOCalc_DocEnumPrinters
+	- _LOCalc_DocEnumPrintersAlt
 	- _LOCalc_DocExport
 	- _LOCalc_DocGetName
 	- _LOCalc_DocGetPath
@@ -189,6 +207,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocMinimize
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
+	- _LOCalc_DocPrint
 	- _LOCalc_DocRedo
 	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
@@ -259,10 +278,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
 	- __LOCalc_IntIsBetween
+	- __LOCalc_NamedRangeGetScopeObj
 	- __LOCalc_NumIsBetween
 	- __LOCalc_PageStyleBorder
 	- __LOCalc_PageStyleFooterBorder
 	- __LOCalc_PageStyleHeaderBorder
+	- __LOCalc_RangeAddressIsSame
 	- __LOCalc_SetPropertyValue
 	- __LOCalc_SheetCursorMove
 	- __LOCalc_TextCursorMove
@@ -322,6 +343,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetLink
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
+	- _LOCalc_SheetPrintColumnsRepeat
+	- _LOCalc_SheetPrintRangeModify
+	- _LOCalc_SheetPrintRowsRepeat
 	- _LOCalc_SheetProtect
 	- _LOCalc_SheetRemove
 	- _LOCalc_SheetsGetCount
@@ -350,6 +374,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_FILTER_ORIENTATION_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_NAMED_RANGE_OPT_*
 	- $LOC_NUM_STYLE_*
 	- $LOC_PAGE_LAYOUT_*
 	- $LOC_PAPER_HEIGHT_*
@@ -369,7 +394,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_UNDERLINE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
-- Autosize option to Range Data, Formulas, and Numbers.
+- Autosize option to Range Data, Formulas, and Numbers fill functions.
 
 > [!NOTE]
 > **LibreOfficeWriter**
