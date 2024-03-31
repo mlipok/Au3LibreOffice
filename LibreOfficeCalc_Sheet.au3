@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -33,6 +34,9 @@
 ; _LOCalc_SheetLink
 ; _LOCalc_SheetMove
 ; _LOCalc_SheetName
+; _LOCalc_SheetPrintColumnsRepeat
+; _LOCalc_SheetPrintRangeModify
+; _LOCalc_SheetPrintRowsRepeat
 ; _LOCalc_SheetProtect
 ; _LOCalc_SheetRemove
 ; _LOCalc_SheetsGetCount
@@ -697,6 +701,263 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_SheetName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetPrintColumnsRepeat
+; Description ...: Set or Retrieve settings for Column Header print settings.
+; Syntax ........: _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet[, $oRange = Null[, $bRepeatColumns = Null]])
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oRange              - [optional] an object. Default is Null. The Range containing the Column Headers. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bRepeatColumns      - [optional] a boolean value. Default is Null. If True, the Column Titles are repeated on each printed page to the right.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $bRepeatColumns not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Column Headers.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current Column Header Range.
+;				   @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $oRange
+;				   |								2 = Error setting $bRepeatColumns
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call $oRange with the Default keyword to reset the Column Range to none.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   The Return for $oRange will be a Cell Range or Cell Object, if no Column is set, the return will always be the first cell (A1) of the Sheet.
+; Related .......: _LOCalc_SheetPrintRowsRepeat
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColumns = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddr
+	Local $oCell, $oCellRange
+	Local $iError = 0
+	Local $avPrintColumn[2]
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($oRange, $bRepeatColumns) Then
+		$tRangeAddr = $oSheet.getTitleColumns()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($tRangeAddr.StartColumn() = $tRangeAddr.EndColumn()) And ($tRangeAddr.StartRow() = $tRangeAddr.EndRow()) Then
+			$oCell = $oSheet.getCellByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow())
+			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			__LOCalc_ArrayFill($avPrintColumn, $oCell, $oSheet.PrintTitleColumns())
+		Else
+			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
+			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			__LOCalc_ArrayFill($avPrintColumn, $oCellRange, $oSheet.PrintTitleColumns())
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPrintColumn)
+	EndIf
+
+	If ($oRange = Default) Then
+		$tRangeAddr = $oSheet.getTitleColumns()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		With $tRangeAddr
+			.Sheet = 0
+			.StartColumn = 0
+			.EndColumn = 0
+			.StartRow = 0
+			.EndRow = 0
+		EndWith
+		$oSheet.setTitleColumns($tRangeAddr)
+		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleColumns(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
+
+	ElseIf ($oRange <> Null) Then
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tRangeAddr = $oRange.RangeAddress()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		$oSheet.setTitleColumns($tRangeAddr)
+		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleColumns(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bRepeatColumns <> Null) Then
+		If Not IsBool($bRepeatColumns) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oSheet.PrintTitleColumns = $bRepeatColumns
+		$iError = ($oSheet.PrintTitleColumns() = $bRepeatColumns) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetPrintRangeModify
+; Description ...: Set or Retrieve an array of Print Ranges for a Sheet.
+; Syntax ........: _LOCalc_SheetPrintRangeModify(ByRef $oSheet[, $aoRange = Null])
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $aoRange             - [optional] an array of objects. Default is Null. An Array of Ranges that are marked for printing. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $aoRange not an Array.
+;				   @Error 1 @Extended 3 Return ? = Element in Array called in $aoRange not an Object, returning problem array element number.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Range Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Print Area Addresses.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $aoRange
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
+;				   @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Print range(s) was successfully set.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.
+;				   Likewise, when retrieving the current print range, if the returned array is empty, that means the entire sheet (all of the used cells) is set to be printed.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   If you set a Print Range for one sheet, any other Sheet without a Print Range set will NOT be printed.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($aoRange = Null) Then
+		$aoRange = $oSheet.getPrintAreas()
+		If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		For $i = 0 To UBound($aoRange) - 1
+			$aoRange[$i] = $oSheet.getCellRangeByPosition($aoRange[$i].StartColumn(), $aoRange[$i].StartRow(), $aoRange[$i].EndColumn(), $aoRange[$i].EndRow())
+			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		Next
+		Return SetError($__LO_STATUS_SUCCESS, UBound($aoRange), $aoRange)
+	EndIf
+
+	If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	For $i = 0 To UBound($aoRange) - 1
+		If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i)
+		$aoRange[$i] = $aoRange[$i].RangeAddress()
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$oSheet.setPrintAreas($aoRange)
+
+	Return (UBound($oSheet.getPrintAreas()) = UBound($aoRange)) ? SetError($__LO_STATUS_SUCCESS, 0, 1) : SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+EndFunc   ;==>_LOCalc_SheetPrintRangeModify
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetPrintRowsRepeat
+; Description ...:  Set or Retrieve settings for Row Header print settings.
+; Syntax ........: _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet[, $oRange = Null[, $bRepeatRows = Null]])
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oRange              - [optional] an object. Default is Null. The Range containing the Row Headers. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bRepeatRows         - [optional] a boolean value. Default is Null. If True, the Row Titles are repeated on each printed page to the bottom.
+; Return values .: Success: 1 or Array.
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $bRepeatRows not a Boolean.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Row Headers.
+;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current Row Header Range.
+;				   @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;				   --Property Setting Errors--
+;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;				   |								1 = Error setting $oRange
+;				   |								2 = Error setting $bRepeatRows
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call $oRange with the Default keyword to reset the Row Range to none.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   The Return for $oRange will be a Cell Range or Cell Object, if no Row is set, the return will always be the first cell (A1) of the Sheet.
+; Related .......: _LOCalc_SheetPrintColumnsRepeat
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddr
+	Local $oCell, $oCellRange
+	Local $iError = 0
+	Local $avPrintRow[2]
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($oRange, $bRepeatRows) Then
+		$tRangeAddr = $oSheet.getTitleRows()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		If ($tRangeAddr.StartColumn() = $tRangeAddr.EndColumn()) And ($tRangeAddr.StartRow() = $tRangeAddr.EndRow()) Then
+			$oCell = $oSheet.getCellByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow())
+			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			__LOCalc_ArrayFill($avPrintRow, $oCell, $oSheet.PrintTitleRows())
+		Else
+			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
+			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+			__LOCalc_ArrayFill($avPrintRow, $oCellRange, $oSheet.PrintTitleRows())
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPrintRow)
+	EndIf
+
+	If ($oRange = Default) Then
+		$tRangeAddr = $oSheet.getTitleRows()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		With $tRangeAddr
+			.Sheet = 0
+			.StartColumn = 0
+			.EndColumn = 0
+			.StartRow = 0
+			.EndRow = 0
+		EndWith
+		$oSheet.setTitleRows($tRangeAddr)
+		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleRows(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
+
+	ElseIf ($oRange <> Null) Then
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tRangeAddr = $oRange.RangeAddress()
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		$oSheet.setTitleRows($tRangeAddr)
+		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleRows(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bRepeatRows <> Null) Then
+		If Not IsBool($bRepeatRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oSheet.PrintTitleRows = $bRepeatRows
+		$iError = ($oSheet.PrintTitleRows() = $bRepeatRows) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_SheetPrintRowsRepeat
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetProtect
