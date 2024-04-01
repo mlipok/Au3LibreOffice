@@ -9,14 +9,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## Releases
 
-|    Version       |    Changes                   |    Download                 |     Released   |    Compare on GitHub       |
-|:-----------------|:----------------------------:|:---------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
-|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
-|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
-|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
-|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
-|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
+|    Version       |    Changes                         |    Download                 |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------------:|:---------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](#0100---2024-04-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](#091---2023-10-28)    | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](#090---2023-10-28)    | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](#0003---2023-08-10)   | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](#0002---2023-07-16)   | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](#0001---2023-07-02)   | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
 ## [0.10.0] - 2024-04-
 
@@ -397,7 +397,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_UNDERLINE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
-- Autosize option to Range Data, Formulas, and Numbers fill functions.
+- Auto size option to Range Data, Formulas, and Numbers fill functions.
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -507,7 +507,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.1] - 2023-10-28
 
@@ -518,7 +518,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Minor documentation adjustments.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.0] - 2023-10-28
 
@@ -606,7 +606,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from <https://github.com/Danp2/au3WebDriver>.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.3] - 2023-08-10
 
@@ -659,7 +659,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 	- _DocInsertControlChar,
 	- _DocInsertString.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.2] - 2023-07-16
 
@@ -690,7 +690,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Updated function documentation to reflect the changes.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.1] - 2023-07-02
 
@@ -701,7 +701,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Initial UDF Release.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ---
 
