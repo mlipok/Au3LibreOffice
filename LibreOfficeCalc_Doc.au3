@@ -11,7 +11,6 @@
 
 ; Other includes for Calc
 
-
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
 ; AutoIt Version : v3.3.16.1
@@ -47,6 +46,9 @@
 ; _LOCalc_DocRedoIsPossible
 ; _LOCalc_DocSave
 ; _LOCalc_DocSaveAs
+; _LOCalc_DocSelectionGet
+; _LOCalc_DocSelectionSet
+; _LOCalc_DocSelectionSetMulti
 ; _LOCalc_DocToFront
 ; _LOCalc_DocUndo
 ; _LOCalc_DocUndoActionBegin
@@ -1431,6 +1433,161 @@ Func _LOCalc_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite =
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOCalc_DocSaveAs
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocSelectionGet
+; Description ...: Retrieve the current user selection(s).
+; Syntax ........: _LOCalc_DocSelectionGet(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Object or Array
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve current selection.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve count of multiple selections.
+;				   @Error 3 @Extended 2 Return 0 = Failed to determine selection type.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return Object = Success. Single cell selected or cursor is editing a cell, returning Cell Object.
+;				   @Error 0 @Extended 1 Return Object = Success. Cell Range selected, returning Cell Range Object.
+;				   @Error 0 @Extended ? Return Array = Success. Multiple Cells or Cell Ranges selected, returning array of Cell Range Objects.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: If the user has nothing selected, or is typing in a cell, the return will still be the single cell Object.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocSelectionGet(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSelection
+	Local $aoSelections[0]
+	Local $iCount
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oSelection = $oDoc.getCurrentSelection()
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	Select
+
+		Case $oSelection.supportsService("com.sun.star.sheet.SheetCell") ; Single Cell is selected.
+			Return SetError($__LO_STATUS_SUCCESS, 0, $oSelection)
+
+		Case $oSelection.supportsService("com.sun.star.sheet.SheetCellRange") ; Single Range is selected.
+			Return SetError($__LO_STATUS_SUCCESS, 1, $oSelection)
+
+		Case $oSelection.supportsService("com.sun.star.sheet.SheetCellRanges") ; Multiple Ranges are selected.
+			$iCount = $oSelection.getCount()
+			If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+			ReDim $aoSelections[$iCount]
+
+			For $i = 0 To $iCount - 1
+				$aoSelections[$i] = $oSelection.getByIndex($i)
+			Next
+
+			Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSelections)
+	EndSelect
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+EndFunc   ;==>_LOCalc_DocSelectionGet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocSelectionSet
+; Description ...: Set the current selection for the Document.
+; Syntax ........: _LOCalc_DocSelectionSet(ByRef $oDoc, ByRef $oObj)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oObj                - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $oObj not an Object.
+;				   @Error 1 @Extended 3 Return 0 = Object called in $oObj not a Cell Object and not a Cell Range.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Object called in $oObj successfully selected.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocSelectionSet(ByRef $oDoc, ByRef $oObj)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oObj.supportsService("com.sun.star.sheet.SheetCell") And Not _
+			$oObj.supportsService("com.sun.star.sheet.SheetCellRange") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oDoc.CurrentController.Select($oObj)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocSelectionSet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocSelectionSetMulti
+; Description ...: Select multiple Ranges in a Document.
+; Syntax ........: _LOCalc_DocSelectionSetMulti(ByRef $oDoc, ByRef $aoRange)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $aoRange             - [in/out] an array of objects. An array of Cell or Cell Range objects returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
+;				   @Error 1 @Extended 1 Return 0 = $oDoc not an object.
+;				   @Error 1 @Extended 2 Return 0 = $aoRange not an Array.
+;				   @Error 1 @Extended 3 Return ? = Array called in $aoRange does not contain an Object in returned element number.
+;				   @Error 1 @Extended 4 Return ? = Array called in $aoRange contains an Object in returned element that is not a Cell Object and not a Cell Range.
+;				   --Initialization Errors--
+;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.sheet.SheetCellRanges" Object.
+;				   --Processing Errors--
+;				   @Error 3 @Extended 1 Return ? = Failed to retrieve Range Address from Object located in array called in $aoRange, returning problem element.
+;				   --Success--
+;				   @Error 0 @Extended 0 Return 1 = Success. Objects were successfully selected.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocSelectionSetMulti(ByRef $oDoc, ByRef $aoRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oRanges
+	Local $aoRangeAddr[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	ReDim $aoRangeAddr[UBound($aoRange)]
+
+	For $i = 0 To UBound($aoRange) - 1
+		If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i)
+		If Not $aoRange[$i].supportsService("com.sun.star.sheet.SheetCell") And Not _
+				$aoRange[$i].supportsService("com.sun.star.sheet.SheetCellRange") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, $i)
+		$aoRangeAddr[$i] = $aoRange[$i].RangeAddress()
+		If Not IsObj($aoRangeAddr[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, $i)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	$oRanges = $oDoc.createInstance("com.sun.star.sheet.SheetCellRanges")
+	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oRanges.addRangeAddresses($aoRangeAddr, True)
+
+	$oDoc.CurrentController.Select($oRanges)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocSelectionSetMulti
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocToFront

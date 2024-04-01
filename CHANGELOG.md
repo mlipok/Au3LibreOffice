@@ -9,16 +9,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## Releases
 
-|    Version       |    Changes                   |    Download                            |     Released   |    Compare on GitHub       |
-|:-----------------|:----------------------------:|:--------------------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]                     | _Unreleased_   | [Compare][v0.10.0-Compare] |
-|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]                       | 2023-10-28     | [Compare][v0.9.1-Compare]  |
-|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]                       | 2023-10-28     | [Compare][v0.9.0-Compare]  |
-|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]                   | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
-|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]                   | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
-|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]                   | 2023-07-02     |                            |
+|    Version       |    Changes                   |    Download                 |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------:|:---------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
-## [0.10.0] - 2024-
+## [0.10.0] - 2024-04-
 
 ### Project
 
@@ -215,6 +215,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocRedoIsPossible
 	- _LOCalc_DocSave
 	- _LOCalc_DocSaveAs
+	- _LOCalc_DocSelectionGet
+	- _LOCalc_DocSelectionSet
+	- _LOCalc_DocSelectionSetMulti
 	- _LOCalc_DocToFront
 	- _LOCalc_DocUndo
 	- _LOCalc_DocUndoActionBegin
