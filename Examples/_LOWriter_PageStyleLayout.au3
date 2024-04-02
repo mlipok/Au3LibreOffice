@@ -25,8 +25,8 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
 
-	Else ;Set all other settings, except the Gutter settings.
-		
+	Else ; Set all other settings, except the Gutter settings.
+
 		; Set layout to, $LOW_PAGE_LAYOUT_MIRRORED, Numbering format to $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, Reference Paragraph style to
 		; "Default Paragraph Style", Background covers margins to True.
 		_LOWriter_PageStyleLayout($oDoc, $oPageStyle, $LOW_PAGE_LAYOUT_MIRRORED, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N, "Default Paragraph Style", Null, Null, True)
