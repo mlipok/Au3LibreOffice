@@ -2536,7 +2536,7 @@ EndFunc   ;==>_LOWriter_FrameStyleDelete
 ; Description ...: Check whether a Document contains a specific Frame Style by name.
 ; Syntax ........: _LOWriter_FrameStyleExists(ByRef $oDoc, $sFrameStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sParStyle           - a string value. The Frame Style Name to search for.
+;                  $sFrameStyle           - a string value. The Frame Style Name to search for.
 ; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--

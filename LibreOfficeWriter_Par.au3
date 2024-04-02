@@ -473,7 +473,6 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Set the Bottom Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -502,6 +501,7 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Certain Error values are passed from the internal border setting function.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle,
 ;					_LOWriter_ParStyleBorderPadding
@@ -589,7 +589,6 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ;                  $iBottom             - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Bottom Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -618,6 +617,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Certain Error values are passed from the internal border setting function.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleBorderWidth,
 ;					_LOWriter_ParStyleBorderColor, _LOWriter_ParStyleBorderPadding
 ; Link ..........:
@@ -651,7 +651,6 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Paragraph Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Paragraph Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3. Libre Office Version 3.4 and Up.
 ;                  $bConnectBorder      - [optional] a boolean value. Default is Null. If True, borders set for a paragraph are merged with the next paragraph. Note: Borders are only merged if they are identical. Libre Office Version 3.4 and Up.
-; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -676,6 +675,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Certain Error values are passed from the internal border setting function.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderColor,
 ;					_LOWriter_ParStyleBorderPadding

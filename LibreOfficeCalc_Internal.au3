@@ -1613,7 +1613,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ; Name ..........: __LOCalc_CreateStruct
 ; Description ...: Creates a Struct.
 ; Syntax ........: __LOCalc_CreateStruct($sStructName)
-; Parameters ....: $sStructName	- a string value. Name of structure to create.
+; Parameters ....: $sStructName - a string value. Name of structure to create.
 ; Return values .:Success: Structure.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--

@@ -154,7 +154,7 @@ EndFunc   ;==>_LOCalc_DocClose
 ; Parameters ....: $sFile               - a string value. A Full or partial file path, or a full or partial file name. See remarks. Can be an empty string if $bConnectAll or $bConnectCurrent is True.
 ;                  $bConnectCurrent     - [optional] a boolean value. Default is False. If True, returns the currently active, or last active Document, unless it is not a Calc Document.
 ;                  $bConnectAll         - [optional] a boolean value. Default is False. If True, returns an array containing all open LibreOffice Calc Documents. See remarks.
-; -Return values .: Success: Object or Array.
+; Return values .: Success: Object or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sFile not a string.
@@ -301,8 +301,8 @@ EndFunc   ;==>_LOCalc_DocConnect
 ; Name ..........: _LOCalc_DocCreate
 ; Description ...: Open a new Libre Office Calc Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOCalc_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: $bForceNew		- [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
-;				   $bHidden			- [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Parameters ....: $bForceNew       - [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
+;				   $bHidden         - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -808,7 +808,6 @@ EndFunc   ;==>_LOCalc_DocIsReadOnly
 ; Syntax ........: _LOCalc_DocMaximize(ByRef $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if false, document is restored to its previous size and location.
-;				   +						If Null, returns a Boolean indicating if document is currently maximized (True).
 ; Return values .: Success: 1 or Boolean.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -819,7 +818,7 @@ EndFunc   ;==>_LOCalc_DocIsReadOnly
 ;				   @Error 0 @Extended 1 Return Boolean = Success. $bMaximize set to Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -844,7 +843,6 @@ EndFunc   ;==>_LOCalc_DocMaximize
 ; Syntax ........: _LOCalc_DocMinimize(ByRef $oDoc[, $bMinimize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if false, document is restored to its previous size and location.
-;				   +						If Null, returns a Boolean indicating if document is currently minimized (True).
 ; Return values .: Success: 1 or Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -855,7 +853,7 @@ EndFunc   ;==>_LOCalc_DocMaximize
 ;				   @Error 0 @Extended 1 Return Boolean = Success. $bMinimize set to Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1088,7 +1086,6 @@ EndFunc   ;==>_LOCalc_DocPosAndSize
 ;                  $bCollate            - [optional] a boolean value. Default is True. Advises the printer to collate the pages of the copies.
 ;                  $vPages              - [optional] a String or Integer value. Default is "ALL". Specifies which pages to print. See remarks.
 ;                  $bWait               - [optional] a boolean value. Default is True. If True, the corresponding print request will be executed synchronous. Default is to use synchronous print mode.
-;				   +						ATTENTION: Setting this field to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ;                  $iDuplexMode         - [optional] an integer value (0-3). Default is $__g_iDuplexOFF. Determines the duplex mode for the print job. See Constants, $LOC_DUPLEX_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $sPrinter            - [optional] a string value. Default is "". Printer name. If left blank, or if printer name is not found, default printer is used.
 ;                  $sFilePathName       - [optional] a string value. Default is "". Specifies the name of a file to print to. Creates a .prn file at the given Path. Must include the desired path destination with file name.
@@ -1118,10 +1115,9 @@ EndFunc   ;==>_LOCalc_DocPosAndSize
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
-;					$vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10.
-;					Default is "ALL". Must be in String format to accept more than just a single page number.
-;					i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
+;				   $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;				   To set the output paper size, you would have to modify the Page Style used for the sheet.
+;				   Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ; Related .......: _LOCalc_SheetPrintColumnsRepeat, _LOCalc_SheetPrintRowsRepeat
 ; Link ..........:
 ; Example .......: Yes

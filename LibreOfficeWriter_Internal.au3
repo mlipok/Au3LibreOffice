@@ -1442,7 +1442,7 @@ EndFunc   ;==>__LOWriter_CreatePoint
 ; Name ..........: __LOWriter_CreateStruct
 ; Description ...: Retrieves a Struct.
 ; Syntax ........: __LOWriter_CreateStruct($sStructName)
-; Parameters ....: $sStructName	- a string value. Name of structure to create.
+; Parameters ....: $sStructName - a string value. Name of structure to create.
 ; Return values .:Success: Structure.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1478,8 +1478,8 @@ EndFunc   ;==>__LOWriter_CreateStruct
 ; Name ..........: __LOWriter_CursorGetText
 ; Description ...: Retrieves a Text object appropriate for the type of cursor.
 ; Syntax ........: __LOWriter_CursorGetText(ByRef $oDoc, $oCursor)
-; Parameters ....: $oDoc	    - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor 	- [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
+; Parameters ....: $oDoc        - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor     - [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
 ; Return values .:Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -1941,7 +1941,7 @@ EndFunc   ;==>__LOWriter_FilterNameGet
 ; Name ..........: __LOWriter_FindFormatAddSetting
 ; Description ...: Add or Update a setting in a Find Format Array.
 ; Syntax ........: __LOWriter_FindFormatAddSetting(ByRef $atArray, $tSetting)
-; Parameters ....: $aArray              - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will be directly modified.
+; Parameters ....: $atArray             - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will be directly modified.
 ;                  $tSetting            - a struct value. A Libre Office Structure setting.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1992,7 +1992,7 @@ EndFunc   ;==>__LOWriter_FindFormatAddSetting
 ; Name ..........: __LOWriter_FindFormatDeleteSetting
 ; Description ...: Delete a setting from a Find Format Array.
 ; Syntax ........: __LOWriter_FindFormatDeleteSetting(ByRef $atArray, $sSettingName)
-; Parameters ....: $aArray              - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will be directly modified.
+; Parameters ....: $atArray             - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will be directly modified.
 ;                  $sSettingName        - a string value. The setting name to search and delete.
 ; Return values .: Success: 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2032,7 +2032,7 @@ EndFunc   ;==>__LOWriter_FindFormatDeleteSetting
 ; Name ..........: __LOWriter_FindFormatRetrieveSetting
 ; Description ...: Retrieve a specific setting from a Find Format Array of Settings.
 ; Syntax ........: __LOWriter_FindFormatRetrieveSetting(ByRef $atArray, $sSettingName)
-; Parameters ....: $aArray              - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will not be modified.
+; Parameters ....: $atArray             - [in/out] an array of structs. A Find Format Array of Settings to Search. Array will not be modified.
 ;                  $sSettingName        - a string value. The Setting name to search for.
 ; Return values .: Success: Object or 1
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
