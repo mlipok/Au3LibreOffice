@@ -638,7 +638,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;				   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;				   Color is set in Long Integer format.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
@@ -950,7 +950,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -1068,8 +1068,8 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Overline style, Color and $bHasColor all reset together.
-;				   Note: $bOLHasColor must be set to true in order to set the underline color.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Overline style, Color and $bHasColor all reset together.
+;				   $bOLHasColor must be set to true in order to set the underline color.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -1156,11 +1156,11 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+;				   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
-;				   Note: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
+;				   $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -1703,7 +1703,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
+;				   $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -1765,7 +1765,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					 Note: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
+;				   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
@@ -1833,11 +1833,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
-;				   Note: In LibreOffice User Interface (UI), there are two options available when applying direct formatting,
-;					"Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am
-;					able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable
-;					to clear either setting once applied, so for those reasons I am not including it in this UDF.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
+;				   In LibreOffice User Interface (UI), there are two options available when applying direct formatting, "Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable to clear either setting once applied, so for those reasons I am not including it in this UDF.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -1922,14 +1919,9 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					Note: Clearing directly formatted page breaks may fail, If the cursor selection contains more than one
-;					paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph
-;					style's original settings even though it returns a success, you will need to reset each paragraph one at
-;					a time if this is the case.
-;					Note: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
-;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
-;						 though I'm not sure if they will work correctly.
+;				   Clearing directly formatted page breaks may fail, If the cursor selection contains more than one paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph style's original settings even though it returns a success, you will need to reset each paragraph one at a time if this is the case.
+;				   Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;				   LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -2002,7 +1994,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor,
 ;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
@@ -2078,12 +2070,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $iAbovePar,
-;				   $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
-;				   Note: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
-;				   Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iAbovePar, $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
+;				   $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
+;				   The settings in LibreOffice, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;				   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;				   Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
+;				   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -2174,13 +2165,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;					This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
-;					Call any optional parameter with Null keyword to skip it.
+;				   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, this function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete,
 ;					_LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
@@ -2327,12 +2315,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
-;				   Note: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
-;				   Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;				   Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
+;				   $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
+;				   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate,
 ;					_LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
@@ -2398,8 +2384,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
-;				   Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
+;				   If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
 ; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -2476,8 +2462,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: $bStrikeout and $iStrikeLineStyle are reset together.
-;				   Note Strikeout converted to single line in Ms word document format.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $bStrikeout and $iStrikeLineStyle are reset together.
+;				   Strikeout converted to single line in Ms word document format.
 ; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
 ;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
 ;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
@@ -2552,8 +2538,8 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Note: Underline style, Color and $bHasColor all reset together.
-;				   Note: $bULHasColor must be set to true in order to set the underline color.
+;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Underline style, Color and $bHasColor all reset together.
+;				   $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
 ;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,

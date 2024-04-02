@@ -737,7 +737,7 @@ EndFunc   ;==>_LOCalc_DocHasSheetName
 ;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True if document is the currently active Libre window. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note, this does NOT test if the document is the current active window in Windows, it only tests if the document is the current active document among other Libre Office documents.
+; Remarks .......: This does NOT test if the document is the current active window in Windows, it only tests if the document is the current active document among other Libre Office documents.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -912,7 +912,7 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ;				   @Error 0 @Extended 2 Return Object = Successfully opened requested Document with requested parameters. Returning Document's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: any parameters (Hidden, template etc.,) will not be applied when connecting to a document.
+; Remarks .......: Any parameters (Hidden, template etc.,) will not be applied when connecting to a document.
 ; Related .......: _LOCalc_DocCreate, _LOCalc_DocClose, _LOCalc_DocConnect
 ; Link ..........:
 ; Example .......: Yes
@@ -1019,7 +1019,7 @@ EndFunc   ;==>_LOCalc_DocOpen
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note, X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
+; Remarks .......: X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
 ;				   If you want more accurate functionality, use the "WinMove" AutoIt function.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1926,7 +1926,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;				   @Error 0 @Extended 1 Return Array = All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Zoom type always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the  Zoom Type property being correctly set.
+; Remarks .......: Zoom type always has the value of $LOC_ZOOMTYPE_BY_VALUE(3), when using the other zoom types, the value stays the same, but the zoom level is modified. Consequently, I have not added an error check for the Zoom Type property being correctly set.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:

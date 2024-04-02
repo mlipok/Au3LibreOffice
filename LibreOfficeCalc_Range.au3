@@ -402,7 +402,7 @@ EndFunc   ;==>_LOCalc_RangeColumnPageBreak
 ;				   @Error 0 @Extended 0 Return Integer = Success. Returning number of Columns contained in the Range.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: There is a fixed number of Columns per sheet, but different L.O. versions contain different amounts of Columns. But this also helps to determine how many columns are contained in a Cell Range.
+; Remarks .......: There is a fixed number of Columns per sheet, but different L.O. versions contain different amounts of Columns. But this also helps to determine how many columns are contained in a Cell Range.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -486,7 +486,7 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bOptimal only accepts True. False will return an error. Calling True again returns the cell to optimal width, setting a custom width essentially disables it.
-;				   Note: I am presently unable to find a setting for Optimal Width "Add" Value.
+;				   I am presently unable to find a setting for Optimal Width "Add" Value.
 ; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1826,7 +1826,7 @@ EndFunc   ;==>_LOCalc_RangeGetSheet
 ;				   @Error 0 @Extended 0 Return 1 = Success. Blank cells were successfully inserted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: The new range of cells inserted will be the same size as the range called in $oRange.
+; Remarks .......: The new range of cells inserted will be the same size as the range called in $oRange.
 ;				   Non-Empty cells cannot be moved off of the sheet.
 ;				   This function will silently fail if the insertion will cause an array formula to be split -- OOME. 4.1., Page 509.
 ; Related .......:
@@ -3218,7 +3218,7 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: I am presently unable to find a setting for Optimal Height "Add" Value.
+; Remarks .......: I am presently unable to find a setting for Optimal Height "Add" Value.
 ; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -3372,7 +3372,7 @@ EndFunc   ;==>_LOCalc_RangeRowPageBreak
 ;				   @Error 0 @Extended 0 Return Integer = Success. Returning number of Rows contained in the Range.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: There is a fixed number of Rows per sheet, but different L.O. versions contain different amounts of Rows. This can also help determine how many rows are in a Cell Range.
+; Remarks .......: There is a fixed number of Rows per sheet, but different L.O. versions contain different amounts of Rows. This can also help determine how many rows are in a Cell Range.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

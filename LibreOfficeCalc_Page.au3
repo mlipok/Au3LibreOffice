@@ -1154,7 +1154,7 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1888,7 +1888,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1982,7 +1982,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderShadow
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: I have no way to retrieve possible values for the Paper Tray parameter, at least that I can find. You may still use it if you know the appropriate value.
+;				   I have no way to retrieve possible values for the Paper Tray parameter, at least that I can find. You may still use it if you know the appropriate value.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2411,7 +2411,7 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes

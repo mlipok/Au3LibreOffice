@@ -843,9 +843,8 @@ EndFunc   ;==>_LOWriter_FieldCondTextModify
 ;				   @Error 0 @Extended 0 Return String = Success. Returning current Field display content in String format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note, a Comment Field will return an empty string, use the Comment Field function to retrieve the current
-;					comment content. A DocInfoComments field will work with this function however.
-;					Note: This will work for most Fields, but not all. Check and see which will work and which wont.
+; Remarks .......: A Comment Field will return an empty string, use the Comment Field function to retrieve the current comment content. A DocInfoComments field will work with this function however.
+;				   This will work for most Fields, but not all. Check and see which will work and which wont.
 ; Related .......: _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -4434,20 +4433,12 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set
-;					to False, the Array will be a single column. With each of the above listed options being set to True, a
-;					column will be added in the order they are listed in the UDF parameters. The First column will always be the
-;					Field Object.
-;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
-;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
-;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
-;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
-;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
-;						($LWFieldDocInfoType). Just because a field is listed in the constants below, does not necessarily mean
-;						that I have made a function to create/modify it, you may still be able to update or delete it using the
-;						_LOWriter_FieldUpdate, or _LOWriter_FieldDelete function, though. Some Fields are too complex to create a function for,
-;						and others are literally impossible.
+; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set to False, the Array will be a single column. With each of the above listed options being set to True, a column will be added in the order they are listed in the UDF parameters. The First column will always be the Field Object.
+;				   Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
+;				   Setting $bFieldType to True will add a Field type column for the found Field.
+;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
+;				   For simplicity, and also due to certain Bit limitations I have broken the different Field types into three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType), and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog), ($LWFieldDocInfoType).
+;				   Just because a field is listed in the constants, does not necessarily mean that I have made a function to create/modify it, you may still be able to update or delete it using the _LOWriter_FieldUpdate, or _LOWriter_FieldDelete function, though. Some Fields are too complex to create a function for, and others are not possible.
 ; Related .......: _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
 ;					_LOWriter_FieldUpdate
 ; Link ..........:
@@ -4497,23 +4488,13 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set
-;					to False, the Array will be a single column. With each of the above listed options being set to True, a
-;					column will be added in the order they are listed in the UDF parameters. The First column will always be the
-;					Field Object.
-;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
-;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the
-;						found Field.
-;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
-;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
-;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
-;						($LWFieldDocInfoType). Just because a field is listed in the constants below, does not necessarily mean
-;						that I have made a function to create/modify it, you may still be able to update or delete it using the
-;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
-;						and others are literally impossible.
-; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
-;					_LOWriter_FieldUpdate
+; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set to False, the Array will be a single column. With each of the above listed options being set to True, a column will be added in the order they are listed in the UDF parameters. The First column will always be the Field Object.
+;				   Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
+;				   Setting $bFieldType to True will add a Field type column for the found Field.
+;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
+;				   For simplicity, and also due to certain Bit limitations I have broken the different Field types into three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType), and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog), ($LWFieldDocInfoType).
+;				   Just because a field is listed in the constants below, does not necessarily mean that I have made a function to create/modify it, you may still be able to update or delete it using the Field Update, or Field Delete function, though. Some Fields are too complex to create a function for, and others are literally impossible.
+; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor, _LOWriter_FieldUpdate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4970,7 +4951,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 ;				   @Error 0 @Extended ? Return Array = Success. Successfully retrieved Array of Set Variable MasterField Names, returning Array of Set Variable MasterField Names with @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Note: This function includes in the list about 5 built-in Master Fields from Libre Office, namely: Illustration, Table, Text, Drawing, and Figure.
+; Remarks .......: This function includes in the list about 5 built-in Master Fields from Libre Office, namely: Illustration, Table, Text, Drawing, and Figure.
 ; Related .......: _LOWriter_FieldSetVarMasterGetObj, _LOWriter_FieldSetVarMasterDelete
 ; Link ..........:
 ; Example .......: Yes
@@ -5150,22 +5131,13 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set
-;					to False, the Array will be a single column. With each of the above listed options being set to True, a
-;					column will be added in the order they are listed in the UDF parameters. The First column will always be the
-;					Field Object.
-;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
-;					Setting $bFieldType to True will add a Field type column for the found Field.
-;					Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
-;					Note: For simplicity, and also due to certain Bit limitations I have broken the different Field types into
-;						three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType),
-;						and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog),
-;						($LWFieldDocInfoType). Just because a field is listed in the constants below, does not necessarily mean
-;						that I have made a function to create/modify it, you may still be able to update or delete it using the
-;						Field Update, or Field Delete function, though. Some Fields are too complex to create a function for,
-;						and others are literally impossible.
-; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
-;					_LOWriter_FieldUpdate
+; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set to False, the Array will be a single column. With each of the above listed options being set to True, a column will be added in the order they are listed in the UDF parameters. The First column will always be the Field Object.
+;				   Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
+;				   Setting $bFieldType to True will add a Field type column for the found Field.
+;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
+;				   For simplicity, and also due to certain Bit limitations I have broken the different Field types into three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType), and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog), ($LWFieldDocInfoType).
+;				   Just because a field is listed in the constants below, does not necessarily mean that I have made a function to create/modify it, you may still be able to update or delete it using the Field Update, or Field Delete function, though. Some Fields are too complex to create a function for, and others are literally impossible.
+; Related .......: _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor, _LOWriter_FieldUpdate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5293,7 +5265,7 @@ EndFunc   ;==>_LOWriter_FieldShowVarInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: This function checks if there is a Set Variable matching the name called in $sSetVarName.
+;				   This function checks if there is a Set Variable matching the name called in $sSetVarName.
 ; Related .......: _LOWriter_FieldShowVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate,  _LOWriter_FormatKeyList
 ; Link ..........:
 ; Example .......: Yes

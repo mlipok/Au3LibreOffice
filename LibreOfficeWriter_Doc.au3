@@ -1700,10 +1700,8 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;				   @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed.
-;					Else the requested object is returned.
-;					Note: If same content on left and right and first pages is active for the requested page style, you only need to use the $bFooter parameter,
-;					the others are only for when same content on first page or same content on left and right pages is deactivated.
+; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+;				   If same content on left and right and first pages is active for the requested page style, you only need to use the $bFooter parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
@@ -2526,10 +2524,8 @@ EndFunc   ;==>_LOWriter_DocHasTableName
 ;				   @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed.
-;					Else the requested object is returned.
-;					Note: If same content on left and right and first pages is active for the requested page style, you only need to use the $bHeader parameter,
-;					the others are only for when same content on first page or same content on left and right pages is deactivated.
+; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
+;				   If same content on left and right and first pages is active for the requested page style, you only need to use the $bHeader parameter, the others are only for when same content on first page or same content on left and right pages is deactivated.
 ; Related .......: _LOWriter_PageStyleGetObj, _LOWriter_PageStyleCreate, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
@@ -2774,7 +2770,7 @@ EndFunc   ;==>_LOWriter_DocInsertString
 ;				   @Error 0 @Extended 0 Return Boolean = Success. Returns True if document is the currently active Libre window. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note, this does NOT test if the document is the current active window in Windows, it only tests if the document is the current active document among other Libre Office documents.
+; Remarks .......: This does NOT test if the document is the current active window in Windows, it only tests if the document is the current active document among other Libre Office documents.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2949,7 +2945,7 @@ EndFunc   ;==>_LOWriter_DocMinimize
 ;				   @Error 0 @Extended 2 Return Object = Successfully opened requested Document with requested parameters. Returning Document's Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: any parameters (Hidden, template etc.,) will not be applied when connecting to a document.
+; Remarks .......: Any parameters (Hidden, template etc.,) will not be applied when connecting to a document.
 ; Related .......: _LOWriter_DocCreate, _LOWriter_DocClose, _LOWriter_DocConnect
 ; Link ..........:
 ; Example .......: Yes
@@ -3056,7 +3052,7 @@ EndFunc   ;==>_LOWriter_DocOpen
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note, X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
+; Remarks .......: X & Y, on my computer at least, seem to go no lower than 8(X) and 30(Y), if you enter lower than this, it will cause a "property setting Error".
 ;				   If you want more accurate functionality, use the "WinMove" AutoIt function.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -3547,7 +3543,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:  Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
-;					Note: for some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
+;					For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
 ;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings

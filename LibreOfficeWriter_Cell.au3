@@ -421,7 +421,8 @@ EndFunc   ;==>_LOWriter_CellFormula
 ;				   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Returns the data type as one of the constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3. Note: If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
+; Remarks .......: Returns the data type as one of the constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;				   If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
 ; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes

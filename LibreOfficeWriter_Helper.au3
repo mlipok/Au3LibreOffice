@@ -156,7 +156,7 @@ EndFunc   ;==>_LOWriter_ComError_UserFunction
 ; Modified ......:
 ; Remarks .......: To retrieve a Hexadecimal color value, call the Long Color code in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the Long color code into $iRGB, etc. for the other color types.
 ;				   Hex returns as a string variable, all others (RGB, HSB, CMYK) return an array.
-;				   Note: The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;				   The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -300,7 +300,7 @@ EndFunc   ;==>_LOWriter_ConvertColorFromLong
 ;				   To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
 ;				   To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
 ;				   To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
-;				   Note: The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;				   The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOWriter_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
@@ -1078,7 +1078,7 @@ EndFunc   ;==>_LOWriter_DateStructModify
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+;				   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1452,7 +1452,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;				   Note: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
+;				   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll,
 ;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1870,12 +1870,10 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;					Note: The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just
-;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
-;					The values accepted by $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;					Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
+;				   The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+;				   The values accepted by $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
+;				   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2583,7 +2581,7 @@ EndFunc   ;==>_LOWriter_PathConvert
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes".
 ;				   Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
-;				   Note: The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for other documents.
+;				   The returned Search Descriptor is only good for the Document it was created by, it WILL NOT work for other documents.
 ; Related .......: _LOWriter_SearchDescriptorModify, _LOWriter_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes

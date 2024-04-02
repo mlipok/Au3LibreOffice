@@ -140,7 +140,7 @@ EndFunc   ;==>_LOCalc_ComError_UserFunction
 ; Modified ......:
 ; Remarks .......: To retrieve a Hexadecimal color value, call the Long Color code in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the Long color code into $iRGB, etc. for the other color types.
 ;				   Hex returns as a string variable, all others (RGB, HSB, CMYK) return an array.
-;				   Note: The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;				   The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -284,7 +284,7 @@ EndFunc   ;==>_LOCalc_ConvertColorFromLong
 ;				   To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
 ;				   To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
 ;				   To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
-;				   Note: The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;				   The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOCalc_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
@@ -1332,7 +1332,7 @@ EndFunc   ;==>_LOCalc_PathConvert
 ;				   @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
+; Remarks .......: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
 ; Related .......: _LOCalc_SearchDescriptorModify, _LOCalc_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes

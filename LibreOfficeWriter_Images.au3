@@ -76,7 +76,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Note: If transparency is set, it can cause strange values to be displayed for Background color.
+;				   If transparency is set, it can cause strange values to be displayed for Background color.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -170,7 +170,7 @@ EndFunc   ;==>_LOWriter_ImageAreaColor
 ; Modified ......:
 ; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;					Call any optional parameter with Null keyword to skip it.
-;					Note: Gradient Name has no use other than for applying a pre-existing preset gradient.
+;					Gradient Name has no use other than for applying a pre-existing preset gradient.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -758,7 +758,7 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $bInvert is glitchy to set. The current setting will always be returned as false if set by the user. Setting inverted using this function can be difficult to remove by the user.
+; Remarks .......: $bInvert is glitchy to set. The current setting will always be returned as false if set by the user. Setting inverted using this function can be difficult to remove by the user.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName
@@ -865,7 +865,7 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: There is no literal setting for $bKeepScale in Libre Office's settings, so I have made an internal static setting in this function to behave the same as Libre Office. When you retrieve the current settings for an image, the return for $bKeepScale will be my internal static value, and NOT the current LibreOffice setting.
+; Remarks .......: There is no literal setting for $bKeepScale in Libre Office's settings, so I have made an internal static setting in this function to behave the same as Libre Office. When you retrieve the current settings for an image, the return for $bKeepScale will be my internal static value, and NOT the current LibreOffice setting.
 ;				   Maximum crop values are based on page width. You cannot exceed the size of the page, nor crop too much of the image away.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
@@ -1416,7 +1416,7 @@ EndFunc   ;==>_LOWriter_ImageOptions
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: Previous and Next link are omitted as they seem to have no use for images.
+;				   Previous and Next link are omitted as they seem to have no use for images.
 ; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ImageOptions
 ; Link ..........:
 ; Example .......: Yes
@@ -1574,7 +1574,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......:  _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
