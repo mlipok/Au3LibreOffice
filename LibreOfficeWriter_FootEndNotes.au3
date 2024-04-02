@@ -140,11 +140,10 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_EndnoteInsert
 ; Description ...: Insert a Endnote into a Document.
-; Syntax ........: _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite[, $sLabel = Null])
+; Syntax ........: _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sLabel = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
-;				   +								If False, content will be inserted to the left of any selection.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the Endnote.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -562,11 +561,10 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FootnoteInsert
 ; Description ...: Insert a Footnote into a Document.
-; Syntax ........: _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite[, $sLabel = Null])
+; Syntax ........: _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sLabel = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
-;				   +									If False, content will be inserted to the left of any selection.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $sLabel              - [optional] a string value. Default is Null. A custom anchor label for the footnote.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.

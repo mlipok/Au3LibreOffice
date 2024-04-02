@@ -42,7 +42,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetCursorMove
 ; Description ...: Move a Sheet Cursor object in a document. Also for creating/Expanding selections.
-; Syntax ........: _LOCalc_SheetCursorMove(ByRef $oCursor, $iMove[, $iCount = 1[, $bSelect = False]])
+; Syntax ........: _LOCalc_SheetCursorMove(ByRef $oCursor, $iMove[, $iColumns = 0[, $iRows = 0[, $iCount = 1[, $bSelect = False]]]])
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions.
 ;                  $iMove               - an integer value. The movement command. See remarks and Constants, $LOC_TEXTCUR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iColumns            - [optional] an integer value. Default is 0. The Number of Columns either to contain in the Range, or to move, depending on the called move command.
@@ -110,7 +110,7 @@ EndFunc   ;==>_LOCalc_SheetCursorMove
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_TextCursorCharPosition
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size for a Text Cursor.
-; Syntax ........: _LOCalc_TextCursorCharPosition(ByRef $oTextCursor[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null[, $bClearFrmt = False]]]]]])
+; Syntax ........: _LOCalc_TextCursorCharPosition(ByRef $oTextCursor[, $bAutoSuper = Null[, $iSuperScript = Null[, $bAutoSub = Null[, $iSubScript = Null[, $iRelativeSize = Null]]]]])
 ; Parameters ....: $oTextCursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
 ;                  $bAutoSuper          - [optional] a boolean value. Default is Null. If True, automatic sizing for Superscript is active.
 ;                  $iSuperScript        - [optional] an integer value (0-100,14000). Default is Null. The Superscript percentage value. See Remarks.

@@ -675,7 +675,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameColumnSettings
 ; Description ...: Set or retrieve Frame Column count.
-; Syntax ........: _LOWriter_FrameColumnSettings(ByRef $oFrame[, $iColumns = Null ])
+; Syntax ........: _LOWriter_FrameColumnSettings(ByRef $oFrame[, $iColumns = Null])
 ; Parameters ....: $oFrame              - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
 ;                  $iColumns            - [optional] an integer value. Default is Null. The number of columns that you want in the Frame. Min. 1.
 ; Return values .: Success: Integer
@@ -2098,7 +2098,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleColumnSeparator
 ; Description ...: Modify or retrieve Frame Style Column Separator line settings.
-; Syntax ........: _LOWriter_FrameStyleColumnSeparator(ByRef $oDoc, $sFrameStyle[, $bSeparatorOn = Null[, $iStyle = Null[, $iWidth = Null[, $iColor = Null[, $iHeight = Null[, $iPosition = Null]]]]]])
+; Syntax ........: _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle[, $bSeparatorOn = Null[, $iStyle = Null[, $iWidth = Null[, $iColor = Null[, $iHeight = Null[, $iPosition = Null]]]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $bSeparatorOn        - [optional] a boolean value. Default is Null. If true, add a separator line between two or more columns.
 ;                  $iStyle              - [optional] an integer value (0-3). Default is Null. The formatting style for the column separator line. See Constants, $LOW_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2202,7 +2202,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSeparator
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleColumnSettings
 ; Description ...: Set or retrieve Frame style Column count.
-; Syntax ........: _LOWriter_FrameStyleColumnSettings(ByRef $oFrameStyle[, $iColumns = Null ])
+; Syntax ........: _LOWriter_FrameStyleColumnSettings(ByRef $oFrameStyle[, $iColumns = Null])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iColumns            - [optional] an integer value. Default is Null. The number of columns that you want in the Frame. Min. 1.
 ; Return values .: Success: Integer.
@@ -3004,7 +3004,7 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStyleTransparency
 ; Description ...: Modify or retrieve Transparency settings for a Frame style.
-; Syntax ........: _LOWriter_FrameStyleTransparency(ByRef $oDoc, $sFrameStyle[, $iTransparency = Null])
+; Syntax ........: _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle[, $iTransparency = Null])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.

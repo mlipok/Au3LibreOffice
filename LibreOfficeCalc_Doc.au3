@@ -877,7 +877,7 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocOpen
 ; Description ...: Open an existing Calc Document, returning its object identifier.
-; Syntax ........: _LOCalc_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = False[, $bReadOnly = False[, $sPassword = ""[, $bLoadAsTemplate = False[, $sFilterName = ""]]]]]])
+; Syntax ........: _LOCalc_DocOpen($sFilePath[, $bConnectIfOpen = True[, $bHidden = Null[, $bReadOnly = Null[, $sPassword = Null[, $bLoadAsTemplate = Null[, $sFilterName = Null]]]]]])
 ; Parameters ....: $sFilePath           - a string value. Full path and filename of the file to be opened.
 ;                  $bConnectIfOpen      - [optional] a boolean value. Default is True(Connect). Whether to connect to the requested document if it is already open. See remarks.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If true, opens the document invisibly.

@@ -2116,7 +2116,7 @@ EndFunc   ;==>_LOCalc_PageStyleMargins
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleOrganizer
 ; Description ...: Set or retrieve the Organizer settings of a Page Style.
-; Syntax ........: _LOCalc_PageStyleOrganizer(ByRef $oDoc, $oPageStyle[, $sNewPageStyleName = Null[, $bHidden = Null[, $sFollowStyle = Null]]])
+; Syntax ........: _LOCalc_PageStyleOrganizer(ByRef $oDoc, $oPageStyle[, $sNewPageStyleName = Null[, $bHidden = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function.
 ;                  $sNewPageStyleName   - [optional] a string value. Default is Null. The new name to set the Page Style called in $oPageStyle to.
@@ -2268,7 +2268,7 @@ EndFunc   ;==>_LOCalc_PageStylePaperFormat
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_PageStyleSet
 ; Description ...: Set the Page style for a Sheet.
-; Syntax ........: _LOCalc_PageStyleSet(ByRef $oDoc, ByRef $oObj, $sPageStyle)
+; Syntax ........: _LOCalc_PageStyleSet(ByRef $oDoc, ByRef $oSheet[, $sPageStyle = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sPageStyle          - [optional] a string value. Default is Null. The Page Style name to set the Page to.
