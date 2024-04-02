@@ -21,7 +21,7 @@ Func Example()
 	_LOCalc_PageStyleLayout($oPageStyle, $LOC_PAGE_LAYOUT_MIRRORED, $LOC_NUM_STYLE_CHARS_UPPER_LETTER_N, True, True)
 	If @error Then _ERROR($oDoc, "Failed to modify Page Style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avPageStyleSettings = _LOCalc_PageStyleLayout($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended)
 

@@ -34,7 +34,7 @@ Func Example()
 	_LOWriter_ParStyleDropCaps($oDoc, $oParStyle, 3, 2, $iMicrometers, False, "Example")
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleDropCaps($oDoc, $oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

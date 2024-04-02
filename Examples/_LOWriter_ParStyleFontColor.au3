@@ -28,7 +28,7 @@ Func Example()
 	_LOWriter_ParStyleFontColor($oParStyle, $LOW_COLOR_RED, 50, $LOW_COLOR_GOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleFontColor($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -43,7 +43,7 @@ Func Example()
 	_LOWriter_ParStyleFontColor($oParStyle, Null, 0)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleFontColor($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

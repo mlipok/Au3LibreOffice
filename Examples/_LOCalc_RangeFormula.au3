@@ -28,7 +28,7 @@ Func Example()
 	$aavData[1] = $avRowData
 
 	$avRowData[0] = "=50 / 10" ; A3
-	$avRowData[1] = "2 + 2"  ; B3
+	$avRowData[1] = "=2 + 2"  ; B3
 	$aavData[2] = $avRowData
 
 	$avRowData[0] = "=5 * 5" ; A4

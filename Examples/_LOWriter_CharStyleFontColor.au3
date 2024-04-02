@@ -44,7 +44,7 @@ Func Example()
 	_LOWriter_CharStyleFontColor($oCharStyle, $LOW_COLOR_RED, 50, $LOW_COLOR_GOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleFontColor($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
@@ -59,7 +59,7 @@ Func Example()
 	_LOWriter_CharStyleFontColor($oCharStyle, Null, 0)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleFontColor($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 

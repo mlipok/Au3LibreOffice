@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_CellBorderStyle($oCell, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderStyle($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's current settings. Error:" & @error & " Extended:" & @extended)
 
@@ -55,7 +55,7 @@ Func Example()
 	_LOCalc_CellBorderStyle($oCellRange, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DOUBLE, $LOC_BORDERSTYLE_DASH_DOT_DOT, $LOC_BORDERSTYLE_DASH_DOT_DOT, $LOC_BORDERSTYLE_DASH_DOT_DOT, $LOC_BORDERSTYLE_DASH_DOT_DOT)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell Range's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderStyle($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Range's current settings. Error:" & @error & " Extended:" & @extended)
 

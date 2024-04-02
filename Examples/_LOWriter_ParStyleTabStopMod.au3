@@ -36,7 +36,7 @@ Func Example()
 	$iTabStop = @extended
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Tab stop settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avTabStop = _LOWriter_ParStyleTabStopMod($oParStyle, $iTabStop)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Paragraph Tab stop settings. Error:" & @error & " Extended:" & @extended)
 

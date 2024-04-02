@@ -29,7 +29,7 @@ Func Example()
 	_LOCalc_CellBorderPadding($oCell, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderPadding($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
@@ -37,7 +37,7 @@ Func Example()
 			"All Padding distance, in Micrometers: " & $avSettings[0] & " This setting will be either Null or an Integer, depending on whether all four distances are equal or not." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Bottom Padding distance, in Micrometers: " & $avSettings[2] & @CRLF & _
-			"Left Padding distance, in Micrometers: " & $avSettings[3] & @CRLF & @CRLF & _
+			"Left Padding distance, in Micrometers: " & $avSettings[3] & @CRLF &  _
 			"Right Padding distance, in Micrometers: " & $avSettings[4] & @CRLF & @CRLF & _
 			"Press Ok, and I will demonstrate setting individual border padding settings.")
 
@@ -49,7 +49,7 @@ Func Example()
 	_LOCalc_CellBorderPadding($oCell, Null, $iMicrometers, $iMicrometers2, $iMicrometers2, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderPadding($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended)
 

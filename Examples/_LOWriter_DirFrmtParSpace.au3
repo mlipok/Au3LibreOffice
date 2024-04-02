@@ -43,7 +43,7 @@ Func Example()
 	_LOWriter_DirFrmtParSpace($oViewCursor, $iMicrometers, $iMicrometers, True, $LOW_LINE_SPC_MODE_FIX, $iMicrometers2, False)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOWriter_DirFrmtParSpace($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 

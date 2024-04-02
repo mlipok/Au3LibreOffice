@@ -29,7 +29,7 @@ Func Example()
 	_LOWriter_ParStyleOutLineAndList($oDoc, $oParStyle, $LOW_OUTLINE_LEVEL_1, "Numbering 123", True, 1)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleOutLineAndList($oDoc, $oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

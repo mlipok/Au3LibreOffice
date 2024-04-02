@@ -33,7 +33,7 @@ Func Example()
 	_LOCalc_CellShadow($oCell, $iMicrometers, $LOC_COLOR_PURPLE, False, $LOC_SHADOW_TOP_LEFT)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellShadow($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended)
 

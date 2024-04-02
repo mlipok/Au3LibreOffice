@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_CellBorderColor($oCell, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderColor($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's current settings. Error:" & @error & " Extended:" & @extended)
 
@@ -55,7 +55,7 @@ Func Example()
 	_LOCalc_CellBorderColor($oCellRange, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK, $LOC_COLOR_BRICK, $LOC_COLOR_BLUE, $LOC_COLOR_BLUE, $LOC_COLOR_BLUE, $LOC_COLOR_BLUE)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell Range's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellBorderColor($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Range's current settings. Error:" & @error & " Extended:" & @extended)
 

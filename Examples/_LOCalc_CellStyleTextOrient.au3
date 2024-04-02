@@ -41,7 +41,7 @@ Func Example()
 	_LOCalc_CellStyleTextOrient($oCellStyle, 90, $LOC_CELL_ROTATE_REF_UPPER_CELL_BORDER)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell Style's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellStyleTextOrient($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's settings. Error:" & @error & " Extended:" & @extended)
 

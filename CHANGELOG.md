@@ -9,16 +9,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## Releases
 
-|    Version       |    Changes                   |    Download                            |     Released   |    Compare on GitHub       |
-|:-----------------|:----------------------------:|:--------------------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]                     | _Unreleased_   | [Compare][v0.10.0-Compare] |
-|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]                       | 2023-10-28     | [Compare][v0.9.1-Compare]  |
-|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]                       | 2023-10-28     | [Compare][v0.9.0-Compare]  |
-|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]                   | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
-|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]                   | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
-|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]                   | 2023-07-02     |                            |
+|    Version       |    Changes                         |    Download                 |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------------:|:---------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](#0100---2024-04-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](#091---2023-10-28)    | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](#090---2023-10-28)    | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](#0003---2023-08-10)   | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](#0002---2023-07-16)   | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](#0001---2023-07-02)   | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
-## [0.10.0] - 2024-
+## [0.10.0] - 2024-04-
 
 ### Project
 
@@ -56,6 +56,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
+	- LibreOfficeCalc_Page.au3
 	- LibreOfficeCalc_Range.au3
 	- LibreOfficeCalc_Sheet.au3
 - Cell/Cell Range Formatting Functions and Examples
@@ -96,6 +97,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeCopyMove
 	- _LOCalc_RangeCreateCursor
 	- _LOCalc_RangeData
+	- _LOCalc_RangeDatabaseAdd
+	- _LOCalc_RangeDatabaseDelete
+	- _LOCalc_RangeDatabaseGetNames
+	- _LOCalc_RangeDatabaseGetObjByName
+	- _LOCalc_RangeDatabaseHasByName
+	- _LOCalc_RangeDatabaseModify
 	- _LOCalc_RangeDelete
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
@@ -110,6 +117,15 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeGetCellByPosition
 	- _LOCalc_RangeGetSheet
 	- _LOCalc_RangeInsert
+	- _LOCalc_RangeIsMerged
+	- _LOCalc_RangeMerge
+	- _LOCalc_RangeNamedAdd
+	- _LOCalc_RangeNamedChangeScope
+	- _LOCalc_RangeNamedDelete
+	- _LOCalc_RangeNamedGetNames
+	- _LOCalc_RangeNamedGetObjByName
+	- _LOCalc_RangeNamedHasByName
+	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNumbers
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
@@ -129,6 +145,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeRowPageBreak
 	- _LOCalc_RangeRowsGetCount
 	- _LOCalc_RangeRowVisible
+	- _LOCalc_RangeSort
+	- _LOCalc_RangeSortAlt
 - Cell Style Formatting Functions and Examples
 	- _LOCalc_CellStyleBackColor
 	- _LOCalc_CellStyleBorderColor
@@ -175,6 +193,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocClose
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
+	- _LOCalc_DocEnumPrinters
+	- _LOCalc_DocEnumPrintersAlt
 	- _LOCalc_DocExport
 	- _LOCalc_DocGetName
 	- _LOCalc_DocGetPath
@@ -187,6 +207,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocMinimize
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
+	- _LOCalc_DocPrint
 	- _LOCalc_DocRedo
 	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
@@ -194,6 +215,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocRedoIsPossible
 	- _LOCalc_DocSave
 	- _LOCalc_DocSaveAs
+	- _LOCalc_DocSelectionGet
+	- _LOCalc_DocSelectionSet
+	- _LOCalc_DocSelectionSetMulti
 	- _LOCalc_DocToFront
 	- _LOCalc_DocUndo
 	- _LOCalc_DocUndoActionBegin
@@ -228,6 +252,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SearchDescriptorCreate
 	- _LOCalc_SearchDescriptorModify
 	- _LOCalc_SearchDescriptorSimilarityModify
+	- _LOCalc_SortFieldCreate
+	- _LOCalc_SortFieldModify
 	- _LOCalc_VersionGet
 - Internal Functions
 	- __LOCalc_AddTo1DArray
@@ -255,10 +281,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
 	- __LOCalc_IntIsBetween
+	- __LOCalc_NamedRangeGetScopeObj
 	- __LOCalc_NumIsBetween
 	- __LOCalc_PageStyleBorder
 	- __LOCalc_PageStyleFooterBorder
 	- __LOCalc_PageStyleHeaderBorder
+	- __LOCalc_RangeAddressIsSame
 	- __LOCalc_SetPropertyValue
 	- __LOCalc_SheetCursorMove
 	- __LOCalc_TextCursorMove
@@ -318,6 +346,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetLink
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
+	- _LOCalc_SheetPrintColumnsRepeat
+	- _LOCalc_SheetPrintRangeModify
+	- _LOCalc_SheetPrintRowsRepeat
 	- _LOCalc_SheetProtect
 	- _LOCalc_SheetRemove
 	- _LOCalc_SheetsGetCount
@@ -346,6 +377,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_FILTER_ORIENTATION_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_NAMED_RANGE_OPT_*
 	- $LOC_NUM_STYLE_*
 	- $LOC_PAGE_LAYOUT_*
 	- $LOC_PAPER_HEIGHT_*
@@ -358,13 +390,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_SHADOW_*
 	- $LOC_SHEET_LINK_MODE_*
 	- $LOC_SHEETCUR_*
+	- $LOC_SORT_DATA_TYPE_*
 	- $LOC_STRIKEOUT_*
 	- $LOC_TEXTCUR_*
 	- $LOC_TXT_DIR_*
 	- $LOC_UNDERLINE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
-- Autosize option to Range Data, Formulas, and Numbers.
+- Auto size option to Range Data, Formulas, and Numbers fill functions.
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -474,7 +507,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.1] - 2023-10-28
 
@@ -485,7 +518,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Minor documentation adjustments.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.0] - 2023-10-28
 
@@ -573,7 +606,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from <https://github.com/Danp2/au3WebDriver>.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.3] - 2023-08-10
 
@@ -626,7 +659,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 	- _DocInsertControlChar,
 	- _DocInsertString.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.2] - 2023-07-16
 
@@ -657,7 +690,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Updated function documentation to reflect the changes.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.1] - 2023-07-02
 
@@ -668,7 +701,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Initial UDF Release.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ---
 

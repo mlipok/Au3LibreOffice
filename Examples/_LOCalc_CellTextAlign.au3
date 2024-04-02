@@ -34,7 +34,7 @@ Func Example()
 	_LOCalc_CellTextAlign($oCell, $LOC_CELL_ALIGN_HORI_LEFT, $LOC_CELL_ALIGN_VERT_MIDDLE, $iMicrometers)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell's settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_CellTextAlign($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended)
 

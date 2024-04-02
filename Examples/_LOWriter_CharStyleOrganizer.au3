@@ -20,7 +20,7 @@ Func Example()
 	_LOWriter_CharStyleOrganizer($oDoc, $oCharStyle, "New-Char-Name", "Example", False)
 	If @error Then _ERROR($oDoc, "Failed to modify Character style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avCharStyleSettings = _LOWriter_CharStyleOrganizer($oDoc, $oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 

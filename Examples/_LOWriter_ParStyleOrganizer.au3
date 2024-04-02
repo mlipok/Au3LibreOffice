@@ -21,7 +21,7 @@ Func Example()
 	_LOWriter_ParStyleOrganizer($oDoc, $oParStyle, "New-Par-Name", "List", "Default Paragraph Style", True, False)
 	If @error Then _ERROR($oDoc, "Failed to modify Paragraph Style settings. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve the current settings. Return will be an array with element values in order of function parameter.
+	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avParStyleSettings = _LOWriter_ParStyleOrganizer($oDoc, $oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 

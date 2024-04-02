@@ -158,6 +158,13 @@ Global Const _
 		$LOC_CURTYPE_PARAGRAPH = 3, _                           ; Object is a Paragraph Object.
 		$LOC_CURTYPE_TEXT_PORTION = 4                           ; Object is a Paragraph Text Portion Object.
 
+; Printer Duplex Constants.
+Global Const _
+		$LOC_DUPLEX_UNKNOWN = 0, _                              ; Duplex mode setting is unknown.
+		$LOC_DUPLEX_OFF = 1, _                                  ; Duplex mode is off.
+		$LOC_DUPLEX_LONG = 2, _                                 ; Duplex mode is on, flip on Long edge.
+		$LOC_DUPLEX_SHORT = 3                                   ; Duplex mode is on, flip on Short edge.
+
 ; Fill Date Mode
 Global Const _
 		$LOC_FILL_DATE_MODE_DAY = 0, _                          ; For each Cell a single day is added.
@@ -230,6 +237,14 @@ Global Const _
 		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _                  ; The formula's result is a string.
 		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _                   ; The formula has an error of some form.
 		$LOC_FORMULA_RESULT_TYPE_ALL = 7                        ; All of the above types.
+
+; Named Range Options
+Global Const _
+		$LOC_NAMED_RANGE_OPT_NONE = 0, _                        ; Normally used for a common Named Range.
+		$LOC_NAMED_RANGE_OPT_FILTER = 1, _                      ; The range contains filter criteria.
+		$LOC_NAMED_RANGE_OPT_PRINT = 2, _                       ; The range can be used as a print range.
+		$LOC_NAMED_RANGE_OPT_COLUMN = 4, _                      ; The range can be used as column headers for printing.
+		$LOC_NAMED_RANGE_OPT_ROW = 8                            ; The range can be used as row headers for printing.
 
 ; Numbering Style Type
 Global Const _
@@ -439,6 +454,12 @@ Global Enum _
 		$LOC_SHEETCUR_GOTO_PREV, _                              ; Move the cursor to the previous (left) unprotected cell.
 		$LOC_SHEETCUR_GOTO_USED_AREA_START, _                   ; Set the cursor to the start of the used area.
 		$LOC_SHEETCUR_GOTO_USED_AREA_END                        ; Set the cursor to the end of the used area.
+
+; Sort Data Type
+Global Const _
+		$LOC_SORT_DATA_TYPE_AUTO = 0, _                         ; Automatically determine Sort Data type.
+		$LOC_SORT_DATA_TYPE_NUMERIC = 1, _                      ; Sort Data type is Numerical.
+		$LOC_SORT_DATA_TYPE_ALPHANUMERIC = 2                    ; Sort Data type is Text.
 
 ; Strikeout
 Global Const _
