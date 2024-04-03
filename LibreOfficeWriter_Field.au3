@@ -975,12 +975,13 @@ EndFunc   ;==>_LOWriter_FieldDateTimeInsert
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $tDateStruct not an Object.
-;				   @Error 1 @Extended 4 Return 0 = $bIsDate not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iOffset not an Integer.
-;				   @Error 1 @Extended 6 Return 0 = $iDateFormatKey not an Integer.
-;				   @Error 1 @Extended 7 Return 0 = $iDateFormatKey not found in current Document.
+;				   @Error 1 @Extended 2 Return 0 = $oDateTimeField not an Object.
+;				   @Error 1 @Extended 3 Return 0 = $bIsFixed not a Boolean.
+;				   @Error 1 @Extended 4 Return 0 = $tDateStruct not an Object.
+;				   @Error 1 @Extended 5 Return 0 = $bIsDate not a Boolean.
+;				   @Error 1 @Extended 6 Return 0 = $iOffset not an Integer.
+;				   @Error 1 @Extended 7 Return 0 = $iDateFormatKey not an Integer.
+;				   @Error 1 @Extended 8 Return 0 = $iDateFormatKey not found in current Document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bIsFixed
@@ -1006,7 +1007,8 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	Local $iError = 0, $iNumberFormat
 	Local $avDateTime[5]
 
-	If Not IsObj($oDateTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDateTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $tDateStruct, $bIsDate, $iOffset, $iDateFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
@@ -1023,25 +1025,25 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	EndIf
 
 	If ($bIsFixed <> Null) Then
-		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDateTimeField.IsFixed = $bIsFixed
 		$iError = ($oDateTimeField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
-		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oDateTimeField.DateTimeValue = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDateTimeField.DateTimeValue(), $tDateStruct)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bIsDate <> Null) Then
-		If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDateTimeField.IsDate = $bIsDate
 		$iError = ($oDateTimeField.IsDate() = $bIsDate) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iOffset <> Null) Then
-		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$iOffset = ($oDateTimeField.IsDate() = True) ? Int((1440 * $iOffset)) : $iOffset
 		; If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
 		; else, just set it to Number of minutes called.
@@ -1051,8 +1053,8 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
-		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oDateTimeField.NumberFormat = $iDateFormatKey
 		$iError = ($oDateTimeField.NumberFormat() = ($iDateFormatKey)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -5461,7 +5463,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCountField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If __LOWriter_VarsAreNull($iNumFormat) Then
+	If __LOWriter_VarsAreNull($iCountType, $iNumFormat) Then
 		__LOWriter_ArrayFill($avCountField, __LOWriter_FieldCountType($oCountField), $oCountField.NumberingType())
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avCountField)
