@@ -582,14 +582,10 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 ;				   @Error 0 @Extended 0 Return 1. Successfully inserted the number of desired columns.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If you do not set $iColumn, the new columns will be placed at the end of the Table. Note, LibreOffice counts
-;					the Table columns/Rows starting at 0. The columns are placed behind the desired column when inserted. To
-;					insert a column at the left most of the Table you would set $iColumn to 0. To insert columns at the Right
-;					of a table you would set $iColumn to one higher than the last column. e.g. a Table containing 3 columns,
-;					would be numbered as follows: 0(first-Column), 1(second-Column), 2(third-Column), to insert columns
-;					at the very Right of the columns, you would set $iColumn to 3.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableColumnGetCount
+; Remarks .......: If you do not set $iColumn, the new columns will be placed at the end of the Table.
+;				   LibreOffice counts the Table columns/Rows starting at 0. The columns are placed behind the desired column when inserted.
+;				   To insert a column at the left most of the Table you would set $iColumn to 0. To insert columns at the Right of a table you would set $iColumn to one higher than the last column. e.g. a Table containing 3 columns, would be numbered as follows: 0(first-Column), 1(second-Column), 2(third-Column), to insert columns at the very Right of the columns, you would set $iColumn to 3.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -635,10 +631,10 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;				   @Error 0 @Extended 0 Return Object. Successfully created a Table Object. The Object is returned for later insertion into the document.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function only creates a Table Object. You must insert it into the document using _LOWriter_TableInsert. You can preset some properties using _LOWriter_TableProperties, before inserting, or set them after inserting. Note: some properties can only be set on already inserted Tables.
+; Remarks .......: This function only creates a Table Object. You must insert it into the document using _LOWriter_TableInsert. You can preset some properties using _LOWriter_TableProperties, before inserting, or set them after inserting.
+;				   Some properties can only be set on already inserted Tables.
 ;				   Call any optional parameter with Null keyword to skip it.
-;						The Table Name may change upon inserting it into the document if there is a table already named the
-;					same, (e.g. TableName becomes TableName1).
+;				   The Table Name may change upon inserting it into the document if there is a table already named the same, (e.g. TableName becomes TableName1).
 ; Related .......: _LOWriter_TableInsert, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -1096,15 +1092,13 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 ;				   @Error 0 @Extended 4 Return String. Returning the data of a specific cell.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If only a Table object is called, an Array of Arrays is returned, The main array will have the same number
-;					of elements as there are rows. Each internal array will have the same number of elements as there are columns.
-;					If You input a specific Row, a Array will be returned with the data from that specific row, one element per column.
-;					If You input a Row and a column, a String will be returned with the specified Cell's data.
-;					If you want only a certain column, set $iRow to -1 and $iColumn to the desired column.
-;					Note, LibreOffice Tables start at 0, so to get the first Row/Column, you would set $iRow or $iColumn to 0.
-;					This function can fail if the Table is "complex", meaning it has joined or split cells.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
+; Remarks .......: If only a Table object is called, an Array of Arrays is returned, The main array will have the same number of elements as there are rows. Each internal array will have the same number of elements as there are columns.
+;				   If You input a specific Row, a Array will be returned with the data from that specific row, one element per column.
+;				   If You input a Row and a column, a String will be returned with the specified Cell's data.
+;				   If you want only a certain column, set $iRow to -1 and $iColumn to the desired column.
+;				   LibreOffice Tables start at 0, so to get the first Row/Column, you would set $iRow or $iColumn to 0.
+;				   This function can fail if the Table is "complex", meaning it has joined or split cells.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1689,12 +1683,10 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 ;				   @Error 0 @Extended 0 Return 1. Successfully inserted requested number of rows.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:If you do not set $iRow, the new Rows will be placed at the Bottom of the Table. Note, LibreOffice counts
-;					the Table Rows starting at 0. The Rows are placed above the desired Row when inserted. To
-;					insert a Row at the top most of the Table you would set $iRow to 0. To insert rows at the bottom of a table
-;					you would set $iRow to one higher than the last row. e.g. a Table containing 3 rows, would be numbered as
-;					follows: 0(first-row), 1(second-row), 2(third-row), to insert rows at the very bottom of the rows, I would
-;					set $iRow to 3.
+; Remarks .......: If you do not set $iRow, the new Rows will be placed at the Bottom of the Table.
+;				   LibreOffice counts the Table Rows starting at 0. The Rows are placed above the desired Row when inserted.
+;				   To insert a Row at the top most of the Table you would set $iRow to 0.
+;				   To insert rows at the bottom of a table you would set $iRow to one higher than the last row. e.g. a Table containing 3 rows, would be numbered as follows: 0(first-row), 1(second-row), 2(third-row), to insert rows at the very bottom of the rows, I would set $iRow to 3.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -1921,10 +1913,8 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertColorFromLong,	_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   LibreOffice may change the shadow width +/- a Micrometer.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong,	_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2003,13 +1993,11 @@ EndFunc   ;==>_LOWriter_TableShadow
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters, the third element is a Boolean, If True, the relative width is used, else false means "plain" Width is used.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than
-;					$LOW_ORIENT_HORI_FULL(6), which is LibeOffice's default setting. Note: Width may change +/- 1
-;					Micrometer once set due to Libre Office.
+; Remarks .......: Relative Width and Width cannot be set until the Table Horizontal orientation is set to other than $LOW_ORIENT_HORI_FULL(6), which is LibeOffice's default setting.
+;				   Width may change +/- 1 Micrometer once set due to Libre Office.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

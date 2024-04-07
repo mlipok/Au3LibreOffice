@@ -567,7 +567,7 @@ EndFunc   ;==>_LOCalc_CellFontColor
 ;				   @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Cell's current formula as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Only individual cells are supported, not cell ranges.
+; Remarks .......: Only individual cells are supported, not cell ranges.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Cell content.
 ; Related .......: _LOCalc_CellGetType, _LOCalc_CellString, _LOCalc_CellValue
 ; Link ..........:
@@ -606,7 +606,7 @@ EndFunc   ;==>_LOCalc_CellFormula
 ;				   @Error 0 @Extended 0 Return Integer = Success. Returning type of data contained in the Cell. Return value will be one of the constants, $LOC_CELL_TYPE_* as defined in LibreOfficeCalc_Constants.au3
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Only individual cells are supported, not cell ranges.
+; Remarks .......: Only individual cells are supported, not cell ranges.
 ; Related .......: _LOCalc_CellString, _LOCalc_CellFormula, _LOCalc_CellValue
 ; Link ..........:
 ; Example .......: Yes
@@ -888,7 +888,7 @@ EndFunc   ;==>_LOCalc_CellStrikeOut
 ;				   @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Cell's contents as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Only individual cells are supported, not cell ranges.
+; Remarks .......: Only individual cells are supported, not cell ranges.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Cell content.
 ; Related .......: _LOCalc_CellGetType, _LOCalc_CellFormula, _LOCalc_CellValue
 ; Link ..........:
@@ -1124,7 +1124,7 @@ EndFunc   ;==>_LOCalc_CellUnderline
 ;				   @Error 0 @Extended 1 Return Number = Success. All optional parameters were set to Null, returning the Cell's current number value.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: Only individual cells are supported, not cell ranges.
+; Remarks .......: Only individual cells are supported, not cell ranges.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Cell content.
 ; Related .......: _LOCalc_CellGetType, _LOCalc_CellString, _LOCalc_CellFormula
 ; Link ..........:

@@ -808,7 +808,7 @@ EndFunc   ;==>_LOCalc_TextCursorParObjCreateList
 ;				   |- TextField – TextField content.
 ;				   |- TextContent – Indicates that text content is anchored as or to a character that is not really part of the paragraph — for example, a text frame or a graphic object.
 ;				   |- ControlCharacter – Control character.
-;				   |- Footnote – Footnote or Endnote. (Note this is just the anchor character for the footnote/Endnote, not the actual foot/endnote content.
+;				   |- Footnote – Footnote or Endnote. (This is just the anchor character for the footnote/Endnote, not the actual foot/endnote content.
 ;				   |- ReferenceMark – Reference mark.
 ;				   |- DocumentIndexMark – Document index mark.
 ;				   |- Bookmark – Bookmark.
@@ -817,7 +817,7 @@ EndFunc   ;==>_LOCalc_TextCursorParObjCreateList
 ;				   |- Frame — a frame.
 ;				   |- SoftPageBreak — a soft page break.
 ;				   |- InContentMetadata — a text range with attached metadata.
-;				   Note: For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
+;						For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
 ; Related .......: _LOCalc_TextCursorParObjCreateList
 ; Link ..........:
 ; Example .......: Yes

@@ -761,7 +761,7 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;				   Note: When setting transparency, the value of font color value is changed, this may lead to property setting error messages for setting the Font color.
+;				   When setting transparency, the value of font color value is changed, this may lead to property setting error messages for setting the Font color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -841,7 +841,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ; Remarks .......: OverLine line style uses the same constants as underline style.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: $bOLHasColor must be set to true in order to set the Overline color.
+;				   $bOLHasColor must be set to true in order to set the Overline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -1087,7 +1087,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;				   Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;				   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;				   Color is set in Long Integer format.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
 ;					_LOWriter_ConvertToMicrometer
@@ -1241,7 +1241,7 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ; Modified ......:
 ; Remarks .......:Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				  Call any optional parameter with Null keyword to skip it.
-;				  Note Strikeout is converted to single line in Ms word document format.
+;				  Strikeout is converted to single line in Ms word document format.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1352,7 +1352,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;				   Note: $bULHasColor must be set to true in order to set the underline color.
+;				   $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -3719,9 +3719,8 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and
-;					$iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-;				   Note: $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
+;				   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4100,7 +4099,7 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office Version is below 6.4, then the Array returned will contain 4 elements because $bHyphenNoCaps is not available.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
+; Remarks .......: $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4420,7 +4419,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;				   Note: LibreOffice may change the shadow width +/- a Micrometer.
+;				   LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -4516,13 +4515,10 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched
-;						on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid,
-;						so that each line is the same height.
-;					Note: The settings in Libre Office, (Single, 1.15, 1.5, Double), Use the Proportional mode, and are just
-;						varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
+;				   The settings in Libre Office, (Single, 1.15, 1.5, Double), Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;				   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;				   Note: $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
+;				   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -4675,13 +4671,9 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;				   @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;						This function returns the new TabStop position.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
-;						accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
+; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position.
+;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -4910,17 +4902,10 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;				   @Error 0 @Extended ? Return 2 = Success. Settings were successfully set. New TabStop position is returned in @Extended.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
-;						This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be
-;						one of a certain length per Paragraph Style.
-;					Note: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again,
-;						This function returns the new TabStop position in @Extended when $iPosition is set, return value will
-;						be set to 2. See Return Values.
-;					Note: Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to
-;						accidentally overwrite an already existing TabStop.
-;					Note: $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32.
-;						The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can
-;						also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per Paragraph Style.
+;				   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -5033,8 +5018,7 @@ EndFunc   ;==>__LOWriter_ParTabStopMod
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will
-;					not become active until $bParSplit is set to true.
+; Remarks .......: If you do not set ParSplit to True, the rest of the settings will still show to have been set but will not become active until $bParSplit is set to true.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:

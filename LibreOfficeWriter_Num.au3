@@ -143,18 +143,8 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 9 Element Array with values in order of function parameters. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style
-;						settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an
-;						appropriate array/sequence by LibreOffice, and consequently causes a
-;						com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more
-;						detailed explanation. This function can still be used to set and retrieve, setting values, however now,
-;						this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if
-;						that fails, it invisibly opens an .odt Libre document and inserts a macro, see
-;						__LOWriter_NumStyleInitiateDocument which is then called with the necessary parameters to set.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. Note: Can only request setting values for one numbering level at a time, you
-;						aren't able to call $iLevel with 0 to retrieve all at once. If Current numbering type is set to Bullet,
-;						the returned array will contain 9 elements, in the order of parameters, if the current numbering type is
-;						other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
+; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, see __LOWriter_NumStyleInitiateDocument which is then called with the necessary parameters to set.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can only request setting values for one numbering level at a time, you aren't able to call $iLevel with 0 to retrieve all at once. If Current numbering type is set to Bullet, the returned array will contain 9 elements, in the order of parameters, if the current numbering type is other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   When a lot of settings are set, especially for all levels, this function can be a bit slow.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj
@@ -539,18 +529,10 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style
-;						settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an
-;						appropriate array/Sequence by LibreOffice, and consequently causes a
-;						com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more
-;						detailed explanation. This function can still be used to set and retrieve, setting values, however now,
-;						this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if
-;						that fails, it invisibly opens an .odt Libre document and inserts a macro, (see
-;						__LOWriter_NumStyleInitiateDocument), which is then called with the necessary parameters to set.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. Note: You can only request setting values for one numbering level at a time, you aren't able to call $iLevel with 0 to retrieve all at once.
+; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/Sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, (see __LOWriter_NumStyleInitiateDocument), which is then called with the necessary parameters to set.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can only request setting values for one numbering level at a time, you aren't able to call $iLevel with 0 to retrieve all at once.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

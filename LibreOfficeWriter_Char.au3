@@ -567,8 +567,8 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: When setting transparency, the value of font color value is changed.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   When setting transparency, the value of font color value is changed.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -742,8 +742,8 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ; Modified ......:
 ; Remarks .......: OverLine line style uses the same constants as underline style.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: $bOLHasColor must be set to true in order to set the Overline color.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   $bOLHasColor must be set to true in order to set the Overline color.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -1021,11 +1021,10 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: LibreOffice may adjust the set width +/- 1 Micrometer after setting.
-;					Color is set in Long Integer format.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
-;					 _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;				   Call any optional parameter with Null keyword to skip it.
+;				   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;				   Color is set in Long Integer format.
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1125,8 +1124,8 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note Strikeout is converted to a single line in Ms word document format.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Strikeout is converted to a single line in Ms word document format.
 ; Related .......: _LOWriter_CharStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1175,8 +1174,8 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Note: $bULHasColor must be set to true in order to set the underline color.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
 ;					_LOWriter_ConvertColorToLong
 ; Link ..........:

@@ -40,6 +40,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - All Internal Error Constants from $__LOW_STATUS_ or $__LOC_STATUS_ To $__LO_STATUS_
 
+### Removed
+
+- "Note" from Remarks section. (@mLipok)
+
 > [!NOTE]
 > **LibreOfficeCalc**
 
