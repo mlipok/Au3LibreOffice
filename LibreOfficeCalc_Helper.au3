@@ -1007,7 +1007,7 @@ EndFunc   ;==>_LOCalc_FormatKeyDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyExists
 ; Description ...: Check if a Document contains a certain Format Key.
-; Syntax ........: _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, Const $iFormatType)
+; Syntax ........: _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey[, $iFormatType = $LOC_FORMAT_KEYS_ALL])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
 ;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1145,7 +1145,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOCalc_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = Null]]])
+; Syntax ........: _LOCalc_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.

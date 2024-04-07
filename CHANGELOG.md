@@ -502,6 +502,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Examples on Error now close any documents opened by the example.
 - Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
 - Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
+- Missing Parameters in some headers or Syntax header.
+- Missing parameter type checks in some functions.
 
 ### Removed
 

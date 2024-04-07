@@ -1148,7 +1148,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyAlignment
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FindFormatModifyEffects
 ; Description ...: Modify or Add Find Format Effects Settings.
-; Syntax ........: _LOWriter_FindFormatModifyEffects(ByRef $atFormat[,$iRelief  = Null[, $iCase = Null[, $bOutline = Null[, $bShadow = Null]]]])
+; Syntax ........: _LOWriter_FindFormatModifyEffects(ByRef $atFormat[,$iRelief = Null[, $iCase = Null[, $bOutline = Null[, $bShadow = Null]]]])
 ; Parameters ....: $atFormat            - [in/out] an array of structs. A Find Format Array of Settings to modify. Array will be directly modified.
 ;                  $iRelief             - [optional] an integer value (0-2). Default is Null. The Character Relief style. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3. In my personal testing, searching for the Relief setting using this parameter causes any results matching the searched for string to be replaced, whether they contain the Relief format or not, this is supposed to be fixed in L.O. 7.6.
 ;                  $iCase               - [optional] an integer value (0-4). Default is Null. The Character Case Style. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3
@@ -2260,7 +2260,7 @@ EndFunc   ;==>_LOWriter_FormatKeyDelete
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyExists
 ; Description ...: Check if a Document contains a certain Format Key.
-; Syntax ........: _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, Const $iFormatType)
+; Syntax ........: _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey[, $iFormatType = $LOW_FORMAT_KEYS_ALL])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
 ;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOW_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
@@ -2398,7 +2398,7 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormatKeyList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOWriter_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = Null]]])
+; Syntax ........: _LOWriter_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOW_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.

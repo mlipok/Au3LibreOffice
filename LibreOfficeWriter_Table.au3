@@ -68,7 +68,6 @@
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value (0-16777215). Default is Null. Set the Vertical Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value (0-16777215). Default is Null. Set the Horizontal Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remarks : Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -102,6 +101,7 @@
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
 ;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_TableBorderWidth,
 ;					_LOWriter_TableBorderStyle, _LOWriter_TableBorderPadding
@@ -230,7 +230,6 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the internal Vertical Border Line Styles of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the internal Horizontal Border Line Styles of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remarks : Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -264,6 +263,7 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
 ;					_LOWriter_TableBorderWidth,	_LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
 ; Link ..........:
@@ -297,7 +297,6 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value. Default is Null. Set the Internal Vertical Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value. Default is Null. Set the Internal Horizontal Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -324,6 +323,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
 ;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderStyle,
 ;					_LOWriter_TableBorderColor,	_LOWriter_TableBorderPadding
@@ -1004,7 +1004,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetCellObjByPosition
 ; Description ...: Retrieve a Cell object or Cell Range by position in a Table. See Remarks
-; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = $iColumn [, $iToRow = $iRow]])
+; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = $iColumn[, $iToRow = $iRow]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iColumn             - an integer value. The column the desired cell is located in, or where to start the the cell range from.
 ;                  $iRow                - an integer value. The row the desired cell is located in, or where to start the the cell range from.
