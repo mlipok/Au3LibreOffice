@@ -44,22 +44,22 @@
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. Specify the Cell background color as a Long Integer. See Remarks. Set to $LOW_COLOR_OFF(-1) to disable Background color. Can also be one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
-;                   @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBackColor
-;                   |                                2 = Error setting $bBackTransparent
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBackColor
+;                  |                                2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
+;                  Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -105,33 +105,33 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Cell in Long Color code format. A custom value or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object .
-;                   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.table.BorderLine2" Object
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object .
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.table.BorderLine2" Object
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Error values for Initialization and Processing are passed from the internal border setting function.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Error values for Initialization and Processing are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CellBorderWidth, _LOWriter_CellBorderStyle, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -161,26 +161,26 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Cell text in Micrometers(uM).
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Cell text in Micrometers(uM).
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell an Object.
-;                   @Error 1 @Extended 2 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 3 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iTop.
-;                   |                                2 = Error setting $iBottom.
-;                   |                                4 = Error setting $iLeft.
-;                   |                                8 = Error setting $iRight.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iTop.
+;                  |                                2 = Error setting $iBottom.
+;                  |                                4 = Error setting $iLeft.
+;                  |                                8 = Error setting $iRight.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderColor, _LOWriter_CellBorderStyle, _LOWriter_CellBorderWidth
 ; Link ..........:
 ; Example .......: Yes
@@ -237,33 +237,33 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Cell using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, or higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Error values for Initialization and Processing are passed from the internal border setting function.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Error values for Initialization and Processing are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_CellBorderWidth, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -293,28 +293,28 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Cell in Micrometers. Can be a custom value or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ; Internal Remark: Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
-;                   @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
-;                   @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
-;                   @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
-;                   @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell Variable not Object type variable.
+;                  @Error 1 @Extended 2 Return 0 = $iTop not an integer, or set to less than 0 or not set to Null.
+;                  @Error 1 @Extended 3 Return 0 = $iBottom not an integer, or set to less than 0 or not set to Null.
+;                  @Error 1 @Extended 4 Return 0 = $iLeft not an integer, or set to less than 0 or not set to Null.
+;                  @Error 1 @Extended 5 Return 0 = $iRight not an integer, or set to less than 0 or not set to Null.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Error values for Initialization and Processing are passed from the internal border setting function.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Error values for Initialization and Processing are passed from the internal border setting function.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderStyle, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -339,12 +339,12 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Syntax ........: _LOWriter_CellCreateTextCursor(ByRef $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ; Return values .: Success: An Object.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Object = Success. Returning a Text Cursor Object located in the specified Cell.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning a Text Cursor Object located in the specified Cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -369,20 +369,20 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $sFormula            - [optional] a string value. Default is Null. The Formula to set the Cell to.
 ; Return values .: Success: 1 or String.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $sFormula not a String and not set to Null keyword.
-;                   @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Formula was successfully set.
-;                   @Error 0 @Extended 1 Return String = Success. Current formula is returned in String format.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sFormula not a String and not set to Null keyword.
+;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Formula was successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. Current formula is returned in String format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Formula can only be set for an individual cell, not a range.
-;                   Setting the formula will overwrite any existing data in the cell.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   To retrieve the total of a formula, use _LOWriter_CellValue.
+;                  Setting the formula will overwrite any existing data in the cell.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  To retrieve the total of a formula, use _LOWriter_CellValue.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -408,16 +408,16 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Syntax ........: _LOWriter_CellGetDataType(ByRef $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ; Return values .: Success: A Number.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Number = Success. The Data Type in Number format, see constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns the data type as one of the constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
+;                  If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -438,12 +438,12 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Syntax ........: _LOWriter_CellGetError(ByRef $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ; Return values .: Success: Integer.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Integer = Success. The Cell formula error code in Integer format.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. The Cell formula error code in Integer format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If the cell is not a formula, the error value is zero.
@@ -468,12 +468,12 @@ EndFunc   ;==>_LOWriter_CellGetError
 ; Syntax ........: _LOWriter_CellGetName(ByRef $oCell)
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ; Return values .: Success: A String.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return String = Success. The Cell name in String format.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. The Cell name in String format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -498,16 +498,16 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $bProtect            - [optional] a boolean value. Default is Null. If True, cell is protected from being written to. See remarks.
 ; Return values .: Success: 1 Or Boolean.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oCell is a Cell Range. Can only set Write-Protect on individual cells.
-;                   @Error 1 @Extended 3 Return 0 = $bProtect not a Boolean or not Null keyword.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Successfully set Cell Protect setting.
-;                   @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell is a Cell Range. Can only set Write-Protect on individual cells.
+;                  @Error 1 @Extended 3 Return 0 = $bProtect not a Boolean or not Null keyword.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Failed to set Write-Protect property.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Successfully set Cell Protect setting.
+;                  @Error 0 @Extended 0 Return Boolean = Success. $bProtect is set to Null, return will be the current setting of write-protection for the cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or False)
@@ -538,19 +538,19 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $sString             - [optional] a string value. Default is Null. The String of text to set the cell to.
 ; Return values .: Success: 1 or String.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $sString not a String.
-;                   @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Successfully set the cell String.
-;                   @Error 0 @Extended 1 Return String = Success. $sString set to Null, returning current string.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sString not a String.
+;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Successfully set the cell String.
+;                  @Error 0 @Extended 1 Return String = Success. $sString set to Null, returning current string.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: String can only be set for an individual cell, not a range.
-;                   Setting the String will overwrite any existing data in the cell.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Setting the String will overwrite any existing data in the cell.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -577,20 +577,20 @@ EndFunc   ;==>_LOWriter_CellString
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $nValue              - [optional] a general number value. Default is Null. The value to set the cell to.
 ; Return values .: Success: 1 or String.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $nValue not a Number and not set to Null keyword.
-;                   @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Successfully set cell value.
-;                   @Error 0 @Extended 1 Return String = Success. $nValue set to Null, returning current cell value.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $nValue not a Number and not set to Null keyword.
+;                  @Error 1 @Extended 3 Return 0 = $oCell is a CellRange not an individual cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Successfully set cell value.
+;                  @Error 0 @Extended 1 Return String = Success. $nValue set to Null, returning current cell value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Value can only be set for an individual cell, not a range.
-;                   Setting the Value will overwrite any existing data in the cell.
-;                   For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Setting the Value will overwrite any existing data in the cell.
+;                  For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
@@ -617,15 +617,15 @@ EndFunc   ;==>_LOWriter_CellValue
 ; Parameters ....: $oCell               - [in/out] an object. A Table Cell or Cell Range Object returned by a previous _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, or _LOWriter_TableGetCellObjByPosition function.
 ;                  $iVertOrient         - [optional] an integer value (0-3). Default is Null. A Vertical Orientation constant. $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Integer.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, or less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Successfully set Vertical Orientation.
-;                   @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iVertOrient not an integer, or less than 0 or greater than 3. See constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Successfully set Vertical Orientation.
+;                  @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $iVertOrient is set to Null the current setting is returned.

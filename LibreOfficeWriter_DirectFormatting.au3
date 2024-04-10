@@ -72,36 +72,36 @@
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Character Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, to less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, to less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0 or higher than 16,777,215.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Border Width must be set first to be able to set Border Style and Color.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -144,35 +144,35 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right border distance in Micrometers.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border padding, on all sides.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iAll not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAll border distance
-;                   |                                2 = Error setting $iTop border distance
-;                   |                                4 = Error setting $iBottom border distance
-;                   |                                8 = Error setting $iLeft border distance
-;                   |                                16 = Error setting $iRight border distance
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iAll not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAll border distance
+;                  |                                2 = Error setting $iTop border distance
+;                  |                                4 = Error setting $iBottom border distance
+;                  |                                8 = Error setting $iLeft border distance
+;                  |                                16 = Error setting $iRight border distance
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor
 ; Link ..........:
 ; Example .......: Yes
@@ -208,36 +208,36 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Characters using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Border Width must be set first to be able to set Border Style and Color.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -280,31 +280,31 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Character Style in Micrometers. Can be a custom value, or one of these constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   To "Turn Off" Borders, set them to 0
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  To "Turn Off" Borders, set them to 0
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -347,34 +347,34 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ;                  $bOutline            - [optional] a boolean value. Default is Null. If True, the characters have an outline around the outside.
 ;                  $bShadow             - [optional] a boolean value. Default is Null. If True, the characters have a shadow.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
-;                   @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iRelief
-;                   |                                2 = Error setting $iCase
-;                   |                                4 = Error setting $bHidden
-;                   |                                8 = Error setting $bOutline
-;                   |                                16 = Error setting $bShadow
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iRelief not an integer or less than 0 or greater than 2. See Constants, $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iCase not an integer or less than 0 or greater than 4. See Constants, $LOW_CASEMAP_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bOutline not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iRelief
+;                  |                                2 = Error setting $iCase
+;                  |                                4 = Error setting $bHidden
+;                  |                                8 = Error setting $bOutline
+;                  |                                16 = Error setting $bShadow
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -433,36 +433,36 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ;                  $iRelativeSize       - [optional] an integer value (1-100). Default is Null. The size percentage relative to current font size.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Super/Sub Script settings.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, or less than 0, higher than 100 and Not 14000.
-;                   @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000 or -14000.
-;                   @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iSuperScript
-;                   |                                2 = Error setting $iSubScript
-;                   |                                4 = Error setting $iRelativeSize.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bAutoSuper not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bAutoSub not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iSuperScript not an integer, or less than 0, higher than 100 and Not 14000.
+;                  @Error 1 @Extended 7 Return 0 = $iSubScript not an integer, or less than -100, higher than 100 and Not 14000 or -14000.
+;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iSuperScript
+;                  |                                2 = Error setting $iSubScript
+;                  |                                4 = Error setting $iRelativeSize.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;                   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
-;                   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
-;                   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;                   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
+;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
+;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;                  If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -496,30 +496,30 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 ;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to horizontally stretch or compress the text. 100 is normal sizing.
 ;                  $bRotateFitLine      - [optional] a boolean value. Default is Null. If True, Stretches or compresses the selected text so that it fits between the line that is above the text and the line that is below the text.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iRotation not an Integer or not equal to 0, 90 or 270 degrees.
-;                   @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
-;                   @Error 1 @Extended 6 Return 0 = $bRotateFitLine not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iRotation
-;                   |                                2 = Error setting $iScaleWidth
-;                   |                                4 = Error setting $bRotateFitLine
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iRotation not an Integer or not equal to 0, 90 or 270 degrees.
+;                  @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
+;                  @Error 1 @Extended 6 Return 0 = $bRotateFitLine not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iRotation
+;                  |                                2 = Error setting $iScaleWidth
+;                  |                                4 = Error setting $bRotateFitLine
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting.
 ; Related .......: _LOWriter_DirFrmtClear,_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -573,38 +573,38 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. Location of the shadow compared to the characters. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Character Shadow, Width, Color and Location.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
-;                   @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
-;                   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error checking.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iColor
-;                   |                                4 = Error setting $bTransparent
-;                   |                                8 = Error setting $iLocation
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error checking.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iColor
+;                  |                                4 = Error setting $bTransparent
+;                  |                                8 = Error setting $iLocation
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
-;                   Color is set in Long Integer format.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  LibreOffice may adjust the set width +/- 1 Micrometer after setting.
+;                  Color is set in Long Integer format.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -636,32 +636,32 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ;                  $bAutoKerning        - [optional] a boolean value. Default is Null. If True, applies a spacing in between certain pairs of characters.
 ;                  $nKerning            - [optional] a general number value (-2-928.8). Default is Null. The kerning value of the characters. See Remarks. Values are in Printer's Points as set in the Libre Office UI.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bAutoKerning
-;                   |                                2 = Error setting $nKerning.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bAutoKerning not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bAutoKerning
+;                  |                                2 = Error setting $nKerning.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting.
-;                   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;                   The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
-;                   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
-;                   Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting.
+;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;                  The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;                  Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -699,23 +699,23 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function, Or A Paragraph Object, or other Object containing a selection of text.
 ; Return values .: Success: 1
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 4 Return 0 = $oSelection is a Table Cursor, which is not supported.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
-;                   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
-;                   @Error 2 @Extended 3 Return 0 = Error retrieving Text Object for creating a ViewCursor Backup.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Failed to determine $oSelection's cursor type.
-;                   @Error 3 @Extended 2 Return 0 = Failed to retrieve document's Viewcursor.
-;                   @Error 3 @Extended 3 Return 0 = Failed to retrieve Text Object for the Viewcursor.
-;                   @Error 3 @Extended 4 Return 0 = Failed to a cursor at the position of the View cursor.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Direct Formatting was successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 4 Return 0 = $oSelection is a Table Cursor, which is not supported.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
+;                  @Error 2 @Extended 3 Return 0 = Error retrieving Text Object for creating a ViewCursor Backup.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to determine $oSelection's cursor type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve document's Viewcursor.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Text Object for the Viewcursor.
+;                  @Error 3 @Extended 4 Return 0 = Failed to a cursor at the position of the View cursor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Direct Formatting was successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function causes the ViewCursor to select the data input in $oSelection, unless $oSelection is a ViewCursor object. After the formatting has been cleared the ViewCursor is returned to its previous position.
@@ -786,36 +786,36 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
 ;                  $iWeight             - [optional] an integer value (0, 50-200). Default is Null. Font Bold settings, see Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 4 Return 0 = $sFontName not available in current document.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                   @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                   @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $sFontName
-;                   |                                2 = Error setting $nFontSize
-;                   |                                4 = Error setting $iPosture
-;                   |                                8 = Error setting $iWeight
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 4 Return 0 = $sFontName not available in current document.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $sFontName
+;                  |                                2 = Error setting $nFontSize
+;                  |                                4 = Error setting $iPosture
+;                  |                                8 = Error setting $iWeight
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting.
-;                   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
-;                   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting.
+;                  Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
+;                  Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
 ; Related .......: _LOWriter_FontsList, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -869,32 +869,32 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
 ;                  $iHighlight          - [optional] an integer value (-1-16777215). Default is Null. A Color value in Long Integer format, to highlight the text in, Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
-;                   @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
-;                   @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $FontColor
-;                   |                                2 = Error setting $iTransparency.
-;                   |                                4 = Error setting $iHighlight
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If The current Libre Office version is below 7.0 the returned array will contain 2 elements, because $iTransparency is not available.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0 or greater than 100%.
+;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $FontColor
+;                  |                                2 = Error setting $iTransparency.
+;                  |                                4 = Error setting $iHighlight
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If The current Libre Office version is below 7.0 the returned array will contain 2 elements, because $iTransparency is not available.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -939,13 +939,13 @@ EndFunc   ;==>_LOWriter_DirFrmtFontColor
 ; Syntax ........: _LOWriter_DirFrmtGetCurStyles(ByRef $oSelection)
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions that has data selected. Or a paragraph or paragraph section.
 ; Return values .: Success: Array
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support Paragraph Properties service.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection does not support Character Properties service.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order: Paragraph Style Name, Character Style Name, Page Style Name, Numbering Style Name. See Remarks.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support Paragraph Properties service.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection does not support Character Properties service.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Array = Success. Returns a 4 element array in the following order: Paragraph Style Name, Character Style Name, Page Style Name, Numbering Style Name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Some of the returned style values may be blank if they are not set, particularly Numbering style.
@@ -980,32 +980,32 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ;                  $bOLHasColor         - [optional] a boolean value. Default is Null. If True, the Overline is colored. See remarks.
 ;                  $iOLColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the Overline, set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bWordOnly
-;                   |                                2 = Error setting $iOverLineStyle
-;                   |                                4 = Error setting $OLHasColor
-;                   |                                8 = Error setting $iOLColor
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bOLHasColor not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bWordOnly
+;                  |                                2 = Error setting $iOverLineStyle
+;                  |                                4 = Error setting $OLHasColor
+;                  |                                8 = Error setting $iOLColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. Overline style, Color and $bHasColor all reset together.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Overline style, Color and $bHasColor all reset together.
 ;                   $bOLHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
@@ -1062,37 +1062,37 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ;                  $bSnapToGrid         - [optional] a boolean value. Default is Null. If True, Aligns the paragraph to a text grid (if one is active).
 ;                  $iTxtDirection       - [optional] an integer value (0-5). Default is Null. The Text Writing Direction. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3. [Libre Office Default is 4]
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or more than 4. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or more than 3. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = $bExpandSingleWord not a Boolean.
-;                   @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
-;                   @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iHorAlign
-;                   |                                2 = Error setting $iVertAlign
-;                   |                                4 = Error setting $iLastLineALign
-;                   |                                8 = Error setting $bExpandSIngleWord
-;                   |                                16 = Error setting $bSnapToGrid
-;                   |                                32 = Error setting $iTxtDirection
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iHorAlign not an integer, less than 0 or greater than 3. See Constants, $LOW_PAR_ALIGN_HOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an integer, less than 0 or more than 4. See Constants, $LOW_PAR_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iLastLineAlign not an integer, less than 0 or more than 3. See Constants, $LOW_PAR_LAST_LINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $bExpandSingleWord not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bSnapToGrid not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0 or greater than 5. See constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iHorAlign
+;                  |                                2 = Error setting $iVertAlign
+;                  |                                4 = Error setting $iLastLineALign
+;                  |                                8 = Error setting $bExpandSIngleWord
+;                  |                                16 = Error setting $bSnapToGrid
+;                  |                                32 = Error setting $iTxtDirection
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;                   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
 ;                   $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
@@ -1154,27 +1154,27 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Background color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
-;                   @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBackColor
-;                   |                                2 = Error setting $bBackTransparent
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBackColor
+;                  |                                2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -1208,36 +1208,36 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Paragraph Style in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of the Paragraph Border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0 or higher than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0 or higher than 16,777,215.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Border Width must be set first to be able to set Border Style and Color.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Border Width must be set first to be able to set Border Style and Color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1281,33 +1281,33 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Paragraph in Micrometers(uM).
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Border padding related settings.
 ; Return values .: Success: Integer or Array, see Remarks.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object to internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iAll not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAll border distance
-;                   |                                2 = Error setting $iTop border distance
-;                   |                                4 = Error setting $iBottom border distance
-;                   |                                8 = Error setting $iLeft border distance
-;                   |                                16 = Error setting $iRight border distance
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object to internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iAll not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAll border distance
+;                  |                                2 = Error setting $iTop border distance
+;                  |                                4 = Error setting $iBottom border distance
+;                  |                                8 = Error setting $iLeft border distance
+;                  |                                16 = Error setting $iRight border distance
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor
 ; Link ..........:
 ; Example .......: Yes
@@ -1341,36 +1341,36 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Paragraph Style using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of the Paragraph Border, Width, Style and Color.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17 and not equal to 0x7FFF, or less than 0.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Border Width must be set first to be able to set Border Style and Color.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Border Width must be set first to be able to set Border Style and Color.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1414,34 +1414,34 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;                  $bConnectBorder      - [optional] a boolean value. Default is Null. If True, borders set for a paragraph are merged with the next paragraph. Note: Borders are only merged if they are identical. Libre Office Version 3.4 and Up.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of the Paragraph Border, Width, Style and Color. Doesn't clear $bConnectBorder. See Remarks.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;                   @Error 1 @Extended 8 Return 0 = $bConnectBorder not a Boolean.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success.  Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
-;                   @Error 0 @Extended 0 Return 3 = Success. $bConnectBorder parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  @Error 1 @Extended 8 Return 0 = $bConnectBorder not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success.  Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  @Error 0 @Extended 0 Return 3 = Success. $bConnectBorder parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
-;                   To "Turn Off" Borders, set them to 0
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
+;                  To "Turn Off" Borders, set them to 0
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1503,39 +1503,39 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;                  $sCharStyle          - [optional] a string value. Default is Null. The character style to use for the DropCaps. See Remarks.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of DropCaps and related settings.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 4 Return 0 = Character Style called in $sCharStyle not found in current document.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0 or greater than 9.
-;                   @Error 1 @Extended 7 Return 0 = $iLines not an Integer, less than 0, equal to 1 or greater than 9
-;                   @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
-;                   @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
-;                   @Error 1 @Extended 10 Return 0 = $sCharStyle not a String.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iNumChar
-;                   |                                2 = Error setting $iLines
-;                   |                                4 = Error setting $iSpcTxt
-;                   |                                8 = Error setting $bWholeWord
-;                   |                                16 = Error setting $sCharStyle
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 4 Return 0 = Character Style called in $sCharStyle not found in current document.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $iNumChar not an integer, less than 0 or greater than 9.
+;                  @Error 1 @Extended 7 Return 0 = $iLines not an Integer, less than 0, equal to 1 or greater than 9
+;                  @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
+;                  @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $sCharStyle not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iNumChar
+;                  |                                2 = Error setting $iLines
+;                  |                                4 = Error setting $iSpcTxt
+;                  |                                8 = Error setting $bWholeWord
+;                  |                                16 = Error setting $sCharStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;                   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
+;                  I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -1573,35 +1573,35 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ;                  $iMinTrailingChar    - [optional] an integer value (2-9). Default is Null. Specifies the minimum number of characters to remain after the hyphen character (when hyphenation is applied).
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Hyphenation.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bAutoHyphen not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iMaxHyphens not an Integer, less than 0, or greater than 99.
-;                   @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2 or greater than 9.
-;                   @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2 or greater than 9.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bAutoHyphen
-;                   |                                2 = Error setting $bHyphenNoCaps
-;                   |                                4 = Error setting $iMaxHyphens
-;                   |                                8 = Error setting $iMinLeadingChar
-;                   |                                16 = Error setting $iMinTrailingChar
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office Version is below 6.4, then the Array returned will contain 4 elements because $bHyphenNoCaps is not available.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bAutoHyphen not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iMaxHyphens not an Integer, less than 0, or greater than 99.
+;                  @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2 or greater than 9.
+;                  @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2 or greater than 9.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bAutoHyphen
+;                  |                                2 = Error setting $bHyphenNoCaps
+;                  |                                4 = Error setting $iMaxHyphens
+;                  |                                8 = Error setting $iMinLeadingChar
+;                  |                                16 = Error setting $iMinTrailingChar
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the current Libre Office Version is below 6.4, then the Array returned will contain 4 elements because $bHyphenNoCaps is not available.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ;                   $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
@@ -1636,31 +1636,31 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ;                  $bAutoFirstLine      - [optional] a boolean value. Default is Null. If True, the first line will be indented automatically.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Indent related settings.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iBeforeText not an integer, less than -9998989 or more than 17094 uM.
-;                   @Error 1 @Extended 5 Return 0 = $iAfterText not an integer, less than -9998989 or more than 17094 uM.
-;                   @Error 1 @Extended 6 Return 0 = $iFirstLine not an integer, less than -57785 or more than 17094 uM.
-;                   @Error 1 @Extended 7 Return 0 = $bAutoFirstLine not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBeforeTxt
-;                   |                                2 = Error setting $iAfterTxt
-;                   |                                4 = Error setting $iFirstLine
-;                   |                                8 = Error setting $bAutoFirstLine
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iBeforeText not an integer, less than -9998989 or more than 17094 uM.
+;                  @Error 1 @Extended 5 Return 0 = $iAfterText not an integer, less than -9998989 or more than 17094 uM.
+;                  @Error 1 @Extended 6 Return 0 = $iFirstLine not an integer, less than -57785 or more than 17094 uM.
+;                  @Error 1 @Extended 7 Return 0 = $bAutoFirstLine not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBeforeTxt
+;                  |                                2 = Error setting $iAfterTxt
+;                  |                                4 = Error setting $iFirstLine
+;                  |                                8 = Error setting $bAutoFirstLine
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ;                   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
@@ -1698,35 +1698,35 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ;                  $bParLineCount       - [optional] a boolean value. Default is Null. If True, the paragraph is included in the line numbering.
 ;                  $iLineCountVal       - [optional] an integer value. Default is Null. The start value for numbering if a new numbering starts at this paragraph. Set to 0 for no line numbering restart.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 4 Return 0 = Numbering Style called in $sNumStyle not found in document.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
-;                   @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
-;                   @Error 1 @Extended 9 Return 0 = $iLineCountVal Not an Integer or less than 0.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iOutline
-;                   |                                2 = Error setting $sNumStyle
-;                   |                                4 = Error setting $bParLineCount
-;                   |                                8 = Error setting $iLineCountVal
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 4 Return 0 = Numbering Style called in $sNumStyle not found in document.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $iOutline not an integer, less than 0 or greater than 10. See Constants, $LOW_OUTLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $sNumStyle not a String.
+;                  @Error 1 @Extended 8 Return 0 = $bParLineCount not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iLineCountVal Not an Integer or less than 0.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iOutline
+;                  |                                2 = Error setting $sNumStyle
+;                  |                                4 = Error setting $bParLineCount
+;                  |                                8 = Error setting $iLineCountVal
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
-;                   In LibreOffice User Interface (UI), there are two options available when applying direct formatting, "Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable to clear either setting once applied, so for those reasons I am not including it in this UDF.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
+;                  In LibreOffice User Interface (UI), there are two options available when applying direct formatting, "Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable to clear either setting once applied, so for those reasons I am not including it in this UDF.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -1783,34 +1783,34 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ;                  $iPgNumOffSet        - [optional] an integer value. Default is Null. If a page break property is set at a paragraph, this property contains the new value for the page number.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Page Break, including Type, Number offset and Page Style. See Remarks.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 4 Return 0 = Page Style called in $sPageStyle not found in document.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
-;                   @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer or less than 0.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBreakType
-;                   |                                2 = Error setting $sPageStyle
-;                   |                                4 = Error setting $iPgNumOffSet
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 4 Return 0 = Page Style called in $sPageStyle not found in document.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $iBreakType not an integer, less than 0 or greater than 6. See Constants, $LOW_BREAK_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $sPageStyle not a String.
+;                  @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer or less than 0.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBreakType
+;                  |                                2 = Error setting $sPageStyle
+;                  |                                4 = Error setting $iPgNumOffSet
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Clearing directly formatted page breaks may fail, If the cursor selection contains more than one paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph style's original settings even though it returns a success, you will need to reset each paragraph one at a time if this is the case.
-;                   Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;                   LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Clearing directly formatted page breaks may fail, If the cursor selection contains more than one paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph style's original settings even though it returns a success, you will need to reset each paragraph one at a time if this is the case.
+;                  Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;                  LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -1852,35 +1852,35 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The location of the shadow compared to the paragraph. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Shadow Width, Color and Location.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iWidth not an integer or less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
-;                   @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iColor
-;                   |                                4 = Error setting $bTransparent
-;                   |                                8 = Error setting $iLocation
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an integer or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
+;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iColor
+;                  |                                4 = Error setting $bTransparent
+;                  |                                8 = Error setting $iLocation
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. $bClearDirFrmt was set to True, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   LibreOffice may change the shadow width +/- a Micrometer.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -1915,45 +1915,45 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;                  $iLineSpcHeight      - [optional] an integer value. Default is Null. This value specifies the spacing of the lines. See Remarks for Minimum and Max values.
 ;                  $bPageLineSpc        - [optional] a boolean value. Default is Null. If True, register mode is applied to the paragraph. See Remarks.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $iAbovePar not an integer, less than 0 or more than 10008 uM.
-;                   @Error 1 @Extended 5 Return 0 = $iBelowPar not an integer, less than 0 or more than 10008 uM.
-;                   @Error 1 @Extended 6 Return 0 = $bAddSpc not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $iLineSpcMode Not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 8 Return 0 = $iLineSpcHeight not an Integer.
-;                   @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
-;                   @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
-;                   @Error 1 @Extended 11 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
-;                   @Error 1 @Extended 12 Return 0 = $bPageLineSpc not a Boolean.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAbovePar
-;                   |                                2 = Error setting $iBelowPar
-;                   |                                4 = Error setting $bAddSpace
-;                   |                                8 = Error setting $iLineSpcMode
-;                   |                                16 = Error setting $iLineSpcHeight
-;                   |                                32 = Error setting bPageLineSpc
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 or 6 Element Array with values in order of function parameters. If the current Libre Office version is less than 3.6, the returned Array will contain 5 elements, because $bAddSpace is not available.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $iAbovePar not an integer, less than 0 or more than 10008 uM.
+;                  @Error 1 @Extended 5 Return 0 = $iBelowPar not an integer, less than 0 or more than 10008 uM.
+;                  @Error 1 @Extended 6 Return 0 = $bAddSpc not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iLineSpcMode Not an integer, less than 0 or greater than 3. See Constants, $LOW_LINE_SPC_MODE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iLineSpcHeight not an Integer.
+;                  @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 0(Proportional) and $iLineSpcHeight less than 6(%) or greater than 65535(%).
+;                  @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
+;                  @Error 1 @Extended 11 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
+;                  @Error 1 @Extended 12 Return 0 = $bPageLineSpc not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAbovePar
+;                  |                                2 = Error setting $iBelowPar
+;                  |                                4 = Error setting $bAddSpace
+;                  |                                8 = Error setting $iLineSpcMode
+;                  |                                16 = Error setting $iLineSpcHeight
+;                  |                                32 = Error setting bPageLineSpc
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 or 6 Element Array with values in order of function parameters. If the current Libre Office version is less than 3.6, the returned Array will contain 5 elements, because $bAddSpace is not available.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. $iAbovePar, $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. $iAbovePar, $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
 ;                   $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
-;                   The settings in LibreOffice, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
+;                  The settings in LibreOffice, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;                   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
 ;                   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
@@ -2018,38 +2018,38 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value (See AutoIt Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = $iPosition not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = Tab Stop position called in $iPosition already exists in this Paragraph.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $iFillChar not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
-;                   @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iPosition
-;                   |                                2 = Error setting $iFillChar
-;                   |                                4 = Error setting $iAlignment
-;                   |                                8 = Error setting $iDecChar
-;                   |                                Note: $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = $iPosition not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = Tab Stop position called in $iPosition already exists in this Paragraph.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $iFillChar not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
+;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iPosition
+;                  |                                2 = Error setting $iFillChar
+;                  |                                4 = Error setting $iAlignment
+;                  |                                8 = Error setting $iDecChar
+;                  |                                Note: $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
 ;                   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, this function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;                   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -2074,21 +2074,21 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ;                  $oSelection      - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ;                  $iTabStop        - an integer value. The TabStop position of the TabStop to modify. See Remarks.
 ; Return values .: Success: Boolean.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 4 Return 0 = $iTabStop not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iTabStop not found in this ParStyle.
-;                   @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
-;                   @Error 1 @Extended 7 Return 0 = Passed Document Object to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Failed to identify and delete TabStop in Paragraph.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Boolean = Returns true if the TabStop was successfully deleted.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 4 Return 0 = $iTabStop not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iTabStop not found in this ParStyle.
+;                  @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
+;                  @Error 1 @Extended 7 Return 0 = Passed Document Object to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify and delete TabStop in Paragraph.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Returns true if the TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essentially the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
@@ -2115,14 +2115,14 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ; Syntax ........: _LOWriter_DirFrmtParTabStopList(ByRef $oSelection)
 ; Parameters ....: $oSelection             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ; Return values .: Success: Array
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                   --Success--
-;                   @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
@@ -2151,44 +2151,44 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;                  $iAlignment          - [optional] an integer value (0-4). Default is Null. The position of where the end of a Tab is aligned to compared to the text. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iDecChar            - [optional] an integer value. Default is Null. Enter a character(in Asc Value(See AutoIt Function)) that you want the decimal tab to use as a decimal separator. Can only be set if $iAlignment is set to $LOW_TAB_ALIGN_DECIMAL.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTabStop not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = TabStop called in $iTabStop not found in this Paragraph or selection.
-;                   @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
-;                   @Error 1 @Extended 6 Return 0 = $iPosition not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
-;                   @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
-;                   @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Paragraph/Selection already contains a TabStop at the length/position specified in $iPosition.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iPosition
-;                   |                                2 = Error setting $iFillChar
-;                   |                                4 = Error setting $iAlignment
-;                   |                                8 = Error setting $iDecChar
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended ? Return 2 = Success. Settings were successfully set. New TabStop position is returned in @Extended.
-;                   @Error 0 @Extended 0 Return 3 = Success. $iTabStop parameter was set to Default, and rest of parameters were set to Null. Direct formatting inserted TabStops have been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTabStop not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = TabStop called in $iTabStop not found in this Paragraph or selection.
+;                  @Error 1 @Extended 5 Return 0 = Passed Object to internal function not an Object.
+;                  @Error 1 @Extended 6 Return 0 = $iPosition not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
+;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Paragraph/Selection already contains a TabStop at the length/position specified in $iPosition.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iPosition
+;                  |                                2 = Error setting $iFillChar
+;                  |                                4 = Error setting $iAlignment
+;                  |                                8 = Error setting $iDecChar
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended ? Return 2 = Success. Settings were successfully set. New TabStop position is returned in @Extended.
+;                  @Error 0 @Extended 0 Return 3 = Success. $iTabStop parameter was set to Default, and rest of parameters were set to Null. Direct formatting inserted TabStops have been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
 ;                   $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph.
 ;                   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
-;                   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
+;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
@@ -2225,33 +2225,33 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ;                  $iParOrphans         - [optional] an integer value(0,2-9). Default is Null. Specifies the minimum number of lines of the paragraph that have to be at bottom of a page if the paragraph is spread over more than one page. 0 = disabled.
 ;                  $iParWidows          - [optional] an integer value(0,2-9). Default is Null. Specifies the minimum number of lines of the paragraph that have to be at top of a page if the paragraph is spread over more than one page. 0 = disabled.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bParSplit not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bKeepTogether not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iParOrphans not an Integer, less than 0, equal to 1, or greater than 9.
-;                   @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bParSplit
-;                   |                                2 = Error setting $bKeepTogether
-;                   |                                4 = Error setting $iParOrphans
-;                   |                                8 = Error setting $iParWidows
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection not a Cursor Object and not a Paragraph portion Object.
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bParSplit not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bKeepTogether not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iParOrphans not an Integer, less than 0, equal to 1, or greater than 9.
+;                  @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bParSplit
+;                  |                                2 = Error setting $bKeepTogether
+;                  |                                4 = Error setting $iParOrphans
+;                  |                                8 = Error setting $iParWidows
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
-;                   If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
+;                  If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -2302,31 +2302,31 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ;                  $bStrikeOut          - [optional] a boolean value. Default is Null. If True, strikeout is applied to characters.
 ;                  $iStrikeLineStyle    - [optional] an integer value (0-6). Default is Null. The Strikeout Line Style, see constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bWordOnly
-;                   |                                2 = Error setting $bStrikeOut
-;                   |                                4 = Error setting $iStrikeLineStyle
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bWordOnly
+;                  |                                2 = Error setting $bStrikeOut
+;                  |                                4 = Error setting $iStrikeLineStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. $bStrikeout and $iStrikeLineStyle are reset together.
-;                   Strikeout converted to single line in Ms word document format.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. $bStrikeout and $iStrikeLineStyle are reset together.
+;                  Strikeout converted to single line in Ms word document format.
 ; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -2373,32 +2373,32 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored. See remarks.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for automatic color mode.
 ; Return values .: Success: Integer or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
-;                   @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bWordOnly
-;                   |                                2 = Error setting $iUnderLineStyle
-;                   |                                4 = Error setting $ULHasColor
-;                   |                                8 = Error setting $iULColor
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
-;                   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSelection does not support any of the following: "com.sun.star.text.Paragraph"; "TextPortion"; "TextCursor"; "TextViewCursor".
+;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, or less than 0 or greater than 18. See constants, $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bULHasColor not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bWordOnly
+;                  |                                2 = Error setting $iUnderLineStyle
+;                  |                                4 = Error setting $ULHasColor
+;                  |                                8 = Error setting $iULColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-;                   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   Call a Parameter with Default keyword to clear direct formatting for that setting. Underline style, Color and $bHasColor all reset together.
+;                  Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call a Parameter with Default keyword to clear direct formatting for that setting. Underline style, Color and $bHasColor all reset together.
 ;                   $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:

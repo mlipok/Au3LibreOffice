@@ -68,23 +68,23 @@
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The color to make the background. Set in Long integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
-;                   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBackColor
-;                   |                                2 = Error setting $bBackTransparent
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBackColor
+;                  |                                2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -129,34 +129,34 @@ EndFunc   ;==>_LOCalc_PageStyleAreaColor
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong,  _LOCalc_PageStyleBorderWidth, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -190,29 +190,29 @@ EndFunc   ;==>_LOCalc_PageStyleBorderColor
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Micrometers(uM).
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Micrometers(uM).
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAll border distance
-;                   |                                2 = Error setting $iTop border distance
-;                   |                                4 = Error setting $iBottom border distance
-;                   |                                8 = Error setting $iLeft border distance
-;                   |                                16 = Error setting $iRight border distance
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAll border distance
+;                  |                                2 = Error setting $iTop border distance
+;                  |                                4 = Error setting $iBottom border distance
+;                  |                                8 = Error setting $iLeft border distance
+;                  |                                16 = Error setting $iRight border distance
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleBorderWidth, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
@@ -276,34 +276,34 @@ EndFunc   ;==>_LOCalc_PageStyleBorderPadding
 ;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Page using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Page using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_PageStyleBorderWidth, _LOCalc_PageStyleBorderColor, _LOCalc_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -336,29 +336,29 @@ EndFunc   ;==>_LOCalc_PageStyleBorderStyle
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleBorderStyle, _LOCalc_PageStyleBorderColor, _LOCalc_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -388,19 +388,19 @@ EndFunc   ;==>_LOCalc_PageStyleBorderWidth
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sPageStyle          - a string value. The Name of the new Page Style to create.
 ; Return values .: Success: Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
-;                   @Error 1 @Extended 3 Return 0 = Page Style name called in $sPageStyle already exists in document.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
-;                   @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
-;                   @Error 2 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Error creating new Page Style by name.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning its Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = Page Style name called in $sPageStyle already exists in document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
+;                  @Error 2 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error creating new Page Style by name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -439,20 +439,20 @@ EndFunc   ;==>_LOCalc_PageStyleCreate
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOCalc_PageStyleCreate, or _LOCalc_PageStyleGetObj function. Must be User-Created, not a built-in Style native to LibreOffice.
 ; Return values .: Success: 1
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Name.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
-;                   @Error 3 @Extended 2 Return 0 = $oPageStyle is in use and cannot be deleted.
-;                   @Error 3 @Extended 3 Return 0 = $oPageStyle still exists after deletion attempt.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Page Style called in $oPageStyle was successfully deleted.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Name.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
+;                  @Error 3 @Extended 2 Return 0 = $oPageStyle is in use and cannot be deleted.
+;                  @Error 3 @Extended 3 Return 0 = $oPageStyle still exists after deletion attempt.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Page Style called in $oPageStyle was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -491,12 +491,12 @@ EndFunc   ;==>_LOCalc_PageStyleDelete
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sPageStyle          - a string value. The Page Style Name to search for.
 ; Return values .: Success: Boolean
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object,
-;                   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Boolean  = Success. If Page Style name exists, then True is returned, else False.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object,
+;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean  = Success. If Page Style name exists, then True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -530,37 +530,37 @@ EndFunc   ;==>_LOCalc_PageStyleExists
 ;                  $iHeight             - [optional] an integer value. Default is Null. The height of the footer. Set in Micrometers.
 ;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, automatically adjusts the height of the footer to fit the contents.
 ; Return values .: Success: 1
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $bFooterOn not a Boolean value.
-;                   @Error 1 @Extended 4 Return 0 = $bSameLeftRight not a Boolean value.
-;                   @Error 1 @Extended 5 Return 0 = $bSameOnFirst not a Boolean value.
-;                   @Error 1 @Extended 6 Return 0 = $iLeftMargin not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iRightMargin not an Integer.
-;                   @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
-;                   @Error 1 @Extended 9 Return 0 = $iHeight not an Integer.
-;                   @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bFooterOn
-;                   |                                2 = Error setting $bSameLeftRight
-;                   |                                4 = Error setting $bSameOnFirst
-;                   |                                8 = Error setting $iLeftMargin
-;                   |                                16 = Error setting $iRightMargin
-;                   |                                32 = Error setting $iSpacing
-;                   |                                64 = Error setting $iHeight
-;                   |                                128 = Error setting $bAutoHeight
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 7 elements, because $bSameOnFirst will not be available.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $bFooterOn not a Boolean value.
+;                  @Error 1 @Extended 4 Return 0 = $bSameLeftRight not a Boolean value.
+;                  @Error 1 @Extended 5 Return 0 = $bSameOnFirst not a Boolean value.
+;                  @Error 1 @Extended 6 Return 0 = $iLeftMargin not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iRightMargin not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bFooterOn
+;                  |                                2 = Error setting $bSameLeftRight
+;                  |                                4 = Error setting $bSameOnFirst
+;                  |                                8 = Error setting $iLeftMargin
+;                  |                                16 = Error setting $iRightMargin
+;                  |                                32 = Error setting $iSpacing
+;                  |                                64 = Error setting $iHeight
+;                  |                                128 = Error setting $bAutoHeight
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 7 elements, because $bSameOnFirst will not be available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -647,25 +647,25 @@ EndFunc   ;==>_LOCalc_PageStyleFooter
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
-;                   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBackColor
-;                   |                                2 = Error setting $bBackTransparent
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBackColor
+;                  |                                2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -711,33 +711,33 @@ EndFunc   ;==>_LOCalc_PageStyleFooterAreaColor
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_PageStyleFooterBorderWidth, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -772,31 +772,31 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderColor
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page contents in Micrometers(uM).
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page contents in Micrometers(uM).
 ; Return values .: Success: 1 or Array, see Remarks.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAll border distance
-;                   |                                2 = Error setting $iTop border distance
-;                   |                                4 = Error setting $iBottom border distance
-;                   |                                8 = Error setting $iLeft border distance
-;                   |                                16 = Error setting $iRight border distance
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAll border distance
+;                  |                                2 = Error setting $iTop border distance
+;                  |                                4 = Error setting $iBottom border distance
+;                  |                                8 = Error setting $iLeft border distance
+;                  |                                16 = Error setting $iRight border distance
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleFooterBorderWidth, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor
 ; Link ..........:
 ; Example .......: Yes
@@ -861,33 +861,33 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderPadding
 ;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Left Border Line Style of the Page Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Page Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, set to higher than 17, and not equal to 0x7FFF, Or is set to less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_PageStyleFooterBorderWidth, _LOCalc_PageStyleFooterBorderColor, _LOCalc_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -921,28 +921,28 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderStyle
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or less than 0.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Footers are not enabled for this Page Style.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleFooterBorderStyle, _LOCalc_PageStyleFooterBorderColor, _LOCalc_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -976,19 +976,19 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderWidth
 ;                  $bCenterArea         - [optional] a boolean value. Default is False. If True, the Text Cursor will be created in the Center Area of the Footer.
 ;                  $bRightArea          - [optional] a boolean value. Default is False. If True, the Text Cursor will be created in the Right Area of the Footer.
 ; Return values .: Success: Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oFooter not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oFooter not a Header/Footer Object.
-;                   @Error 1 @Extended 3 Return 0 = $bAtEnd not a Boolean.
-;                   @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Object = Success. Successfully created a Text Cursor in the requested Footer area, returning the Text Cursor Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFooter not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFooter not a Header/Footer Object.
+;                  @Error 1 @Extended 3 Return 0 = $bAtEnd not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully created a Text Cursor in the requested Footer area, returning the Text Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: You can only create a Text Cursor in one area at a time per function call.
@@ -1041,30 +1041,30 @@ EndFunc   ;==>_LOCalc_PageStyleFooterCreateTextCursor
 ;                  $oRightPage          - [optional] an object. Default is Null. Set or Retrieve the Right Page Footer Object. Call with Default Keyword to retrieve the Object, else Call with the modified Object to set the new content.
 ;                  $oLeftPage           - [optional] an object. Default is Null. Set or Retrieve the Left Page Footer Object. Call with Default Keyword to retrieve the Object, else Call with the modified Object to set the new content.
 ; Return values .: Success: 1 or Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
-;                   @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
-;                   @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
-;                   @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Footer Object.
-;                   @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Footer Object.
-;                   @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Footer Object.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Footer Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
+;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
+;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
+;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Footer Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Footer Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Footer Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Footer Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office Calc Footers are set up in a way that you must retrieve the Object for the one you wish to modify the content of, modify it, and then re-insert the modified object.
-;                   To modify the Header/Footer content, retrieve the desired Page (First, Left/Right) by calling the respective parameter with Default keyword, then create a text cursor in the desired area by calling _LOCalc_PageStyleFooterCreateTextCursor with the Header/Footer Object, insert, delete, etc. the content, then call this function again with the Object you retrieved from it earlier, in the appropriate parameter.
-;                   The Object returned is interchangeable among the others. i.e. if you want identical content on all pages, you can set all three using the same Object. You can also use this method to copy header/footer content from one page Style to another, even in other documents.
-;                   Only one Object can be retrieved at once. But you could set and retrieve another object at one time, such as set First page and retrieve Left Page. If more than one parameter is set to Default, the first parameter set to Default is retrieved.
-;                   If Same Content on Left and Right is True, enter Content using RightPage Object.
+;                  To modify the Header/Footer content, retrieve the desired Page (First, Left/Right) by calling the respective parameter with Default keyword, then create a text cursor in the desired area by calling _LOCalc_PageStyleFooterCreateTextCursor with the Header/Footer Object, insert, delete, etc. the content, then call this function again with the Object you retrieved from it earlier, in the appropriate parameter.
+;                  The Object returned is interchangeable among the others. i.e. if you want identical content on all pages, you can set all three using the same Object. You can also use this method to copy header/footer content from one page Style to another, even in other documents.
+;                  Only one Object can be retrieved at once. But you could set and retrieve another object at one time, such as set First page and retrieve Left Page. If more than one parameter is set to Default, the first parameter set to Default is retrieved.
+;                  If Same Content on Left and Right is True, enter Content using RightPage Object.
 ; Related .......: _LOCalc_PageStyleHeaderObj, _LOCalc_PageStyleFooterCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -1128,33 +1128,33 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Footer Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Footer Shadow. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;                   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iColor
-;                   |                                4 = Error setting $bTransparent
-;                   |                                8 = Error setting $iLocation
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iColor
+;                  |                                4 = Error setting $bTransparent
+;                  |                                8 = Error setting $iLocation
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   LibreOffice may change the shadow width +/- a Micrometer.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1219,15 +1219,15 @@ EndFunc   ;==>_LOCalc_PageStyleFooterShadow
 ; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sPageStyle           - a string value. The Page Style name to retrieve the Object for.
 ; Return values .: Success: Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
-;                   @Error 1 @Extended 3 Return 0 = Page Style called in $sPageStyle not found in Document.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving Page Style Object.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Object = Success. Page Style successfully retrieved, returning Page Style Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
+;                  @Error 1 @Extended 3 Return 0 = Page Style called in $sPageStyle not found in Document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Page Style Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Page Style successfully retrieved, returning Page Style Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1264,37 +1264,37 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ;                  $iHeight             - [optional] an integer value. Default is Null. The height for the Header. Set in Micrometers.
 ;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, Automatically adjusts the height of the Header to fit the contents.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $bHeaderOn not a Boolean value.
-;                   @Error 1 @Extended 4 Return 0 = $bSameLeftRight not a Boolean value.
-;                   @Error 1 @Extended 5 Return 0 = $bSameOnFirst not a Boolean value.
-;                   @Error 1 @Extended 6 Return 0 = $iLeftMargin not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iRightMargin not an Integer.
-;                   @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
-;                   @Error 1 @Extended 9 Return 0 = $iHeight not an Integer.
-;                   @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $bHeaderOn
-;                   |                                2 = Error setting $bSameLeftRight
-;                   |                                4 = Error setting $bSameOnFirst
-;                   |                                8 = Error setting $iLeftMargin
-;                   |                                16 = Error setting $iRightMargin
-;                   |                                32= Error setting $iSpacing
-;                   |                                64 = Error setting $iHeight
-;                   |                                128 = Error setting $bAutoHeight
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 7 elements, because $bSameOnFirst will not be available.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $bHeaderOn not a Boolean value.
+;                  @Error 1 @Extended 4 Return 0 = $bSameLeftRight not a Boolean value.
+;                  @Error 1 @Extended 5 Return 0 = $bSameOnFirst not a Boolean value.
+;                  @Error 1 @Extended 6 Return 0 = $iLeftMargin not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iRightMargin not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iSpacing not an Integer.
+;                  @Error 1 @Extended 9 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $bHeaderOn
+;                  |                                2 = Error setting $bSameLeftRight
+;                  |                                4 = Error setting $bSameOnFirst
+;                  |                                8 = Error setting $iLeftMargin
+;                  |                                16 = Error setting $iRightMargin
+;                  |                                32= Error setting $iSpacing
+;                  |                                64 = Error setting $iHeight
+;                  |                                128 = Error setting $bAutoHeight
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If Libre Office version is less than 4.0, then the Array returned will contain 7 elements, because $bSameOnFirst will not be available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1381,25 +1381,25 @@ EndFunc   ;==>_LOCalc_PageStyleHeader
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_COLOR_OFF(-1) for "None".
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True the background color is transparent.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
-;                   @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iBackColor
-;                   |                                2 = Error setting $bBackTransparent
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
+;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iBackColor
+;                  |                                2 = Error setting $bBackTransparent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -1445,33 +1445,33 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderAreaColor
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Set the Left Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Page Style in Long Color code format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0, or greater than 16,777,215.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Color when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Color when Right Border width not set.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_PageStyleHeaderBorderWidth, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1506,31 +1506,31 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderColor
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Page Header contents in Micrometers(uM).
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Page Header contents in Micrometers(uM).
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $Left not an Integer.
-;                   @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iAll border distance
-;                   |                                2 = Error setting $iTop border distance
-;                   |                                4 = Error setting $iBottom border distance
-;                   |                                8 = Error setting $iLeft border distance
-;                   |                                16 = Error setting $iRight border distance
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iAll not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iBottom not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $Left not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iAll border distance
+;                  |                                2 = Error setting $iTop border distance
+;                  |                                4 = Error setting $iBottom border distance
+;                  |                                8 = Error setting $iLeft border distance
+;                  |                                16 = Error setting $iRight border distance
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleHeaderBorderWidth, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor
 ; Link ..........:
 ; Example .......: Yes
@@ -1595,32 +1595,32 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderPadding
 ;                  $iLeft               - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Left Border Line Style of the Page Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Sets the Right Border Line Style of the Page Style using one of the line style constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style Top when Border width not set.
-;                   @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style Bottom when Border width not set.
-;                   @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
-;                   @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or greater than 17, and not equal to 0x7FFF, or less than 0. See constants, $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style Top when Border width not set.
+;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style Bottom when Border width not set.
+;                  @Error 4 @Extended 3 Return 0 = Cannot set Left Border Style when Left Border width not set.
+;                  @Error 4 @Extended 4 Return 0 = Cannot set Right Border Style when Right Border width not set.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_PageStyleHeaderBorderWidth, _LOCalc_PageStyleHeaderBorderColor, _LOCalc_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1654,28 +1654,28 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderStyle
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Border Line width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Page Style in Micrometers. Can be a custom value, or one of the constants, $LOC_BORDERWIDTH_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
-;                   @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
-;                   @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
-;                   @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
+;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
+;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Headers are not enabled for this Page Style.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_PageStyleHeaderBorderStyle, _LOCalc_PageStyleHeaderBorderColor, _LOCalc_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
@@ -1709,19 +1709,19 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderWidth
 ;                  $bCenterArea         - [optional] a boolean value. Default is False. If True, the Text Cursor will be created in the Center Area of the Header.
 ;                  $bRightArea          - [optional] a boolean value. Default is False. If True, the Text Cursor will be created in the Right Area of the Header.
 ; Return values .: Success: Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oHeader not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oHeader not a Header/Footer Object.
-;                   @Error 1 @Extended 3 Return 0 = $bAtEnd not a Boolean.
-;                   @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return Object = Success. Successfully created a Text Cursor in the requested Header area, returning the Text Cursor Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oHeader not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oHeader not a Header/Footer Object.
+;                  @Error 1 @Extended 3 Return 0 = $bAtEnd not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bLeftArea not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bCenterArea not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bRightArea not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = Either more than one of the following are set to True, or all are False, $bLeftArea, $bCenterArea, $bRightArea.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully created a Text Cursor in the requested Header area, returning the Text Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: You can only create a Text Cursor in one area at a time per function call. i.e. only one of the Area parameters can be set to True.
@@ -1774,30 +1774,30 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderCreateTextCursor
 ;                  $oRightPage          - [optional] an object. Default is Null. Set or Retrieve the Right Page Header Object. Call with Default Keyword to retrieve the Object, else Call with the modified Object to set the new content.
 ;                  $oLeftPage           - [optional] an object. Default is Null. Set or Retrieve the Left Page Header Object. Call with Default Keyword to retrieve the Object, else Call with the modified Object to set the new content.
 ; Return values .: Success: 1 or Object
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
-;                   @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
-;                   @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
-;                   @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
-;                   @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Header Object.
-;                   @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Header Object.
-;                   @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Header Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFirstPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oRightPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 4 Return 0 = $oLeftPage not a keyword (Null or Default) and not an Object.
+;                  @Error 1 @Extended 5 Return 0 = None of the Parameters ($oFirstPage, $oRightPage, $oLeftPage) are set to other than Null.
+;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
+;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
+;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Header Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Header Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Header Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office Calc Headers are set up in a way that you must retrieve the Object for the one you wish to modify the content of, modify it, and then re-insert the modified object.
-;                   To modify the Header/Footer content, retrieve the desired Page (First, Left/Right) by calling the respective parameter with Default keyword, then create a text cursor in the desired area by calling _LOCalc_PageStyleHeaderCreateTextCursor with the Header/Footer Object, insert, delete, etc. the content, then call this function again with the Object you retrieved from it earlier, in the appropriate parameter.
-;                   The Object returned is interchangeable among the others. i.e. if you want identical content on all pages, you can set all three using the same Object. You can also use this method to copy header/footer content from one page Style to another, even in other documents.
-;                   Only one Object can be retrieved at once. But you could set and retrieve another object at one time, such as set First page and retrieve Left Page. If more than one parameter is set to Default, the first parameter set to Default is retrieved.
-;                   If Same Content on Left and Right is True, enter Content using RightPage Object.
+;                  To modify the Header/Footer content, retrieve the desired Page (First, Left/Right) by calling the respective parameter with Default keyword, then create a text cursor in the desired area by calling _LOCalc_PageStyleHeaderCreateTextCursor with the Header/Footer Object, insert, delete, etc. the content, then call this function again with the Object you retrieved from it earlier, in the appropriate parameter.
+;                  The Object returned is interchangeable among the others. i.e. if you want identical content on all pages, you can set all three using the same Object. You can also use this method to copy header/footer content from one page Style to another, even in other documents.
+;                  Only one Object can be retrieved at once. But you could set and retrieve another object at one time, such as set First page and retrieve Left Page. If more than one parameter is set to Default, the first parameter set to Default is retrieved.
+;                  If Same Content on Left and Right is True, enter Content using RightPage Object.
 ; Related .......: _LOCalc_PageStyleHeaderCreateTextCursor, _LOCalc_PageStyleFooterObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1861,34 +1861,34 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Header Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Header Shadow. See constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;                   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
-;                   --Processing Errors--
-;                   @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iColor
-;                   |                                4 = Error setting $bTransparent
-;                   |                                8 = Error setting $iLocation
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iColor
+;                  |                                4 = Error setting $bTransparent
+;                  |                                8 = Error setting $iLocation
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   LibreOffice may change the shadow width +/- a Micrometer.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1957,32 +1957,32 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderShadow
 ;                  $bTableAlignVert     - [optional] a boolean value. Default is Null. If True, Centers the cells Vertically on the printed page.
 ;                  $sPaperTray          - [optional] a string value. Default is Null. The paper source for your printer. See remarks.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iLayout not an Integer, less than 0, or greater than 4. See Constants, $LOC_PAGE_LAYOUT_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 4 Return 0 = $iNumFormat  not an Integer, less than 0, or greater than 71. See Constants, $LOC_NUM_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 5 Return 0 = $bTableAlignHori not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $bTableAlignVert not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $sPaperTray not a string.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error creating Document Settings Object.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iLayout
-;                   |                                2 = Error setting $iNumFormat
-;                   |                                4 = Error setting $bTableAlignHori
-;                   |                                8 = Error setting $bTableAlignVert
-;                   |                                16 = Error setting $sPaperTray
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iLayout not an Integer, less than 0, or greater than 4. See Constants, $LOC_PAGE_LAYOUT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iNumFormat  not an Integer, less than 0, or greater than 71. See Constants, $LOC_NUM_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $bTableAlignHori not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bTableAlignVert not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $sPaperTray not a string.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating Document Settings Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iLayout
+;                  |                                2 = Error setting $iNumFormat
+;                  |                                4 = Error setting $bTableAlignHori
+;                  |                                8 = Error setting $bTableAlignVert
+;                  |                                16 = Error setting $sPaperTray
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   I have no way to retrieve possible values for the Paper Tray parameter, at least that I can find. You may still use it if you know the appropriate value.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I have no way to retrieve possible values for the Paper Tray parameter, at least that I can find. You may still use it if you know the appropriate value.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2046,27 +2046,27 @@ EndFunc   ;==>_LOCalc_PageStyleLayout
 ;                  $iTop                - [optional] an integer value. Default is Null. The amount of space to leave between the upper edge of the page and the document text. Set in Micrometers.
 ;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space to leave between the lower edge of the page and the document text. Set in Micrometers.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iLeft not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
-;                   @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iLeft
-;                   |                                2 = Error setting $iRight
-;                   |                                4 = Error setting $iTop
-;                   |                                8 = Error setting $iBottom
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iLeft not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iLeft
+;                  |                                2 = Error setting $iRight
+;                  |                                4 = Error setting $iTop
+;                  |                                8 = Error setting $iBottom
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2122,27 +2122,27 @@ EndFunc   ;==>_LOCalc_PageStyleMargins
 ;                  $sNewPageStyleName   - [optional] a string value. Default is Null. The new name to set the Page Style called in $oPageStyle to.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. If True, the style is hidden in L.O. UI. Libre Office 4.0 and Up.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 4 Return 0 = $sNewPageStyleName not a String.
-;                   @Error 1 @Extended 5 Return 0 = Page Style name called in $sNewPageStyleName already exists in document.
-;                   @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $sNewParStyleName
-;                   |                                2 = Error setting $bHidden
-;                   --Version Related Errors--
-;                   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 1 or 2 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 1 element because $bHidden is not available.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $sNewPageStyleName not a String.
+;                  @Error 1 @Extended 5 Return 0 = Page Style name called in $sNewPageStyleName already exists in document.
+;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $sNewParStyleName
+;                  |                                2 = Error setting $bHidden
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 1 or 2 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 1 element because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
@@ -2193,25 +2193,25 @@ EndFunc   ;==>_LOCalc_PageStyleOrganizer
 ;                  $iHeight             - [optional] an integer value. Default is Null. The Height of the page, may be a custom value in Micrometers, or one of the constants, $LOC_PAPER_HEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bLandscape          - [optional] a boolean value. Default is Null. If true, displays the page in Landscape layout.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
-;                   @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
-;                   @Error 1 @Extended 5 Return 0 = $bLandscape not a Boolean value.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iHeight
-;                   |                                4 = Error setting $bLandscape
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $bLandscape not a Boolean value.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iHeight
+;                  |                                4 = Error setting $bLandscape
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj,  _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2273,18 +2273,18 @@ EndFunc   ;==>_LOCalc_PageStylePaperFormat
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sPageStyle          - [optional] a string value. Default is Null. The Page Style name to set the Page to.
 ; Return values .: Success: 1 or String.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;                   @Error 1 @Extended 3 Return 0 = $oSheet is not a Sheet Object.
-;                   @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
-;                   @Error 1 @Extended 5 Return 0 = Page Style called in $sPageStyle doesn't exist in Document.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended 1 Return 0 = Error setting Page Style.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current Page Style set for this Sheet.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSheet is not a Sheet Object.
+;                  @Error 1 @Extended 4 Return 0 = $sPageStyle not a String.
+;                  @Error 1 @Extended 5 Return 0 = Page Style called in $sPageStyle doesn't exist in Document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Error setting Page Style.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current Page Style set for this Sheet.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2317,22 +2317,22 @@ EndFunc   ;==>_LOCalc_PageStyleSet
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Page Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Page Styles are returned.
 ; Return values .: Success: Integer or Array
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
-;                   @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
-;                   @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
+;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If Only a Document object is input, all available Page styles will be returned.
-;                   Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
-;                   Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
-;                   If Both are true then only User-Created Page styles that are applied are returned.
+;                  Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
+;                  Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
+;                  If Both are true then only User-Created Page styles that are applied are returned.
 ; Related .......: _LOCalc_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2386,31 +2386,31 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Page Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Page Shadow. See constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
-;                   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;                   @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
-;                   --Initialization Errors--
-;                   @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                   @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                   |                                1 = Error setting $iWidth
-;                   |                                2 = Error setting $iColor
-;                   |                                4 = Error setting $bTransparent
-;                   |                                8 = Error setting $iLocation
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer or less than 0.
+;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                                1 = Error setting $iWidth
+;                  |                                2 = Error setting $iColor
+;                  |                                4 = Error setting $bTransparent
+;                  |                                8 = Error setting $iLocation
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
-;                   LibreOffice may change the shadow width +/- a Micrometer.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  LibreOffice may change the shadow width +/- a Micrometer.
 ; Related .......: _LOCalc_PageStyleCreate, _LOCalc_PageStyleGetObj, _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2475,25 +2475,25 @@ EndFunc   ;==>_LOCalc_PageStyleShadow
 ;                  $bFirstPageNum       - [optional] a boolean value. Default is Null. If True Page numbering will be restarted.
 ;                  $iFirstPage          - [optional] an integer value (0-9999). Default is Null. The Page number you want the numbering to restart at.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $bTop2Bottom not a Boolean.
-;                   @Error 1 @Extended 4 Return 0 = $bFirstPageNum not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $iFirstPage not an Integer, less than 0 or greater than 9999.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                   |                                1 = Error setting $bTop2Bottom
-;                   |                                2 = Error setting $bFirstPageNum
-;                   |                                4 = Error setting $iFirstPage
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $bTop2Bottom not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bFirstPageNum not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iFirstPage not an Integer, less than 0 or greater than 9999.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                                1 = Error setting $bTop2Bottom
+;                  |                                2 = Error setting $bFirstPageNum
+;                  |                                4 = Error setting $iFirstPage
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleSheetScale, _LOCalc_PageStyleSheetPrint
 ; Link ..........:
 ; Example .......: Yes
@@ -2548,35 +2548,35 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPageOrder
 ;                  $bFormulas           - [optional] a boolean value. Default is Null. If True, Formulas are printed instead of the results.
 ;                  $bZeroValues         - [optional] a boolean value. Default is Null. IF True, Cells containing Zero Values are printed.
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $bHeaders not a Boolean.
-;                   @Error 1 @Extended 4 Return 0 = $bGrid not a Boolean.
-;                   @Error 1 @Extended 5 Return 0 = $bComments not a Boolean.
-;                   @Error 1 @Extended 6 Return 0 = $bObjectsOrImages not a Boolean.
-;                   @Error 1 @Extended 7 Return 0 = $bCharts not a Boolean.
-;                   @Error 1 @Extended 8 Return 0 = $bDrawing not a Boolean.
-;                   @Error 1 @Extended 9 Return 0 = $bFormulas not a Boolean.
-;                   @Error 1 @Extended 10 Return 0 = $bZeroValues not a Boolean.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                   |                                1 = Error setting $bHeaders
-;                   |                                2 = Error setting $bGrid
-;                   |                                4 = Error setting $bComments
-;                   |                                8 = Error setting $bObjectsOrImages
-;                   |                                16 = Error setting $bCharts
-;                   |                                32 = Error setting $bDrawing
-;                   |                                64 = Error setting $bFormulas
-;                   |                                128 = Error setting $bZeroValues
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $bHeaders not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bGrid not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bComments not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bObjectsOrImages not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bCharts not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bDrawing not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bFormulas not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $bZeroValues not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                                1 = Error setting $bHeaders
+;                  |                                2 = Error setting $bGrid
+;                  |                                4 = Error setting $bComments
+;                  |                                8 = Error setting $bObjectsOrImages
+;                  |                                16 = Error setting $bCharts
+;                  |                                32 = Error setting $bDrawing
+;                  |                                64 = Error setting $bFormulas
+;                  |                                128 = Error setting $bZeroValues
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_PageStyleSheetPageOrder, _LOCalc_PageStyleSheetScale
 ; Link ..........:
 ; Example .......: Yes
@@ -2657,35 +2657,35 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ;                  $iVariable1          - [optional] an integer value. Default is Null. The First Scale Value. See Remarks
 ;                  $iVariable2          - [optional] an integer value. Default is Null. The Second Scale Value. See Remarks
 ; Return values .: Success: 1 or Array.
-;                   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                   --Input Errors--
-;                   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
-;                   @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                   @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 1 or greater than 3. See Constants $LOC_SCALE_* as defined in LibreOfficeCalc_Constants.au3.
-;                   @Error 1 @Extended 4 Return 0 = Current mode set to $LOC_SCALE_REDUCE_ENLARGE, but $iVariable1 is not an Integer, less than 10 or greater than 400%.
-;                   @Error 1 @Extended 5 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
-;                   @Error 1 @Extended 6 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable2 is not an Integer, less than 1 or greater than 1000.
-;                   @Error 1 @Extended 7 Return 0 = Current mode set to $LOC_SCALE_FIT_PAGES, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
-;                   --Property Setting Errors--
-;                   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                   |                                1 = Error setting $iMode
-;                   |                                2 = Error setting $iVariable1 for mode $LOC_SCALE_REDUCE_ENLARGE
-;                   |                                4 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
-;                   |                                8 = Error setting $iVariable2 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
-;                   |                                16 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_PAGES
-;                   --Success--
-;                   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the current mode is equal to $LOC_SCALE_FIT_WIDTH_HEIGHT, there will be three elements, Elelemnt 1(0) will be the current mode, element 2(1) will be the Width value, and Element 3(2) will be the height value.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 1 or greater than 3. See Constants $LOC_SCALE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = Current mode set to $LOC_SCALE_REDUCE_ENLARGE, but $iVariable1 is not an Integer, less than 10 or greater than 400%.
+;                  @Error 1 @Extended 5 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
+;                  @Error 1 @Extended 6 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable2 is not an Integer, less than 1 or greater than 1000.
+;                  @Error 1 @Extended 7 Return 0 = Current mode set to $LOC_SCALE_FIT_PAGES, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                                1 = Error setting $iMode
+;                  |                                2 = Error setting $iVariable1 for mode $LOC_SCALE_REDUCE_ENLARGE
+;                  |                                4 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
+;                  |                                8 = Error setting $iVariable2 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
+;                  |                                16 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_PAGES
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the current mode is equal to $LOC_SCALE_FIT_WIDTH_HEIGHT, there will be three elements, Elelemnt 1(0) will be the current mode, element 2(1) will be the Width value, and Element 3(2) will be the height value.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ;                   $iVariable1 and $iVariable2 setting values depend on what the current or new mode is. For Modes Reduce/Enlarge and Fit Pages, $iVariable1 ALONE is used for setting Scale Percentage or Number of Pages Respectively.
-;                   If Mode is set to Fit Width and Height, $iVariable1 is for setting Width, and $iVariable2 is for setting height.
-;                   You can set the Scale Values still without setting Mode each time.
-;                   When Scale Mode is set to $LOC_SCALE_REDUCE_ENLARGE, the Minimum scaling value for $iVariable1 is 10%, and the Maximum is 400%.
-;                   When Scale Mode is set to $LOC_SCALE_FIT_WIDTH_HEIGHT, the Minimum scaling value for both Vairable1 and Variable2 is 1, and the Maximum is 1000.
-;                   When Scale Mode is set to $LOC_SCALE_FIT_PAGES, the Minimum scaling value for $iVariable1 is 1, and the Maximum is 1000.
+;                  If Mode is set to Fit Width and Height, $iVariable1 is for setting Width, and $iVariable2 is for setting height.
+;                  You can set the Scale Values still without setting Mode each time.
+;                  When Scale Mode is set to $LOC_SCALE_REDUCE_ENLARGE, the Minimum scaling value for $iVariable1 is 10%, and the Maximum is 400%.
+;                  When Scale Mode is set to $LOC_SCALE_FIT_WIDTH_HEIGHT, the Minimum scaling value for both Vairable1 and Variable2 is 1, and the Maximum is 1000.
+;                  When Scale Mode is set to $LOC_SCALE_FIT_PAGES, the Minimum scaling value for $iVariable1 is 1, and the Maximum is 1000.
 ; Related .......: _LOCalc_PageStyleSheetPageOrder, _LOCalc_PageStyleSheetPrint
 ; Link ..........:
 ; Example .......: Yes
