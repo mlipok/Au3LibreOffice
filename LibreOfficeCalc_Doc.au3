@@ -312,7 +312,7 @@ EndFunc   ;==>_LOCalc_DocConnect
 ;                  @Error 2 @Extended 4 Return 0 = Failure Creating New Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Document Object is still returned. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHidden
+;                  |                               1 = Error setting $bHidden
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Successfully connected to an existing Document. Returning Document's Object
 ;                  @Error 0 @Extended 2 Return Object = Successfully created a new document. Returning Document's Object
@@ -897,11 +897,11 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ;                  @Error 2 @Extended 3 Return 0 = Failed opening or connecting to document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHidden
-;                  |                                2 = Error setting $bReadOnly
-;                  |                                4 = Error setting $sPassword
-;                  |                                8 = Error setting $bLoadAsTemplate
-;                  |                                16 = Error setting $sFilterName
+;                  |                               1 = Error setting $bHidden
+;                  |                               2 = Error setting $bReadOnly
+;                  |                               4 = Error setting $sPassword
+;                  |                               8 = Error setting $bLoadAsTemplate
+;                  |                               16 = Error setting $sFilterName
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Successfully connected to requested Document without requested parameters. Returning Document's Object.
 ;                  @Error 0 @Extended 2 Return Object = Successfully opened requested Document with requested parameters. Returning Document's Object.
@@ -1005,10 +1005,10 @@ EndFunc   ;==>_LOCalc_DocOpen
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iX
-;                  |                                2 = Error setting $iY
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iHeight
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iHeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

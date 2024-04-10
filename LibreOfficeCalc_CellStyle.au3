@@ -64,8 +64,8 @@
 ;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -180,10 +180,10 @@ EndFunc   ;==>_LOCalc_CellStyleBorderColor
 ;                  @Error 1 @Extended 8 Return 0 = $iRight not an Integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iTop
-;                  |                                2 = Error setting $iBottom
-;                  |                                4 = Error setting $iLeft
-;                  |                                8 = Error setting $iRight
+;                  |                               1 = Error setting $iTop
+;                  |                               2 = Error setting $iBottom
+;                  |                               4 = Error setting $iLeft
+;                  |                               8 = Error setting $iRight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -471,9 +471,9 @@ EndFunc   ;==>_LOCalc_CellStyleDelete
 ;                  @Error 1 @Extended 6 Return 0 = $bShadow not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iRelief
-;                  |                                2 = Error setting $bOutline
-;                  |                                4 = Error setting $bShadow
+;                  |                               1 = Error setting $iRelief
+;                  |                               2 = Error setting $bOutline
+;                  |                               4 = Error setting $bShadow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -553,10 +553,10 @@ EndFunc   ;==>_LOCalc_CellStyleExists
 ;                  @Error 1 @Extended 9 Return 0 = $iWeight not an Integer, less than 50 but not equal to 0, or greater than 200. See Constants, $LOC_WEIGHT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $sFontName
-;                  |                                2 = Error setting $nFontSize
-;                  |                                4 = Error setting $iPosture
-;                  |                                8 = Error setting $iWeight
+;                  |                               1 = Error setting $sFontName
+;                  |                               2 = Error setting $nFontSize
+;                  |                               4 = Error setting $iPosture
+;                  |                               8 = Error setting $iWeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -601,7 +601,7 @@ EndFunc   ;==>_LOCalc_CellStyleFont
 ;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iFontColor
+;                  |                               1 = Error setting $iFontColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Font Color as an Integer.
@@ -682,7 +682,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ;                  @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iFormatKey
+;                  |                               1 = Error setting $iFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current setting as an Integer.
@@ -730,9 +730,9 @@ EndFunc
 ;                  @Error 1 @Extended 8 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewCellStyleName
-;                  |                                2 = Error setting $sParentStyle
-;                  |                                4 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewCellStyleName
+;                  |                               2 = Error setting $sParentStyle
+;                  |                               4 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -810,10 +810,10 @@ EndFunc   ;==>_LOCalc_CellStyleOrganizer
 ;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iOverLineStyle
-;                  |                                4 = Error setting $bOLHasColor
-;                  |                                8 = Error setting $iOLColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iOverLineStyle
+;                  |                               4 = Error setting $bOLHasColor
+;                  |                               8 = Error setting $iOLColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -862,10 +862,10 @@ EndFunc   ;==>_LOCalc_CellStyleOverline
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bHideAll
-;                  |                                2 = Error setting $bProtected
-;                  |                                4 = Error setting $bHideFormula
-;                  |                                8 = Error setting $bHideWhenPrint
+;                  |                               1 = Error setting $bHideAll
+;                  |                               2 = Error setting $bProtected
+;                  |                               4 = Error setting $bHideFormula
+;                  |                               8 = Error setting $bHideWhenPrint
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1022,10 +1022,10 @@ EndFunc   ;==>_LOCalc_CellStylesGetNames
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1070,9 +1070,9 @@ EndFunc   ;==>_LOCalc_CellStyleShadow
 ;                  @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, less than 0 or greater than 6. See constants, $LOC_STRIKEOUT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $bStrikeOut
-;                  |                                4 = Error setting $iStrikeLineStyle
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $bStrikeOut
+;                  |                               4 = Error setting $iStrikeLineStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1116,9 +1116,9 @@ EndFunc   ;==>_LOCalc_CellStyleStrikeOut
 ;                  @Error 1 @Extended 6 Return 0 = $iIndent not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iHoriAlign
-;                  |                                2 = Error setting $iVertAlign
-;                  |                                4 = Error setting $iIndent
+;                  |                               1 = Error setting $iHoriAlign
+;                  |                               2 = Error setting $iVertAlign
+;                  |                               4 = Error setting $iIndent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1164,10 +1164,10 @@ EndFunc   ;==>_LOCalc_CellStyleTextAlign
 ;                  @Error 1 @Extended 7 Return 0 = $bAsianLayout not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iRotate
-;                  |                                2 = Error setting $iReference
-;                  |                                4 = Error setting $bVerticalStack
-;                  |                                8 = Error setting $bAsianLayout
+;                  |                               1 = Error setting $iRotate
+;                  |                               2 = Error setting $iReference
+;                  |                               4 = Error setting $bVerticalStack
+;                  |                               8 = Error setting $bAsianLayout
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1213,10 +1213,10 @@ EndFunc   ;==>_LOCalc_CellStyleTextOrient
 ;                  @Error 1 @Extended 7 Return 0 = $iTextDirection not an Integer, less than 0, or greater than 1 but not equal to 4. See Constants, $LOC_TXT_DIR_* as defined in LibreOfficeCalc_Constants.au3. [Libre Office Default is 4]
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bAutoWrapText
-;                  |                                2 = Error setting $bHyphen
-;                  |                                4 = Error setting $bShrinkToFit
-;                  |                                8 = Error setting $iTextDirection
+;                  |                               1 = Error setting $bAutoWrapText
+;                  |                               2 = Error setting $bHyphen
+;                  |                               4 = Error setting $bShrinkToFit
+;                  |                               8 = Error setting $iTextDirection
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1262,10 +1262,10 @@ EndFunc   ;==>_LOCalc_CellStyleTextProperties
 ;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iUnderLineStyle
-;                  |                                4 = Error setting $bULHasColor
-;                  |                                8 = Error setting $iULColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iUnderLineStyle
+;                  |                               4 = Error setting $bULHasColor
+;                  |                               8 = Error setting $iULColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

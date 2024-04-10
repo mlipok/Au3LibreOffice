@@ -51,8 +51,8 @@
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean and not set to Null.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -169,10 +169,10 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTop.
-;                  |                                2 = Error setting $iBottom.
-;                  |                                4 = Error setting $iLeft.
-;                  |                                8 = Error setting $iRight.
+;                  |                               1 = Error setting $iTop.
+;                  |                               2 = Error setting $iBottom.
+;                  |                               4 = Error setting $iLeft.
+;                  |                               8 = Error setting $iRight.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

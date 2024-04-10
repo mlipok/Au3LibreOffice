@@ -130,11 +130,11 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ;                  @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -414,11 +414,11 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ;                  @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iRelief
-;                  |                                2 = Error setting $iCase
-;                  |                                4 = Error setting $bHidden
-;                  |                                8 = Error setting $bOutline
-;                  |                                16 = Error setting $bShadow
+;                  |                               1 = Error setting $iRelief
+;                  |                               2 = Error setting $iCase
+;                  |                               4 = Error setting $bHidden
+;                  |                               8 = Error setting $bOutline
+;                  |                               16 = Error setting $bShadow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -499,10 +499,10 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sFontName
-;                  |                                2 = Error setting $nFontSize
-;                  |                                4 = Error setting $iPosture
-;                  |                                8 = Error setting $iWeight
+;                  |                               1 = Error setting $sFontName
+;                  |                               2 = Error setting $nFontSize
+;                  |                               4 = Error setting $iPosture
+;                  |                               8 = Error setting $iWeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -550,9 +550,9 @@ EndFunc   ;==>_LOWriter_CharStyleFont
 ;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $FontColor
-;                  |                                2 = Error setting $iTransparency.
-;                  |                                4 = Error setting $iHighlight
+;                  |                               1 = Error setting $FontColor
+;                  |                               2 = Error setting $iTransparency.
+;                  |                               4 = Error setting $iHighlight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
 ;                  --Success--
@@ -640,9 +640,9 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ;                  @Error 1 @Extended 8 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewParStyleName
-;                  |                                2 = Error setting $sParentStyle
-;                  |                                4 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewParStyleName
+;                  |                               2 = Error setting $sParentStyle
+;                  |                               4 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -725,10 +725,10 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iOverLineStyle
-;                  |                                4 = Error setting $OLHasColor
-;                  |                                8 = Error setting $iOLColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iOverLineStyle
+;                  |                               4 = Error setting $OLHasColor
+;                  |                               8 = Error setting $iOLColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -778,9 +778,9 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, higher than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iSuperScript
-;                  |                                2 = Error setting $iSubScript
-;                  |                                4 = Error setting $iRelativeSize.
+;                  |                               1 = Error setting $iSuperScript
+;                  |                               2 = Error setting $iSubScript
+;                  |                               4 = Error setting $iRelativeSize.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -828,8 +828,8 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 ;                  @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1% or greater than 100%.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iRotation
-;                  |                                2 = Error setting $iScaleWidth
+;                  |                               1 = Error setting $iRotation
+;                  |                               2 = Error setting $iScaleWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -994,10 +994,10 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.2.
 ;                  --Success--
@@ -1044,8 +1044,8 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 ;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2 or greater than 928.8 Points.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoKerning
-;                  |                                2 = Error setting $nKerning.
+;                  |                               1 = Error setting $bAutoKerning
+;                  |                               2 = Error setting $nKerning.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1093,9 +1093,9 @@ EndFunc   ;==>_LOWriter_CharStyleSpacing
 ;                  @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0 or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $bStrikeOut
-;                  |                                4 = Error setting $iStrikeLineStyle
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $bStrikeOut
+;                  |                               4 = Error setting $iStrikeLineStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1142,10 +1142,10 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iUnderLineStyle
-;                  |                                4 = Error setting $ULHasColor
-;                  |                                8 = Error setting $iULColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iUnderLineStyle
+;                  |                               4 = Error setting $ULHasColor
+;                  |                               8 = Error setting $iULColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

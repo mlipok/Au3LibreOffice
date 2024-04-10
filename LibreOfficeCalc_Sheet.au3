@@ -665,7 +665,7 @@ EndFunc   ;==>_LOCalc_SheetMove
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $sName
+;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sheet's new name was successfully set.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Sheet's current name.
@@ -723,8 +723,8 @@ EndFunc   ;==>_LOCalc_SheetName
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $oRange
-;                  |                                2 = Error setting $bRepeatColumns
+;                  |                               1 = Error setting $oRange
+;                  |                               2 = Error setting $bRepeatColumns
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -817,7 +817,7 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Print Area Addresses.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $aoRange
+;                  |                               1 = Error setting $aoRange
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
 ;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
@@ -883,8 +883,8 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $oRange
-;                  |                                2 = Error setting $bRepeatRows
+;                  |                               1 = Error setting $oRange
+;                  |                               2 = Error setting $bRepeatRows
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1133,7 +1133,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ;                  @Error 1 @Extended 2 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iColor
+;                  |                               1 = Error setting $iColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Tab Color as an Integer
@@ -1212,7 +1212,7 @@ EndFunc   ;==>_LOCalc_SheetUnprotect
 ;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bVisiblee
+;                  |                               1 = Error setting $bVisiblee
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sheet Visibility setting was successfully set.
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bVisible set to Null, returning current visibility setting. True indicates the Sheet is currently visible.

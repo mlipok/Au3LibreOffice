@@ -846,7 +846,7 @@ EndFunc   ;==>_LOWriter_DocConvertTextToTable
 ;                  @Error 2 @Extended 4 Return 0 = Failure Creating New Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Document Object is still returned. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHidden
+;                  |                               1 = Error setting $bHidden
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Successfully connected to an existing Document. Returning Document's Object
 ;                  @Error 0 @Extended 2 Return Object = Successfully created a new document. Returning Document's Object
@@ -992,10 +992,10 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sTitle
-;                  |                                2 = Error setting $sSubject
-;                  |                                4 = Error setting $asKeywords
-;                  |                                8 = Error setting $sComments
+;                  |                               1 = Error setting $sTitle
+;                  |                               2 = Error setting $sSubject
+;                  |                               4 = Error setting $asKeywords
+;                  |                               8 = Error setting $sComments
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters. "Keywords" value will be an Array, which could be empty if no keywords are presently set.
@@ -1731,10 +1731,10 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving Document Settings Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewAuthor
-;                  |                                2 = Error setting $iRevisions
-;                  |                                4 = Error setting $iEditDuration
-;                  |                                8 = Error setting $bApplyUserData
+;                  |                               1 = Error setting $sNewAuthor
+;                  |                               2 = Error setting $iRevisions
+;                  |                               4 = Error setting $iEditDuration
+;                  |                               8 = Error setting $bApplyUserData
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Document Properties were successfully Reset.
@@ -1824,8 +1824,8 @@ EndFunc   ;==>_LOWriter_DocGenProp
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sAuthor
-;                  |                                2 = Error setting $tDateStruct
+;                  |                               1 = Error setting $sAuthor
+;                  |                               2 = Error setting $tDateStruct
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1885,8 +1885,8 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sModifiedBy
-;                  |                                2 = Error setting $tDateStruct
+;                  |                               1 = Error setting $sModifiedBy
+;                  |                               2 = Error setting $tDateStruct
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1947,8 +1947,8 @@ EndFunc   ;==>_LOWriter_DocGenPropModification
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sPrintedBy
-;                  |                                2 = Error setting $tDateStruct
+;                  |                               1 = Error setting $sPrintedBy
+;                  |                               2 = Error setting $tDateStruct
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2013,9 +2013,9 @@ EndFunc   ;==>_LOWriter_DocGenPropPrint
 ;                  @Error 3 @Extended 1 Return 0 = Error converting Computer path to Libre Office URL.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sTemplateName
-;                  |                                2 = Error setting $sTemplateURL
-;                  |                                4 = Error setting $tDateStruct
+;                  |                               1 = Error setting $sTemplateName
+;                  |                               2 = Error setting $sTemplateURL
+;                  |                               4 = Error setting $tDateStruct
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -2888,11 +2888,11 @@ EndFunc   ;==>_LOWriter_DocMinimize
 ;                  @Error 2 @Extended 3 Return 0 = Failed opening or connecting to document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHidden
-;                  |                                2 = Error setting $bReadOnly
-;                  |                                4 = Error setting $sPassword
-;                  |                                8 = Error setting $bLoadAsTemplate
-;                  |                                16 = Error setting $sFilterName
+;                  |                               1 = Error setting $bHidden
+;                  |                               2 = Error setting $bReadOnly
+;                  |                               4 = Error setting $sPassword
+;                  |                               8 = Error setting $bLoadAsTemplate
+;                  |                               16 = Error setting $sFilterName
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Successfully connected to requested Document without requested parameters. Returning Document's Object.
 ;                  @Error 0 @Extended 2 Return Object = Successfully opened requested Document with requested parameters. Returning Document's Object.
@@ -2996,10 +2996,10 @@ EndFunc   ;==>_LOWriter_DocOpen
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iX
-;                  |                                2 = Error setting $iY
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iHeight
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iHeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -3184,11 +3184,11 @@ EndFunc   ;==>_LOWriter_DocPrint
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.DocumentSettings" Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bGraphics
-;                  |                                2 = Error setting $bControls
-;                  |                                4 = Error setting $bDrawings
-;                  |                                8 = Error setting $bTables
-;                  |                                16 = Error setting $bHiddenText
+;                  |                               1 = Error setting $bGraphics
+;                  |                               2 = Error setting $bControls
+;                  |                               4 = Error setting $bDrawings
+;                  |                               8 = Error setting $bTables
+;                  |                               16 = Error setting $bHiddenText
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -3279,12 +3279,12 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving setting value of "CanSetPaperOrientation" from Printer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPaperOrient
-;                  |                                2 = Error setting $sPrinterName
-;                  |                                4 = Error setting $iCommentsMode
-;                  |                                8 = Error setting $bBrochure
-;                  |                                16 = Error setting $bBrochureRTL
-;                  |                                32 = Error setting $bReversed
+;                  |                               1 = Error setting $iPaperOrient
+;                  |                               2 = Error setting $sPrinterName
+;                  |                               4 = Error setting $iCommentsMode
+;                  |                               8 = Error setting $bBrochure
+;                  |                               16 = Error setting $bBrochureRTL
+;                  |                               32 = Error setting $bReversed
 ;                  --Printer Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Printer does not allow changing paper orientation.
 ;                  --Success--
@@ -3393,11 +3393,11 @@ EndFunc   ;==>_LOWriter_DocPrintMiscSettings
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.DocumentSettings" Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bBlackOnly
-;                  |                                2 = Error setting $bLeftOnly
-;                  |                                4 = Error setting $bRightOnly
-;                  |                                8 = Error setting $bBackground
-;                  |                                16 = Error setting $bEmptyPages
+;                  |                               1 = Error setting $bBlackOnly
+;                  |                               2 = Error setting $bLeftOnly
+;                  |                               4 = Error setting $bRightOnly
+;                  |                               8 = Error setting $bBackground
+;                  |                               16 = Error setting $bEmptyPages
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -3481,9 +3481,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.awt.Size" Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPaperFormat
-;                  |                                2 = Error setting $iPaperWidth
-;                  |                                4 = Error setting $iPaperHeight
+;                  |                               1 = Error setting $iPaperFormat
+;                  |                               2 = Error setting $iPaperWidth
+;                  |                               4 = Error setting $iPaperHeight
 ;                  --Printer Related Errors--
 ;                  @Error 6 @Extended 1 Return 0 = Printer doesn't allow paper format to be set.
 ;                  @Error 6 @Extended 2 Return 0 = Printer doesn't allow paper size to be set.

@@ -76,8 +76,8 @@
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -201,11 +201,11 @@ EndFunc   ;==>_LOCalc_PageStyleBorderColor
 ;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -544,14 +544,14 @@ EndFunc   ;==>_LOCalc_PageStyleExists
 ;                  @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFooterOn
-;                  |                                2 = Error setting $bSameLeftRight
-;                  |                                4 = Error setting $bSameOnFirst
-;                  |                                8 = Error setting $iLeftMargin
-;                  |                                16 = Error setting $iRightMargin
-;                  |                                32 = Error setting $iSpacing
-;                  |                                64 = Error setting $iHeight
-;                  |                                128 = Error setting $bAutoHeight
+;                  |                               1 = Error setting $bFooterOn
+;                  |                               2 = Error setting $bSameLeftRight
+;                  |                               4 = Error setting $bSameOnFirst
+;                  |                               8 = Error setting $iLeftMargin
+;                  |                               16 = Error setting $iRightMargin
+;                  |                               32 = Error setting $iSpacing
+;                  |                               64 = Error setting $iHeight
+;                  |                               128 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -657,8 +657,8 @@ EndFunc   ;==>_LOCalc_PageStyleFooter
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -785,11 +785,11 @@ EndFunc   ;==>_LOCalc_PageStyleFooterBorderColor
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1143,10 +1143,10 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1278,14 +1278,14 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ;                  @Error 1 @Extended 10 Return 0 = $bAutoHeight not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHeaderOn
-;                  |                                2 = Error setting $bSameLeftRight
-;                  |                                4 = Error setting $bSameOnFirst
-;                  |                                8 = Error setting $iLeftMargin
-;                  |                                16 = Error setting $iRightMargin
-;                  |                                32= Error setting $iSpacing
-;                  |                                64 = Error setting $iHeight
-;                  |                                128 = Error setting $bAutoHeight
+;                  |                               1 = Error setting $bHeaderOn
+;                  |                               2 = Error setting $bSameLeftRight
+;                  |                               4 = Error setting $bSameOnFirst
+;                  |                               8 = Error setting $iLeftMargin
+;                  |                               16 = Error setting $iRightMargin
+;                  |                               32= Error setting $iSpacing
+;                  |                               64 = Error setting $iHeight
+;                  |                               128 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -1391,8 +1391,8 @@ EndFunc   ;==>_LOCalc_PageStyleHeader
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1519,11 +1519,11 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderBorderColor
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1877,10 +1877,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1970,11 +1970,11 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderShadow
 ;                  @Error 2 @Extended 1 Return 0 = Error creating Document Settings Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iLayout
-;                  |                                2 = Error setting $iNumFormat
-;                  |                                4 = Error setting $bTableAlignHori
-;                  |                                8 = Error setting $bTableAlignVert
-;                  |                                16 = Error setting $sPaperTray
+;                  |                               1 = Error setting $iLayout
+;                  |                               2 = Error setting $iNumFormat
+;                  |                               4 = Error setting $bTableAlignHori
+;                  |                               8 = Error setting $bTableAlignVert
+;                  |                               16 = Error setting $sPaperTray
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -2056,10 +2056,10 @@ EndFunc   ;==>_LOCalc_PageStyleLayout
 ;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iLeft
-;                  |                                2 = Error setting $iRight
-;                  |                                4 = Error setting $iTop
-;                  |                                8 = Error setting $iBottom
+;                  |                               1 = Error setting $iLeft
+;                  |                               2 = Error setting $iRight
+;                  |                               4 = Error setting $iTop
+;                  |                               8 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2132,8 +2132,8 @@ EndFunc   ;==>_LOCalc_PageStyleMargins
 ;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewParStyleName
-;                  |                                2 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewParStyleName
+;                  |                               2 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -2202,9 +2202,9 @@ EndFunc   ;==>_LOCalc_PageStyleOrganizer
 ;                  @Error 1 @Extended 5 Return 0 = $bLandscape not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iHeight
-;                  |                                4 = Error setting $bLandscape
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iHeight
+;                  |                               4 = Error setting $bLandscape
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -2399,10 +2399,10 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2484,9 +2484,9 @@ EndFunc   ;==>_LOCalc_PageStyleShadow
 ;                  @Error 1 @Extended 5 Return 0 = $iFirstPage not an Integer, less than 0 or greater than 9999.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bTop2Bottom
-;                  |                                2 = Error setting $bFirstPageNum
-;                  |                                4 = Error setting $iFirstPage
+;                  |                               1 = Error setting $bTop2Bottom
+;                  |                               2 = Error setting $bFirstPageNum
+;                  |                               4 = Error setting $iFirstPage
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -2562,14 +2562,14 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPageOrder
 ;                  @Error 1 @Extended 10 Return 0 = $bZeroValues not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bHeaders
-;                  |                                2 = Error setting $bGrid
-;                  |                                4 = Error setting $bComments
-;                  |                                8 = Error setting $bObjectsOrImages
-;                  |                                16 = Error setting $bCharts
-;                  |                                32 = Error setting $bDrawing
-;                  |                                64 = Error setting $bFormulas
-;                  |                                128 = Error setting $bZeroValues
+;                  |                               1 = Error setting $bHeaders
+;                  |                               2 = Error setting $bGrid
+;                  |                               4 = Error setting $bComments
+;                  |                               8 = Error setting $bObjectsOrImages
+;                  |                               16 = Error setting $bCharts
+;                  |                               32 = Error setting $bDrawing
+;                  |                               64 = Error setting $bFormulas
+;                  |                               128 = Error setting $bZeroValues
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -2668,11 +2668,11 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ;                  @Error 1 @Extended 7 Return 0 = Current mode set to $LOC_SCALE_FIT_PAGES, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iMode
-;                  |                                2 = Error setting $iVariable1 for mode $LOC_SCALE_REDUCE_ENLARGE
-;                  |                                4 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
-;                  |                                8 = Error setting $iVariable2 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
-;                  |                                16 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_PAGES
+;                  |                               1 = Error setting $iMode
+;                  |                               2 = Error setting $iVariable1 for mode $LOC_SCALE_REDUCE_ENLARGE
+;                  |                               4 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
+;                  |                               8 = Error setting $iVariable2 for mode $LOC_SCALE_FIT_WIDTH_HEIGHT
+;                  |                               16 = Error setting $iVariable1 for mode $LOC_SCALE_FIT_PAGES
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the current mode is equal to $LOC_SCALE_FIT_WIDTH_HEIGHT, there will be three elements, Elelemnt 1(0) will be the current mode, element 2(1) will be the Width value, and Element 3(2) will be the height value.

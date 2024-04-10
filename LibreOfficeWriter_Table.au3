@@ -147,10 +147,10 @@ EndFunc   ;==>_LOWriter_TableBorderColor
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving TableBorderDistances Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTop border distance
-;                  |                                2 = Error setting $iBottom border distance
-;                  |                                4 = Error setting $iLeft border distance
-;                  |                                8 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iTop border distance
+;                  |                               2 = Error setting $iBottom border distance
+;                  |                               4 = Error setting $iLeft border distance
+;                  |                               8 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -360,9 +360,9 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ;                  @Error 1 @Extended 6 Return 0 = $iPgNumOffSet not an Integer or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBreakType
-;                  |                                2 = Error setting $sPageStyle
-;                  |                                4 = Error setting $iPgNumOffSet
+;                  |                               1 = Error setting $iBreakType
+;                  |                               2 = Error setting $sPageStyle
+;                  |                               4 = Error setting $iPgNumOffSet
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -428,8 +428,8 @@ EndFunc   ;==>_LOWriter_TableBreak
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1307,10 +1307,10 @@ EndFunc   ;==>_LOWriter_TableInsert
 ;                  @Error 3 @Extended 3 Return 0 = Unable to set Right Margin with orientation set to other than $LOW_ORIENT_HORI_NONE(0) Or $LOW_ORIENT_HORI_LEFT(3).
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTopMargin
-;                  |                                2 = Error setting $iBottomMargin
-;                  |                                4 = Error setting $iLeftMargin
-;                  |                                8 = Error setting $iRightMargin
+;                  |                               1 = Error setting $iTopMargin
+;                  |                               2 = Error setting $iBottomMargin
+;                  |                               4 = Error setting $iLeftMargin
+;                  |                               8 = Error setting $iRightMargin
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1396,13 +1396,13 @@ EndFunc   ;==>_LOWriter_TableMargin
 ;                  @Error 1 @Extended 11 Return 0 = $oTable not inserted in Document, cannot set $iHeaderRows.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTableAlign
-;                  |                                2 = Error setting $bKeepTogether
-;                  |                                4 = Error setting $sTableName -- Table with same name already present
-;                  |                                8 = Error setting $bSplit
-;                  |                                16 = Error setting $bSplitRows
-;                  |                                32 = Error setting $bRepeatHeading
-;                  |                                64 = Error setting $bRepeatHeading
+;                  |                               1 = Error setting $iTableAlign
+;                  |                               2 = Error setting $bKeepTogether
+;                  |                               4 = Error setting $sTableName -- Table with same name already present
+;                  |                               8 = Error setting $bSplit
+;                  |                               16 = Error setting $bSplitRows
+;                  |                               32 = Error setting $bRepeatHeading
+;                  |                               64 = Error setting $bRepeatHeading
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, If the Table is NOT already inserted into the document, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1506,8 +1506,8 @@ EndFunc   ;==>_LOWriter_TableProperties
 ;                  @Error 2 @Extended 1 Return 0 = Failure retrieving specified Row object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1704,9 +1704,9 @@ EndFunc   ;==>_LOWriter_TableRowInsert
 ;                  @Error 3 @Extended 1 Return 0 = Table called in $oTable not inserted into document already.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHeight
-;                  |                                2 = Error setting $bIsAutoHeight
-;                  |                                4 = Error setting $bIsSplitAllowed
+;                  |                               1 = Error setting $iHeight
+;                  |                               2 = Error setting $bIsAutoHeight
+;                  |                               4 = Error setting $bIsSplitAllowed
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1875,10 +1875,10 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1959,8 +1959,8 @@ EndFunc   ;==>_LOWriter_TableShadow
 ;                  @Error 3 @Extended 3 Return 0 = Unable to set $iRelativeWidth with orientation set to $LOW_ORIENT_HORI_FULL(6).
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iRelativeWidth
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iRelativeWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters, the third element is a Boolean, If True, the relative width is used, else false means "plain" Width is used.

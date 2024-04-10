@@ -342,8 +342,8 @@ EndFunc   ;==>_LOCalc_RangeColumnInsert
 ;                  @Error 1 @Extended 3 Return 0 = $bStartOfPageBreak not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bManualPageBreak
-;                  |                                2 = Error setting $bStartOfPageBreak
+;                  |                               1 = Error setting $bManualPageBreak
+;                  |                               2 = Error setting $bStartOfPageBreak
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -434,7 +434,7 @@ EndFunc   ;==>_LOCalc_RangeColumnsGetCount
 ;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bVisible
+;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning Column's current visibility setting.
@@ -478,8 +478,8 @@ EndFunc   ;==>_LOCalc_RangeColumnVisible
 ;                  @Error 1 @Extended 3 Return 0 = $iWidth not an Integer, less than 0 or greater than 34464.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bOptimal
-;                  |                                2 = Error setting $iWidth
+;                  |                               1 = Error setting $bOptimal
+;                  |                               2 = Error setting $iWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1063,14 +1063,14 @@ EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $oRange
-;                  |                                2 = Error setting $sName
-;                  |                                4 = Error setting $bColumnHeaders
-;                  |                                8 = Error setting $bTotalsRow
-;                  |                                16 = Error setting $bAddDeleteCells
-;                  |                                32 = Error setting $bKeepFormatting
-;                  |                                64 = Error setting $bDontSaveImport
-;                  |                                128 = Error setting $bAutoFilter
+;                  |                               1 = Error setting $oRange
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $bColumnHeaders
+;                  |                               8 = Error setting $bTotalsRow
+;                  |                               16 = Error setting $bAddDeleteCells
+;                  |                               32 = Error setting $bKeepFormatting
+;                  |                               64 = Error setting $bDontSaveImport
+;                  |                               128 = Error setting $bAutoFilter
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -2317,9 +2317,9 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $vRange
-;                  |                                2 = Error setting $sName
-;                  |                                4 = Error setting $iOptions
+;                  |                               1 = Error setting $vRange
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $iOptions
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -3211,8 +3211,8 @@ EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
 ;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer, less than 0 or greater than 34464.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bOptimal
-;                  |                                2 = Error setting $iHeight
+;                  |                               1 = Error setting $bOptimal
+;                  |                               2 = Error setting $iHeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -3312,8 +3312,8 @@ EndFunc   ;==>_LOCalc_RangeRowInsert
 ;                  @Error 1 @Extended 3 Return 0 = $bStartOfPageBreak not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bManualPageBreak
-;                  |                                2 = Error setting $bStartOfPageBreak
+;                  |                               1 = Error setting $bManualPageBreak
+;                  |                               2 = Error setting $bStartOfPageBreak
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -3404,7 +3404,7 @@ EndFunc   ;==>_LOCalc_RangeRowsGetCount
 ;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bVisible
+;                  |                               1 = Error setting $bVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning Row's current visibility setting.

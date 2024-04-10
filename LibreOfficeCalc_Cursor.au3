@@ -132,9 +132,9 @@ EndFunc   ;==>_LOCalc_SheetCursorMove
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iSuperScript
-;                  |                                2 = Error setting $iSubScript
-;                  |                                4 = Error setting $iRelativeSize.
+;                  |                               1 = Error setting $iSuperScript
+;                  |                               2 = Error setting $iSubScript
+;                  |                               4 = Error setting $iRelativeSize.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -198,8 +198,8 @@ EndFunc   ;==>_LOCalc_TextCursorCharPosition
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoKerning
-;                  |                                2 = Error setting $nKerning.
+;                  |                               1 = Error setting $bAutoKerning
+;                  |                               2 = Error setting $nKerning.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -263,9 +263,9 @@ EndFunc   ;==>_LOCalc_TextCursorCharSpacing
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iRelief
-;                  |                                2 = Error setting $bOutline
-;                  |                                4 = Error setting $bShadow
+;                  |                               1 = Error setting $iRelief
+;                  |                               2 = Error setting $bOutline
+;                  |                               4 = Error setting $bShadow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -331,10 +331,10 @@ EndFunc   ;==>_LOCalc_TextCursorEffect
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $sFontName
-;                  |                                2 = Error setting $nFontSize
-;                  |                                4 = Error setting $iPosture
-;                  |                                8 = Error setting $iWeight
+;                  |                               1 = Error setting $sFontName
+;                  |                               2 = Error setting $nFontSize
+;                  |                               4 = Error setting $iPosture
+;                  |                               8 = Error setting $iWeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -395,7 +395,7 @@ EndFunc   ;==>_LOCalc_TextCursorFont
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iFontColor
+;                  |                               1 = Error setting $iFontColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Font Color as an Integer.
@@ -679,10 +679,10 @@ EndFunc   ;==>_LOCalc_TextCursorMove
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iOverLineStyle
-;                  |                                4 = Error setting $bOLHasColor
-;                  |                                8 = Error setting $iOLColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iOverLineStyle
+;                  |                               4 = Error setting $bOLHasColor
+;                  |                               8 = Error setting $iOLColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -856,9 +856,9 @@ EndFunc   ;==>_LOCalc_TextCursorParObjSectionsGet
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $bStrikeOut
-;                  |                                4 = Error setting $iStrikeLineStyle
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $bStrikeOut
+;                  |                               4 = Error setting $iStrikeLineStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -921,10 +921,10 @@ EndFunc   ;==>_LOCalc_TextCursorStrikeOut
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor for Paragraph Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iUnderLineStyle
-;                  |                                4 = Error setting $bULHasColor
-;                  |                                8 = Error setting $iULColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iUnderLineStyle
+;                  |                               4 = Error setting $bULHasColor
+;                  |                               8 = Error setting $iULColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
