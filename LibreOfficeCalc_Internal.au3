@@ -1475,16 +1475,9 @@ EndFunc   ;==>__LOCalc_CellUnderLine
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;					The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an
-;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
-;						this function, and thus will over-write any Superscript settings.
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage. For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1566,15 +1559,10 @@ EndFunc   ;==>__LOCalc_CharPosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;					The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
-;						value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						max settable kerning  is -2.0 Pt to 928.8 Pt.
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;				   The acceptable values for $nKerning are from -2 Pt to  928.8 Pt.
+;				   The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning  is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -1614,8 +1602,8 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ; Name ..........: __LOCalc_CreateStruct
 ; Description ...: Creates a Struct.
 ; Syntax ........: __LOCalc_CreateStruct($sStructName)
-; Parameters ....: $sStructName	- a string value. Name of structure to create.
-; Return values .:Success: Structure.
+; Parameters ....: $sStructName - a string value. Name of structure to create.
+; Return values .: Success: Structure.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sStructName not a string
@@ -1652,7 +1640,7 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; Syntax ........: __LOCalc_FilterNameGet(ByRef $sDocSavePath[, $bIncludeExportFilters = False])
 ; Parameters ....: $sDocSavePath           - [in/out] a string value. Full path with extension.
 ;                  $bIncludeExportFilters  - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
-; Return values .:Success: String.
+; Return values .: Success: String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sDocSavePath is not a string.
@@ -1665,10 +1653,8 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Searches a predefined list of extensions stored in an array. Not all FilterNames are listed.
-;				   For finding your own FilterNames, see convertfilters.html found in
-;						L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide
-;				   Or See: "OOME_3_0",	"OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for
-;						listing all FilterNames, found on page 284 of the above book in the ODT format.
+;				   For finding your own FilterNames, see convertfilters.html found in L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide
+;				   Or See: "OOME_3_0",	"OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for listing all FilterNames, found on page 284 of the above book in the ODT format.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1760,7 +1746,7 @@ EndFunc   ;==>__LOCalc_FilterNameGet
 ; Description ...: Get what type of cursor the object is.
 ; Syntax ........: __LOCalc_Internal_CursorGetType(ByRef $oCursor)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-; Return values .:Success: Integer.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
@@ -2360,7 +2346,7 @@ EndFunc   ;==>__LOCalc_RangeAddressIsSame
 ; Syntax ........: __LOCalc_SetPropertyValue($sName, $vValue)
 ; Parameters ....: $sName               - a string value. Property name.
 ;                  $vValue              - a variant value. Property value.
-; Return values .:Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sName not a string
@@ -2417,23 +2403,23 @@ EndFunc   ;==>__LOCalc_SetPropertyValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept Column and Row Values, creating/ extending a selection of cells, etc. They will be specified below.
-;					#Cursor Movement Constants which accept Column and Row values:
-;						$LOC_SHEETCUR_COLLAPSE_TO_SIZE,
-;						$LOC_SHEETCUR_GOTO_OFFSET
-;					#Cursor Movements which accept Selecting Only:
-;						$LOC_SHEETCUR_GOTO_USED_AREA_START,
-;						$LOC_SHEETCUR_GOTO_USED_AREA_END
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
-;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
-;						$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
-;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
-;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
-;						$LOC_SHEETCUR_GOTO_START,
-;						$LOC_SHEETCUR_GOTO_END
-;					#Cursor Movements which accept only number of moves ($iCount):
-;						$LOC_SHEETCUR_GOTO_NEXT,
-;						$LOC_SHEETCUR_GOTO_PREV
+;				   #Cursor Movement Constants which accept Column and Row values:
+;					$LOC_SHEETCUR_COLLAPSE_TO_SIZE,
+;					$LOC_SHEETCUR_GOTO_OFFSET
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOC_SHEETCUR_GOTO_USED_AREA_START,
+;					$LOC_SHEETCUR_GOTO_USED_AREA_END
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
+;					$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
+;					$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
+;					$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
+;					$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
+;					$LOC_SHEETCUR_GOTO_START,
+;					$LOC_SHEETCUR_GOTO_END
+;				   #Cursor Movements which accept only number of moves ($iCount):
+;					$LOC_SHEETCUR_GOTO_NEXT,
+;					$LOC_SHEETCUR_GOTO_PREV
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2514,22 +2500,20 @@ EndFunc   ;==>__LOCalc_SheetCursorMove
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully.
-;				   +				Returns True if the full count of movements were successful, else false if none or only partially successful.
-;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept movement amounts and selecting (such as $LOC_TEXTCUR_GO_RIGHT 2, True) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
-;					 To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
-;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;						$LOC_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOC_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;					#Cursor Movements which accept Selecting Only:
-;						$LOC_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;						$LOC_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOC_TEXTCUR_COLLAPSE_TO_START,
-;						$LOC_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
+;				   To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
+;				   #Cursor Movement Constants which accept number of Moves and Selecting:
+;					$LOC_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;					$LOC_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOC_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;					$LOC_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOC_TEXTCUR_COLLAPSE_TO_START,
+;					$LOC_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2581,7 +2565,7 @@ EndFunc   ;==>__LOCalc_TextCursorMove
 ; Syntax ........: __LOCalc_UnitConvert($nValue, $sReturnType)
 ; Parameters ....: $nValue              - a general number value. The Number to be converted.
 ;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeCalc_Constants.au3.
-; Return values .:Success: Integer or Number.
+; Return values .: Success: Integer or Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $nValue is not a Number.

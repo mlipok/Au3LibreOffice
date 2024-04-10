@@ -98,16 +98,11 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle,
-;					_LOWriter_DirFrmtCharBorderPadding
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -175,15 +170,10 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle,
-;					_LOWriter_DirFrmtCharBorderColor
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -244,16 +234,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth,
-;					_LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
-;
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderWidth, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -316,16 +301,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor,
-;					_LOWriter_DirFrmtCharBorderPadding
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtCharBorderStyle, _LOWriter_DirFrmtCharBorderColor, _LOWriter_DirFrmtCharBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -391,14 +371,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -478,24 +455,15 @@ EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript
-;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
-;						line to be set in this function, and thus will over-write any Superscript settings.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
+;				   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -548,14 +516,11 @@ EndFunc   ;==>_LOWriter_DirFrmtCharPosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
-; Related .......: _LOWriter_DirFrmtClear,_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor,_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear,_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -635,17 +600,12 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;				   Color is set in Long Integer format.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -694,24 +654,15 @@ EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
 ;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;				   The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
-;						correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+;				   The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;				   Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -768,10 +719,7 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function causes the ViewCursor to select the data input in $oSelection, unless $oSelection is a ViewCursor object. After the formatting has been cleared the ViewCursor is returned to its previous position.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -861,18 +809,14 @@ EndFunc   ;==>_LOWriter_DirFrmtClear
 ;				   @Error 0 @Extended 0 Return 2 = Success. One or more parameter was set to Default, and rest of parameters were set to Null. Direct formatting has been successfully cleared.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting.
 ;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
 ;				   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOWriter_FontsList, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_FontsList, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -947,15 +891,11 @@ EndFunc   ;==>_LOWriter_DirFrmtFont
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Font Color and Transparency reset at the same time as the other, e.g., if you reset Font Color, it will reset Transparency.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1009,10 +949,7 @@ EndFunc   ;==>_LOWriter_DirFrmtFontColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Some of the returned style values may be blank if they are not set, particularly Numbering style.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1065,16 +1002,12 @@ EndFunc   ;==>_LOWriter_DirFrmtGetCurStyles
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Overline style, Color and $bHasColor all reset together.
 ;				   $bOLHasColor must be set to true in order to set the underline color.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1155,16 +1088,13 @@ EndFunc   ;==>_LOWriter_DirFrmtOverLine
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iHorAlign, $iLastLineAlign, and $bExpandSingleWord are all reset together.
 ;				   $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					 _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					 _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1242,14 +1172,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1308,16 +1234,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Border Width must be set first to be able to set Border Style and Color.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle,
-;					_LOWriter_DirFrmtParBorderPadding
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1359,7 +1280,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the Left Distance between the Border and Paragraph in Micrometers(uM).
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Distance between the Border and Paragraph in Micrometers(uM).
 ;                  $bClearDirFrmt       - [optional] a boolean value. Default is False. If True, clears ALL direct formatting of Border padding related settings.
-; Return values .: Integer or Array, see Remarks.
+; Return values .: Success: Integer or Array, see Remarks.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
@@ -1384,15 +1305,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle,
-;					_LOWriter_DirFrmtParBorderColor
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1451,15 +1367,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Border Width must be set first to be able to set Border Style and Color.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth,
-;					_LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet,  _LOWriter_DirFrmtParBorderWidth, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1525,17 +1437,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call $bConnectBorder Parameter with Default keyword to clear direct formatting for that setting.
 ;				   To "Turn Off" Borders, set them to 0
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor,
-;					_LOWriter_DirFrmtParBorderPadding
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_DirFrmtParBorderStyle, _LOWriter_DirFrmtParBorderColor, _LOWriter_DirFrmtParBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1624,20 +1531,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
-;					When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM
-;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
-;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
-;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1700,14 +1599,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   $bAutoHyphen needs to be set to True for the rest of the settings to be activated, but they will be still successfully be set regardless.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1762,15 +1658,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1830,15 +1722,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParIndent
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iOutline, $bParLineCount, and $iLineCountVal all are reset together.
 ;				   In LibreOffice User Interface (UI), there are two options available when applying direct formatting, "Restart numbering at this paragraph", and "start value", these are too glitchy to make available, I am able to set "Restart numbering at this paragraph" to True, but I cannot set it to false, and I am unable to clear either setting once applied, so for those reasons I am not including it in this UDF.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1916,16 +1805,13 @@ EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Clearing directly formatted page breaks may fail, If the cursor selection contains more than one paragraph that has more than one type of page break, it may fail to literally  reset it to the paragraph style's original settings even though it returns a success, you will need to reset each paragraph one at a time if this is the case.
 ;				   Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
 ;				   LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
-; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1991,16 +1877,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
-;					_LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
-;
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2067,7 +1948,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $iAbovePar, $iBelowPar, and $bAddSpace are all reset together, $iLineSpace Mode / Height also reset together.
@@ -2169,12 +2050,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete,
-;					_LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
-;
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2249,13 +2125,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ;				   @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different
-;						settings could be selected at once, which would result in a return of 0, false, null, etc.
-; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Remarks .......: Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+; Related .......: _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2311,7 +2182,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a $iTabStop with Default keyword to clear all direct formatting created TabStops.
@@ -2319,12 +2190,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;				   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
 ;				   Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;				   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate,
-;					_LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopCreate, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2381,15 +2247,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Resetting Orphan or Widow will reset $bParSplit to False if it was set to True.
 ;				   If you do not set ParSplit to True, the rest of the settings will still show to have been set, but will not become active until $bParSplit is set to true.
-; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2459,15 +2322,12 @@ EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. $bStrikeout and $iStrikeLineStyle are reset together.
 ;				   Strikeout converted to single line in Ms word document format.
-; Related .......:_LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2535,16 +2395,12 @@ EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Direct formatting is, just as the name indicates, directly applying settings to a selection of text, it is messy to deal with both by proxy (such as by AutoIt automation) and directly in the document, and is generally not recommended to use. Character and Paragraph styles are generally recommended instead.
-; 				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
+;				   Retrieving current settings in any Direct formatting functions may be inaccurate as multiple different settings could be selected at once, which would result in a return of 0, false, null, etc.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call a Parameter with Default keyword to clear direct formatting for that setting. Underline style, Color and $bHasColor all reset together.
 ;				   $bULHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_ParObjSectionsGet
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DirFrmtClear, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

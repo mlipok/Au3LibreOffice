@@ -66,18 +66,17 @@
 ; Author ........: mLipok
 ; Modified ......: donnyh13 - Added a clear UserFunction without error option. Also added parameters option.
 ; Remarks .......: The first parameter passed to the User function will always be the COM Error object. See below.
-;						Every COM Error will be passed to that function. The user can then read the following properties. (As
-;							Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the
-;							UserFunction. For Example MyFunc($oMyError)
-;							$oMyError.number The Windows HRESULT value from a COM call
-;							$oMyError.windescription The FormatWinError() text derived from .number
-;							$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
-;							$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;							$oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
-;							$oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
-;							$oMyError.lastdllerror The number returned from GetLastError()
-;							$oMyError.scriptline The script line on which the error was generated
-;				    		NOTE: Not all properties will necessarily contain data, some will be blank.
+;				   Every COM Error will be passed to that function. The user can then read the following properties. (As Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the UserFunction.
+;				   For Example MyFunc($oMyError)
+;					$oMyError.number The Windows HRESULT value from a COM call
+;					$oMyError.windescription The FormatWinError() text derived from .number
+;					$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
+;					$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
+;					$oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
+;					$oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
+;					$oMyError.lastdllerror The number returned from GetLastError()
+;					$oMyError.scriptline The script line on which the error was generated
+;				    NOTE: Not all properties will necessarily contain data, some will be blank.
 ;				   If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
 ;				   If called with Default keyword, the current UserFunction, if set, will be returned.
 ;				   If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
@@ -434,10 +433,8 @@ EndFunc   ;==>_LOCalc_ConvertColorToLong
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To skip a parameter, set it to Null.
-;				   If you are converting to Inches, place the Micrometers in $nInchOut, if
-;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.  A
-;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
-;					measurement parameter.
+;				   If you are converting to Inches, place the Micrometers in $nInchOut, if converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.
+;				   A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -504,9 +501,9 @@ EndFunc   ;==>_LOCalc_ConvertFromMicrometer
 ;				   @Error 0 @Extended 4 Return Integer. Converted Printer's Points to Micrometers.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null. If you are converting from Inches, call inches in $nInchIn, if
-;					converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set. A Micrometer is 1000th of a
-;					centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
+; Remarks .......: To skip a parameter, set it to Null.
+;				   If you are converting from Inches, call inches in $nInchIn, if converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set.
+;				   A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOCalc_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1110,7 +1107,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetStandard
 ; Syntax ........: _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to retrieve the string for.
-; Return values .:Success: String
+; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1162,14 +1159,12 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve NumberFormats Object.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Format Keys.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting.
-;				   +						Column One (Array[0][0]) will contain the Format Key integer,
-;				   +						Column two (Array[0][1]) will contain the Format Key String,
-;				   +						If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else false.
-;				   +						@Extended is set to the number of Keys returned.
+;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+;				   Column two (Array[0][1]) will contain the Format Key String,
+;				   If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else false.
 ; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetString, _LOCalc_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
@@ -1238,12 +1233,8 @@ EndFunc   ;==>_LOCalc_FormatKeyList
 ;				   @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are
-;					allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found
-;					in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering,
-;					Basic Programmer's Guide; Page 74
-;					The user generally should not even need this function, as I have endeavored to convert any URLs to the
-;						appropriate computer path format and any input computer paths to a Libre Office URL.
+; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering, Basic Programmer's Guide; Page 74
+;				   The user generally should not even need this function, as I have endeavored to convert any URLs to the appropriate computer path format and any input computer paths to a Libre Office URL.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1401,7 +1392,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorCreate
 ;				   @Error 1 @Extended 10 Return 0 = $bStyles not a Boolean.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: When setting $bRegExp or $bWildcards to True, if any of following three are set to True, they will be set to False: $bSimilarity(From the Similarity function), $bRegExp or $bWildcards.
@@ -1497,7 +1488,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorModify
 ;				   @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1563,7 +1554,7 @@ EndFunc   ;==>_LOCalc_SearchDescriptorSimilarityModify
 ;                  $iDataType           - [optional] an integer value (0-2). Default is $LOC_SORT_DATA_TYPE_AUTO. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
 ;                  $bAscending          - [optional] a boolean value. Default is True. If True, data will be sorted into ascending order.
 ;                  $bCaseSensitive      - [optional] a boolean value. Default is False. If True, sort will be case sensitive.
-; Return values .:  Success: Struct
+; Return values .: Success: Struct
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $iIndex not an Integer, or less than 0.

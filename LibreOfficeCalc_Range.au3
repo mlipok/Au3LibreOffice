@@ -1951,7 +1951,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ;				   If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;				   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;				   Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell  that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
-;					Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.
+;				   [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
 ; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2164,7 +2164,7 @@ EndFunc   ;==>_LOCalc_RangeNamedDelete
 ; Description ...: Retrieve an array of Named Range names for either the document or sheet.
 ; Syntax ........: _LOCalc_RangeNamedGetNames(ByRef $oObj)
 ; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-; Return values .:  Success: Array
+; Return values .: Success: Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oObj not an Object.
@@ -2329,7 +2329,7 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ;				   If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;				   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;				   Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
-;					Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.
+;				   [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.]
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   When retrieving the settings, $vRange will be in a String format, either being a formula or Range Address String, i.e. $Sheet1.$A$1:$C$14.

@@ -347,9 +347,7 @@ EndFunc   ;==>_LOWriter_FrameAreaGradient
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_FrameBorderWidth,
-;					_LOWriter_FrameBorderStyle, _LOWriter_FrameBorderPadding
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_FrameBorderWidth, _LOWriter_FrameBorderStyle, _LOWriter_FrameBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -403,9 +401,7 @@ EndFunc   ;==>_LOWriter_FrameBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_FrameBorderWidth,
-;					_LOWriter_FrameBorderStyle, _LOWriter_FrameBorderColor
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer,  _LOWriter_FrameBorderWidth, _LOWriter_FrameBorderStyle, _LOWriter_FrameBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -493,8 +489,7 @@ EndFunc   ;==>_LOWriter_FrameBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_FrameBorderWidth, _LOWriter_FrameBorderColor, _LOWriter_FrameBorderPadding
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameBorderWidth, _LOWriter_FrameBorderColor, _LOWriter_FrameBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -544,11 +539,9 @@ EndFunc   ;==>_LOWriter_FrameBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FrameBorderStyle,
-;					_LOWriter_FrameBorderColor, _LOWriter_FrameBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FrameBorderStyle, _LOWriter_FrameBorderColor, _LOWriter_FrameBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -606,10 +599,8 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -694,7 +685,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -908,10 +899,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSize
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
-;					_LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -968,8 +956,7 @@ EndFunc   ;==>_LOWriter_FrameCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor,
-;					_LOWriter_CursorMove _LOWriter_DocInsertString
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_CursorMove _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1070,8 +1057,7 @@ EndFunc   ;==>_LOWriter_FrameGetAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_FrameDelete
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_FrameDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1171,7 +1157,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -1262,7 +1248,7 @@ EndFunc   ;==>_LOWriter_FrameHyperlink
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -1361,7 +1347,7 @@ EndFunc   ;==>_LOWriter_FrameOptions
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor
 ; Link ..........:
 ; Example .......: Yes
@@ -1429,8 +1415,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;				   @Error 0 @Extended ? Return Array. Returning Array of Frame names. @Extended set to number of Frame Names returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this
-;					function returns no results, or not the ones you expect, try setting $bSearchShapes to true.
+; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this function returns no results, or not the ones you expect, try setting $bSearchShapes to true.
 ; Related .......: _LOWriter_FrameGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -1605,8 +1590,7 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   If transparency is set, it can cause strange values to be displayed for Background color.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1855,11 +1839,9 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong,  _LOWriter_FrameStyleBorderWidth, _LOWriter_FrameStyleBorderStyle,
-;					_LOWriter_FrameStyleBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_FrameStyleBorderWidth, _LOWriter_FrameStyleBorderStyle, _LOWriter_FrameStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1914,10 +1896,8 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer,  _LOWriter_FrameStyleBorderWidth, _LOWriter_FrameStyleBorderStyle,
-;					_LOWriter_FrameStyleBorderColor
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FrameStyleBorderWidth, _LOWriter_FrameStyleBorderStyle, _LOWriter_FrameStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2005,10 +1985,9 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameStyleBorderWidth,
-;					_LOWriter_FrameStyleBorderColor, _LOWriter_FrameStyleBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_FrameStyleBorderWidth, _LOWriter_FrameStyleBorderColor, _LOWriter_FrameStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2062,9 +2041,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_FrameStyleBorderStyle, _LOWriter_FrameStyleBorderColor,
-;					_LOWriter_FrameStyleBorderPadding
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_FrameStyleBorderStyle, _LOWriter_FrameStyleBorderColor, _LOWriter_FrameStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2125,8 +2102,7 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2843,13 +2819,12 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 0 = Success. No Frame Styles found according to parameters.
 ;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Frame Styles matching the called parameters. @Extended contains the count of results returned.
-;				   +		If only a Document object is called, all available Frame styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Frame Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Frame Styles are returned.
-;				   +		If Both are true then only User-Created Frame styles that are applied are returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If only a Document object is called, all available Frame styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Frame Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied Frame Styles are returned.
+;				   If Both are true then only User-Created Frame styles that are applied are returned.
 ; Related .......: _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3212,70 +3187,70 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					$iHorRelation has varying acceptable values, depending on the current Anchor position and also the current
-;							$iHorAlign setting. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;						$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;					$iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_ROW(-1),
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;							$LOW_RELATIVE_CHARACTER (2),
-;						$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;					The behavior of each Relation constant is described below.
-;							$LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
-;							$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH for Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH_TEXT for Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
-;							$LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
-;								[$LOW_RELATIVE_CHARACTER for Vertical relation:] the frame is positioned considering the vertical space used by the character.
-;							$LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;							$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
-;							$LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
-;								[$LOW_RELATIVE_PAGE for Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
-;							$LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;								[$LOW_RELATIVE_PAGE_PRINT for Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
-;							$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
+;				   The Following is a list of acceptable values per anchor position.
+;					$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0),
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;					$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0),
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_CHARACTER (2),
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;				   $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
+;					$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_ROW(-1),
+;						$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;						$LOW_RELATIVE_CHARACTER (2),
+;					$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_CHARACTER (2),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;						$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;				   The behavior of each Relation constant is described below.
+;						$LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
+;						$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
+;						$LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;						$LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
+;						$LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
+;						$LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
+;						$LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;						$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
+;						$LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
+;						$LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
+;						$LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;						$LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
+;						$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3462,12 +3437,9 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for
-;						some reason the applicable setting values are not updated, so this function may return incorrect
-;						values for "Keep Ratio".
-;					When Keep Ratio is set to True, setting Width/Height values via this function will not be kept in ratio.
-; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for some reason the applicable setting values are not updated, so this function may return incorrect values for "Keep Ratio".
+;				   When Keep Ratio is set to True, setting Width/Height values via this function will not be kept in ratio.
+; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3699,7 +3671,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrap
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					This function may indicate the settings were set successfully when they haven't been if the appropriate wrap type, anchor type etc. hasn't been set before hand.
+;				   This function may indicate the settings were set successfully when they haven't been if the appropriate wrap type, anchor type etc. hasn't been set before hand.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -3964,69 +3936,69 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					$iHorRelation has varying acceptable values, depending on the current Anchor position and also the current
-;							$iHorAlign setting. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;						$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;					$iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_ROW(-1),
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;							$LOW_RELATIVE_CHARACTER (2),
-;						$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;					The behavior of each Relation constant is described below.
-;							$LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
-;							$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH for Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH_TEXT for Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
-;							$LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
-;								[$LOW_RELATIVE_CHARACTER for Vertical relation:] the frame is positioned considering the vertical space used by the character.
-;							$LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;							$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
-;							$LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
-;								[$LOW_RELATIVE_PAGE for Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
-;							$LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;								[$LOW_RELATIVE_PAGE_PRINT for Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
-;							$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
+;				   $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current
+;						$iHorAlign setting. The Following is a list of acceptable values per anchor position.
+;					$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0),
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;					$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0),
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_CHARACTER (2),
+;						$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;						$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;				   $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
+;					$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_ROW(-1),
+;						$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;						$LOW_RELATIVE_CHARACTER (2),
+;					$LOW_ANCHOR_AT_PAGE(2) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;					$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;						$LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;						$LOW_RELATIVE_CHARACTER (2),
+;						$LOW_RELATIVE_PAGE (7),
+;						$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;						$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;				   The behavior of each Relation constant is described below.
+;						$LOW_RELATIVE_ROW(-1), This option will position the frame considering the height of the row where the anchor is placed.
+;						$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the frame is positioned considering the whole width available for the paragraph, including indent spaces.
+;						$LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the frame is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the frame considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;						$LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the frame is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;						$LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the frame is positioned considering the height of the paragraph where the anchor is placed.
+;						$LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the frame is positioned considering the horizontal space used by the character.
+;						$LOW_RELATIVE_CHARACTER [For Vertical relation:] the frame is positioned considering the vertical space used by the character.
+;						$LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the frame is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;						$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the frame is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;						$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the frame is positioned considering the width of the indent space available to the left of the paragraph.
+;						$LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the frame is positioned considering the width of the indent space available to the right of the paragraph.
+;						$LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the frame is positioned considering the whole width of the page, from the left to the right page borders.
+;						$LOW_RELATIVE_PAGE [For Vertical relation:], the frame is positioned considering the full page height, from top to bottom page borders.
+;						$LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the frame is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;						$LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the frame is positioned considering the full height available for text, from top to bottom margins.
+;						$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the frame is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -4211,11 +4183,8 @@ EndFunc   ;==>_LOWriter_FrameTypePosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for
-;						some reason the applicable setting values are not updated, so this function may return incorrect values
-;						for "Keep Ratio".
-; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName,
-;				   _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+;				   This function can successfully set "Keep Ratio" however when the user changes this setting in the UI, for some reason the applicable setting values are not updated, so this function may return incorrect values for "Keep Ratio".
+; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

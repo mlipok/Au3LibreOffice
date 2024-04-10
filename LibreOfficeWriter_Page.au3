@@ -346,9 +346,7 @@ EndFunc   ;==>_LOWriter_PageStyleAreaGradient
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong,  _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle,
-;					_LOWriter_PageStyleBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -404,9 +402,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle,
-;					_LOWriter_PageStyleBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -496,8 +492,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidth,
-;					_LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleBorderWidth, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -551,9 +546,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor,
-;					_LOWriter_PageStyleBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleBorderStyle, _LOWriter_PageStyleBorderColor, _LOWriter_PageStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -614,8 +607,7 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1076,8 +1068,7 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1444,9 +1435,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaGradient
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle,
-;					_LOWriter_PageStyleFooterBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1505,9 +1494,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle,
-;					_LOWriter_PageStyleFooterBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1597,8 +1584,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleFooterBorderWidth,
-;					_LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleFooterBorderWidth, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1652,9 +1638,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor,
-;					_LOWriter_PageStyleFooterBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleFooterBorderStyle, _LOWriter_PageStyleFooterBorderColor, _LOWriter_PageStyleFooterBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1983,8 +1967,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2057,8 +2040,7 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,	_LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2206,8 +2188,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2574,9 +2555,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaGradient
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle,
-;					_LOWriter_PageStyleHeaderBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2635,9 +2614,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle,
-;					_LOWriter_PageStyleHeaderBorderColor
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2727,8 +2704,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleHeaderBorderWidth,
-;					_LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_PageStyleHeaderBorderWidth, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2782,9 +2758,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set Width to 0.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor,
-;					_LOWriter_PageStyleHeaderBorderPadding
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_PageStyleHeaderBorderStyle, _LOWriter_PageStyleHeaderBorderColor, _LOWriter_PageStyleHeaderBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2961,7 +2935,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
 ;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
-; Return values .:Success: Integer or Array.
+; Return values .: Success: Integer or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -3251,8 +3225,7 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3421,8 +3394,7 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_PageStyleCreate, _LOWriter_PageStyleGetObj,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3497,8 +3469,7 @@ EndFunc   ;==>_LOWriter_PageStylePaperFormat
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_PageStylesGetNames
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3534,16 +3505,15 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
-;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
-;				   +		If Only a Document object is input, all available Page styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
-;				   +		If Both are true then only User-Created Page styles that are applied are returned.
+;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: One Page style has two separate names, Default Page Style is also internally called "Standard"  Either
-;					name works when setting a Page Style, but on certain functions that return a Page Style Name, you may see
-;					the alternative name.
+; Remarks .......: If Only a Document object is input, all available Page styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
+;				   If Both are true then only User-Created Page styles that are applied are returned.
+;				   One Page style has two separate names, Default Page Style is also internally called "Standard".
+;				   Either name works when setting a Page Style, but on certain functions that return a Page Style Name, you may see the alternative name.
 ; Related .......: _LOWriter_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes

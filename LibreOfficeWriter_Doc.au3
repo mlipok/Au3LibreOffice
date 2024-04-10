@@ -412,14 +412,12 @@ EndFunc   ;==>_LOWriter_DocBookmarksList
 ;				   --Success--
 ;				   @Error 0 @Extended 1 Return String = Success, Document was successfully closed, and was saved to the returned file Path.
 ;				   @Error 0 @Extended 2 Return String = Success, Document was successfully closed, document's changes were saved to its existing location.
-;				   @Error 0 @Extended 3 Return String = Success, Document was successfully closed, document either had no changes to save, or $bSaveChanges was set to False.
-;				   +			If document had a save location, or if document was saved to a location, it is returned, else an empty string is returned.
+;				   @Error 0 @Extended 3 Return String = Success, Document was successfully closed, document either had no changes to save, or $bSaveChanges was set to False. If document had a save location, or if document was saved to a location, it is returned, else an empty string is returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
-;					If $sSaveName is undefined, it is saved as an .odt document to the desktop, named
-;					Year-Month-Day_Hour-Minute-Second.odt. $sSaveName may be a name only without an extension, in which case the file will be saved
-;					in .odt format. Or you may define your own format by including an extension, such as "Test.docx"
+;				   If $sSaveName is undefined, it is saved as an .odt document to the desktop, named Year-Month-Day_Hour-Minute-Second.odt.
+;				   $sSaveName may be a name only without an extension, in which case the file will be saved in .odt format. Or you may define your own format by including an extension, such as "Test.docx"
 ; Related .......: _LOWriter_DocOpen, _LOWriter_DocConnect, _LOWriter_DocCreate, _LOWriter_DocSaveAs, _LOWriter_DocSave
 ; Link ..........:
 ; Example .......: Yes
@@ -742,9 +740,7 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function temporarily moves the ViewCursor to and selects the Text, and then attempts to restore the ViewCursor to its former position.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					 _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					 _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_DocConvertTableToText
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -837,8 +833,8 @@ EndFunc   ;==>_LOWriter_DocConvertTextToTable
 ; Name ..........: _LOWriter_DocCreate
 ; Description ...: Open a new Libre Office Writer Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOWriter_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: $bForceNew		- [optional] a boolean value. Default is True. If True, force opening a new Writer Document instead of checking for a usable blank.
-;				   $bHidden			- [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Parameters ....: $bForceNew       - [optional] a boolean value. Default is True. If True, force opening a new Writer Document instead of checking for a usable blank.
+;                  $bHidden         - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -926,14 +922,9 @@ EndFunc   ;==>_LOWriter_DocCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The cursor Created by this function in a text document, is used for inserting text, reading text, etc.
-;					If you set $bCreateAtEnd to False, the new cursor is created at the beginning of the document, True creates
-;					the cursor at the very end of the document. Setting $bCreateAtViewCursor to True will create a Textcursor at
-;					the current ViewCursor position.
-; +
-;						There are two types of cursors in Word documents. The one you see, called the "ViewCursor", and one
-;					you do not see, called a "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing
-;					a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor
-;					used for inserting text etc., into a Writer document. You can have multiple "TextCursors" per document.
+;				   If you set $bCreateAtEnd to False, the new cursor is created at the beginning of the document, True creates the cursor at the very end of the document.
+;				   Setting $bCreateAtViewCursor to True will create a Textcursor at the current ViewCursor position.
+;				   There are two types of cursors in Word documents. The one you see, called the "ViewCursor", and one you do not see, called a "TextCursor". A "ViewCursor" is the blinking cursor you see when you are editing a Word document, there is only one per document. A "TextCursor" on the other hand, is an invisible cursor used for inserting text etc., into a Writer document. You can have multiple "TextCursors" per document.
 ; Related .......: _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
@@ -1137,11 +1128,11 @@ EndFunc   ;==>_LOWriter_DocEnumPrinters
 ;				   @Error 6 @Extended 1 Return 0 = No default printer found.
 ;				   --Success--
 ;				   @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
-;				   @Error 0 @Extended 2 Return String = Returning the default printer name. See remarks.
+;				   @Error 0 @Extended 2 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
 ; Author ........: jguinch (_PrintMgr_EnumPrinter)
 ; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
 ; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
-;				   @Extended is set to the number of results. If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
+;				   If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
 ;				   When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
 ; Related .......: _LOWriter_DocEnumPrinters
 ; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
@@ -1201,37 +1192,38 @@ EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Dispatch is essentially a simulation of the user performing an action, such as pressing Ctrl+A to select all, etc.
-; Dispatch Commands: uno:FullScreen -- Toggles full screen mode.
-;					 uno:ChangeCaseToLower -- Changes all selected text to lower case.  Text must be selected with the ViewCursor.
-;					 uno:ChangeCaseToUpper -- Changes all selected text to upper case.  Text must be selected with the ViewCursor.
-;					 uno:ChangeCaseRotateCase -- Cycles the Case (Title Case, Sentence case, UPPERCASE, lowercase). Text must be selected with the ViewCursor.
-;					 uno:ChangeCaseToSentenceCase -- Changes the sentence to Sentence case where the Viewcursor is currently positioned or has selected.
-;					 uno:ChangeCaseToTitleCase -- Changes the selected text to Title case. Text must be selected with the ViewCursor.
-;					 uno:ChangeCaseToToggleCase -- Toggles the selected text's case (A becomes a, b becomes B, etc.).Text must be selected with the ViewCursor.
-;					 uno:UpdateAll -- Causes all non fixed Fields, Links, Indexes, Charts etc., to be updated.
-;					 uno:UpdateFields -- Causes all Fields to be updated.
-;					 uno:UpdateAllIndexes -- Causes all Indexes to be updated.
-;					 uno:UpdateAllLinks -- Causes all Links to be updated.
-;					 uno:UpdateCharts -- Causes all Charts to be updated.
-;					 uno:Repaginate -- Update Page Formatting.
-;					 uno:ResetAttributes -- Removes all direct formatting from the selected text. Text must be selected with the ViewCursor.
-;					 uno:SwBackspace -- Simulates pressing the Backspace key.
-;					 uno:Delete -- Simulates pressing the Delete key.
-;					 uno:Paste -- Pastes the data out of the clipboard. Simulating Ctrl+V.
-;					 uno:PasteUnformatted -- Pastes the data out of the clipboard unformatted.
-;					 uno:PasteSpecial -- Simulates pasting with Ctrl+Shift+V, opens a dialog for selecting paste format.
-;					 uno:Copy -- Simulates Ctrl+C, copies selected data to the clipboard. Text must be selected with the ViewCursor.
-;					 uno:Cut -- Simulates Ctrl+X, cuts selected data, placing it into the clipboard. Text must be selected with the ViewCursor.
-;					 uno:SelectAll -- Simulates Ctrl+A being pressed at the ViewCursor location.
-;					 uno:Zoom50Percent -- Set the zoom level to 50%.
-;					 uno:Zoom75Percent -- Set the zoom level to 75%.
-;					 uno:Zoom100Percent -- Set the zoom level to 100%.
-;					 uno:Zoom150Percent -- Set the zoom level to 150%.
-;					 uno:Zoom200Percent -- Set the zoom level to 200%.
-;					 uno:ZoomMinus -- Decreases the zoom value to the next increment down.
-;					 uno:ZoomPlus -- Increases the zoom value to the next increment up.
-;					 uno:ZoomPageWidth -- Set zoom to fit page width.
-;					 uno:ZoomPage -- Set zoom to fit page.
+;				   Dispatch Commands:
+;					uno:FullScreen -- Toggles full screen mode.
+;					uno:ChangeCaseToLower -- Changes all selected text to lower case.  Text must be selected with the ViewCursor.
+;					uno:ChangeCaseToUpper -- Changes all selected text to upper case.  Text must be selected with the ViewCursor.
+;					uno:ChangeCaseRotateCase -- Cycles the Case (Title Case, Sentence case, UPPERCASE, lowercase). Text must be selected with the ViewCursor.
+;					uno:ChangeCaseToSentenceCase -- Changes the sentence to Sentence case where the Viewcursor is currently positioned or has selected.
+;					uno:ChangeCaseToTitleCase -- Changes the selected text to Title case. Text must be selected with the ViewCursor.
+;					uno:ChangeCaseToToggleCase -- Toggles the selected text's case (A becomes a, b becomes B, etc.).Text must be selected with the ViewCursor.
+;					uno:UpdateAll -- Causes all non fixed Fields, Links, Indexes, Charts etc., to be updated.
+;					uno:UpdateFields -- Causes all Fields to be updated.
+;					uno:UpdateAllIndexes -- Causes all Indexes to be updated.
+;					uno:UpdateAllLinks -- Causes all Links to be updated.
+;					uno:UpdateCharts -- Causes all Charts to be updated.
+;					uno:Repaginate -- Update Page Formatting.
+;					uno:ResetAttributes -- Removes all direct formatting from the selected text. Text must be selected with the ViewCursor.
+;					uno:SwBackspace -- Simulates pressing the Backspace key.
+;					uno:Delete -- Simulates pressing the Delete key.
+;					uno:Paste -- Pastes the data out of the clipboard. Simulating Ctrl+V.
+;					uno:PasteUnformatted -- Pastes the data out of the clipboard unformatted.
+;					uno:PasteSpecial -- Simulates pasting with Ctrl+Shift+V, opens a dialog for selecting paste format.
+;					uno:Copy -- Simulates Ctrl+C, copies selected data to the clipboard. Text must be selected with the ViewCursor.
+;					uno:Cut -- Simulates Ctrl+X, cuts selected data, placing it into the clipboard. Text must be selected with the ViewCursor.
+;					uno:SelectAll -- Simulates Ctrl+A being pressed at the ViewCursor location.
+;					uno:Zoom50Percent -- Set the zoom level to 50%.
+;					uno:Zoom75Percent -- Set the zoom level to 75%.
+;					uno:Zoom100Percent -- Set the zoom level to 100%.
+;					uno:Zoom150Percent -- Set the zoom level to 150%.
+;					uno:Zoom200Percent -- Set the zoom level to 200%.
+;					uno:ZoomMinus -- Decreases the zoom value to the next increment down.
+;					uno:ZoomPlus -- Increases the zoom value to the next increment up.
+;					uno:ZoomPageWidth -- Set zoom to fit page width.
+;					uno:ZoomPage -- Set zoom to fit page.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
@@ -1376,13 +1368,7 @@ EndFunc   ;==>_LOWriter_DocExport
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Objects returned can be used in any of the functions accepting a Paragraph or Cursor Object etc., to modify their properties or even the text itself.
-; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext,
-;					_LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment,
-;					_LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation,
-;					_LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak,
-;					_LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace,
-;					_LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout,
-;					_LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1446,16 +1432,7 @@ EndFunc   ;==>_LOWriter_DocFindAll
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_SearchDescriptorCreate,
-;					_LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll,
-;					_LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment,
-;					_LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation,
-;					_LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak,
-;					_LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace,
-;					_LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout,
-;					_LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1566,20 +1543,9 @@ EndFunc   ;==>_LOWriter_DocFindAllInRange
 ;				   @Error 0 @Extended 1 Return Object = Success. Search was successful, returning the resulting Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: When a search is performed inside of a selection, the search may miss any footnotes/ Endnotes/ Frames
-;					contained in that selection as the text of these are counted as being located at the very end/beginning of
-;					a Document, thus if you are searching in the center of a document, the search will begin in the center,
-;					reach the end of the selection, and stop, never reaching the foot/Endnotes etc. If $bExhaustive is set to
-;					True, the search continues until the whole document has been searched, but, if the search has many
-;					hits, this could slow the search considerably. There is no use setting this to True in a full document
-;					search.
-; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange,
-;					_LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment,
-;					_LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation,
-;					_LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak,
-;					_LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace,
-;					_LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout,
-;					_LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Remarks .......: When a search is performed inside of a selection, the search may miss any footnotes/ Endnotes/ Frames contained in that selection as the text of these are counted as being located at the very end/beginning of a Document, thus if you are searching in the center of a document, the search will begin in the center, reach the end of the selection, and stop, never reaching the foot/Endnotes etc.
+;				   If $bExhaustive is set to True, the search continues until the whole document has been searched, but, if the search has many hits, this could slow the search considerably. There is no use setting this to True in a full document search.
+; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1783,6 +1749,12 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
+;				   Setting $bResetUserData to True resets several attributes at once, as follows:
+;				   + Author is set to $sNewAuthor parameter, ($sNewAuthor MUST be set to a string).
+;				   + CreationDate is set to the current date and time;
+;				   + ModifiedBy is cleared, ModificationDate is cleared;
+;				   + PrintedBy is cleared; PrintDate is cleared;
+;				   + EditingDuration is cleared; EditingCycles is set to 1.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2246,12 +2218,9 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ;				   @Error 0 @Extended 0 Return String = Success. The selected text in String format.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Libre Office documentation states that when used in Libre Basic, GetString is limited to 64kb's in size.
-;					I do not know if the same limitation applies to any outside use of GetString (such as through Autoit).
-;					Also, if there are multiple selections, the returned value will be an empty string ("").
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Remarks .......: Libre Office documentation states that when used in Libre Basic, GetString is limited to 64kb's in size. I do not know if the same limitation applies to any outside use of GetString (such as through Autoit).
+;				   If there are multiple selections, the returned value will be an empty string ("").
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2363,7 +2332,7 @@ EndFunc   ;==>_LOWriter_DocHasFrameName
 ; Syntax ........: _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sImageName          - a string value. The Image name to search for.
-; Return values .:  Success: Boolean
+; Return values .: Success: Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2577,8 +2546,8 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  $bInsertAtViewCursor - [optional] a boolean value. Default is False. If True, inserts the hyperlink at the ViewCursor's position. See Remarks.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If true, overwrites any data selected by the $oCursor.
 ; Return values .: Success: 1.
-;				    Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				    --Input Errors--
+;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object, and is not set to Default keyword.
 ;				   @Error 1 @Extended 3 Return 0 = $sLinkText not a String.
@@ -2586,20 +2555,18 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;				   @Error 1 @Extended 5 Return 0 = $bInsertAtViewCursor not a Boolean.
 ;				   @Error 1 @Extended 6 Return 0 = $oCursor is set to an Object variable, and $bInsertAtViewCursor is set to True. Change $oCursor to Default or set $bInsertAtViewCursor to False.
 ;				   @Error 1 @Extended 7 Return 0 = $oCursor is a TableCursor, and is not supported.
-;				    --Initialization Errors--
+;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to create Cursor Object.
 ;				   @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
-;				    --Processing Errors--
+;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Cursor type.
 ;				   @Error 3 @Extended 2 Return 0 = Current ViewCursor is in unknown data type or failed detecting what data type.
-;				    --Success--
+;				   --Success--
 ;				   @Error 0 @Extended 1 Return 1 = Success, hyperlink was successfully inserted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: You may call this function with an already existing cursor object, which will place the Link at the cursor's current position. You can also set $oCursor to Default keyword, and set $bInsertAtViewCursor to True. This will insert the link at the current ViewCursor position. Or you can set $oCursor to Default, and leave $bInsertAtViewCursor undeclared which will insert the Link at the very end of the document.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2676,9 +2643,7 @@ EndFunc   ;==>_LOWriter_DocHyperlinkInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2728,9 +2693,7 @@ EndFunc   ;==>_LOWriter_DocInsertControlChar
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3151,11 +3114,9 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
-;					$vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10.
-;					Default is "ALL". Must be in String format to accept more than just a single page number.
-;					i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
-; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings,
-;					_LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
+;				   $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
+;				   Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
+; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3335,7 +3296,7 @@ EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 ;				   |								8 = Error setting $bBrochure
 ;				   |								16 = Error setting $bBrochureRTL
 ;				   |								32 = Error setting $bReversed
-;				    --Printer Related Errors--
+;				   --Printer Related Errors--
 ;				   @Error 6 @Extended 1 Return 0 = Printer does not allow changing paper orientation.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
@@ -3534,7 +3495,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;				   |								1 = Error setting $iPaperFormat
 ;				   |								2 = Error setting $iPaperWidth
 ;				   |								4 = Error setting $iPaperHeight
-;				    --Printer Related Errors--
+;				   --Printer Related Errors--
 ;				   @Error 6 @Extended 1 Return 0 = Printer doesn't allow paper format to be set.
 ;				   @Error 6 @Extended 2 Return 0 = Printer doesn't allow paper size to be set.
 ;				   --Success--
@@ -3791,13 +3752,7 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment,
-;					_LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation,
-;					_LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak,
-;					_LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace,
-;					_LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout,
-;					_LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Related .......: _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAllInRange, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3870,41 +3825,15 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;				   @Error 0 @Extended ? Return 1 = Success. Search and Replace was successful, number of replacements returned in @Extended.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection,
-;						consequently I have had to create my own. This function uses the "FindAllInRange" function,
-;						so any errors with Find/Replace formatting causing deletions will cause problems here. As best
-;						as I can tell all options for find and replace should be available, Formatting, Paragraph styles
-;						etc. How I created this function to still accept Regular Expressions is I use Libre's FindAll
-;						command, modified by my FindAllInRange function. I then ran into another problem, as my next step
-;						was to use AutoIt's RegExpReplace function to perform the replacement, but some replacements don't
-;						work as expected. To Fix this I have created two versions of Regular Expression replacement, the
-;						first way is only implemented if $atReplaceFormat is skipped using an empty array. I use an
-;						ExecutionHelper to execute the Find and replace command, however this method doesn't accept formatting
-;						for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's
-;						RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new
-;						string to that result. However I have had to create a separate function to convert the ReplaceString
-;						to be compatible with AutoIt's Regular Expression formatting. A Backslash (\) must be doubled(\\) in
-;						order to be literally inserted, at the beginning of the conversion process all double Backslashes
-;						are replaced with a specific flag to aid in identifying commented and non-commented keywords
-;						(\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double
-;						Backslashes, this should not cause any issues, \n (new Paragraph) in L.O. RegExp. formatting is
-;						replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal, \t (Tab) in L.O.
-;						format is replaced with @Tab, and &(Find Result/BackReference) is replaced with $0 which means insert
-;						the entire found string at that position, To insert a regular "&" character, comment it with a
-;						Backslash, \&. As with LibreOffice, this function should still accept BackReferences ($0-9 or \0-9).
-;						However I have found certain problems with some of the expressions still not working, such as
-;						$ (end of paragraph mark) not replacing correctly because Autoit uses @CRLF for its newline endings, and
-;						Libre uses @CR for a new paragraph and @LF for a newline.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment,
-;					_LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation,
-;					_LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak,
-;					_LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace,
-;					_LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout,
-;					_LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
+; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection, consequently I have had to create my own. This function uses the "FindAllInRange" function, so any errors with Find/Replace formatting causing deletions will cause problems here. As best as I can tell all options for find and replace should be available, Formatting, Paragraph styles etc.
+;				   How I created this function to still accept Regular Expressions is I use Libre's FindAll command, modified by my FindAllInRange function. I then ran into another problem, as my next step was to use AutoIt's RegExpReplace function to perform the replacement, but some replacements don't work as expected. To Fix this I have created two versions of Regular Expression replacement, the first way is only implemented if $atReplaceFormat is skipped using an empty array. I use an ExecutionHelper to execute the Find and replace command, however this method doesn't accept formatting for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new string to that result. However I have had to create a separate function to convert the ReplaceString to be compatible with AutoIt's Regular Expression formatting.
+;				   + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
+;				   + \n (new Paragraph) in L.O. RegExp. formatting is replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal.
+;				   + \t (Tab) in L.O. format is replaced with @Tab.
+;				   + &(Find Result/BackReference) is replaced with $0 which means insert the entire found string at that position, To insert a regular "&" character, comment it with a Backslash, \&.
+;				   As with LibreOffice, this function should still accept BackReferences ($0-9 or \0-9).
+;				   I have found certain problems with some of the expressions still not working, such as $ (end of paragraph mark) not replacing correctly because Autoit uses @CRLF for its newline endings, and Libre uses @CR for a new paragraph and @LF for a newline.
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

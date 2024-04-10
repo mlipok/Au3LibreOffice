@@ -737,8 +737,7 @@ EndFunc
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters.
-;				   +								If the Libre Office version is below 4.0, the Array will contain 2 elements because $bHidden is not available.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 or 3 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 2 elements because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -949,15 +948,13 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Styles Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. No Cell Styles found according to parameters.
-;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the input parameters.
-;				   +		@Extended contains the count of results returned.
-;				   +		If Only a Document object is input, all available Cell styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Cell Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Cell Styles are returned.
-;				   +		If Both are true then only User-Created Cell styles that are applied are returned.
+;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the input parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If Only a Document object is input, all available Cell styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Cell Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied Cell Styles are returned.
+;				   If Both are true then only User-Created Cell styles that are applied are returned.
 ; Related .......: _LOCalc_CellStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1253,7 +1250,7 @@ EndFunc   ;==>_LOCalc_CellStyleTextProperties
 ;                  $iUnderLineStyle     - [optional] an integer value (0-18). Default is Null. The Underline line style, see constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bULHasColor         - [optional] a boolean value. Default is Null. If True, the underline is colored, must be set to true in order to set the underline color.
 ;                  $iULColor            - [optional] an integer value (-1-16777215). Default is Null. The color of the underline, set in Long integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_COLOR_OFF(-1) for automatic color mode.
-; Return values .:  Success: 1 or Array
+; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCellStyle not an Object.

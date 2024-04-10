@@ -2327,13 +2327,12 @@ EndFunc   ;==>_LOCalc_PageStyleSet
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
 ;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
-;				   +		If Only a Document object is input, all available Page styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
-;				   +		If Both are true then only User-Created Page styles that are applied are returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If Only a Document object is input, all available Page styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Page Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied Page Styles are returned.
+;				   If Both are true then only User-Created Page styles that are applied are returned.
 ; Related .......: _LOCalc_PageStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -2657,7 +2656,7 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ;                  $iMode               - [optional] an integer value (1-3). Default is Null. The Scaling mode when the spreadsheet is printed. See Constants $LOC_SCALE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iVariable1          - [optional] an integer value. Default is Null. The First Scale Value. See Remarks
 ;                  $iVariable2          - [optional] an integer value. Default is Null. The Second Scale Value. See Remarks
-; Return values .:  Success: 1 or Array.
+; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.

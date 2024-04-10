@@ -102,9 +102,8 @@
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_TableBorderWidth,
-;					_LOWriter_TableBorderStyle, _LOWriter_TableBorderPadding
+;				   Error values for Initialization and Processing, are passed from the internal border setting function.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_TableBorderWidth, _LOWriter_TableBorderStyle, _LOWriter_TableBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -160,9 +159,7 @@ EndFunc   ;==>_LOWriter_TableBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderWidth,
-;					_LOWriter_TableBorderStyle, _LOWriter_TableBorderColor
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderWidth, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -264,8 +261,8 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableBorderWidth,	_LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
+;				   Error values for Initialization and Processing are passed from the internal border setting function.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableBorderWidth, _LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -324,9 +321,8 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderStyle,
-;					_LOWriter_TableBorderColor,	_LOWriter_TableBorderPadding
+;				   Error values for Initialization and Processing, are passed from the internal border setting function.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor,	_LOWriter_TableBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -376,13 +372,10 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
-;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
-;						though I'm not sure if they will work correctly.
+;				   LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_PageStylesGetNames
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_PageStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -447,8 +440,7 @@ EndFunc   ;==>_LOWriter_TableBreak
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -501,11 +493,10 @@ EndFunc   ;==>_LOWriter_TableColor
 ;				   @Error 0 @Extended $iCount Return 2: $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: LibreOffice counts columns and Rows starting at 0. So to delete the first column in a Table you would set
-;					$iColumn to 0. If you attempt to delete more columns than are present all columns from $iColumn over will be
-;					deleted. If you delete all columns starting from column 0, the entire Table is deleted.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableColumnGetCount
+; Remarks .......: LibreOffice counts columns and Rows starting at 0. So to delete the first column in a Table you would set $iColumn to 0.
+;				   If you attempt to delete more columns than are present all columns from $iColumn over will be deleted.
+;				   If you delete all columns starting from column 0, the entire Table is deleted.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -576,7 +567,7 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 ;				   @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or set to less than 1.
 ;				   @Error 1 @Extended 4 Return 0 = $iColumn not an integer, or set to less than -1.
 ;				   @Error 1 @Extended 5 Return 0 = Column called in $iColumn higher than number of columns contained in table.
-;				    --Processing Errors--
+;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to insert columns.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1. Successfully inserted the number of desired columns.
@@ -699,8 +690,7 @@ EndFunc   ;==>_LOWriter_TableCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oTable can be either set to a Table object, or Null Keyword with $oCursor set to a Cursor object, $oCursor can be either set to a cursor object currently located in a Table (such as a ViewCursor)/ or a TextCursor located in a table. $sCellName can be left blank, which will place the TextTableCursor at the first cell (Typically "A1") if $oTable is called with an Object, else if $oCursor is used, the cell the cursor is currently located in is used.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableGetCellNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableGetCellNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -895,11 +885,10 @@ EndFunc   ;==>_LOWriter_TableGetCellNames
 ;				   @Error 0 @Extended 0 Return Object. A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function will accept a Table Cursor, a ViewCursor, or a Text Cursor. A TableCursor and ViewCursor can
-;					retrieve the single cell they are located in, or a range of cells that have been selected by them. A
-;					TextCursor can only retrieve the single cell it is located in.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor
+; Remarks .......: This function will accept a Table Cursor, a ViewCursor, or a Text Cursor.
+;				   A TableCursor and ViewCursor can retrieve the single cell they are located in, or a range of cells that have been selected by them.
+;				   A TextCursor can only retrieve the single cell it is located in.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1027,16 +1016,13 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;				   @Error 0 @Extended 0 Return Object.  = Success. A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split
-;					or joined.
-;						If Both $iToColumn and $iToRow are uncalled, a single cell will be returned.
-;						Rows and Columns in a Table are 0 based, meaning they start their count at 0. the first cell is row 0
-;					column 0. To retrieve a single cell, only call the $iColumn and $iRow parameters. To retrieve a cell range,
-;					call $iColumn with the lowest integer value column and then $iToColumn with the highest integer value column
-;					desired. Same for $iRow and $iToRow. You may request the same row in both $iRow and $iToRow, but neither
-;					$iToRow or $iToColumn may be a lower integer value than $iRow and $iColumn respectively.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
+; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split or joined.
+;				   If Both $iToColumn and $iToRow are uncalled, a single cell will be returned.
+;				   Rows and Columns in a Table are 0 based, meaning they start their count at 0. the first cell is row 0 column 0.
+;				   To retrieve a single cell, only call the $iColumn and $iRow parameters.
+;				   To retrieve a cell range, call $iColumn with the lowest integer value column and then $iToColumn with the highest integer value column desired. Same for $iRow and $iToRow.
+;				   You may request the same row in both $iRow and $iToRow, but neither $iToRow or $iToColumn may be a lower integer value than $iRow and $iColumn respectively.
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableColumnGetCount, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1241,19 +1227,11 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function inserts a Table previously created by _LOWriter_TableCreate, into a document.
-;					Text Tables cannot be inserted into Foot/Endnotes. And it is not best to place them into other tables, though
-;					it is possible. You can set the $oCursor parameter  to either a ViewCursor or a Text cursor currently in an
-;					acceptable data type, the table will be inserted at the cursor position. Or set $oCursor to Default, the
-;					Table will be inserted at the very end of a document.
-;						$bHeading only applies when a Table is created with more than 1 Row. For an unknown reason to myself,
-;					when creating a Text Table with more than 1 row the "Table Heading" paragraph style is applied to the first
-;					row. Setting $bHeading to False (Default) will return the paragraph style to "Table Contents" as normal. If
-;					you set $bHeading to True, "Table Heading" Paragraph Style will be applied. If these styles are not present
-;					a Property setting error will result, however the Table will still have been successfully inserted into the
-;					document.
-; Related .......: _LOWriter_TableCreate, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor
+;				   Text Tables cannot be inserted into Foot/Endnotes. And it is not best to place them into other tables, though it is possible.
+;				   You can set the $oCursor parameter  to either a ViewCursor or a Text cursor currently in an acceptable data type, the table will be inserted at the cursor position. Or set $oCursor to Default, the Table will be inserted at the very end of a document.
+;				   $bHeading only applies when a Table is created with more than 1 Row.
+;				   For an unknown reason to myself, when creating a Text Table with more than 1 row the "Table Heading" paragraph style is applied to the first row. Setting $bHeading to False (Default) will return the paragraph style to "Table Contents" as normal. If you set $bHeading to True, "Table Heading" Paragraph Style will be applied. If these styles are not present a Property setting error will result, however the Table will still have been successfully inserted into the document.
+; Related .......: _LOWriter_TableCreate, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1341,13 +1319,11 @@ EndFunc   ;==>_LOWriter_TableInsert
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Left Margin cannot be set unless Table Orientation is set to other than $LOW_ORIENT_HORI_FULL(6), or
-;					$LOW_ORIENT_HORI_LEFT(3). Right Margin cannot be set unless the table orientation is set to
-;					$LOW_ORIENT_HORI_NONE(0), or $LOW_ORIENT_HORI_LEFT(3).
+; Remarks .......: Left Margin cannot be set unless Table Orientation is set to other than $LOW_ORIENT_HORI_FULL(6), or $LOW_ORIENT_HORI_LEFT(3).
+;				   Right Margin cannot be set unless the table orientation is set to $LOW_ORIENT_HORI_NONE(0), or $LOW_ORIENT_HORI_LEFT(3).
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1438,8 +1414,8 @@ EndFunc   ;==>_LOWriter_TableMargin
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					$bSplitRows and $bRepeatHeading can only be set for Tables currently in the document, not for Tables Created with _LOWriter_TableCreate, and not inserted.
-;					$bSplitRows will return 0 instead of a boolean if the Table's rows have different settings for $bSplitRows.
+;				   $bSplitRows and $bRepeatHeading can only be set for Tables currently in the document, not for Tables Created with _LOWriter_TableCreate, and not inserted.
+;				   $bSplitRows will return 0 instead of a boolean if the Table's rows have different settings for $bSplitRows.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -1542,8 +1518,7 @@ EndFunc   ;==>_LOWriter_TableProperties
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_TableRowGetCount
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1603,9 +1578,9 @@ EndFunc   ;==>_LOWriter_TableRowColor
 ;				   @Error 0 @Extended $iCount Return 2: $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: LibreOffice counts Rows starting at 0. So to delete the first Row in a Table you would set
-;					$iRow to 0. If you attempt to delete more rows than are present, all rows from $iRow over will be deleted.
-;					If you delete all Rows starting from Row 0, the entire Table is deleted.
+; Remarks .......: LibreOffice counts Rows starting at 0. So to delete the first Row in a Table you would set $iRow to 0.
+;				   If you attempt to delete more rows than are present, all rows from $iRow over will be deleted.
+;				   If you delete all Rows starting from Row 0, the entire Table is deleted.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableRowGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -1677,7 +1652,7 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 ;				   @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or set to less than 1.
 ;				   @Error 1 @Extended 4 Return 0 = $iRow not an integer, or set to less than -1.
 ;				   @Error 1 @Extended 5 Return 0 = Requested Row higher than number of Rows contained in table.
-;				    --Processing Errors--
+;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Failed to insert Rows.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1. Successfully inserted requested number of rows.
@@ -1808,10 +1783,11 @@ EndFunc   ;==>_LOWriter_TableRowProperty
 ;				   @Error 0 @Extended 0 Return 1. Table data was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The array must be an array of Arrays. The Main Array must contain the same number of elements as there are
-;					rows, and each sub Array must have the same number of Elements as there are columns. To skip a Cell, just
-;					leave the sub array element blank you want to skip. This will replace all previous data in the Table. The
-;					Array will not be modified.
+; Remarks .......: The array must be an array of Arrays.
+;				   The Main Array must contain the same number of elements as there are rows, and each sub Array must have the same number of Elements as there are columns.
+;				   To skip a Cell, just leave the sub array element blank you want to skip.
+;				   This will replace all previous data in the Table.
+;				   The Array will not be modified.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes

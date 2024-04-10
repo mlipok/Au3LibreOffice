@@ -412,8 +412,7 @@ EndFunc   ;==>__LOWriter_Border
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the Object parameter and all other parameters set to Null keyword, and $bWid,
-;					or $bSty, or $bCol set to true to get the corresponding current settings.
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, and $bWid, or $bSty, or $bCol set to true to get the corresponding current settings.
 ;				   All distance values are set in Micrometers.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -686,9 +685,8 @@ EndFunc   ;==>__LOWriter_CharEffect
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
-;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
-;					are changed automatically to an acceptable value, which could trigger a settings error.
+;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
+;				   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -920,16 +918,10 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;					The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an
-;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
-;						this function, and thus will over-write any Superscript settings.
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage), Subscript is a negative number set to 1 to 100 percentage.
+;				   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1090,8 +1082,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;				   Color is set in Long Integer format.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -1168,17 +1159,10 @@ EndFunc   ;==>__LOWriter_CharShadow
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
-;						Display, however the internal setting is measured in Micrometers. They will be automatically converted
-;						from Points to MicroMeters and back for retrieval of settings.
-;						The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last correct
-;						value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						 max settable kerning  is -2.0 Pt to 928.8 Pt.
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to MicroMeters and back for retrieval of settings.
+;				   The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;				   Attempting to set Libre's kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning  is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -1443,8 +1427,8 @@ EndFunc   ;==>__LOWriter_CreatePoint
 ; Name ..........: __LOWriter_CreateStruct
 ; Description ...: Retrieves a Struct.
 ; Syntax ........: __LOWriter_CreateStruct($sStructName)
-; Parameters ....: $sStructName	- a string value. Name of structure to create.
-; Return values .:Success: Structure.
+; Parameters ....: $sStructName - a string value. Name of structure to create.
+; Return values .: Success: Structure.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sStructName not a string
@@ -1479,9 +1463,9 @@ EndFunc   ;==>__LOWriter_CreateStruct
 ; Name ..........: __LOWriter_CursorGetText
 ; Description ...: Retrieves a Text object appropriate for the type of cursor.
 ; Syntax ........: __LOWriter_CursorGetText(ByRef $oDoc, $oCursor)
-; Parameters ....: $oDoc	    - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor 	- [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
-; Return values .:Success: Object.
+; Parameters ....: $oDoc        - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor     - [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
+; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1679,16 +1663,11 @@ EndFunc   ;==>__LOWriter_FieldCountType
 ;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set
-;					to False, the Array will be a single column. With each of the above listed options being set to True, a
-;					column will be added in the order they are listed in the UDF parameters. The First column will always be the
-;					Field Object.
-;					Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
-;					Setting $bFieldType to True will add a Field type column for the found Field.
+; Remarks .......: The Array can vary in the number of columns, if $bSupportedServices, $bFieldType, and $bFieldTypeNum are set to False, the Array will be a single column. With each of the above listed options being set to True, a column will be added in the order they are listed in the UDF parameters.
+;				   The First column will always be the Field Object.
+;				   Setting $bSupportedServices to True will add a Supported Service String column for the found Field.
+;				   Setting $bFieldType to True will add a Field type column for the found Field.
 ;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching one of the following constants for the found Field. $LOW_FIELD_TYPE_*,$LOW_FIELD_ADV_TYPE_*, and $LOW_FIELD_DOCINFO_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1847,7 +1826,7 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ; Syntax ........: __LOWriter_FilterNameGet(ByRef $sDocSavePath[, $bIncludeExportFilters = False])
 ; Parameters ....: $sDocSavePath           - [in/out] a string value. Full path with extension.
 ;                  $bIncludeExportFilters  - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
-; Return values .:Success: String.
+; Return values .: Success: String.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sDocSavePath is not a string.
@@ -1859,13 +1838,9 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ;				   @Error 0 @Extended 3 Return String = FilterName not found for given file extension, defaulting to .odt file format and updating save path accordingly.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Searches a predefined list of extensions stored in an array. Not all FilterNames are listed, where multiple
-;						options were available for a given extension, the most recent Filter was used; Such as for .doc, there
-;						is the a 97 MsWord Filter available, and also a 95 MsWord, in this case 97 MsWord was used, as is listed
-;						in the "SaveAs" and "Export" dialogs. For finding your own FilterNames, see convertfilters.html found in
-;						L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide -- Or See: "OOME_3_0",
-;						"OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for
-;						listing all FilterNames, found on page 284 of the above book in the ODT format.
+; Remarks .......: Searches a predefined list of extensions stored in an array.
+;				   Not all FilterNames are listed, where multiple options were available for a given extension, the most recent Filter was used; Such as for .doc, there is the a 97 MsWord Filter available, and also a 95 MsWord, in this case 97 MsWord was used, as is listed in the "SaveAs" and "Export" dialogs.
+;				   For finding your own FilterNames, see convertfilters.html found in L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide -- Or See: "OOME_3_0", "OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for listing all FilterNames, found on page 284 of the above book in the ODT format.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2283,10 +2258,9 @@ EndFunc   ;==>__LOWriter_GetShapeName
 ;				   @Error 0 @Extended 0 Return String = Success. A new Gradient name was created. Returning the new name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If The Gradient name is blank, I need to create a new name and apply it. I think I could re-use
-;					an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names
-;					that have been already created, then I need to create and apply one before the transparency gradient will
-;					be displayed. Else if a preset Gradient is called, I need to create its name before it can be used.
+; Remarks .......: If The Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one.
+;				   If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed.
+;				   Else if a preset Gradient is called, I need to create its name before it can be used.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2343,7 +2317,7 @@ EndFunc   ;==>__LOWriter_GradientNameInsert
 ; Description ...: Set Page background Gradient to preset settings.
 ; Syntax ........: __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $sGradientName[, $bFooter = False[, $bHeader = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;				   $oObject             - [in/out] an object. The Object to modify the Gradient settings for.
+;                  $oObject             - [in/out] an object. The Object to modify the Gradient settings for.
 ;                  $tGradient           - [in/out] an object. The Fill Gradient Object to modify the Gradient settings for.
 ;                  $sGradientName       - a string value. The Gradient Preset name to apply.
 ;                  $bFooter             - [optional] a boolean value. Default is False. If True, settings are being set for footer Fill Gradient. If both are false, settings are for The Page itself.
@@ -2913,7 +2887,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ; Description ...: Get what type of cursor the object is. Internal version of CursorGetType.
 ; Syntax ........: __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 ; Parameters ....: $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-; Return values .:Success: Integer.
+; Return values .: Success: Integer.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
@@ -3592,15 +3566,10 @@ EndFunc   ;==>__LOWriter_NumStyleRetrieve
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function isn't totally necessary, because when setting Relative Width/Height, for a Frame/Frame
-;					style, the frame is still appropriately set to the correct percentage. However, the L.O. U.I. does not
-;					show the percentage unless you set a width value for the frame or frame style based on the Page width.
-;					For Frame Styles, If you notice in L.O. when you set the relative value, while the Viewcursor is in one
-;					Page Style, and then move the cursor to another type of page style, the percentage changes. So when I am
-;					modifying a Frame Style obtain the ViewCursor, retrieve what Page Style it is currently in, and calculate the
-;					Width/Height values based on that sizing. Or when modifying a Frame, I obtain its anchor, and retrieve the
-;					page style name, and get the page size settings for setting Frame Width/Height. However, is makes no
-;					material difference, as the frame still is set to the correct width/height regardless.
+; Remarks .......: This function isn't totally necessary, because when setting Relative Width/Height, for a Frame/Frame style, the frame is still appropriately set to the correct percentage. However, the L.O. U.I. does not show the percentage unless you set a width value for the frame or frame style based on the Page width.
+;				   For Frame Styles, If you notice in L.O. when you set the relative value, while the Viewcursor is in one Page Style, and then move the cursor to another type of page style, the percentage changes. So when I am modifying a Frame Style obtain the ViewCursor, retrieve what Page Style it is currently in, and calculate the Width/Height values based on that sizing.
+;				   Or when modifying a Frame, I obtain its anchor, and retrieve the page style name, and get the page size settings for setting Frame Width/Height.
+;				   However, it makes no material difference, as the frame still is set to the correct width/height regardless.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -3958,11 +3927,7 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;					I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
-;					When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM
-;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
-;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
-;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
+;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4341,11 +4306,8 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before
-;					$iPgNumOffSet can be set.
-;					Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both)
-;						and (Page both), but  doesn't throw an error when being set to either one, so they are included here,
-;						though I'm not sure if they will work correctly.
+; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
+;				   Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ;				   Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4775,9 +4737,7 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;				   @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page
-;						margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there
-;						 can only be one of a certain length per paragraph style.
+; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per paragraph style.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5117,7 +5077,7 @@ EndFunc   ;==>__LOWriter_RegExpConvert
 ; Syntax ........: __LOWriter_SetPropertyValue($sName, $vValue)
 ; Parameters ....: $sName               - a string value. Property name.
 ;                  $vValue              - a variant value. Property value.
-; Return values .:Success: Object
+; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $sName not a string
@@ -5175,8 +5135,8 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
-;					$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+;				   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
+;				   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5340,7 +5300,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;					$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
+;				   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6043,7 +6003,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;					$LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE.
+;				   $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6159,9 +6119,9 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;					$LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+;				   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
 ;				   The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
-;					$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+;				   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6292,31 +6252,31 @@ EndFunc   ;==>__LOWriter_Shape_CreateSymbol
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
-;					Because of this the following shape types cannot be identified, and this function will return -1:
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
-;						$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
-;						$LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
-;						$LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
-;						$LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
-;						$LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
-;						$LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
-;						$LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
-;						$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;				   Because of this the following shape types cannot be identified, and this function will return -1:
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;					$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;					$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;					$LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;					$LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;					$LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;					$LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;					$LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;					$LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;					$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
 ;				   The following Shapes implement the same type names, and are consequently indistinguishable:
-;						$LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
-;						$LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
-;						$LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;					$LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;					$LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;					$LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
 ;				   The following Shapes have strange names that may change in the future, but currently are able to be identified:
-;						$LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
-;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
-;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+;					$LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;					$LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;					$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -7690,23 +7650,19 @@ EndFunc   ;==>__LOWriter_TableBorder
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully.
-;				   +				Returns True if the full count of movements were successful, else false if none or only partially successful.
-;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $iMove may be set to any of the following constants.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;						$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;						$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
-;						$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
-;					#Cursor Movements which accept Selecting Only:
-;						$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;						$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
+; Remarks .......: $iMove may be set to any of the following constants. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
+;				   To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
+;				   #Cursor Movement Constants which accept number of Moves and Selecting:
+;					$LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
+;					$LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
+;					$LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
+;					$LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
+;					$LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -7930,36 +7886,34 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully.
-;				   +				Returns True if the full count of movements were successful, else false if none or only partially successful.
-;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be set to any of the following constants.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;						$LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;						$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;						$LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;						$LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
-;						$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;						$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;						$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
-;					#Cursor Movements which accept Selecting Only:
-;						$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;						$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;						$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;						$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;						$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;						$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;						$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;						$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOW_TEXTCUR_COLLAPSE_TO_START,
-;						$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
+;				   Only some movements accept movement amounts (such as "goRight" 2) etc.
+;				   Only some accept creating/ extending a selection of text/ data. They will be specified below.
+;				   To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
+;				   #Cursor Movement Constants which accept number of Moves and Selecting:
+;					$LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;					$LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;					$LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
+;					$LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
+;					$LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
+;					$LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
+;					$LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
+;					$LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;					$LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;					$LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
+;					$LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
+;					$LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
+;					$LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
+;					$LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
+;					$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOW_TEXTCUR_COLLAPSE_TO_START,
+;					$LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8035,7 +7989,7 @@ EndFunc   ;==>__LOWriter_TextCursorMove
 ; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to Long color integer value.
 ;                  $iLongToPercent      - [optional] an integer value. Default is Null. The Long color integer value to convert to percentage.
 ; Return values .: Success: Integer.
-;					Failure: Null and sets the @Error and @Extended flags to non-zero.
+;				   Failure: Null and sets the @Error and @Extended flags to non-zero.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return Null = No values called in parameters.
 ;				   --Success--
@@ -8085,10 +8039,8 @@ EndFunc   ;==>__LOWriter_TransparencyGradientConvert
 ;				   @Error 0 @Extended 0 Return String = Success. A new transparency Gradient name was created. Returning the new name as a string.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: If The Transparency Gradient name is blank, I need to create a new name and apply it. I think I could re-use
-;					an old one without problems, but I'm not sure, so to be safe, I will create a new one. If there are no names
-;					that have been already created, then I need to create and apply one before the transparency gradient will
-;					be displayed.
+; Remarks .......: If The Transparency Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one.
+;				   If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8138,7 +8090,7 @@ EndFunc   ;==>__LOWriter_TransparencyGradientNameInsert
 ; Syntax ........: __LOWriter_UnitConvert($nValue, $sReturnType)
 ; Parameters ....: $nValue              - a general number value. The Number to be converted.
 ;                  $iReturnType         - a Integer value. Determines conversion type. See Constants, $__LOCONST_CONVERT_* as defined in LibreOfficeWriter_Constants.au3.
-; Return values .:Success: Integer or Number.
+; Return values .: Success: Integer or Number.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $nValue is not a Number.
@@ -8352,38 +8304,35 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 2 Return 0 = Error processing cursor move.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully.
-;				   +				Returns True if the full count of movements were successful, else false if none or only partially successful.
-;				   +				@Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
+;				   @Error 0 @Extended ? Return Boolean = Success, Cursor object movement was processed successfully. Returns True if the full count of movements were successful, else false if none or only partially successful. @Extended set to number of successful movements. Or Page Number for "gotoPage" command. See Remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iMove may be set to any of the following constants.
-;					 Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/
-;					extending a selection of text/ data. They will be specified below. To Clear /Unselect a current selection,
-;					you can input a move such as "goRight", 0, False.
-; Cursor Movement Constants:
-;					#Cursor Movement Constants which accept number of Moves and Selecting:
-;						$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;						$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;						$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;						$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
-;					#Cursor Movements which accept number of Moves Only:
-;						$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;						$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;						$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;						$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
-;					#Cursor Movements which accept Selecting Only:
-;						$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;						$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;						$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;						$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;						$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;						$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;						$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
-;					#Misc. Cursor Movements:
-;						$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
+;				   Only some movements accept movement amounts (such as "goRight" 2) etc.
+;				   Only some accept creating/ extending a selection of text/ data. They will be specified below.
+;				   To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
+;				   #Cursor Movement Constants which accept number of Moves and Selecting:
+;					$LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
+;					$LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
+;					$LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
+;					$LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
+;				   #Cursor Movements which accept number of Moves Only:
+;					$LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
+;					$LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
+;					$LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
+;					$LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
+;					$LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
+;					$LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
+;					$LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
+;					$LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
+;					$LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
+;					$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
+;				   #Misc. Cursor Movements:
+;					$LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No

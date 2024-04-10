@@ -145,10 +145,8 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle,
-;					_LOWriter_CharStyleBorderColor
+;				   All distance values are set in Micrometers. Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -203,8 +201,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_CharStyleBorderWidth,
-;					_LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderPadding
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -259,10 +256,9 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderStyle,
-;					_LOWriter_CharStyleBorderPadding
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Certain Error values are passed from the internal border setting function.
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CharStyleBorderColor, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -432,7 +428,7 @@ EndFunc   ;==>_LOWriter_CharStyleDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -516,10 +512,9 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
-;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
-;					are changed automatically to an acceptable value, which could trigger a settings error.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
+;				   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_FontsList
 ; Link ..........:
 ; Example .......: Yes
@@ -659,7 +654,7 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
@@ -746,8 +741,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   $bOLHasColor must be set to true in order to set the Overline color.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -796,18 +790,13 @@ EndFunc   ;==>_LOWriter_CharStyleOverLine
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					Set either $iSubScript or $iSuperScript to 0 to return it to the Normal setting.
-;					The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript
-;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
-;						line to be set in this function, and thus will over-write any Superscript settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Set either $iSubScript or $iSuperScript to 0 to return it to the Normal setting.
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
+;				   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000.
+;				   There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -850,7 +839,7 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
+;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -890,11 +879,7 @@ EndFunc   ;==>_LOWriter_CharStyleRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_ParObjCreateList,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_CharStylesGetNames
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_ParObjCreateList, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_CharStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -932,17 +917,18 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. No Character Styles found according to parameters.
 ;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Character Styles matching the input parameters. @Extended contains the count of results returned.
-;				   +	If Only a Document object is input, all available Character styles will be returned.
-;				   +	Else if $bUserOnly is set to True, only User-Created Character Styles are returned.
-;				   +	Else if $bAppliedOnly, only Applied Character Styles are returned.
-;				   +	If Both are true then only User-Created Character styles that are applied are returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Five Character styles have two separate names, Footnote Characters is also internally called
-;					"Footnote Symbol"; Bullets, is internally called "Bullet Symbol"; Endnote Characters is internally called
-;					"Endnote Symbol"; Quotation is internally called "Citation"; and "No Character Style" is internally called
-;					"Standard". Either name works when setting a Character Style, but on certain functions that return a
-;					Character Style Name, you may see one of these alternative names.
+; Remarks .......: If Only a Document object is input, all available Character styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Character Styles are returned.
+;				   Else if $bAppliedOnly, only Applied Character Styles are returned.
+;				   If Both are true then only User-Created Character styles that are applied are returned.
+;				   Five Character styles have two separate names, either name works when setting a Character Style, but on certain functions that return a Character Style Name, you may see one of these alternative names. The Styles are as follows:
+;				   + Footnote Characters is also internally called "Footnote Symbol";
+;				   + Bullets, is internally called "Bullet Symbol";
+;				   + Endnote Characters is internally called "Endnote Symbol";
+;				   + Quotation is internally called "Citation";
+;				   + "No Character Style" is internally called "Standard".
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1069,18 +1055,11 @@ EndFunc   ;==>_LOWriter_CharStyleShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
-;						Display, however the internal setting is measured in Micrometers. They will be automatically converted
-;						from Points to Micrometers and back for retrieval of settings.
-;					The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
-;						correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						max settable kerning is -2.0 Pt to 928.8 Pt.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;				   The acceptable values are from -2 Pt to 928.8 Pt. The figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;				   Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -1178,8 +1157,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   $bULHasColor must be set to true in order to set the underline color.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

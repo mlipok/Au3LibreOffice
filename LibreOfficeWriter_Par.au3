@@ -123,8 +123,7 @@ EndFunc   ;==>_LOWriter_ParObjCopy
 ;				   @Error 0 @Extended ? Return Array  = Success. Returns an Array of Paragraph Objects, @Extended is set to the number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: 	$oCursor can be either a ViewCursor or a TextCursor, the paragraphs are enumerated for the area the cursor is currently within,
-;						for example, the ViewCursor is currently in a Table, the enumeration of paragraphs would be for the Cell the cursor was presently in.
+; Remarks .......: 	$oCursor can be either a ViewCursor or a TextCursor, the paragraphs are enumerated for the area the cursor is currently within, for example, the ViewCursor is currently in a Table, the enumeration of paragraphs would be for the Cell the cursor was presently in.
 ;					In the main document the enumeration would be for the entire Text Body, in the Header, it would for the that Header for that Page Style etc.
 ;					The different possible areas are: Text Body, Table Cell, Header, Footer, Footnote, Endnote, Frame.
 ;					Returns an Array of objects for Direct Formatting paragraphs in a document, or for copying and inserting etc.
@@ -277,7 +276,7 @@ EndFunc   ;==>_LOWriter_ParObjPaste
 ;				   |- Frame — a frame.
 ;				   |- SoftPageBreak — a soft page break.
 ;				   |- InContentMetadata — a text range with attached metadata.
-;						For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
+;				   For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
 ; Related .......: _LOWriter_ParObjCreateList
 ; Link ..........:
 ; Example .......: Yes
@@ -327,11 +326,7 @@ EndFunc   ;==>_LOWriter_ParObjSectionsGet
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function causes the ViewCursor to move and select a Paragraph, Table, Frame, TextCursor data, etc., usually in preparation for calling _LOWriter_ParObjCopy.
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_ParObjCopy, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor,
-;					_LOWriter_TableInsert, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName,
-;					_LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor,	_LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_ParObjCopy, _LOWriter_TableGetObjByName, _LOWriter_TableGetObjByCursor, _LOWriter_TableInsert, _LOWriter_FrameGetObjByCursor, _LOWriter_FrameGetObjByName, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,	_LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -445,8 +440,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -501,9 +495,8 @@ EndFunc   ;==>_LOWriter_ParStyleBackColor
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong,
-;					_LOWriter_ConvertColorToLong, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle,
-;					_LOWriter_ParStyleBorderPadding
+;				   Certain Error values are passed from the internal border setting function.
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -560,9 +553,7 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle,
-;					_LOWriter_ParStyleBorderColor
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -617,8 +608,8 @@ EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleBorderWidth,
-;					_LOWriter_ParStyleBorderColor, _LOWriter_ParStyleBorderPadding
+;				   Certain Error values are passed from the internal border setting function.
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleBorderWidth, _LOWriter_ParStyleBorderColor, _LOWriter_ParStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -675,9 +666,8 @@ EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 ; Remarks .......: To "Turn Off" Borders, set them to 0
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderColor,
-;					_LOWriter_ParStyleBorderPadding
+;				   Certain Error values are passed from the internal border setting function.
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_ParStyleBorderStyle, _LOWriter_ParStyleBorderColor, _LOWriter_ParStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -861,15 +851,10 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Set $iNumChars, $iLines, $iSpcTxt to 0 to disable DropCaps.
-;					I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface.
-;					When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM
-;					error/Exception, even when attempting to set it to Libre's own return value without any in-between
-;					variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So
-;					consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
+;				   I am unable to find a way to set Drop Caps character style to "None" as is available in the User Interface. When it is set to "None" Libre returns a blank string ("") but setting it to a blank string throws a COM error/Exception, even when attempting to set it to Libre's own return value without any in-between variables, in case I was mistaken as to it being a blank string, but this still caused a COM error. So consequently, you cannot set Character Style to "None", but you can still disable Drop Caps as noted above.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1007,9 +992,8 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted,
-;					such as oblique, ultra Bold etc. Libre Writer accepts only the predefined weight values, any other values
-;					are changed automatically to an acceptable value, which could trigger a settings error.
+;				   Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
+;				   Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_FontsList
 ; Link ..........:
 ; Example .......: Yes
@@ -1205,8 +1189,7 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ; Remarks .......: $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1259,8 +1242,7 @@ EndFunc   ;==>_LOWriter_ParStyleIndent
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters.
-;				   +								If the Libre Office version is below 4.0, the Array will contain 4 elements because $bHidden is not available.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 or 5 Element Array with values in order of function parameters. If the Libre Office version is below 4.0, the Array will contain 4 elements because $bHidden is not available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1524,14 +1506,12 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;					The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage),Subscript is a negative number set to 1 to 100 percentage.
-;					For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
-;					Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000.
-;					There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
-;					If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer,
-;						Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Super is a positive number from 1 to 100 (percentage),Subscript is a negative number set to 1 to 100 percentage.
+;				   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000.
+;				   There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1614,9 +1594,7 @@ EndFunc   ;==>_LOWriter_ParStyleRotateScale
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParStylesGetNames
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1651,16 +1629,15 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Paragraph Styles Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 0 = Success. No Paragraph Styles found according to parameters.
-;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the input parameters.
-;				   +		@Extended contains the count of results returned.
-;				   +		If Only a Document object is input, all available Paragraph styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Paragraph Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied paragraph Styles are returned.
-;				   +		If Both are true then only User-Created paragraph styles that are applied are returned.
+;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Two paragraph styles have two separate names, Default Paragraph Style is also internally called "Standard" and Complimentary Close, which is internally called "Salutation".
-;					Either name works when setting a Paragraph Style, but on certain functions that return a Paragraph Style Name, you may see one of these alternative names.
+; Remarks .......: If Only a Document object is input, all available Paragraph styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Paragraph Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied paragraph Styles are returned.
+;				   If Both are true then only User-Created paragraph styles that are applied are returned.
+;				   Two paragraph styles have two separate names, Default Paragraph Style is also internally called "Standard" and Complimentary Close, which is internally called "Salutation".
+;				   Either name works when setting a Paragraph Style, but on certain functions that return a Paragraph Style Name, you may see one of these alternative names.
 ; Related .......: _LOWriter_ParStyleGetObj
 ; Link ..........:
 ; Example .......: Yes
@@ -1798,8 +1775,7 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;				   @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 or 6 Element Array with values in order of function parameters.
-;				   +								If the current Libre Office version is less than 3.6, the returned Array will contain 5 elements, because $bAddSpace is not available.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 or 6 Element Array with values in order of function parameters. If the current Libre Office version is less than 3.6, the returned Array will contain 5 elements, because $bAddSpace is not available.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on.
@@ -1852,15 +1828,13 @@ EndFunc   ;==>_LOWriter_ParStyleSpace
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers.
-;					They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;					The acceptable values are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
-;					For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
-;					Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt.
-;					For these reasons the max settable kerning is -2.0 Pt  to 928.8 Pt.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer,
-;					_LOWriter_ConvertToMicrometer
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers.
+;				   They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;				   The acceptable values are from -2 Pt to  928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;				   Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt.
+;				   For these reasons the max settable kerning is -2.0 Pt  to 928.8 Pt.
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2008,9 +1982,8 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin.
-;					This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per document.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopList,
-;					_LOWriter_ParStyleTabStopCreate
+;				   This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per document.
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopList, _LOWriter_ParStyleTabStopCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2048,8 +2021,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopMod,
-;					_LOWriter_ParStyleTabStopDelete
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ParStyleTabStopMod, _LOWriter_ParStyleTabStopDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

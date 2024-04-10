@@ -1205,7 +1205,7 @@ EndFunc   ;==>_LOCalc_SheetUnprotect
 ; Syntax ........: _LOCalc_SheetVisible(ByRef $oSheet[, $bVisible = Null])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the Sheet is visible in the Libre Office UI.
-; Return values .:  Success: 1 or Boolean
+; Return values .: Success: 1 or Boolean
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.

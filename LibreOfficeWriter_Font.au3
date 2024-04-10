@@ -79,10 +79,9 @@ EndFunc   ;==>_LOWriter_FontExists
 ;				   @Error 0 @Extended ? Return Array  = Success. Returns a 4 Column Array, @extended is set to the number of results. See remarks
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Many fonts will be listed multiple times, this is because of the varying settings for them, such as bold,
-;					Italic, etc. Style Name is really a repeat of weight(Bold) and Slant (Italic) settings, but is included for
-;					easier processing if required. From personal tests, Slant only returns 0 or 2. This function may cause a
-;					 processor usage spike for a moment or two.
+; Remarks .......: Many fonts will be listed multiple times, this is because of the varying settings for them, such as bold, Italic, etc.
+;				   Style Name is really a repeat of weight(Bold) and Slant (Italic) settings, but is included for easier processing if required.
+;				   From personal tests, Slant only returns 0 or 2. This function may cause a processor usage spike for a moment or two.
 ;				   The returned array will be as follows:
 ;				   The first column (Array[1][0]) contains the Font Name.
 ;				   The Second column (Array [1][1] contains the style name (Such as Bold Italic etc.)

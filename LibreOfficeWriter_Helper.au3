@@ -82,18 +82,17 @@
 ; Author ........: mLipok
 ; Modified ......: donnyh13 - Added a clear UserFunction without error option. Also added parameters option.
 ; Remarks .......: The first parameter passed to the User function will always be the COM Error object. See below.
-;						Every COM Error will be passed to that function. The user can then read the following properties. (As
-;							Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the
-;							UserFunction. For Example MyFunc($oMyError)
-;							$oMyError.number The Windows HRESULT value from a COM call
-;							$oMyError.windescription The FormatWinError() text derived from .number
-;							$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
-;							$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;							$oMyError.helpfile Source Object's helpfile for the error (contents from ExcepInfo.helpfile)
-;							$oMyError.helpcontext Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)
-;							$oMyError.lastdllerror The number returned from GetLastError()
-;							$oMyError.scriptline The script line on which the error was generated
-;				    		NOTE: Not all properties will necessarily contain data, some will be blank.
+;				   Every COM Error will be passed to that function. The user can then read the following properties. (As Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the UserFunction.
+;				   For Example MyFunc($oMyError)
+;					$oMyError.number The Windows HRESULT value from a COM call
+;					$oMyError.windescription The FormatWinError() text derived from .number
+;					$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
+;					$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
+;					$oMyError.helpfile Source Object's helpfile for the error (contents from ExcepInfo.helpfile)
+;					$oMyError.helpcontext Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)
+;					$oMyError.lastdllerror The number returned from GetLastError()
+;					$oMyError.scriptline The script line on which the error was generated
+;				    NOTE: Not all properties will necessarily contain data, some will be blank.
 ;				   If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
 ;				   If called with Default keyword, the current UserFunction, if set, will be returned.
 ;				   If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
@@ -450,10 +449,8 @@ EndFunc   ;==>_LOWriter_ConvertColorToLong
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To skip a parameter, set it to Null.
-;				   If you are converting to Inches, place the Micrometers in $nInchOut, if
-;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.  A
-;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
-;					measurement parameter.
+;				   If you are converting to Inches, place the Micrometers in $nInchOut, if converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.
+;				   A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -520,9 +517,8 @@ EndFunc   ;==>_LOWriter_ConvertFromMicrometer
 ;				   @Error 0 @Extended 4 Return Integer. Converted Printer's Points to Micrometers.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null. If you are converting from Inches, call inches in $nInchIn, if
-;					converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set. A Micrometer is 1000th of a
-;					centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
+; Remarks .......: To skip a parameter, set it to Null. If you are converting from Inches, call inches in $nInchIn, if converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set.
+;				   A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOWriter_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -755,14 +751,12 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting.
-;				   +			Column One (Array[0][0]) will contain the Format Key integer,
-;				   +			Column two (Array[0][1]) will contain the Format String
-;				   +			And if $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
-;				   +			@Extended is set to the number of Keys returned.
+;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+;				   Column two (Array[0][1]) will contain the Format String
+;				   And if $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
 ; Related .......: _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyDelete, _LOWriter_DateFormatKeyGetString
 ; Link ..........:
 ; Example .......: Yes
@@ -1169,8 +1163,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyAlignment
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll
-;					_LOWriter_DocReplaceAllInRange
+; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1253,9 +1246,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyEffects
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,_LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange,
-;					_LOWriter_FontsList
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,_LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange, _LOWriter_FontsList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1364,9 +1355,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyFont
 ;				   @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: In my personal testing, searching for any of these hyphenation formatting settings causes any results
-;						matching the searched for string to be replaced, whether they contain these formatting settings or not.
-;						This is a bug in Libre Office.
+; Remarks .......: In my personal testing, searching for any of these hyphenation formatting settings causes any results matching the searched for string to be replaced, whether they contain these formatting settings or not. This is a bug in Libre Office.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
@@ -1453,8 +1442,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1530,8 +1518,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
 ;				   Underline Constants are used for Overline line style.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1600,8 +1587,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyOverline
 ;				   @Error 0 @Extended 0 Return 1 = Success. FindFormat Array of Settings was successfully modified.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: In my personal testing, searching for a page break was very hit and miss, especially when searching with the
-;					"PageStyle" Name parameter, and it never worked for searching for PageNumberOffset.
+; Remarks .......: In my personal testing, searching for a page break was very hit and miss, especially when searching with the "PageStyle" Name parameter, and it never worked for searching for PageNumberOffset.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
@@ -1675,18 +1661,11 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   0 is the normal $iSubScript or $iSuperScript setting.
-;					The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an
-;						integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in
-;						this function, and thus will over-write any Superscript settings.
-; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll
-;					_LOWriter_DocReplaceAllInRange
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
+;				   For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
+; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1775,19 +1754,11 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPosition
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   There is a bug in Libre Office, where searching for the Rotate setting using the $iRotation parameter causes any results matching the searched for string to be replaced, whether they contain the Rotate format or not, this is supposed to be fixed in L.O. 7.6.
 ;				   There is a bug in Libre Office, where searching for the Scale Width setting using the $iScaleWidth parameter causes any results matching the searched for string to be replaced, whether they contain the Scale Width format or not, this is supposed to be fixed in L.O. 7.6.
-;					When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User
-;						Display, however the internal setting is measured in MicroMeters. They will be automatically converted
-;						from Points to Micrometers and back for retrieval of settings.
-;						The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
-;						correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set
-;						Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the
-;						kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these
-;						reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
-; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
+;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in MicroMeters. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
+;				   The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;				   Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
+; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1971,8 +1942,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifySpacing
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
-; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll
-;					_LOWriter_DocReplaceAllInRange
+; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2110,8 +2080,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ;				   Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;				   If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;				   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
-; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll,
-;					_LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
+; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2361,7 +2330,7 @@ EndFunc   ;==>_LOWriter_FormatKeyGetStandard
 ; Syntax ........: _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to retrieve the string for.
-; Return values .:Success: String
+; Return values .: Success: String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2413,14 +2382,12 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve NumberFormats Object.
 ;				   @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Format Keys.
 ;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting.
-;				   +						Column One (Array[0][0]) will contain the Format Key integer,
-;				   +						Column two (Array[0][1]) will contain the Format Key String,
-;				   +						If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
-;				   +						@Extended is set to the number of Keys returned.
+;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+;				   Column two (Array[0][1]) will contain the Format Key String,
+;				   If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User created, else false.
 ; Related .......: _LOWriter_FormatKeyDelete, _LOWriter_FormatKeyGetString, _LOWriter_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
@@ -2489,12 +2456,9 @@ EndFunc   ;==>_LOWriter_FormatKeyList
 ;				   @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are
-;					allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found
-;					in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering,
-;					Basic Programmer's Guide; Page 74
-;					The user generally should not even need this function, as I have endeavored to convert any URLs to the
-;						appropriate computer path format and any input computer paths to a Libre Office URL.
+; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found in internet URL's (spaces become %20).
+;				   See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering, Basic Programmer's Guide; Page 74
+;				   The user generally should not even need this function, as I have endeavored to convert any URLs to the appropriate computer path format and any input computer paths to a Libre Office URL.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2641,7 +2605,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorCreate
 ;				   @Error 3 @Extended 1 Return 0 = $bRegExp is set to True while Similarity Search is also set to True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $bSearchPropValues is equivalent to the difference in selecting "Format" options in Libre Office's search box and "Attributes". Setting $bSearchPropValues to True, means that the search will look for matches using the specified property AND having the specified value, such as Character Weight, Bold, only matches that have Character weight of Bold will be returned, whereas if $bSearchPropValues is set to false, the search only looks for matches that have the specified property, regardless of its value. Such as Character weight, would match Bold, Semi-Bold, etc. From my understanding, the search is based on anything directly formatted unless $bStyles is also true.
@@ -2725,7 +2689,7 @@ EndFunc   ;==>_LOWriter_SearchDescriptorModify
 ;				   @Error 3 @Extended 1 Return 0 = $bSimilarity is set to True while Regular Expression Search is also set to True.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

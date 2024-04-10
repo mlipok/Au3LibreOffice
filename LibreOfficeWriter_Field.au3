@@ -142,9 +142,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldAuthorModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldAuthorModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -281,9 +279,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldChapterModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldChapterModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -401,9 +397,7 @@ EndFunc   ;==>_LOWriter_FieldChapterModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldCombCharModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldCombCharModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -515,10 +509,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldCommentModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DateStructCreate _LOWriter_DateStructModify
+; Related .......: _LOWriter_FieldCommentModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateStructCreate _LOWriter_DateStructModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -719,9 +710,7 @@ EndFunc   ;==>_LOWriter_FieldCommentModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldCondTextModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldCondTextModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -899,10 +888,7 @@ EndFunc   ;==>_LOWriter_FieldCurrentDisplayGet
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DateStructCreate, _LOWriter_DateStructModify
+; Related .......: _LOWriter_FieldDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateStructCreate, _LOWriter_DateStructModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1146,10 +1132,7 @@ EndFunc   ;==>_LOWriter_FieldDelete
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoCommentsModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocDescription
+; Related .......: _LOWriter_FieldDocInfoCommentsModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocDescription
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1272,10 +1255,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoCreateAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocGenPropCreation
+; Related .......: _LOWriter_FieldDocInfoCreateAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropCreation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1399,10 +1379,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoCreateDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
+; Related .......: _LOWriter_FieldDocInfoCreateDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1465,8 +1442,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoCreateDateTimeInsert, _LOWriter_FieldsDocInfoGetList,
-;					_LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
+; Related .......: _LOWriter_FieldDocInfoCreateDateTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropCreation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1534,10 +1510,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully Inserted a Document Info Total Editing Time Field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: _LOWriter_FieldDocInfoEditTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
+; Remarks .......: _LOWriter_FieldDocInfoEditTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1601,8 +1574,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoEditTimeInsert, _LOWriter_FieldsDocInfoGetList,
-;					_LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
+; Related .......: _LOWriter_FieldDocInfoEditTimeInsert, _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenProp
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1670,10 +1642,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoKeywordsModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocDescription
+; Related .......: _LOWriter_FieldDocInfoKeywordsModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocDescription
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1778,7 +1747,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
-;				   $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sAuthor             - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1796,10 +1765,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoModAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocGenPropModification
+; Related .......: _LOWriter_FieldDocInfoModAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropModification
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1923,11 +1889,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoModDateTimeModify, _LOWriter_DateFormatKeyCreate,
-;					_LOWriter_DateFormatKeyList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocGenPropModification
+; Related .......: _LOWriter_FieldDocInfoModDateTimeModify, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropModification
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2058,10 +2020,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoPrintAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocGenPropPrint
+; Related .......: _LOWriter_FieldDocInfoPrintAuthModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenPropPrint
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2185,10 +2144,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoPrintDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
+; Related .......: _LOWriter_FieldDocInfoPrintDateTimeModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2251,8 +2207,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldDocInfoPrintDateTimeInsert,  _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate,
-;					_LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
+; Related .......: _LOWriter_FieldDocInfoPrintDateTimeInsert,  _LOWriter_FieldsDocInfoGetList, _LOWriter_DateFormatKeyCreate, _LOWriter_DateFormatKeyList, _LOWriter_DocGenPropPrint
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2320,10 +2275,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoRevNumModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocGenProp
+; Related .......: _LOWriter_FieldDocInfoRevNumModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocGenProp
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2446,10 +2398,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoSubjectModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocDescription
+; Related .......: _LOWriter_FieldDocInfoSubjectModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocDescription
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2572,10 +2521,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldDocInfoTitleModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_DocDescription
+; Related .......: _LOWriter_FieldDocInfoTitleModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_DocDescription
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2681,7 +2627,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval function. Cannot be a Table Cursor.
 ;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;				   $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: Object.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2699,9 +2645,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ; Modified ......:
 ; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the content is set to Fixed = True.
 ;				   For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format of $LOW_FIELD_FILENAME_NAME.
-; Related .......: _LOWriter_FieldFileNameModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldFileNameModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2742,7 +2686,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ; Syntax ........: _LOWriter_FieldFileNameModify(ByRef $oFileNameField[, $bIsFixed = Null[, $iFormat = Null]])
 ; Parameters ....: $oFileNameField      - [in/out] an object. A File Name field Object from a previous _LOWriter_FieldFileNameInsert, or _LOWriter_FieldsGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;				   $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $iFormat             - [optional] an integer value (0-3). Default is Null. The Data Format to display. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
@@ -2758,9 +2702,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the
-;						content is set to Fixed = True. For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format
-;							of $LOW_FIELD_FILENAME_NAME.
+; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the content is set to Fixed = True. For example, $LOW_FIELD_FILENAME_NAME_AND_EXT, displays in the format of $LOW_FIELD_FILENAME_NAME.
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FieldFileNameInsert, _LOWriter_FieldsGetList
@@ -2821,9 +2763,7 @@ EndFunc   ;==>_LOWriter_FieldFileNameModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldFuncHiddenParModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldFuncHiddenParModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2928,9 +2868,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldFuncHiddenTextModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldFuncHiddenTextModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3049,9 +2987,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldFuncInputModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldFuncInputModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3172,9 +3108,7 @@ EndFunc   ;==>_LOWriter_FieldFuncInputModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldFuncPlaceholderModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldFuncPlaceholderModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3343,9 +3277,7 @@ EndFunc   ;==>_LOWriter_FieldGetAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldInputListModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldInputListModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3482,9 +3414,7 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldPageNumberModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldPageNumberModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3665,10 +3595,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
-;					 _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3731,8 +3658,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList,
-;					_LOWriter_FieldsGetList
+; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3795,10 +3721,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefEndnoteModify, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefEndnoteModify, _LOWriter_EndnoteInsert, _LOWriter_EndnotesGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3936,10 +3859,7 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefFootnoteModify, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefFootnoteModify, _LOWriter_FootnoteInsert, _LOWriter_FootnotesGetList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4106,10 +4026,7 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList,
-;					_LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
-;					_LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor,
-;					_LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefModify, _LOWriter_FieldRefMarkSet, _LOWriter_FieldRefMarkList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4305,9 +4222,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefMarkDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefMarkDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4439,8 +4354,7 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;				   Setting $bFieldTypeNum to True will add a Field type Number column, matching the constants, $LOW_FIELD_ADV_TYPE_* as defined in LibreOfficeWriter_Constants.au3 for the found Field.
 ;				   For simplicity, and also due to certain Bit limitations I have broken the different Field types into three different categories, Regular Fields, ($LWFieldType), Advanced(Complex) Fields, ($LWFieldAdvType), and Document Information fields (Found in the Document Information Tab in L.O. Fields dialog), ($LWFieldDocInfoType).
 ;				   Just because a field is listed in the constants, does not necessarily mean that I have made a function to create/modify it, you may still be able to update or delete it using the _LOWriter_FieldUpdate, or _LOWriter_FieldDelete function, though. Some Fields are too complex to create a function for, and others are not possible.
-; Related .......: _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor,
-;					_LOWriter_FieldUpdate
+; Related .......: _LOWriter_FieldsDocInfoGetList, _LOWriter_FieldsGetList, _LOWriter_FieldDelete, _LOWriter_FieldGetAnchor, _LOWriter_FieldUpdate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4544,9 +4458,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSenderModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldSenderModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4688,11 +4600,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSetVarModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_FieldSetVarMasterCreate,
-;					_LOWriter_FieldSetVarMasterList
+; Related .......: _LOWriter_FieldSetVarModify,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5189,11 +5097,7 @@ EndFunc   ;==>_LOWriter_FieldsGetList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function checks if there is a Set Variable matching the name called in $sSetVarName.
-; Related .......: _LOWriter_FieldShowVarModify, _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList,
-;					_LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					 _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
-;					_LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldShowVarModify, _LOWriter_FieldSetVarInsert, _LOWriter_FieldsGetList, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5342,12 +5246,8 @@ EndFunc   ;==>_LOWriter_FieldShowVarModify
 ;				   @Error 0 @Extended 0 Return Object = Success. Successfully Inserted a Count Field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: After insertion there seems to be a necessary delay before the value to display is available, thus when a
-;						new count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this
-;						field after a few seconds, the value should appear.
-; Related .......: _LOWriter_FieldStatCountModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Remarks .......: After insertion there seems to be a necessary delay before the value to display is available, thus when a new count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this field after a few seconds, the value should appear.
+; Related .......: _LOWriter_FieldStatCountModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5414,9 +5314,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
-;					 After changing the Count type there may be a delay before the value to display is available,
-;						thus when the count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for
-;						this field after a few seconds, the value should appear.
+;				   After changing the Count type there may be a delay before the value to display is available, thus when the count field is inserted, the value will be "0". If you call a _LOWriter_FieldUpdate for this field after a few seconds, the value should appear.
 ; Related .......: _LOWriter_FieldStatCountInsert, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5498,10 +5396,7 @@ EndFunc   ;==>_LOWriter_FieldStatCountModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldStatTemplateModify, _LOWriter_DocGenPropTemplate,  _LOWriter_DocGetViewCursor,
-;					_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor,
-;					_LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,
-;					_LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldStatTemplateModify, _LOWriter_DocGenPropTemplate,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5596,8 +5491,8 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateModify
 ;				   @Error 0 @Extended ? Return 1 = Success. Successfully updated all fields, @Extended set to number of fields updated.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Updating a fixed field will usually erase any user-provided content, such as an author name, creation date
-;						etc. If a Field is fixed, the field wont be updated unless $bForceUpdate is set to true.
+; Remarks .......: Updating a fixed field will usually erase any user-provided content, such as an author name, creation date etc.
+;				   If a Field is fixed, the field wont be updated unless $bForceUpdate is set to true.
 ; Related .......: _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, _LOWriter_FieldsDocInfoGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -5676,9 +5571,7 @@ EndFunc   ;==>_LOWriter_FieldUpdate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldVarSetPageModify, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldVarSetPageModify, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -5795,9 +5688,7 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldVarShowPageModify, _LOWriter_DocGetViewCursor,	_LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldVarShowPageModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

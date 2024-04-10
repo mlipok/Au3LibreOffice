@@ -84,14 +84,11 @@
 ;				   --Success--
 ;				   @Error 0 @Extended 1 Return String = Success, Document was successfully closed, and was saved to the returned file Path.
 ;				   @Error 0 @Extended 2 Return String = Success, Document was successfully closed, document's changes were saved to its existing location.
-;				   @Error 0 @Extended 3 Return String = Success, Document was successfully closed, document either had no changes to save, or $bSaveChanges was set to False.
-;				   +			If document had a save location, or if document was saved to a location, it is returned, else an empty string is returned.
+;				   @Error 0 @Extended 3 Return String = Success, Document was successfully closed, document either had no changes to save, or $bSaveChanges was set to False. If document had a save location, or if document was saved to a location, it is returned, else an empty string is returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
-;					If $sSaveName is undefined, it is saved as an .odt document to the desktop, named
-;					Year-Month-Day_Hour-Minute-Second.ods. $sSaveName may be a name only without an extension, in which case the file will be saved
-;					in .ods format. Or you may define your own format by including an extension, such as "Test.xlsx"
+;				   If $sSaveName is undefined, it is saved as an .odt document to the desktop, named Year-Month-Day_Hour-Minute-Second.ods. $sSaveName may be a name only without an extension, in which case the file will be saved in .ods format. Or you may define your own format by including an extension, such as "Test.xlsx"
 ; Related .......: _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_DocSaveAs, _LOCalc_DocSave
 ; Link ..........:
 ; Example .......: Yes
@@ -301,8 +298,8 @@ EndFunc   ;==>_LOCalc_DocConnect
 ; Name ..........: _LOCalc_DocCreate
 ; Description ...: Open a new Libre Office Calc Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOCalc_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: $bForceNew		- [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
-;				   $bHidden			- [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Parameters ....: $bForceNew       - [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
+;                  $bHidden         - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
 ; Return values .: Success: Object
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--

@@ -643,10 +643,7 @@ EndFunc   ;==>_LOWriter_NumStylePosition
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor,
-;					_LOWriter_NumStylesGetNames
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_NumStylesGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -685,9 +682,7 @@ EndFunc   ;==>_LOWriter_NumStyleSet
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor,
-;					_LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor,
-;					_LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_ParObjCreateList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -716,7 +711,7 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Numbering Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Numbering Styles are returned.
-; Return values .: ; Success: Integer or Array
+; Return values .: Success: Integer or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
 ;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -726,14 +721,13 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Numbering Styles Object.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return 0 = Success. No Numbering Styles found according to parameters.
-;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Numbering Styles matching the input parameters.
-;				   +		@Extended contains the count of results returned. If Only a Document object is input, all available Numbering styles will be returned.
-;				   +		Else if $bUserOnly is set to True, only User-Created Numbering Styles are returned.
-;				   +		Else if $bAppliedOnly is set to True, only Applied Numbering Styles are returned.
-;				   +		If Both are true then only User-Created Numbering styles that are applied are returned.
+;				   @Error 0 @Extended ? Return Array = Success. An Array containing all Numbering Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If Only a Document object is input, all available Numbering styles will be returned.
+;				   Else if $bUserOnly is set to True, only User-Created Numbering Styles are returned.
+;				   Else if $bAppliedOnly is set to True, only Applied Numbering Styles are returned.
+;				   If Both are true then only User-Created Numbering styles that are applied are returned.
 ; Related .......: _LOWriter_NumStyleGetObj
 ; Link ..........:
 ; Example .......: Yes

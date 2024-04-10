@@ -68,23 +68,23 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept Column and Row Values, creating/ extending a selection of cells, etc. They will be specified below.
-;					#Cursor Movement Constants which accept Column and Row values:
-;						$LOC_SHEETCUR_COLLAPSE_TO_SIZE, Call $iColumns with the number of columns to resize the range to contain, counting from the Top-Left hand cell of the current range. And call $iRows with the number of Rows to resize the range to contain, counting from the Top-Left hand cell of the current range..
-;						$LOC_SHEETCUR_GOTO_OFFSET Call $iColumns with the number of columns to move, either left (negative number) or right (positive number), and call $iRows with the number of Rows to move up (negative number) or down (positive number).
-;					#Cursor Movements which accept Selecting Only:
-;						$LOC_SHEETCUR_GOTO_USED_AREA_START, Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
-;						$LOC_SHEETCUR_GOTO_USED_AREA_END Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
-;						$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
-;						$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
-;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
-;						$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
-;						$LOC_SHEETCUR_GOTO_START,
-;						$LOC_SHEETCUR_GOTO_END
-;					#Cursor Movements which accept only number of moves ($iCount):
-;						$LOC_SHEETCUR_GOTO_NEXT, Call $iCount with the number of moves to perform.
-;						$LOC_SHEETCUR_GOTO_PREV Call $iCount with the number of moves to perform.
+;				   #Cursor Movement Constants which accept Column and Row values:
+;					$LOC_SHEETCUR_COLLAPSE_TO_SIZE, Call $iColumns with the number of columns to resize the range to contain, counting from the Top-Left hand cell of the current range. And call $iRows with the number of Rows to resize the range to contain, counting from the Top-Left hand cell of the current range..
+;					$LOC_SHEETCUR_GOTO_OFFSET Call $iColumns with the number of columns to move, either left (negative number) or right (positive number), and call $iRows with the number of Rows to move up (negative number) or down (positive number).
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOC_SHEETCUR_GOTO_USED_AREA_START, Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
+;					$LOC_SHEETCUR_GOTO_USED_AREA_END Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
+;					$LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
+;					$LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
+;					$LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
+;					$LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
+;					$LOC_SHEETCUR_GOTO_START,
+;					$LOC_SHEETCUR_GOTO_END
+;				   #Cursor Movements which accept only number of moves ($iCount):
+;					$LOC_SHEETCUR_GOTO_NEXT, Call $iCount with the number of moves to perform.
+;					$LOC_SHEETCUR_GOTO_PREV Call $iCount with the number of moves to perform.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -144,16 +144,9 @@ EndFunc   ;==>_LOCalc_SheetCursorMove
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   Set either $iSubScript or $iSuperScript to 0 to return it to Normal setting.
-;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from
-;						1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's
-;						convenience this function accepts both positive and negative numbers for Subscript, if a positive number
-;						is called for Subscript, it is automatically set to a negative. Automatic Superscript has a integer
-;						value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic
-;						Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two
-;						separate parameters to be able to determine if the user wants to automatically set Superscript or
-;						Subscript. If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript
-;						to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the
-;						line to be set in this function, and thus will over-write any Superscript settings.
+;				   The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage. For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
+;				   Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
+;				   If you set both Auto Superscript to True and Auto Subscript to True, or $iSuperScript to an integer and $iSubScript to an integer, Subscript will be set as it is the last in the line to be set in this function, and thus will over-write any Superscript settings.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -216,14 +209,8 @@ EndFunc   ;==>_LOCalc_TextCursorCharPosition
 ;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;				   Call any optional parameter with Null keyword to skip it.
 ;				   When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;				   The acceptable values are from -2 Pt to 928.8 Pt. the figures can be directly converted easily,
-;						however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative
-;						Micrometers internally from 928.9 up to 1000 Pt (Max setting). For example, 928.8Pt is the last
-;						correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following:
-;						;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's
-;						kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to
-;						any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the
-;						max settable kerning is -2.0 Pt to 928.8 Pt.
+;				   The acceptable values are from -2 Pt to 928.8 Pt. The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;				   For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -637,16 +624,16 @@ EndFunc   ;==>_LOCalc_TextCursorIsCollapsed
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept movement amounts and selecting (such as $LOC_TEXTCUR_GO_RIGHT 2, True) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
-;					 To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
-;					#Cursor Movement Constants which accept Number of Moves and Selecting:
-;						$LOC_TEXTCUR_GO_LEFT,
-;						$LOC_TEXTCUR_GO_RIGHT,
-;					#Cursor Movements which accept Selecting Only:
-;						$LOC_TEXTCUR_GOTO_START,
-;						$LOC_TEXTCUR_GOTO_END,
-;					#Cursor Movements which accept nothing and are done once per call:
-;						$LOC_TEXTCUR_COLLAPSE_TO_START,
-;						$LOC_TEXTCUR_COLLAPSE_TO_END
+;				   To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
+;				   #Cursor Movement Constants which accept Number of Moves and Selecting:
+;					$LOC_TEXTCUR_GO_LEFT,
+;					$LOC_TEXTCUR_GO_RIGHT,
+;				   #Cursor Movements which accept Selecting Only:
+;					$LOC_TEXTCUR_GOTO_START,
+;					$LOC_TEXTCUR_GOTO_END,
+;				   #Cursor Movements which accept nothing and are done once per call:
+;					$LOC_TEXTCUR_COLLAPSE_TO_START,
+;					$LOC_TEXTCUR_COLLAPSE_TO_END
 ; Related .......: _LOCalc_TextCursorIsCollapsed
 ; Link ..........:
 ; Example .......: Yes

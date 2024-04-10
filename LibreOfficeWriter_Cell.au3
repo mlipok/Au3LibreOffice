@@ -59,9 +59,8 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
-; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;				   Call any optional parameter with Null keyword to skip it. $iBackColor is set using Long integer.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -130,11 +129,10 @@ EndFunc   ;==>_LOWriter_CellBackColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CellBorderWidth,
-;					_LOWriter_CellBorderStyle, _LOWriter_CellBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing are passed from the internal border setting function.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CellBorderWidth, _LOWriter_CellBorderStyle, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -182,10 +180,8 @@ EndFunc   ;==>_LOWriter_CellBorderColor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderColor,
-;					_LOWriter_CellBorderStyle, _LOWriter_CellBorderWidth
+;				   Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderColor, _LOWriter_CellBorderStyle, _LOWriter_CellBorderWidth
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -265,10 +261,10 @@ EndFunc   ;==>_LOWriter_CellBorderPadding
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_CellBorderWidth, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing are passed from the internal border setting function.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_CellBorderWidth, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -316,11 +312,10 @@ EndFunc   ;==>_LOWriter_CellBorderStyle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To "Turn Off" Borders, set them to 0
-;					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					Call any optional parameter with Null keyword to skip it.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
-;					_LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderStyle,
-;					_LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   Call any optional parameter with Null keyword to skip it.
+;				   Error values for Initialization and Processing are passed from the internal border setting function.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_CellBorderStyle, _LOWriter_CellBorderColor, _LOWriter_CellBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -353,7 +348,7 @@ EndFunc   ;==>_LOWriter_CellBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_DocInsertString
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition, _LOWriter_DocInsertString
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -385,10 +380,10 @@ EndFunc   ;==>_LOWriter_CellCreateTextCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Formula can only be set for an individual cell, not a range.
-;					Setting the formula will overwrite any existing data in the cell.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;					To retrieve the total of a formula, use _LOWriter_CellValue.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+;				   Setting the formula will overwrite any existing data in the cell.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;				   To retrieve the total of a formula, use _LOWriter_CellValue.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -423,7 +418,7 @@ EndFunc   ;==>_LOWriter_CellFormula
 ; Modified ......:
 ; Remarks .......: Returns the data type as one of the constants, $LOW_CELL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;				   If the data was entered by the keyboard, it is generally recognized as a string regardless of the data content.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -452,7 +447,7 @@ EndFunc   ;==>_LOWriter_CellGetDataType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If the cell is not a formula, the error value is zero.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -482,7 +477,7 @@ EndFunc   ;==>_LOWriter_CellGetError
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -516,7 +511,7 @@ EndFunc   ;==>_LOWriter_CellGetName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling $bProtect with Null keyword returns the current WriteProtection setting of the cell. (True or False)
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -554,9 +549,9 @@ EndFunc   ;==>_LOWriter_CellProtect
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: String can only be set for an individual cell, not a range.
-;					Setting the String will overwrite any existing data in the cell.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+;				   Setting the String will overwrite any existing data in the cell.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -593,10 +588,10 @@ EndFunc   ;==>_LOWriter_CellString
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Value can only be set for an individual cell, not a range.
-;					Setting the Value will overwrite any existing data in the cell.
-;					For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
-; 					Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+;				   Setting the Value will overwrite any existing data in the cell.
+;				   For a value cell the value is returned, for a string cell zero is returned and for a formula cell the result value of a formula is returned.
+;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -634,7 +629,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $iVertOrient is set to Null the current setting is returned.
-; Related .......:_LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
+; Related .......: _LOWriter_TableGetCellObjByCursor, _LOWriter_TableGetCellObjByName, _LOWriter_TableGetCellObjByPosition,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
