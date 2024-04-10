@@ -3493,9 +3493,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
-;                   For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
-;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                   Call any optional parameter with Null keyword to skip it.
+;                  For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
