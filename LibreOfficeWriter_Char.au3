@@ -112,7 +112,7 @@ EndFunc   ;==>_LOWriter_CharStyleBorderColor
 ; Description ...: Set and retrieve the distance between the border and the characters. Libre Office 4.2 and Up.
 ; Syntax ........: _LOWriter_CharStyleBorderPadding(ByRef $oCharStyle[, $iAll = Null[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null]]]]])
 ; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
-;                  $iAll                - [optional] an integer value. Default is Null. Set all four values to the same value. When used, all other parameters are ignored.  In Micrometers.
+;                  $iAll                - [optional] an integer value. Default is Null. Set all four values to the same value. When used, all other parameters are ignored. In Micrometers.
 ;                  $iTop                - [optional] an integer value. Default is Null. Set the Top border distance in Micrometers.
 ;                  $iBottom             - [optional] an integer value. Default is Null. Set the Bottom border distance in Micrometers.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Set the left border distance in Micrometers.
@@ -455,7 +455,7 @@ EndFunc   ;==>_LOWriter_CharStyleEffect
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object,
 ;                  @Error 1 @Extended 2 Return 0 = $sCharStyle not a String
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean  = Success. If Character Style exists then True is returned, if not, False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If Character Style exists then True is returned, if not, False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -625,7 +625,7 @@ EndFunc   ;==>_LOWriter_CharStyleGetObj
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
 ;                  $sNewCharStyleName   - [optional] a string value. Default is Null. The new name to set the called Character style to.
-;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing  Character style (or an Empty String ("") = - None -) to apply its settings to the current style. Use the other settings to modify the inherited style settings.
+;                  $sParentStyle        - [optional] a string value. Default is Null. Set an existing Character style (or an Empty String ("") = - None -) to apply its settings to the current style. Use the other settings to modify the inherited style settings.
 ;                  $bHidden             - [optional] a boolean value. Default is Null. Whether to hide the style in the UI. Libre Office version 4.0 and up only.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -817,7 +817,7 @@ EndFunc   ;==>_LOWriter_CharStylePosition
 ; Syntax ........: _LOWriter_CharStyleRotateScale(ByRef $oCharStyle[, $iRotation = Null[, $iScaleWidth = Null]])
 ; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
 ;                  $iRotation           - [optional] an integer value (0,90,270). Default is Null. Degrees to rotate the text.
-;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to  horizontally stretch or compress the text. 100% is a normal sizing.
+;                  $iScaleWidth         - [optional] an integer value (1-100). Default is Null. The percentage to horizontally stretch or compress the text. 100% is a normal sizing.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

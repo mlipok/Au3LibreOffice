@@ -385,8 +385,8 @@ EndFunc   ;==>_LOCalc_SheetGetObjByPosition
 ; Name ..........: _LOCalc_SheetImport
 ; Description ...: Import a Sheet from another Document. L.O. 3.5 and up.
 ; Syntax ........: _LOCalc_SheetImport(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName[, $bInsertAfter = False])
-; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sSheetName          - a string value. The Sheet's name to import from the Source Document.
 ;                  $bInsertAfter        - [optional] a boolean value. Default is False. If True, the Sheet is inserted after the currently active Sheet. If False, the Sheet is inserted before the currently active Sheet.
 ; Return values .: Success: Object
@@ -518,8 +518,8 @@ EndFunc   ;==>_LOCalc_SheetIsProtected
 ; Name ..........: _LOCalc_SheetLink
 ; Description ...: Link to an external Sheet in another Document.
 ; Syntax ........: _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName[, $iLinkMode = $LOC_SHEET_LINK_MODE_NORMAL[, $bInsertAfter = False]])
-; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. Must have been previously saved to a location.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. Must have been previously saved to a location. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sSheetName          - a string value. The Sheet's name to import from the Source Document.
 ;                  $iLinkMode           - [optional] an integer value (0-2). Default is $LOC_SHEET_LINK_MODE_NORMAL. The content to link from the Sheet. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bInsertAfter        - [optional] a boolean value. Default is False. If True, the Sheet is inserted after the currently active Sheet. If False, the Sheet is inserted before the currently active Sheet.
@@ -864,7 +864,7 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetPrintRowsRepeat
-; Description ...:  Set or Retrieve settings for Row Header print settings.
+; Description ...: Set or Retrieve settings for Row Header print settings.
 ; Syntax ........: _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet[, $oRange = Null[, $bRepeatRows = Null]])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $oRange              - [optional] an object. Default is Null. The Range containing the Row Headers. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.

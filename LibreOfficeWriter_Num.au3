@@ -359,7 +359,7 @@ EndFunc   ;==>_LOWriter_NumStyleDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sNumStyle not a String.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean  = Success. Returns True if Numbering Style exists in the document, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Numbering Style exists in the document, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -380,7 +380,7 @@ EndFunc   ;==>_LOWriter_NumStyleExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_NumStyleStyleGetObj
-; Description ...: Retrieve a Numbering Style Style Object for use with other  Numbering Style Style functions.
+; Description ...: Retrieve a Numbering Style Style Object for use with other Numbering Style Style functions.
 ; Syntax ........: _LOWriter_NumStyleStyleGetObj(ByRef $oDoc, $sNumStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sNumStyle           - a string value. The Numbering Style Style name to retrieve the Object for.

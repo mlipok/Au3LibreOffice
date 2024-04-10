@@ -38,7 +38,7 @@
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean  = Success. Returns True if the Font is available, else False.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Font is available, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function may cause a processor usage spike for a moment or two. If you wish to eliminate this, comment out the current sleep function and place a sleep(10) in its place.
@@ -76,7 +76,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array  = Success. Returns a 4 Column Array, @extended is set to the number of results. See remarks
+;                  @Error 0 @Extended ? Return Array = Success. Returns a 4 Column Array, @extended is set to the number of results. See remarks
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Many fonts will be listed multiple times, this is because of the varying settings for them, such as bold, Italic, etc.

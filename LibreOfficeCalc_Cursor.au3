@@ -471,7 +471,7 @@ EndFunc   ;==>_LOCalc_TextCursorGetString
 ; Description ...: Moves a Text cursor to another Text Cursor or Paragraph portion Position or Range.
 ; Syntax ........: _LOCalc_TextCursorGoToRange(ByRef $oCursor, ByRef $oRange[, $bSelect = False])
 ; Parameters ....: $oCursor             - [in/out] an object. an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
-;                  $oRange              - [in/out] an object. an object. The Cursor or paragraph portion to move cursor called in $oCursor to.  A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
+;                  $oRange              - [in/out] an object. an object. The Cursor or paragraph portion to move cursor called in $oCursor to. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
 ;                  $bSelect             - [optional] a boolean value. Default is False. If True, the selection is expanded or created from original cursor location to Range location.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -735,7 +735,7 @@ EndFunc   ;==>_LOCalc_TextCursorOverline
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Enumeration of Paragraphs.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array  = Success. Returns an Array of Paragraph Objects, @Extended is set to the number of results.
+;                  @Error 0 @Extended ? Return Array = Success. Returns an Array of Paragraph Objects, @Extended is set to the number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The paragraphs are enumerated for the area the cursor is currently within, for example, the Text Cursor is currently in a Cell, the enumeration of paragraphs would be for the Cell the cursor was presently in.

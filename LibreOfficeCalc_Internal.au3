@@ -1448,11 +1448,11 @@ EndFunc   ;==>__LOCalc_CellUnderLine
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: __LOCalc_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.style.CharacterProperties".
-;                  $bAutoSuper          -  a boolean value. If True, automatic sizing for Superscript is active.
-;                  $iSuperScript        -  an integer value. The Superscript percentage value. See Remarks.
-;                  $bAutoSub            -  a boolean value. If True, automatic sizing for Subscript is active.
-;                  $iSubScript          -  an integer value. The Subscript percentage value. See Remarks.
-;                  $iRelativeSize       -  an integer value (1-100). The size percentage relative to current font size.
+;                  $bAutoSuper          - a boolean value. If True, automatic sizing for Superscript is active.
+;                  $iSuperScript        - an integer value. The Superscript percentage value. See Remarks.
+;                  $bAutoSub            - a boolean value. If True, automatic sizing for Subscript is active.
+;                  $iSubScript          - an integer value. The Subscript percentage value. See Remarks.
+;                  $iRelativeSize       - an integer value (1-100). The size percentage relative to current font size.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1560,9 +1560,9 @@ EndFunc   ;==>__LOCalc_CharPosition
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to Micrometers and back for retrieval of settings.
-;                  The acceptable values for $nKerning are from -2 Pt to  928.8 Pt.
+;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt.
 ;                  The values can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning  is -2.0 Pt to 928.8 Pt.
+;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258. Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -1654,7 +1654,7 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; Modified ......:
 ; Remarks .......: Searches a predefined list of extensions stored in an array. Not all FilterNames are listed.
 ;                  For finding your own FilterNames, see convertfilters.html found in L.O. Install Folder: LibreOffice\help\en-US\text\shared\guide
-;                  Or See: "OOME_3_0",    "OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for listing all FilterNames, found on page 284 of the above book in the ODT format.
+;                  Or See: "OOME_3_0", "OpenOffice.org Macros Explained OOME Third Edition" by Andrew D. Pitonyak, which has a handy Macro for listing all FilterNames, found on page 284 of the above book in the ODT format.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -1753,7 +1753,7 @@ EndFunc   ;==>__LOCalc_FilterNameGet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Unknown Cursor type.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOC_CURTYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 0 @Extended 0 Return Integer = Success, Return value will be one of the constants, $LOC_CURTYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of cursor the input Object is, such as a Text Cursor or a Sheet Cursor. Can also be a Paragraph or Text Portion.

@@ -891,11 +891,11 @@ EndFunc   ;==>__LOWriter_CharOverLine
 ; Description ...: Set and retrieve settings related to Sub/Super Script and relative size.
 ; Syntax ........: __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $bAutoSuper          -  a boolean value. If True, automatic sizing for Superscript is active.
-;                  $iSuperScript        -  an integer value. The Superscript percentage value. See Remarks.
-;                  $bAutoSub            -  a boolean value. If True, automatic sizing for Subscript is active.
-;                  $iSubScript          -  an integer value. The Subscript percentage value. See Remarks.
-;                  $iRelativeSize       -  an integer value (1-100). The size percentage relative to current font size.
+;                  $bAutoSuper          - a boolean value. If True, automatic sizing for Superscript is active.
+;                  $iSuperScript        - an integer value. The Superscript percentage value. See Remarks.
+;                  $bAutoSub            - a boolean value. If True, automatic sizing for Subscript is active.
+;                  $iSubScript          - an integer value. The Subscript percentage value. See Remarks.
+;                  $iRelativeSize       - an integer value (1-100). The size percentage relative to current font size.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -985,7 +985,7 @@ EndFunc   ;==>__LOWriter_CharPosition
 ; Syntax ........: __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth[, $bRotateFitLine = Null])
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
 ;                  $iRotation           - an integer value (0,90,270). Degrees to rotate the text.
-;                  $iScaleWidth         - an integer value (1-100). The percentage to  horizontally stretch or compress the text. 100 is normal sizing.
+;                  $iScaleWidth         - an integer value (1-100). The percentage to horizontally stretch or compress the text. 100 is normal sizing.
 ;                  $bRotateFitLine      - [optional] a boolean value. Default is Null. If True, Stretches or compresses the selected text so that it fits between the line that is above the text and the line that is below the text. Only works with Direct Formatting.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1082,7 +1082,7 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  LibreOffice may adjust the set width +/- 1 Micrometer after setting.
 ;                  Color is set in Long Integer format.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -1160,9 +1160,9 @@ EndFunc   ;==>__LOWriter_CharShadow
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When setting Kerning values in LibreOffice, the measurement is listed in Pt (Printer's Points) in the User Display, however the internal setting is measured in Micrometers. They will be automatically converted from Points to MicroMeters and back for retrieval of settings.
-;                  The acceptable values for $nKerning are from -2 Pt to  928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
-;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM;  929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
-;                  Attempting to set Libre's kerning value to  anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative  numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning  is -2.0 Pt to 928.8 Pt.
+;                  The acceptable values for $nKerning are from -2 Pt to 928.8 Pt. the figures can be directly converted easily, however, for an unknown reason to myself, LibreOffice begins counting backwards and in negative Micrometers internally from 928.9 up to 1000 Pt (Max setting).
+;                  For example, 928.8Pt is the last correct value, which equals 32766 uM (Micrometers), after this LibreOffice reports the following: ;928.9 Pt = -32766 uM; 929 Pt = -32763 uM; 929.1 = -32759; 1000 pt = -30258.
+;                  Attempting to set Libre's kerning value to anything over 32768 uM causes a COM exception, and attempting to set the kerning to any of these negative numbers sets the User viewable kerning value to -2.0 Pt. For these reasons the max settable kerning is -2.0 Pt to 928.8 Pt.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
@@ -2791,7 +2791,7 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  @Error 3 @Extended 4 Return 0 = Cursor in unknown DataType
 ;                  --Success--
 ;                  @Error 0 @Extended Integer Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 0 @Extended 0 Return Integer  = Success, If $bReturnObject is False, Return value will be one of constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 0 Return Integer = Success, If $bReturnObject is False, Return value will be one of constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of cursor, such as a TextTable, Footnote etc.
@@ -2894,7 +2894,7 @@ EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Unknown Cursor type.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer  = Success, Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended 0 Return Integer = Success, Return value will be one of the constants, $LOW_CURTYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Returns what type of cursor the input Object is, such as a Table Cursor, Text Cursor or a View Cursor. Can also be a Paragraph or Text Portion.
@@ -3199,7 +3199,7 @@ EndFunc   ;==>__LOWriter_NumStyleCreateScript
 ; Name ..........: __LOWriter_NumStyleDeleteScript
 ; Description ...: Part of the Numbering Style Modification workaround, deletes a Macro in a document.
 ; Syntax ........: __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3368,7 +3368,7 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ; Name ..........: __LOWriter_NumStyleModify
 ; Description ...: Internal function for modifying Numbering Style settings.
 ; Syntax ........: __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettings)
-; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, to modify NumberingRules for.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, to modify NumberingRules for.
 ;                  $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
 ;                  $iLevel              - an integer value (-1-9). The Numbering Style level to modify. -1 = all levels.
 ;                  $avSettings          - an array of variants. Array containing Numbering Style settings to set.
@@ -4004,7 +4004,7 @@ EndFunc   ;==>__LOWriter_ParDropCaps
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve ParaTabStops Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean  = True if Paragraph has the requested TabStop. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = True if Paragraph has the requested TabStop. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4047,7 +4047,7 @@ EndFunc   ;==>__LOWriter_ParHasTabStop
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoHyphen not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not  a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bHyphenNoCaps not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iMaxHyphens not an Integer, less than 0, or greater than 99.
 ;                  @Error 1 @Extended 7 Return 0 = $iMinLeadingChar not an Integer, less than 2, or greater than 9.
 ;                  @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2, or greater than 9.
@@ -4307,7 +4307,7 @@ EndFunc   ;==>__LOWriter_ParOutLineAndList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;                  Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
+;                  Libre doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ;                  Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4383,7 +4383,7 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
@@ -4964,7 +4964,7 @@ EndFunc   ;==>__LOWriter_ParTabStopMod
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bParSplit not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $bKeepTogether not  a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bKeepTogether not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iParOrphans not an Integer, less than 0, equal to 1, or greater than 9.
 ;                  @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
 ;                  --Property Setting Errors--
@@ -6712,7 +6712,7 @@ EndFunc   ;==>__LOWriter_ShapeArrowStyleName
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ShapeLineStyleName
-; Description ...:  Convert a Line Style Constant to the corresponding name or reverse.
+; Description ...: Convert a Line Style Constant to the corresponding name or reverse.
 ; Syntax ........: __LOWriter_ShapeLineStyleName([$iLineStyle = Null[, $sLineStyle = Null]])
 ; Parameters ....: $iLineStyle          - [optional] an integer value. Default is Null. The Line Style Constant to convert to its corresponding name. See $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $sLineStyle          - [optional] a string value. Default is Null. The Line Style Name to convert to the corresponding constant if found.
@@ -6882,7 +6882,7 @@ EndFunc   ;==>__LOWriter_ShapePointGetSettings
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ShapePointModify
 ; Description ...: Internal function for modifying A Shape's Points.
-; Syntax ........: __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayElement[, $iX = Null[, $iY = Null[,  $iPointType = Null[, $bIsCurve = Null]]]])
+; Syntax ........: __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayElement[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
 ; Parameters ....: $aiFlags             - [in/out] an array of integers. An Array of Point Type Flags returned from the Shape. Array will be directly modified.
 ;                  $atPoints            - [in/out] an array of dll structs. An Array of Points returned from the Shape. Array will be directly modified.
 ;                  $iArrayElement       - [in/out] an integer value. The Array element that contains the point to modify. This may be directly modified, depending on the settings.
@@ -7658,11 +7658,11 @@ EndFunc   ;==>__LOWriter_TableBorder
 ;                  #Cursor Movement Constants which accept number of Moves and Selecting:
 ;                   $LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
 ;                   $LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;                   $LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
+;                   $LOW_TABLECUR_GO_UP, Move the cursor up/down n cells.
 ;                   $LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
 ;                  #Cursor Movements which accept Selecting Only:
 ;                   $LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;                   $LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
+;                   $LOW_TABLECUR_GOTO_END, Move the cursor to the bottom right cell.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -7913,7 +7913,7 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;                   $LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
 ;                  #Cursor Movements which accept nothing and are done once per call:
 ;                   $LOW_TEXTCUR_COLLAPSE_TO_START,
-;                   $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
+;                   $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No

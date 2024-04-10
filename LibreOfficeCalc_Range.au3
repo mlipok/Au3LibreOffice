@@ -775,7 +775,7 @@ EndFunc   ;==>_LOCalc_RangeData
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDatabaseAdd
-; Description ...:    Add a Database Range to a document.
+; Description ...: Add a Database Range to a document.
 ; Syntax ........: _LOCalc_RangeDatabaseAdd(ByRef $oDoc, $oRange, $sName[, $bColumnHeaders = True[, $bTotalsRow = False[, $bAddDeleteCells = True[, $bKeepFormatting = True[, $bDontSaveImport = False[, $bAutoFilter = False]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oRange              - an object. The Range to designate as a Database range. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
@@ -1950,7 +1950,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ;                  $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
 ;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
-;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell  that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
+;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
 ; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
 ; Link ..........:
@@ -2328,7 +2328,7 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ; Remarks .......: $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
 ;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
-;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
+;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.]
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.

@@ -621,7 +621,7 @@ EndFunc   ;==>_LOWriter_CellValue
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Failed to set Cell Vertical Orientation property.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1  = Successfully set Vertical Orientation.
+;                  @Error 0 @Extended 0 Return 1 = Successfully set Vertical Orientation.
 ;                  @Error 0 @Extended 0 Return Integer = Success. $iVertOrient is set to Null, returning current Cell Vertical orientation, see constants $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:

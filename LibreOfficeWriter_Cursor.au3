@@ -74,7 +74,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;                  @Error 1 @Extended 2 Return 0 = $iFlag not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iFlag set to flag not available for "Text" cursor.
 ;                  @Error 1 @Extended 4 Return 0 = $iFlag set to flag not available for "Table" cursor.
-;                  @Error 1 @Extended 5 Return 0 = $iFlag  set to flag not available for "View" cursor.
+;                  @Error 1 @Extended 5 Return 0 = $iFlag set to flag not available for "View" cursor.
 ;                  @Error 1 @Extended 6 Return 0 = $oCursor unknown cursor type.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Cursor Type.
@@ -206,7 +206,7 @@ EndFunc   ;==>_LOWriter_CursorGetType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If the Cursor being used as a range has anything selected, the selection will be selected in the Cursor called in $oCursor also.
-; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor,    _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_CursorMove
+; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet, _LOWriter_CursorMove
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

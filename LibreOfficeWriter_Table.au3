@@ -217,7 +217,7 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableBorderStyle
-; Description ...: Set and Retrieve the Table Border Line style.  Libre Office Version 3.6 and Up.
+; Description ...: Set and Retrieve the Table Border Line style. Libre Office Version 3.6 and Up.
 ; Syntax ........: _LOWriter_TableBorderStyle(ByRef $oTable[, $iTop = Null[, $iBottom = Null[, $iLeft = Null[, $iRight = Null[, $iVert = Null[, $iHori = Null]]]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iTop                - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Top Border Line Style of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -319,7 +319,7 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Error values for Initialization and Processing, are passed from the internal border setting function.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor,    _LOWriter_TableBorderPadding
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_TableBorderStyle, _LOWriter_TableBorderColor, _LOWriter_TableBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -369,7 +369,7 @@ EndFunc   ;==>_LOWriter_TableBorderWidth
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Break Type must be set before Page Style will be able to be set, and page style needs set before $iPgNumOffSet can be set.
-;                  LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but  doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
+;                  LibreOffice doesn't directly show in its User interface options for Break type constants #3 and #6 (Column both) and (Page both), but doesn't throw an error when being set to either one, so they are included here, though I'm not sure if they will work correctly.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_PageStylesGetNames
@@ -734,7 +734,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ;                  $bSelect             - [optional] a boolean value. Default is False. If True, selection is expanded when moving to a specific cell with $sGoToCellByName.
 ;                  $bMergeRange         - [optional] a boolean value. Default is Null. Merge the selected range of cells.
 ;                  $iSplitRangeInto     - [optional] an integer value. Default is Null. Create n new cells in each cell selected by the cursor. See also $bSplitRangeHori.
-;                  $bSplitRangeHori     - [optional] a boolean value. Default is False. If True, splits the selected cell or cell range  horizontally, else, False for vertically.
+;                  $bSplitRangeHori     - [optional] a boolean value. Default is False. If True, splits the selected cell or cell range horizontally, else, False for vertically.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1010,7 +1010,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object.  = Success. A Cell object or a Cell Range.
+;                  @Error 0 @Extended 0 Return Object. = Success. A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split or joined.
@@ -1134,7 +1134,7 @@ EndFunc   ;==>_LOWriter_TableGetData
 ; Description ...: Returns a Table Object, for later Table related functions.
 ; Syntax ........: _LOWriter_TableGetObjByCursor(ByRef $oDoc, ByRef $oCursor)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor             - [in/out] an object.  A Cursor Object returned from any Cursor Object creation Or retrieval functions. Cursor object must be located in a Table.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation Or retrieval functions. Cursor object must be located in a Table.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1225,7 +1225,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 ; Modified ......:
 ; Remarks .......: This function inserts a Table previously created by _LOWriter_TableCreate, into a document.
 ;                  Text Tables cannot be inserted into Foot/Endnotes. And it is not best to place them into other tables, though it is possible.
-;                  You can set the $oCursor parameter  to either a ViewCursor or a Text cursor currently in an acceptable data type, the table will be inserted at the cursor position. Or set $oCursor to Default, the Table will be inserted at the very end of a document.
+;                  You can set the $oCursor parameter to either a ViewCursor or a Text cursor currently in an acceptable data type, the table will be inserted at the cursor position. Or set $oCursor to Default, the Table will be inserted at the very end of a document.
 ;                  $bHeading only applies when a Table is created with more than 1 Row.
 ;                  For an unknown reason to myself, when creating a Text Table with more than 1 row the "Table Heading" paragraph style is applied to the first row. Setting $bHeading to False (Default) will return the paragraph style to "Table Contents" as normal. If you set $bHeading to True, "Table Heading" Paragraph Style will be applied. If these styles are not present a Property setting error will result, however the Table will still have been successfully inserted into the document.
 ; Related .......: _LOWriter_TableCreate, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor
@@ -1405,7 +1405,7 @@ EndFunc   ;==>_LOWriter_TableMargin
 ;                  |                                64 = Error setting $bRepeatHeading
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, If the Table is NOT already inserted into the document, returning current settings in a 4  Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, If the Table is NOT already inserted into the document, returning current settings in a 4 Element Array with values in order of function parameters.
 ;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were set to Null, If the Table is already inserted into the document, returning current settings in a 7 Element Array with values in order of function parameters. $bSplitRows, $RepeatHeadline, and $iHeaderRows will be returned in the 5th, 6th, and 7th elements, respectively, as the Table is inserted into the Document.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -1687,7 +1687,7 @@ EndFunc   ;==>_LOWriter_TableRowInsert
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iRow                - an integer value. The Row to set the properties for.
 ;                  $iHeight             - [optional] an integer value. Default is Null. The row height.
-;                  $bIsAutoHeight       - [optional] a boolean value. Default is Null. If  True, the row's height is automatically adjusted.
+;                  $bIsAutoHeight       - [optional] a boolean value. Default is Null. If True, the row's height is automatically adjusted.
 ;                  $bIsSplitAllowed     - [optional] a boolean value. Default is Null. If False, the row can not be split at a page boundary.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1858,7 +1858,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Description ...: Set or Retrieve the shadow settings for a Table Border.
 ; Syntax ........: _LOWriter_TableShadow(ByRef $oTable[, $iWidth = Null[, $iColor = Null[, $bTransparent = Null[, $iLocation = Null]]]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Table,  set in Micrometers.
+;                  $iWidth              - [optional] an integer value. Default is Null. The Shadow Width of the Table, set in Micrometers.
 ;                  $iColor              - [optional] an integer value (0-16777215). Default is Null. The Color of the Table shadow, set in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $bTransparent        - [optional] a boolean value. Default is Null. If True, the Table Shadow is transparent.
 ;                  $iLocation           - [optional] an integer value (0-4). Default is Null. The Location of the Table Shadow. See constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1887,7 +1887,7 @@ EndFunc   ;==>_LOWriter_TablesGetNames
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong,    _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

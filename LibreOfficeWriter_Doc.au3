@@ -283,7 +283,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sBookmarkName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $sBookmarkName contains illegal characters, /\@:*?";,.# .
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return     0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                            1 = Error setting $sBookmarkName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Bookmark name successfully modified.
@@ -496,12 +496,12 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 5 @Extended 2 Return 0 = Current Component not a Text Document.
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Object =  Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array =  Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
-;                  @Error 0 @Extended 3 Return Object =  Success, The Object for the document with matching URL is returned.
-;                  @Error 0 @Extended 4 Return Object =  Success, The Object for the document with matching Title is returned.
-;                  @Error 0 @Extended 5 Return Object =  Success, A partial Title or Path search found only one match, returning the Object for the found document.
-;                  @Error 0 @Extended 6 Return Array =  Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
+;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
+;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
+;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
+;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
+;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
+;                  @Error 0 @Extended 6 Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (i.e: Test.odt), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.).
@@ -1193,8 +1193,8 @@ EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
 ; Remarks .......: A Dispatch is essentially a simulation of the user performing an action, such as pressing Ctrl+A to select all, etc.
 ;                  Dispatch Commands:
 ;                    uno:FullScreen -- Toggles full screen mode.
-;                    uno:ChangeCaseToLower -- Changes all selected text to lower case.  Text must be selected with the ViewCursor.
-;                    uno:ChangeCaseToUpper -- Changes all selected text to upper case.  Text must be selected with the ViewCursor.
+;                    uno:ChangeCaseToLower -- Changes all selected text to lower case. Text must be selected with the ViewCursor.
+;                    uno:ChangeCaseToUpper -- Changes all selected text to upper case. Text must be selected with the ViewCursor.
 ;                    uno:ChangeCaseRotateCase -- Cycles the Case (Title Case, Sentence case, UPPERCASE, lowercase). Text must be selected with the ViewCursor.
 ;                    uno:ChangeCaseToSentenceCase -- Changes the sentence to Sentence case where the Viewcursor is currently positioned or has selected.
 ;                    uno:ChangeCaseToTitleCase -- Changes the selected text to Title case. Text must be selected with the ViewCursor.
@@ -1647,7 +1647,7 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ; Name ..........: _LOWriter_DocFooterGetTextCursor
 ; Description ...: Create a Text cursor in a Page Style footer for text related functions.
 ; Syntax ........: _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle[, $bFooter = False[, $bFirstPage = False[, $bLeftPage = False[, $bRightPage = False]]]])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or  _LOWriter_PageStyleGetObj function.
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $bFooter             - [optional] a boolean value. Default is False. If True, creates a text cursor for the page Footer. See Remarks.
 ;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor for the First page of the Footer. See Remarks.
 ;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor for Left pages in the Footer. See Remarks.
@@ -2467,7 +2467,7 @@ EndFunc   ;==>_LOWriter_DocHasTableName
 ; Name ..........: _LOWriter_DocHeaderGetTextCursor
 ; Description ...: Create a Text cursor in a Page Style header for text related functions.
 ; Syntax ........: _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle[, $bHeader = False[, $bFirstPage = False[, $bLeftPage = False[, $bRightPage = False]]]])
-; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or  _LOWriter_PageStyleGetObj function.
+; Parameters ....: $oPageStyle          - [in/out] an object. A Page Style object returned by a previous _LOWriter_PageStyleCreate, or _LOWriter_PageStyleGetObj function.
 ;                  $bHeader             - [optional] a boolean value. Default is False. If True, creates a text cursor in the page header. See Remarks.
 ;                  $bFirstPage          - [optional] a boolean value. Default is False. If True, creates a text cursor in the First page of the header. See Remarks.
 ;                  $bLeftPage           - [optional] a boolean value. Default is False. If True, creates a text cursor in the Left pages of the header. See Remarks.
@@ -3492,7 +3492,7 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
+; Remarks .......: Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
 ;                   For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
 ;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                   Call any optional parameter with Null keyword to skip it.
@@ -3719,7 +3719,7 @@ EndFunc   ;==>_LOWriter_DocRedoIsPossible
 ; Description ...: Replace all instances of a search.
 ; Syntax ........: _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, $sReplaceString, ByRef $atFindFormat, ByRef $atReplaceFormat)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oSrchDescript       - [in/out] an object.  A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
+;                  $oSrchDescript       - [in/out] an object. A Search Descriptor Object returned from _LOWriter_SearchDescriptorCreate function.
 ;                  $sSearchString       - a string value. A String of text or a Regular Expression to Search for.
 ;                  $sReplaceString      - a string value. A String of text or a Regular Expression to replace any results with.
 ;                  $atFindFormat        - [in/out] an array of structs. Set to an empty array[0] to skip. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Array will not be modified.
@@ -3783,7 +3783,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  $oRange              - [in/out] an object. A Range, such as a cursor with Data selected, to perform the search within.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $sReplaceString      - a string value. A String of text or a regular expression to replace any results with.
-;                  $atFindFormat        - [in/out] an array of structs. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".  Set to an empty array[0] to skip. Array will not be modified.
+;                  $atFindFormat        - [in/out] an array of structs. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search". Set to an empty array[0] to skip. Array will not be modified.
 ;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any results with. Set to an empty array[0] to skip. Array will not be modified. Not Recommended for use with regular expressions, see remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3814,7 +3814,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ; Modified ......:
 ; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection, consequently I have had to create my own. This function uses the "FindAllInRange" function, so any errors with Find/Replace formatting causing deletions will cause problems here. As best as I can tell all options for find and replace should be available, Formatting, Paragraph styles etc.
 ;                  How I created this function to still accept Regular Expressions is I use Libre's FindAll command, modified by my FindAllInRange function. I then ran into another problem, as my next step was to use AutoIt's RegExpReplace function to perform the replacement, but some replacements don't work as expected. To Fix this I have created two versions of Regular Expression replacement, the first way is only implemented if $atReplaceFormat is skipped using an empty array. I use an ExecutionHelper to execute the Find and replace command, however this method doesn't accept formatting for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new string to that result. However I have had to create a separate function to convert the ReplaceString to be compatible with AutoIt's Regular Expression formatting.
-;                  + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
+;                  + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
 ;                  + \n (new Paragraph) in L.O. RegExp. formatting is replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal.
 ;                  + \t (Tab) in L.O. format is replaced with @Tab.
 ;                  + &(Find Result/BackReference) is replaced with $0 which means insert the entire found string at that position, To insert a regular "&" character, comment it with a Backslash, \&.
@@ -4399,7 +4399,7 @@ EndFunc   ;==>_LOWriter_DocVisible
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return     0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                            1 = Error setting $iZoom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = $iZoom set successfully.

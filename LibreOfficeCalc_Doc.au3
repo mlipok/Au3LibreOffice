@@ -168,12 +168,12 @@ EndFunc   ;==>_LOCalc_DocClose
 ;                  @Error 5 @Extended 2 Return 0 = Current Component not a Calc Document.
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Object =  Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array =  Success, An Array of all open LibreOffice Calc documents is returned. See remarks.
-;                  @Error 0 @Extended 3 Return Object =  Success, The Object for the document with matching URL is returned.
-;                  @Error 0 @Extended 4 Return Object =  Success, The Object for the document with matching Title is returned.
-;                  @Error 0 @Extended 5 Return Object =  Success, A partial Title or Path search found only one match, returning the Object for the found document.
-;                  @Error 0 @Extended 6 Return Array =  Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
+;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
+;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Calc documents is returned. See remarks.
+;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
+;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
+;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
+;                  @Error 0 @Extended 6 Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.ods Or file:///C:/file/Test.ods) of the document, or the full Title with extension, (i.e: Test.ods), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.ods, Test2.xlsx etc.).
@@ -1912,7 +1912,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;                  @Error 1 @Extended 2 Return 0 = $iZoomType not an Integer, less than 0 or greater than 4. See constants $LOC_ZOOMTYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $iZoom not an Integer, less than 20 or greater than 600.
 ;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return     0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                            1 = Error setting $iZoom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Settings were successfully set.

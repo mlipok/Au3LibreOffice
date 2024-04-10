@@ -121,7 +121,7 @@ EndFunc   ;==>_LOWriter_ImageAreaColor
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient type to apply. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iIncrement          - [optional] an integer value (0,3-256). Default is Null. Specifies the number of steps of change color. 0 = Automatic.
 ;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage. $iType must be other than "Linear", or "Axial".
-;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage.  $iType must be other than "Linear", or "Axial".
+;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
 ;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
 ;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
@@ -1021,7 +1021,7 @@ EndFunc   ;==>_LOWriter_ImageGetAnchor
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Image object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object = Success.  Successfully found requested Image by name, returning Image Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully found requested Image by name, returning Image Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1510,7 +1510,7 @@ EndFunc   ;==>_LOWriter_ImageReplace
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Image Names. @Extended set to number of Names returned.
-;                  @Error 0 @Extended 0 Return 1 = Success.  Document contains no images.
+;                  @Error 0 @Extended 0 Return 1 = Success. Document contains no images.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1575,7 +1575,7 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  LibreOffice may change the shadow width +/- a Micrometer.
-; Related .......:  _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1632,7 +1632,7 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageSize
 ; Description ...: Set or retrieve Image size settings.
-; Syntax ........: _LOWriter_ImageSize(ByRef $oImage[, $iScaleWidth = Null[, $iScaleHeight = Null[, $iWidth = Null[,  $iHeight = Null[, $bOriginalSize = Null]]]]])
+; Syntax ........: _LOWriter_ImageSize(ByRef $oImage[, $iScaleWidth = Null[, $iScaleHeight = Null[, $iWidth = Null[, $iHeight = Null[, $bOriginalSize = Null]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iScaleWidth         - [optional] an integer value (Min. 1%). Default is Null. The Scale Width percentage of the image.
 ;                  $iScaleHeight        - [optional] an integer value (Min. 1%). Default is Null. The Scale Height percentage of the image.
@@ -1791,7 +1791,7 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImagePosition
 ; Description ...: Set or Retrieve Image Position Settings.
-; Syntax ........: _LOWriter_ImagePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[,  $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ImagePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Image. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Image. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
@@ -1878,7 +1878,7 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ;                     $LOW_RELATIVE_PAGE (7),
 ;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
 ;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName,  _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Related .......: _LOWriter_ImageInsert, _LOWriter_ImageGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

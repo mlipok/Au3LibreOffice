@@ -156,13 +156,13 @@ EndFunc   ;==>_LOWriter_EndnoteGetTextCursor
 ;                  @Error 1 @Extended 6 Return 0 = $oCursor located in unknown data type.
 ;                  @Error 1 @Extended 7 Return 0 = $sLabel not a string.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 =  Error creating "com.sun.star.text.Endnote" Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.Endnote" Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new Endnote, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Endnote cannot be inserted into a Frame, a Footnote, a Endnote, or the Header/Footer.
-; Related .......: _LOWriter_EndnoteDelete,  _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
+; Related .......: _LOWriter_EndnoteDelete, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor,
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -577,7 +577,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetTextCursor
 ;                  @Error 1 @Extended 6 Return 0 = $oCursor located in unknown data type.
 ;                  @Error 1 @Extended 7 Return 0 = $sLabel not a string.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 =  Error creating "com.sun.star.text.Footnote" Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.Footnote" Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted a new footnote, returning Footnote Object.
 ; Author ........: donnyh13
