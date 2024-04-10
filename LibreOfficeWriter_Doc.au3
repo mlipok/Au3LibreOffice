@@ -284,7 +284,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ;                  @Error 1 @Extended 4 Return 0 = $sBookmarkName contains illegal characters, /\@:*?";,.# .
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                            1 = Error setting $sBookmarkName
+;                  |                               1 = Error setting $sBookmarkName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Bookmark name successfully modified.
 ;                  @Error 0 @Extended 0 Return String = Success. $sBookmarkName set to Null, returning current Bookmark name.
@@ -4400,7 +4400,7 @@ EndFunc   ;==>_LOWriter_DocVisible
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                            1 = Error setting $iZoom
+;                  |                               1 = Error setting $iZoom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = $iZoom set successfully.
 ;                  @Error 0 @Extended 1 Return Integer = $iZoom set to null, returning current zoom value.

@@ -949,14 +949,14 @@ EndFunc   ;==>_LOWriter_DateStructCreate
 ;                  @Error 1 @Extended 10 Return 0 = $bIsUTC not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iYear
-;                  |                                2 = Error setting $iMonth
-;                  |                                4 = Error setting $iDay
-;                  |                                8 = Error setting $iHours
-;                  |                                16 = Error setting $iMinutes
-;                  |                                32 = Error setting $iSeconds
-;                  |                                64 = Error setting $iNanoSeconds
-;                  |                                128 = Error setting $bIsUTC
+;                  |                               1 = Error setting $iYear
+;                  |                               2 = Error setting $iMonth
+;                  |                               4 = Error setting $iDay
+;                  |                               8 = Error setting $iHours
+;                  |                               16 = Error setting $iMinutes
+;                  |                               32 = Error setting $iSeconds
+;                  |                               64 = Error setting $iNanoSeconds
+;                  |                               128 = Error setting $bIsUTC
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
 ;                  --Success--

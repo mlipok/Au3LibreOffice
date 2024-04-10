@@ -382,12 +382,12 @@ EndFunc   ;==>_LOWriter_ParObjSelect
 ;                  @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0, or greater than 5, see constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHorAlign
-;                  |                                2 = Error setting $iVertAlign
-;                  |                                4 = Error setting $iLastLineALign
-;                  |                                8 = Error setting $bExpandSIngleWord
-;                  |                                16 = Error setting $bSnapToGrid
-;                  |                                32 = Error setting $iTxtDirection
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iVertAlign
+;                  |                               4 = Error setting $iLastLineALign
+;                  |                               8 = Error setting $bExpandSIngleWord
+;                  |                               16 = Error setting $bSnapToGrid
+;                  |                               32 = Error setting $iTxtDirection
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -431,8 +431,8 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -540,11 +540,11 @@ EndFunc   ;==>_LOWriter_ParStyleBorderColor
 ;                  @Error 1 @Extended 8 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -837,11 +837,11 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumChar
-;                  |                                2 = Error setting $iLines
-;                  |                                4 = Error setting $iSpcTxt
-;                  |                                8 = Error setting $bWholeWord
-;                  |                                16 = Error setting $sCharStyle
+;                  |                               1 = Error setting $iNumChar
+;                  |                               2 = Error setting $iLines
+;                  |                               4 = Error setting $iSpcTxt
+;                  |                               8 = Error setting $bWholeWord
+;                  |                               16 = Error setting $sCharStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -893,11 +893,11 @@ EndFunc   ;==>_LOWriter_ParStyleDropCaps
 ;                  @Error 1 @Extended 8 Return 0 = $bShadow not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iRelief
-;                  |                                2 = Error setting $iCase
-;                  |                                4 = Error setting $bHidden
-;                  |                                8 = Error setting $bOutline
-;                  |                                16 = Error setting $bShadow
+;                  |                               1 = Error setting $iRelief
+;                  |                               2 = Error setting $iCase
+;                  |                               4 = Error setting $bHidden
+;                  |                               8 = Error setting $bOutline
+;                  |                               16 = Error setting $bShadow
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -978,10 +978,10 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sFontName
-;                  |                                2 = Error setting $nFontSize
-;                  |                                4 = Error setting $iPosture
-;                  |                                8 = Error setting $iWeight
+;                  |                               1 = Error setting $sFontName
+;                  |                               2 = Error setting $nFontSize
+;                  |                               4 = Error setting $iPosture
+;                  |                               8 = Error setting $iWeight
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1030,9 +1030,9 @@ EndFunc   ;==>_LOWriter_ParStyleFont
 ;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $FontColor
-;                  |                                2 = Error setting $iTransparency.
-;                  |                                4 = Error setting $iHighlight
+;                  |                               1 = Error setting $FontColor
+;                  |                               2 = Error setting $iTransparency.
+;                  |                               4 = Error setting $iHighlight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.0.
 ;                  --Success--
@@ -1121,11 +1121,11 @@ EndFunc   ;==>_LOWriter_ParStyleGetObj
 ;                  @Error 1 @Extended 8 Return 0 = $iMinTrailingChar not an Integer, less than 2, or greater than 9.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoHyphen
-;                  |                                2 = Error setting $bHyphenNoCaps
-;                  |                                4 = Error setting $iMaxHyphens
-;                  |                                8 = Error setting $iMinLeadingChar
-;                  |                                16 = Error setting $iMinTrailingChar
+;                  |                               1 = Error setting $bAutoHyphen
+;                  |                               2 = Error setting $bHyphenNoCaps
+;                  |                               4 = Error setting $iMaxHyphens
+;                  |                               8 = Error setting $iMinLeadingChar
+;                  |                               16 = Error setting $iMinTrailingChar
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 6.4.
 ;                  --Success--
@@ -1174,10 +1174,10 @@ EndFunc   ;==>_LOWriter_ParStyleHyphenation
 ;                  @Error 1 @Extended 7 Return 0 = $bAutoFirstLine not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBeforeTxt
-;                  |                                2 = Error setting $iAfterTxt
-;                  |                                4 = Error setting $iFirstLine
-;                  |                                8 = Error setting $bAutoFirstLine
+;                  |                               1 = Error setting $iBeforeTxt
+;                  |                               2 = Error setting $iAfterTxt
+;                  |                               4 = Error setting $iFirstLine
+;                  |                               8 = Error setting $bAutoFirstLine
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1230,11 +1230,11 @@ EndFunc   ;==>_LOWriter_ParStyleIndent
 ;                  @Error 1 @Extended 11 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewParStyleName
-;                  |                                2 = Error setting $sFollowStyle
-;                  |                                4 = Error setting $sParentStyle
-;                  |                                8 = Error setting $bAutoUpdate
-;                  |                                16 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewParStyleName
+;                  |                               2 = Error setting $sFollowStyle
+;                  |                               4 = Error setting $sParentStyle
+;                  |                               8 = Error setting $bAutoUpdate
+;                  |                               16 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -1336,10 +1336,10 @@ EndFunc   ;==>_LOWriter_ParStyleOrganizer
 ;                  @Error 1 @Extended 9 Return 0 = $iLineCountVal not an Integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iOutline
-;                  |                                2 = Error setting $sNumStyle
-;                  |                                4 = Error setting $bParLineCount
-;                  |                                8 = Error setting $iLineCountVal
+;                  |                               1 = Error setting $iOutline
+;                  |                               2 = Error setting $sNumStyle
+;                  |                               4 = Error setting $bParLineCount
+;                  |                               8 = Error setting $iLineCountVal
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1387,10 +1387,10 @@ EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 ;                  @Error 1 @Extended 7 Return 0 = $iOLColor not an Integer, or less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iOverLineStyle
-;                  |                                4 = Error setting $OLHasColor
-;                  |                                8 = Error setting $iOLColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iOverLineStyle
+;                  |                               4 = Error setting $OLHasColor
+;                  |                               8 = Error setting $iOLColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1439,9 +1439,9 @@ EndFunc   ;==>_LOWriter_ParStyleOverLine
 ;                  @Error 1 @Extended 8 Return 0 = $iPgNumOffSet not an Integer, or less than 0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBreakType
-;                  |                                2 = Error setting $sPageStyle
-;                  |                                4 = Error setting $iPgNumOffSet
+;                  |                               1 = Error setting $iBreakType
+;                  |                               2 = Error setting $sPageStyle
+;                  |                               4 = Error setting $iPgNumOffSet
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1494,9 +1494,9 @@ EndFunc   ;==>_LOWriter_ParStylePageBreak
 ;                  @Error 1 @Extended 8 Return 0 = $iRelativeSize not an integer, or less than 1, greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iSuperScript
-;                  |                                2 = Error setting $iSubScript
-;                  |                                4 = Error setting $iRelativeSize.
+;                  |                               1 = Error setting $iSuperScript
+;                  |                               2 = Error setting $iSubScript
+;                  |                               4 = Error setting $iRelativeSize.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1543,8 +1543,8 @@ EndFunc   ;==>_LOWriter_ParStylePosition
 ;                  @Error 1 @Extended 5 Return 0 = $iScaleWidth not an Integer or less than 1%, or greater than 100%.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iRotation
-;                  |                                2 = Error setting $iScaleWidth
+;                  |                               1 = Error setting $iRotation
+;                  |                               2 = Error setting $iScaleWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1703,10 +1703,10 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1762,12 +1762,12 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAbovePar
-;                  |                                2 = Error setting $iBelowPar
-;                  |                                4 = Error setting $bAddSpace
-;                  |                                8 = Error setting $iLineSpcMode
-;                  |                                16 = Error setting $iLineSpcHeight
-;                  |                                32 = Error setting bPageLineSpc
+;                  |                               1 = Error setting $iAbovePar
+;                  |                               2 = Error setting $iBelowPar
+;                  |                               4 = Error setting $bAddSpace
+;                  |                               8 = Error setting $iLineSpcMode
+;                  |                               16 = Error setting $iLineSpcHeight
+;                  |                               32 = Error setting bPageLineSpc
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -1816,8 +1816,8 @@ EndFunc   ;==>_LOWriter_ParStyleSpace
 ;                  @Error 1 @Extended 5 Return 0 = $nKerning not a number, or less than -2, or greater than 928.8 Points.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoKerning
-;                  |                                2 = Error setting $nKerning.
+;                  |                               1 = Error setting $bAutoKerning
+;                  |                               2 = Error setting $nKerning.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1867,9 +1867,9 @@ EndFunc   ;==>_LOWriter_ParStyleSpacing
 ;                  @Error 1 @Extended 6 Return 0 = $iStrikeLineStyle not an Integer, or less than 0, or greater than 6. See constants, $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $bStrikeOut
-;                  |                                4 = Error setting $iStrikeLineStyle
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $bStrikeOut
+;                  |                               4 = Error setting $iStrikeLineStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1923,11 +1923,10 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop position once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPosition
-;                  |                                2 = Error setting $iFillChar
-;                  |                                4 = Error setting $iAlignment
-;                  |                                8 = Error setting $iDecChar
-;                  |                                Note: $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
+;                  |                                     1 = Error setting $iPosition
+;                  |                                     2 = Error setting $iFillChar
+;                  |                                     4 = Error setting $iAlignment
+;                  |                                     8 = Error setting $iDecChar
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
@@ -1936,6 +1935,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  $iNewTabStop position is still returned as even though some settings weren't successfully set, the new TabStop was still created.
 ; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_ParStyleTabStopDelete
 ; Link ..........:
 ; Example .......: Yes
@@ -2066,10 +2066,10 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ;                  @Error 3 @Extended 1 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPosition
-;                  |                                2 = Error setting $iFillChar
-;                  |                                4 = Error setting $iAlignment
-;                  |                                8 = Error setting $iDecChar
+;                  |                               1 = Error setting $iPosition
+;                  |                               2 = Error setting $iFillChar
+;                  |                               4 = Error setting $iAlignment
+;                  |                               8 = Error setting $iDecChar
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2122,10 +2122,10 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopMod
 ;                  @Error 1 @Extended 7 Return 0 = $iParWidows not an Integer, less than 0, equal to 1, or greater than 9.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bParSplit
-;                  |                                2 = Error setting $bKeepTogether
-;                  |                                4 = Error setting $iParOrphans
-;                  |                                8 = Error setting $iParWidows
+;                  |                               1 = Error setting $bParSplit
+;                  |                               2 = Error setting $bKeepTogether
+;                  |                               4 = Error setting $iParOrphans
+;                  |                               8 = Error setting $iParWidows
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2172,10 +2172,10 @@ EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 ;                  @Error 1 @Extended 7 Return 0 = $iULColor not an Integer, or less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bWordOnly
-;                  |                                2 = Error setting $iUnderLineStyle
-;                  |                                4 = Error setting $ULHasColor
-;                  |                                8 = Error setting $iULColor
+;                  |                               1 = Error setting $bWordOnly
+;                  |                               2 = Error setting $iUnderLineStyle
+;                  |                               4 = Error setting $ULHasColor
+;                  |                               8 = Error setting $iULColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

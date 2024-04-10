@@ -1913,7 +1913,7 @@ EndFunc   ;==>_LOCalc_DocVisible
 ;                  @Error 1 @Extended 3 Return 0 = $iZoom not an Integer, less than 20 or greater than 600.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                            1 = Error setting $iZoom
+;                  |                               1 = Error setting $iZoom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.

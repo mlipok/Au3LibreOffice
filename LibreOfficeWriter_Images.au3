@@ -68,8 +68,8 @@
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -151,17 +151,17 @@ EndFunc   ;==>_LOWriter_ImageAreaColor
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -302,7 +302,7 @@ EndFunc   ;==>_LOWriter_ImageAreaGradient
 ;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -366,13 +366,13 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparency
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -545,11 +545,11 @@ EndFunc   ;==>_LOWriter_ImageBorderColor
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -745,14 +745,14 @@ EndFunc   ;==>_LOWriter_ImageBorderWidth
 ;                  @Error 1 @Extended 9 Return 0 = $bInvert not a boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iRed
-;                  |                                2 = Error setting $iGreen
-;                  |                                4 = Error setting $iBlue
-;                  |                                8 = Error setting $iBrightness
-;                  |                                16 = Error setting $iContrast
-;                  |                                32 = Error setting $nGamma
-;                  |                                64 = Error setting $iColorMode
-;                  |                                128 = Error setting $bInvert
+;                  |                               1 = Error setting $iRed
+;                  |                               2 = Error setting $iGreen
+;                  |                               4 = Error setting $iBlue
+;                  |                               8 = Error setting $iBrightness
+;                  |                               16 = Error setting $iContrast
+;                  |                               32 = Error setting $nGamma
+;                  |                               64 = Error setting $iColorMode
+;                  |                               128 = Error setting $bInvert
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -856,10 +856,10 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve the image Size structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iLeft
-;                  |                                2 = Error setting $iRight
-;                  |                                4 = Error setting $iTop
-;                  |                                8 = Error setting $iBottom
+;                  |                               1 = Error setting $iLeft
+;                  |                               2 = Error setting $iRight
+;                  |                               4 = Error setting $iTop
+;                  |                               8 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1069,10 +1069,10 @@ EndFunc   ;==>_LOWriter_ImageGetObjByName
 ;                  @Error 1 @Extended 6 Return 0 = $bServerSideMap not a boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sURL
-;                  |                                2 = Error setting $sName
-;                  |                                4 = Error setting $sFrameTarget
-;                  |                                8 = Error setting $bServerSideMap
+;                  |                               1 = Error setting $sURL
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $sFrameTarget
+;                  |                               8 = Error setting $bServerSideMap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1253,10 +1253,10 @@ EndFunc   ;==>_LOWriter_ImageInsert
 ;                  @Error 1 @Extended 5 Return 0 = $nAngle not a number, less than 0, or greater than 360.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bFlipVert
-;                  |                                2 = Error setting $bFlipHoriOnRight
-;                  |                                4 = Error setting $bFlipHoriOnLeft
-;                  |                                8 = Error setting $nAngle
+;                  |                               1 = Error setting $bFlipVert
+;                  |                               2 = Error setting $bFlipHoriOnRight
+;                  |                               4 = Error setting $bFlipHoriOnLeft
+;                  |                               8 = Error setting $nAngle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1330,10 +1330,10 @@ EndFunc   ;==>_LOWriter_ImageModify
 ;                  @Error 1 @Extended 5 Return 0 = $bPrint not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bProtectContent
-;                  |                                2 = Error setting $bProtectPos
-;                  |                                4 = Error setting $bProtectSize
-;                  |                                8 = Error setting $bPrint
+;                  |                               1 = Error setting $bProtectContent
+;                  |                               2 = Error setting $bProtectPos
+;                  |                               4 = Error setting $bProtectSize
+;                  |                               8 = Error setting $bPrint
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1406,9 +1406,9 @@ EndFunc   ;==>_LOWriter_ImageOptions
 ;                  @Error 1 @Extended 6 Return 0 = $sDesc not a string.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sName
-;                  |                                2 = Error setting $sAltText
-;                  |                                4 = Error setting $sDesc
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sAltText
+;                  |                               4 = Error setting $sDesc
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1563,10 +1563,10 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1654,11 +1654,11 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the image's Size structure again after setting scale sizing.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iScaleWidth
-;                  |                                2 = Error setting $iScaleHeight
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iHeight
-;                  |                                16 = Error setting Image to Original Size, possibly the page size is smaller than the image size.
+;                  |                               1 = Error setting $iScaleWidth
+;                  |                               2 = Error setting $iScaleHeight
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iHeight
+;                  |                               16 = Error setting Image to Original Size, possibly the page size is smaller than the image size.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1761,7 +1761,7 @@ EndFunc   ;==>_LOWriter_ImageSize
 ;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an integer, less than 0, or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return ? = Success. $iTransparency set to Null, returning the current Transparency setting as an integer.
@@ -1817,15 +1817,15 @@ EndFunc   ;==>_LOWriter_ImageTransparency
 ;                  @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or less than 0, or greater than 4, or equal to 3. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHorAlign
-;                  |                                2 = Error setting $iHorPos
-;                  |                                4 = Error setting $iHorRelation
-;                  |                                8 = Error setting $bMirror
-;                  |                                16 = Error setting $iVertAlign
-;                  |                                32 = Error setting $iVertPos
-;                  |                                64 = Error setting $iVertRelation
-;                  |                                128 = Error setting $bKeepInside
-;                  |                                256 = Error setting $iAnchorPos
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iHorPos
+;                  |                               4 = Error setting $iHorRelation
+;                  |                               8 = Error setting $bMirror
+;                  |                               16 = Error setting $iVertAlign
+;                  |                               32 = Error setting $iVertPos
+;                  |                               64 = Error setting $iVertRelation
+;                  |                               128 = Error setting $bKeepInside
+;                  |                               256 = Error setting $iAnchorPos
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
@@ -2042,13 +2042,13 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ;                  @Error 1 @Extended 9 Return 0 = $bKeepRatio not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iRelativeWidth
-;                  |                                4 = Error setting $iWidthRelativeTo
-;                  |                                8 = Error setting $iHeight
-;                  |                                16 = Error setting $iRelativeHeight
-;                  |                                32 = Error setting $iHeightRelativeTo
-;                  |                                64 = Error setting $bKeepRatio
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iRelativeWidth
+;                  |                               4 = Error setting $iWidthRelativeTo
+;                  |                               8 = Error setting $iHeight
+;                  |                               16 = Error setting $iRelativeHeight
+;                  |                               32 = Error setting $iHeightRelativeTo
+;                  |                               64 = Error setting $bKeepRatio
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.3.
 ;                  --Success--
@@ -2161,11 +2161,11 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWrapType
-;                  |                                2 = Error setting $iLeft
-;                  |                                4 = Error setting $iRight
-;                  |                                8 = Error setting $iTop
-;                  |                                16 = Error setting $iBottom
+;                  |                               1 = Error setting $iWrapType
+;                  |                               2 = Error setting $iLeft
+;                  |                               4 = Error setting $iRight
+;                  |                               8 = Error setting $iTop
+;                  |                               16 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -2261,11 +2261,11 @@ EndFunc   ;==>_LOWriter_ImageWrap
 ;                  @Error 1 @Extended 6 Return 0 = $bAllowOverlap not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFirstPar
-;                  |                                2 = Error setting $bContour
-;                  |                                4 = Error setting $bOutsideOnly
-;                  |                                8 = Error setting $bInBackground
-;                  |                                16 = Error setting $bAllowOverlap
+;                  |                               1 = Error setting $bFirstPar
+;                  |                               2 = Error setting $bContour
+;                  |                               4 = Error setting $bOutsideOnly
+;                  |                               8 = Error setting $bInBackground
+;                  |                               16 = Error setting $bAllowOverlap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.

@@ -58,7 +58,7 @@
 ;                  @Error 1 @Extended 2 Return 0 = $iColor not an integer, less than -1, or greater than 16777215.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iColor
+;                  |                               1 = Error setting $iColor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Fill color as an integer.
@@ -133,17 +133,17 @@ EndFunc   ;==>_LOWriter_ShapeAreaColor
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -701,13 +701,13 @@ EndFunc   ;==>_LOWriter_ShapeInsert
 ;                  @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Arrowhead name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $vStartStyle
-;                  |                                2 = Error setting $iStartWidth
-;                  |                                4 = Error setting $bStartCenter
-;                  |                                8 = Error setting $bSync
-;                  |                                16 = Error setting $vEndStyle
-;                  |                                32 = Error setting $iEndWidth
-;                  |                                64 = Error setting $bEndCenter
+;                  |                               1 = Error setting $vStartStyle
+;                  |                               2 = Error setting $iStartWidth
+;                  |                               4 = Error setting $bStartCenter
+;                  |                               8 = Error setting $bSync
+;                  |                               16 = Error setting $vEndStyle
+;                  |                               32 = Error setting $iEndWidth
+;                  |                               64 = Error setting $bEndCenter
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
@@ -834,12 +834,12 @@ EndFunc   ;==>_LOWriter_ShapeLineArrowStyles
 ;                  @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Line Style name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $vStyle
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iTransparency
-;                  |                                16 = Error setting $iCornerStyle
-;                  |                                32 = Error setting $iCapStyle
+;                  |                               1 = Error setting $vStyle
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iTransparency
+;                  |                               16 = Error setting $iCornerStyle
+;                  |                               32 = Error setting $iCapStyle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -973,7 +973,7 @@ EndFunc   ;==>_LOWriter_ShapeLineProperties
 ;                  @Error 1 @Extended 4 Return 0 = Document already contains a Shape with the same name as called in $sName.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sName
+;                  |                               1 = Error setting $sName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Shape's name was successfully set.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Shape's current name.
@@ -1022,9 +1022,9 @@ EndFunc   ;==>_LOWriter_ShapeName
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $iX
-;                  |                                2 = Error setting $iY
-;                  |                                4 = Error setting $bProtectPos
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  |                               4 = Error setting $bProtectPos
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -1095,8 +1095,8 @@ EndFunc   ;==>_LOWriter_ShapePosition
 ;                  @Error 1 @Extended 3 Return 0 = $nSlant not a Number, less than -89, or greater than 89.00.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $nRotate
-;                  |                                2 = Error setting $nSlant
+;                  |                               1 = Error setting $nRotate
+;                  |                               2 = Error setting $nSlant
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2233,8 +2233,8 @@ EndFunc   ;==>_LOWriter_ShapePointsRemove
 ;                  @Error 3 @Extended 1 Return 0 = Shape called in $oShape does not support "com.sun.star.drawing.CustomShape", and does not support adding a TextBox.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                                1 = Error setting $bTextBox
-;                  |                                2 = Error setting $sContent
+;                  |                               1 = Error setting $bTextBox
+;                  |                               2 = Error setting $sContent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2290,7 +2290,7 @@ EndFunc   ;==>_LOWriter_ShapeTextBox
 ;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -2354,13 +2354,13 @@ EndFunc   ;==>_LOWriter_ShapeTransparency
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -2484,15 +2484,15 @@ EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 ;                  @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or not equal to 0, 1 or 4. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHorAlign
-;                  |                                2 = Error setting $iHorPos
-;                  |                                4 = Error setting $iHorRelation
-;                  |                                8 = Error setting $bMirror
-;                  |                                16 = Error setting $iVertAlign
-;                  |                                32 = Error setting $iVertPos
-;                  |                                64 = Error setting $iVertRelation
-;                  |                                128 = Error setting $bKeepInside
-;                  |                                256 = Error setting $iAnchorPos
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iHorPos
+;                  |                               4 = Error setting $iHorRelation
+;                  |                               8 = Error setting $bMirror
+;                  |                               16 = Error setting $iVertAlign
+;                  |                               32 = Error setting $iVertPos
+;                  |                               64 = Error setting $iVertRelation
+;                  |                               128 = Error setting $bKeepInside
+;                  |                               256 = Error setting $iAnchorPos
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
@@ -2706,9 +2706,9 @@ EndFunc   ;==>_LOWriter_ShapeTypePosition
 ;                  @Error 1 @Extended 4 Return 0 = $bProtectSize not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iHeight
-;                  |                                4 = Error setting $bProtectSize
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iHeight
+;                  |                               4 = Error setting $bProtectSize
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -2789,11 +2789,11 @@ EndFunc   ;==>_LOWriter_ShapeTypeSize
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWrapType
-;                  |                                2 = Error setting $iLeft
-;                  |                                4 = Error setting $iRight
-;                  |                                8 = Error setting $iTop
-;                  |                                16 = Error setting $iBottom
+;                  |                               1 = Error setting $iWrapType
+;                  |                               2 = Error setting $iLeft
+;                  |                               4 = Error setting $iRight
+;                  |                               8 = Error setting $iTop
+;                  |                               16 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -2887,9 +2887,9 @@ EndFunc   ;==>_LOWriter_ShapeWrap
 ;                  @Error 1 @Extended 4 Return 0 = $bAllowOverlap not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFirstPar
-;                  |                                2 = Error setting $bInBackground
-;                  |                                4 = Error setting $bAllowOverlap
+;                  |                               1 = Error setting $bFirstPar
+;                  |                               2 = Error setting $bInBackground
+;                  |                               4 = Error setting $bAllowOverlap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.

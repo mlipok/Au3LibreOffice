@@ -2036,11 +2036,10 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                               1 = Error setting $iPosition
-;                  |                               2 = Error setting $iFillChar
-;                  |                               4 = Error setting $iAlignment
-;                  |                               8 = Error setting $iDecChar
-;                  |                               Note: $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
+;                  |                                     1 = Error setting $iPosition
+;                  |                                     2 = Error setting $iFillChar
+;                  |                                     4 = Error setting $iAlignment
+;                  |                                     8 = Error setting $iDecChar
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Settings were successfully set. New TabStop position is returned.
 ; Author ........: donnyh13
@@ -2050,6 +2049,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
 ;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Function and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  $iNewTabStop position is still returned even though some settings weren't successfully set, the new TabStop was still created.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DirFrmtParTabStopDelete, _LOWriter_DirFrmtParTabStopMod, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_ParObjCreateList, _LOWriter_ParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes

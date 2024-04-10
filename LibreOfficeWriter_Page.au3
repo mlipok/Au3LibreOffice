@@ -85,8 +85,8 @@
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -171,17 +171,17 @@ EndFunc   ;==>_LOWriter_PageStyleAreaColor
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -390,11 +390,11 @@ EndFunc   ;==>_LOWriter_PageStyleBorderColor
 ;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -594,12 +594,12 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bSeparatorOn
-;                  |                                2 = Error setting $iStyle
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iColor
-;                  |                                16 = Error setting $iHeight
-;                  |                                32 = Error setting $iPosition
+;                  |                               1 = Error setting $bSeparatorOn
+;                  |                               2 = Error setting $iStyle
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iColor
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $iPosition
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -687,7 +687,7 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSeparator
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iColumns
+;                  |                               1 = Error setting $iColumns
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current column count.
@@ -750,10 +750,10 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoWidth
-;                  |                                2 = Error setting $iGlobalSpacing
-;                  |                                4 = Error setting $iSpacing
-;                  |                                8 = Error setting $iWidth
+;                  |                               1 = Error setting $bAutoWidth
+;                  |                               2 = Error setting $iGlobalSpacing
+;                  |                               4 = Error setting $iSpacing
+;                  |                               8 = Error setting $iWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1050,15 +1050,15 @@ EndFunc   ;==>_LOWriter_PageStyleExists
 ;                  @Error 1 @Extended 11 Return 0 = $bAutoHeight not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFooterOn
-;                  |                                2 = Error setting $bSameLeftRight
-;                  |                                4 = Error setting $bSameOnFirst
-;                  |                                8 = Error setting $iLeftMargin
-;                  |                                16 = Error setting $iRightMargin
-;                  |                                32 = Error setting $iSpacing
-;                  |                                64 = Error setting $bDynamicSpacing
-;                  |                                128 = Error setting $iHeight
-;                  |                                256 = Error setting $bAutoHeight
+;                  |                               1 = Error setting $bFooterOn
+;                  |                               2 = Error setting $bSameLeftRight
+;                  |                               4 = Error setting $bSameOnFirst
+;                  |                               8 = Error setting $iLeftMargin
+;                  |                               16 = Error setting $iRightMargin
+;                  |                               32 = Error setting $iSpacing
+;                  |                               64 = Error setting $bDynamicSpacing
+;                  |                               128 = Error setting $iHeight
+;                  |                               256 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -1173,8 +1173,8 @@ EndFunc   ;==>_LOWriter_PageStyleFooter
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1260,17 +1260,17 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaColor
 ;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -1482,11 +1482,11 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1686,10 +1686,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1771,7 +1771,7 @@ EndFunc   ;==>_LOWriter_PageStyleFooterShadow
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -1839,13 +1839,13 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -1958,8 +1958,8 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
 ;                  @Error 1 @Extended 4 Return 0 = $iSpaceToText not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iFootnoteHeight
-;                  |                                2 = Error setting $iSpaceToText
+;                  |                               1 = Error setting $iFootnoteHeight
+;                  |                               2 = Error setting $iSpaceToText
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2027,12 +2027,12 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteArea
 ;                  @Error 3 @Extended 1 Return 0 = Error converting from Printer's Points to Micrometers.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPosition
-;                  |                                2 = Error setting $iStyle
-;                  |                                4 = Error setting $nThickness
-;                  |                                8 = Error setting $iColor
-;                  |                                16 = Error setting $iLength
-;                  |                                32 = Error setting $iSpacing
+;                  |                               1 = Error setting $iPosition
+;                  |                               2 = Error setting $iStyle
+;                  |                               4 = Error setting $nThickness
+;                  |                               8 = Error setting $iColor
+;                  |                               16 = Error setting $iLength
+;                  |                               32 = Error setting $iSpacing
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -2170,15 +2170,15 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ;                  @Error 1 @Extended 11 Return 0 = $bAutoHeight not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bHeaderOn
-;                  |                                2 = Error setting $bSameLeftRight
-;                  |                                4 = Error setting $bSameOnFirst
-;                  |                                8 = Error setting $iLeftMargin
-;                  |                                16 = Error setting $iRightMargin
-;                  |                                32= Error setting $iSpacing
-;                  |                                64 = Error setting $bDynamicSpacing
-;                  |                                128 = Error setting $iHeight
-;                  |                                256 = Error setting $bAutoHeight
+;                  |                               1 = Error setting $bHeaderOn
+;                  |                               2 = Error setting $bSameLeftRight
+;                  |                               4 = Error setting $bSameOnFirst
+;                  |                               8 = Error setting $iLeftMargin
+;                  |                               16 = Error setting $iRightMargin
+;                  |                               32= Error setting $iSpacing
+;                  |                               64 = Error setting $bDynamicSpacing
+;                  |                               128 = Error setting $iHeight
+;                  |                               256 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -2293,8 +2293,8 @@ EndFunc   ;==>_LOWriter_PageStyleHeader
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2380,17 +2380,17 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaColor
 ;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -2602,11 +2602,11 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -2806,10 +2806,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2890,7 +2890,7 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderShadow
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -2958,13 +2958,13 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -3091,13 +3091,13 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
 ;                  @Error 2 @Extended 1 Return 0 = Error creating Document Settings Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iLayout
-;                  |                                2 = Error setting $iNumFormat
-;                  |                                4 = Error setting $sRefStyle
-;                  |                                8 = Error setting $bGutterOnRight
-;                  |                                16 = Error setting $bGutterAtTop
-;                  |                                32 = Error setting $bBackCoversMargins
-;                  |                                64 = Error setting $sPaperTray
+;                  |                               1 = Error setting $iLayout
+;                  |                               2 = Error setting $iNumFormat
+;                  |                               4 = Error setting $sRefStyle
+;                  |                               8 = Error setting $bGutterOnRight
+;                  |                               16 = Error setting $bGutterAtTop
+;                  |                               32 = Error setting $bBackCoversMargins
+;                  |                               64 = Error setting $sPaperTray
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
 ;                  --Success--
@@ -3211,11 +3211,11 @@ EndFunc   ;==>_LOWriter_PageStyleLayout
 ;                  @Error 1 @Extended 7 Return 0 = $iGutter not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iLeft
-;                  |                                2 = Error setting $iRight
-;                  |                                4 = Error setting $iTop
-;                  |                                8 = Error setting $iBottom
-;                  |                                16 = Error setting $iGutter
+;                  |                               1 = Error setting $iLeft
+;                  |                               2 = Error setting $iRight
+;                  |                               4 = Error setting $iTop
+;                  |                               8 = Error setting $iBottom
+;                  |                               16 = Error setting $iGutter
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 7.2.
 ;                  --Success--
@@ -3305,9 +3305,9 @@ EndFunc   ;==>_LOWriter_PageStyleMargins
 ;                  @Error 1 @Extended 8 Return 0 = Page Style called in $sFollowStyle doesn't exist in this document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewParStyleName
-;                  |                                2 = Error setting $bHidden
-;                  |                                4 = Error setting $sFollowStyle
+;                  |                               1 = Error setting $sNewParStyleName
+;                  |                               2 = Error setting $bHidden
+;                  |                               4 = Error setting $sFollowStyle
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -3384,9 +3384,9 @@ EndFunc   ;==>_LOWriter_PageStyleOrganizer
 ;                  @Error 1 @Extended 5 Return 0 = $bLandscape not a Boolean value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iHeight
-;                  |                                4 = Error setting $bLandscape
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iHeight
+;                  |                               4 = Error setting $bLandscape
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -3580,10 +3580,10 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -3661,7 +3661,7 @@ EndFunc   ;==>_LOWriter_PageStyleShadow
 ;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency as an integer.
@@ -3726,13 +3726,13 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.

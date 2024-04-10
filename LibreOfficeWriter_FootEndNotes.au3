@@ -265,10 +265,10 @@ EndFunc   ;==>_LOWriter_EndnoteModifyAnchor
 ;                  @Error 1 @Extended 5 Return 0 = $sAfter not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumFormat
-;                  |                                2 = Error setting $iStartAt
-;                  |                                4 = Error setting $sBefore
-;                  |                                8 = Error setting $sAfter
+;                  |                               1 = Error setting $iNumFormat
+;                  |                               2 = Error setting $iStartAt
+;                  |                               4 = Error setting $sBefore
+;                  |                               8 = Error setting $sAfter
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -345,10 +345,10 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsAutoNumber
 ;                  @Error 1 @Extended 9 Return 0 = Character Style called in $sEndnoteArea not found in Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sParagraph
-;                  |                                2 = Error setting $sPage
-;                  |                                4 = Error setting $sTextArea
-;                  |                                8 = Error setting $sEndnoteArea
+;                  |                               1 = Error setting $sParagraph
+;                  |                               2 = Error setting $sPage
+;                  |                               4 = Error setting $sTextArea
+;                  |                               8 = Error setting $sEndnoteArea
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -690,12 +690,12 @@ EndFunc   ;==>_LOWriter_FootnoteModifyAnchor
 ;                  @Error 1 @Extended 7 Return 0 = $bEndOfDoc not a boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumFormat
-;                  |                                2 = Error setting $iStartAt
-;                  |                                4 = Error setting $sBefore
-;                  |                                8 = Error setting $sAfter
-;                  |                                16 = Error setting $iCounting
-;                  |                                32 = Error setting $bEndOfDoc
+;                  |                               1 = Error setting $iNumFormat
+;                  |                               2 = Error setting $iStartAt
+;                  |                               4 = Error setting $sBefore
+;                  |                               8 = Error setting $sAfter
+;                  |                               16 = Error setting $iCounting
+;                  |                               32 = Error setting $bEndOfDoc
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -778,8 +778,8 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsAutoNumber
 ;                  @Error 1 @Extended 3 Return 0 = $sBegin not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sEnd
-;                  |                                2 = Error setting $sBegin
+;                  |                               1 = Error setting $sEnd
+;                  |                               2 = Error setting $sBegin
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -843,10 +843,10 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsContinuation
 ;                  @Error 1 @Extended 9 Return 0 = Character Style referenced in $sFootnoteArea not found in Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sParagraph
-;                  |                                2 = Error setting $sPage
-;                  |                                4 = Error setting $sTextArea
-;                  |                                8 = Error setting $sFootnoteArea
+;                  |                               1 = Error setting $sParagraph
+;                  |                               2 = Error setting $sPage
+;                  |                               4 = Error setting $sTextArea
+;                  |                               8 = Error setting $sFootnoteArea
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.

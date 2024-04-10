@@ -129,15 +129,15 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumFormat
-;                  |                                2 = Error setting $iStartAt
-;                  |                                4 = Error setting $sCharStyle
-;                  |                                8 = Error setting $iSubLevels
-;                  |                                16 = Error setting $sSepBefore
-;                  |                                32 = Error setting $sSepAfter
-;                  |                                64 = Error setting $bConsecutiveNum
-;                  |                                128 = Error setting $sBulletFont
-;                  |                                256 = Error setting $iCharDecimal
+;                  |                               1 = Error setting $iNumFormat
+;                  |                               2 = Error setting $iStartAt
+;                  |                               4 = Error setting $sCharStyle
+;                  |                               8 = Error setting $iSubLevels
+;                  |                               16 = Error setting $sSepBefore
+;                  |                               32 = Error setting $sSepAfter
+;                  |                               64 = Error setting $bConsecutiveNum
+;                  |                               128 = Error setting $sBulletFont
+;                  |                               256 = Error setting $iCharDecimal
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested Properties.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 9 Element Array with values in order of function parameters. See remarks.
@@ -435,8 +435,8 @@ EndFunc   ;==>_LOWriter_NumStyleGetObj
 ;                  @Error 1 @Extended 6 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewParStyleName
-;                  |                                2 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewParStyleName
+;                  |                               2 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -519,11 +519,11 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAlignedAt
-;                  |                                2 = Error setting $iNumAlign
-;                  |                                4 = Error setting $iFollowedBy
-;                  |                                8 = Error setting $iTabStop
-;                  |                                16 = Error setting $iIndent
+;                  |                               1 = Error setting $iAlignedAt
+;                  |                               2 = Error setting $iNumAlign
+;                  |                               4 = Error setting $iFollowedBy
+;                  |                               8 = Error setting $iTabStop
+;                  |                               16 = Error setting $iIndent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested Properties.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.

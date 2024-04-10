@@ -203,9 +203,9 @@ EndFunc   ;==>_LOWriter_FieldAuthorInsert
 ;                  @Error 1 @Extended 4 Return 0 = $bFullName not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sAuthor
-;                  |                                4 = Error setting $bFullName
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sAuthor
+;                  |                               4 = Error setting $bFullName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -329,8 +329,8 @@ EndFunc   ;==>_LOWriter_FieldChapterInsert
 ;                  @Error 1 @Extended 3 Return 0 = $iLevel not an Integer, less than 1, or greater than 10.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iChapFrmt
-;                  |                                2 = Error setting $iLevel
+;                  |                               1 = Error setting $iChapFrmt
+;                  |                               2 = Error setting $iLevel
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -442,7 +442,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharInsert
 ;                  @Error 1 @Extended 3 Return 0 = String called in $sCharacters longer than 6 characters.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sCharacters
+;                  |                               1 = Error setting $sCharacters
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning current Combined Characters value.
@@ -597,12 +597,12 @@ EndFunc   ;==>_LOWriter_FieldCommentInsert
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sContent
-;                  |                                2 = Error setting $sAuthor
-;                  |                                4 = Error setting $tDateStruct
-;                  |                                8 = Error setting $sInitials
-;                  |                                16 = Error setting $sName
-;                  |                                32 = Error setting $bResolved
+;                  |                               1 = Error setting $sContent
+;                  |                               2 = Error setting $sAuthor
+;                  |                               4 = Error setting $tDateStruct
+;                  |                               8 = Error setting $sInitials
+;                  |                               16 = Error setting $sName
+;                  |                               32 = Error setting $bResolved
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array If L.O. version is less than 4.0, else a 6 Element Array with values in order of function parameters.
@@ -767,9 +767,9 @@ EndFunc   ;==>_LOWriter_FieldCondTextInsert
 ;                  @Error 1 @Extended 4 Return 0 = $sElse not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sCondition
-;                  |                                2 = Error setting $sThen
-;                  |                                4 = Error setting $sElse
+;                  |                               1 = Error setting $sCondition
+;                  |                               2 = Error setting $sThen
+;                  |                               4 = Error setting $sElse
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters, with an additional parameter in the last element to indicate if the condition is evaluated as True or not.
@@ -968,11 +968,11 @@ EndFunc   ;==>_LOWriter_FieldDateTimeInsert
 ;                  @Error 1 @Extended 7 Return 0 = $iDateFormatKey not found in current Document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $tDateStruct
-;                  |                                4 = Error setting $bIsDate
-;                  |                                8 = Error setting $iOffset
-;                  |                                16 = Error setting $iDateFormatKey
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $tDateStruct
+;                  |                               4 = Error setting $bIsDate
+;                  |                               8 = Error setting $iOffset
+;                  |                               16 = Error setting $iDateFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -1186,8 +1186,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sComments not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sComments
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sComments
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1309,8 +1309,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sAuthor
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sAuthor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1433,8 +1433,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ;                  @Error 1 @Extended 5 Return 0 = $iDateFormatKey not found in document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iDateFormatKey
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iDateFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1565,8 +1565,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ;                  @Error 1 @Extended 5 Return 0 = $iTimeFormatKey not found in document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iTimeFormatKey
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iTimeFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1696,8 +1696,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sKeywords not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sKeywords
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sKeywords
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1819,8 +1819,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sAuthor
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sAuthor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1943,8 +1943,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ;                  @Error 1 @Extended 5 Return 0 = $iDateFormatKey not found in document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iDateFormatKey
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iDateFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2074,8 +2074,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sAuthor
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sAuthor
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2198,8 +2198,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ;                  @Error 1 @Extended 5 Return 0 = $iDateFormatKey not found in document.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iDateFormatKey
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iDateFormatKey
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2329,8 +2329,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumInsert
 ;                  @Error 1 @Extended 3 Return 0 = $iRevNum not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iRevNum
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iRevNum
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2452,8 +2452,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sSubject not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sSubject
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sSubject
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2575,8 +2575,8 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sTitle not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sTitle
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sTitle
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2695,8 +2695,8 @@ EndFunc   ;==>_LOWriter_FieldFileNameInsert
 ;                  @Error 1 @Extended 3 Return 0 = $iFormat not an Integer, less than 0, or greater than 3. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $iFormat
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $iFormat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -2806,7 +2806,7 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenParInsert
 ;                  @Error 1 @Extended 2 Return 0 = $sCondition not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sCondition
+;                  |                               1 = Error setting $sCondition
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters. The second Element is a boolean whether the Paragraph is Hidden(True) or Visible(False).
@@ -2918,8 +2918,8 @@ EndFunc   ;==>_LOWriter_FieldFuncHiddenTextInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sText not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sCondition
-;                  |                                2 = Error setting $sText
+;                  |                               1 = Error setting $sCondition
+;                  |                               2 = Error setting $sText
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters. The Third Element is a boolean whether the Text is Hidden(True) Or Visible(False).
@@ -3037,8 +3037,8 @@ EndFunc   ;==>_LOWriter_FieldFuncInputInsert
 ;                  @Error 1 @Extended 3 Return 0 = $sText not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sReference
-;                  |                                2 = Error setting $sText
+;                  |                               1 = Error setting $sReference
+;                  |                               2 = Error setting $sText
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -3165,9 +3165,9 @@ EndFunc   ;==>_LOWriter_FieldFuncPlaceholderInsert
 ;                  @Error 1 @Extended 4 Return 0 = $sReference not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iPHolderType
-;                  |                                2 = Error setting $sPHolderName
-;                  |                                4 = Error setting $sReference
+;                  |                               1 = Error setting $iPHolderType
+;                  |                               2 = Error setting $sPHolderName
+;                  |                               4 = Error setting $sReference
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -3334,9 +3334,9 @@ EndFunc   ;==>_LOWriter_FieldInputListInsert
 ;                  @Error 1 @Extended 4 Return 0 = $sSelectedItem not a String.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $asItems
-;                  |                                2 = Error setting $sName
-;                  |                                4 = Error setting $sSelectedItem
+;                  |                               1 = Error setting $asItems
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $sSelectedItem
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -3492,10 +3492,10 @@ EndFunc   ;==>_LOWriter_FieldPageNumberInsert
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.PageNumber" Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumFormat
-;                  |                                2 = Error setting $iOffset
-;                  |                                4 = Error setting $iPageNumType
-;                  |                                8 = Error setting $sUserText
+;                  |                               1 = Error setting $iNumFormat
+;                  |                               2 = Error setting $iOffset
+;                  |                               4 = Error setting $iPageNumType
+;                  |                               8 = Error setting $sUserText
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -3649,8 +3649,8 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ;                  @Error 1 @Extended 5 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sBookmarkName
-;                  |                                2 = Error setting $iRefUsing
+;                  |                               1 = Error setting $sBookmarkName
+;                  |                               2 = Error setting $iRefUsing
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -3776,8 +3776,8 @@ EndFunc   ;==>_LOWriter_FieldRefEndnoteInsert
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Endnote Object for setting return.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $oEndNote
-;                  |                                2 = Error setting $iRefUsing
+;                  |                               1 = Error setting $oEndNote
+;                  |                               2 = Error setting $iRefUsing
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -3914,8 +3914,8 @@ EndFunc   ;==>_LOWriter_FieldRefFootnoteInsert
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Footnote Object for setting return.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $oFootNote
-;                  |                                2 = Error setting $iRefUsing
+;                  |                               1 = Error setting $oFootNote
+;                  |                               2 = Error setting $iRefUsing
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -4273,8 +4273,8 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sRefMarkName
-;                  |                                2 = Error setting $iRefUsing
+;                  |                               1 = Error setting $sRefMarkName
+;                  |                               2 = Error setting $iRefUsing
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -4519,9 +4519,9 @@ EndFunc   ;==>_LOWriter_FieldSenderInsert
 ;                  @Error 1 @Extended 4 Return 0 = $iDataType not an Integer, less than 0, or greater than 14. See Constants, $LOW_FIELD_USER_DATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bIsFixed
-;                  |                                2 = Error setting $sContent
-;                  |                                4 = Error setting $iDataType
+;                  |                               1 = Error setting $bIsFixed
+;                  |                               2 = Error setting $sContent
+;                  |                               4 = Error setting $iDataType
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -4955,9 +4955,9 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterListFields
 ;                  @Error 1 @Extended 6 Return 0 = $bIsVisible not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sValue
-;                  |                                2 = Error setting $iNumFormatKey
-;                  |                                4 = Error setting $bIsVisible
+;                  |                               1 = Error setting $sValue
+;                  |                               2 = Error setting $iNumFormatKey
+;                  |                               4 = Error setting $bIsVisible
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters. The fourth element is the Variable Name.
@@ -5159,9 +5159,9 @@ EndFunc   ;==>_LOWriter_FieldShowVarInsert
 ;                  @Error 1 @Extended 7 Return 0 = $bShowName not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sSetVarName
-;                  |                                2 = Error setting $iNumFormatKey
-;                  |                                4 = Error setting $bShowName
+;                  |                               1 = Error setting $sSetVarName
+;                  |                               2 = Error setting $iNumFormatKey
+;                  |                               4 = Error setting $bShowName
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -5305,8 +5305,8 @@ EndFunc   ;==>_LOWriter_FieldStatCountInsert
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Field Count Service Type. Check Constants.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iCountType
-;                  |                                2 = Error setting $iNumFormat
+;                  |                               1 = Error setting $iCountType
+;                  |                               2 = Error setting $iNumFormat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -5439,7 +5439,7 @@ EndFunc   ;==>_LOWriter_FieldStatTemplateInsert
 ;                  @Error 1 @Extended 2 Return 0 = $iFormat not an integer, less than 0, or greater than 5. See Constants, $LOW_FIELD_FILENAME_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iFormat
+;                  |                               1 = Error setting $iFormat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Template Format Type setting, in Integer format. See File Name Constants.
@@ -5621,8 +5621,8 @@ EndFunc   ;==>_LOWriter_FieldVarSetPageInsert
 ;                  @Error 1 @Extended 3 Return 0 = $iOffset not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bRefOn
-;                  |                                2 = Error setting $iOffset
+;                  |                               1 = Error setting $bRefOn
+;                  |                               2 = Error setting $iOffset
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -5733,7 +5733,7 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ;                  @Error 1 @Extended 2 Return 0 = $iNumFormat not an integer, less than 0, or greater than 71. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iNumFormat
+;                  |                               1 = Error setting $iNumFormat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current numbering type setting, in Integer format.

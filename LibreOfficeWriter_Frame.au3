@@ -90,8 +90,8 @@
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -173,17 +173,17 @@ EndFunc   ;==>_LOWriter_FrameAreaColor
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -389,11 +389,11 @@ EndFunc   ;==>_LOWriter_FrameBorderColor
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -587,12 +587,12 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bSeparatorOn
-;                  |                                2 = Error setting $iStyle
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iColor
-;                  |                                16 = Error setting $iHeight
-;                  |                                32 = Error setting $iPosition
+;                  |                               1 = Error setting $bSeparatorOn
+;                  |                               2 = Error setting $iStyle
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iColor
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $iPosition
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -678,7 +678,7 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iColumns
+;                  |                               1 = Error setting $iColumns
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current column count.
@@ -739,10 +739,10 @@ EndFunc   ;==>_LOWriter_FrameColumnSettings
 ;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Frame.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoWidth
-;                  |                                2 = Error setting $iGlobalSpacing
-;                  |                                4 = Error setting $iSpacing
-;                  |                                8 = Error setting $iWidth
+;                  |                               1 = Error setting $bAutoWidth
+;                  |                               2 = Error setting $iGlobalSpacing
+;                  |                               4 = Error setting $iSpacing
+;                  |                               8 = Error setting $iWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1147,10 +1147,10 @@ EndFunc   ;==>_LOWriter_FrameGetObjByName
 ;                  @Error 1 @Extended 6 Return 0 = $bServerSideMap not a boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sURL
-;                  |                                2 = Error setting $sName
-;                  |                                4 = Error setting $sFrameTarget
-;                  |                                8 = Error setting $bServerSideMap
+;                  |                               1 = Error setting $sURL
+;                  |                               2 = Error setting $sName
+;                  |                               4 = Error setting $sFrameTarget
+;                  |                               8 = Error setting $bServerSideMap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1235,13 +1235,13 @@ EndFunc   ;==>_LOWriter_FrameHyperlink
 ;                  @Error 1 @Extended 8 Return 0 = $iTxtDirection not an Integer, less than 0, or greater than 5. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bProtectContent
-;                  |                                2 = Error setting $bProtectPos
-;                  |                                4 = Error setting $bProtectSize
-;                  |                                8 = Error setting $iVertAlign
-;                  |                                16 = Error setting $bEditInRead
-;                  |                                32 = Error setting $bPrint
-;                  |                                64 = Error setting $iTxtDirection
+;                  |                               1 = Error setting $bProtectContent
+;                  |                               2 = Error setting $bProtectPos
+;                  |                               4 = Error setting $bProtectSize
+;                  |                               8 = Error setting $iVertAlign
+;                  |                               16 = Error setting $bEditInRead
+;                  |                               32 = Error setting $bPrint
+;                  |                               64 = Error setting $iTxtDirection
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
@@ -1337,10 +1337,10 @@ EndFunc   ;==>_LOWriter_FrameOptions
 ;                  @Error 1 @Extended 9 Return 0 = Document does not contain Frame matching $sNextLink
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sName
-;                  |                                2 = Error setting $sDesc
-;                  |                                4 = Error setting $sPrevLink
-;                  |                                8 = Error setting $sNextLink
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sDesc
+;                  |                               4 = Error setting $sPrevLink
+;                  |                               8 = Error setting $sNextLink
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1498,10 +1498,10 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -1580,8 +1580,8 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iBackColor
-;                  |                                2 = Error setting $bBackTransparent
+;                  |                               1 = Error setting $iBackColor
+;                  |                               2 = Error setting $bBackTransparent
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
@@ -1665,17 +1665,17 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaColor
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sGradientName
-;                  |                                2 = Error setting $iType
-;                  |                                4 = Error setting $iIncrement
-;                  |                                8 = Error setting $iXCenter
-;                  |                                16 = Error setting $iYCenter
-;                  |                                32 = Error setting $iAngle
-;                  |                                64 = Error setting $iBorder
-;                  |                                128 = Error setting $iFromColor
-;                  |                                256 = Error setting $iToColor
-;                  |                                512 = Error setting $iFromIntense
-;                  |                                1024 = Error setting $iToIntense
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Gradient has been successfully turned off.
@@ -1885,11 +1885,11 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderColor
 ;                  @Error 1 @Extended 7 Return 0 = $iRight not an Integer.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iAll border distance
-;                  |                                2 = Error setting $iTop border distance
-;                  |                                4 = Error setting $iBottom border distance
-;                  |                                8 = Error setting $iLeft border distance
-;                  |                                16 = Error setting $iRight border distance
+;                  |                               1 = Error setting $iAll border distance
+;                  |                               2 = Error setting $iTop border distance
+;                  |                               4 = Error setting $iBottom border distance
+;                  |                               8 = Error setting $iLeft border distance
+;                  |                               16 = Error setting $iRight border distance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -2089,12 +2089,12 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bSeparatorOn
-;                  |                                2 = Error setting $iStyle
-;                  |                                4 = Error setting $iWidth
-;                  |                                8 = Error setting $iColor
-;                  |                                16 = Error setting $iHeight
-;                  |                                32 = Error setting $iPosition
+;                  |                               1 = Error setting $bSeparatorOn
+;                  |                               2 = Error setting $iStyle
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iColor
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $iPosition
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
@@ -2182,7 +2182,7 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSeparator
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iColumns
+;                  |                               1 = Error setting $iColumns
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current column count.
@@ -2245,10 +2245,10 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 ;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Frame Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bAutoWidth
-;                  |                                2 = Error setting $iGlobalSpacing
-;                  |                                4 = Error setting $iSpacing
-;                  |                                8 = Error setting $iWidth
+;                  |                               1 = Error setting $bAutoWidth
+;                  |                               2 = Error setting $iGlobalSpacing
+;                  |                               4 = Error setting $iSpacing
+;                  |                               8 = Error setting $iWidth
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2587,13 +2587,13 @@ EndFunc   ;==>_LOWriter_FrameStyleGetObj
 ;                  @Error 1 @Extended 9 Return 0 = $iTxtDirection not an Integer, less than 0, or greater than 5. See Constants, $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bProtectContent
-;                  |                                2 = Error setting $bProtectPos
-;                  |                                4 = Error setting $bProtectSize
-;                  |                                8 = Error setting $iVertAlign
-;                  |                                16 = Error setting $bEditInRead
-;                  |                                32 = Error setting $bPrint
-;                  |                                64 = Error setting $iTxtDirection
+;                  |                               1 = Error setting $bProtectContent
+;                  |                               2 = Error setting $bProtectPos
+;                  |                               4 = Error setting $bProtectSize
+;                  |                               8 = Error setting $iVertAlign
+;                  |                               16 = Error setting $bEditInRead
+;                  |                               32 = Error setting $bPrint
+;                  |                               64 = Error setting $iTxtDirection
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
@@ -2690,10 +2690,10 @@ EndFunc   ;==>_LOWriter_FrameStyleOptions
 ;                  @Error 1 @Extended 9 Return 0 = $bHidden not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $sNewFrameStyleName
-;                  |                                2 = Error setting $sParentStyle
-;                  |                                4 = Error setting $bAutoUpdate
-;                  |                                8 = Error setting $bHidden
+;                  |                               1 = Error setting $sNewFrameStyleName
+;                  |                               2 = Error setting $sParentStyle
+;                  |                               4 = Error setting $bAutoUpdate
+;                  |                               8 = Error setting $bHidden
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.0.
 ;                  --Success--
@@ -2893,10 +2893,10 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iColor
-;                  |                                4 = Error setting $bTransparent
-;                  |                                8 = Error setting $iLocation
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $bTransparent
+;                  |                               8 = Error setting $iLocation
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
@@ -2974,7 +2974,7 @@ EndFunc   ;==>_LOWriter_FrameStyleShadow
 ;                  @Error 1 @Extended 3 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -3040,13 +3040,13 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -3172,15 +3172,15 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 ;                  @Error 1 @Extended 11 Return 0 = $iAnchorPos not an Integer, or less than 0, or greater than 4, or equal to 3. See Constants, $LOW_ANCHOR_AT_* as defined in LibreOfficeWriter_Constants.au3..
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHorAlign
-;                  |                                2 = Error setting $iHorPos
-;                  |                                4 = Error setting $iHorRelation
-;                  |                                8 = Error setting $bMirror
-;                  |                                16 = Error setting $iVertAlign
-;                  |                                32 = Error setting $iVertPos
-;                  |                                64 = Error setting $iVertRelation
-;                  |                                128 = Error setting $bKeepInside
-;                  |                                256 = Error setting $iAnchorPos
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iHorPos
+;                  |                               4 = Error setting $iHorRelation
+;                  |                               8 = Error setting $bMirror
+;                  |                               16 = Error setting $iVertAlign
+;                  |                               32 = Error setting $iVertPos
+;                  |                               64 = Error setting $iVertRelation
+;                  |                               128 = Error setting $bKeepInside
+;                  |                               256 = Error setting $iAnchorPos
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
@@ -3419,15 +3419,15 @@ EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 ;                  @Error 1 @Extended 12 Return 0 = $bKeepRatio not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iRelativeWidth
-;                  |                                4 = Error setting $iWidthRelativeTo
-;                  |                                8 = Error setting $bAutoWidth
-;                  |                                16 = Error setting $iHeight
-;                  |                                32 = Error setting $iRelativeHeight
-;                  |                                64 = Error setting $iHeightRelativeTo
-;                  |                                128 = Error setting $bAutoHeight
-;                  |                                256 = Error setting $bKeepRatio
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iRelativeWidth
+;                  |                               4 = Error setting $iWidthRelativeTo
+;                  |                               8 = Error setting $bAutoWidth
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $iRelativeHeight
+;                  |                               64 = Error setting $iHeightRelativeTo
+;                  |                               128 = Error setting $bAutoHeight
+;                  |                               256 = Error setting $bKeepRatio
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.3.
 ;                  --Success--
@@ -3563,11 +3563,11 @@ EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWrapType
-;                  |                                2 = Error setting $iLeft
-;                  |                                4 = Error setting $iRight
-;                  |                                8 = Error setting $iTop
-;                  |                                16 = Error setting $iBottom
+;                  |                               1 = Error setting $iWrapType
+;                  |                               2 = Error setting $iLeft
+;                  |                               4 = Error setting $iRight
+;                  |                               8 = Error setting $iTop
+;                  |                               16 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -3661,9 +3661,9 @@ EndFunc   ;==>_LOWriter_FrameStyleWrap
 ;                  @Error 1 @Extended 5 Return 0 = $bAllowOverlap not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFirstPar
-;                  |                                2 = Error setting $bInBackground
-;                  |                                4 = Error setting $bAllowOverlap
+;                  |                               1 = Error setting $bFirstPar
+;                  |                               2 = Error setting $bInBackground
+;                  |                               4 = Error setting $bAllowOverlap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
@@ -3726,7 +3726,7 @@ EndFunc   ;==>_LOWriter_FrameStyleWrapOptions
 ;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iTransparency
+;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
@@ -3790,13 +3790,13 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iType
-;                  |                                2 = Error setting $iXCenter
-;                  |                                4 = Error setting $iYCenter
-;                  |                                8 = Error setting $iAngle
-;                  |                                16 = Error setting $iBorder
-;                  |                                32 = Error setting $iStart
-;                  |                                64 = Error setting $iEnd
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
 ;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
@@ -3920,15 +3920,15 @@ EndFunc   ;==>_LOWriter_FrameTransparencyGradient
 ;                  @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or less than 0, or greater than 4, or equal to 3. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iHorAlign
-;                  |                                2 = Error setting $iHorPos
-;                  |                                4 = Error setting $iHorRelation
-;                  |                                8 = Error setting $bMirror
-;                  |                                16 = Error setting $iVertAlign
-;                  |                                32 = Error setting $iVertPos
-;                  |                                64 = Error setting $iVertRelation
-;                  |                                128 = Error setting $bKeepInside
-;                  |                                256 = Error setting $iAnchorPos
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iHorPos
+;                  |                               4 = Error setting $iHorRelation
+;                  |                               8 = Error setting $bMirror
+;                  |                               16 = Error setting $iVertAlign
+;                  |                               32 = Error setting $iVertPos
+;                  |                               64 = Error setting $iVertRelation
+;                  |                               128 = Error setting $bKeepInside
+;                  |                               256 = Error setting $iAnchorPos
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
@@ -4165,15 +4165,15 @@ EndFunc   ;==>_LOWriter_FrameTypePosition
 ;                  @Error 1 @Extended 11 Return 0 = $bKeepRatio not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWidth
-;                  |                                2 = Error setting $iRelativeWidth
-;                  |                                4 = Error setting $iWidthRelativeTo
-;                  |                                8 = Error setting $bAutoWidth
-;                  |                                16 = Error setting $iHeight
-;                  |                                32 = Error setting $iRelativeHeight
-;                  |                                64 = Error setting $iHeightRelativeTo
-;                  |                                128 = Error setting $bAutoHeight
-;                  |                                256 = Error setting $bKeepRatio
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iRelativeWidth
+;                  |                               4 = Error setting $iWidthRelativeTo
+;                  |                               8 = Error setting $bAutoWidth
+;                  |                               16 = Error setting $iHeight
+;                  |                               32 = Error setting $iRelativeHeight
+;                  |                               64 = Error setting $iHeightRelativeTo
+;                  |                               128 = Error setting $bAutoHeight
+;                  |                               256 = Error setting $bKeepRatio
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.3.
 ;                  --Success--
@@ -4306,11 +4306,11 @@ EndFunc   ;==>_LOWriter_FrameTypeSize
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $iWrapType
-;                  |                                2 = Error setting $iLeft
-;                  |                                4 = Error setting $iRight
-;                  |                                8 = Error setting $iTop
-;                  |                                16 = Error setting $iBottom
+;                  |                               1 = Error setting $iWrapType
+;                  |                               2 = Error setting $iLeft
+;                  |                               4 = Error setting $iRight
+;                  |                               8 = Error setting $iTop
+;                  |                               16 = Error setting $iBottom
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
@@ -4404,9 +4404,9 @@ EndFunc   ;==>_LOWriter_FrameWrap
 ;                  @Error 1 @Extended 4 Return 0 = $bAllowOverlap not a Boolean.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;                  |                                1 = Error setting $bFirstPar
-;                  |                                2 = Error setting $bInBackground
-;                  |                                4 = Error setting $bAllowOverlap
+;                  |                               1 = Error setting $bFirstPar
+;                  |                               2 = Error setting $bInBackground
+;                  |                               4 = Error setting $bAllowOverlap
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
