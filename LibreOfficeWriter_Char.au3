@@ -55,7 +55,6 @@
 ;                  $iBottom             - [optional] an integer value (0-16777215). Default is Null. Sets the Bottom Border Line Color of the Character Style in Long Color code format. A custom value can be used, or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value (0-16777215). Default is Null. Sets the Left Border Line Color of the Character Style in Long Color code format. A custom value can be used, or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Sets the Right Border Line Color of the Character Style in Long Color code format. A custom value can be used, or one of the constants $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -83,10 +82,9 @@
 ; Modified ......:
 ; Remarks .......: Border Width must be set first to be able to set Border Style and Color.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                    Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong,
-;                    _LOWriter_ConvertColorToLong, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle,
-;                    _LOWriter_CharStyleBorderPadding
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Certain Error values are passed from the internal border setting function.
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_CharStyleBorderWidth, _LOWriter_CharStyleBorderStyle, _LOWriter_CharStyleBorderPadding
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -233,7 +231,6 @@ EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 ;                  $iBottom             - [optional] an integer value. Default is Null. Sets the Bottom Border Line Width of the Character Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value. Default is Null. Sets the Left Border Line width of the Character Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iRight              - [optional] an integer value. Default is Null. Sets the Right Border Line Width of the Character Style in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Certain Error values are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -740,7 +737,7 @@ EndFunc   ;==>_LOWriter_CharStyleOrganizer
 ; Remarks .......: OverLine line style uses the same constants as underline style.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $bOLHasColor must be set to true in order to set the Overline color.
+;                  $bOLHasColor must be set to true in order to set the Overline color.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -924,11 +921,11 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;                  Else if $bAppliedOnly, only Applied Character Styles are returned.
 ;                  If Both are true then only User-Created Character styles that are applied are returned.
 ;                  Five Character styles have two separate names, either name works when setting a Character Style, but on certain functions that return a Character Style Name, you may see one of these alternative names. The Styles are as follows:
-;                   + Footnote Characters is also internally called "Footnote Symbol";
-;                   + Bullets, is internally called "Bullet Symbol";
-;                   + Endnote Characters is internally called "Endnote Symbol";
-;                   + Quotation is internally called "Citation";
-;                   + "No Character Style" is internally called "Standard".
+;                  --Footnote Characters is also internally called "Footnote Symbol";
+;                  --Bullets, is internally called "Bullet Symbol";
+;                  --Endnote Characters is internally called "Endnote Symbol";
+;                  --Quotation is internally called "Citation";
+;                  --"No Character Style" is internally called "Standard".
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1156,7 +1153,7 @@ EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $bULHasColor must be set to true in order to set the underline color.
+;                  $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes

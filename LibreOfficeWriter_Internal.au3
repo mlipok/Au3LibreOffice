@@ -602,7 +602,7 @@ EndFunc   ;==>__LOWriter_CharBorderPadding
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
@@ -840,7 +840,7 @@ EndFunc   ;==>__LOWriter_CharFontColor
 ; Remarks .......: OverLine line style uses the same constants as underline style.
 ;                  Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $bOLHasColor must be set to true in order to set the Overline color.
+;                  $bOLHasColor must be set to true in order to set the Overline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -1224,7 +1224,7 @@ EndFunc   ;==>__LOWriter_CharSpacing
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
+; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Strikeout is converted to single line in Ms word document format.
 ; Related .......:
@@ -1337,7 +1337,7 @@ EndFunc   ;==>__LOWriter_CharStyleNameToggle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;                   $bULHasColor must be set to true in order to set the underline color.
+;                  $bULHasColor must be set to true in order to set the underline color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -3690,7 +3690,7 @@ EndFunc   ;==>__LOWriter_PageStyleNameToggle
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iHorAlign must be set to $LOW_PAR_ALIGN_HOR_JUSTIFIED(2) before you can set $iLastLineAlign, and $iLastLineAlign must be set to $LOW_PAR_LAST_LINE_JUSTIFIED(2) before $bExpandSingleWord can be set.
-;                   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+;                  $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ;                  Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -4480,8 +4480,8 @@ EndFunc   ;==>__LOWriter_ParShadow
 ; Modified ......:
 ; Remarks .......: $bPageLineSpc(Register mode) is only used if the register mode property of the page style is switched on. $bPageLineSpc(Register Mode) Aligns the baseline of each line of text to a vertical document grid, so that each line is the same height.
 ;                  The settings in Libre Office, (Single, 1.15, 1.5, Double), Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
-;                   $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;                   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
+;                  $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
+;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ;                  Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -4636,7 +4636,7 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ; Modified ......:
 ; Remarks .......: $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position.
 ;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;                   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
+;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -4863,9 +4863,9 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $iTabStop refers to the position, or essential the "length" of a TabStop from the edge of a page margin. This is the only reliable way to identify a Tabstop to be able to interact with it, as there can only be one of a certain length per Paragraph Style.
-;                   $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
+;                  $iPosition once set can vary +/- 1 uM. To ensure you can identify the tabstop to modify it again, This function returns the new TabStop position in @Extended when $iPosition is set, return value will be set to 2. See Return Values.
 ;                  Since $iPosition can fluctuate +/- 1 uM when it is inserted into LibreOffice, it is possible to accidentally overwrite an already existing TabStop.
-;                   $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
+;                  $iFillChar, Libre's Default value, "None" is in reality a space character which is Asc value 32. The other values offered by Libre are: Period (ASC 46), Dash (ASC 45) and Underscore (ASC 95). You can also enter a custom ASC value. See ASC AutoIt Func. and "ASCII Character Codes" in the AutoIt help file.
 ;                  Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
@@ -5135,8 +5135,8 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
-;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+;                  $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT,
+;                  $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -5300,7 +5300,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
+;                  $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6003,7 +6003,7 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;                   $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE.
+;                  $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6119,9 +6119,9 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+;                  $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
 ;                  The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
-;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+;                  $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -6253,30 +6253,30 @@ EndFunc   ;==>__LOWriter_Shape_CreateSymbol
 ; Modified ......:
 ; Remarks .......: Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
 ;                  Because of this the following shape types cannot be identified, and this function will return -1:
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
-;                    $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
-;                    $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
-;                    $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
-;                    $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
-;                    $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
-;                    $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
-;                    $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;                   $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;                   $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
 ;                  The following Shapes implement the same type names, and are consequently indistinguishable:
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
-;                    $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
-;                    $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
 ;                  The following Shapes have strange names that may change in the future, but currently are able to be identified:
-;                    $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
-;                    $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
-;                    $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+;                   $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -7655,14 +7655,14 @@ EndFunc   ;==>__LOWriter_TableBorder
 ; Modified ......:
 ; Remarks .......: $iMove may be set to any of the following constants. Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
-;                   #Cursor Movement Constants which accept number of Moves and Selecting:
-;                    $LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
-;                    $LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
-;                    $LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
-;                    $LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
-;                    $LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
+;                  #Cursor Movement Constants which accept number of Moves and Selecting:
+;                   $LOW_TABLECUR_GO_LEFT, Move the cursor left/right n cells.
+;                   $LOW_TABLECUR_GO_RIGHT, Move the cursor left/right n cells.
+;                   $LOW_TABLECUR_GO_UP,  Move the cursor up/down n cells.
+;                   $LOW_TABLECUR_GO_DOWN, Move the cursor up/down n cells.
+;                  #Cursor Movements which accept Selecting Only:
+;                   $LOW_TABLECUR_GOTO_START, Move the cursor to the top left cell.
+;                   $LOW_TABLECUR_GOTO_END,  Move the cursor to the bottom right cell.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -7893,27 +7893,27 @@ EndFunc   ;==>__LOWriter_TableRowSplitToggle
 ;                  Only some movements accept movement amounts (such as "goRight" 2) etc.
 ;                  Only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
-;                   #Cursor Movement Constants which accept number of Moves and Selecting:
-;                    $LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
-;                    $LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;                    $LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
-;                    $LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
-;                    $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
-;                    $LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
-;                    $LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
-;                    $LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;                    $LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;                    $LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
-;                    $LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
-;                    $LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
-;                    $LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
-;                    $LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
-;                    $LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOW_TEXTCUR_COLLAPSE_TO_START,
-;                    $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
+;                  #Cursor Movement Constants which accept number of Moves and Selecting:
+;                   $LOW_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;                   $LOW_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;                   $LOW_TEXTCUR_GOTO_NEXT_WORD, Move to the start of the next word.
+;                   $LOW_TEXTCUR_GOTO_PREV_WORD, Move to the end of the previous word.
+;                   $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, Move to the start of the next sentence.
+;                   $LOW_TEXTCUR_GOTO_PREV_SENTENCE, Move to the end of the previous sentence.
+;                   $LOW_TEXTCUR_GOTO_NEXT_PARAGRAPH, Move to the start of the next paragraph.
+;                   $LOW_TEXTCUR_GOTO_PREV_PARAGRAPH, Move to the End of the previous paragraph.
+;                  #Cursor Movements which accept Selecting Only:
+;                   $LOW_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;                   $LOW_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;                   $LOW_TEXTCUR_GOTO_END_OF_WORD, Move to the end of the current word.
+;                   $LOW_TEXTCUR_GOTO_START_OF_WORD, Move to the start of the current word.
+;                   $LOW_TEXTCUR_GOTO_END_OF_SENTENCE, Move to the end of the current sentence.
+;                   $LOW_TEXTCUR_GOTO_START_OF_SENTENCE, Move to the start of the current sentence.
+;                   $LOW_TEXTCUR_GOTO_END_OF_PARAGRAPH, Move to the end of the current paragraph.
+;                   $LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH, Move to the start of the current paragraph.
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                   $LOW_TEXTCUR_COLLAPSE_TO_START,
+;                   $LOW_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor  to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -8311,28 +8311,28 @@ EndFunc   ;==>__LOWriter_VersionCheck
 ;                  Only some movements accept movement amounts (such as "goRight" 2) etc.
 ;                  Only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
-;                   #Cursor Movement Constants which accept number of Moves and Selecting:
-;                    $LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
-;                    $LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
-;                    $LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
-;                    $LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
-;                   #Cursor Movements which accept number of Moves Only:
-;                    $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
-;                    $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
-;                    $LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
-;                    $LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
-;                    $LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
-;                    $LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
-;                    $LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
-;                    $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
-;                    $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
-;                    $LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
-;                   #Misc. Cursor Movements:
-;                    $LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
+;                  #Cursor Movement Constants which accept number of Moves and Selecting:
+;                   $LOW_VIEWCUR_GO_DOWN, Move the cursor Down by n lines.
+;                   $LOW_VIEWCUR_GO_UP, Move the cursor Up by n lines.
+;                   $LOW_VIEWCUR_GO_LEFT, Move the cursor left by n characters.
+;                   $LOW_VIEWCUR_GO_RIGHT, Move the cursor right by n characters.
+;                  #Cursor Movements which accept number of Moves Only:
+;                   $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, Move the cursor to the Next page.
+;                   $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, Move the cursor to the previous page.
+;                   $LOW_VIEWCUR_SCREEN_DOWN, Scroll the view forward by one visible page.
+;                   $LOW_VIEWCUR_SCREEN_UP, Scroll the view back by one visible page.
+;                  #Cursor Movements which accept Selecting Only:
+;                   $LOW_VIEWCUR_GOTO_END_OF_LINE, Move the cursor to the end of the current line.
+;                   $LOW_VIEWCUR_GOTO_START_OF_LINE, Move the cursor to the start of the current line.
+;                   $LOW_VIEWCUR_GOTO_START, Move the cursor to the start of the document or Table.
+;                   $LOW_VIEWCUR_GOTO_END, Move the cursor to the end of the document or Table.
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                   $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, Move the cursor to the first page.
+;                   $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, Move the cursor to the Last page.
+;                   $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, Move the cursor to the end of the current page.
+;                   $LOW_VIEWCUR_JUMP_TO_START_OF_PAGE, Move the cursor to the start of the current page.
+;                  #Misc. Cursor Movements:
+;                   $LOW_VIEWCUR_JUMP_TO_PAGE (accepts page number to jump to in $iCount, Returns what page was successfully jumped to.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No

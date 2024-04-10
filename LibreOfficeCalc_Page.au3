@@ -2680,7 +2680,7 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $iVariable1 and $iVariable2 setting values depend on what the current or new mode is. For Modes Reduce/Enlarge and Fit Pages, $iVariable1 ALONE is used for setting Scale Percentage or Number of Pages Respectively.
+;                  $iVariable1 and $iVariable2 setting values depend on what the current or new mode is. For Modes Reduce/Enlarge and Fit Pages, $iVariable1 ALONE is used for setting Scale Percentage or Number of Pages Respectively.
 ;                  If Mode is set to Fit Width and Height, $iVariable1 is for setting Width, and $iVariable2 is for setting height.
 ;                  You can set the Scale Values still without setting Mode each time.
 ;                  When Scale Mode is set to $LOC_SCALE_REDUCE_ENLARGE, the Minimum scaling value for $iVariable1 is 10%, and the Maximum is 400%.

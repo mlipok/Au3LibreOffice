@@ -68,23 +68,23 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept Column and Row Values, creating/ extending a selection of cells, etc. They will be specified below.
-;                   #Cursor Movement Constants which accept Column and Row values:
-;                    $LOC_SHEETCUR_COLLAPSE_TO_SIZE, Call $iColumns with the number of columns to resize the range to contain, counting from the Top-Left hand cell of the current range. And call $iRows with the number of Rows to resize the range to contain, counting from the Top-Left hand cell of the current range..
-;                    $LOC_SHEETCUR_GOTO_OFFSET Call $iColumns with the number of columns to move, either left (negative number) or right (positive number), and call $iRows with the number of Rows to move up (negative number) or down (positive number).
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOC_SHEETCUR_GOTO_USED_AREA_START, Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
-;                    $LOC_SHEETCUR_GOTO_USED_AREA_END Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
-;                    $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
-;                    $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
-;                    $LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
-;                    $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
-;                    $LOC_SHEETCUR_GOTO_START,
-;                    $LOC_SHEETCUR_GOTO_END
-;                   #Cursor Movements which accept only number of moves ($iCount):
-;                    $LOC_SHEETCUR_GOTO_NEXT, Call $iCount with the number of moves to perform.
-;                    $LOC_SHEETCUR_GOTO_PREV Call $iCount with the number of moves to perform.
+;                  #Cursor Movement Constants which accept Column and Row values:
+;                  $LOC_SHEETCUR_COLLAPSE_TO_SIZE, Call $iColumns with the number of columns to resize the range to contain, counting from the Top-Left hand cell of the current range. And call $iRows with the number of Rows to resize the range to contain, counting from the Top-Left hand cell of the current range..
+;                  $LOC_SHEETCUR_GOTO_OFFSET Call $iColumns with the number of columns to move, either left (negative number) or right (positive number), and call $iRows with the number of Rows to move up (negative number) or down (positive number).
+;                  #Cursor Movements which accept Selecting Only:
+;                  $LOC_SHEETCUR_GOTO_USED_AREA_START, Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
+;                  $LOC_SHEETCUR_GOTO_USED_AREA_END Call $bSelect with a Boolean whether to select cells while performing this move (True) or not.
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                  $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
+;                  $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
+;                  $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
+;                  $LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
+;                  $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
+;                  $LOC_SHEETCUR_GOTO_START,
+;                  $LOC_SHEETCUR_GOTO_END
+;                  #Cursor Movements which accept only number of moves ($iCount):
+;                  $LOC_SHEETCUR_GOTO_NEXT, Call $iCount with the number of moves to perform.
+;                  $LOC_SHEETCUR_GOTO_PREV Call $iCount with the number of moves to perform.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -625,15 +625,15 @@ EndFunc   ;==>_LOCalc_TextCursorIsCollapsed
 ; Modified ......:
 ; Remarks .......: Only some movements accept movement amounts and selecting (such as $LOC_TEXTCUR_GO_RIGHT 2, True) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
-;                   #Cursor Movement Constants which accept Number of Moves and Selecting:
-;                    $LOC_TEXTCUR_GO_LEFT,
-;                    $LOC_TEXTCUR_GO_RIGHT,
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOC_TEXTCUR_GOTO_START,
-;                    $LOC_TEXTCUR_GOTO_END,
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOC_TEXTCUR_COLLAPSE_TO_START,
-;                    $LOC_TEXTCUR_COLLAPSE_TO_END
+;                  #Cursor Movement Constants which accept Number of Moves and Selecting:
+;                  $LOC_TEXTCUR_GO_LEFT,
+;                  $LOC_TEXTCUR_GO_RIGHT,
+;                  #Cursor Movements which accept Selecting Only:
+;                  $LOC_TEXTCUR_GOTO_START,
+;                  $LOC_TEXTCUR_GOTO_END,
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                  $LOC_TEXTCUR_COLLAPSE_TO_START,
+;                  $LOC_TEXTCUR_COLLAPSE_TO_END
 ; Related .......: _LOCalc_TextCursorIsCollapsed
 ; Link ..........:
 ; Example .......: Yes
@@ -738,8 +738,8 @@ EndFunc   ;==>_LOCalc_TextCursorOverline
 ;                  @Error 0 @Extended ? Return Array  = Success. Returns an Array of Paragraph Objects, @Extended is set to the number of results.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:     The paragraphs are enumerated for the area the cursor is currently within, for example, the Text Cursor is currently in a Cell, the enumeration of paragraphs would be for the Cell the cursor was presently in.
-;                    Returns an Array of objects for Directly Formatting paragraphs in a document, or for deleting or inserting in other areas, etc.
+; Remarks .......: The paragraphs are enumerated for the area the cursor is currently within, for example, the Text Cursor is currently in a Cell, the enumeration of paragraphs would be for the Cell the cursor was presently in.
+;                  Returns an Array of objects for Directly Formatting paragraphs in a document, or for deleting or inserting in other areas, etc.
 ; Related .......: _LOCalc_TextCursorParObjSectionsGet
 ; Link ..........:
 ; Example .......: Yes
@@ -804,7 +804,7 @@ EndFunc   ;==>_LOCalc_TextCursorParObjCreateList
 ;                  |- Frame — a frame.
 ;                  |- SoftPageBreak — a soft page break.
 ;                  |- InContentMetadata — a text range with attached metadata.
-;                        For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
+;                  For Reference marks, document index marks, etc., 2 text portions will be generated, one for the start position and one for the end position.
 ; Related .......: _LOCalc_TextCursorParObjCreateList
 ; Link ..........:
 ; Example .......: Yes

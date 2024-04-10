@@ -86,20 +86,20 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only certain flags work for certain types of cursors:
-;                   # Text And View Cursor Status Flag Constants:
+;                  # Text And View Cursor Status Flag Constants:
 ;                   + $LOW_CURSOR_STAT_IS_COLLAPSED
-;                   # Text Cursor Status Flag Constants:
+;                  # Text Cursor Status Flag Constants:
 ;                   + $LOW_CURSOR_STAT_IS_START_OF_WORD,
 ;                   + $LOW_CURSOR_STAT_IS_END_OF_WORD,
 ;                   + $LOW_CURSOR_STAT_IS_START_OF_SENTENCE,
 ;                   + $LOW_CURSOR_STAT_IS_END_OF_SENTENCE,
 ;                   + $LOW_CURSOR_STAT_IS_START_OF_PAR,
 ;                   + $LOW_CURSOR_STAT_IS_END_OF_PAR,
-;                   # View Cursor Status Flag Constants:
+;                  # View Cursor Status Flag Constants:
 ;                   + $LOW_CURSOR_STAT_IS_START_OF_LINE,
 ;                   + $LOW_CURSOR_STAT_IS_END_OF_LINE,
 ;                   + $LOW_CURSOR_STAT_GET_PAGE,
-;                   # Table Cursor Status Flag Constants:
+;                  # Table Cursor Status Flag Constants:
 ;                   + $LOW_CURSOR_STAT_GET_RANGE_NAME
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_CursorGetType
 ; Link ..........:
@@ -259,7 +259,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ; Remarks .......: $iMove may be set to any of the following constants depending on the Cursor type you are intending to move.
 ;                  Only some movements accept movement amounts (such as "goRight" 2) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as "goRight", 0, False.
-;                   #Cursor Movement Constants which accept Number of Moves and Selecting:
+;                  #Cursor Movement Constants which accept Number of Moves and Selecting:
 ;                  -ViewCursor
 ;                    $LOW_VIEWCUR_GO_DOWN,
 ;                    $LOW_VIEWCUR_GO_UP,
@@ -279,13 +279,13 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;                    $LOW_TABLECUR_GO_RIGHT,
 ;                    $LOW_TABLECUR_GO_UP,
 ;                    $LOW_TABLECUR_GO_DOWN,
-;                   #Cursor Movements which accept Number of Moves Only:
+;                  #Cursor Movements which accept Number of Moves Only:
 ;                  -ViewCursor
 ;                    $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE,
 ;                    $LOW_VIEWCUR_JUMP_TO_PREV_PAGE,
 ;                    $LOW_VIEWCUR_SCREEN_DOWN,
 ;                    $LOW_VIEWCUR_SCREEN_UP,
-;                   #Cursor Movements which accept Selecting Only:
+;                  #Cursor Movements which accept Selecting Only:
 ;                  -ViewCursor
 ;                    $LOW_VIEWCUR_GOTO_END_OF_LINE,
 ;                    $LOW_VIEWCUR_GOTO_START_OF_LINE,
@@ -303,7 +303,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;                  -TableCursor
 ;                    $LOW_TABLECUR_GOTO_START,
 ;                    $LOW_TABLECUR_GOTO_END,
-;                   #Cursor Movements which accept nothing and are done once per call:
+;                  #Cursor Movements which accept nothing and are done once per call:
 ;                  -ViewCursor
 ;                    $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE,
 ;                    $LOW_VIEWCUR_JUMP_TO_LAST_PAGE,
@@ -312,7 +312,7 @@ EndFunc   ;==>_LOWriter_CursorGoToRange
 ;                  -TextCursor
 ;                    $LOW_TEXTCUR_COLLAPSE_TO_START,
 ;                    $LOW_TEXTCUR_COLLAPSE_TO_END,
-;                   #Misc. Cursor Movements:
+;                  #Misc. Cursor Movements:
 ;                  -ViewCursor
 ;                    $LOW_VIEWCUR_JUMP_TO_PAGE
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_TableCreateCursor, _LOWriter_CursorGoToRange

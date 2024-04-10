@@ -217,8 +217,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetObj
 ; Syntax ........: _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor[, $bOverwrite = False[, $sBookmarkName = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval function. Cannot be a Table Cursor.
-;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten.
-;                   +                        If False, content will be inserted to the left of any selection.
+;                  $bOverwrite          - [optional] a boolean value. Default is False. If True, any content selected by the cursor will be overwritten. If False, content will be inserted to the left of any selection.
 ;                  $sBookmarkName       - [optional] a string value. Default is Null. The Name of the Bookmark to create. See Remarks.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -417,7 +416,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksList
 ; Modified ......:
 ; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
 ;                  If $sSaveName is undefined, it is saved as an .odt document to the desktop, named Year-Month-Day_Hour-Minute-Second.odt.
-;                   $sSaveName may be a name only without an extension, in which case the file will be saved in .odt format. Or you may define your own format by including an extension, such as "Test.docx"
+;                  $sSaveName may be a name only without an extension, in which case the file will be saved in .odt format. Or you may define your own format by including an extension, such as "Test.docx"
 ; Related .......: _LOWriter_DocOpen, _LOWriter_DocConnect, _LOWriter_DocCreate, _LOWriter_DocSaveAs, _LOWriter_DocSave
 ; Link ..........:
 ; Example .......: Yes
@@ -480,7 +479,7 @@ EndFunc   ;==>_LOWriter_DocClose
 ; Parameters ....: $sFile               - a string value. A Full or partial file path, or a full or partial file name. See remarks. Can be an empty string if $bConnectAll or $bConnectCurrent is True.
 ;                  $bConnectCurrent     - [optional] a boolean value. Default is False. If True, returns the currently active, or last active Document, unless it is not a Text Document.
 ;                  $bConnectAll         - [optional] a boolean value. Default is False. If True, returns an array containing all open LibreOffice Writer Text Documents. See remarks.
-; -Return values .: Success: Object or Array.
+; Return values .: Success: Object or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sFile not a string.
@@ -505,12 +504,12 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 0 @Extended 6 Return Array =  Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (i.e: Test.odt), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.).
-;                    Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]. each result is stored in a separate row;
-;                    Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
-;                    Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.docx
-;                    Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.docx
-;                    Row 2, Column 0 contain the Object variable for the next document. And so on. i.e. $aArray[1][0] = $oDoc2
+; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (i.e: Test.odt), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.).
+;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]. each result is stored in a separate row;
+;                  -Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
+;                  -Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.docx
+;                  -Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.docx
+;                  -Row 2, Column 0 contain the Object variable for the next document. And so on. i.e. $aArray[1][0] = $oDoc2
 ; Related .......: _LOWriter_DocOpen, _LOWriter_DocClose, _LOWriter_DocCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -1003,7 +1002,7 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: "Title" is the Title as found in File>Properties, not the Document's Title as set when saving it.
-;                   "Keywords" error checking only checks to make sure the input array, and the set Array of Keywords is the same size, it does not check that each element is the same.
+;                  "Keywords" error checking only checks to make sure the input array, and the set Array of Keywords is the same size, it does not check that each element is the same.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -1717,12 +1716,7 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ;                  $iRevisions          - [optional] an integer value. Default is Null. How often the document was edited and saved.
 ;                  $iEditDuration       - [optional] an integer value. Default is Null. The total time of editing the document (in seconds).
 ;                  $bApplyUserData      - [optional] a boolean value. Default is Null. If True, the user-specific settings saved within a document will be loaded with the document.
-;                  $bResetUserData      - [optional] a boolean value. Default is False. If True, clears the document properties, such that it appears the document has just been created. Resets several attributes at once, as follows:
-;                   +                        Author is set to $sNewAuthor parameter, ($sNewAuthor MUST be set to a string).
-;                   +                        CreationDate is set to the current date and time;
-;                   +                        ModifiedBy is cleared, ModificationDate is cleared;
-;                   +                        PrintedBy is cleared; PrintDate is cleared;
-;                   +                        EditingDuration is cleared; EditingCycles is set to 1.
+;                  $bResetUserData      - [optional] a boolean value. Default is False. If True, clears the document properties, such that it appears the document has just been created. Resets several attributes at once. See remarks.
 ; Return values .: Success: Integer or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2003,10 +1997,8 @@ EndFunc   ;==>_LOWriter_DocGenPropPrint
 ; Description ...: Set or Retrieve a Document's General Template Properties.
 ; Syntax ........: _LOWriter_DocGenPropTemplate(ByRef $oDoc[, $sTemplateName = Null[, $sTemplateURL = Null[, $tDateStruct = Null]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sTemplateName       - [optional] a string value. Default is Null. The name of the template from which the document was created.
-;                   +                        The value is an empty string if the document was not created from a template or if it was detached from the template
-;                  $sTemplateURL        - [optional] a string value. Default is Null. The URL of the template from which the document was created.
-;                   +                        The value is an empty string if the document was not created from a template or if it was detached from the template.
+;                  $sTemplateName       - [optional] a string value. Default is Null. The name of the template from which the document was created. The value is an empty string if the document was not created from a template or if it was detached from the template
+;                  $sTemplateURL        - [optional] a string value. Default is Null. The URL of the template from which the document was created. The value is an empty string if the document was not created from a template or if it was detached from the template.
 ;                  $tDateStruct         - [optional] a dll struct value. Default is Null. The date to display, created previously by _LOWriter_DateStructCreate.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2804,7 +2796,6 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ; Syntax ........: _LOWriter_DocMaximize(ByRef $oDoc[, $bMaximize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bMaximize           - [optional] a boolean value. Default is Null. If True, document window is maximized, else if false, document is restored to its previous size and location.
-;                   +                        If Null, returns a Boolean indicating if document is currently maximized (True).
 ; Return values .: Success: 1 or Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2815,7 +2806,7 @@ EndFunc   ;==>_LOWriter_DocIsReadOnly
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMaximize set to Null, returning boolean indicating if Document is currently maximized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If $bMaximize is set to Null, returns a Boolean indicating if document is currently maximized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2840,7 +2831,6 @@ EndFunc   ;==>_LOWriter_DocMaximize
 ; Syntax ........: _LOWriter_DocMinimize(ByRef $oDoc[, $bMinimize = Null])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bMinimize           - [optional] a boolean value. Default is Null. If True, document window is minimized, else if false, document is restored to its previous size and location.
-;                   +                        If Null, returns a Boolean indicating if document is currently minimized (True).
 ; Return values .: Success: 1 or Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2851,7 +2841,7 @@ EndFunc   ;==>_LOWriter_DocMaximize
 ;                  @Error 0 @Extended 1 Return Boolean = Success. $bMinimize set to Null, returning boolean indicating if Document is currently minimized (True) or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If $bMinimize is set to Null, returns a Boolean indicating if document is currently minimized (True).
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3084,7 +3074,6 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ;                  $bCollate            - [optional] a boolean value. Default is True. Advises the printer to collate the pages of the copies.
 ;                  $vPages              - [optional] a String or Integer value. Default is "ALL". Specifies which pages to print. See remarks.
 ;                  $bWait               - [optional] a boolean value. Default is True. If True, the corresponding print request will be executed synchronous. Default is to use synchronous print mode.
-;                   +                        ATTENTION: Setting this field to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ;                  $iDuplexMode         - [optional] an integer value (0-3). Default is $__g_iDuplexOFF. Determines the duplex mode for the print job. See Constants, $LOW_DUPLEX_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $sPrinter            - [optional] a string value. Default is "". Printer name. If left blank, or if printer name is not found, default printer is used.
 ;                  $sFilePathName       - [optional] a string value. Default is "". Specifies the name of a file to print to. Creates a .prn file at the given Path. Must include the desired path destination with file name.
@@ -3114,7 +3103,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
-;                   $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
+;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -3504,9 +3493,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:  Due to slight inaccuracies in unit conversion, there may be false errors thrown while attempting to set paper size.
-;                    For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
-;                    Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                    Call any optional parameter with Null keyword to skip it.
+;                   For some reason, setting $iPaperWidth and $iPaperHeight modifies the document page size also.
+;                   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                   Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
@@ -3794,10 +3783,8 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  $oRange              - [in/out] an object. A Range, such as a cursor with Data selected, to perform the search within.
 ;                  $sSearchString       - a string value. A String of text or a regular expression to search for.
 ;                  $sReplaceString      - a string value. A String of text or a regular expression to replace any results with.
-;                  $atFindFormat        - [in/out] an array of structs. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".
-;                   +                        Set to an empty array[0] to skip. Array will not be modified.
-;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any results with.
-;                   +                        Set to an empty array[0] to skip. Array will not be modified. Not Recommended for use with regular expressions, see remarks.
+;                  $atFindFormat        - [in/out] an array of structs. An Array of Formatting properties to search for, either by value or simply by existence, depending on the current setting of "Value Search".  Set to an empty array[0] to skip. Array will not be modified.
+;                  $atReplaceFormat     - [in/out] an array of structs. An Array of Formatting property values to replace any results with. Set to an empty array[0] to skip. Array will not be modified. Not Recommended for use with regular expressions, see remarks.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -3827,10 +3814,10 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ; Modified ......:
 ; Remarks .......: Libre Office does not offer a Function to call to replace only results within a selection, consequently I have had to create my own. This function uses the "FindAllInRange" function, so any errors with Find/Replace formatting causing deletions will cause problems here. As best as I can tell all options for find and replace should be available, Formatting, Paragraph styles etc.
 ;                  How I created this function to still accept Regular Expressions is I use Libre's FindAll command, modified by my FindAllInRange function. I then ran into another problem, as my next step was to use AutoIt's RegExpReplace function to perform the replacement, but some replacements don't work as expected. To Fix this I have created two versions of Regular Expression replacement, the first way is only implemented if $atReplaceFormat is skipped using an empty array. I use an ExecutionHelper to execute the Find and replace command, however this method doesn't accept formatting for find and replace. So I developed my second method, which accepts formatting, and uses AutoIt's RegExpReplace function to "Search" the resulting matched Strings and replace it, then I set the new string to that result. However I have had to create a separate function to convert the ReplaceString to be compatible with AutoIt's Regular Expression formatting.
-;                   + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
-;                   + \n (new Paragraph) in L.O. RegExp. formatting is replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal.
-;                   + \t (Tab) in L.O. format is replaced with @Tab.
-;                   + &(Find Result/BackReference) is replaced with $0 which means insert the entire found string at that position, To insert a regular "&" character, comment it with a Backslash, \&.
+;                  + A Backslash (\) must be doubled(\\) in order to be literally inserted, at the beginning of the conversion process all double Backslashes are replaced with a specific flag to aid in identifying commented and non-commented keywords (\n, \t, & etc.), after the  conversion process the special flag is replaced again with the double Backslashes, this should not cause any issues.
+;                  + \n (new Paragraph) in L.O. RegExp. formatting is replaced with @CR, unless the Backslash is doubled (\\n), then \n becomes literal.
+;                  + \t (Tab) in L.O. format is replaced with @Tab.
+;                  + &(Find Result/BackReference) is replaced with $0 which means insert the entire found string at that position, To insert a regular "&" character, comment it with a Backslash, \&.
 ;                  As with LibreOffice, this function should still accept BackReferences ($0-9 or \0-9).
 ;                  I have found certain problems with some of the expressions still not working, such as $ (end of paragraph mark) not replacing correctly because Autoit uses @CRLF for its newline endings, and Libre uses @CR for a new paragraph and @LF for a newline.
 ; Related .......: _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_SearchDescriptorCreate, _LOWriter_DocFindAll, _LOWriter_DocFindNext, _LOWriter_DocFindAllInRange, _LOWriter_DocReplaceAll, _LOWriter_FindFormatModifyAlignment, _LOWriter_FindFormatModifyEffects, _LOWriter_FindFormatModifyFont, _LOWriter_FindFormatModifyHyphenation, _LOWriter_FindFormatModifyIndent, _LOWriter_FindFormatModifyOverline, _LOWriter_FindFormatModifyPageBreak, _LOWriter_FindFormatModifyPosition, _LOWriter_FindFormatModifyRotateScaleSpace, _LOWriter_FindFormatModifySpacing, _LOWriter_FindFormatModifyStrikeout, _LOWriter_FindFormatModifyTxtFlowOpt, _LOWriter_FindFormatModifyUnderline.

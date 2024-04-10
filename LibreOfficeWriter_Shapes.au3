@@ -419,33 +419,33 @@ EndFunc   ;==>_LOWriter_ShapeGetObjByName
 ; Modified ......:
 ; Remarks .......: #1 Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
 ;                  Because of this the following Custom shape types cannot be identified, and this function will return -1:
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
-;                    $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
-;                    $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
-;                    $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
-;                    $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
-;                    $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
-;                    $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
-;                    $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
-;                   #2 The following Shapes implement the same type names, and are consequently indistinguishable:
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
-;                    $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
-;                    $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
-;                    $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE (The Value of $LOW_SHAPE_TYPE_LINE_CURVE is returned for either one.)
-;                    $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_CURVE_FILLED is returned for either one.)
-;                    $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_POLYGON is returned for any of these.)
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;                   $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;                   $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;                  #2 The following Shapes implement the same type names, and are consequently indistinguishable:
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE (The Value of $LOW_SHAPE_TYPE_LINE_CURVE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_CURVE_FILLED is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_POLYGON is returned for any of these.)
 ;                  The following Shapes have strange names that may change in the future, but currently are able to be identified:
-;                    $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
-;                    $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
-;                    $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+;                   $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -555,13 +555,13 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ;                  Line Shapes, such as Curves etc., may not be smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select the individual points and set the Point type in L.O. UI.
 ;                  Polygon and Polygon 45 degree are the same shape internally, one only allows you to draw the lines at 45 degree angles in L.O. UI.
 ;                  The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;                    $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
-;                    $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE
-;                    $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE
+;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
 ;                  Inserting any of the above shapes will still show successful, but the shape will be invisible, and could cause the document to crash.
 ;                  The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
-;                    $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2241,8 +2241,8 @@ EndFunc   ;==>_LOWriter_ShapePointsRemove
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes do not support adding a TextBox:
-;                    $LOW_SHAPE_TYPE_LINE_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED.
-;                    $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT, $LOW_SHAPE_TYPE_BASIC_ARC.
+;                   $LOW_SHAPE_TYPE_LINE_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED.
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT, $LOW_SHAPE_TYPE_BASIC_ARC.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2500,61 +2500,61 @@ EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
+;                  $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
 ;                  The Following is a list of acceptable values per anchor position.
-;                    $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;                        $LOW_RELATIVE_PARAGRAPH (0),
-;                        $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                        $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                        $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                        $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                        $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                        $LOW_RELATIVE_PAGE (7),
-;                        $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                    $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;                    $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;                        $LOW_RELATIVE_PARAGRAPH (0),
-;                        $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                        $LOW_RELATIVE_CHARACTER (2),
-;                        $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;                        $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;                        $LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;                        $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;                        $LOW_RELATIVE_PAGE (7),
-;                        $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                   $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;                    $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;                        $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;                        $LOW_RELATIVE_PAGE (7),
-;                        $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                    $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;                        $LOW_RELATIVE_ROW(-1),
-;                        $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;                        $LOW_RELATIVE_CHARACTER (2),
-;                    $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;                        $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;                        $LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;                        $LOW_RELATIVE_CHARACTER (2),
-;                        $LOW_RELATIVE_PAGE (7),
-;                        $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;                        $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0),
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0),
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
+;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_ROW(-1),
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
 ;                  The behavior of each Relation constant is described below.
-;                        $LOW_RELATIVE_ROW(-1), This option will position the Shape considering the height of the row where the anchor is placed.
-;                        $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the Shape is positioned considering the whole width available for the paragraph, including indent spaces.
-;                        $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the Shape is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the Shape considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;                        $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the Shape is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;                        $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the Shape is positioned considering the height of the paragraph where the anchor is placed.
-;                        $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the Shape is positioned considering the horizontal space used by the character.
-;                        $LOW_RELATIVE_CHARACTER [For Vertical relation:] the Shape is positioned considering the vertical space used by the character.
-;                        $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the Shape is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;                        $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the Shape is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;                        $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the Shape is positioned considering the width of the indent space available to the left of the paragraph.
-;                        $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the Shape is positioned considering the width of the indent space available to the right of the paragraph.
-;                        $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the Shape is positioned considering the whole width of the page, from the left to the right page borders.
-;                        $LOW_RELATIVE_PAGE [For Vertical relation:], the Shape is positioned considering the full page height, from top to bottom page borders.
-;                        $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the Shape is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;                        $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the Shape is positioned considering the full height available for text, from top to bottom margins.
-;                        $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the Shape is positioned considering the height of the line of text where the anchor is placed.
+;                     $LOW_RELATIVE_ROW(-1), This option will position the Shape considering the height of the row where the anchor is placed.
+;                     $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the Shape is positioned considering the whole width available for the paragraph, including indent spaces.
+;                     $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the Shape is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the Shape considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the Shape is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the Shape is positioned considering the height of the paragraph where the anchor is placed.
+;                     $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the Shape is positioned considering the horizontal space used by the character.
+;                     $LOW_RELATIVE_CHARACTER [For Vertical relation:] the Shape is positioned considering the vertical space used by the character.
+;                     $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the Shape is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;                     $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the Shape is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the Shape is positioned considering the width of the indent space available to the left of the paragraph.
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the Shape is positioned considering the width of the indent space available to the right of the paragraph.
+;                     $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the Shape is positioned considering the whole width of the page, from the left to the right page borders.
+;                     $LOW_RELATIVE_PAGE [For Vertical relation:], the Shape is positioned considering the full page height, from top to bottom page borders.
+;                     $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the Shape is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;                     $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the Shape is positioned considering the full height available for text, from top to bottom margins.
+;                     $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the Shape is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes

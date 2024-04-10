@@ -392,7 +392,7 @@ EndFunc   ;==>__LOCalc_CellBorder
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $iAll returns an integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
+;                  $iAll returns an integer value if all (Top, Bottom, Left, Right) padding values are equal, else Null is returned.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2403,23 +2403,23 @@ EndFunc   ;==>__LOCalc_SetPropertyValue
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only some movements accept Column and Row Values, creating/ extending a selection of cells, etc. They will be specified below.
-;                   #Cursor Movement Constants which accept Column and Row values:
-;                    $LOC_SHEETCUR_COLLAPSE_TO_SIZE,
-;                    $LOC_SHEETCUR_GOTO_OFFSET
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOC_SHEETCUR_GOTO_USED_AREA_START,
-;                    $LOC_SHEETCUR_GOTO_USED_AREA_END
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
-;                    $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
-;                    $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
-;                    $LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
-;                    $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
-;                    $LOC_SHEETCUR_GOTO_START,
-;                    $LOC_SHEETCUR_GOTO_END
-;                   #Cursor Movements which accept only number of moves ($iCount):
-;                    $LOC_SHEETCUR_GOTO_NEXT,
-;                    $LOC_SHEETCUR_GOTO_PREV
+;                  #Cursor Movement Constants which accept Column and Row values:
+;                  $LOC_SHEETCUR_COLLAPSE_TO_SIZE,
+;                  $LOC_SHEETCUR_GOTO_OFFSET
+;                  #Cursor Movements which accept Selecting Only:
+;                  $LOC_SHEETCUR_GOTO_USED_AREA_START,
+;                  $LOC_SHEETCUR_GOTO_USED_AREA_END
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                  $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_ARRAY,
+;                  $LOC_SHEETCUR_COLLAPSE_TO_CURRENT_REGION,
+;                  $LOC_SHEETCUR_COLLAPSE_TO_MERGED_AREA,
+;                  $LOC_SHEETCUR_EXPAND_TO_ENTIRE_COLUMN,
+;                  $LOC_SHEETCUR_EXPAND_TO_ENTIRE_ROW,
+;                  $LOC_SHEETCUR_GOTO_START,
+;                  $LOC_SHEETCUR_GOTO_END
+;                  #Cursor Movements which accept only number of moves ($iCount):
+;                  $LOC_SHEETCUR_GOTO_NEXT,
+;                  $LOC_SHEETCUR_GOTO_PREV
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
@@ -2505,15 +2505,15 @@ EndFunc   ;==>__LOCalc_SheetCursorMove
 ; Modified ......:
 ; Remarks .......: Only some movements accept movement amounts and selecting (such as $LOC_TEXTCUR_GO_RIGHT 2, True) etc. Also only some accept creating/ extending a selection of text/ data. They will be specified below.
 ;                  To Clear /Unselect a current selection, you can input a move such as $LOC_TEXTCUR_GO_RIGHT, 0, False.
-;                   #Cursor Movement Constants which accept number of Moves and Selecting:
-;                    $LOC_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
-;                    $LOC_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
-;                   #Cursor Movements which accept Selecting Only:
-;                    $LOC_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
-;                    $LOC_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
-;                   #Cursor Movements which accept nothing and are done once per call:
-;                    $LOC_TEXTCUR_COLLAPSE_TO_START,
-;                    $LOC_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
+;                  #Cursor Movement Constants which accept number of Moves and Selecting:
+;                  $LOC_TEXTCUR_GO_LEFT, Move the cursor left by n characters.
+;                  $LOC_TEXTCUR_GO_RIGHT, Move the cursor right by n characters.
+;                  #Cursor Movements which accept Selecting Only:
+;                  $LOC_TEXTCUR_GOTO_START, Move the cursor to the start of the text.
+;                  $LOC_TEXTCUR_GOTO_END, Move the cursor to the end of the text.
+;                  #Cursor Movements which accept nothing and are done once per call:
+;                  $LOC_TEXTCUR_COLLAPSE_TO_START,
+;                  $LOC_TEXTCUR_COLLAPSE_TO_END (Collapses the current selection and moves the cursor to start or End of selection.
 ; Related .......:
 ; Link ..........:
 ; Example .......: No

@@ -350,7 +350,7 @@ EndFunc   ;==>_LOCalc_RangeColumnInsert
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                   $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each Column, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
@@ -583,7 +583,7 @@ EndFunc   ;==>_LOCalc_RangeCompute
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Destination Range can be on different Sheet from Source.
-;                   $oSheet is the source sheet where $oRangeSrc is located.
+;                  $oSheet is the source sheet where $oRangeSrc is located.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -694,7 +694,7 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return Strings and Numbers contained in the cell range when $aavData is called with Null keyword. Array will be an array of arrays. The internal arrays will contain numerical or string data, depending on cell content.
-;                   $aavData must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aavData must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain appropriate data, strings or numbers.
 ;                  Formulas will be inserted as strings only, and will not be valid.
@@ -1516,7 +1516,7 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only formulas contained in the cell range when $aasFormulas is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or formula strings, depending on cell content.
-;                   $aasFormulas must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aasFormulas must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain strings, blank or otherwise.
 ; Related .......:
@@ -1947,9 +1947,9 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj determines the scope you are inserting the new Named Range in, either Globally (Document Object), or locally (Sheet Object).
-;                   $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
+;                  $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
 ;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
-;                   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
+;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell  that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
 ; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
@@ -2327,7 +2327,7 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ; Modified ......:
 ; Remarks .......: $vRange can be a string representation of the Range covered by the NamedRange, i.e., $Sheet1.$A$1:$C$14, or a Formula, such as A1+A2, or a Cell Range Object.
 ;                  If $vRange is a String, $oRefCell must be set to the Cell Object of either the first cell of the desired Range, or the reference cell for the formula. See explanation below.
-;                   $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
+;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which  refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to  the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519.]
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -2452,7 +2452,7 @@ EndFunc   ;==>_LOCalc_RangeNamedModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will return only numbers contained in the cell range when $aanNumbers is called with Null keyword. Array will be an array of arrays. The internal arrays will contain blank cells or numbers, depending on cell content.
-;                   $aanNumbers must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
+;                  $aanNumbers must be an array containing arrays. If $bStrictSize is set to True, the main Array's element count must match the row count contained in the Cell Range, and each internal Array's element count must match the column count of the Cell Range it is to fill. All internal arrays must be the same size.
 ;                  Any data previously contained in the Cell Range will be overwritten.
 ;                  All array elements must contain numbers.
 ; Related .......:
@@ -3322,7 +3322,7 @@ EndFunc   ;==>_LOCalc_RangeRowInsert
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Setting $bStartOfPageBreak to True will insert a Manual Page Break, the same as setting $bManualPageBreak to True would.
-;                   $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
+;                  $bStartOfPageBreak setting is available more for indicating where Calc is inserting Page Breaks rather than for applying a setting. You can retrieve the settings for each row, and check if this value is set to True or not. If the Page break is an automatically inserted one, the value for $bManualPageBreak would be false.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -3481,7 +3481,7 @@ EndFunc   ;==>_LOCalc_RangeRowVisible
 ; Modified ......:
 ; Remarks .......: You can sort up to 3 Columns/Rows per Sort call by using $tSortField2 and $tSortField3.
 ;                  Only one Sort Field per Column/Row per sort, may be used, otherwise only the first Sort Field for that Column/Row is used.
-;                   $oCellOutput indicates the cell to begin the output data, and does not need to be the same size as $oRange. Any data will be overwritten in order to output the copied Sort Data that is within range.
+;                  $oCellOutput indicates the cell to begin the output data, and does not need to be the same size as $oRange. Any data will be overwritten in order to output the copied Sort Data that is within range.
 ;                  Due to some form of bug in LibreOffice, the sort function does not work appropriately when using the normal method, so a slight workaround has been implemented, this workaround involves inserting a temporary Macro into the Document, calling that Macro, and then deleting the Macro once finished.
 ; Related .......:
 ; Link ..........:

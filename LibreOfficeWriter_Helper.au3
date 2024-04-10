@@ -84,15 +84,15 @@
 ; Remarks .......: The first parameter passed to the User function will always be the COM Error object. See below.
 ;                  Every COM Error will be passed to that function. The user can then read the following properties. (As Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the UserFunction.
 ;                  For Example MyFunc($oMyError)
-;                    $oMyError.number The Windows HRESULT value from a COM call
-;                    $oMyError.windescription The FormatWinError() text derived from .number
-;                    $oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
-;                    $oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;                    $oMyError.helpfile Source Object's helpfile for the error (contents from ExcepInfo.helpfile)
-;                    $oMyError.helpcontext Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)
-;                    $oMyError.lastdllerror The number returned from GetLastError()
-;                    $oMyError.scriptline The script line on which the error was generated
-;                    NOTE: Not all properties will necessarily contain data, some will be blank.
+;                   $oMyError.number The Windows HRESULT value from a COM call
+;                   $oMyError.windescription The FormatWinError() text derived from .number
+;                   $oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
+;                   $oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
+;                   $oMyError.helpfile Source Object's helpfile for the error (contents from ExcepInfo.helpfile)
+;                   $oMyError.helpcontext Source Object's helpfile context id number (contents from ExcepInfo.helpcontext)
+;                   $oMyError.lastdllerror The number returned from GetLastError()
+;                   $oMyError.scriptline The script line on which the error was generated
+;                   NOTE: Not all properties will necessarily contain data, some will be blank.
 ;                  If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
 ;                  If called with Default keyword, the current UserFunction, if set, will be returned.
 ;                  If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
@@ -580,7 +580,7 @@ EndFunc   ;==>_LOWriter_ConvertToMicrometer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_DateFormatKeyDelete
+; Related .......: _LOWriter_DateFormatKeyDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -709,7 +709,7 @@ EndFunc   ;==>_LOWriter_DateFormatKeyExists
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_DateFormatKeyList
+; Related .......: _LOWriter_DateFormatKeyList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1072,7 +1072,7 @@ EndFunc   ;==>_LOWriter_DateStructModify
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
+;                  $iTxtDirection constants 2,3, and 5 may not be available depending on your language settings.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1441,7 +1441,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyHyphenation
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
+;                  $iFirstLine Indent cannot be set if $bAutoFirstLine is set to True.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1516,7 +1516,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyIndent
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
 ;                  Underline Constants are used for Overline line style.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
@@ -1660,7 +1660,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyPageBreak
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   0 is the normal $iSubScript or $iSuperScript setting.
+;                  0 is the normal $iSubScript or $iSuperScript setting.
 ;                  The way LibreOffice is set up Super/Subscript are set in the same setting, Superscript is a positive number from 1 to 100 (percentage), Subscript is a negative number set to -1 to -100 percentage.
 ;                  For the user's convenience this function accepts both positive and negative numbers for Subscript, if a positive number is called for Subscript, it is automatically set to a negative.
 ;                  Automatic Superscript has a integer value of 14000, Auto Subscript has a integer value of -14000. There is no settable setting of Automatic Super/Sub Script, though one exists, it is read-only in LibreOffice, consequently I have made two separate parameters to be able to determine if the user wants to automatically set Superscript or Subscript.
@@ -1843,7 +1843,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
 ;                  The settings in Libre Office, (Single,1.15, 1.5, Double,) Use the Proportional mode, and are just varying percentages. e.g Single = 100, 1.15 = 115%, 1.5 = 150%, Double = 200%.
 ;                  The values accepted by $iLineSpcHeight depends on the $iLineSpcMode used, see constants for accepted Input values.
-;                   $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
+;                  $iAbovePar, $iBelowPar, $iLineSpcHeight may change +/- 1 Micrometer once set.
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -1941,7 +1941,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifySpacing
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
 ; Related .......: _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes
@@ -2079,7 +2079,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyTxtFlowOpt
 ; Remarks .......: Call any optional parameter with Null keyword to skip it.
 ;                  Call any parameter you wish to delete from an already existing Find Format Array with the Default Keyword.
 ;                  If you do not have a pre-existing FindFormat Array, create and pass an Array with 0 elements. (Local $aArray[0])
-;                   $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
+;                  $bWordOnly applies to Underline, Overline and Strikeout, regardless of which is set to true, one setting applies to all.
 ; Related .......:_LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong, _LOWriter_DocFindAll, _LOWriter_DocFindAllInRange, _LOWriter_DocFindNext, _LOWriter_DocReplaceAll, _LOWriter_DocReplaceAllInRange
 ; Link ..........:
 ; Example .......: Yes

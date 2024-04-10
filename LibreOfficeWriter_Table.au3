@@ -68,7 +68,6 @@
 ;                  $iRight              - [optional] an integer value (0-16777215). Default is Null. Set the Right Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value (0-16777215). Default is Null. Set the Vertical Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value (0-16777215). Default is Null. Set the Horizontal Border Line Color of the Table in Long Color code format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remarks : Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -227,7 +226,6 @@ EndFunc   ;==>_LOWriter_TableBorderPadding
 ;                  $iRight              - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the Right Border Line Style of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the internal Vertical Border Line Styles of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value (0x7FFF,0-17). Default is Null. Set the internal Horizontal Border Line Styles of the Table using one of the line style constants, $LOW_BORDERSTYLE_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remarks : Error values for Initialization and Processing are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -294,7 +292,6 @@ EndFunc   ;==>_LOWriter_TableBorderStyle
 ;                  $iRight              - [optional] an integer value. Default is Null. Set the Right Border Line Width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iVert               - [optional] an integer value. Default is Null. Set the Internal Vertical Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iHori               - [optional] an integer value. Default is Null. Set the Internal Horizontal Border Line width of the Table in Micrometers. Can be a custom value, or one of the constants, $LOW_BORDERWIDTH_* as defined in LibreOfficeWriter_Constants.au3.
-; Internal Remark: Error values for Initialization and Processing, are passed from the internal border setting function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -957,7 +954,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Cell names are Case Sensitive. LibreOffice first goes from A to Z, and then a to z and then AA to ZZ etc.
-;                   $sCellName can contain a Cell name that is located after $sToCellName in the Table.
+;                  $sCellName can contain a Cell name that is located after $sToCellName in the Table.
 ;                  If $sToCellName is left blank, a cell object is returned instead of a Cell Range.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableGetCellNames
 ; Link ..........:
@@ -1229,7 +1226,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 ; Remarks .......: This function inserts a Table previously created by _LOWriter_TableCreate, into a document.
 ;                  Text Tables cannot be inserted into Foot/Endnotes. And it is not best to place them into other tables, though it is possible.
 ;                  You can set the $oCursor parameter  to either a ViewCursor or a Text cursor currently in an acceptable data type, the table will be inserted at the cursor position. Or set $oCursor to Default, the Table will be inserted at the very end of a document.
-;                   $bHeading only applies when a Table is created with more than 1 Row.
+;                  $bHeading only applies when a Table is created with more than 1 Row.
 ;                  For an unknown reason to myself, when creating a Text Table with more than 1 row the "Table Heading" paragraph style is applied to the first row. Setting $bHeading to False (Default) will return the paragraph style to "Table Contents" as normal. If you set $bHeading to True, "Table Heading" Paragraph Style will be applied. If these styles are not present a Property setting error will result, however the Table will still have been successfully inserted into the document.
 ; Related .......: _LOWriter_TableCreate, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor
 ; Link ..........:
@@ -1414,8 +1411,8 @@ EndFunc   ;==>_LOWriter_TableMargin
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                   $bSplitRows and $bRepeatHeading can only be set for Tables currently in the document, not for Tables Created with _LOWriter_TableCreate, and not inserted.
-;                   $bSplitRows will return 0 instead of a boolean if the Table's rows have different settings for $bSplitRows.
+;                  $bSplitRows and $bRepeatHeading can only be set for Tables currently in the document, not for Tables Created with _LOWriter_TableCreate, and not inserted.
+;                  $bSplitRows will return 0 instead of a boolean if the Table's rows have different settings for $bSplitRows.
 ; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -1828,7 +1825,7 @@ EndFunc   ;==>_LOWriter_TableSetData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOWriter_TableGetObjByName
+; Related .......: _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
