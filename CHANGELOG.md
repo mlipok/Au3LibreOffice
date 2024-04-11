@@ -508,6 +508,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
 - Missing Parameters in some headers or Syntax header.
 - Missing parameter type checks in some functions.
+- Missing ExitLoop in __LOWriter_FieldsGetList causing unnecessary looping.
 
 ### Removed
 
