@@ -417,7 +417,7 @@ EndFunc   ;==>_LOWriter_ParStyleAlignment
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleBackColor
 ; Description ...: Set or Retrieve background color settings for a Paragraph style.
-; Syntax ........: _LOWriter_ParStyleBackColor(ByRef $oDoc, $sParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
+; Syntax ........: _LOWriter_ParStyleBackColor(ByRef $oParStyle[, $iBackColor = Null[, $bBackTransparent = Null]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iBackColor          - [optional] an integer value (-1-16777215). Default is Null. The background color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1), to turn Background color off.
 ;                  $bBackTransparent    - [optional] a boolean value. Default is Null. If True, the background color is transparent.
@@ -1898,7 +1898,7 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleTabStopCreate
 ; Description ...: Create a new TabStop for a Paragraph Style.
-; Syntax ........: _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition[, $iAlignment = Null[, $iFillChar = Null[, $iDecChar = Null]]])
+; Syntax ........: _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition[, $iFillChar = Null[, $iAlignment = Null[, $iDecChar = Null]]])
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $iPosition           - an integer value. The TabStop position to set the new TabStop to. Set in Micrometers (uM). See Remarks.
 ;                  $iFillChar           - [optional] an integer value. Default is Null. The Asc (see AutoIt function) value of any character (except 0/Null) you want to act as a Tab Fill character. See remarks.

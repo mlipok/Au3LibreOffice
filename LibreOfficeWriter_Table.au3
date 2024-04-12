@@ -986,7 +986,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetCellObjByPosition
 ; Description ...: Retrieve a Cell object or Cell Range by position in a Table. See Remarks
-; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = $iColumn [, $iToRow = $iRow]])
+; Syntax ........: _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow[, $iToColumn = $iColumn[, $iToRow = $iRow]])
 ; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
 ;                  $iColumn             - an integer value. The column the desired cell is located in, or where to start the the cell range from.
 ;                  $iRow                - an integer value. The row the desired cell is located in, or where to start the the cell range from.

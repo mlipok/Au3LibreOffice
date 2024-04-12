@@ -292,7 +292,7 @@ EndFunc   ;==>_LOWriter_ImageAreaGradient
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaTransparency
 ; Description ...: Modify or retrieve Transparency settings for an Image's background color.
-; Syntax ........: _LOWriter_ImageAreaTransparency(ByRef $oDoc[, $iTransparency = Null])
+; Syntax ........: _LOWriter_ImageAreaTransparency(ByRef $oImage[, $iTransparency = Null])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
@@ -1314,7 +1314,7 @@ EndFunc   ;==>_LOWriter_ImageModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageOptions
 ; Description ...: Set or Retrieve Image Options.
-; Syntax ........: _LOWriter_ImageOptions(ByRef $oImage[, $bProtectContent = Null[, $bProtectPos = Null[, $bProtectSize = Null[, $iVertAlign = Null[, $bEditInRead = Null[, $bPrint = Null[, $iTxtDirection = Null]]]]]]])
+; Syntax ........: _LOWriter_ImageOptions(ByRef $oImage[, $bProtectContent = Null[, $bProtectPos = Null[, $bProtectSize = Null[, $bPrint = Null]]]])
 ; Parameters ....: $oImage           - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bProtectContent     - [optional] a boolean value. Default is Null. If True, Prevents changes to the contents of the Image.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, Locks the position of the Image in the current document.
@@ -2016,17 +2016,15 @@ EndFunc   ;==>_LOWriter_ImageTypePosition
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageTypeSize
 ; Description ...: Set or Retrieve Image Size related settings.
-; Syntax ........: _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $bAutoWidth = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bAutoHeight = Null[, $bKeepRatio = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bKeepRatio = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWidth              - [optional] an integer value. Default is Null. The width of the Image, in Micrometers(uM). Min. 51.
 ;                  $iRelativeWidth      - [optional] an integer value (0-254). Default is Null. Calculates the width of the Image as a percentage of the width of the page text area. 0 = off.
 ;                  $iWidthRelativeTo    - [optional] an integer value (0,7). Default is Null. Decides what 100% width means: either text area (excluding margins) or the entire page (including margins). See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3. Libre Office 4.3 and Up.
-;                  $bAutoWidth          - [optional] a boolean value. Default is Null. If True, automatically adjusts the width of a Image. $iWidth becomes the minimum width the Image must be.
 ;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Image, in Micrometers(uM). Min. 51.
 ;                  $iRelativeHeight     - [optional] an integer value (0-254). Default is Null. Calculates the Height of the Image as a percentage of the Height of the page text area. 0 = off.
 ;                  $iHeightRelativeTo   - [optional] an integer value (0,7). Default is Null. Decides what 100% Height means: either text area (excluding margins) or the entire page (including margins). See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3. Libre Office 4.3 and Up.
-;                  $bAutoHeight         - [optional] a boolean value. Default is Null. If True, automatically adjusts the height of a Image. $iHeight becomes the minimum height the Image must be.
 ;                  $bKeepRatio          - [optional] a boolean value. Default is Null. Maintains the height and width ratio when you change the width or the height setting.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.

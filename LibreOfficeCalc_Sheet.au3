@@ -150,11 +150,11 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetCopy
 ; Description ...: Create a copy of a particular Sheet.
-; Syntax ........: _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName, $iPosition)
+; Syntax ........: _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet[, $sNewName = Null[, $iPosition = Null]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $sNewName            - a string value. The name to assign to the newly copied Sheet.
-;                  $iPosition           - an integer value. The position to place the copied sheet at. 0 = the beginning.
+;                  $sNewName            - [optional] a string value. Default is Null. The name to assign to the newly copied Sheet.
+;                  $iPosition           - [optional] an integer value. Default is Null. The position to place the copied sheet at. 0 = the beginning.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
