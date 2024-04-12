@@ -1009,6 +1009,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oDateTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
+
 	If __LOWriter_VarsAreNull($bIsFixed, $tDateStruct, $bIsDate, $iOffset, $iDateFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
 		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
@@ -1025,24 +1026,28 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		$oDateTimeField.IsFixed = $bIsFixed
 		$iError = ($oDateTimeField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($tDateStruct <> Null) Then
 		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oDateTimeField.DateTimeValue = $tDateStruct
 		$iError = (__LOWriter_DateStructCompare($oDateTimeField.DateTimeValue(), $tDateStruct)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($bIsDate <> Null) Then
 		If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oDateTimeField.IsDate = $bIsDate
 		$iError = ($oDateTimeField.IsDate() = $bIsDate) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iOffset <> Null) Then
 		If Not IsInt($iOffset) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
 		$iOffset = ($oDateTimeField.IsDate() = True) ? Int((1440 * $iOffset)) : $iOffset
 		; If IsDate = True, Then Calculate number of minutes in a day (1440) times number of days to off set the Date/ Value,
 		; else, just set it to Number of minutes called.
@@ -1054,6 +1059,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
 		$oDateTimeField.NumberFormat = $iDateFormatKey
 		$iError = ($oDateTimeField.NumberFormat() = ($iDateFormatKey)) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -1066,15 +1072,13 @@ EndFunc   ;==>_LOWriter_FieldDateTimeModify
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDelete
 ; Description ...: Delete a Field from a Document.
-; Syntax ........: _LOWriter_FieldDelete(ByRef $oDoc, ByRef $oField[, $bDeleteMaster = False])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oField              - [in/out] an object. A Field Object from a previous Insert, _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, or _LOWriter_FieldsDocInfoGetList function.
+; Syntax ........: _LOWriter_FieldDelete(ByRef $oField[, $bDeleteMaster = False])
+; Parameters ....: $oField              - [in/out] an object. A Field Object from a previous Insert, _LOWriter_FieldsGetList, _LOWriter_FieldsAdvGetList, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bDeleteMaster       - [optional] a boolean value. Default is False. If True, and the field has a Master Field, the MasterField (With any other dependent fields) will be deleted.
 ; Return values .: Success: 1.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oField not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oField not an Object.
 ;				   @Error 1 @Extended 3 Return 0 = $bDeleteMaster not a Boolean.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Error retrieving TextFieldMaster Object.
@@ -1089,16 +1093,15 @@ EndFunc   ;==>_LOWriter_FieldDateTimeModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDelete(ByRef $oDoc, ByRef $oField, $bDeleteMaster = False)
+Func _LOWriter_FieldDelete(ByRef $oField, $bDeleteMaster = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oFieldMaster
 	Local $aoDependents[0]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsBool($bDeleteMaster) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bDeleteMaster) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If ($bDeleteMaster = True) And ($oField.TextFieldMaster.Name() <> "") Then
 		$oFieldMaster = $oField.TextFieldMaster()
@@ -1579,19 +1582,17 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoEditTimeModify
 ; Description ...: Set or Retrieve a Document Information Total Editing Time Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeField[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
-; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oDocInfoEditTimeField - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
+; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTimeField[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
+; Parameters ....: $oDocInfoEditTimeField - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $iTimeFormatKey        - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
 ; Return values .: Success: 1 or Array.
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oDocInfoEditTimeField not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $bIsFixed not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $iTimeFormatKey not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iTimeFormatKey not found in document.
+;				   @Error 1 @Extended 1 Return 0 = $oDocInfoEditTimeField not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
+;				   @Error 1 @Extended 3 Return 0 = $iTimeFormatKey not an Integer.
+;				   @Error 1 @Extended 4 Return 0 = $iTimeFormatKey not found in document.
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |								1 = Error setting $bIsFixed
@@ -1608,15 +1609,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeField, $bIsFixed = Null, $iTimeFormatKey = Null)
+Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTimeField, $bIsFixed = Null, $iTimeFormatKey = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoEditTm[2]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oDocInfoEditTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDocInfoEditTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iTimeFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
@@ -1630,14 +1630,14 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDoc, ByRef $oDocInfoEditTimeFi
 	EndIf
 
 	If ($bIsFixed <> Null) Then
-		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oDocInfoEditTimeField.IsFixed = $bIsFixed
 		$iError = ($oDocInfoEditTimeField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTimeFormatKey <> Null) Then
+		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDocInfoEditTimeField.NumberFormat = $iTimeFormatKey
 		$iError = ($oDocInfoEditTimeField.NumberFormat() = $iTimeFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -4994,14 +4994,12 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterList
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterListFields
 ; Description ...: Return an Array of Objects of dependent fields for a specific Master Field.
-; Syntax ........: _LOWriter_FieldSetVarMasterListFields(ByRef $oDoc, ByRef $oMasterfield)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oMasterfield        - [in/out] an object. The Set Variable Master Field Object returned from a previous _LOWriter_FieldSetVarMasterCreate, or _LOWriter_FieldSetVarMasterGetObj function.
+; Syntax ........: _LOWriter_FieldSetVarMasterListFields(ByRef $oMasterfield)
+; Parameters ....: $oMasterfield        - [in/out] an object. The Set Variable Master Field Object returned from a previous _LOWriter_FieldSetVarMasterCreate, or _LOWriter_FieldSetVarMasterGetObj function.
 ; Return values .: Success: 1 or Array
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oMasterfield not an Object.
+;				   @Error 1 @Extended 1 Return 0 = $oMasterfield not an Object.
 ;				   --Initialization Errors--
 ;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve dependent fields Array.
 ;				   --Success--
@@ -5014,14 +5012,13 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldSetVarMasterListFields(ByRef $oDoc, ByRef $oMasterfield)
+Func _LOWriter_FieldSetVarMasterListFields(ByRef $oMasterfield)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $aoDependFields[0]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$aoDependFields = $oMasterfield.DependentTextFields()
 	If Not IsArray($aoDependFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)

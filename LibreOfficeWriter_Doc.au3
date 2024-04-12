@@ -271,17 +271,15 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkModify
 ; Description ...: Set or Retrieve a Bookmark's settings.
-; Syntax ........: _LOWriter_DocBookmarkModify(ByRef $oDoc, ByRef $oBookmark[, $sBookmarkName = Null])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oBookmark           - [in/out] an object. A Bookmark Object from a previous _LOWriter_DocBookmarkInsert, or _LOWriter_DocBookmarkGetObj function.
+; Syntax ........: _LOWriter_DocBookmarkModify(ByRef $oBookmark[, $sBookmarkName = Null])
+; Parameters ....: $oBookmark           - [in/out] an object. A Bookmark Object from a previous _LOWriter_DocBookmarkInsert, or _LOWriter_DocBookmarkGetObj function.
 ;                  $sBookmarkName       - [optional] a string value. Default is Null. The new name to rename the bookmark called in $oBookmark.
 ; Return values .: Success: 1 or String
 ;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oBookmark not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sBookmarkName not a String.
-;				   @Error 1 @Extended 4 Return 0 = $sBookmarkName contains illegal characters, /\@:*?";,.# .
+;				   @Error 1 @Extended 1 Return 0 = $oBookmark not an Object.
+;				   @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
+;				   @Error 1 @Extended 3 Return 0 = $sBookmarkName contains illegal characters, /\@:*?";,.# .
 ;				   --Property Setting Errors--
 ;				   @Error 4 @Extended ? Return 	0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;				   |							1 = Error setting $sBookmarkName
@@ -298,19 +296,18 @@ EndFunc   ;==>_LOWriter_DocBookmarkInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocBookmarkModify(ByRef $oDoc, ByRef $oBookmark, $sBookmarkName = Null)
+Func _LOWriter_DocBookmarkModify(ByRef $oBookmark, $sBookmarkName = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sBookmarkName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oBookmark.Name())
 
-	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Invalid Characters in Name.
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Invalid Characters in Name.
 	$oBookmark.Name = $sBookmarkName
 	$iError = ($oBookmark.Name() = $sBookmarkName) ? ($iError) : (BitOR($iError, 1))
 
@@ -2639,7 +2636,8 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 		$oTextCursor.gotoEnd(False)
 	EndIf
 
-	$oText.insertString($oTextCursor, $sLinkText, False)
+	$oText.insertString($oTextCursor, $sLinkText, $bOverwrite)
+
 	With $oTextCursor
 		.goLeft(StringLen($sLinkText), False)
 		.goRight(StringLen($sLinkText), True)
