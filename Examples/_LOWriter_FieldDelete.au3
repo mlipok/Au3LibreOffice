@@ -27,7 +27,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Press ok to delete the Page Number Field.")
 
 	; Delete the Field.
-	_LOWriter_FieldDelete($oDoc, $oField)
+	_LOWriter_FieldDelete($oField)
 	If @error Then _ERROR($oDoc, "Failed to delete a field. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

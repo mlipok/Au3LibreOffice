@@ -70,7 +70,7 @@ Func Example()
 		$oPar = $aoPars[$i]
 
 		; Set the Numbering Style Level for This Paragraph to 2.
-		_LOWriter_NumStyleSetLevel($oDoc, $oPar, $i + 1)
+		_LOWriter_NumStyleSetLevel($oPar, $i + 1)
 		If @error Then _ERROR($oDoc, "Failed to set the Numbering Style level. Error:" & @error & " Extended:" & @extended)
 	Next
 
