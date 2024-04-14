@@ -35,7 +35,7 @@ Func Example()
 	MsgBox($MB_OK, "", "Press ok to delete the Set Variable Field.")
 
 	; Delete the Field and its MasterField.
-	_LOWriter_FieldDelete($oDoc, $oField, True)
+	_LOWriter_FieldDelete($oField, True)
 	If @error Then _ERROR($oDoc, "Failed to delete a field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve an array of Set Variable Master Field names.

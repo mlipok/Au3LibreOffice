@@ -1157,12 +1157,11 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ;				   @Error 2 @Extended 3 Return 0 = Failure Creating "com.sun.star.graphic.GraphicProvider" Object.
 ;				   --Processing Errors--
 ;				   @Error 3 @Extended 1 Return 0 = Error getting Cursor type.
-;				   @Error 3 @Extended 2 Return 0 = Error creating text cursor at ViewCursor location.
-;				   @Error 3 @Extended 3 Return 0 = Error converting Image Path to Libre Office URL.
-;				   @Error 3 @Extended 4 Return 0 = Error setting a property value for retrieving the Image's size.
-;				   @Error 3 @Extended 5 Return 0 = Error retrieving current Page Style name at insertion point.
-;				   @Error 3 @Extended 6 Return 0 = Error retrieving Page Style Object.
-;				   @Error 3 @Extended 7 Return 0 = Error calculating suggested image size.
+;				   @Error 3 @Extended 2 Return 0 = Error converting Image Path to Libre Office URL.
+;				   @Error 3 @Extended 3 Return 0 = Error setting a property value for retrieving the Image's size.
+;				   @Error 3 @Extended 4 Return 0 = Error retrieving current Page Style name at insertion point.
+;				   @Error 3 @Extended 5 Return 0 = Error retrieving Page Style Object.
+;				   @Error 3 @Extended 6 Return 0 = Error calculating suggested image size.
 ;				   --Success--
 ;				   @Error 0 @Extended 0 Return Object. = Success. Image was successfully inserted, returning image Object.
 ; Author ........: donnyh13
@@ -1177,7 +1176,7 @@ Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = 
 	#forceref $oCOM_ErrorHandler
 
 	Local $iCursorType
-	Local $oTextCursor = $oCursor, $oImage
+	Local $oImage
 	Local $oServiceManager, $oProvider, $oSize, $oPageStyle
 	Local $sPageStyle
 	Local $atProp[1]
@@ -1192,14 +1191,11 @@ Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = 
 	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If ($iCursorType = $LOW_CURTYPE_VIEW_CURSOR) Then $oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False, True)
-
-	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If Not FileExists($sImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$sImage = _LOWriter_PathConvert($sImage, $LOW_PATHCONV_OFFICE_RETURN)
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oImage = $oDoc.createInstance("com.sun.star.text.TextGraphicObject")
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -1211,16 +1207,16 @@ Func _LOWriter_ImageInsert(ByRef $oDoc, $sImage, ByRef $oCursor, $iAnchorType = 
 	If Not IsObj($oProvider) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$atProp[0] = __LOWriter_SetPropertyValue("URL", $sImage)
-	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$sPageStyle = $oCursor.PageStyleName()
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$oPageStyle = _LOWriter_PageStyleGetObj($oDoc, $sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	$oSize = __LOWriter_ImageGetSuggestedSize(($oProvider.queryGraphicDescriptor($atProp)), $oPageStyle)
-	If Not IsObj($oSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+	If Not IsObj($oSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	With $oImage
 		.GraphicURL = $sImage

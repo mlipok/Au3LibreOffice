@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve a Bookmark Object. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Bookmark name to "Old Bookmark"
-	_LOWriter_DocBookmarkModify($oDoc, $oBookmark, "Old Bookmark")
+	_LOWriter_DocBookmarkModify($oBookmark, "Old Bookmark")
 	If @error Then _ERROR($oDoc, "Failed to modify a Bookmark. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
