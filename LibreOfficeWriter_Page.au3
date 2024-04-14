@@ -3124,6 +3124,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
 	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -3143,12 +3144,14 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 
 	If ($iLayout <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLayout, $LOW_PAGE_LAYOUT_ALL, $LOW_PAGE_LAYOUT_MIRRORED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
 		$oPageStyle.PageStyleLayout = $iLayout
 		$iError = ($oPageStyle.PageStyleLayout() = $iLayout) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
 		$oPageStyle.NumberingType = $iNumFormat
 		$iError = ($oPageStyle.NumberingType() = $iNumFormat) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -3156,6 +3159,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	If ($sRefStyle <> Null) Then
 		If Not IsString($sRefStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		If Not _LOWriter_ParStyleExists($oDoc, $sRefStyle) And Not ($sRefStyle = "") Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
 		$sRefStyle = __LOWriter_ParStyleNameToggle($sRefStyle)
 		$oPageStyle.RegisterParagraphStyle = $sRefStyle
 		$iError = ($oPageStyle.RegisterParagraphStyle() = $sRefStyle) ? ($iError) : (BitOR($iError, 4))
@@ -3164,13 +3168,16 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	If ($bGutterOnRight <> Null) Then
 		If Not IsBool($bGutterOnRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oPageStyle.RtlGutter = $bGutterOnRight
 		$iError = ($oPageStyle.RtlGutter() = $bGutterOnRight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
 	If ($bGutterAtTop <> Null) Then
+
 		If Not IsBool($bGutterAtTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oSettings.setPropertyValue("GutterAtTop", $bGutterAtTop)
 		$iError = ($oSettings.getPropertyValue("GutterAtTop") = $bGutterAtTop) ? ($iError) : (BitOR($iError, 16))
 	EndIf
@@ -3178,12 +3185,14 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	If ($bBackCoversMargins <> Null) Then
 		If Not IsBool($bBackCoversMargins) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
 		$oPageStyle.BackgroundFullSize = $bBackCoversMargins
 		$iError = ($oPageStyle.BackgroundFullSize() = $bBackCoversMargins) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
 	If ($sPaperTray <> Null) Then
 		If Not IsString($sPaperTray) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+
 		$oPageStyle.PrinterPaperTray = $sPaperTray
 		$iError = ($oPageStyle.PrinterPaperTray() = $sPaperTray) ? ($iError) : (BitOR($iError, 64))
 	EndIf

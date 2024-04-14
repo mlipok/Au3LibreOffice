@@ -967,8 +967,7 @@ EndFunc   ;==>_LOCalc_FormatKeyCreate
 ;                  @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
 ;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to delete key.
 ;                  --Success--
@@ -984,16 +983,14 @@ Func _LOCalc_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tLocale
 	Local $oFormats
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
-	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
-	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)

@@ -410,6 +410,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.
 
+### Fixed
+
+- Removed unused variables and parameters in some functions. Affected functions are as follows:
+	- _LOCalc_FormatKeyDelete -- removed internal variable.
+
 > [!NOTE]
 > **LibreOfficeWriter**
 
@@ -515,6 +520,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
 - Missing Parameters in some headers or Syntax header.
 - Missing parameter type checks in some functions.
+- Missing ExitLoop in __LOWriter_FieldsGetList causing unnecessary looping.
+- Removed unused variables and parameters in some functions. Affected functions are as follows:
+	- _LOWriter_DocBookmarkModify -- removed $oDoc parameter.
+	- _LOWriter_FieldDelete -- removed $oDoc parameter.
+	- _LOWriter_FieldDocInfoEditTimeModify -- removed $oDoc parameter.
+	- _LOWriter_FieldSetVarMasterListFields -- removed $oDoc parameter.
+	- _LOWriter_DateFormatKeyDelete -- removed internal variable.
+	- _LOWriter_FormatKeyDelete -- removed internal variable.
+	- _LOWriter_ImageInsert -- removed internal variable, now uses ViewCursor directly to insert an Image.
+	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
+- _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
 
 ### Removed
 

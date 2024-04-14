@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert a text field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve an array of dependent fields for the Master Field. Dependent fields are Set Variable fields that reference the Master.
-	$aoFields = _LOWriter_FieldSetVarMasterListFields($oDoc, $oMasterfield)
+	$aoFields = _LOWriter_FieldSetVarMasterListFields($oMasterfield)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of Dependent fields. Error:" & @error & " Extended:" & @extended)
 
 	$iResults = @extended
@@ -41,7 +41,7 @@ Func Example()
 	MsgBox($MB_OK, "", "I found " & $iResults & " dependent fields for this Master Field. Press Ok to delete one of these fields.")
 
 	; Delete the last Field result.
-	_LOWriter_FieldDelete($oDoc, $aoFields[$iResults - 1])
+	_LOWriter_FieldDelete($aoFields[$iResults - 1])
 	If @error Then _ERROR($oDoc, "Failed to delete a Dependent field. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")

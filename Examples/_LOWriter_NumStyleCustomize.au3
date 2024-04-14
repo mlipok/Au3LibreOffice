@@ -29,7 +29,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Numbering Style Level for This Paragraph to 2.
-	_LOWriter_NumStyleSetLevel($oDoc, $oViewCursor, 2)
+	_LOWriter_NumStyleSetLevel($oViewCursor, 2)
 	If @error Then _ERROR($oDoc, "Failed to set the Numbering Style level. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.
@@ -37,7 +37,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended)
 
 	; Set the Numbering Style Level for This Paragraph to 3.
-	_LOWriter_NumStyleSetLevel($oDoc, $oViewCursor, 3)
+	_LOWriter_NumStyleSetLevel($oViewCursor, 3)
 	If @error Then _ERROR($oDoc, "Failed to set the Numbering Style level. Error:" & @error & " Extended:" & @extended)
 
 	; Insert some text.

@@ -40,11 +40,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Date Format Key. Error:" & @error & " Extended:" & @extended)
 
 	; Modify the Doc Info Editing time Field settings. Set Fixed to False, and set the new Time Format key to be used.
-	_LOWriter_FieldDocInfoEditTimeModify($oDoc, $oField, False, $iTimeFormatKey)
+	_LOWriter_FieldDocInfoEditTimeModify($oField, False, $iTimeFormatKey)
 	If @error Then _ERROR($oDoc, "Failed to modify field. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve current Field settings. Return will be an array, with elements in order of function parameters.
-	$avSettings = _LOWriter_FieldDocInfoEditTimeModify($oDoc, $oField)
+	$avSettings = _LOWriter_FieldDocInfoEditTimeModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The current Doc Info Field settings are: " & @CRLF & _

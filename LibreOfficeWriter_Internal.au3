@@ -1713,6 +1713,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 
 				$iCount += 1
 				If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2][$iColumns]
+				ExitLoop
 			EndIf
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
