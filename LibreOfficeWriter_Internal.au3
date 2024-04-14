@@ -2778,7 +2778,7 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $ReturnObject not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bReturnObject not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $oCursor is a Table Cursor, or a View Cursor with table cells selected. Can't get data type from these types of Cursors.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Footnotes Object for document.
