@@ -40,9 +40,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - All Internal Error Constants from $__LOW_STATUS_ or $__LOC_STATUS_ To $__LO_STATUS_
 
+### Fixed
+
+- Align Parameters, Error/Return values, Remarks, and Related, to the same position.
+
 ### Removed
 
-- "Note" from Remarks section. (@mLipok)
+- "Note" from Remarks section in Header. (@mLipok)
+- Double spaces from Headers.
+- Tabs from headers, replaced with spaces.
+- Manual line breaks from headers.
 
 > [!NOTE]
 > **LibreOfficeCalc**
