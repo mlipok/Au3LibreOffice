@@ -936,8 +936,8 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ; Description ...: Retrieve an array of Cell Style names.
 ; Syntax ........: _LOCalc_CellStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Cell Styles are returned.
-;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Cell Styles are returned.
+;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Cell Styles are returned. See remarks.
+;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Cell Styles are returned. See remarks.
 ; Return values .: Success: Integer or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
