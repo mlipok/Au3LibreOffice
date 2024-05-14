@@ -22,6 +22,7 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; __LOCalc_AddTo1DArray
 ; __LOCalc_ArrayFill
+; __LOCalc_CellAddressIsSame
 ; __LOCalc_CellBackColor
 ; __LOCalc_CellBorder
 ; __LOCalc_CellBorderPadding
@@ -141,6 +142,40 @@ Func __LOCalc_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar
 		$aArrayToFill[$i] = Eval("vVar" & $i + 1)
 	Next
 EndFunc   ;==>__LOCalc_ArrayFill
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CellAddressIsSame
+; Description ...: Compare two Cell Addresses to see if they are the same.
+; Syntax ........: __LOCalc_CellAddressIsSame(ByRef $tCellAddr1, ByRef $tCellAddr2)
+; Parameters ....: $tCellAddr1          - a dll struct value. The first Cell Address Structure to compare.
+;                  $tCellAddr2          - a dll struct value. The second Cell Address Structure to compare.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $tCellAddr1 not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $tCellAddr2 not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Cell Addresses are identical, True is returned, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CellAddressIsSame($tCellAddr1, $tCellAddr2)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($tCellAddr1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($tCellAddr2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($tCellAddr1.Sheet() = $tCellAddr2.Sheet()) And _
+			($tCellAddr1.Column() = $tCellAddr2.Column()) And _
+			($tCellAddr1.Row() = $tCellAddr2.Row()) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>__LOCalc_CellAddressIsSame
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_CellBackColor

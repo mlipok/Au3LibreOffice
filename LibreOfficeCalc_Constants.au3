@@ -508,6 +508,43 @@ Global Const _
 		$LOC_UNDERLINE_BOLD_DASH_DOT_DOT = 17, _                ; Bold Dash Dot Dot line Underline/Overline style.
 		$LOC_UNDERLINE_BOLD_WAVE = 18                           ; Bold Wave line Underline/Overline style.
 
+; Validation Conditions.
+Global Const _
+		$LOC_VALIDATION_COND_NONE = 0, _                        ; No condition is specified.
+		$LOC_VALIDATION_COND_EQUAL = 1, _                       ; The cell value is equal to the specified value.
+		$LOC_VALIDATION_COND_NOT_EQUAL = 2, _                   ; The cell value must not be equal to the specified value.
+		$LOC_VALIDATION_COND_GREATER = 3, _                     ; The cell value has to be greater than the specified value.
+		$LOC_VALIDATION_COND_GREATER_EQUAL = 4, _               ; The cell value is greater or equal to the specified value.
+		$LOC_VALIDATION_COND_LESS = 5, _                        ; The cell value has to be less than the specified value.
+		$LOC_VALIDATION_COND_LESS_EQUAL = 6, _                  ; The cell value is less or equal to the specified value.
+		$LOC_VALIDATION_COND_BETWEEN = 7, _                     ; The cell value has to be between the two specified values.
+		$LOC_VALIDATION_COND_NOT_BETWEEN = 8, _                 ; The cell value has to be outside of the two specified values.
+		$LOC_VALIDATION_COND_FORMULA = 9                        ; The specified formula has to give a non-zero result.
+
+; Validation On Error Alert Types.
+Global Const _
+		$LOC_VALIDATION_ERROR_ALERT_STOP = 0, _                 ; Error message is shown and the change is rejected.
+		$LOC_VALIDATION_ERROR_ALERT_WARNING = 1, _              ; Warning message is shown and the user is asked whether the change will be accepted (defaulted to "No").
+		$LOC_VALIDATION_ERROR_ALERT_INFO = 2, _                 ; Information message is shown and the user is asked whether the change will be accepted (defaulted to "Yes").
+		$LOC_VALIDATION_ERROR_ALERT_MACRO = 3                   ; A macro is executed.
+
+; Validation List Visibility.
+Global Const _
+		$LOC_VALIDATION_LIST_INVISIBLE = 0, _                   ; The List is not shown.
+		$LOC_VALIDATION_LIST_UNSORTED = 1, _                    ; The List is shown unsorted.
+		$LOC_VALIDATION_LIST_SORT_ASCENDING = 2                 ; The List is shown sorted ascending.
+
+; Validation Types.
+Global Const _
+		$LOC_VALIDATION_TYPE_ANY = 0, _                         ; Any cell content is valid; no conditions are used.
+		$LOC_VALIDATION_TYPE_WHOLE = 1, _                       ; Any whole number matching the specified condition is valid.
+		$LOC_VALIDATION_TYPE_DECIMAL = 2, _                     ; Any number matching the specified condition is valid.
+		$LOC_VALIDATION_TYPE_DATE = 3, _                        ; Any date value matching the specified condition is valid.
+		$LOC_VALIDATION_TYPE_TIME = 4, _                        ; Any time value matching the specified condition is valid.
+		$LOC_VALIDATION_TYPE_TEXT_LEN = 5, _                    ; String is valid if its length matches the specified condition.
+		$LOC_VALIDATION_TYPE_LIST = 6, _                        ; Only strings from a specified list are valid.
+		$LOC_VALIDATION_TYPE_CUSTOM = 7                         ; The specified formula determines which contents are valid.
+
 ; Weight/Bold
 Global Const _
 		$LOC_WEIGHT_DONT_KNOW = 0, _                            ; The font weight is not specified/unknown. For Read Only.
