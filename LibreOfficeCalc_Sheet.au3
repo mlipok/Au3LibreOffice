@@ -25,6 +25,11 @@
 ; _LOCalc_SheetAdd
 ; _LOCalc_SheetCopy
 ; _LOCalc_SheetCreateCursor
+; _LOCalc_SheetDetectiveClear
+; _LOCalc_SheetDetectiveDependent
+; _LOCalc_SheetDetectiveInvalidData
+; _LOCalc_SheetDetectivePrecedent
+; _LOCalc_SheetDetectiveTraceError
 ; _LOCalc_SheetGetActive
 ; _LOCalc_SheetGetObjByName
 ; _LOCalc_SheetGetObjByPosition
@@ -261,6 +266,210 @@ Func _LOCalc_SheetCreateCursor(ByRef $oSheet)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheetCursor)
 EndFunc   ;==>_LOCalc_SheetCreateCursor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetDetectiveClear
+; Description ...: Clear all Detective marking arrows for a Sheet.
+; Syntax ........: _LOCalc_SheetDetectiveClear(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. All Detective arrows were successfully cleared.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetDetectivePrecedent, _LOCalc_SheetDetectiveDependent, _LOCalc_SheetDetectiveTraceError, _LOCalc_SheetDetectiveInvalidData
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetDetectiveClear(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oSheet.clearArrows()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_SheetDetectiveClear
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetDetectiveDependent
+; Description ...: Show or Hide Dependent marking arrows for a Cell.
+; Syntax ........: _LOCalc_SheetDetectiveDependent(ByRef $oCell[, $bShow = True])
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_RangeGetCellByName, or _LOCalc_RangeGetCellByPosition function.
+;                  $bShow               - [optional] a boolean value. Default is True. If True, Dependent marking arrows will be added one level, if False, marking arrows will be removed one level.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell not a Cell Object.
+;                  @Error 1 @Extended 3 Return 0 = $bShow not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Dependent function.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Dependents were marked/cleared one level, else false.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Each time that $bShow is called with True, another level of Dependents is marked with arrows.
+; Related .......: _LOCalc_SheetDetectivePrecedent, _LOCalc_SheetDetectiveTraceError, _LOCalc_SheetDetectiveClear, _LOCalc_SheetDetectiveInvalidData
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetDetectiveDependent(ByRef $oCell, $bShow = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+	Local $tCellAddress
+
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
+	If Not IsBool($bShow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tCellAddress = $oCell.CellAddress()
+	If Not IsObj($tCellAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $bShow Then
+		$bReturn = $oCell.Spreadsheet.showDependents($tCellAddress)
+		If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Else
+		$bReturn = $oCell.Spreadsheet.hideDependents($tCellAddress)
+		If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_SheetDetectiveDependent
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetDetectiveInvalidData
+; Description ...: Mark all cells containing invalid data.
+; Syntax ........: _LOCalc_SheetDetectiveInvalidData(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to process Invalid Data function.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if invalid data was marked, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Validity rules must be set up for Cell(s) before invalid data will be marked.
+; Related .......: _LOCalc_RangeValidation, _LOCalc_RangeValidationSettings, _LOCalc_SheetDetectivePrecedent, _LOCalc_SheetDetectiveDependent, _LOCalc_SheetDetectiveTraceError, _LOCalc_SheetDetectiveClear
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetDetectiveInvalidData(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$bReturn = $oSheet.showInvalid()
+	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_SheetDetectiveInvalidData
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetDetectivePrecedent
+; Description ...: Show or Hide Precedent marking arrows for a Cell.
+; Syntax ........: _LOCalc_SheetDetectivePrecedent(ByRef $oCell[, $bShow = True])
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_RangeGetCellByName, or _LOCalc_RangeGetCellByPosition function.
+;                  $bShow               - [optional] a boolean value. Default is True. If True, Precedent marking arrows will be added one level, if False, marking arrows will be removed one level.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell not a Cell Object.
+;                  @Error 1 @Extended 3 Return 0 = $bShow not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to process Show/Hide Precedent function.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if precedents were marked/cleared one level, else false.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Each time that $bShow is called with True, another level of precedents is marked with arrows.
+; Related .......: _LOCalc_SheetDetectiveDependent, _LOCalc_SheetDetectiveTraceError, _LOCalc_SheetDetectiveClear, _LOCalc_SheetDetectiveInvalidData
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetDetectivePrecedent(ByRef $oCell, $bShow = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+	Local $tCellAddress
+
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
+	If Not IsBool($bShow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$tCellAddress = $oCell.CellAddress()
+	If Not IsObj($tCellAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $bShow Then
+		$bReturn = $oCell.Spreadsheet.showPrecedents($tCellAddress)
+		If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Else
+		$bReturn = $oCell.Spreadsheet.hidePrecedents($tCellAddress)
+		If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_SheetDetectivePrecedent
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetDetectiveTraceError
+; Description ...: Draw arrows from a Cell with errors to the cells causing the errors.
+; Syntax ........: _LOCalc_SheetDetectiveTraceError(ByRef $oCell)
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_RangeGetCellByName, or _LOCalc_RangeGetCellByPosition function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell not a Cell Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve called Cell's Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to process Trace Error function.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if Errors were marked, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_SheetDetectivePrecedent, _LOCalc_SheetDetectiveDependent, _LOCalc_SheetDetectiveClear, _LOCalc_SheetDetectiveInvalidData
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetDetectiveTraceError(ByRef $oCell)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+	Local $tCellAddress
+
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not ($oCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Only single cells supported.
+
+	$tCellAddress = $oCell.CellAddress()
+	If Not IsObj($tCellAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$bReturn = $oCell.Spreadsheet.showErrors($tCellAddress)
+	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_SheetDetectiveTraceError
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetGetActive
