@@ -22,6 +22,8 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOCalc_DocClose
+; _LOCalc_DocColumnsRowsAreFrozen
+; _LOCalc_DocColumnsRowsFreeze
 ; _LOCalc_DocConnect
 ; _LOCalc_DocCreate
 ; _LOCalc_DocEnumPrinters
@@ -46,7 +48,9 @@
 ; _LOCalc_DocRedoIsPossible
 ; _LOCalc_DocSave
 ; _LOCalc_DocSaveAs
+; _LOCalc_DocSelectionCopy
 ; _LOCalc_DocSelectionGet
+; _LOCalc_DocSelectionPaste
 ; _LOCalc_DocSelectionSet
 ; _LOCalc_DocSelectionSetMulti
 ; _LOCalc_DocToFront
@@ -58,7 +62,14 @@
 ; _LOCalc_DocUndoGetAllActionTitles
 ; _LOCalc_DocUndoIsPossible
 ; _LOCalc_DocUndoReset
+; _LOCalc_DocViewDisplaySettings
+; _LOCalc_DocViewWindowSettings
 ; _LOCalc_DocVisible
+; _LOCalc_DocWindowFirstColumn
+; _LOCalc_DocWindowFirstRow
+; _LOCalc_DocWindowIsSplit
+; _LOCalc_DocWindowSplit
+; _LOCalc_DocWindowVisibleRange
 ; _LOCalc_DocZoom
 ; ===============================================================================================================================
 
@@ -143,6 +154,76 @@ Func _LOCalc_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 
 EndFunc   ;==>_LOCalc_DocClose
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocColumnsRowsAreFrozen
+; Description ...: Query whether the Document has Columns or Rows currently frozen in view.
+; Syntax ........: _LOCalc_DocColumnsRowsAreFrozen(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to query Document whether frozen Columns/Rows are present.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Document currently contains frozen Columns/Rows.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocColumnsRowsAreFrozen(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$bReturn = $oDoc.CurrentController.hasFrozenPanes()
+	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_DocColumnsRowsAreFrozen
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocColumnsRowsFreeze
+; Description ...: Set Columns and/or Rows of a document to be frozen in view.
+; Syntax ........: _LOCalc_DocColumnsRowsFreeze(ByRef $oDoc[, $iColumns = 0[, $iRows = 0]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iColumns            - [optional] an integer value. Default is 0. The number of Columns to freeze. Set to 0 to skip. See remarks.
+;                  $iRows               - [optional] an integer value. Default is 0. The number of Rows to freeze. See remarks.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iColumns not an Integer, less than 0 or greater than number of columns contained in the document.
+;                  @Error 1 @Extended 3 Return 0 = $iRows not an Integer, less than 0 or greater than number of rows contained in the document.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Called Columns/Rows were successfully frozen.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To set no Columns or rows to be frozen in view, set both $iColumns and $iRows to 0.
+;                  Setting either $iColumns or $iRows will lose previous values for both.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocColumnsRowsFreeze(ByRef $oDoc, $iColumns = 0, $iRows = 0)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iColumns, 0, $oDoc.CurrentController.getActiveSheet().Columns.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iRows, 0, $oDoc.CurrentController.getActiveSheet().Rows.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oDoc.CurrentController.freezeAtPosition($iColumns, $iRows)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocColumnsRowsFreeze
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocConnect
@@ -1428,6 +1509,43 @@ Func _LOCalc_DocSaveAs(ByRef $oDoc, $sFilePath, $sFilterName = "", $bOverwrite =
 EndFunc   ;==>_LOCalc_DocSaveAs
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocSelectionCopy
+; Description ...: "Copies" data selected by the ViewCursor, returning an Object for use in inserting later.
+; Syntax ........: _LOCalc_DocSelectionCopy(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Copy Selected Data, make sure Data is selected.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object  = Success. Data was successfully copied, returning an Object for use in _LOCalc_DocSelectionPaste.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Data you desire to be copied must be selected first, see _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti.
+;                  This function works essentially the same as Copy/ Ctrl+C, except it doesn't use your clipboard.
+;				   The Object returned is used in _LOCalc_DocSelectionPaste to insert the data again.
+;				   Data copied can be inserted into the same or another document.
+; Related .......: _LOCalc_DocSelectionPaste, _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocSelectionCopy(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oObj
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oObj = $oDoc.CurrentController.getTransferable() ; Copy
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oObj)
+EndFunc   ;==>_LOCalc_DocSelectionCopy
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocSelectionGet
 ; Description ...: Retrieve the current user selection(s).
 ; Syntax ........: _LOCalc_DocSelectionGet(ByRef $oDoc)
@@ -1488,6 +1606,38 @@ Func _LOCalc_DocSelectionGet(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 EndFunc   ;==>_LOCalc_DocSelectionGet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocSelectionPaste
+; Description ...: Inserts a ParObjCopy Object at the current ViewCursor location.
+; Syntax ........: _LOCalc_DocSelectionPaste(ByRef $oDoc, ByRef $oData)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oData               - [in/out] an object. A Object returned from _LOCalc_DocSelectionCopy to insert.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oData not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1  = Success. Data was successfully inserted at the currently selected cell.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The data will be pasted into the document, beginning at the currently selected cell.
+; Related .......: _LOCalc_ParObjCopy, _LOCalc_DocSelectionSet
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocSelectionPaste(ByRef $oDoc, ByRef $oData)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oData) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.CurrentController.insertTransferable($oData)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocSelectionPaste
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocSelectionSet
@@ -1859,6 +2009,253 @@ Func _LOCalc_DocUndoReset(ByRef $oDoc)
 EndFunc   ;==>_LOCalc_DocUndoReset
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocViewDisplaySettings
+; Description ...: Set or Retrieve the current Document View Display settings.
+; Syntax ........: _LOCalc_DocViewDisplaySettings(ByRef $oDoc[, $bFormulas = Null[, $bZeroValues = Null[, $bComments = Null[, $bPageBreaks = Null[, $bHelpLines = Null[, $bValueHighlight = Null[, $bAnchors = Null[, $bGrid = Null[, $iGridColor = Null]]]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $bFormulas           - [optional] a boolean value. Default is Null. If True, Formulas, rather than results, are displayed in the cells.
+;                  $bZeroValues         - [optional] a boolean value. Default is Null. If True, numbers with the value of 0 are shown.
+;                  $bComments           - [optional] a boolean value. Default is Null. If True, a small rectangle in the top right corner of the cell indicates that a comment exists.
+;                  $bPageBreaks         - [optional] a boolean value. Default is Null. If True, Page Breaks are displayed for a print area.
+;                  $bHelpLines          - [optional] a boolean value. Default is Null. If True, help lines are displayed while moving graphics, drawings, etc.
+;                  $bValueHighlight     - [optional] a boolean value. Default is Null. If True, Cell contents are displayed in different colors, depending on the content type of the cell.
+;                  $bAnchors            - [optional] a boolean value. Default is Null. If True, the Anchor icon is displayed when a graphic or other object is selected.
+;                  $bGrid               - [optional] a boolean value. Default is Null. If True, Gridlines are displayed.
+;                  $iGridColor          - [optional] an integer value (0-16777215). Default is Null. Set the Grid line color in Long Color format. Can be one of the constants $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3 or a custom value.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bFormulas not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bZeroValues not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bComments not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bPageBreaks not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bHelpLines not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bValueHighlight not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bAnchors not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bGrid not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $iGridColor not an Integer, less than 0 or greater than 16777215.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Current Controller Object for the Document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bFormulas
+;                  |                               2 = Error setting $bZeroValues
+;                  |                               4 = Error setting $bComments
+;                  |                               8 = Error setting $bPageBreaks
+;                  |                               16 = Error setting $bHelpLines
+;                  |                               32 = Error setting $bValueHighlight
+;                  |                               64 = Error setting $bAnchors
+;                  |                               128 = Error setting $bGrid
+;                  |                               256 = Error setting $iGridColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_DocViewWindowSettings, _LOCalc_ConvertColorToLong, _LOCalc_ConvertColorFromLong
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocViewDisplaySettings(ByRef $oDoc, $bFormulas = Null, $bZeroValues = Null, $bComments = Null, $bPageBreaks = Null, $bHelpLines = Null, $bValueHighlight = Null, $bAnchors = Null, $bGrid = Null, $iGridColor = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $abView[9]
+	Local $oCurCont
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oCurCont = $oDoc.CurrentController()
+	If Not IsObj($oCurCont) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($bFormulas, $bZeroValues, $bComments, $bPageBreaks, $bHelpLines, $bValueHighlight, $bAnchors, $bGrid, $iGridColor) Then
+		__LOCalc_ArrayFill($abView, $oCurCont.ShowFormulas(), $oCurCont.ShowZeroValues(), $oCurCont.ShowNotes(), $oCurCont.ShowPageBreaks(), $oCurCont.ShowHelpLines(), _
+				$oCurCont.IsValueHighlightingEnabled(), $oCurCont.ShowAnchor(), $oCurCont.ShowGrid(), $oCurCont.GridColor())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abView)
+	EndIf
+
+	If ($bFormulas <> Null) Then
+		If Not IsBool($bFormulas) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oCurCont.ShowFormulas = $bFormulas
+		$iError = ($oCurCont.ShowFormulas() = $bFormulas) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bZeroValues <> Null) Then
+		If Not IsBool($bZeroValues) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCurCont.ShowZeroValues = $bZeroValues
+		$iError = ($oCurCont.ShowZeroValues() = $bZeroValues) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bComments <> Null) Then
+		If Not IsBool($bComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCurCont.ShowNotes = $bComments
+		$iError = ($oCurCont.ShowNotes() = $bComments) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bPageBreaks <> Null) Then
+		If Not IsBool($bPageBreaks) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oCurCont.ShowPageBreaks = $bPageBreaks
+		$iError = ($oCurCont.ShowPageBreaks() = $bPageBreaks) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bHelpLines <> Null) Then
+		If Not IsBool($bHelpLines) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oCurCont.ShowHelpLines = $bHelpLines
+		$iError = ($oCurCont.ShowHelpLines() = $bHelpLines) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bValueHighlight <> Null) Then
+		If Not IsBool($bValueHighlight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oCurCont.IsValueHighlightingEnabled = $bValueHighlight
+		$iError = ($oCurCont.IsValueHighlightingEnabled() = $bValueHighlight) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($bAnchors <> Null) Then
+		If Not IsBool($bAnchors) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oCurCont.ShowAnchor = $bAnchors
+		$iError = ($oCurCont.ShowAnchor() = $bAnchors) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($bGrid <> Null) Then
+		If Not IsBool($bGrid) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oCurCont.ShowGrid = $bGrid
+		$iError = ($oCurCont.ShowGrid() = $bGrid) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($iGridColor <> Null) Then
+		If Not __LOCalc_IntIsBetween($iGridColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oCurCont.GridColor = $iGridColor
+		$iError = ($oCurCont.GridColor() = $iGridColor) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_DocViewDisplaySettings
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocViewWindowSettings
+; Description ...: Set or Retrieve the current Document View Window settings.
+; Syntax ........: _LOCalc_DocViewWindowSettings(ByRef $oDoc[, $bHeaders = Null[, $bVertScroll = Null[, $bHoriScroll = Null[, $bSheetTabs = Null[, $bOutlineSymbols = Null[, $bCharts = Null[, $bDrawing = Null[, $bObjects = Null]]]]]]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $bHeaders            - [optional] a boolean value. Default is Null. If True, Column/Row headers are displayed.
+;                  $bVertScroll         - [optional] a boolean value. Default is Null. If True, a Vertical scrollbar is displayed at the right of the document.
+;                  $bHoriScroll         - [optional] a boolean value. Default is Null. If True, a Horizontal scrollbar is displayed at the bottom of the document.
+;                  $bSheetTabs          - [optional] a boolean value. Default is Null. If True, Sheet Tabs selector will be displayed at the bottom of the document.
+;                  $bOutlineSymbols     - [optional] a boolean value. Default is Null. If True, the predefined outline symbols will be displayed.
+;                  $bCharts             - [optional] a boolean value. Default is Null. If True, Charts are visible in the document.
+;                  $bDrawing            - [optional] a boolean value. Default is Null. If True, Drawing Objects are visible in the document.
+;                  $bObjects            - [optional] a boolean value. Default is Null. If True, Objects/Graphics are visible in the document.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bHeaders not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bVertScroll not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bHoriScroll not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bSheetTabs not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bOutlineSymbols not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bCharts not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bDrawing not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bObjects not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Current Controller Object for the Document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bHeaders
+;                  |                               2 = Error setting $bVertScroll
+;                  |                               4 = Error setting $bHoriScroll
+;                  |                               8 = Error setting $bSheetTabs
+;                  |                               16 = Error setting $bOutlineSymbols
+;                  |                               32 = Error setting $bCharts
+;                  |                               64 = Error setting $bDrawing
+;                  |                               128 = Error setting $bObjects
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocViewWindowSettings(ByRef $oDoc, $bHeaders = Null, $bVertScroll = Null, $bHoriScroll = Null, $bSheetTabs = Null, $bOutlineSymbols = Null, $bCharts = Null, $bDrawing = Null, $bObjects = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $abView[8]
+	Local $oCurCont
+	Local Const $__LOC_ViewObjMode_SHOW = 0, $__LOC_ViewObjMode_HIDE = 1
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oCurCont = $oDoc.CurrentController()
+	If Not IsObj($oCurCont) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($bHeaders, $bVertScroll, $bHoriScroll, $bSheetTabs, $bOutlineSymbols, $bCharts, $bDrawing, $bObjects) Then
+		__LOCalc_ArrayFill($abView, $oCurCont.HasColumnRowHeaders(), $oCurCont.HasVerticalScrollBar(), $oCurCont.HasSheetTabs(), $oCurCont.HasHorizontalScrollBar(), _
+				$oCurCont.IsOutlineSymbolsSet(), ($oCurCont.ShowCharts() = $__LOC_ViewObjMode_SHOW) ? (True) : (False), _
+				($oCurCont.ShowDrawing() = $__LOC_ViewObjMode_SHOW) ? (True) : (False), ($oCurCont.ShowObjects() = $__LOC_ViewObjMode_SHOW) ? (True) : (False))
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abView)
+	EndIf
+
+	If ($bHeaders <> Null) Then
+		If Not IsBool($bHeaders) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oCurCont.HasColumnRowHeaders = $bHeaders
+		$iError = ($oCurCont.HasColumnRowHeaders() = $bHeaders) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bVertScroll <> Null) Then
+		If Not IsBool($bVertScroll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCurCont.HasVerticalScrollBar = $bVertScroll
+		$iError = ($oCurCont.HasVerticalScrollBar() = $bVertScroll) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bHoriScroll <> Null) Then
+		If Not IsBool($bHoriScroll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oCurCont.HasHorizontalScrollBar = $bHoriScroll
+		$iError = ($oCurCont.HasHorizontalScrollBar() = $bHoriScroll) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bSheetTabs <> Null) Then
+		If Not IsBool($bSheetTabs) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oCurCont.HasSheetTabs = $bSheetTabs
+		$iError = ($oCurCont.HasSheetTabs() = $bSheetTabs) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bOutlineSymbols <> Null) Then
+		If Not IsBool($bOutlineSymbols) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oCurCont.IsOutlineSymbolsSet = $bOutlineSymbols
+		$iError = ($oCurCont.IsOutlineSymbolsSet() = $bOutlineSymbols) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bCharts <> Null) Then
+		If Not IsBool($bCharts) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oCurCont.ShowCharts = ($bCharts) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
+		$iError = ((($oCurCont.ShowCharts() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bCharts) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($bDrawing <> Null) Then
+		If Not IsBool($bDrawing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oCurCont.ShowDrawing = ($bDrawing) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
+		$iError = ((($oCurCont.ShowDrawing() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bDrawing) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($bObjects <> Null) Then
+		If Not IsBool($bObjects) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oCurCont.ShowObjects = ($bObjects) ? ($__LOC_ViewObjMode_SHOW) : ($__LOC_ViewObjMode_HIDE)
+		$iError = ((($oCurCont.ShowObjects() = $__LOC_ViewObjMode_SHOW) ? (True) : (False)) = $bObjects) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_DocViewWindowSettings
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocVisible
 ; Description ...: Set or retrieve the current visibility of a document.
 ; Syntax ........: _LOCalc_DocVisible(ByRef $oDoc[, $bVisible = Null])
@@ -1897,6 +2294,221 @@ Func _LOCalc_DocVisible(ByRef $oDoc, $bVisible = Null)
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOCalc_DocVisible
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocWindowFirstColumn
+; Description ...: Set or Retrieve the first visible Column in the Document view.
+; Syntax ........: _LOCalc_DocWindowFirstColumn(ByRef $oDoc[, $iColumn = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iColumn             - [optional] an integer value. Default is Null. The column number to set as the first visible column on the page, 0 based.
+; Return values .: Success: 1 or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0, or greater than number of columns contained in the document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iColumn
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. First visible Column was successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning the first visible column number as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  This will fail if there are currently any frozen Columns.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocWindowFirstColumn(ByRef $oDoc, $iColumn = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($iColumn = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.getFirstVisibleColumn())
+
+	If Not __LOCalc_IntIsBetween($iColumn, 0, $oDoc.CurrentController.getActiveSheet().Columns.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.CurrentController.setFirstVisibleColumn($iColumn)
+
+	Return ($oDoc.CurrentController.getFirstVisibleColumn() = $iColumn) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+EndFunc   ;==>_LOCalc_DocWindowFirstColumn
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocWindowFirstRow
+; Description ...: Set or Retrieve the first visible Row in the Document view.
+; Syntax ........: _LOCalc_DocWindowFirstRow(ByRef $oDoc[, $iRow = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iRow                - [optional] an integer value. Default is Null. The row number to set as the first visible row on the page, 0 based.
+; Return values .: Success: 1 or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer, or less than 0, or greater than number of Rows contained in the document.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iRow
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. First visible Row was successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning the first visible row number as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  This will fail if there are currently any frozen Rows.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocWindowFirstRow(ByRef $oDoc, $iRow = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If ($iRow = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.getFirstVisibleRow())
+
+	If Not __LOCalc_IntIsBetween($iRow, 0, $oDoc.CurrentController.getActiveSheet().Rows.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.CurrentController.setFirstVisibleRow($iRow)
+
+	Return ($oDoc.CurrentController.getFirstVisibleRow() = $iRow) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
+EndFunc   ;==>_LOCalc_DocWindowFirstRow
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocWindowIsSplit
+; Description ...: Query whether the current Document's view is split.
+; Syntax ........: _LOCalc_DocWindowIsSplit(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to query Document whether the Document view is currently split.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Document view is currently split.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocWindowIsSplit(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$bReturn = $oDoc.CurrentController.getIsWindowSplit()
+	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_DocWindowIsSplit
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocWindowSplit
+; Description ...: Split a Document's View either Horizontally, Vertically, or both, or retrieve the current split settings.
+; Syntax ........: _LOCalc_DocWindowSplit(ByRef $oDoc[, $iX = Null[, $iY = Null[, $bReturnPixels = True]]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iX                  - [optional] an integer value. Default is Null. See remarks. The Horizontal (X) position to split the View, in pixels. Set to 0 for no Horizontal split.
+;                  $iY                  - [optional] an integer value. Default is Null. See remarks. The Vertical (Y) position to split the View, in pixels. Set to 0 to skip.
+;                  $bReturnPixels       - [optional] a boolean value. Default is True. See remarks. If True, return value will be in pixels, Else, return value will be Column Number (X), and Row Number (Y).
+; Return values .: Success: 1, 2 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bReturnPixels not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iY not an Integer.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in Pixels, in a 2 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were set to Null, returning current settings in Column/Row values, in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: To remove the split view, set both $iX and $iY to 0.
+;                  $bReturnPixels changes only the return value type, it doesn't change the type of input values to use for $iX and $iY.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocWindowSplit(ByRef $oDoc, $iX = Null, $iY = Null, $bReturnPixels = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aiWindow[2]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnPixels) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If __LOCalc_VarsAreNull($iX, $iY) Then
+		If $bReturnPixels Then
+			__LOCalc_ArrayFill($aiWindow, $oDoc.CurrentController.getSplitHorizontal(), $oDoc.CurrentController.getSplitVertical())
+			Return SetError($__LO_STATUS_SUCCESS, 1, $aiWindow)
+		Else
+			__LOCalc_ArrayFill($aiWindow, $oDoc.CurrentController.getSplitColumn(), $oDoc.CurrentController.getSplitRow())
+			Return SetError($__LO_STATUS_SUCCESS, 2, $aiWindow)
+		EndIf
+
+	EndIf
+
+	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$oDoc.CurrentController.splitAtPosition($iX, $iY)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_DocWindowSplit
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocWindowVisibleRange
+; Description ...: Retrieve a Cell Range Object for the currently visible cells in the document view.
+; Syntax ........: _LOCalc_DocWindowVisibleRange(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheet Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve currently visible Range Address.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning currently visible Range of cells as a Cell Range Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocWindowVisibleRange(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRange
+	Local $oSheet, $oRange
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tRange = $oDoc.CurrentController.getVisibleRange()
+	If Not IsObj($tRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oSheet = $oDoc.Sheets.getByIndex($tRange.Sheet())
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oRange = $oSheet.getCellRangeByPosition($tRange.StartColumn(), $tRange.StartRow(), $tRange.EndColumn(), $tRange.EndRow())
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oRange)
+EndFunc   ;==>_LOCalc_DocWindowVisibleRange
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocZoom
