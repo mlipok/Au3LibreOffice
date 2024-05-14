@@ -52,21 +52,21 @@
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The Fill color. Set in Long integer format. Can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for "None".
 ; Return values .: Success: 1 or Integer.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColor not an integer, less than -1, or greater than 16777215.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iColor
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Fill color as an integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iColor not an integer, less than -1, or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Fill color as an integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   If transparency is set, it can cause strange values to be displayed for Background color.
-; Related .......:  _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;                  If transparency is set, it can cause strange values to be displayed for Background color.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -111,48 +111,48 @@ EndFunc   ;==>_LOWriter_ShapeAreaColor
 ;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color.
 ;                  $iToIntense          - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "To Color", where 0% corresponds to black, and 100 % to the selected color.
 ; Return values .: Success: Integer or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sGradientName not a String.
-;				   @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $iIncrement not an Integer, less than 3, but not 0, or greater than 256.
-;				   @Error 1 @Extended 6 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 7 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 9 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 10 Return 0 = $iFromColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 11 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 12 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;				   @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $sGradientName
-;				   |								2 = Error setting $iType
-;				   |								4 = Error setting $iIncrement
-;				   |								8 = Error setting $iXCenter
-;				   |								16 = Error setting $iYCenter
-;				   |								32 = Error setting $iAngle
-;				   |								64 = Error setting $iBorder
-;				   |								128 = Error setting $iFromColor
-;				   |								256 = Error setting $iToColor
-;				   |								512 = Error setting $iFromIntense
-;				   |								1024 = Error setting $iToIntense
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 11 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sGradientName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5. See Constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iIncrement not an Integer, less than 3, but not 0, or greater than 256.
+;                  @Error 1 @Extended 6 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 9 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iFromColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 11 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 12 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $sGradientName
+;                  |                               2 = Error setting $iType
+;                  |                               4 = Error setting $iIncrement
+;                  |                               8 = Error setting $iXCenter
+;                  |                               16 = Error setting $iYCenter
+;                  |                               32 = Error setting $iAngle
+;                  |                               64 = Error setting $iBorder
+;                  |                               128 = Error setting $iFromColor
+;                  |                               256 = Error setting $iToColor
+;                  |                               512 = Error setting $iFromIntense
+;                  |                               1024 = Error setting $iToIntense
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 11 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Gradient Name has no use other than for applying a pre-existing preset gradient.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Gradient Name has no use other than for applying a pre-existing preset gradient.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -277,16 +277,16 @@ EndFunc   ;==>_LOWriter_ShapeAreaGradient
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oShape              - an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's name.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Shape with the same name still exists in document after deletion attempt.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Shape was successfully deleted.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's name.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Shape with the same name still exists in document after deletion attempt.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Shape was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -317,13 +317,13 @@ EndFunc   ;==>_LOWriter_ShapeDelete
 ; Syntax ........: _LOWriter_ShapeGetAnchor(ByRef $oShape)
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape anchor Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully returned the Shape Anchor.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape anchor Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully returned the Shape Anchor.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -352,16 +352,16 @@ EndFunc   ;==>_LOWriter_ShapeGetAnchor
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sShapeName          - a string value. The Shape name to retrieve the object for.
 ; Return values .: Success: Object.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Draw Page Object
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Shape requested in $sShapeName not found in document.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success, Returning the requested Shape Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Draw Page Object
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Shape requested in $sShapeName not found in document.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success, Returning the requested Shape Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -398,54 +398,54 @@ EndFunc   ;==>_LOWriter_ShapeGetObjByName
 ; Syntax ........: _LOWriter_ShapeGetType(ByRef $oShape)
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve CustomShapeGeometry Array.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry "Type" value.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to determine CustomShape's type.
-;				   @Error 3 @Extended 2 Return 0 = Failed to identify what type of "com.sun.star.drawing.EllipseShape" called shape is.
-;				   @Error 3 @Extended 3 Return 0 = Called Shape is a unknown shape type.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return Integer = Success. Shape is a Custom Shape Type. Returning appropriate Constant for shape type if successfully identified, else -1 if identification failed. See Remarks #1. See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-;				   @Error 0 @Extended 2 Return Integer = Success. Shape is a *_BASIC_CIRCLE_SEGMENT or *_BASIC_ARC Type Shape. Returning appropriate Constant, See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-;				   @Error 0 @Extended 3 Return Integer = Success. Shape is a *_LINE_CURVE or *_LINE_FREEFORM_LINE Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE Constant Value. See Remarks #2.
-;				   @Error 0 @Extended 4 Return Integer = Success. Shape is a *_LINE_CURVE_FILLED or *_LINE_FREEFORM_LINE_FILLED Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE_FILLED Constant Value. See Remarks #2.
-;				   @Error 0 @Extended 5 Return Integer = Success. Shape is a *_LINE_LINE Type Shape. Returning $LOW_SHAPE_TYPE_LINE_LINE Constant Value.
-;				   @Error 0 @Extended 6 Return Integer = Success. Shape is a *_LINE_POLYGON, *_LINE_POLYGON_45 or *_LINE_POLYGON_45_FILLED Type Shape. Returning $LOW_SHAPE_TYPE_LINE_POLYGON Constant Value. See Remarks #2.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve CustomShapeGeometry Array.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry "Type" value.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to determine CustomShape's type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify what type of "com.sun.star.drawing.EllipseShape" called shape is.
+;                  @Error 3 @Extended 3 Return 0 = Called Shape is a unknown shape type.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Integer = Success. Shape is a Custom Shape Type. Returning appropriate Constant for shape type if successfully identified, else -1 if identification failed. See Remarks #1. See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 0 @Extended 2 Return Integer = Success. Shape is a *_BASIC_CIRCLE_SEGMENT or *_BASIC_ARC Type Shape. Returning appropriate Constant, See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 0 @Extended 3 Return Integer = Success. Shape is a *_LINE_CURVE or *_LINE_FREEFORM_LINE Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE Constant Value. See Remarks #2.
+;                  @Error 0 @Extended 4 Return Integer = Success. Shape is a *_LINE_CURVE_FILLED or *_LINE_FREEFORM_LINE_FILLED Type Shape. Returning $LOW_SHAPE_TYPE_LINE_CURVE_FILLED Constant Value. See Remarks #2.
+;                  @Error 0 @Extended 5 Return Integer = Success. Shape is a *_LINE_LINE Type Shape. Returning $LOW_SHAPE_TYPE_LINE_LINE Constant Value.
+;                  @Error 0 @Extended 6 Return Integer = Success. Shape is a *_LINE_POLYGON, *_LINE_POLYGON_45 or *_LINE_POLYGON_45_FILLED Type Shape. Returning $LOW_SHAPE_TYPE_LINE_POLYGON Constant Value. See Remarks #2.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: #1 Some shapes are not implemented, or not fully implemented into LibreOffice for automation, consequently they do not have appropriate type names as of yet. Many have simply ambiguous names, such as "non-primitive".
-;					Because of this the following Custom shape types cannot be identified, and this function will return -1:
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
-;						$LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
-;						$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
-;						$LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
-;						$LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
-;						$LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
-;						$LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
-;						$LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
-;						$LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
-;						$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
-;				   #2 The following Shapes implement the same type names, and are consequently indistinguishable:
-;						$LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
-;						$LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
-;						$LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
-;						$LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE (The Value of $LOW_SHAPE_TYPE_LINE_CURVE is returned for either one.)
-;						$LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_CURVE_FILLED is returned for either one.)
-;						$LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_POLYGON is returned for any of these.)
-;				   The following Shapes have strange names that may change in the future, but currently are able to be identified:
-;						$LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
-;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
-;						$LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
+;                  Because of this the following Custom shape types cannot be identified, and this function will return -1:
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT, known as "mso-spt100".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, known as "non-primitive", should be "corner-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, known as "non-primitive", should be "s-sharped-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, known as "non-primitive", should be "split-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT, known as "mso-spt100", should be "striped-right-arrow".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT, known as "mso-spt89", should be "up-right-arrow-callout".
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, known as "mso-spt100", should be "up-right-down-arrow".
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, known as "mso-spt100", should be "circle-pie".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT, known as "non-primitive", should be "star6".
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE, known as "non-primitive", should be "concave-star6".
+;                   $LOW_SHAPE_TYPE_STARS_12_POINT, known as "non-primitive", should be "star12".
+;                   $LOW_SHAPE_TYPE_STARS_SIGNET, known as "non-primitive", should be "signet".
+;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, known as "non-primitive", should be "cloud"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_FLOWER, known as "non-primitive", should be "flower"?
+;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING, known as "non-primitive", should be "lightning".
+;                  #2 The following Shapes implement the same type names, and are consequently indistinguishable:
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE, $LOW_SHAPE_TYPE_BASIC_ELLIPSE (The Value of $LOW_SHAPE_TYPE_BASIC_CIRCLE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE, $LOW_SHAPE_TYPE_BASIC_RECTANGLE (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED, $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED (The Value of $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE (The Value of $LOW_SHAPE_TYPE_LINE_CURVE is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_CURVE_FILLED is returned for either one.)
+;                   $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED (The Value of $LOW_SHAPE_TYPE_LINE_POLYGON is returned for any of these.)
+;                  The following Shapes have strange names that may change in the future, but currently are able to be identified:
+;                   $LOW_SHAPE_TYPE_STARS_DOORPLATE, known as, "mso-spt21", should be "doorplate"
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND, known as, "col-502ad400", should be ??
+;                   $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, known as, "col-60da8460", should be ??
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -532,36 +532,36 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ;                  $iWidth              - an integer value. The Shape's Width in Micrometers. Note, for Lines, Width is the length of the line
 ;                  $iHeight             - an integer value. The Shape's Height in Micrometers. Note, for Lines, Height is the amount the line goes below the point of insertion.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iShapeType not an Integer, less than 0, or greater than 122. See $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-;				   @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
-;				   @Error 1 @Extended 6 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
-;				   @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to determine Cursor type.
-;				   @Error 3 @Extended 2 Return 0 = Failed to create requested Shape.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. The Shape was successfully inserted. Returning the Shape's Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iShapeType not an Integer, less than 0, or greater than 122. See $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
+;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to determine Cursor type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to create requested Shape.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. The Shape was successfully inserted. Returning the Shape's Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oCursor cannot be a Table Cursor.
-;				   Line Shapes, such as Curves etc., may not be smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select the individual points and set the Point type in L.O. UI.
-;				   Polygon and Polygon 45 degree are the same shape internally, one only allows you to draw the lines at 45 degree angles in L.O. UI.
-;				   The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
-;					$LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
-;					$LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
-;					$LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE
-;					$LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
-;				   Inserting any of the above shapes will still show successful, but the shape will be invisible, and could cause the document to crash.
-;				   The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
-;					$LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
+;                  Line Shapes, such as Curves etc., may not be smoothly curved. This is due to my lack of understanding of setting Point type settings. You will need to manually select the individual points and set the Point type in L.O. UI.
+;                  Polygon and Polygon 45 degree are the same shape internally, one only allows you to draw the lines at 45 degree angles in L.O. UI.
+;                  The following shapes are not implemented into LibreOffice as of L.O. Version 7.3.4.2 for automation, and thus will not work:
+;                   $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE, $LOW_SHAPE_TYPE_BASIC_FRAME
+;                   $LOW_SHAPE_TYPE_STARS_6_POINT, $LOW_SHAPE_TYPE_STARS_12_POINT, $LOW_SHAPE_TYPE_STARS_SIGNET, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE
+;                   $LOW_SHAPE_TYPE_SYMBOL_CLOUD, $LOW_SHAPE_TYPE_SYMBOL_FLOWER, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
+;                  Inserting any of the above shapes will still show successful, but the shape will be invisible, and could cause the document to crash.
+;                  The following shape is visually different from the manually inserted one in L.O. 7.3.4.2:
+;                   $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING
 ; Related .......: _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -685,40 +685,40 @@ EndFunc   ;==>_LOWriter_ShapeInsert
 ;                  $iEndWidth           - [optional] an integer value (0-5004). Default is Null. The Width of the Ending Arrowhead, in Micrometers.
 ;                  $bEndCenter          - [optional] a boolean value. Default is Null. If True, Places the center of the End arrowhead on the endpoint of the line.
 ; Return values .: Success: Integer or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $vStartStyle not a String, and not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $vStartStyle is an Integer, but less than 0, or greater than 32. See constants $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 4 Return 0 = $iStartWidth not an Integer, less than 0, or greater than 5004.
-;				   @Error 1 @Extended 5 Return 0 = $bStartCenter not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $bSync not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $vEndStyle not a String, and not an Integer.
-;				   @Error 1 @Extended 8 Return 0 = $vSEndStyle is an Integer, but less than 0, or greater than 32. See constants $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 9 Return 0 = $iEndWidth not an Integer, less than 0, or greater than 5004.
-;				   @Error 1 @Extended 8 Return 0 = $bEndCenter not a Boolean.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Arrowhead name.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $vStartStyle
-;				   |								2 = Error setting $iStartWidth
-;				   |								4 = Error setting $bStartCenter
-;				   |								8 = Error setting $bSync
-;				   |								16 = Error setting $vEndStyle
-;				   |								32 = Error setting $iEndWidth
-;				   |								64 = Error setting $bEndCenter
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $vStartStyle not a String, and not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $vStartStyle is an Integer, but less than 0, or greater than 32. See constants $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iStartWidth not an Integer, less than 0, or greater than 5004.
+;                  @Error 1 @Extended 5 Return 0 = $bStartCenter not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bSync not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $vEndStyle not a String, and not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $vSEndStyle is an Integer, but less than 0, or greater than 32. See constants $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iEndWidth not an Integer, less than 0, or greater than 5004.
+;                  @Error 1 @Extended 8 Return 0 = $bEndCenter not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Arrowhead name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $vStartStyle
+;                  |                               2 = Error setting $iStartWidth
+;                  |                               4 = Error setting $bStartCenter
+;                  |                               8 = Error setting $bSync
+;                  |                               16 = Error setting $vEndStyle
+;                  |                               32 = Error setting $iEndWidth
+;                  |                               64 = Error setting $bEndCenter
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office has no setting for $bSync, so I have made a manual version of it in this function. It only accepts True, and must be called with True each time you want it to synchronize.
-;					When retrieving the current settings, $bSync will be a Boolean value of whether the Start Arrowhead settings are currently equal to the End Arrowhead setting values.
-;				   Both $vStartStyle and $vEndStyle accept a String or an Integer because there is the possibility of a custom Arrowhead being available the user may want to use.
-;					When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  When retrieving the current settings, $bSync will be a Boolean value of whether the Start Arrowhead settings are currently equal to the End Arrowhead setting values.
+;                  Both $vStartStyle and $vEndStyle accept a String or an Integer because there is the possibility of a custom Arrowhead being available the user may want to use.
+;                  When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -820,36 +820,36 @@ EndFunc   ;==>_LOWriter_ShapeLineArrowStyles
 ;                  $iCornerStyle        - [optional] an integer value (0,2-4). Default is Null. The Line Corner Style. See Constants $LOW_SHAPE_LINE_JOINT_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $iCapStyle           - [optional] an integer value (0-2). Default is Null. The Line Cap Style. See Constants $LOW_SHAPE_LINE_CAP_* as defined in LibreOfficeWriter_Constants.au3
 ; Return values .: Success: Integer or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $vStyle not a String, and not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $vStyle is an Integer, but less than 0, or greater than 31. See constants $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
-;				   @Error 1 @Extended 5 Return 0 = $iWidth not an Integer, less than 0, or greater than 5004.
-;				   @Error 1 @Extended 6 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 7 Return 0 = $iCornerStyle not an Integer, not equal to 0, equal to 1, not equal to 2 or greater than 4.  See Constants $LOW_SHAPE_LINE_JOINT_* as defined in LibreOfficeWriter_Constants.au3
-;				   @Error 1 @Extended 8 Return 0 = $iCapStyle is an Integer, but less than 0, or greater than 2. See constants $LOW_SHAPE_LINE_CAP_* as defined in LibreOfficeWriter_Constants.au3.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Line Style name.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $vStyle
-;				   |								2 = Error setting $iColor
-;				   |								4 = Error setting $iWidth
-;				   |								8 = Error setting $iTransparency
-;				   |								16 = Error setting $iCornerStyle
-;				   |								32 = Error setting $iCapStyle
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $vStyle not a String, and not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $vStyle is an Integer, but less than 0, or greater than 31. See constants $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
+;                  @Error 1 @Extended 5 Return 0 = $iWidth not an Integer, less than 0, or greater than 5004.
+;                  @Error 1 @Extended 6 Return 0 = $iTransparency not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iCornerStyle not an Integer, not equal to 0, equal to 1, not equal to 2 or greater than 4. See Constants $LOW_SHAPE_LINE_JOINT_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 1 @Extended 8 Return 0 = $iCapStyle is an Integer, but less than 0, or greater than 2. See constants $LOW_SHAPE_LINE_CAP_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Line Style name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $vStyle
+;                  |                               2 = Error setting $iColor
+;                  |                               4 = Error setting $iWidth
+;                  |                               8 = Error setting $iTransparency
+;                  |                               16 = Error setting $iCornerStyle
+;                  |                               32 = Error setting $iCapStyle
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $vStyle accepts a String or an Integer because there is the possibility of a custom Line Style being available that the user may want to use.
-;					When retrieving the current settings, $vStyle could be either an integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-; Related .......:  _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
+;                  When retrieving the current settings, $vStyle could be either an integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOW_SHAPE_LINE_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -965,18 +965,18 @@ EndFunc   ;==>_LOWriter_ShapeLineProperties
 ;                  $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $sName               - [optional] a string value. Default is Null. The new Name for the Shape.
 ; Return values .: Success: 1 or String
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sName not a String.
-;				   @Error 1 @Extended 4 Return 0 = Document already contains a Shape with the same name as called in $sName.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $sName
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Shape's name was successfully set.
-;				   @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Shape's current name.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = Document already contains a Shape with the same name as called in $sName.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $sName
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Shape's name was successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Shape's current name.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1012,22 +1012,22 @@ EndFunc   ;==>_LOWriter_ShapeName
 ;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iX not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iY not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $iX
-;				   |								2 = Error setting $iY
-;				   |								4 = Error setting $bProtectPos
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  |                               4 = Error setting $bProtectPos
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1088,26 +1088,26 @@ EndFunc   ;==>_LOWriter_ShapePosition
 ;                  $nRotate             - [optional] a general number value (0-359.99). Default is Null. The Degrees to rotate the shape. See remarks.
 ;                  $nSlant              - [optional] a general number value (-89-89.00). Default is Null. The Degrees to slant the shape. See remarks.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0, or greater than 359.99.
-;				   @Error 1 @Extended 3 Return 0 = $nSlant not a Number, less than -89, or greater than 89.00.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $nRotate
-;				   |								2 = Error setting $nSlant
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0, or greater than 359.99.
+;                  @Error 1 @Extended 3 Return 0 = $nSlant not a Number, less than -89, or greater than 89.00.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $nRotate
+;                  |                               2 = Error setting $nSlant
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If you attempt to apply rotation to an already slanted Shape, or vice versa, a property setting error will occur, and the values will be very inaccurately applied.
-;				   This function uses the deprecated Libre Office methods RotateAngle, and ShearAngle, and may stop working in future Libre Office versions, after 7.3.4.2.
-;				   At the present time Control Point settings are not included as they are too complex to manipulate.
-;				   At the present time Corner Radius setting is not included, as I was unable to identify a shape that utilized this setting.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  This function uses the deprecated Libre Office methods RotateAngle, and ShearAngle, and may stop working in future Libre Office versions, after 7.3.4.2.
+;                  At the present time Control Point settings are not included as they are too complex to manipulate.
+;                  At the present time Corner Radius setting is not included, as I was unable to identify a shape that utilized this setting.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -1145,20 +1145,20 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 ; Name ..........: _LOWriter_ShapesGetNames
 ; Description ...: Return a list of Shape names contained in a document.
 ; Syntax ........: _LOWriter_ShapesGetNames(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object.  A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 2D Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error retrieving Shapes Object.
-;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shapes Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
-;				   I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
-;				   Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
+;                  I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
+;                  Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1203,37 +1203,37 @@ EndFunc   ;==>_LOWriter_ShapesGetNames
 ;                  $iPointType          - [optional] an integer value (0,1,3). Default is $LOW_SHAPE_POINT_TYPE_NORMAL. The Type of Point this new Point is. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bIsCurve            - [optional] a boolean value. Default is False. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
-;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 0 or greater than number of points in the shape.
-;				   @Error 1 @Extended 4 Return 0 = $iX not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iY not an Integer
-;				   @Error 1 @Extended 6 Return 0 = $iPointType not an Integer, less than 0 or greater than 3, or equal to 2. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
-;				   @Error 1 @Extended 7 Return 0 = $bIsCurve not a Boolean.
-;				   @Error 1 @Extended 8 Return 0 = First or Last Points in a shape can only be a "Normal" type point.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure.
-;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;				   @Error 2 @Extended 3 Return 0 = Failed to Retrieve Array of Points.
-;				   @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
-;				   @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
-;				   @Error 2 @Extended 6 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
-;				   @Error 2 @Extended 7 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
-;				   @Error 2 @Extended 8 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;				   @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Shape.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;                  @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 0 or greater than number of points in the shape.
+;                  @Error 1 @Extended 4 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iY not an Integer
+;                  @Error 1 @Extended 6 Return 0 = $iPointType not an Integer, less than 0 or greater than 3, or equal to 2. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
+;                  @Error 1 @Extended 7 Return 0 = $bIsCurve not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = First or Last Points in a shape can only be a "Normal" type point.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
+;                  @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;                  @Error 2 @Extended 6 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;                  @Error 2 @Extended 7 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
+;                  @Error 2 @Extended 8 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Shape.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
-;				   This is a homemade function as LibreOffice doesn't offer an easy way for adding points to a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
-;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you call a new point with "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
-;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
-;				   Calling any Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as with the last point in a shape, as they are already a curve, or not supported in the case of the last point.
+;                  This is a homemade function as LibreOffice doesn't offer an easy way for adding points to a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;                  For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you call a new point with "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
+;                  The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
+;                  Calling any Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as with the last point in a shape, as they are already a curve, or not supported in the case of the last point.
 ; Related .......:_LOWriter_ShapePointsModify, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -1687,14 +1687,14 @@ EndFunc   ;==>_LOWriter_ShapePointsAdd
 ; Syntax ........: _LOWriter_ShapePointsGetCount(ByRef $oShape)
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. Returns total number of points present in a shape.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returns total number of points present in a shape.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
@@ -1738,38 +1738,38 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ;                  $iPointType          - [optional] an integer value (0,1,3). Default is Null. The Type of Point to change the called point to. See Remarks. See constants $LOW_SHAPE_POINT_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  $bIsCurve            - [optional] a boolean value. Default is Null. If True, the Normal Point is a Curve. See remarks.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
-;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
-;				   @Error 1 @Extended 4 Return 0 = $iX not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iY not an Integer
-;				   @Error 1 @Extended 6 Return 0 = $PointType not an Integer, less than 0 or greater than 3, or equal to 2.
-;				   @Error 1 @Extended 7 Return 0 = $PointType set to other than Normal while $iPoint is referencing first or last point.
-;				   @Error 1 @Extended 8 Return 0 = $bIsCurve not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $bIsCurve cannot be set for last point in a shape.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
-;				   @Error 2 @Extended 3 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current settings for requested point.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended 1 Return 0 = Failed to modify the requested point.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;                  @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
+;                  @Error 1 @Extended 4 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iY not an Integer
+;                  @Error 1 @Extended 6 Return 0 = $PointType not an Integer, less than 0 or greater than 3, or equal to 2.
+;                  @Error 1 @Extended 7 Return 0 = $PointType set to other than Normal while $iPoint is referencing first or last point.
+;                  @Error 1 @Extended 8 Return 0 = $bIsCurve not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bIsCurve cannot be set for last point in a shape.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current settings for requested point.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended 1 Return 0 = Failed to modify the requested point.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings for the Array Element called in $iArrayElement.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
-;				   This is a homemade function as LibreOffice doesn't offer an easy way for modifying points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
-;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you modify a point to "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
-;				   The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
-;				   Calling and Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as they are already a curve.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
+;                  This is a homemade function as LibreOffice doesn't offer an easy way for modifying points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;                  For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon insertion that were already present in the shape. If you modify a point to "SMOOTH" type, it will be, for now, replaced with "Symmetrical".
+;                  The first and last points in a shape can only be a "Normal" Point Type. The last point cannot be Curved, but the first can be.
+;                  Calling and Smooth or Symmetrical point types with $bIsCurve = True, will be ignored, as they are already a curve.
 ; Related .......: _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsRemove, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -1865,29 +1865,29 @@ EndFunc   ;==>_LOWriter_ShapePointsModify
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iPoint              - an integer value. The Point to in the Shape to delete, beginning at 1.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
-;				   @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;				   @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
-;				   @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
-;				   @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
-;				   @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
-;				   @Error 2 @Extended 6 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;				   @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
-;				   @Error 3 @Extended 3 Return 0 = Failed to identify the Previous normal Point in the Array of Points.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Shape.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
+;                  @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;                  @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
+;                  @Error 2 @Extended 6 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the Previous normal Point in the Array of Points.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Shape.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only $LOW_SHAPE_TYPE_LINE_* type shapes have Points that can be added to, removed, or modified.
-;				   This is a homemade function as LibreOffice doesn't offer an easy way for removing points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
-;				   For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon deletion that were already present in the shape. Some symmetrical points may revert also.
+;                  This is a homemade function as LibreOffice doesn't offer an easy way for removing points in a shape. Consequently this will not produce similar results as when working with Libre office manually, and may wreck your shape's shape. Use with caution.
+;                  For an unknown reason, I am unable to insert "SMOOTH" Points, and consequently, any smooth Points are reverted back to "Normal" points, but still having their Smooth control points upon deletion that were already present in the shape. Some symmetrical points may revert also.
 ; Related .......: _LOWriter_ShapePointsAdd, _LOWriter_ShapePointsModify, _LOWriter_ShapePointsGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -2224,26 +2224,25 @@ EndFunc   ;==>_LOWriter_ShapePointsRemove
 ;                  $bTextBox            - [optional] a boolean value. Default is Null. If True, adds a TexttBox inside of the Shape. See Remarks.
 ;                  $sContent            - [optional] a string value. Default is Null. The Text content of the Shape's TextBox.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bTextBox not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $sContent not a String.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Shape called in $oShape does not support "com.sun.star.drawing.CustomShape", and does not support adding a TextBox.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $bTextBox
-;				   |								2 = Error setting $sContent
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bTextBox not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $sContent not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Shape called in $oShape does not support "com.sun.star.drawing.CustomShape", and does not support adding a TextBox.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bTextBox
+;                  |                               2 = Error setting $sContent
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The following shapes do not support adding a TextBox:
-;					$LOW_SHAPE_TYPE_LINE_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED,
-;						$LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED.
-;					$LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT, $LOW_SHAPE_TYPE_BASIC_ARC.
+;                   $LOW_SHAPE_TYPE_LINE_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE, $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED, $LOW_SHAPE_TYPE_LINE_CURVE, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED, $LOW_SHAPE_TYPE_LINE_POLYGON, $LOW_SHAPE_TYPE_LINE_POLYGON_45, $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED.
+;                   $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT, $LOW_SHAPE_TYPE_BASIC_ARC.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2285,20 +2284,20 @@ EndFunc   ;==>_LOWriter_ShapeTextBox
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
 ;                  $iTransparency       - [optional] an integer value (0-100). Default is Null. The color transparency. 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iTransparency
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iTransparency not an Integer, less than 0 or greater than 100.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iTransparency
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current setting for Transparency in integer format.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2335,41 +2334,41 @@ EndFunc   ;==>_LOWriter_ShapeTransparency
 ;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;				   @Error 1 @Extended 7 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;				   @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;				   @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;				   @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iType
-;				   |								2 = Error setting $iXCenter
-;				   |								4 = Error setting $iYCenter
-;				   |								8 = Error setting $iAngle
-;				   |								16 = Error setting $iBorder
-;				   |								32 = Error setting $iStart
-;				   |								64 = Error setting $iEnd
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
-;				   @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 7 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
+;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iXCenter
+;                  |                               4 = Error setting $iYCenter
+;                  |                               8 = Error setting $iAngle
+;                  |                               16 = Error setting $iBorder
+;                  |                               32 = Error setting $iStart
+;                  |                               64 = Error setting $iEnd
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings have been successfully set.
+;                  @Error 0 @Extended 0 Return 2 = Success. Transparency Gradient has been successfully turned off.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2471,91 +2470,91 @@ EndFunc   ;==>_LOWriter_ShapeTransparencyGradient
 ;                  $bKeepInside         - [optional] a boolean value. Default is Null. If True, Keeps the Shape within the layout boundaries of the text that the Shape is anchored to.
 ;                  $iAnchorPos          - [optional] an integer value(0,1,4). Default is Null. Specify the anchoring options for the Shape. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iHorAlign not an Integer, or less than 0, or greater than 3. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 3 Return 0 = $iHorPos not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = $iHorRelation not an Integer, or less than 0, or greater than 8. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = $bMirror not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iVertAlign not an integer, or less than 0, or greater than 9. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 7 Return 0 = $iVertPos not an integer.
-;				   @Error 1 @Extended 8 Return 0 = $iVertRelation not an Integer, Less than -1, or greater than 9. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 9 Return 0 = $bKeepInside not a Boolean.
-;				   @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or not equal to 0, 1 or 4. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iHorAlign
-;				   |								2 = Error setting $iHorPos
-;				   |								4 = Error setting $iHorRelation
-;				   |								8 = Error setting $bMirror
-;				   |								16 = Error setting $iVertAlign
-;				   |								32 = Error setting $iVertPos
-;				   |								64 = Error setting $iVertRelation
-;				   |								128 = Error setting $bKeepInside
-;				   |								256 = Error setting $iAnchorPos
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iHorAlign not an Integer, or less than 0, or greater than 3. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iHorPos not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iHorRelation not an Integer, or less than 0, or greater than 8. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $bMirror not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iVertAlign not an integer, or less than 0, or greater than 9. See Constants, $LOW_ORIENT_VERT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iVertPos not an integer.
+;                  @Error 1 @Extended 8 Return 0 = $iVertRelation not an Integer, Less than -1, or greater than 9. See Constants, $LOW_RELATIVE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $bKeepInside not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $iAnchorPos not an Integer, or not equal to 0, 1 or 4. See Constants, $LOW_ANCHOR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iHorAlign
+;                  |                               2 = Error setting $iHorPos
+;                  |                               4 = Error setting $iHorRelation
+;                  |                               8 = Error setting $bMirror
+;                  |                               16 = Error setting $iVertAlign
+;                  |                               32 = Error setting $iVertPos
+;                  |                               64 = Error setting $iVertRelation
+;                  |                               128 = Error setting $bKeepInside
+;                  |                               256 = Error setting $iAnchorPos
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 9 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current
-;							$iHorAlign setting. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0),
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
-;							$LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;					$iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
-;						$LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;						$LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_ROW(-1),
-;							$LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
-;							$LOW_RELATIVE_CHARACTER (2),
-;						$LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
-;							$LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1),
-;							$LOW_RELATIVE_CHARACTER (2),
-;							$LOW_RELATIVE_PAGE (7),
-;							$LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
-;							$LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
-;					The behavior of each Relation constant is described below.
-;							$LOW_RELATIVE_ROW(-1), This option will position the Shape considering the height of the row where the anchor is placed.
-;							$LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the Shape is positioned considering the whole width available for the paragraph, including indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH for Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the Shape is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the Shape considering the text baseline over which all characters are placed. ("As Character" anchoring.)
-;							$LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the Shape is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
-;								[$LOW_RELATIVE_PARAGRAPH_TEXT for Vertical relation:] the Shape is positioned considering the height of the paragraph where the anchor is placed.
-;							$LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the Shape is positioned considering the horizontal space used by the character.
-;								[$LOW_RELATIVE_CHARACTER for Vertical relation:] the Shape is positioned considering the vertical space used by the character.
-;							$LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the Shape is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
-;							$LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the Shape is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
-;							$LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the Shape is positioned considering the width of the indent space available to the left of the paragraph.
-;							$LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the Shape is positioned considering the width of the indent space available to the right of the paragraph.
-;							$LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the Shape is positioned considering the whole width of the page, from the left to the right page borders.
-;								[$LOW_RELATIVE_PAGE for Vertical relation:], the Shape is positioned considering the full page height, from top to bottom page borders.
-;							$LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the Shape is positioned considering the whole width available for text in the page, from the left to the right page margins.
-;								[$LOW_RELATIVE_PAGE_PRINT for Vertical relation:], the Shape is positioned considering the full height available for text, from top to bottom margins.
-;							$LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the Shape is positioned considering the height of the line of text where the anchor is placed.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  $iHorRelation has varying acceptable values, depending on the current Anchor position and also the current $iHorAlign setting.
+;                  The Following is a list of acceptable values per anchor position.
+;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iHorRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0),
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts No $iHorRelation Values.
+;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iHorRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0),
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                     $LOW_RELATIVE_PAGE_LEFT (3)[Same as Left Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PAGE_RIGHT (4)[Same as Right Page Border in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                  $iVertRelation has varying acceptable values, depending on the current Anchor position. The Following is a list of acceptable values per anchor position.
+;                   $LOW_ANCHOR_AT_PARAGRAPH(0) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Margin" in L.O. UI],
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                   $LOW_ANCHOR_AS_CHARACTER(1) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_ROW(-1),
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The Same as "Baseline" in L.O. UI],
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                   $LOW_ANCHOR_AT_CHARACTER(4) Accepts the following $iVertRelation Values:
+;                     $LOW_RELATIVE_PARAGRAPH (0)[The same as "Margin" in L.O. UI],
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1),
+;                     $LOW_RELATIVE_CHARACTER (2),
+;                     $LOW_RELATIVE_PAGE (7),
+;                     $LOW_RELATIVE_PAGE_PRINT (8)[Same as Page Text Area in L.O. UI].
+;                     $LOW_RELATIVE_TEXT_LINE (9)[The same as "Line of Text" in L.O. UI]
+;                  The behavior of each Relation constant is described below.
+;                     $LOW_RELATIVE_ROW(-1), This option will position the Shape considering the height of the row where the anchor is placed.
+;                     $LOW_RELATIVE_PARAGRAPH (0), [For Horizontal Relation:] the Shape is positioned considering the whole width available for the paragraph, including indent spaces.
+;                     $LOW_RELATIVE_PARAGRAPH [For Vertical Relation:] {$LOW_RELATIVE_PARAGRAPH is Also called "Margin" or "Baseline" in L.O. UI], Depending on the anchoring type, the Shape is positioned considering the space between the top margin and the character ("To character" anchoring) or bottom edge of the paragraph ("To paragraph" anchoring) where the anchor is placed. Or will position the Shape considering the text baseline over which all characters are placed. ("As Character" anchoring.)
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT (1), [For Horizontal Relation:] the Shape is positioned considering the whole width available for text in the paragraph, excluding indent spaces.
+;                     $LOW_RELATIVE_PARAGRAPH_TEXT [For Vertical relation:] the Shape is positioned considering the height of the paragraph where the anchor is placed.
+;                     $LOW_RELATIVE_CHARACTER (2), [For Horizontal Relation:] the Shape is positioned considering the horizontal space used by the character.
+;                     $LOW_RELATIVE_CHARACTER [For Vertical relation:] the Shape is positioned considering the vertical space used by the character.
+;                     $LOW_RELATIVE_PAGE_LEFT (3),[For Horizontal Relation:], the Shape is positioned considering the space available between the left page border and the left paragraph border. [Same as Left Page Border in L.O. UI]
+;                     $LOW_RELATIVE_PAGE_RIGHT (4),[For Horizontal Relation:], the Shape is positioned considering the space available between the Right page border and the right paragraph border. [Same as Right Page Border in L.O. UI]
+;                     $LOW_RELATIVE_PARAGRAPH_LEFT (5),[For Horizontal Relation:] the Shape is positioned considering the width of the indent space available to the left of the paragraph.
+;                     $LOW_RELATIVE_PARAGRAPH_RIGHT (6),[For Horizontal Relation:], the Shape is positioned considering the width of the indent space available to the right of the paragraph.
+;                     $LOW_RELATIVE_PAGE (7),[For Horizontal Relation:], the Shape is positioned considering the whole width of the page, from the left to the right page borders.
+;                     $LOW_RELATIVE_PAGE [For Vertical relation:], the Shape is positioned considering the full page height, from top to bottom page borders.
+;                     $LOW_RELATIVE_PAGE_PRINT (8),[For Horizontal Relation:], [Same as Page Text Area in L.O. UI] the Shape is positioned considering the whole width available for text in the page, from the left to the right page margins.
+;                     $LOW_RELATIVE_PAGE_PRINT [For Vertical relation:], the Shape is positioned considering the full height available for text, from top to bottom margins.
+;                     $LOW_RELATIVE_TEXT_LINE (9),[For Vertical relation:], the Shape is positioned considering the height of the line of text where the anchor is placed.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes
@@ -2699,25 +2698,25 @@ EndFunc   ;==>_LOWriter_ShapeTypePosition
 ;                  $iHeight             - [optional] an integer value. Default is Null. The height of the Shape, in Micrometers(uM). Min. 51.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Shape.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iWidth not an Integer, or less than 51.
-;				   @Error 1 @Extended 3 Return 0 = $iHeight not an Integer, or less than 51.
-;				   @Error 1 @Extended 4 Return 0 = $bProtectSize not a Boolean.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iWidth
-;				   |								2 = Error setting $iHeight
-;				   |								4 = Error setting $bProtectSize
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer, or less than 51.
+;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer, or less than 51.
+;                  @Error 1 @Extended 4 Return 0 = $bProtectSize not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iWidth
+;                  |                               2 = Error setting $iHeight
+;                  |                               4 = Error setting $bProtectSize
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   I have skipped "Keep Ratio, as currently it seems unable to be set for shapes.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  I have skipped "Keep Ratio, as currently it seems unable to be set for shapes.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2778,30 +2777,30 @@ EndFunc   ;==>_LOWriter_ShapeTypeSize
 ;                  $iTop                - [optional] an integer value. Default is Null. The amount of space between the Top edge of the Shape and the text. Set in Micrometers.
 ;                  $iBottom             - [optional] an integer value. Default is Null. The amount of space between the Bottom edge of the Shape and the text. Set in Micrometers.
 ; Return values .: Success: 1 or Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iWrapType not an Integer, less than 0, or greater than 5. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
-;				   @Error 1 @Extended 3 Return 0 = $iLeft not an Integer.
-;				   @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
-;				   @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
-;				   @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $iWrapType
-;				   |								2 = Error setting $iLeft
-;				   |								4 = Error setting $iRight
-;				   |								8 = Error setting $iTop
-;				   |								16 = Error setting $iBottom
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iWrapType not an Integer, less than 0, or greater than 5. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iLeft not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
+;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
+;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iWrapType
+;                  |                               2 = Error setting $iLeft
+;                  |                               4 = Error setting $iRight
+;                  |                               8 = Error setting $iTop
+;                  |                               16 = Error setting $iBottom
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -2880,25 +2879,25 @@ EndFunc   ;==>_LOWriter_ShapeWrap
 ;                  $bInBackground       - [optional] a boolean value. Default is Null. If True, Moves the selected object to the background. This option is only available with the "Through" wrap type.
 ;                  $bAllowOverlap       - [optional] a boolean value. Default is Null. If True, the object is allowed to overlap another object. This option has no effect on wrap through objects, which can always overlap.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bFirstPar not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $bInBackground not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bAllowOverlap not a Boolean.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
-;				   |								1 = Error setting $bFirstPar
-;				   |								2 = Error setting $bInBackground
-;				   |								4 = Error setting $bAllowOverlap
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bFirstPar not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bInBackground not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bAllowOverlap not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $bFirstPar
+;                  |                               2 = Error setting $bInBackground
+;                  |                               4 = Error setting $bAllowOverlap
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   This function may indicate the settings were set successfully when they haven't been if the appropriate wrap type, anchor type etc. hasn't been set before hand.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  This function may indicate the settings were set successfully when they haven't been if the appropriate wrap type, anchor type etc. hasn't been set before hand.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
 ; Link ..........:
 ; Example .......: Yes

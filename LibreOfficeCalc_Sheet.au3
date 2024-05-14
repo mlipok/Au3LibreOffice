@@ -53,16 +53,16 @@
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully activated.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully activated.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:_LOCalc_SheetIsActive
+; Related .......: _LOCalc_SheetIsActive
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -86,23 +86,23 @@ EndFunc   ;==>_LOCalc_SheetActivate
 ;                  $sName               - [optional] a string value. Default is Null. The Name of the new Sheet. See remarks.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The position to insert the new sheet. If left as Null, new sheet is inserted at the end. See remarks.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
-;				   @Error 1 @Extended 3 Return 0 = Document already contains a Sheet named the same as called in $sName.
-;				   @Error 1 @Extended 4 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets present in the document.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object. New Sheet may not have been inserted successfully.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. New sheet was successfully inserted, returning its Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Document already contains a Sheet named the same as called in $sName.
+;                  @Error 1 @Extended 4 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets present in the document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object. New Sheet may not have been inserted successfully.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. New sheet was successfully inserted, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $sName is left as Null, the sheet will be automatically named "Sheet?" where "?" is a digit.
-;				   If $iPosition is left as Null, the sheet will be inserted at the end of the list of Sheets.
-;				   Calling $iPosition with the number of Sheets in the Document will place the added sheet at the end of the sheet list.
+;                  If $iPosition is left as Null, the sheet will be inserted at the end of the list of Sheets.
+;                  Calling $iPosition with the number of Sheets in the Document will place the added sheet at the end of the sheet list.
 ; Related .......: _LOCalc_SheetRemove, _LOCalc_DocHasSheetName
 ; Link ..........:
 ; Example .......: Yes
@@ -156,25 +156,25 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ;                  $sNewName            - [optional] a string value. Default is Null. The name to assign to the newly copied Sheet.
 ;                  $iPosition           - [optional] an integer value. Default is Null. The position to place the copied sheet at. 0 = the beginning.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sNewName not a String.
-;				   @Error 1 @Extended 4 Return 0 = Document already contains a Sheet with the same name as called in $sNewName.
-;				   @Error 1 @Extended 5 Return 0 = $iPosition not an Integer, less than 0, or greater than number of Sheets contained in the document.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve original Sheet's name.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Object for new Sheet.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully copied the Sheet. Returning the new Sheet's Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
+;                  @Error 1 @Extended 4 Return 0 = Document already contains a Sheet with the same name as called in $sNewName.
+;                  @Error 1 @Extended 5 Return 0 = $iPosition not an Integer, less than 0, or greater than number of Sheets contained in the document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve original Sheet's name.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Object for new Sheet.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully copied the Sheet. Returning the new Sheet's Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $sNewName is left as Null, the original Sheet's name is used, with "_" and a digit appended.
-;				   If $iPosition is left as Null, the copied sheet will be placed at the end of the list.
-;				   Calling $iPosition with the number of Sheets in the Document will place the copied sheet at the end of the sheet list.
+;                  If $iPosition is left as Null, the copied sheet will be placed at the end of the list.
+;                  Calling $iPosition with the number of Sheets in the Document will place the copied sheet at the end of the sheet list.
 ; Related .......: _LOCalc_DocHasSheetName, _LOCalc_SheetMove
 ; Link ..........:
 ; Example .......: Yes
@@ -234,13 +234,13 @@ EndFunc   ;==>_LOCalc_SheetCopy
 ; Syntax ........: _LOCalc_SheetCreateCursor(ByRef $oSheet)
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create a Sheet Cursor.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully created a Sheet Cursor, returning its Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Sheet Cursor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully created a Sheet Cursor, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Sheet Cursor can be used in functions accepting a range. When created, the Cursor will have the entire Sheet selected.
@@ -268,13 +268,13 @@ EndFunc   ;==>_LOCalc_SheetCreateCursor
 ; Syntax ........: _LOCalc_SheetGetActive(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Active Sheet's Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the Active Sheet, returning its Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Active Sheet's Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the Active Sheet, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -303,16 +303,16 @@ EndFunc   ;==>_LOCalc_SheetGetActive
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sName               - a string value. The sheet name to retrieve the Object for.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sName not a String.
-;				   @Error 1 @Extended 3 Return 0 = Document does not contain a sheet with name called in $sName.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Document does not contain a sheet with name called in $sName.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -347,15 +347,15 @@ EndFunc   ;==>_LOCalc_SheetGetObjByName
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iPosition           - an integer value. The 0 based position of the Sheet, to retrieve the Object for.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iPosition not an Integer, less than 0 or greater than number of Sheets contained in the document.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iPosition not an Integer, less than 0 or greater than number of Sheets contained in the document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Sheet position aligns with the order they are displayed at the bottom of the document. 0 based.
@@ -385,27 +385,27 @@ EndFunc   ;==>_LOCalc_SheetGetObjByPosition
 ; Name ..........: _LOCalc_SheetImport
 ; Description ...: Import a Sheet from another Document. L.O. 3.5 and up.
 ; Syntax ........: _LOCalc_SheetImport(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName[, $bInsertAfter = False])
-; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sSheetName          - a string value. The Sheet's name to import from the Source Document.
 ;                  $bInsertAfter        - [optional] a boolean value. Default is False. If True, the Sheet is inserted after the currently active Sheet. If False, the Sheet is inserted before the currently active Sheet.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSourceDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oDestDoc not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
-;				   @Error 1 @Extended 4 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
-;				   @Error 1 @Extended 5 Return 0 = $bInsertAfter not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to import the Sheet.
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
-;				   --Version Related Errors--
-;				   @Error 7 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully imported the requested Sheet, returning the new Sheet's Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSourceDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oDestDoc not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
+;                  @Error 1 @Extended 4 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
+;                  @Error 1 @Extended 5 Return 0 = $bInsertAfter not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to import the Sheet.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully imported the requested Sheet, returning the new Sheet's Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -448,14 +448,14 @@ EndFunc   ;==>_LOCalc_SheetImport
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Boolean
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. If the called Sheet is the currently active sheet, True is returned. Else False.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the called Sheet is the currently active sheet, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -486,13 +486,13 @@ EndFunc   ;==>_LOCalc_SheetIsActive
 ; Syntax ........: _LOCalc_SheetIsProtected(ByRef $oSheet)
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Boolean
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to query Sheet's current protection status.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Boolean = Success. Successfully queried Sheet's protection status, returning a boolean indicating if the sheet is currently protected (True), or not (False).
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to query Sheet's current protection status.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Successfully queried Sheet's protection status, returning a boolean indicating if the sheet is currently protected (True), or not (False).
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -518,28 +518,28 @@ EndFunc   ;==>_LOCalc_SheetIsProtected
 ; Name ..........: _LOCalc_SheetLink
 ; Description ...: Link to an external Sheet in another Document.
 ; Syntax ........: _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName[, $iLinkMode = $LOC_SHEET_LINK_MODE_NORMAL[, $bInsertAfter = False]])
-; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. Must have been previously saved to a location.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to.  A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. Must have been previously saved to a location. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sSheetName          - a string value. The Sheet's name to import from the Source Document.
 ;                  $iLinkMode           - [optional] an integer value (0-2). Default is $LOC_SHEET_LINK_MODE_NORMAL. The content to link from the Sheet. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $bInsertAfter        - [optional] a boolean value. Default is False. If True, the Sheet is inserted after the currently active Sheet. If False, the Sheet is inserted before the currently active Sheet.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSourceDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oDestDoc not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
-;				   @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0, or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
-;				   @Error 1 @Extended 5 Return 0 = Document called in $oSourceDoc has no save location.
-;				   @Error 1 @Extended 6 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
-;				   @Error 1 @Extended 7 Return 0 = $bInsertAfter not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Create a name for new Sheet in Destination Document.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully inserted and linked the new Sheet, returning the new Sheet's Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSourceDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oDestDoc not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0, or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = Document called in $oSourceDoc has no save location.
+;                  @Error 1 @Extended 6 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
+;                  @Error 1 @Extended 7 Return 0 = $bInsertAfter not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create a name for new Sheet in Destination Document.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted and linked the new Sheet, returning the new Sheet's Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -605,16 +605,16 @@ EndFunc   ;==>_LOCalc_SheetLink
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $iPosition           - [optional] an integer value. Default is Null.The Position the move the Sheet to, 0 being the beginning.
 ; Return values .: Success: 1 or Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets contained in the document.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheet's name.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully moved.
-;				   @Error 0 @Extended 0 Return Integer = Success. $iPosition called with Null, returning Sheet's current position.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets contained in the document.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheet's name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully moved.
+;                  @Error 0 @Extended 0 Return Integer = Success. $iPosition called with Null, returning Sheet's current position.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Calling $iPosition with the number of Sheets in the Document will place the moved sheet at the end of the sheet list.
@@ -655,20 +655,20 @@ EndFunc   ;==>_LOCalc_SheetMove
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sName               - [optional] a string value. Default is Null. The new name for the Sheet.
 ; Return values .: Success: 1 or String
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $sName not a String.
-;				   @Error 1 @Extended 4 Return 0 = Document already has a Sheet named the same as called in $sName.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $sName
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet's new name was successfully set.
-;				   @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Sheet's current name.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = Document already has a Sheet named the same as called in $sName.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet's new name was successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning the Sheet's current name.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -710,30 +710,30 @@ EndFunc   ;==>_LOCalc_SheetName
 ;                  $oRange              - [optional] an object. Default is Null. The Range containing the Column Headers. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $bRepeatColumns      - [optional] a boolean value. Default is Null. If True, the Column Titles are repeated on each printed page to the right.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $bRepeatColumns not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Column Headers.
-;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current Column Header Range.
-;				   @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $oRange
-;				   |								2 = Error setting $bRepeatColumns
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $bRepeatColumns not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Column Headers.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Column Header Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $oRange
+;                  |                               2 = Error setting $bRepeatColumns
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Column Range to none.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   The Return for $oRange will be a Cell Range or Cell Object, if no Column is set, the return will always be the first cell (A1) of the Sheet.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  The Return for $oRange will be a Cell Range or Cell Object, if no Column is set, the return will always be the first cell (A1) of the Sheet.
 ; Related .......: _LOCalc_SheetPrintRowsRepeat
 ; Link ..........:
 ; Example .......: Yes
@@ -806,29 +806,29 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $aoRange             - [optional] an array of objects. Default is Null. An Array of Ranges that are marked for printing. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $aoRange not an Array.
-;				   @Error 1 @Extended 3 Return ? = Element in Array called in $aoRange not an Object, returning problem array element number.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Range Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Print Area Addresses.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $aoRange
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
-;				   @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Print range(s) was successfully set.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $aoRange not an Array.
+;                  @Error 1 @Extended 3 Return ? = Element in Array called in $aoRange not an Object, returning problem array element number.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Print Area Addresses.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $aoRange
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
+;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Print range(s) was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.
-;				   Likewise, when retrieving the current print range, if the returned array is empty, that means the entire sheet (all of the used cells) is set to be printed.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   If you set a Print Range for one sheet, any other Sheet without a Print Range set will NOT be printed.
+;                  Likewise, when retrieving the current print range, if the returned array is empty, that means the entire sheet (all of the used cells) is set to be printed.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  If you set a Print Range for one sheet, any other Sheet without a Print Range set will NOT be printed.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -864,36 +864,36 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetPrintRowsRepeat
-; Description ...:  Set or Retrieve settings for Row Header print settings.
+; Description ...: Set or Retrieve settings for Row Header print settings.
 ; Syntax ........: _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet[, $oRange = Null[, $bRepeatRows = Null]])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $oRange              - [optional] an object. Default is Null. The Range containing the Row Headers. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $bRepeatRows         - [optional] a boolean value. Default is Null. If True, the Row Titles are repeated on each printed page to the bottom.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oRange not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $bRepeatRows not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Row Headers.
-;				   @Error 3 @Extended 2 Return 0 = Failed to retrieve current Row Header Range.
-;				   @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $oRange
-;				   |								2 = Error setting $bRepeatRows
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $bRepeatRows not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Row Headers.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Row Header Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $oRange
+;                  |                               2 = Error setting $bRepeatRows
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $oRange with the Default keyword to reset the Row Range to none.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   The Return for $oRange will be a Cell Range or Cell Object, if no Row is set, the return will always be the first cell (A1) of the Sheet.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  The Return for $oRange will be a Cell Range or Cell Object, if no Row is set, the return will always be the first cell (A1) of the Sheet.
 ; Related .......: _LOCalc_SheetPrintColumnsRepeat
 ; Link ..........:
 ; Example .......: Yes
@@ -966,15 +966,15 @@ EndFunc   ;==>_LOCalc_SheetPrintRowsRepeat
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sPassword           - a string value. The password to protect the sheet with.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
-;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to protect the sheet.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully protected with the called password.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;                  @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to protect the sheet.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully protected with the called password.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1002,17 +1002,17 @@ EndFunc   ;==>_LOCalc_SheetProtect
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve the Sheet's name.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Sheets Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Attempted to delete the Sheet, but a Sheet by that name still exists.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Successfully removed the requested sheet.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve the Sheet's name.
+;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Attempted to delete the Sheet, but a Sheet by that name still exists.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully removed the requested sheet.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1049,13 +1049,13 @@ EndFunc   ;==>_LOCalc_SheetRemove
 ; Syntax ........: _LOCalc_SheetsGetCount(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. Returning count of Sheets contained in the Calc Document.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Sheets contained in the Calc Document.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1083,13 +1083,13 @@ EndFunc   ;==>_LOCalc_SheetsGetCount
 ; Syntax ........: _LOCalc_SheetsGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning Array of Sheet names for this document. @Extended set to number of results.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Sheet names for this document. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1127,16 +1127,16 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $iColor              - [optional] an integer value (-1-16777215). Default is Null. The tab color in Long Color format. Set to $LOC_COLOR_OFF(-1) to set to Default color setting. Can also be one of the constants $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $iColor
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;				   @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Tab Color as an Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iColor
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Tab Color as an Integer
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
@@ -1167,16 +1167,16 @@ EndFunc   ;==>_LOCalc_SheetTabColor
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $sPassword           - a string value. The password previously used to protect the sheet.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sPassword not a String.
-;				   @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Password called in $sPassword is incorrect.
-;				   @Error 3 @Extended 2 Return 0 = Failed to unprotect the sheet.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully unprotected with the called password.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sPassword not a String.
+;                  @Error 1 @Extended 3 Return 0 = String called in $sPassword contains no letters, digits, or underscores.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Password called in $sPassword is incorrect.
+;                  @Error 3 @Extended 2 Return 0 = Failed to unprotect the sheet.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully unprotected with the called password.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1205,17 +1205,17 @@ EndFunc   ;==>_LOCalc_SheetUnprotect
 ; Syntax ........: _LOCalc_SheetVisible(ByRef $oSheet[, $bVisible = Null])
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the Sheet is visible in the Libre Office UI.
-; Return values .:  Success: 1 or Boolean
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
-;				   --Property Setting Errors--
-;				   @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;				   |								1 = Error setting $bVisiblee
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Sheet Visibility setting was successfully set.
-;				   @Error 0 @Extended 1 Return Boolean = Success. $bVisible set to Null, returning current visibility setting. True indicates the Sheet is currently visible.
+; Return values .: Success: 1 or Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bVisible not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bVisiblee
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Sheet Visibility setting was successfully set.
+;                  @Error 0 @Extended 1 Return Boolean = Success. $bVisible set to Null, returning current visibility setting. True indicates the Sheet is currently visible.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
