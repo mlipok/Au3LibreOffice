@@ -42,6 +42,8 @@
 ; __LOCalc_CharPosition
 ; __LOCalc_CharSpacing
 ; __LOCalc_CreateStruct
+; __LOCalc_FieldGetObj
+; __LOCalc_FieldTypeServices
 ; __LOCalc_FilterNameGet
 ; __LOCalc_Internal_CursorGetType
 ; __LOCalc_InternalComErrorHandler
@@ -1667,6 +1669,150 @@ Func __LOCalc_CreateStruct($sStructName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tStruct)
 EndFunc   ;==>__LOCalc_CreateStruct
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_FieldGetObj
+; Description ...: Retrieve the Field's Object after insertion.
+; Syntax ........: __LOCalc_FieldGetObj(ByRef $oTextcursor[, $iType = $LOC_FIELD_TYPE_ALL])
+; Parameters ....: $oTextcursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
+;                  $iType               - [optional] an integer value. Default is $LOC_FIELD_TYPE_ALL. The Type of field to search for.
+; Return values .: Success: Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTextcursor not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Text Fields Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of paragraphs in Cell.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
+;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve Text Field Object.
+;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve Alternate Text Field Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify requested Field Types.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve total Fields count.
+;                  @Error 3 @Extended 3 Return 0 = Number of identified fields is greater than number of expected fields.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify newly created Field.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Map = Success. Returning newly inserted Field's Object inside of a map.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: After inserting a Field, the Object is not usable for modifying the field later on, so I retrieve it again after insertion.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avFieldTypes[0][0]
+	Local $oParEnum, $oPar, $oTextEnum, $oTextPortion, $oTextField, $oInternalCursor = $oTextCursor, $oFields, $oField
+	Local $iTotalFields = 0, $iTotalFound = 0
+	Local $mFieldObj[]
+
+	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iType, $LOC_FIELD_TYPE_ALL, 255) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	; When a Text Cursor has been used to insert Strings previous to inserting or looking for a Field, the fields sometimes are not able to be identified.
+	; The workaround I figured out was to create the Text Cursor again before enumerating the fields. I only create the text cursor again if the Text Cursor is in a Cell, not a header.
+	If ($oTextCursor.Text.SupportsService("com.sun.star.sheet.SheetCell")) Then
+		$oInternalCursor = $oTextCursor.Text.Spreadsheet.getCellByPosition($oTextCursor.Text.RangeAddress.StartColumn(), $oTextCursor.Text.RangeAddress.StartRow()).Text.createTextCursorByRange($oTextcursor)
+	EndIf
+
+	$avFieldTypes = __LOCalc_FieldTypeServices($iType)
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oFields = $oInternalCursor.Text.TextFields()
+	If Not IsObj($oFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$iTotalFields = $oFields.Count()
+	If Not IsInt($iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$oParEnum = $oInternalCursor.getText().createEnumeration()
+	If Not IsObj($oParEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	While $oParEnum.hasMoreElements()
+		$oPar = $oParEnum.nextElement()
+
+		$oTextEnum = $oPar.createEnumeration()
+		If Not IsObj($oTextEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+		While $oTextEnum.hasMoreElements()
+			$oTextPortion = $oTextEnum.nextElement()
+
+			If ($oTextPortion.TextPortionType = "TextField") Then
+				$oTextField = $oTextPortion.TextField()
+				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
+				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+				For $i = 0 To UBound($avFieldTypes) - 1
+
+					If $oTextField.supportsService($avFieldTypes[$i][1]) And ($oInternalCursor.compareRegionEnds($oInternalCursor, $oTextField.Anchor.End()) = 0) Then
+
+						$oField = $oFields.getByIndex($iTotalFound)
+						If Not IsObj($oField) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+
+						$mFieldObj.EnumFieldObj = $oTextField
+						$mFieldObj.FieldObj = $oField
+						Return SetError($__LO_STATUS_SUCCESS, 0, $mFieldObj)
+					EndIf
+					Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+				Next
+
+				$iTotalFound += 1
+			EndIf
+		WEnd
+
+	WEnd
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+EndFunc   ;==>__LOCalc_FieldGetObj
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_FieldTypeServices
+; Description ...: Retrieve an Array of Supported Service Names and Integer Constants to search for Fields.
+; Syntax ........: __LOCalc_FieldTypeServices($iFieldType)
+; Parameters ....: $iFieldType          - an integer value. The Constant Field type.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iFieldType not an Integer.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Array = Success. $iFieldType set to All, returning full regular Field Service list String Array.
+;                  @Error 0 @Extended 1 Return Array = Success. $iFieldType BitOr'd together, determining which flags are called from the Array. Returning Field Service String list Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_FieldTypeServices($iFieldType)
+	Local $avFieldTypes[7][2] = [[$LOC_FIELD_TYPE_DATE_TIME, "com.sun.star.text.TextField.DateTime"], [$LOC_FIELD_TYPE_DOC_TITLE, "com.sun.star.text.TextField.docinfo.Title"], _
+			[$LOC_FIELD_TYPE_FILE_NAME, "com.sun.star.text.TextField.FileName"], [$LOC_FIELD_TYPE_PAGE_NUM, "com.sun.star.text.TextField.PageNumber"], _
+			[$LOC_FIELD_TYPE_PAGE_COUNT, "com.sun.star.text.TextField.PageCount"], [$LOC_FIELD_TYPE_SHEET_NAME, "com.sun.star.text.TextField.SheetName"], _
+			[$LOC_FIELD_TYPE_URL, "com.sun.star.text.TextField.URL"]]
+
+	Local $avFieldResults[UBound($avFieldTypes)][2]
+	Local $iCount = 0
+
+	If Not IsInt($iFieldType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (BitAND($iFieldType, $LOC_FIELD_TYPE_ALL)) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avFieldTypes)
+
+	For $i = 0 To UBound($avFieldTypes) - 1
+		If BitAND($avFieldTypes[$i][0], $iFieldType) Then
+			$avFieldResults[$iCount][0] = $avFieldTypes[$i][0]
+			$avFieldResults[$iCount][1] = $avFieldTypes[$i][1]
+			$iCount += 1
+		EndIf
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
+	Next
+
+	ReDim $avFieldResults[$iCount][2]
+
+	Return SetError($__LO_STATUS_SUCCESS, 1, $avFieldResults)
+EndFunc   ;==>__LOCalc_FieldTypeServices
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_FilterNameGet

@@ -165,6 +165,17 @@ Global Const _
 		$LOC_DUPLEX_LONG = 2, _                                 ; Duplex mode is on, flip on Long edge.
 		$LOC_DUPLEX_SHORT = 3                                   ; Duplex mode is on, flip on Short edge.
 
+; Field Types
+Global Enum Step *2 _
+		$LOC_FIELD_TYPE_ALL = 1, _                              ; Returns a list of all field types listed below.
+		$LOC_FIELD_TYPE_DATE_TIME, _                            ; A Date or Time field. {Cell & Header.}
+		$LOC_FIELD_TYPE_DOC_TITLE, _                            ; A Document Title field. {Cell & Header.}
+		$LOC_FIELD_TYPE_FILE_NAME, _                            ; A File Name or Path and File Name field. {Header.}
+		$LOC_FIELD_TYPE_PAGE_NUM, _                             ; A Page Number field. {Header.}
+		$LOC_FIELD_TYPE_PAGE_COUNT, _                           ; A total Page Count field. {Header.}
+		$LOC_FIELD_TYPE_SHEET_NAME, _                           ; A Sheet Name field. {Cell & Header.}
+		$LOC_FIELD_TYPE_URL                                     ; A Hyperlink/URL field. {Cell.}
+
 ; Fill Date Mode
 Global Const _
 		$LOC_FILL_DATE_MODE_DAY = 0, _                          ; For each Cell a single day is added.

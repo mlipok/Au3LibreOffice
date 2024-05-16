@@ -64,6 +64,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Constants.au3
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
+	- LibreOfficeCalc_Field.au3
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
@@ -253,6 +254,19 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocWindowSplit
 	- _LOCalc_DocWindowVisibleRange
 	- _LOCalc_DocZoom
+- Field Functions
+	- _LOCalc_FieldCurrentDisplayGet
+	- _LOCalc_FieldDateTimeInsert
+	- _LOCalc_FieldDelete
+	- _LOCalc_FieldFileNameInsert
+	- _LOCalc_FieldGetAnchor
+	- _LOCalc_FieldHyperlinkInsert
+	- _LOCalc_FieldHyperlinkModify
+	- _LOCalc_FieldPageCountInsert
+	- _LOCalc_FieldPageNumberInsert
+	- _LOCalc_FieldsGetList
+	- _LOCalc_FieldSheetNameInsert
+	- _LOCalc_FieldTitleInsert
 - Font Query Functions
 	- _LOCalc_FontExists
 	- _LOCalc_FontsList
@@ -302,6 +316,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
 	- __LOCalc_CreateStruct
+	- __LOCalc_FieldGetObj
+	- __LOCalc_FieldTypeServices
 	- __LOCalc_FilterNameGet
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
@@ -400,6 +416,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_COMPUTE_*
 	- $LOC_CURTYPE_*
 	- $LOC_DUPLEX_*
+	- $LOC_FIELD_TYPE_*
 	- $LOC_FILL_DATE_MODE_*
 	- $LOC_FILL_DIR_*
 	- $LOC_FILL_MODE_*
