@@ -49,8 +49,6 @@ Func Example()
 	_LOWriter_DocReplaceAll($oDoc, $oSrchDesc, "a", "@", $atFindFormat, $atReplaceFormat)
 	If @error Then _ERROR($oDoc, "Failed to perform search in the document. Error:" & @error & " Extended:" & @extended)
 
-	ConsoleWrite(@extended & @CRLF)
-
 	MsgBox($MB_OK, "", "The search was successful, I searched using a Find Format, looking for any bold ""a""'s, " & _
 			"and replaced all of them with an italic ""@"", I replaced " & @extended & " results.")
 

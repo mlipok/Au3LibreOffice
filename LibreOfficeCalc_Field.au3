@@ -161,8 +161,8 @@ Func _LOCalc_FieldDelete(ByRef $mField)
 	If Not IsMap($mField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If ($mField["FieldObj"].Anchor.Text.SupportsService("com.sun.star.sheet.SheetCell")) Then
-		ConsoleWrite("Yes" & @CRLF)
 		$mField["FieldObj"].Anchor.Text.removeTextContent($mField["FieldObj"])
+
 	Else
 		$oCursor = $mField["FieldObj"].Anchor.Text.createTextCursorByRange($mField["EnumFieldObj"].Anchor())
 		If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
