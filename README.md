@@ -46,7 +46,7 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
   - *“WriterDemo.au3”* by @mLipok. [WriterDemo](https://www.autoitscript.com/forum/topic/204665-libreopenoffice-writer/?do=findComment&comment=1471711)
   - *Printers Management UDF* by @jguinch. [Printers Management UDF](https://www.autoitscript.com/forum/topic/155485-printers-management-udf/)
   - *Word* UDF supplied with AutoIt by @water.
-  - Thanks to Andrew Pitonyak for his invaluable book on writing Open Office/ Libre Office Macros, and his Macro collection document.
+- Thanks to Andrew Pitonyak for his invaluable book on writing Open Office/ Libre Office Macros, and his Macro collection document.
   - [OpenOffice.org Macros Explained — OOME Third Edition](https://www.pitonyak.org/OOME_3_0.pdf)
   - [OpenOffice.org Macros Explained — OOME Fourth Edition](https://www.pitonyak.org/OOME_4_1.odt)
   - [Useful Macro Information For OpenOffice.org](https://www.pitonyak.org/AndrewMacro.pdf)
