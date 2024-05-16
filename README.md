@@ -52,7 +52,7 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
   - [Useful Macro Information For OpenOffice.org](https://www.pitonyak.org/AndrewMacro.pdf)
   - Andrew Pitonyak's website: <https://www.pitonyak.org/oo.php>
 - Thanks to the maintainers
-  - Thanks to [@mLipok](https://github.com/mLipok) for hosting this project on his GitHub. As well as his tireless energy during long hours of development, code review and clean-up.
+  - Thanks to [@mLipok](https://github.com/mLipok) for hosting this project on his GitHub. As well as his tireless energy during the long hours of development, code review and clean-up.
   - Thanks to [@donnyh13](https://github.com/donnyh13) for the initial project creation and development.
   - **Big thanks** to all the hard-working contributors.
 
