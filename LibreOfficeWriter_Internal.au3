@@ -2250,7 +2250,7 @@ EndFunc   ;==>__LOWriter_GetShapeName
 ;                  @Error 1 @Extended 2 Return 0 = $tGradient not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sGradientName not a string.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.drawing.GradientTable" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
@@ -2259,7 +2259,7 @@ EndFunc   ;==>__LOWriter_GetShapeName
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If The Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one.
-;                  If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed.
+;                  If there are no names that have been already created, then I need to create and apply one before the gradient will be displayed.
 ;                  Else if a preset Gradient is called, I need to create its name before it can be used.
 ; Related .......:
 ; Link ..........:
