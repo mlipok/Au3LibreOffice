@@ -169,8 +169,8 @@ EndFunc   ;==>_LOWriter_FrameAreaColor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
