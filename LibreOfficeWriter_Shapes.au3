@@ -696,7 +696,7 @@ EndFunc   ;==>_LOWriter_ShapeInsert
 ;                  @Error 1 @Extended 7 Return 0 = $vEndStyle not a String, and not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $vSEndStyle is an Integer, but less than 0, or greater than 32. See constants $LOW_SHAPE_LINE_ARROW_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $iEndWidth not an Integer, less than 0, or greater than 5004.
-;                  @Error 1 @Extended 8 Return 0 = $bEndCenter not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $bEndCenter not a Boolean.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to convert Constant to Arrowhead name.
 ;                  --Property Setting Errors--
