@@ -168,17 +168,18 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Select
 		Case IsInt($iHex) ; Long TO Hex
-			$nRed = Int(Mod(($iHex / 65536), 256))
-			$nGreen = Int(Mod(($iHex / 256), 256))
-			$nBlue = Int(Mod($iHex, 256))
+			$nRed = BitAND(BitShift($iHex, 16), 0xff)
+			$nGreen = BitAND(BitShift($iHex, 8), 0xff)
+			$nBlue = BitAND($iHex, 0xff)
 
 			$dHex = Hex($nRed, 2) & Hex($nGreen, 2) & Hex($nBlue, 2)
 			Return SetError($__LO_STATUS_SUCCESS, 1, $dHex)
 
 		Case IsInt($iRGB) ; Long to RGB
-			$nRed = Int(Mod(($iRGB / 65536), 256))
-			$nGreen = Int(Mod(($iRGB / 256), 256))
-			$nBlue = Int(Mod($iRGB, 256))
+			$nRed = BitAND(BitShift($iRGB, 16), 0xff)
+			$nGreen = BitAND(BitShift($iRGB, 8), 0xff)
+			$nBlue = BitAND($iRGB, 0xff)
+
 			ReDim $aiReturn[3]
 			$aiReturn[0] = $nRed
 			$aiReturn[1] = $nGreen
