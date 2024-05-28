@@ -41,6 +41,9 @@
 ; __LOCalc_CellUnderLine
 ; __LOCalc_CharPosition
 ; __LOCalc_CharSpacing
+; __LOCalc_CommentArrowStyleName
+; __LOCalc_CommentGetObjByCell
+; __LOCalc_CommentLineStyleName
 ; __LOCalc_CreateStruct
 ; __LOCalc_FieldGetObj
 ; __LOCalc_FieldTypeServices
@@ -57,6 +60,8 @@
 ; __LOCalc_SetPropertyValue
 ; __LOCalc_SheetCursorMove
 ; __LOCalc_TextCursorMove
+; __LOCalc_TransparencyGradientConvert
+; __LOCalc_TransparencyGradientNameInsert
 ; __LOCalc_UnitConvert
 ; __LOCalc_VarsAreDefault
 ; __LOCalc_VarsAreNull
@@ -1635,6 +1640,231 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 EndFunc   ;==>__LOCalc_CharSpacing
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CommentArrowStyleName
+; Description ...: Convert a Arrow head Constant to the corresponding name or reverse.
+; Syntax ........: __LOCalc_CommentArrowStyleName([$iArrowStyle = Null[, $sArrowStyle = Null]])
+; Parameters ....: $iArrowStyle         - [optional] an integer value (0-32). Default is Null. The Arrow Style Constant to convert to its corresponding name. See $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $sArrowStyle         - [optional] a string value. Default is Null. The Arrow Style Name to convert to the corresponding constant if found.
+; Return values .: Success: String or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iArrowStyle not set to Null, not an Integer, less than 0, or greater than Arrow type constants. See $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 2 Return 0 = $sArrowStyle not a String and not set to Null.
+;                  @Error 1 @Extended 3 Return 0 = Both $iArrowStyle and $sArrowStyle set to Null.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Constant called in $iArrowStyle was successfully converted to its corresponding Arrow Type Name.
+;                  @Error 0 @Extended 1 Return Integer = Success. Arrow Type Name called in $sArrowStyle was successfully converted to its corresponding Constant value.
+;                  @Error 0 @Extended 2 Return String = Success. Arrow Type Name called in $sArrowStyle was not matched to an existing Constant value, returning called name. Possibly a custom value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CommentArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
+	Local $asArrowStyles[33]
+
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_NONE] = ""
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_ARROW_SHORT] = "Arrow short"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CONCAVE_SHORT] = "Concave short"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_ARROW] = "Arrow"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_TRIANGLE] = "Triangle"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CONCAVE] = "Concave"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_ARROW_LARGE] = "Arrow large"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CIRCLE] = "Circle"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE] = "Square"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_45] = "Square 45"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DIAMOND] = "Diamond"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_HALF_CIRCLE] = "Half Circle"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSIONAL_LINES] = "Dimension Lines"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSIONAL_LINE_ARROW] = "Dimension Line Arrow"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSION_LINE] = "Dimension Line"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_LINE_SHORT] = "Line short"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_LINE] = "Line"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_TRIANGLE_UNFILLED] = "Triangle unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DIAMOND_UNFILLED] = "Diamond unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CIRCLE_UNFILLED] = "Circle unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_45_UNFILLED] = "Square 45 unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_UNFILLED] = "Square unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_HALF_CIRCLE_UNFILLED] = "Half Circle unfilled"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_HALF_ARROW_LEFT] = "Half Arrow left"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_HALF_ARROW_RIGHT] = "Half Arrow right"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_REVERSED_ARROW] = "Reversed Arrow"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_DOUBLE_ARROW] = "Double Arrow"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_ONE] = "CF One"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_ONLY_ONE] = "CF Only One"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_MANY] = "CF Many"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_MANY_ONE] = "CF Many One"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_ONE] = "CF Zero One"
+	$asArrowStyles[$LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_MANY] = "CF Zero Many"
+
+	If ($iArrowStyle <> Null) Then
+		If Not __LOCalc_IntIsBetween($iArrowStyle, 0, UBound($asArrowStyles) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 0, $asArrowStyles[$iArrowStyle]) ; Return the requested Arrow Style name.
+
+	ElseIf ($sArrowStyle <> Null) Then
+		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+
+		For $i = 0 To UBound($asArrowStyles) - 1
+
+			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
+
+			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, 2, $sArrowStyle) ; If no matches, just return the name, as it could be a custom value.
+
+	Else
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
+
+	EndIf
+EndFunc   ;==>__LOCalc_CommentArrowStyleName
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CommentGetObjByCell
+; Description ...: Internal function for getting a Comment Object by Cell.
+; Syntax ........: __LOCalc_CommentGetObjByCell(ByRef $oCell[, $bReturnIndex = False])
+; Parameters ....: $oCell               - [in/out] an object. A Cell object returned by a previous _LOCalc_RangeGetCellByName, or _LOCalc_RangeGetCellByPosition function.
+;                  $bReturnIndex        - [optional] a boolean value. Default is False. If True, the Comment's index number is returned instead of its Object.
+; Return values .: Success: Integer or Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCell not a Cell Object.
+;                  @Error 1 @Extended 3 Return 0 = $bReturnIndex not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Annotations Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Address.
+;                  @Error 3 @Extended 3 Return 0 = Failed to find comment for specified cell.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. $bReturnIndex set to True, returning Comment's Index number.
+;                  @Error 0 @Extended ? Return Object = Success. Returning Comment's Object. @Extended set to Comment's Index number.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CommentGetObjByCell(ByRef $oCell, $bReturnIndex = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tAddress
+	Local $oAnnotations, $oAnnotation
+
+	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCell.SupportsService("com.sun.star.sheet.SheetCell") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bReturnIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oAnnotations = $oCell.Spreadsheet.Annotations()
+	If Not IsObj($oAnnotations) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$tAddress = $oCell.CellAddress()
+	If Not IsObj($tAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	For $i = 0 To $oAnnotations.Count() - 1
+		$oAnnotation = $oAnnotations.getByIndex($i)
+
+		If __LOCalc_CellAddressIsSame($tAddress, $oAnnotation.Position()) Then
+			If $bReturnIndex Then Return SetError($__LO_STATUS_SUCCESS, 1, $i)
+			Return SetError($__LO_STATUS_SUCCESS, $i, $oAnnotation)
+		EndIf
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+EndFunc   ;==>__LOCalc_CommentGetObjByCell
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CommentLineStyleName
+; Description ...: Convert a Line Style Constant to the corresponding name or reverse.
+; Syntax ........: __LOCalc_CommentLineStyleName([$iLineStyle = Null[, $sLineStyle = Null]])
+; Parameters ....: $iLineStyle          - [optional] an integer value. Default is Null. The Line Style Constant to convert to its corresponding name. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $sLineStyle          - [optional] a string value. Default is Null. The Line Style Name to convert to the corresponding constant if found.
+; Return values .: Success: String or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iLineStyle not set to Null, not an Integer, less than 0, or greater than Line Style constants. See $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 2 Return 0 = $sLineStyle not a String and not set to Null.
+;                  @Error 1 @Extended 3 Return 0 = Both $iLineStyle and $sLineStyle set to Null.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Constant called in $iLineStyle was successfully converted to its corresponding Line Style Name.
+;                  @Error 0 @Extended 1 Return Integer = Success. Line Style Name called in $sLineStyle was successfully converted to its corresponding Constant value.
+;                  @Error 0 @Extended 2 Return String = Success. Line Style Name called in $sLineStyle was not matched to an existing Constant value, returning called name. Possibly a custom value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CommentLineStyleName($iLineStyle = Null, $sLineStyle = Null)
+	Local $asLineStyles[32]
+
+	; $LOC_COMMENT_LINE_STYLE_NONE, $LOC_COMMENT_LINE_STYLE_CONTINUOUS, don't have a name, so to keep things symmetrical I created my own, but those two won't be used.
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_NONE] = "NONE"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_CONTINUOUS] = "CONTINUOUS"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOT] = "Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOT_ROUNDED] = "Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DOT] = "Long Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DOT_ROUNDED] = "Long Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH] = "Dash"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH_ROUNDED] = "Dash (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DASH] = "Long Dash"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DASH_ROUNDED] = "Long Dash (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH] = "Double Dash"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_ROUNDED] = "Double Dash (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH_DOT] = "Dash Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH_DOT_ROUNDED] = "Dash Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DASH_DOT] = "Long Dash Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LONG_DASH_DOT_ROUNDED] = "Long Dash Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT] = "Double Dash Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_ROUNDED] = "Double Dash Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH_DOT_DOT] = "Dash Dot Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASH_DOT_DOT_ROUNDED] = "Dash Dot Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_DOT] = "Double Dash Dot Dot"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_DOT_ROUNDED] = "Double Dash Dot Dot (Rounded)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_ULTRAFINE_DOTTED] = "Ultrafine Dotted (var)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_FINE_DOTTED] = "Fine Dotted"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_ULTRAFINE_DASHED] = "Ultrafine Dashed"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_FINE_DASHED] = "Fine Dashed"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_DASHED] = "Dashed (var)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LINE_STYLE_9] = "Line Style 9"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_3_DASHES_3_DOTS] = "3 Dashes 3 Dots (var)"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_ULTRAFINE_2_DOTS_3_DASHES] = "Ultrafine 2 Dots 3 Dashes"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_2_DOTS_1_DASH] = "2 Dots 1 Dash"
+	$asLineStyles[$LOC_COMMENT_LINE_STYLE_LINE_WITH_FINE_DOTS] = "Line with Fine Dots"
+
+	If ($iLineStyle <> Null) Then
+		If Not __LOCalc_IntIsBetween($iLineStyle, 0, UBound($asLineStyles) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 0, $asLineStyles[$iLineStyle]) ; Return the requested Line Style name.
+
+	ElseIf ($sLineStyle <> Null) Then
+		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+
+		For $i = 0 To UBound($asLineStyles) - 1
+
+			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
+
+			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		Return SetError($__LO_STATUS_SUCCESS, 2, $sLineStyle) ; If no matches, just return the name, as it could be a custom value.
+
+	Else
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
+
+	EndIf
+EndFunc   ;==>__LOCalc_CommentLineStyleName
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_CreateStruct
 ; Description ...: Creates a Struct.
 ; Syntax ........: __LOCalc_CreateStruct($sStructName)
@@ -2738,6 +2968,108 @@ Func __LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False)
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
 EndFunc   ;==>__LOCalc_TextCursorMove
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_TransparencyGradientConvert
+; Description ...: Convert a Transparency Gradient percentage value to a color value or from a color value to a percentage.
+; Syntax ........: __LOCalc_TransparencyGradientConvert([$iPercentToLong = Null[, $iLongToPercent = Null]])
+; Parameters ....: $iPercentToLong      - [optional] an integer value. Default is Null. The percentage to convert to Long color integer value.
+;                  $iLongToPercent      - [optional] an integer value. Default is Null. The Long color integer value to convert to percentage.
+; Return values .: Success: Integer.
+;                  Failure: Null and sets the @Error and @Extended flags to non-zero.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return Null = No values called in parameters.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. The requested Integer value converted from percentage to Long color format.
+;                  @Error 0 @Extended 1 Return Integer = Success. The requested Integer value from Long color format to percentage.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPercent = Null)
+	Local $iReturn
+
+	If ($iPercentToLong <> Null) Then
+		$iReturn = (255 * ($iPercentToLong / 100)) ; Change percentage to decimal and times by White color (255 RGB)
+		$iReturn = _LOCalc_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
+		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
+	ElseIf ($iLongToPercent <> Null) Then
+		$iReturn = _LOCalc_ConvertColorFromLong(Null, $iLongToPercent)
+		$iReturn = Int((($iReturn[0] / 255) * 100) + .50) ; All return color values will be the same, so use only one. Add . 50 to round up if applicable.
+		Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
+	Else
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
+	EndIf
+
+EndFunc   ;==>__LOCalc_TransparencyGradientConvert
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_TransparencyGradientNameInsert
+; Description ...: Create and insert a new Transparency Gradient name.
+; Syntax ........: __LOCalc_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $tTGradient          - a dll struct value. A Gradient Structure to copy settings from.
+; Return values .: Success: String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $tTGradient not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. A new transparency Gradient name was created. Returning the new name as a string.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: If The Transparency Gradient name is blank, I need to create a new name and apply it. I think I could re-use an old one without problems, but I'm not sure, so to be safe, I will create a new one.
+;                  If there are no names that have been already created, then I need to create and apply one before the transparency gradient will be displayed.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tNewTGradient
+	Local $oTGradTable
+	Local $iCount = 1
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($tTGradient) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oTGradTable = $oDoc.createInstance("com.sun.star.drawing.TransparencyGradientTable")
+	If Not IsObj($oTGradTable) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	While $oTGradTable.hasByName("Transparency " & $iCount)
+		$iCount += 1
+		Sleep((IsInt($iCount / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
+	WEnd
+
+	$tNewTGradient = __LOCalc_CreateStruct("com.sun.star.awt.Gradient")
+	If Not IsObj($tNewTGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
+	With $tNewTGradient
+		.Style = $tTGradient.Style()
+		.XOffset = $tTGradient.XOffset()
+		.YOffset = $tTGradient.YOffset()
+		.Angle = $tTGradient.Angle()
+		.Border = $tTGradient.Border()
+		.StartColor = $tTGradient.StartColor()
+		.EndColor = $tTGradient.EndColor()
+	EndWith
+
+	$oTGradTable.insertByName("Transparency " & $iCount, $tNewTGradient)
+	If Not ($oTGradTable.hasByName("Transparency " & $iCount)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, "Transparency " & $iCount)
+EndFunc   ;==>__LOCalc_TransparencyGradientNameInsert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_UnitConvert
