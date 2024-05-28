@@ -64,6 +64,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeCalc_Constants.au3
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
+	- LibreOfficeCalc_Field.au3
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
@@ -158,6 +159,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeRowVisible
 	- _LOCalc_RangeSort
 	- _LOCalc_RangeSortAlt
+	- _LOCalc_RangeValidation
+	- _LOCalc_RangeValidationSettings
 - Cell Style Formatting Functions and Examples
 	- _LOCalc_CellStyleBackColor
 	- _LOCalc_CellStyleBorderColor
@@ -202,6 +205,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TextCursorUnderline
 - Document Functions and Examples
 	- _LOCalc_DocClose
+	- _LOCalc_DocColumnsRowsAreFrozen
+	- _LOCalc_DocColumnsRowsFreeze
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
 	- _LOCalc_DocEnumPrinters
@@ -226,7 +231,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocRedoIsPossible
 	- _LOCalc_DocSave
 	- _LOCalc_DocSaveAs
+	- _LOCalc_DocSelectionCopy
 	- _LOCalc_DocSelectionGet
+	- _LOCalc_DocSelectionPaste
 	- _LOCalc_DocSelectionSet
 	- _LOCalc_DocSelectionSetMulti
 	- _LOCalc_DocToFront
@@ -238,8 +245,28 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocUndoGetAllActionTitles
 	- _LOCalc_DocUndoIsPossible
 	- _LOCalc_DocUndoReset
+	- _LOCalc_DocViewDisplaySettings
+	- _LOCalc_DocViewWindowSettings
 	- _LOCalc_DocVisible
+	- _LOCalc_DocWindowFirstColumn
+	- _LOCalc_DocWindowFirstRow
+	- _LOCalc_DocWindowIsSplit
+	- _LOCalc_DocWindowSplit
+	- _LOCalc_DocWindowVisibleRange
 	- _LOCalc_DocZoom
+- Field Functions
+	- _LOCalc_FieldCurrentDisplayGet
+	- _LOCalc_FieldDateTimeInsert
+	- _LOCalc_FieldDelete
+	- _LOCalc_FieldFileNameInsert
+	- _LOCalc_FieldGetAnchor
+	- _LOCalc_FieldHyperlinkInsert
+	- _LOCalc_FieldHyperlinkModify
+	- _LOCalc_FieldPageCountInsert
+	- _LOCalc_FieldPageNumberInsert
+	- _LOCalc_FieldsGetList
+	- _LOCalc_FieldSheetNameInsert
+	- _LOCalc_FieldTitleInsert
 - Font Query Functions
 	- _LOCalc_FontExists
 	- _LOCalc_FontsList
@@ -269,6 +296,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Internal Functions
 	- __LOCalc_AddTo1DArray
 	- __LOCalc_ArrayFill
+	- __LOCalc_CellAddressIsSame
 	- __LOCalc_CellBackColor
 	- __LOCalc_CellBorder
 	- __LOCalc_CellBorderPadding
@@ -288,6 +316,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
 	- __LOCalc_CreateStruct
+	- __LOCalc_FieldGetObj
+	- __LOCalc_FieldTypeServices
 	- __LOCalc_FilterNameGet
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
@@ -348,6 +378,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetAdd
 	- _LOCalc_SheetCopy
 	- _LOCalc_SheetCreateCursor
+	- _LOCalc_SheetDetectiveClear
+	- _LOCalc_SheetDetectiveDependent
+	- _LOCalc_SheetDetectiveInvalidData
+	- _LOCalc_SheetDetectivePrecedent
+	- _LOCalc_SheetDetectiveTraceError
 	- _LOCalc_SheetGetActive
 	- _LOCalc_SheetGetObjByName
 	- _LOCalc_SheetGetObjByPosition
@@ -380,12 +415,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_COLOR_*
 	- $LOC_COMPUTE_*
 	- $LOC_CURTYPE_*
+	- $LOC_DUPLEX_*
+	- $LOC_FIELD_TYPE_*
 	- $LOC_FILL_DATE_MODE_*
 	- $LOC_FILL_DIR_*
 	- $LOC_FILL_MODE_*
-	- $LOC_FILTER_CONNECTION_*
+	- $LOC_FILTER_CONDITION_*
 	- $LOC_FILTER_OPERATOR_*
-	- $LOC_FILTER_ORIENTATION_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
 	- $LOC_NAMED_RANGE_OPT_*
@@ -406,6 +442,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_TEXTCUR_*
 	- $LOC_TXT_DIR_*
 	- $LOC_UNDERLINE_*
+	- $LOC_VALIDATION_COND_*
+	- $LOC_VALIDATION_ERROR_*
+	- $LOC_VALIDATION_LIST_*
+	- $LOC_VALIDATION_TYPE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.

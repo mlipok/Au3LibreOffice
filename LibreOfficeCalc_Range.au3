@@ -85,6 +85,8 @@
 ; _LOCalc_RangeRowVisible
 ; _LOCalc_RangeSort
 ; _LOCalc_RangeSortAlt
+; _LOCalc_RangeValidation
+; _LOCalc_RangeValidationSettings
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -3801,3 +3803,245 @@ Func _LOCalc_RangeSortAlt(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortC
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeSortAlt
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeValidation
+; Description ...: Set or Retrieve Validation settings for a Range.
+; Syntax ........: _LOCalc_RangeValidation(ByRef $oRange[, $iType = Null[, $iCondition = Null[, $sValue1 = Null[, $sValue2 = Null[, $oBaseCell = Null[, $bIgnoreBlanks = Null[, $iShowList = Null]]]]]]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iType               - [optional] an integer value. Default is Null. The Validity check type. See Constants $LOC_VALIDATION_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iCondition          - [optional] an integer value. Default is Null. The Condition to check the cell data with. See Constants $LOC_VALIDATION_COND_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $sValue1             - [optional] a string value. Default is Null. If Condition is such that it requires a value, enter it here as a string.
+;                  $sValue2             - [optional] a string value. Default is Null. If Condition is such that it requires a second value, enter it here as a string.
+;                  $oBaseCell           - [optional] an object. Default is Null. The Cell that is used as a base for relative references in the formulas.
+;                  $bIgnoreBlanks       - [optional] a boolean value. Default is Null. If True, empty cells are allowed, and not marked as invalid.
+;                  $iShowList           - [optional] an integer value. Default is Null. If $iType is set to $LOC_VALIDATION_TYPE_LIST, $iShowList determines the visibility of the list. See Constants $LOC_VALIDATION_LIST_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 0 or greater than 7. See Constants $LOC_VALIDATION_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iCondition not an Integer, less than 0 or greater than 9. See Constants $LOC_VALIDATION_COND_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $sValue1 not a String.
+;                  @Error 1 @Extended 5 Return 0 = $sValue2 not a String.
+;                  @Error 1 @Extended 6 Return 0 = $oBaseCell not an Object.
+;                  @Error 1 @Extended 7 Return 0 = $oBaseCell not a single cell Object.
+;                  @Error 1 @Extended 8 Return 0 = $bIgnoreBlanks not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $iShowList not an Integer, less than 0 or greater than 2. See Constants $LOC_VALIDATION_LIST_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Validation Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Address.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Cell Object for referenced Cell as base cell.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iType
+;                  |                               2 = Error setting $iCondition
+;                  |                               4 = Error setting $sValue1
+;                  |                               8 = Error setting $sValue2
+;                  |                               16 = Error setting $oBaseCell
+;                  |                               32 = Error setting $bIgnoreBlanks
+;                  |                               64 = Error setting $iShowList
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, $sValue1 is set to a single string of words that constitute the list, each word needs to be surrounded by quotations, and separated by semicolons, such as: "abc";"def";"ghi"
+;                  When $iType is set to $LOC_VALIDATION_TYPE_LIST, set $iCondition to $LOC_VALIDATION_COND_EQUAL.
+;                  The return for $oBaseCell will always be a cell object, whether or not it is currently set or not. If it has never been set before, it will generally be cell A1.
+; Related .......: _LOCalc_RangeValidationSettings
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeValidation(ByRef $oRange, $iType = Null, $iCondition = Null, $sValue1 = Null, $sValue2 = Null, $oBaseCell = Null, $bIgnoreBlanks = Null, $iShowList = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avValid[7]
+	Local $oValidation, $oCell
+	Local $tCellAddress
+	Local $iError = 0
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oValidation = $oRange.Validation()
+	If Not IsObj($oValidation) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iType, $iCondition, $sValue1, $sValue2, $oBaseCell, $bIgnoreBlanks, $iShowList) Then
+		$tCellAddress = $oValidation.getSourcePosition()
+		If Not IsObj($tCellAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		$oCell = $oRange.Spreadsheet.getCellByPosition($tCellAddress.Column(), $tCellAddress.Row())
+		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		__LOCalc_ArrayFill($avValid, $oValidation.Type(), $oValidation.getOperator(), $oValidation.getFormula1(), $oValidation.getFormula2(), $oCell, _
+				$oValidation.IgnoreBlankCells(), $oValidation.ShowList())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
+	EndIf
+
+	If ($iType <> Null) Then
+		If Not __LOCalc_IntIsBetween($iType, $LOC_VALIDATION_TYPE_ANY, $LOC_VALIDATION_TYPE_CUSTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oValidation.Type = $iType
+	EndIf
+
+	If ($iCondition <> Null) Then
+		If Not __LOCalc_IntIsBetween($iCondition, $LOC_VALIDATION_COND_NONE, $LOC_VALIDATION_COND_FORMULA) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oValidation.setOperator($iCondition)
+	EndIf
+
+	If ($sValue1 <> Null) Then
+		If Not IsString($sValue1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oValidation.setFormula1($sValue1)
+	EndIf
+
+	If ($sValue2 <> Null) Then
+		If Not IsString($sValue2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oValidation.setFormula2($sValue2)
+	EndIf
+
+	If ($oBaseCell <> Null) Then
+		If Not IsObj($oBaseCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not ($oBaseCell.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; Only single cells supported.
+		$tCellAddress = $oBaseCell.CellAddress()
+		If Not IsObj($tCellAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		$oValidation.setSourcePosition($tCellAddress)
+	EndIf
+
+	If ($bIgnoreBlanks <> Null) Then
+		If Not IsBool($bIgnoreBlanks) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oValidation.IgnoreBlankCells = $bIgnoreBlanks
+	EndIf
+
+	If ($iShowList <> Null) Then
+		If Not __LOCalc_IntIsBetween($iShowList, $LOC_VALIDATION_LIST_INVISIBLE, $LOC_VALIDATION_LIST_SORT_ASCENDING) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oValidation.ShowList = $iShowList
+	EndIf
+
+	$oRange.Validation = $oValidation
+
+	$iError = ($iType = Null) ? ($iError) : ($oRange.Validation.Type() = $iType) ? ($iError) : (BitOR($iError, 1))
+	$iError = ($iCondition = Null) ? ($iError) : ($oRange.Validation.getOperator() = $iCondition) ? ($iError) : (BitOR($iError, 2))
+	$iError = ($sValue1 = Null) ? ($iError) : ($oRange.Validation.getFormula1() = $sValue1) ? ($iError) : (BitOR($iError, 4))
+	$iError = ($sValue2 = Null) ? ($iError) : ($oRange.Validation.getFormula2() = $sValue2) ? ($iError) : (BitOR($iError, 8))
+	$iError = ($oBaseCell = Null) ? ($iError) : (__LOCalc_CellAddressIsSame($oRange.Validation.getSourcePosition(), $tCellAddress)) ? ($iError) : (BitOR($iError, 16))
+	$iError = ($bIgnoreBlanks = Null) ? ($iError) : ($oRange.Validation.IgnoreBlankCells() = $bIgnoreBlanks) ? ($iError) : (BitOR($iError, 32))
+	$iError = ($iShowList = Null) ? ($iError) : ($oRange.Validation.ShowList() = $iShowList) ? ($iError) : (BitOR($iError, 64))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeValidation
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeValidationSettings
+; Description ...: Set or Retrieve Range Validation settings.
+; Syntax ........: _LOCalc_RangeValidationSettings(ByRef $oRange[, $bInputMsg = Null[, $sInputTitle = Null[, $sInputMsg = Null[, $bErrorMsg = Null[, $iErrorStyle = Null[, $sErrorTitle = Null[, $sErrorMsg = Null]]]]]]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bInputMsg           - [optional] a boolean value. Default is Null. If True, a input message is displayed when the cell is clicked.
+;                  $sInputTitle         - [optional] a string value. Default is Null. If $bInputMsg is True, the Title of the Input tip to display.
+;                  $sInputMsg           - [optional] a string value. Default is Null. If $bInputMsg is True, the Message of the Input tip to display.
+;                  $bErrorMsg           - [optional] a boolean value. Default is Null. If True, a error message is displayed when invalid data is entered into a cell.
+;                  $iErrorStyle         - [optional] an integer value. Default is Null. The Error alert style. See Constants $LOC_VALIDATION_ERROR_ALERT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $sErrorTitle         - [optional] a string value. Default is Null. If $bErrorMsg is True, the Title of the error alert to display.
+;                  $sErrorMsg           - [optional] a string value. Default is Null. If $bErrorMsg is True, the Message of the error alert to display.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bInputMsg not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $sInputTitle not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sInputMsg not a String.
+;                  @Error 1 @Extended 5 Return 0 = $bErrorMsg not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iErrorStyle not an Integer, less than 0 or greater than 3. See Constants $LOC_VALIDATION_ERROR_ALERT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $sErrorTitle not a String.
+;                  @Error 1 @Extended 8 Return 0 = $sErrorMsg not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Validation Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bInputMsg
+;                  |                               2 = Error setting $sInputTitle
+;                  |                               4 = Error setting $sInputMsg
+;                  |                               8 = Error setting $bErrorMsg
+;                  |                               16 = Error setting $iErrorStyle
+;                  |                               32 = Error setting $sErrorTitle
+;                  |                               64 = Error setting $sErrorMsg
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  When $iErrorStyle is set to $LOC_VALIDATION_ERROR_ALERT_MACRO, $sErrorTitle is set to the macro address to execute, the macro address will look similar to the following, filling in the data between the"<>", including the last parameter for location, which will be either application, or document: "vnd.sun.star.script:<LibraryName>.<ModuleName>.<MacroName>?language=Basic&location=<application|document>"
+;                  At this time I have no functions for locating or creating macros. They may be added later.
+; Related .......: _LOCalc_RangeValidation
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeValidationSettings(ByRef $oRange, $bInputMsg = Null, $sInputTitle = Null, $sInputMsg = Null, $bErrorMsg = Null, $iErrorStyle = Null, $sErrorTitle = Null, $sErrorMsg = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avValid[7]
+	Local $oValidation
+	Local $iError = 0
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oValidation = $oRange.Validation()
+	If Not IsObj($oValidation) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($bInputMsg, $sInputTitle, $sInputMsg, $bErrorMsg, $iErrorStyle, $sErrorTitle, $sErrorMsg) Then
+
+		__LOCalc_ArrayFill($avValid, $oValidation.ShowInputMessage(), $oValidation.InputTitle(), $oValidation.InputMessage(), $oValidation.ShowErrorMessage(), _
+				$oValidation.ErrorAlertStyle(), $oValidation.ErrorTitle(), $oValidation.ErrorMessage())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
+	EndIf
+
+	If ($bInputMsg <> Null) Then
+		If Not IsBool($bInputMsg) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oValidation.ShowInputMessage = $bInputMsg
+	EndIf
+
+	If ($sInputTitle <> Null) Then
+		If Not IsString($sInputTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oValidation.InputTitle = $sInputTitle
+	EndIf
+
+	If ($sInputMsg <> Null) Then
+		If Not IsString($sInputMsg) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oValidation.InputMessage = $sInputMsg
+	EndIf
+
+	If ($bErrorMsg <> Null) Then
+		If Not IsBool($bErrorMsg) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oValidation.ShowErrorMessage = $bErrorMsg
+	EndIf
+
+	If ($iErrorStyle <> Null) Then
+		If Not __LOCalc_IntIsBetween($iErrorStyle, $LOC_VALIDATION_ERROR_ALERT_STOP, $LOC_VALIDATION_ERROR_ALERT_MACRO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oValidation.ErrorAlertStyle = $iErrorStyle
+	EndIf
+
+	If ($sErrorTitle <> Null) Then
+		If Not IsString($sErrorTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oValidation.ErrorTitle = $sErrorTitle
+	EndIf
+
+	If ($sErrorMsg <> Null) Then
+		If Not IsString($sErrorMsg) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oValidation.ErrorMessage = $sErrorMsg
+	EndIf
+
+	$oRange.Validation = $oValidation
+
+	$iError = ($bInputMsg = Null) ? ($iError) : ($oRange.Validation.ShowInputMessage() = $bInputMsg) ? ($iError) : (BitOR($iError, 1))
+	$iError = ($sInputTitle = Null) ? ($iError) : ($oRange.Validation.InputTitle() = $sInputTitle) ? ($iError) : (BitOR($iError, 2))
+	$iError = ($sInputMsg = Null) ? ($iError) : ($oRange.Validation.InputMessage() = $sInputMsg) ? ($iError) : (BitOR($iError, 4))
+	$iError = ($bErrorMsg = Null) ? ($iError) : ($oRange.Validation.ShowErrorMessage() = $bErrorMsg) ? ($iError) : (BitOR($iError, 8))
+	$iError = ($iErrorStyle = Null) ? ($iError) : ($oRange.Validation.ErrorAlertStyle() = $iErrorStyle) ? ($iError) : (BitOR($iError, 16))
+	$iError = ($sErrorTitle = Null) ? ($iError) : ($oRange.Validation.ErrorTitle() = $sErrorTitle) ? ($iError) : (BitOR($iError, 32))
+	$iError = ($sErrorMsg = Null) ? ($iError) : ($oRange.Validation.ErrorMessage() = $sErrorMsg) ? ($iError) : (BitOR($iError, 64))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangeValidationSettings
