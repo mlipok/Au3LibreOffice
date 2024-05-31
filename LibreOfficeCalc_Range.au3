@@ -1925,7 +1925,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ; Syntax ........: _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName[, $iOptions = $LOC_NAMED_RANGE_OPT_NONE[, $oRefCell = Null]])
 ; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ;                  $vRange              - a variant value. See remarks. May be a String or a Cell Range object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $sName               - a string value. The unique name of the Named Range to create. Must start with a letter, and ONLY contain Letters, Numbers and Underscores, no Spaces.
+;                  $sName               - a string value. The unique name of the Named Range to create. Must start with a letter or an Underscore, and ONLY contain Letters, Numbers and Underscores, no Spaces.
 ;                  $iOptions            - [optional] an integer value (0-15). Default is $LOC_NAMED_RANGE_OPT_NONE. Any options to set for the Named Range, can be BitOR'd together. See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $oRefCell            - [optional] an object. Default is Null. The reference cell for the Range or Formula set in $vRange.
 ; Return values .: Success: Object
