@@ -2298,7 +2298,7 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oNamedRange         - [in/out] an object. A Named Range Object returned by a previous _LOCalc_RangeNamedGetObjByName, or _LOCalc_RangeNamedAdd function.
 ;                  $vRange              - [optional] a variant value. Default is Null. See remarks. May be a String or a Cell Range object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $sName               - [optional] a string value. Default is Null. The unique name of the Named Range to create. Must start with a letter, and ONLY contain Letters, Numbers and Underscores, no Spaces.
+;                  $sName               - [optional] a string value. Default is Null. The unique name of the Named Range to create. Must start with a letter or Underscore, and ONLY contain Letters, Numbers and Underscores, no Spaces.
 ;                  $iOptions            - [optional] an integer value (0-15). Default is Null. Any options to set for the Named Range, can be BitOR'd together. See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $oRefCell            - [optional] an object. Default is Null. The reference cell for the Range or Formula set in $vRange.
 ; Return values .: Success: 1 or Array
@@ -2388,7 +2388,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$sName = StringStripWS($sName, ($__LOC_STR_STRIPLEADING + $__LOC_STR_STRIPTRAILING))
-		If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z_]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oObj = __LOCalc_NamedRangeGetScopeObj($oDoc, $oNamedRange.Name(), $oNamedRange.TokenIndex(), $oNamedRange.Content())
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
