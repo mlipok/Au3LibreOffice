@@ -41,6 +41,7 @@
 ; __LOCalc_CellUnderLine
 ; __LOCalc_CharPosition
 ; __LOCalc_CharSpacing
+; __LOCalc_CommentAreaShadowModify
 ; __LOCalc_CommentArrowStyleName
 ; __LOCalc_CommentGetObjByCell
 ; __LOCalc_CommentLineStyleName
@@ -1638,6 +1639,146 @@ Func __LOCalc_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOCalc_CharSpacing
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOCalc_CommentAreaShadowModify
+; Description ...: Internal function for setting or retrieving Comment Shadow Location and Distance settings.
+; Syntax ........: __LOCalc_CommentAreaShadowModify($oAnnotationShape[, $iLocation = Null[, $iDistance = Null]])
+; Parameters ....: $oAnnotationShape    - an object. A Annotation Shape Object retrieved from a Comment.
+;                  $iLocation           - [optional] an integer value. Default is Null. The Location of the Shadow, must be one of the Constants, $LOC_COMMENT_SHADOW_* as defined in LibreOfficeCalc_Constants.au3..
+;                  $iDistance           - [optional] an integer value. Default is Null. The distance of the Shadow from the Comment box, set in Micrometers.
+; Return values .: Success: 1 or Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oAnnotationShape not an Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iLocation
+;                  |                               2 = Error setting $iDistance
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the settings.
+;                  @Error 0 @Extended ? Return ? = Success. $iLocation and $iDistance set to Null, returning current Values. Return will be current distance, and @Extended will be the current Location.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOCalc_CommentAreaShadowModify($oAnnotationShape, $iLocation = Null, $iDistance = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn = False, $bModifyLocation = True
+	Local $iError = 1
+
+	If Not IsObj($oAnnotationShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iLocation, $iDistance) Then $bReturn = True
+
+	If ($iLocation = Null) Then ; Determine current location)
+		$bModifyLocation = False
+		$iError = 2
+		Select
+			Case (($oAnnotationShape.ShadowXDistance() < 0) And ($oAnnotationShape.ShadowYDistance() < 0)) ; Top Left.
+				$iLocation = $LOC_COMMENT_ANCHOR_TOP_LEFT
+
+			Case (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() < 0)) ; Top Center
+				$iLocation = $LOC_COMMENT_ANCHOR_TOP_CENTER
+
+			Case (($oAnnotationShape.ShadowXDistance() > 0) And ($oAnnotationShape.ShadowYDistance() < 0)) ; Top Right
+				$iLocation = $LOC_COMMENT_ANCHOR_TOP_RIGHT
+
+			Case (($oAnnotationShape.ShadowXDistance() < 0) And ($oAnnotationShape.ShadowYDistance() = 0)) ; Middle Left
+				$iLocation = $LOC_COMMENT_ANCHOR_MIDDLE_LEFT
+
+			Case (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() = 0)) ; Middle Center
+				$iLocation = $LOC_COMMENT_ANCHOR_MIDDLE_CENTER
+
+			Case (($oAnnotationShape.ShadowXDistance() > 0) And ($oAnnotationShape.ShadowYDistance() = 0)) ; Middle Right
+				$iLocation = $LOC_COMMENT_ANCHOR_MIDDLE_RIGHT
+
+			Case (($oAnnotationShape.ShadowXDistance() < 0) And ($oAnnotationShape.ShadowYDistance() > 0)) ; Bottom Left
+				$iLocation = $LOC_COMMENT_ANCHOR_BOTTOM_LEFT
+
+			Case (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() > 0)) ; Bottom Center
+				$iLocation = $LOC_COMMENT_ANCHOR_BOTTOM_CENTER
+
+			Case (($oAnnotationShape.ShadowXDistance() > 0) And ($oAnnotationShape.ShadowYDistance() > 0)) ; Bottom Right
+				$iLocation = $LOC_COMMENT_ANCHOR_BOTTOM_RIGHT
+		EndSelect
+	EndIf
+
+	If ($iDistance = Null) Then
+		; Retrieve the current Distance setting
+		If ($oAnnotationShape.ShadowXDistance() <> 0) Then
+			$iDistance = $oAnnotationShape.ShadowXDistance()
+
+		ElseIf ($oAnnotationShape.ShadowYDistance() <> 0) Then
+			$iDistance = $oAnnotationShape.ShadowYDistance()
+
+		Else
+			$iDistance = 0
+
+		EndIf
+
+		If $bModifyLocation And ($iDistance = 0) Then $iDistance = 100 ; Set a non 0 value so location can be set.
+
+		; If negative, make it positive for easier processing.
+		$iDistance = ($iDistance < 0) ? ($iDistance * -1) : ($iDistance)
+
+	EndIf
+
+	If $bReturn Then Return SetError($__LO_STATUS_SUCCESS, $iLocation, $iDistance)
+
+	Switch $iLocation
+		Case $LOC_COMMENT_SHADOW_TOP_LEFT
+			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
+			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_TOP_CENTER
+			$oAnnotationShape.ShadowXDistance = 0
+			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+			Return (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_TOP_RIGHT
+			$oAnnotationShape.ShadowXDistance = $iDistance
+			$oAnnotationShape.ShadowYDistance = ($iDistance * -1)
+			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = ($iDistance * -1))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_MIDDLE_LEFT
+			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
+			$oAnnotationShape.ShadowYDistance = 0
+			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = 0)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_MIDDLE_CENTER
+			$oAnnotationShape.ShadowXDistance = ($bModifyLocation) ? (0) : ($iDistance)
+			$oAnnotationShape.ShadowYDistance = ($bModifyLocation) ? (0) : ($iDistance)
+			Return (($oAnnotationShape.ShadowXDistance() = (($bModifyLocation) ? (0) : ($iDistance))) And ($oAnnotationShape.ShadowYDistance() = (($bModifyLocation) ? (0) : ($iDistance)))) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_MIDDLE_RIGHT
+			$oAnnotationShape.ShadowXDistance = $iDistance
+			$oAnnotationShape.ShadowYDistance = 0
+			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = 0)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_BOTTOM_LEFT
+			$oAnnotationShape.ShadowXDistance = ($iDistance * -1)
+			$oAnnotationShape.ShadowYDistance = $iDistance
+			Return (($oAnnotationShape.ShadowXDistance() = ($iDistance * -1)) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_BOTTOM_CENTER
+			$oAnnotationShape.ShadowXDistance = 0
+			$oAnnotationShape.ShadowYDistance = $iDistance
+			Return (($oAnnotationShape.ShadowXDistance() = 0) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+		Case $LOC_COMMENT_SHADOW_BOTTOM_RIGHT
+			$oAnnotationShape.ShadowXDistance = $iDistance
+			$oAnnotationShape.ShadowYDistance = $iDistance
+			Return (($oAnnotationShape.ShadowXDistance() = $iDistance) And ($oAnnotationShape.ShadowYDistance() = $iDistance)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+
+	EndSwitch
+EndFunc   ;==>__LOCalc_CommentAreaShadowModify
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_CommentArrowStyleName

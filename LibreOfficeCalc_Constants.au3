@@ -193,8 +193,8 @@ Global Const _
 ; Comment Connector Line Style
 Global Const _
 		$LOC_COMMENT_CALLOUT_STYLE_STRAIGHT = 0, _              ; The connecting line from the comment to the cell is straight.
-		$LOC_COMMENT_CALLOUT_STYLE_ANGLED = 1, _               ; The connecting line from the comment to the cell is angled.
-		$LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR = 2        ; The connecting line from the comment to the cell is angled and connected.
+		$LOC_COMMENT_CALLOUT_STYLE_ANGLED = 1, _                ; The connecting line from the comment to the cell is angled.
+		$LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR = 2         ; The connecting line from the comment to the cell is angled and connected.
 
 ; Arrowhead Type Constants
 Global Enum _
@@ -280,6 +280,18 @@ Global Enum _
 		$LOC_COMMENT_LINE_STYLE_ULTRAFINE_2_DOTS_3_DASHES, _    ; 29 -- A Ultrafine Line consisting of 2 Dots and 3 Dashes.
 		$LOC_COMMENT_LINE_STYLE_2_DOTS_1_DASH, _                ; 30 -- A Line consisting of 2 Dots and 1 Dash.
 		$LOC_COMMENT_LINE_STYLE_LINE_WITH_FINE_DOTS             ; 31 -- A Line with Fine Dots.
+
+; Comment Shadow Position
+Global Enum _
+		$LOC_COMMENT_SHADOW_TOP_LEFT, _                         ; The comment Shadow is positioned in the Upper-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_TOP_CENTER, _                       ; The comment Shadow is positioned in the Upper-Center of the comment box.
+		$LOC_COMMENT_SHADOW_TOP_RIGHT, _                        ; The comment Shadow is positioned in the Upper-Right corner of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_LEFT, _                      ; The comment Shadow is positioned in the Middle-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_CENTER, _                    ; The comment Shadow is positioned in the Middle-Center of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_RIGHT, _                     ; The comment Shadow is positioned in the Middle-Right of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_LEFT, _                      ; The comment Shadow is positioned in the Lower-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_CENTER, _                    ; The comment Shadow is positioned in the Lower-Center of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_RIGHT                        ; The comment Shadow is positioned in the Lower-Right corner of the comment box.
 
 ; Compute Functions
 Global Const _

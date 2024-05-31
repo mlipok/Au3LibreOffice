@@ -191,6 +191,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CommentAdd
 	- _LOCalc_CommentAreaColor
 	- _LOCalc_CommentAreaGradient
+	- _LOCalc_CommentAreaShadow
 	- _LOCalc_CommentAreaTransparency
 	- _LOCalc_CommentAreaTransparencyGradient
 	- _LOCalc_CommentCallout
@@ -342,6 +343,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellUnderLine
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
+	- __LOCalc_CommentAreaShadowModify
 	- __LOCalc_CommentArrowStyleName
 	- __LOCalc_CommentGetObjByCell
 	- __LOCalc_CommentLineStyleName
@@ -459,6 +461,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_COMMENT_LINE_CAP_*
 	- $LOC_COMMENT_LINE_JOINT_*
 	- $LOC_COMMENT_LINE_STYLE_*
+	- $LOC_COMMENT_SHADOW_*
 	- $LOC_COMPUTE_*
 	- $LOC_CURTYPE_*
 	- $LOC_DUPLEX_*
