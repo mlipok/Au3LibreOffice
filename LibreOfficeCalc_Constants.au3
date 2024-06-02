@@ -435,6 +435,11 @@ Global Const _
 		$LOC_GRAD_TYPE_SQUARE = 4, _                            ; Square type Gradient
 		$LOC_GRAD_TYPE_RECT = 5                                 ; Rectangle type Gradient
 
+; Group Orientation
+Global Const _
+		$LOC_GROUP_ORIENT_COLUMNS = 0, _                        ; Group using Columns.
+		$LOC_GROUP_ORIENT_ROWS = 1                              ; Group using Rows.
+
 ; Named Range Options
 Global Const _
 		$LOC_NAMED_RANGE_OPT_NONE = 0, _                        ; Normally used for a common Named Range.

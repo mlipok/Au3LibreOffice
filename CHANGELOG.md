@@ -96,6 +96,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellUnderline
 	- _LOCalc_CellValue
 - Cell/Cell Range Functions and Examples
+	- _LOCalc_RangeAutoOutline
 	- _LOCalc_RangeClearContents
 	- _LOCalc_RangeColumnDelete
 	- _LOCalc_RangeColumnGetName
@@ -117,6 +118,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeDatabaseHasByName
 	- _LOCalc_RangeDatabaseModify
 	- _LOCalc_RangeDelete
+	- _LOCalc_RangeDetail
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
@@ -129,6 +131,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeGetCellByName
 	- _LOCalc_RangeGetCellByPosition
 	- _LOCalc_RangeGetSheet
+	- _LOCalc_RangeGroup
 	- _LOCalc_RangeInsert
 	- _LOCalc_RangeIsMerged
 	- _LOCalc_RangeMerge
@@ -140,6 +143,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedHasByName
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNumbers
+	- _LOCalc_RangeOutlineClearAll
+	- _LOCalc_RangeOutlineShow
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
 	- _LOCalc_RangeQueryDependents
@@ -474,7 +479,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
 	- $LOC_GRAD_NAME_*
-	- $LOC_GRAD_TYPE_
+	- $LOC_GRAD_TYPE_*
+	- $LOC_GROUP_ORIENT_*
 	- $LOC_NAMED_RANGE_OPT_*
 	- $LOC_NUM_STYLE_*
 	- $LOC_PAGE_LAYOUT_*
