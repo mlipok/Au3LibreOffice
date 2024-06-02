@@ -122,7 +122,6 @@ EndFunc   ;==>_LOCalc_CommentAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current setting.
-;                  If transparency is set, it can cause strange values to be displayed for Background color.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
