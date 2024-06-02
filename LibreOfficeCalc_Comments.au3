@@ -152,7 +152,7 @@ EndFunc   ;==>_LOCalc_CommentAreaColor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CommentAreaGradient
 ; Description ...: Modify or retrieve the settings for Comment Background color Gradient.
-; Syntax ........: _LOCalc_CommentAreaGradient(ByRef $oComment[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
+; Syntax ........: _LOCalc_CommentAreaGradient(ByRef $oComment[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
 ; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See remarks. See constants, $LOC_GRAD_NAME_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The gradient type to apply. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
@@ -160,7 +160,7 @@ EndFunc   ;==>_LOCalc_CommentAreaColor
 ;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient, where 0% corresponds to the current horizontal location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" setting. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient, where 0% corresponds to the current vertical location of the endpoint color in the gradient. The endpoint color is the color that is selected in the "To Color" Setting. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which to adjust the transparent area of the gradient. Set in percentage.
 ;                  $iFromColor          - [optional] an integer value (0-16777215). Default is Null. A color for the beginning point of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iToColor            - [optional] an integer value (0-16777215). Default is Null. A color for the endpoint of the gradient, set in Long Color Integer format. Can be a custom value, or one of the constants, $LOC_COLOR_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iFromIntense        - [optional] an integer value (0-100). Default is Null. Enter the intensity for the color in the "From Color", where 0% corresponds to black, and 100 % to the selected color.
@@ -175,7 +175,7 @@ EndFunc   ;==>_LOCalc_CommentAreaColor
 ;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 8 Return 0 = $iBorder not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iFromColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 10 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 11 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
@@ -194,7 +194,7 @@ EndFunc   ;==>_LOCalc_CommentAreaColor
 ;                  |                               8 = Error setting $iXCenter
 ;                  |                               16 = Error setting $iYCenter
 ;                  |                               32 = Error setting $iAngle
-;                  |                               64 = Error setting $iBorder
+;                  |                               64 = Error setting $iTransitionStart
 ;                  |                               128 = Error setting $iFromColor
 ;                  |                               256 = Error setting $iToColor
 ;                  |                               512 = Error setting $iFromIntense
@@ -212,7 +212,7 @@ EndFunc   ;==>_LOCalc_CommentAreaColor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType = Null, $iIncrement = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iBorder = Null, $iFromColor = Null, $iToColor = Null, $iFromIntense = Null, $iToIntense = Null)
+Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType = Null, $iIncrement = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iFromColor = Null, $iToColor = Null, $iFromIntense = Null, $iToIntense = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -231,7 +231,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	$tStyleGradient = $oAnnotationShape.FillGradient()
 	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If __LOCalc_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iBorder, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
+	If __LOCalc_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOCalc_ArrayFill($avGradient, $oAnnotationShape.FillGradientName(), $tStyleGradient.Style(), _
 				$oAnnotationShape.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
@@ -284,9 +284,9 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
-	If ($iBorder <> Null) Then
-		If Not __LOCalc_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		$tStyleGradient.Border = $iBorder
+	If ($iTransitionStart <> Null) Then
+		If Not __LOCalc_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iFromColor <> Null) Then
@@ -366,7 +366,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 	$iError = ($iXCenter = Null) ? $iError : ($oAnnotationShape.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8))
 	$iError = ($iYCenter = Null) ? $iError : ($oAnnotationShape.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16))
 	$iError = ($iAngle = Null) ? $iError : (($oAnnotationShape.FillGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 32))
-	$iError = ($iBorder = Null) ? $iError : ($oAnnotationShape.FillGradient.Border() = $iBorder) ? ($iError) : (BitOR($iError, 64))
+	$iError = ($iTransitionStart = Null) ? $iError : ($oAnnotationShape.FillGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 64))
 	$iError = ($iFromColor = Null) ? $iError : ($oAnnotationShape.FillGradient.StartColor() = $iFromColor) ? ($iError) : (BitOR($iError, 128))
 	$iError = ($iToColor = Null) ? $iError : ($oAnnotationShape.FillGradient.EndColor() = $iToColor) ? ($iError) : (BitOR($iError, 256))
 	$iError = ($iFromIntense = Null) ? $iError : ($oAnnotationShape.FillGradient.StartIntensity() = $iFromIntense) ? ($iError) : (BitOR($iError, 512))
@@ -545,14 +545,14 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CommentAreaTransparencyGradient
 ; Description ...: Set or retrieve the Comment transparency gradient settings.
-; Syntax ........: _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iBorder = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
+; Syntax ........: _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment[, $iType = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iStart = Null[, $iEnd = Null]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
 ;                  $iType               - [optional] an integer value (-1-5). Default is Null. The type of transparency gradient to apply. See Constants, $LOC_GRAD_TYPE_* as defined in LibreOfficeCalc_Constants.au3. Set to $LOC_GRAD_TYPE_OFF to turn Transparency Gradient off.
 ;                  $iXCenter            - [optional] an integer value (0-100). Default is Null. The horizontal offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iYCenter            - [optional] an integer value (0-100). Default is Null. The vertical offset for the gradient. Set in percentage. $iType must be other than "Linear", or "Axial".
 ;                  $iAngle              - [optional] an integer value (0-359). Default is Null. The rotation angle for the gradient. Set in degrees. $iType must be other than "Radial".
-;                  $iBorder             - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
+;                  $iTransitionStart    - [optional] an integer value (0-100). Default is Null. The amount by which you want to adjust the transparent area of the gradient. Set in percentage.
 ;                  $iStart              - [optional] an integer value (0-100). Default is Null. The transparency value for the beginning point of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ;                  $iEnd                - [optional] an integer value (0-100). Default is Null. The transparency value for the endpoint of the gradient, where 0% is fully opaque and 100% is fully transparent.
 ; Return values .: Success: Integer or Array.
@@ -564,7 +564,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  @Error 1 @Extended 4 Return 0 = $iXCenter Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 5 Return 0 = $iYCenter Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 6 Return 0 = $iAngle Not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iBorder Not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
 ;                  --Initialization Errors--
@@ -579,7 +579,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ;                  |                               2 = Error setting $iXCenter
 ;                  |                               4 = Error setting $iYCenter
 ;                  |                               8 = Error setting $iAngle
-;                  |                               16 = Error setting $iBorder
+;                  |                               16 = Error setting $iTransitionStart
 ;                  |                               32 = Error setting $iStart
 ;                  |                               64 = Error setting $iEnd
 ;                  --Success--
@@ -594,7 +594,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparency
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iBorder = Null, $iStart = Null, $iEnd = Null)
+Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iType = Null, $iXCenter = Null, $iYCenter = Null, $iAngle = Null, $iTransitionStart = Null, $iStart = Null, $iEnd = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -614,7 +614,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	$tGradient = $oAnnotationShape.FillTransparenceGradient()
 	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
-	If __LOCalc_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iBorder, $iStart, $iEnd) Then
+	If __LOCalc_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOCalc_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
 				($tGradient.Angle() / 10), $tGradient.Border(), __LOCalc_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
 				__LOCalc_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
@@ -646,9 +646,9 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 		$tGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
-	If ($iBorder <> Null) Then
-		If Not __LOCalc_IntIsBetween($iBorder, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-		$tGradient.Border = $iBorder
+	If ($iTransitionStart <> Null) Then
+		If Not __LOCalc_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$tGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
@@ -717,7 +717,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	$iError = ($iXCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iYCenter = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
 	$iError = ($iAngle = Null) ? ($iError) : ((($oAnnotationShape.FillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iBorder = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
 	$iError = ($iStart = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.StartColor() = __LOCalc_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
 	$iError = ($iEnd = Null) ? ($iError) : (($oAnnotationShape.FillTransparenceGradient.EndColor() = __LOCalc_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
