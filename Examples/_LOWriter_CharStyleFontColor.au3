@@ -49,22 +49,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Character style's current font color settings are as follows: " & @CRLF & _
-			"The current Font color, in Long color format: " & $avCharStyleSettings[0] & " This value is a bit weird because transparency" & _
-			" is set to other than 0%" & @CRLF & @CRLF & _
-			"Transparency of the font color, in percentage: " & $avCharStyleSettings[1] & @CRLF & _
-			"Current Font highlight color, in long color format: " & $avCharStyleSettings[2] & @CRLF & @CRLF & _
-			"I will now set transparency to 0%.")
-
-	; Set "Example" Character style transparency to 0
-	_LOWriter_CharStyleFontColor($oCharStyle, Null, 0)
-	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended)
-
-	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avCharStyleSettings = _LOWriter_CharStyleFontColor($oCharStyle)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended)
-
-	MsgBox($MB_OK, "", "The Character style's current font color settings are as follows: " & @CRLF & _
-			"The current Font color in Long color format: " & $avCharStyleSettings[0] & @CRLF & _
+			"The current Font color, in Long color format: " & $avCharStyleSettings[0] & @CRLF & _
 			"Transparency of the font color, in percentage: " & $avCharStyleSettings[1] & @CRLF & _
 			"Current Font highlight color, in long color format: " & $avCharStyleSettings[2])
 

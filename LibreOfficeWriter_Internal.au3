@@ -40,6 +40,7 @@
 ; __LOWriter_CharStrikeOut
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
+; __LOWriter_ColorRemoveAlpha
 ; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
@@ -746,6 +747,8 @@ EndFunc   ;==>__LOWriter_CharFont
 ;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an integer, less than -1, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $iTransparency not an Integer, or less than 0, or greater than 100%.
 ;                  @Error 1 @Extended 6 Return 0 = $iHighlight not an integer, less than -1, or greater than 16777215.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $FontColor
@@ -759,7 +762,6 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the Object parameter and all other parameters set to Null keyword, to get the current settings.
-;                  When setting transparency, the value of font color value is changed, this may lead to property setting error messages for setting the Font color.
 ; Related .......: _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: No
@@ -768,24 +770,32 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iError = 0
+	Local $iError = 0, $iOldTransparency
 	Local $avColor[2]
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then
 		If __LOWriter_VersionCheck(7.0) Then
-			__LOWriter_ArrayFill($avColor, $oObj.CharColor(), $oObj.CharTransparence(), $oObj.CharBackColor())
+			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharTransparence(), $oObj.CharBackColor())
 		Else
-			__LOWriter_ArrayFill($avColor, $oObj.CharColor(), $oObj.CharBackColor())
+			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharBackColor())
 		EndIf
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iFontColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFontColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		If __LOWriter_VersionCheck(7.0) Then
+			$iOldTransparency = $oObj.CharTransparence()
+			If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		EndIf
+
 		$oObj.CharColor = $iFontColor
 		$iError = ($oObj.CharColor() = $iFontColor) ? ($iError) : (BitOR($iError, 1))
+
+		If IsInt($iOldTransparency) Then $oObj.CharTransparence = $iOldTransparency
 	EndIf
 
 	If ($iTransparency <> Null) Then
@@ -1381,6 +1391,41 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>__LOWriter_CharUnderLine
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ColorRemoveAlpha
+; Description ...: Remove the Alpha value from a Long color value.
+; Syntax ........: __LOWriter_ColorRemoveAlpha($iColor)
+; Parameters ....: $iColor              - an integer value. A Long Color value to remove Alpha from.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return $iColor = $iColor not an Integer. Returning $iColor to be sure not to lose the value.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Color already has no Alpha value, returning same color.
+;                  @Error 0 @Extended 1 Return Integer = Success. Removed Alpha value from Long Color value, returning new Color value.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: In functions which return the current color value, generally background colors, if Transparency (alpha) is set, the background color value is not the literal color set, but also includes the transparency value added to it. This functions removed that value for simpler color values.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ColorRemoveAlpha($iColor)
+	Local $iRed, $iGreen, $iBlue, $iLong
+
+	If Not IsInt($iColor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, $iColor)
+
+	If __LOWriter_IntIsBetween($iColor, -1, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iColor) ; If Color value is not greater than White(16777215) or less than -1, then there is no alpha to remove.
+
+	; Obtain individual color values.
+	$iRed = BitAND(BitShift($iColor, 16), 0xff)
+	$iGreen = BitAND(BitShift($iColor, 8), 0xff)
+	$iBlue = BitAND($iColor, 0xff)
+	$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
+	Return SetError($__LO_STATUS_SUCCESS, 1, $iLong)
+EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreatePoint
@@ -5844,7 +5889,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			$atPoint[0] = __LOWriter_CreatePoint(0, 0)
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 8)),Int(($iHeight / 2)))
+			$atPoint[1] = __LOWriter_CreatePoint($iWidth + Int(($iWidth / 8)), Int(($iHeight / 2)))
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$atPoint[2] = __LOWriter_CreatePoint(Int($iWidth), Int($iHeight))

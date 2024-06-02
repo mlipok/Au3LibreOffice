@@ -66,6 +66,8 @@
 ;                  @Error 1 @Extended 1 Return 0 = $oImage not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
@@ -86,20 +88,24 @@ Func _LOWriter_ImageAreaColor(ByRef $oImage, $iBackColor = Null, $bBackTranspare
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iError = 0
+	Local $iError = 0, $iOldTransparency
 	Local $avColor[2]
 
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, $oImage.BackColor(), $oImage.BackTransparent())
+		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oImage.BackColor()), $oImage.BackTransparent())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$iOldTransparency =  $oImage.FillTransparence()
+		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$oImage.BackColor = $iBackColor
 		$iError = ($oImage.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+
+		$oImage.FillTransparence = $iOldTransparency
 	EndIf
 
 	If ($bBackTransparent <> Null) Then

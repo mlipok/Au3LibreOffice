@@ -33,21 +33,6 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The Paragraph's current Font Color settings are as follows: " & @CRLF & _
-			"The current Font color is, in Long color format: " & $avParStyleSettings[0] & " This value is a bit weird because transparency" & _
-			" is set to other than 0%" & @CRLF & @CRLF & _
-			"Transparency of the font color, in percentage: " & $avParStyleSettings[1] & @CRLF & _
-			"Current Font highlight color, in long color format: " & $avParStyleSettings[2] & @CRLF & @CRLF & _
-			"I'll set transparency to 0% now.")
-
-	; Set "Default Paragraph Style" font Transparency to 100%
-	_LOWriter_ParStyleFontColor($oParStyle, Null, 0)
-	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
-
-	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avParStyleSettings = _LOWriter_ParStyleFontColor($oParStyle)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended)
-
-	MsgBox($MB_OK, "", "The Paragraph's current Font Color settings are as follows: " & @CRLF & _
 			"The current Font color is, in Long color format: " & $avParStyleSettings[0] & @CRLF & _
 			"Transparency of the font color, in percentage: " & $avParStyleSettings[1] & @CRLF & _
 			"Current Font highlight color, in long color format: " & $avParStyleSettings[2])

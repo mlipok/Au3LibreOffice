@@ -510,6 +510,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ShapePointModify
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 - Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
+- Alpha Removal function __LOWriter_ColorRemoveAlpha.
 
 ### Changed
 
@@ -573,6 +574,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ImageInsert -- removed internal variable, now uses ViewCursor directly to insert an Image.
 	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
 - _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
+- Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
 
 ### Removed
 

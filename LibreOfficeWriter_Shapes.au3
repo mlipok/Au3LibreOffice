@@ -56,6 +56,8 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColor not an integer, less than -1, or greater than 16777215.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iColor
@@ -65,7 +67,6 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  If transparency is set, it can cause strange values to be displayed for Background color.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -74,20 +75,25 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iError = 0
+	Local $iError = 0, $iOldTransparency
 
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	; If $iColor is Null, and Fill Style is set to solid, then return current color value, else return LOW_COLOR_OFF.
-	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $__LOWCONST_FILL_STYLE_SOLID) ? ($oShape.FillColor()) : ($LOW_COLOR_OFF))
+	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $__LOWCONST_FILL_STYLE_SOLID) ? (__LOWriter_ColorRemoveAlpha($oShape.FillColor())) : ($LOW_COLOR_OFF))
 
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iColor = $LOW_COLOR_OFF) Then
 		$oShape.FillStyle = $__LOWCONST_FILL_STYLE_OFF
 	Else
+		$iOldTransparency = $oShape.FillTransparence()
+		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oShape.FillStyle = $__LOWCONST_FILL_STYLE_SOLID
 		$oShape.FillColor = $iColor
 		$iError = ($oShape.FillColor() = $iColor) ? ($iError) : (BitOR($iError, 1))
+
+		$oShape.FillTransparence = $iOldTransparency
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

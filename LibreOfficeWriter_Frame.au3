@@ -88,6 +88,8 @@
 ;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
 ;                  @Error 1 @Extended 3 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
@@ -98,7 +100,6 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  If transparency is set, it can cause strange values to be displayed for Background color.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, _LOWriter_FrameGetObjByCursor, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -108,20 +109,25 @@ Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null, $bBackTranspare
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iError = 0
+	Local $iError = 0, $iOldTransparency
 	Local $avColor[2]
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, $oFrame.BackColor(), $oFrame.BackTransparent())
+		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrame.BackColor()), $oFrame.BackTransparent())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$iOldTransparency = $oFrame.FillTransparence()
+		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oFrame.BackColor = $iBackColor
 		$iError = ($oFrame.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+
+		$oFrame.FillTransparence = $iOldTransparency
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
@@ -1578,6 +1584,8 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iBackColor not an integer, less than -1, or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bBackTransparent not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve old Transparency value.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iBackColor
@@ -1588,7 +1596,6 @@ EndFunc   ;==>_LOWriter_FrameShadow
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  If transparency is set, it can cause strange values to be displayed for Background color.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_FrameStyleCreate, _LOWriter_FrameStyleGetObj, _LOWriter_ConvertColorFromLong, _LOWriter_ConvertColorToLong
 ; Link ..........:
@@ -1598,21 +1605,26 @@ Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null, $bBac
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $iError = 0
+	Local $iError = 0, $iOldTransparency
 	Local $avColor[2]
 
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
-		__LOWriter_ArrayFill($avColor, $oFrameStyle.BackColor(), $oFrameStyle.BackTransparent())
+		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrameStyle.BackColor()), $oFrameStyle.BackTransparent())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
 	If ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$iOldTransparency = $oFrameStyle.FillTransparence()
+		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		$oFrameStyle.BackColor = $iBackColor
 		$iError = ($oFrameStyle.BackColor() = $iBackColor) ? ($iError) : (BitOR($iError, 1))
+
+		$oFrameStyle.FillTransparence = $iOldTransparency
 	EndIf
 
 	If ($bBackTransparent <> Null) Then
@@ -2998,7 +3010,7 @@ Func _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oFrameStyle.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
+	$oFrameStyle.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
 	$oFrameStyle.FillTransparence = $iTransparency
 	$iError = ($oFrameStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -3749,7 +3761,7 @@ Func _LOWriter_FrameTransparency(ByRef $oFrame, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oFrame.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
+	$oFrame.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
 	$oFrame.FillTransparence = $iTransparency
 	$iError = ($oFrame.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
