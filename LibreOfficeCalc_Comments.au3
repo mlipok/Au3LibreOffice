@@ -70,7 +70,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOCalc_CommentDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -122,7 +122,7 @@ EndFunc   ;==>_LOCalc_CommentAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current setting.
-; Related .......:
+; Related .......: _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -767,7 +767,7 @@ EndFunc   ;==>_LOCalc_CommentAreaTransparencyGradient
 ;                  If $iCalloutStyle is not set to $LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR, both $bOptimal and $iLength, are not used/unavailable for setting.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -938,7 +938,7 @@ EndFunc   ;==>_LOCalc_CommentCreateTextCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOCalc_CommentAdd, _LOCalc_CommentGetObjByCell, _LOCalc_CommentGetObjByIndex, _LOCalc_CommentsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1060,7 +1060,7 @@ EndFunc   ;==>_LOCalc_CommentGetLastEdit
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOCalc_CommentDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1100,7 +1100,7 @@ EndFunc   ;==>_LOCalc_CommentGetObjByCell
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......:
+; Related .......: _LOCalc_CommentDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1176,7 +1176,7 @@ EndFunc   ;==>_LOCalc_CommentGetObjByIndex
 ;                  When retrieving the current settings, both $vStartStyle and $vEndStyle could be either an integer or a String. It will be a String if the current Arrowhead is a custom Arrowhead, else an Integer, corresponding to one of the constants, $LOC_COMMENT_LINE_ARROW_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOCalc_CommentLineProperties
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1311,7 +1311,7 @@ EndFunc   ;==>_LOCalc_CommentLineArrowStyles
 ;                  When retrieving the current settings, $vStyle could be either an integer or a String. It will be a String if the current Line Style is a custom Line Style, else an Integer, corresponding to one of the constants, $LOC_COMMENT_LINE_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
+; Related .......: _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong, _LOCalc_CommentLineArrowStyles
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1453,7 +1453,7 @@ EndFunc   ;==>_LOCalc_CommentLineProperties
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The X Coordinate seems to be measured from the right hand edge of the Comment Box, and the Y Coordinate seems to be measured from the top of the comment box.
-; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_CommentRotate, _LOCalc_CommentSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1529,7 +1529,7 @@ EndFunc   ;==>_LOCalc_CommentPosition
 ; Modified ......:
 ; Remarks .......: This function uses the deprecated Libre Office method RotateAngle and may stop working in future Libre Office versions, after 7.3.4.2.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-; Related .......:
+; Related .......: _LOCalc_CommentPosition, _LOCalc_CommentSize
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1669,7 +1669,7 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  I have skipped "Keep Ratio, as there is no built in setting for it for Comments, so I would have to formulate a custom function for this purpose.
-; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_CommentPosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1992,7 +1992,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnchor
 ;                  $iIncrement in the L.O. UI allows for 10" max, however this produces an erroneous value internally, and switches back to using pixels, even in the UI, if you set $iIncrement to the max value, it will most likely cause a property setting error.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2101,7 +2101,7 @@ EndFunc   ;==>_LOCalc_CommentTextAnimation
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2201,7 +2201,7 @@ EndFunc   ;==>_LOCalc_CommentTextColumns
 ;                  If spacing values on all sides do not match, $iSpacingAll will return 0.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......:
+; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
