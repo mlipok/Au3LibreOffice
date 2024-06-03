@@ -41,23 +41,8 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
 
 	MsgBox($MB_OK, "", "The selected text's current font color settings are as follows: " & @CRLF & _
-			"The current Font color, in Long color format: " & $avSettings[0] & " This value is a bit weird because transparency" & _
-			" is set to other than 0%" & @CRLF & @CRLF & _
-			"Transparency of the font color, in percentage: " & $avSettings[1] & @CRLF & @CRLF & _
-			"Current Font highlight color, in long color format: " & $avSettings[2] & @CRLF & @CRLF & _
-			"I will now set transparency to 0%.")
-
-	; Set the selected text's Font transparency to 0%,
-	_LOWriter_DirFrmtFontColor($oViewCursor, Null, 0)
-	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended)
-
-	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avSettings = _LOWriter_DirFrmtFontColor($oViewCursor)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended)
-
-	MsgBox($MB_OK, "", "The selected text's current font color settings are as follows: " & @CRLF & _
 			"The current Font color, in Long color format: " & $avSettings[0] & @CRLF & _
-			"Transparency of the font color, in percentage: " & $avSettings[1] & @CRLF & @CRLF & _
+			"Transparency of the font color, in percentage: " & $avSettings[1] & @CRLF & _
 			"Current Font highlight color, in long color format: " & $avSettings[2] & @CRLF & @CRLF & _
 			"Press ok to remove direct formatting.")
 
