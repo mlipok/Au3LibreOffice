@@ -510,6 +510,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ShapePointModify
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 - Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
+- Alpha Removal function __LOWriter_ColorRemoveAlpha.
 
 ### Changed
 
@@ -544,6 +545,21 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Sorted Constants in LibreOfficeWriter_Constants alphabetically.
 - Renamed $LOW_FIELDADV_TYPE_* Constants to $LOW_FIELD_ADV_TYPE_* to match formatting of other Field Type Constants.
 - Renamed $LibreOfficeWriter_DirectFormating.au3 to LibreOfficeWriter_DirectFormatting.au3 (misspelling correction)
+- Renamed Parameter $iBorder for Gradient Functions to $iTransitionStart for clarity of which setting it corresponds to in the L.O. UI.
+	- _LOWriter_FrameAreaGradient
+	- _LOWriter_FrameTransparencyGradient
+	- _LOWriter_FrameStyleAreaGradient
+	- _LOWriter_FrameStyleTransparencyGradient
+	- _LOWriter_ImageAreaGradient
+	- _LOWriter_ImageAreaTransparencyGradient
+	- _LOWriter_PageStyleAreaGradient
+	- _LOWriter_PageStyleFooterAreaGradient
+	- _LOWriter_PageStyleFooterTransparencyGradient
+	- _LOWriter_PageStyleHeaderAreaGradient
+	- _LOWriter_PageStyleHeaderTransparencyGradient
+	- _LOWriter_PageStyleTransparencyGradient
+	- _LOWriter_ShapeAreaGradient
+	- _LOWriter_ShapeTransparencyGradient
 
 ### Fixed
 
@@ -573,6 +589,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ImageInsert -- removed internal variable, now uses ViewCursor directly to insert an Image.
 	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
 - _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
+- Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
 
 ### Removed
 
