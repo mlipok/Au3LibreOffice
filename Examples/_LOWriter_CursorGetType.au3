@@ -10,7 +10,6 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the document view cursor to insert text with.
@@ -41,9 +40,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & _
-			@error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & @error & " Extended:" & @extended)
 
 EndFunc
 

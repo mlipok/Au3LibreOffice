@@ -27,7 +27,6 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
 
 EndFunc
