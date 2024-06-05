@@ -454,8 +454,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Removed unused variables and parameters in some functions. Affected functions are as follows:
 	- _LOCalc_FormatKeyDelete -- removed internal variable.
-- NamedRange names incorrectly reported as invalid.
-	- _LOCalc_RangeNamedModify and _LOCalc_RangeNamedAdd now accept an underscore as the beginning character.
+- NamedRange names incorrectly reported as invalid in certain functions when the name began with an underscore.
+	- _LOCalc_RangeNamedModify
+	- _LOCalc_RangeNamedAdd
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -590,6 +591,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
 - _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
 - Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
+- Missing Data Type in _LOWriter_CursorGetDataType example.
 
 ### Removed
 
