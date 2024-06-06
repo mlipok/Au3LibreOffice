@@ -1001,7 +1001,8 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	Local $vProperty
 	Local $sFileURL
 
-	Local $oComError = ObjEvent("AutoIt.Error", "__LOCalc_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOCalc_InternalComErrorHandler")
+	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$sFileURL = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN)
@@ -1051,16 +1052,12 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 
 	EndIf
 
+	If $bConnectIfOpen Then $oDoc = _LOCalc_DocConnect($sFilePath)
+    If IsObj($oDoc) Then Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
+
 	$oDoc = $oDesktop.loadComponentFromURL($sFileURL, "_default", $iURLFrameCreate, $aoProperties)
-	If StringInStr($oComError.description, """type detection failed""") And $bConnectIfOpen Then
-		ReDim $aoProperties[0]
-		$oDoc = $oDesktop.loadComponentFromURL($sFileURL, "_default", $iURLFrameCreate, $aoProperties)
-		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
-		Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
-	EndIf
-
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 2, $oDoc))
 EndFunc   ;==>_LOCalc_DocOpen
 

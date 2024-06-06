@@ -431,6 +431,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetIsProtected
 	- _LOCalc_SheetLink
+	- _LOCalc_SheetLinkModify
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
 	- _LOCalc_SheetPrintColumnsRepeat
@@ -506,6 +507,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.
+- Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
 
 ### Fixed
 
