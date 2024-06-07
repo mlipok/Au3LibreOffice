@@ -22,6 +22,7 @@
 ; #CURRENT# =====================================================================================================================
 ; _LOCalc_CommentAdd
 ; _LOCalc_CommentAreaColor
+; _LOCalc_CommentAreaFillStyle
 ; _LOCalc_CommentAreaGradient
 ; _LOCalc_CommentAreaShadow
 ; _LOCalc_CommentAreaTransparency
@@ -141,13 +142,48 @@ Func _LOCalc_CommentAreaColor(ByRef $oComment, $iColor = Null)
 
 	If Not __LOCalc_IntIsBetween($iColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	$oAnnotationShape.FillStyle = $__LOCCONST_FILL_STYLE_SOLID
+	$oAnnotationShape.FillStyle = $LOC_AREA_FILL_STYLE_SOLID
 	$oAnnotationShape.FillColor = $iColor
 
 	If ($oAnnotationShape.FillColor() <> $iColor) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_CommentAreaColor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_CommentAreaFillStyle
+; Description ...: Retrieve what kind of background fill is active, if any.
+; Syntax ........: _LOCalc_CommentAreaFillStyle(ByRef $oComment)
+; Parameters ....: $oComment            - [in/out] an object. A Comment object returned by a previous _LOCalc_CommentsGetList, _LOCalc_CommentGetObjByCell, or _LOCalc_CommentGetObjByIndex function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oComment not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Fill Style.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning current background fill style. Return will be one of the constants $LOC_AREA_FILL_STYLE_* as defined in LibreOfficeCalc_Constants.au3.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function is to help determine if a Gradient background, or a solid color background is currently active.
+;                  This is useful because, if a Gradient is active, the solid color value is still present, and thus it would not be possible to determine which function should be used to retrieve the current values for, whether the Color function, or the Gradient function.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_CommentAreaFillStyle(ByRef $oComment)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iFillStyle
+
+	If Not IsObj($oComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iFillStyle = $oComment.AnnotationShape.FillStyle()
+	If Not IsInt($iFillStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iFillStyle)
+EndFunc   ;==>_LOCalc_CommentAreaFillStyle
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CommentAreaGradient
@@ -239,7 +275,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
-	If ($oAnnotationShape.FillStyle() <> $__LOCCONST_FILL_STYLE_GRADIENT) Then $oAnnotationShape.FillStyle = $__LOCCONST_FILL_STYLE_GRADIENT
+	If ($oAnnotationShape.FillStyle() <> $LOC_AREA_FILL_STYLE_GRADIENT) Then $oAnnotationShape.FillStyle = $LOC_AREA_FILL_STYLE_GRADIENT
 
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -253,7 +289,7 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 
 	If ($iType <> Null) Then
 		If ($iType = $LOC_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oAnnotationShape.FillStyle = $__LOCCONST_FILL_STYLE_OFF
+			$oAnnotationShape.FillStyle = $LOC_AREA_FILL_STYLE_OFF
 			$oAnnotationShape.FillGradientName = ""
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf

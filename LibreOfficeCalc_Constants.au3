@@ -22,11 +22,11 @@ Global Const $__LOCCONST_SLEEP_DIV = 0
 
 ; Fill Style Type Constants
 Global Enum _
-		$__LOCCONST_FILL_STYLE_OFF, _                           ; 0 Fill Style is off.
-		$__LOCCONST_FILL_STYLE_SOLID, _                         ; 1 Fill Style is a solid color.
-		$__LOCCONST_FILL_STYLE_GRADIENT, _                      ; 2 Fill Style is a gradient color.
-		$__LOCCONST_FILL_STYLE_HATCH, _                         ; 3 Fill Style is a Hatch style color.
-		$__LOCCONST_FILL_STYLE_BITMAP                           ; 4 Fill Style is a Bitmap.
+		$LOC_AREA_FILL_STYLE_OFF, _                             ; 0 Fill Style is off.
+		$LOC_AREA_FILL_STYLE_SOLID, _                           ; 1 Fill Style is a solid color.
+		$LOC_AREA_FILL_STYLE_GRADIENT, _                        ; 2 Fill Style is a gradient color.
+		$LOC_AREA_FILL_STYLE_HATCH, _                           ; 3 Fill Style is a Hatch style color.
+		$LOC_AREA_FILL_STYLE_BITMAP                             ; 4 Fill Style is a Bitmap.
 
 ; Border Style
 Global Const _

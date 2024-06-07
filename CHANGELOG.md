@@ -195,6 +195,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Comment Functions and Examples.
 	- _LOCalc_CommentAdd
 	- _LOCalc_CommentAreaColor
+	- _LOCalc_CommentAreaFillStyle
 	- _LOCalc_CommentAreaGradient
 	- _LOCalc_CommentAreaShadow
 	- _LOCalc_CommentAreaTransparency
@@ -517,6 +518,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNamedAdd
 - _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
+
+### Changed
+
+- Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
 
 > [!NOTE]
 > **LibreOfficeWriter**
