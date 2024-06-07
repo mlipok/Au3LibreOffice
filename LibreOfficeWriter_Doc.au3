@@ -2646,7 +2646,7 @@ Func _LOWriter_DocInsertControlChar(ByRef $oDoc, ByRef $oCursor, $iConChar, $bOv
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOWriter_IntIsBetween($iConChar, 0, 5) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_IntIsBetween($iConChar, $LOW_CON_CHAR_PAR_BREAK, $LOW_CON_CHAR_APPEND_PAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
 	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
