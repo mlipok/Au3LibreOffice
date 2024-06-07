@@ -561,6 +561,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_PageStyleTransparencyGradient
 	- _LOWriter_ShapeAreaGradient
 	- _LOWriter_ShapeTransparencyGradient
+- _LOWriter_DocOpen now uses a different method for connecting to an already open document, as the previous method could potentially cause errors.
 
 ### Fixed
 
