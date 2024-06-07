@@ -513,8 +513,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Removed unused variables and parameters in some functions. Affected functions are as follows:
 	- _LOCalc_FormatKeyDelete -- removed internal variable.
-- NamedRange names incorrectly reported as invalid.
-	- _LOCalc_RangeNamedModify and _LOCalc_RangeNamedAdd now accept an underscore as the beginning character.
+- NamedRange names incorrectly reported as invalid in certain functions when the name began with an underscore.
+	- _LOCalc_RangeNamedModify
+	- _LOCalc_RangeNamedAdd
+- _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
 
 > [!NOTE]
 > **LibreOfficeWriter**
