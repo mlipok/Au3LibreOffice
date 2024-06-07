@@ -20,6 +20,7 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_ShapeAreaColor
+; _LOWriter_ShapeAreaFillStyle
 ; _LOWriter_ShapeAreaGradient
 ; _LOWriter_ShapeDelete
 ; _LOWriter_ShapeGetAnchor
@@ -80,16 +81,16 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	; If $iColor is Null, and Fill Style is set to solid, then return current color value, else return LOW_COLOR_OFF.
-	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $__LOWCONST_FILL_STYLE_SOLID) ? (__LOWriter_ColorRemoveAlpha($oShape.FillColor())) : ($LOW_COLOR_OFF))
+	If ($iColor = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oShape.FillStyle() = $LOW_AREA_FILL_STYLE_SOLID) ? (__LOWriter_ColorRemoveAlpha($oShape.FillColor())) : ($LOW_COLOR_OFF))
 
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iColor = $LOW_COLOR_OFF) Then
-		$oShape.FillStyle = $__LOWCONST_FILL_STYLE_OFF
+		$oShape.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 	Else
 		$iOldTransparency = $oShape.FillTransparence()
 		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-		$oShape.FillStyle = $__LOWCONST_FILL_STYLE_SOLID
+		$oShape.FillStyle = $LOW_AREA_FILL_STYLE_SOLID
 		$oShape.FillColor = $iColor
 		$iError = ($oShape.FillColor() = $iColor) ? ($iError) : (BitOR($iError, 1))
 
@@ -98,6 +99,41 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeAreaColor
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapeAreaFillStyle
+; Description ...: Retrieve what kind of background fill is active, if any.
+; Syntax ........: _LOWriter_ShapeAreaFillStyle(ByRef $oShape)
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current Fill Style.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning current background fill style. Return will be one of the constants $LOW_AREA_FILL_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function is to help determine if a Gradient background, or a solid color background is currently active.
+;                  This is useful because, if a Gradient is active, the solid color value is still present, and thus it would not be possible to determine which function should be used to retrieve the current values for, whether the Color function, or the Gradient function.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapeAreaFillStyle(ByRef $oShape)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iFillStyle
+
+	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iFillStyle = $oShape.FillStyle()
+	If Not IsInt($iFillStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iFillStyle)
+EndFunc   ;==>_LOWriter_ShapeAreaFillStyle
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeAreaGradient
@@ -185,7 +221,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
-	If ($oShape.FillStyle() <> $__LOWCONST_FILL_STYLE_GRADIENT) Then $oShape.FillStyle = $__LOWCONST_FILL_STYLE_GRADIENT
+	If ($oShape.FillStyle() <> $LOW_AREA_FILL_STYLE_GRADIENT) Then $oShape.FillStyle = $LOW_AREA_FILL_STYLE_GRADIENT
 
 	If ($sGradientName <> Null) Then
 		If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -195,7 +231,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
-			$oShape.FillStyle = $__LOWCONST_FILL_STYLE_OFF
+			$oShape.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oShape.FillGradientName = ""
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf

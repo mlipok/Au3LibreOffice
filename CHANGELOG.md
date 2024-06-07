@@ -512,6 +512,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 - Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
 - Alpha Removal function __LOWriter_ColorRemoveAlpha.
+- _LOWriter_FrameAreaFillStyle.
+- _LOWriter_FrameStyleAreaFillStyle
+- _LOWriter_ImageAreaFillStyle
+- _LOWriter_PageStyleAreaFillStyle
+- _LOWriter_PageStyleFooterAreaFillStyle
+- _LOWriter_PageStyleHeaderAreaFillStyle
+- _LOWriter_ShapeAreaFillStyle
 
 ### Changed
 
@@ -562,6 +569,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ShapeAreaGradient
 	- _LOWriter_ShapeTransparencyGradient
 - _LOWriter_DocOpen now uses a different method for connecting to an already open document, as the previous method could potentially cause errors.
+- Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
 
 ### Fixed
 
