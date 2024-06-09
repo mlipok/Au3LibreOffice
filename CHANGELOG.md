@@ -458,6 +458,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNamedAdd
 
+### Changed
+
+- __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
+
 > [!NOTE]
 > **LibreOfficeWriter**
 
@@ -570,6 +575,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_ShapeTransparencyGradient
 - _LOWriter_DocOpen now uses a different method for connecting to an already open document, as the previous method could potentially cause errors.
 - Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
+- __LOWriter_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
 
 ### Fixed
 
