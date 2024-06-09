@@ -2018,13 +2018,13 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_IntIsBetween
-; Description ...: Test whether an input is an Integer and is between two Numbers.
-; Syntax ........: __LOCalc_IntIsBetween($iTest, $nMin, $nMax[, $snNot = ""[, $snIncl = Default]])
+; Description ...: Test whether an input is an Integer and is between two Integers.
+; Syntax ........: __LOCalc_IntIsBetween($iTest, $iMin, $iMax[, $vNot = ""[, $vIncl = ""]])
 ; Parameters ....: $iTest               - an integer value. The Value to test.
-;                  $nMin                - a general number value. The minimum $iTest can be.
-;                  $nMax                - a general number value. The maximum $iTest can be.
-;                  $snNot               - [optional] a string value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
-;                  $snIncl              - [optional] a string value. Default is Default. Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
+;                  $iMin                - an integer value. The minimum $iTest can be.
+;                  $iMax                - [optional] an integer value. Default is 0. The maximum $iTest can be.
+;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
+;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
 ;                  Failure: False
 ;                  --Success--
@@ -2036,37 +2036,45 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOCalc_IntIsBetween($iTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
-	Local $bMatch = False
-	Local $anNot, $anIncl
-
+Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 	If Not IsInt($iTest) Then Return False
-	If (@NumParams = 3) Then Return (($iTest < $nMin) Or ($iTest > $nMax)) ? (False) : (True)
 
-	If ($snNot <> "") Then
-		If IsString($snNot) And StringInStr($snNot, ":") Then
-			$anNot = StringSplit($snNot, ":")
-			For $i = 1 To $anNot[0]
-				If ($anNot[$i] = $iTest) Then Return False
-			Next
-		Else
-			If ($iTest = $snNot) Then Return False
-		EndIf
-	EndIf
+	Switch @NumParams
 
-	If (($iTest >= $nMin) And ($iTest <= $nMax)) Then Return True
+		Case 2
+			Return ($iTest < $iMin) ? (False) : (True)
 
-	If IsString($snIncl) And StringInStr($snIncl, ":") Then
-		$anIncl = StringSplit($snIncl, ":")
-		For $j = 1 To $anIncl[0]
-			$bMatch = ($anIncl[$j] = $iTest) ? (True) : (False)
-			If $bMatch Then ExitLoop
-		Next
-	ElseIf IsNumber($snIncl) Then
-		$bMatch = ($iTest = $snIncl) ? (True) : (False)
-	EndIf
+		Case 3
+			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
 
-	Return $bMatch
+		Case 4
+
+			If IsString($vNot) Then
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+
+			ElseIf IsInt($vNot) Then
+				If ($iTest = $vNot) Then Return False
+
+			EndIf
+
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+
+			If @NumParams = 5 Then ContinueCase
+
+			Return False
+
+		Case Else
+			If IsString($vIncl) Then
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+
+			ElseIf IsInt($vIncl) Then
+
+				If ($iTest = $vIncl) Then Return True
+			EndIf
+
+			Return False
+
+	EndSwitch
 EndFunc   ;==>__LOCalc_IntIsBetween
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
