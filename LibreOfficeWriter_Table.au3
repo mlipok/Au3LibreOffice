@@ -183,22 +183,22 @@ Func _LOWriter_TableBorderPadding(ByRef $oTable, $iTop = Null, $iBottom = Null, 
 	If Not IsObj($tBD) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($iTop <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tBD.TopDistance = $iTop
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tBD.BottomDistance = $iBottom
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tBD.LeftDistance = $iLeft
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tBD.RightDistance = $iRight
 	EndIf
 
@@ -328,12 +328,12 @@ Func _LOWriter_TableBorderWidth(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($iVert <> Null) And Not __LOWriter_IntIsBetween($iVert, 0, $iVert) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If ($iHori <> Null) And Not __LOWriter_IntIsBetween($iHori, 0, $iHori) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If ($iTop <> Null) And Not __LOWriter_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($iBottom <> Null) And Not __LOWriter_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($iLeft <> Null) And Not __LOWriter_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($iVert <> Null) And Not __LOWriter_IntIsBetween($iVert, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If ($iHori <> Null) And Not __LOWriter_IntIsBetween($iHori, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Table not in document.
 
 	$vReturn = __LOWriter_TableBorder($oTable, True, False, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
@@ -405,7 +405,7 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 	EndIf
 
 	If ($iPgNumOffSet <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0, $iPgNumOffSet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iPgNumOffSet, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTable.PageNumberOffset = $iPgNumOffSet
 		$iError = ($oTable.PageNumberOffset() = $iPgNumOffSet) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -781,7 +781,7 @@ Func _LOWriter_TableCursor(ByRef $oCursor, $sGoToCellByName = Null, $bSelect = F
 	EndIf
 
 	If ($iSplitRangeInto <> Null) Then
-		If Not __LOWriter_IntIsBetween($iSplitRangeInto, 1, $iSplitRangeInto) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iSplitRangeInto, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not IsBool($bSplitRangeHori) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$vReturn = $oCursor.splitRange($iSplitRangeInto, $bSplitRangeHori)
 		$iError = ($vReturn = True) ? ($iError) : (BitOR($iError, 4, 0))
@@ -1352,14 +1352,14 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 	EndIf
 
 	If ($iLeftMargin <> Null) Then
-		If Not __LOWriter_IntIsBetween($iLeftMargin, -100000, $iLeftMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iLeftMargin, -100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (($oTable.HoriOrient() = $LOW_ORIENT_HORI_FULL) Or ($oTable.HoriOrient() = $LOW_ORIENT_HORI_LEFT)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Can't set Left Margin with orientation set to Auto(6/Full) Or Left (3)
 		$oTable.LeftMargin = $iLeftMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.LeftMargin(), $iLeftMargin - 1, $iLeftMargin + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iRightMargin <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRightMargin, -100000, $iRightMargin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iRightMargin, -100000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If Not (($oTable.HoriOrient() = $LOW_ORIENT_HORI_LEFT) Or ($oTable.HoriOrient() = $LOW_ORIENT_HORI_NONE)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Can't set Right Margin with orientation set to other than Manual(0/None) Or Left (3)
 		$oTable.RightMargin = $iRightMargin
 		$iError = (__LOWriter_IntIsBetween($oTable.RightMargin(), $iRightMargin - 1, $iRightMargin + 1)) ? ($iError) : (BitOR($iError, 8))
@@ -1911,7 +1911,7 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $bTran
 	EndIf
 
 	If ($iWidth <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWidth, 0, $iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOWriter_IntIsBetween($iWidth, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tShdwFrmt.ShadowWidth = $iWidth
 	EndIf
 
