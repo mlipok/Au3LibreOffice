@@ -454,8 +454,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Removed unused variables and parameters in some functions. Affected functions are as follows:
 	- _LOCalc_FormatKeyDelete -- removed internal variable.
-- NamedRange names incorrectly reported as invalid.
-	- _LOCalc_RangeNamedModify and _LOCalc_RangeNamedAdd now accept an underscore as the beginning character.
+- NamedRange names incorrectly reported as invalid in certain functions when the name began with an underscore.
+	- _LOCalc_RangeNamedModify
+	- _LOCalc_RangeNamedAdd
+
+### Changed
+
+- __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -511,6 +517,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 - Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
 - Alpha Removal function __LOWriter_ColorRemoveAlpha.
+- _LOWriter_FrameAreaFillStyle.
+- _LOWriter_FrameStyleAreaFillStyle
+- _LOWriter_ImageAreaFillStyle
+- _LOWriter_PageStyleAreaFillStyle
+- _LOWriter_PageStyleFooterAreaFillStyle
+- _LOWriter_PageStyleHeaderAreaFillStyle
+- _LOWriter_ShapeAreaFillStyle
 
 ### Changed
 
@@ -560,6 +573,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_PageStyleTransparencyGradient
 	- _LOWriter_ShapeAreaGradient
 	- _LOWriter_ShapeTransparencyGradient
+- _LOWriter_DocOpen now uses a different method for connecting to an already open document, as the previous method could potentially cause errors.
+- Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
+- __LOWriter_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
 
 ### Fixed
 
@@ -590,6 +607,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
 - _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
 - Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
+- Missing Data Type in _LOWriter_CursorGetDataType example.
 
 ### Removed
 
