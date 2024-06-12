@@ -3117,8 +3117,6 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
@@ -3867,8 +3865,6 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.

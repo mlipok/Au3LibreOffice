@@ -37,6 +37,7 @@
 ; _LOCalc_SheetIsActive
 ; _LOCalc_SheetIsProtected
 ; _LOCalc_SheetLink
+; _LOCalc_SheetLinkModify
 ; _LOCalc_SheetMove
 ; _LOCalc_SheetName
 ; _LOCalc_SheetPrintColumnsRepeat
@@ -725,7 +726,7 @@ EndFunc   ;==>_LOCalc_SheetIsProtected
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetLink
-; Description ...: Link to an external Sheet in another Document.
+; Description ...: Create a new Sheet and Link to an external Sheet in another Document.
 ; Syntax ........: _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName[, $iLinkMode = $LOC_SHEET_LINK_MODE_NORMAL[, $bInsertAfter = False]])
 ; Parameters ....: $oSourceDoc          - [in/out] an object. The Document containing the desired Sheet. Must have been previously saved to a location. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $oDestDoc            - [in/out] an object. The Document to Import the Sheet to. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
@@ -805,6 +806,116 @@ Func _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $iLinkMo
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_SheetLink
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetLinkModify
+; Description ...: Set or Retrieve the Linked settings of a Sheet.
+; Syntax ........: _LOCalc_SheetLinkModify(ByRef $oSheet[, $oNewDoc = Null[, $sSheetName = Null[, $iLinkMode = Null]]])
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $oNewDoc             - [optional] an object. Default is Null. A New Document to link a new sheet from. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sSheetName          - [optional] a string value. Default is Null. The Sheet name to link to.
+;                  $iLinkMode           - [optional] an integer value (0-2). Default is Null. The content to link from the Sheet. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oNewDoc not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $iLinkMode not an Integer, less than 0, or greater than 2. See Constants $LOC_SHEET_LINK_MODE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = Document called in $oNewDoc has no save location.
+;                  @Error 1 @Extended 6 Return 0 = Document called in $oNewDoc does not have a Sheet with the name called in $sSheetName.
+;                  @Error 1 @Extended 7 Return 0 = Document currently set as source does not contain a Sheet with the name as called in $sSheetName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to set $sSheetName, Sheet has not been linked before, and has no source document to find $sSheetName in.
+;                  @Error 3 @Extended 2 Return 0 = Failed to open source document set for this Sheet.
+;                  @Error 3 @Extended 3 Return 0 = Failed to set $iLinkMode, Sheet isn't currently linked.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $oNewDoc
+;                  |                               2 = Error setting $sSheetName
+;                  |                               4 = Error setting $iLinkMode
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+;~
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  The Return for $oNewDoc is the File path of the linked Document.
+;                  If you set $oNewDoc, you must set $sSheetName and $iLinkMode also.
+;                  To unlink a Sheet, call $iLinkMode with $LOC_SHEET_LINK_MODE_NONE.
+; Related .......: _LOCalc_SheetLink
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null, $iLinkMode = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSourceDoc
+	Local $iError = 0
+	Local $bClose = True
+	Local $avSheet[3]
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($oNewDoc, $sSheetName, $iLinkMode) Then
+		__LOCalc_ArrayFill($avSheet, _LOCalc_PathConvert($oSheet.LinkUrl(), $LOC_PATHCONV_PCPATH_RETURN), $oSheet.LinkSheetName(), $oSheet.LinkMode())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSheet)
+	EndIf
+
+	If ($oNewDoc <> Null) Then
+		If Not IsObj($oNewDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not IsString($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		If Not __LOCalc_IntIsBetween($iLinkMode, $LOC_SHEET_LINK_MODE_NONE, $LOC_SHEET_LINK_MODE_VALUE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If ($oNewDoc.URL() = "") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not $oNewDoc.Sheets.hasByName($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+		$oSheet.link($oSourceDoc.URL(), $sSheetName, "", "", $iLinkMode)
+
+		$iError = ($oSheet.LinkUrl() = $oNewDoc.URL()) ? ($iError) : (BitOR($iError, 1))
+		$iError = ($oSheet.LinkSheetName() = $sSheetName) ? ($iError) : (BitOR($iError, 2))
+		$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($sSheetName <> Null) Then
+		If Not IsString($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		$oSourceDoc = _LOCalc_DocOpen(_LOCalc_PathConvert($oSheet.LinkUrl(), $LOC_PATHCONV_PCPATH_RETURN), True, True)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		$bClose = (@extended = 2) ? (True) : (False)
+		If Not $oSourceDoc.Sheets.hasByName($sSheetName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $oSourceDoc.Close(True))
+		If $bClose Then $oSourceDoc.Close(True)
+
+		$oSheet.LinkSheetName = $sSheetName
+		$iError = ($oSheet.LinkSheetName() = $sSheetName) ? ($iError) : (BitOR($iError, 2))
+
+	EndIf
+
+	If ($iLinkMode <> Null) Then
+		If Not __LOCalc_IntIsBetween($iLinkMode, $LOC_SHEET_LINK_MODE_NONE, $LOC_SHEET_LINK_MODE_VALUE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		If ($iLinkMode = $LOC_SHEET_LINK_MODE_NONE) Then
+			With $oSheet
+				.LinkUrl = ""
+				.LinkSheetName = ""
+				.LinkMode = $iLinkMode
+			EndWith
+			$iError = ($oSheet.LinkUrl() = "") ? ($iError) : (BitOR($iError, 1))
+			$iError = ($oSheet.LinkSheetName() = "") ? ($iError) : (BitOR($iError, 2))
+			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
+		Else
+
+			If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$oSheet.LinkMode = $iLinkMode
+			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
+		EndIf
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_SheetLinkModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetMove
@@ -1289,14 +1400,21 @@ EndFunc   ;==>_LOCalc_SheetsGetCount
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetsGetNames
 ; Description ...: Retrieve an array of Sheet names for a Calc Document.
-; Syntax ........: _LOCalc_SheetsGetNames(ByRef $oDoc)
+; Syntax ........: _LOCalc_SheetsGetNames(ByRef $oDoc[, $bLinkedOnly = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $bLinkedOnly         - [optional] a boolean value. Default is False. If True, only Sheets that are linked will be returned. If False, all Sheets will be returned.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 1 @Extended 2 Return 0 = $bLinkedOnly not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve count of Sheets.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve SheetLinks Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve count of Sheet Links.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Linked Sheet's object.
+;                  @Error 3 @Extended 6 Return 0 =Failed to retrieve Sheet's object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Sheet names for this document. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -1306,25 +1424,59 @@ EndFunc   ;==>_LOCalc_SheetsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_SheetsGetNames(ByRef $oDoc)
+Func _LOCalc_SheetsGetNames(ByRef $oDoc, $bLinkedOnly = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oSheets
+	Local $oSheets, $oSheetLinks, $oLinkedSheet, $oSheet
+	Local $iLinkedSheetCount = 0, $iSheetsCount = 0
 	Local $asNames[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bLinkedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	ReDim $asNames[$oSheets.Count()]
+	$iSheetsCount = $oSheets.Count()
+	If Not IsInt($iSheetsCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	For $i = 0 To $oSheets.Count() - 1
-		$asNames[$i] = $oSheets.getByIndex($i).Name()
+	If $bLinkedOnly Then
+		$oSheetLinks = $oDoc.SheetLinks()
+		If Not IsObj($oSheetLinks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
-	Next
+		$iLinkedSheetCount = $oSheetLinks.Count()
+		If Not IsInt($iLinkedSheetCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		ReDim $asNames[$iLinkedSheetCount]
+
+		For $i = 0 To $iLinkedSheetCount - 1
+
+			$oLinkedSheet = $oSheetLinks.getByIndex($i)
+			If Not IsObj($oLinkedSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+			For $k = 0 To $iSheetsCount - 1
+				$oSheet = $oSheets.getByIndex($k)
+				If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+				If ($oLinkedSheet.Url() = $oSheet.LinkUrl()) Then
+					$asNames[$i] = $oSheet.Name()
+					ExitLoop
+				EndIf
+				Sleep((IsInt($k / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Next
+
+		Next
+
+	Else
+		ReDim $asNames[$iSheetsCount]
+
+		For $i = 0 To $iSheetsCount - 1
+			$asNames[$i] = $oSheets.getByIndex($i).Name()
+
+			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asNames), $asNames)
 EndFunc   ;==>_LOCalc_SheetsGetNames
