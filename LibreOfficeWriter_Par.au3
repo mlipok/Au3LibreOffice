@@ -709,11 +709,11 @@ EndFunc   ;==>_LOWriter_ParStyleBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $sParStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Paragraph Style name called in $sParStyle already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "ParagraphStyle" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.ParagraphStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving Created Paragraph Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.ParagraphStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Paragraph Style by name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "ParagraphStyle" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Paragraph Style by name.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving Created Paragraph Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New paragraph Style successfully created. Returning its Object.
 ; Author ........: donnyh13
@@ -732,17 +732,17 @@ Func _LOWriter_ParStyleCreate(ByRef $oDoc, $sParStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
-	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.ParagraphStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oParStyles.insertByName($sParStyle, $oStyle)
 
-	If Not $oParStyles.hasByName($sParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oParStyles.hasByName($sParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oParStyle = $oParStyles.getByName($sParStyle)
-	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oParStyle)
 EndFunc   ;==>_LOWriter_ParStyleCreate
@@ -764,13 +764,12 @@ EndFunc   ;==>_LOWriter_ParStyleCreate
 ;                  @Error 1 @Extended 4 Return 0 = $bForceDelete not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sReplacementStyle not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Paragraph Style called in $sReplacementStyle doesn't exist in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "ParagraphStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Paragraph Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $oParStyle is not a User-Created Paragraph Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $oParStyle is in use and $bForceDelete is false.
-;                  @Error 3 @Extended 3 Return 0 = $oParStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "ParagraphStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Paragraph Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $oParStyle is not a User-Created Paragraph Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $oParStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 5 Return 0 = $oParStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Paragraph Style called in $oParStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -795,18 +794,18 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	If ($sReplacementStyle <> "") And Not _LOWriter_ParStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oParStyles = $oDoc.StyleFamilies().getByName("ParagraphStyles")
-	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oParStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sParStyle = $oParStyle.Name()
-	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oParStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oParStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oParStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oParStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Default Paragraph Style") Then $oParStyle.setParentStyle($sReplacementStyle)
 	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
-	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -833,8 +832,8 @@ EndFunc   ;==>_LOWriter_ParStyleDelete
 ;                  @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
 ;                  @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $sCharStyle not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumChar
@@ -1073,8 +1072,8 @@ EndFunc   ;==>_LOWriter_ParStyleFontColor
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sParStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Paragraph Style called in $sParStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Paragraph Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Paragraph Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Paragraph Style successfully retrieved, returning its Object.
 ; Author ........: donnyh13
@@ -1094,7 +1093,7 @@ Func _LOWriter_ParStyleGetObj(ByRef $oDoc, $sParStyle)
 	If Not IsString($sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oParStyle = $oDoc.StyleFamilies().getByName("ParagraphStyles").getByName($sParStyle)
-	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oParStyle)
 EndFunc   ;==>_LOWriter_ParStyleGetObj
@@ -1623,8 +1622,8 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Paragraph Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Paragraph Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No Paragraph Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
@@ -1653,7 +1652,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("ParagraphStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -1699,9 +1698,9 @@ EndFunc   ;==>_LOWriter_ParStylesGetNames
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1759,8 +1758,8 @@ EndFunc   ;==>_LOWriter_ParStyleShadow
 ;                  @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1, or 2 (Minimum, or Leading) and $iLineSpcHeight less than 0, uM or greater than 10008 uM
 ;                  @Error 1 @Extended 11 Return 0 = $iLineSpcMode set to 3 (Fixed) and $iLineSpcHeight less than 51, uM or greater than 10008 uM.
 ;                  @Error 1 @Extended 12 Return 0 = $bPageLineSpc not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAbovePar
@@ -1917,11 +1916,11 @@ EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 ;                  @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants , $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop position once inserted.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the new Tabstop position once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                                     1 = Error setting $iPosition
@@ -1971,10 +1970,9 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 ;                  @Error 1 @Extended 5 Return 0 = Tab Stop position called in $iTabStop not found in this ParStyle.
 ;                  @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
 ;                  @Error 1 @Extended 7 Return 0 = Passed Document Object to internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify and delete TabStop in Paragraph.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
@@ -2012,8 +2010,8 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -2059,12 +2057,11 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopList
 ;                  @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
+;                  @Error 3 @Extended 3 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iPosition

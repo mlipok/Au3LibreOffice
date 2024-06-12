@@ -35,8 +35,8 @@
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Font is available, else False.
 ; Author ........: donnyh13
@@ -55,7 +55,7 @@ Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
-	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	For $i = 0 To UBound($atFonts) - 1
 		If $atFonts[$i].Name = $sFontName Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
@@ -73,8 +73,8 @@ EndFunc   ;==>_LOWriter_FontExists
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Font list.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returns a 4 Column Array, @extended is set to the number of results. See remarks
 ; Author ........: donnyh13
@@ -100,7 +100,7 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
-	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $asFonts[UBound($atFonts)][4]
 

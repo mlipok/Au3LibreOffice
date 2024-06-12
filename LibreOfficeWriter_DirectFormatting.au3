@@ -582,9 +582,9 @@ EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -708,12 +708,12 @@ EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving Text Object for creating a ViewCursor Backup.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create a cursor at the position of the View cursor.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to determine $oSelection's cursor type.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve document's Viewcursor.
 ;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Text Object for the Viewcursor.
-;                  @Error 3 @Extended 4 Return 0 = Failed to a cursor at the position of the View cursor.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving Text Object for creating a ViewCursor Backup.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Direct Formatting was successfully cleared.
 ; Author ........: donnyh13
@@ -756,9 +756,9 @@ Func _LOWriter_DirFrmtClear(ByRef $oDoc, ByRef $oSelection)
 			; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 			$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-			If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 			$oViewCursorBackup = $oText.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			$oViewCursor.gotoRange($oSelection, False)
 
@@ -1517,8 +1517,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderWidth
 ;                  @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
 ;                  @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $sCharStyle not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumChar
@@ -1863,9 +1863,9 @@ EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0 or greater than 4. See Constants.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1931,8 +1931,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParShadow
 ;                  @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
 ;                  @Error 1 @Extended 11 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
 ;                  @Error 1 @Extended 12 Return 0 = $bPageLineSpc not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAbovePar
@@ -2031,11 +2031,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParSpace
 ;                  @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the new Tabstop position once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                                     1 = Error setting $iPosition
@@ -2085,10 +2085,9 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 ;                  @Error 1 @Extended 5 Return 0 = $iTabStop not found in this ParStyle.
 ;                  @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
 ;                  @Error 1 @Extended 7 Return 0 = Passed Document Object to internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify and delete TabStop in Paragraph.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Returns true if the TabStop was successfully deleted.
 ; Author ........: donnyh13
@@ -2121,8 +2120,8 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oSelection not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -2164,12 +2163,11 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopList
 ;                  @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0 or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Paragraph/Selection already contains a TabStop at the length/position specified in $iPosition.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
+;                  @Error 3 @Extended 3 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iPosition

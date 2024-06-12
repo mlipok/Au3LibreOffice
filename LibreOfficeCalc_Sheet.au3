@@ -97,10 +97,9 @@ EndFunc   ;==>_LOCalc_SheetActivate
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document already contains a Sheet named the same as called in $sName.
 ;                  @Error 1 @Extended 4 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets present in the document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object. New Sheet may not have been inserted successfully.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve new Sheet's Object. New Sheet may not have been inserted successfully.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New sheet was successfully inserted, returning its Object.
 ; Author ........: donnyh13
@@ -122,7 +121,7 @@ Func _LOCalc_SheetAdd(ByRef $oDoc, $sName = Null, $iPosition = Null)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($sName = Null) Then
 		$sName = "Sheet" & ($oSheets.Count() + 1)
@@ -149,7 +148,7 @@ Func _LOCalc_SheetAdd(ByRef $oDoc, $sName = Null, $iPosition = Null)
 
 	$oSheet = $oSheets.getByName($sName)
 
-	Return (IsObj($oSheet)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oSheet)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return (IsObj($oSheet)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oSheet)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOCalc_SheetAdd
 
 ; #FUNCTION# ====================================================================================================================
@@ -168,11 +167,10 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ;                  @Error 1 @Extended 3 Return 0 = $sNewName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document already contains a Sheet with the same name as called in $sNewName.
 ;                  @Error 1 @Extended 5 Return 0 = $iPosition not an Integer, less than 0, or greater than number of Sheets contained in the document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve original Sheet's name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Object for new Sheet.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve original Sheet's name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Object for new Sheet.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully copied the Sheet. Returning the new Sheet's Object.
 ; Author ........: donnyh13
@@ -196,10 +194,10 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sName = $oSheet.Name()
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If ($sNewName = Null) Then
 		$sNewName = $sName & "_" & 2
@@ -228,7 +226,7 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 	$oSheets.copyByName($sName, $sNewName, $iPosition)
 
 	$oNewSheet = $oSheets.getByName($sNewName)
-	If Not IsObj($oNewSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oNewSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNewSheet)
 EndFunc   ;==>_LOCalc_SheetCopy
@@ -480,8 +478,8 @@ EndFunc   ;==>_LOCalc_SheetDetectiveTraceError
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Active Sheet's Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Active Sheet's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the Active Sheet, returning its Object.
 ; Author ........: donnyh13
@@ -500,7 +498,7 @@ Func _LOCalc_SheetGetActive(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oSheet = $oDoc.CurrentController.getActiveSheet()
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_SheetGetActive
@@ -517,9 +515,9 @@ EndFunc   ;==>_LOCalc_SheetGetActive
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document does not contain a sheet with name called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
 ; Author ........: donnyh13
@@ -539,12 +537,12 @@ Func _LOCalc_SheetGetObjByName(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oSheet = $oSheets.getByName($sName)
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_SheetGetObjByName
@@ -560,9 +558,9 @@ EndFunc   ;==>_LOCalc_SheetGetObjByName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iPosition not an Integer, less than 0 or greater than number of Sheets contained in the document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Sheet's object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Sheet's object.
 ; Author ........: donnyh13
@@ -582,10 +580,10 @@ Func _LOCalc_SheetGetObjByPosition(ByRef $oDoc, $iPosition)
 	If Not __LOCalc_IntIsBetween($iPosition, 0, $oDoc.Sheets.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheet = $oSheets.getByIndex($iPosition)
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_SheetGetObjByPosition
@@ -606,11 +604,10 @@ EndFunc   ;==>_LOCalc_SheetGetObjByPosition
 ;                  @Error 1 @Extended 3 Return 0 = $sSheetName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
 ;                  @Error 1 @Extended 5 Return 0 = $bInsertAfter not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to import the Sheet.
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
+;                  @Error 3 @Extended 2 Return 0 = Failed to import the Sheet.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Sheet's Object.
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version less than 3.5.
 ;                  --Success--
@@ -637,15 +634,15 @@ Func _LOCalc_SheetImport(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $bInse
 	If Not IsBool($bInsertAfter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$iPosition = $oDestDoc.CurrentController.getActiveSheet().RangeAddress.Sheet()
-	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iPosition = ($bInsertAfter) ? ($iPosition + 1) : ($iPosition)
 
 	$iNewSheet = $oDestDoc.Sheets.importSheet($oSourceDoc, $sSheetName, $iPosition)
-	If Not IsInt($iNewSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iNewSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oSheet = $oDestDoc.Sheets.getByIndex($iNewSheet)
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_SheetImport
@@ -661,8 +658,8 @@ EndFunc   ;==>_LOCalc_SheetImport
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the called Sheet is the currently active sheet, True is returned. Else False.
 ; Author ........: donnyh13
@@ -682,7 +679,7 @@ Func _LOCalc_SheetIsActive(ByRef $oDoc, ByRef $oSheet)
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheet2 = $oDoc.CurrentController.getActiveSheet()
-	If Not IsObj($oSheet2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheet2) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oSheet.AbsoluteName() = $oSheet2.AbsoluteName()) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
@@ -742,11 +739,10 @@ EndFunc   ;==>_LOCalc_SheetIsProtected
 ;                  @Error 1 @Extended 5 Return 0 = Document called in $oSourceDoc has no save location.
 ;                  @Error 1 @Extended 6 Return 0 = Document called in $oSourceDoc does not have a Sheet with the name called in $sSheetName.
 ;                  @Error 1 @Extended 7 Return 0 = $bInsertAfter not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Create a name for new Sheet in Destination Document.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Sheet's Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Create a name for new Sheet in Destination Document.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Document's currently active Sheet's position.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Sheet's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted and linked the new Sheet, returning the new Sheet's Object.
 ; Author ........: donnyh13
@@ -789,17 +785,17 @@ Func _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $iLinkMo
 
 	EndIf
 
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iPosition = $oDestDoc.CurrentController.getActiveSheet().RangeAddress.Sheet()
-	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iPosition = ($bInsertAfter) ? ($iPosition + 1) : ($iPosition - 1)
 
 	$oDestDoc.Sheets.insertNewByName($sName, $iPosition)
 
 	$oSheet = $oDestDoc.Sheets.getByName($sName)
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oSheet.link($oSourceDoc.URL(), $sSheetName, "", "", $iLinkMode)
 
@@ -819,8 +815,9 @@ EndFunc   ;==>_LOCalc_SheetLink
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iPosition not an Integer, less than 0 or greater than number of sheets contained in the document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheet's name.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheet's name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sheet was successfully moved.
 ;                  @Error 0 @Extended 0 Return Integer = Success. $iPosition called with Null, returning Sheet's current position.
@@ -844,10 +841,10 @@ Func _LOCalc_SheetMove(ByRef $oDoc, ByRef $oSheet, $iPosition = Null)
 	If ($iPosition = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oSheet.RangeAddress.Sheet())
 
 	$sName = $oSheet.Name()
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If Not __LOCalc_IntIsBetween($iPosition, 0, $oSheets.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -870,8 +867,8 @@ EndFunc   ;==>_LOCalc_SheetMove
 ;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document already has a Sheet named the same as called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $sName
@@ -900,7 +897,7 @@ Func _LOCalc_SheetName(ByRef $oDoc, ByRef $oSheet, $sName = Null)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -924,12 +921,11 @@ EndFunc   ;==>_LOCalc_SheetName
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bRepeatColumns not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Column Headers.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Column Header Range.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve current Column Header Range.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve called Range Address.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $oRange
@@ -964,12 +960,12 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 
 		If ($tRangeAddr.StartColumn() = $tRangeAddr.EndColumn()) And ($tRangeAddr.StartRow() = $tRangeAddr.EndRow()) Then
 			$oCell = $oSheet.getCellByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow())
-			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintColumn, $oCell, $oSheet.PrintTitleColumns())
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
-			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintColumn, $oCellRange, $oSheet.PrintTitleColumns())
 		EndIf
@@ -979,7 +975,7 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 
 	If ($oRange = Default) Then
 		$tRangeAddr = $oSheet.getTitleColumns()
-		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		With $tRangeAddr
 			.Sheet = 0
@@ -994,7 +990,7 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 	ElseIf ($oRange <> Null) Then
 		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tRangeAddr = $oRange.RangeAddress()
-		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		$oSheet.setTitleColumns($tRangeAddr)
 		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleColumns(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1020,10 +1016,9 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $aoRange not an Array.
 ;                  @Error 1 @Extended 3 Return ? = Element in Array called in $aoRange not an Object, returning problem array element number.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Range Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Print Area Addresses.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Range Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $aoRange
@@ -1053,7 +1048,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 		If Not IsArray($aoRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		For $i = 0 To UBound($aoRange) - 1
 			$aoRange[$i] = $oSheet.getCellRangeByPosition($aoRange[$i].StartColumn(), $aoRange[$i].StartRow(), $aoRange[$i].EndColumn(), $aoRange[$i].EndRow())
-			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
 		Return SetError($__LO_STATUS_SUCCESS, UBound($aoRange), $aoRange)
 	EndIf
@@ -1084,12 +1079,11 @@ EndFunc   ;==>_LOCalc_SheetPrintRangeModify
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bRepeatRows not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell/Cell Range Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Object of current Row Headers.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current Row Header Range.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve called Range Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell/Cell Range Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve current Row Header Range.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve called Range Address.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $oRange
@@ -1124,12 +1118,12 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 
 		If ($tRangeAddr.StartColumn() = $tRangeAddr.EndColumn()) And ($tRangeAddr.StartRow() = $tRangeAddr.EndRow()) Then
 			$oCell = $oSheet.getCellByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow())
-			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintRow, $oCell, $oSheet.PrintTitleRows())
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
-			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintRow, $oCellRange, $oSheet.PrintTitleRows())
 		EndIf
@@ -1139,7 +1133,7 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 
 	If ($oRange = Default) Then
 		$tRangeAddr = $oSheet.getTitleRows()
-		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		With $tRangeAddr
 			.Sheet = 0
@@ -1154,7 +1148,7 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 	ElseIf ($oRange <> Null) Then
 		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tRangeAddr = $oRange.RangeAddress()
-		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		$oSheet.setTitleRows($tRangeAddr)
 		$iError = (__LOCalc_RangeAddressIsSame($oSheet.getTitleRows(), $tRangeAddr)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1215,11 +1209,10 @@ EndFunc   ;==>_LOCalc_SheetProtect
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oSheet not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve the Sheet's name.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to delete the Sheet, but a Sheet by that name still exists.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Sheet's name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Sheets Object.
+;                  @Error 3 @Extended 3 Return 0 = Attempted to delete the Sheet, but a Sheet by that name still exists.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully removed the requested sheet.
 ; Author ........: donnyh13
@@ -1240,14 +1233,14 @@ Func _LOCalc_SheetRemove(ByRef $oDoc, ByRef $oSheet)
 	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$sName = $oSheet.Name()
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oSheets.removeByName($sName)
 
-	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_SheetRemove
@@ -1261,8 +1254,8 @@ EndFunc   ;==>_LOCalc_SheetRemove
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Sheets contained in the Calc Document.
 ; Author ........: donnyh13
@@ -1281,7 +1274,7 @@ Func _LOCalc_SheetsGetCount(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheets.Count())
 EndFunc   ;==>_LOCalc_SheetsGetCount
@@ -1295,8 +1288,8 @@ EndFunc   ;==>_LOCalc_SheetsGetCount
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Sheet names for this document. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -1316,7 +1309,7 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $asNames[$oSheets.Count()]
 

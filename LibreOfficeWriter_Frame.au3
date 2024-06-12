@@ -209,11 +209,10 @@ EndFunc   ;==>_LOWriter_FrameAreaFillStyle
 ;                  @Error 1 @Extended 11 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 12 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -252,7 +251,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tStyleGradient = $oFrame.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -332,10 +331,10 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	If ($oFrame.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oFrame.FillGradientName = $sGradName
-		If ($oFrame.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrame.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oFrame.FillGradient = $tStyleGradient
@@ -626,8 +625,8 @@ EndFunc   ;==>_LOWriter_FrameBorderWidth
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $iHeight not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 7 Return 0 = $iPosition not an Integer, less than 0, or greater than 2. See constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bSeparatorOn
@@ -657,7 +656,7 @@ Func _LOWriter_FrameColumnSeparator(ByRef $oFrame, $bSeparatorOn = Null, $iStyle
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
@@ -717,8 +716,8 @@ EndFunc   ;==>_LOWriter_FrameColumnSeparator
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oFrame not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColumns not an Integer or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iColumns
@@ -742,7 +741,7 @@ Func _LOWriter_FrameColumnSettings(ByRef $oFrame, $iColumns = Null)
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
@@ -775,11 +774,11 @@ EndFunc   ;==>_LOWriter_FrameColumnSettings
 ;                  @Error 1 @Extended 5 Return 0 = $iGlobalSpacing not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iSpacing not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iWidth not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Frame Style Column Object Array.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Frame.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Frame Style Column Object Array.
+;                  @Error 3 @Extended 3 Return 0 = No columns present for requested Frame.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Array of Columns.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bAutoWidth
@@ -811,10 +810,10 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrame.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$atColumns = $oTextColumns.Columns()
-	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
@@ -889,7 +888,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
-			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			; See if setting spacing worked. Spacing is equally divided between the two adjoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
@@ -907,7 +906,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrame.TextColumns.Columns()
-		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
@@ -1126,9 +1125,9 @@ EndFunc   ;==>_LOWriter_FrameGetObjByCursor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving TextFrame Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shapes Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No matches found.
 ;                  @Error 0 @Extended 1 Return Object = Success. Successfully found requested Frame by name, returning Frame Object.
@@ -1149,13 +1148,13 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrames.getByName($sFrameName))
 
 	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
@@ -1451,9 +1450,9 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bSearchShapes not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure retrieving Frame objects.
-;                  @Error 2 @Extended 2 Return 0 = Failure retrieving Shape objects.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failure retrieving Frame objects.
+;                  @Error 3 @Extended 2 Return 0 = Failure retrieving Shape objects.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array. Returning Array of Frame names. @Extended set to number of Frame Names returned.
 ; Author ........: donnyh13
@@ -1474,7 +1473,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsBool($bSearchShapes) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oFrames.hasElements() Then
 		ReDim $asFrameNames[$oFrames.getCount()]
@@ -1486,7 +1485,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 
 	If ($bSearchShapes = True) Then
 		$oShapes = $oDoc.DrawPage()
-		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		If $oShapes.hasElements() Then
 			ReDim $asShapes[$oShapes.getCount()]
@@ -1536,9 +1535,9 @@ EndFunc   ;==>_LOWriter_FramesGetNames
 ;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3..
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1567,7 +1566,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$tShdwFrmt = $oFrame.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1597,7 +1596,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 	$oFrame.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oFrame.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -1742,11 +1741,10 @@ EndFunc   ;==>_LOWriter_FrameStyleAreaFillStyle
 ;                  @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -1786,7 +1784,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oFrameStyle.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -1866,10 +1864,10 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	If ($oFrameStyle.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oFrameStyle.FillGradientName = $sGradName
-		If ($oFrameStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrameStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oFrameStyle.FillGradient = $tStyleGradient
@@ -2169,8 +2167,8 @@ EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 ;                  @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 7 Return 0 = $iHeight not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iPosition not an Integer, less than 0, or greater than 2. See constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bSeparatorOn
@@ -2201,7 +2199,7 @@ Func _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle, $bSeparatorOn = Nul
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
@@ -2262,8 +2260,8 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSeparator
 ;                  @Error 1 @Extended 1 Return 0 = $oFrameStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oFrameStyle not a Frame Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iColumns
@@ -2288,7 +2286,7 @@ Func _LOWriter_FrameStyleColumnSettings(ByRef $oFrameStyle, $iColumns = Null)
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
@@ -2322,11 +2320,11 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSettings
 ;                  @Error 1 @Extended 6 Return 0 = $iGlobalSpacing not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iSpacing not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iWidth not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Frame Style Column Object Array.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Frame Style.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Frame Style Column Object Array.
+;                  @Error 3 @Extended 3 Return 0 = No columns present for requested Frame Style.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve array of Columns.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bAutoWidth
@@ -2359,10 +2357,10 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oTextColumns = $oFrameStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$atColumns = $oTextColumns.Columns()
-	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -2438,7 +2436,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
-			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			; See if setting spacing worked. Spacing is equally divided between the two adjoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
@@ -2456,7 +2454,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 		; Retrieve Array of columns again for testing.
 		$atColumns = $oFrameStyle.TextColumns.Columns()
-		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
@@ -2476,11 +2474,11 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSize
 ;                  @Error 1 @Extended 2 Return 0 = $sFrameStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sFrameStyle name already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "FrameStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.FrameStyle" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Retrieving New Frame Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.FrameStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Frame Style by Name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "FrameStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Frame Style by Name.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving New Frame Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New Frame Style successfully created. Returning its Object.
 ; Author ........: donnyh13
@@ -2499,17 +2497,17 @@ Func _LOWriter_FrameStyleCreate(ByRef $oDoc, $sFrameStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrameStyles = $oDoc.StyleFamilies().getByName("FrameStyles")
-	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.FrameStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oFrameStyles.insertByName($sFrameStyle, $oStyle)
 
-	If Not $oFrameStyles.hasByName($sFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oFrameStyles.hasByName($sFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oFrameStyle = $oFrameStyles.getByName($sFrameStyle)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrameStyle)
 EndFunc   ;==>_LOWriter_FrameStyleCreate
@@ -2531,13 +2529,12 @@ EndFunc   ;==>_LOWriter_FrameStyleCreate
 ;                  @Error 1 @Extended 4 Return 0 = $bForceDelete not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sReplacementStyle not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Frame Style called in $sReplacementStyle doesn't exist in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FrameStyles" Object.
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Frame Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $sFrameStyle is not a User-Created Frame Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $sFrameStyle is in use and $bForceDelete is false.
-;                  @Error 3 @Extended 3 Return 0 = $sFrameStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FrameStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Frame Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $sFrameStyle is not a User-Created Frame Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $sFrameStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 5 Return 0 = $sFrameStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Frame Style called in $sFrameStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -2562,18 +2559,18 @@ Func _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle, $bForceDelete = False
 	If ($sReplacementStyle <> "") And Not _LOWriter_FrameStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oFrameStyles = $oDoc.StyleFamilies().getByName("FrameStyles")
-	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sFrameStyle = $oFrameStyle.Name()
-	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oFrameStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oFrameStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oFrameStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oFrameStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oFrameStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Frame") Then $oFrameStyle.setParentStyle($sReplacementStyle)
 	; If Parent style is blank set it to "Frame" style, Or if not but User has called a specific style set it to that.
 
 	$oFrameStyles.removeByName($sFrameStyle)
-	Return ($oFrameStyles.hasByName($sFrameStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oFrameStyles.hasByName($sFrameStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -2619,8 +2616,8 @@ EndFunc   ;==>_LOWriter_FrameStyleExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFrameStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Frame Style called in $sFrameStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Frame Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Frame Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Frame Style successfully retrieved, returning its Object.
 ; Author ........: donnyh13
@@ -2640,7 +2637,7 @@ Func _LOWriter_FrameStyleGetObj(ByRef $oDoc, $sFrameStyle)
 	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFrameStyle = $oDoc.StyleFamilies().getByName("FrameStyles").getByName($sFrameStyle)
-	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrameStyle)
 EndFunc   ;==>_LOWriter_FrameStyleGetObj
@@ -2898,8 +2895,8 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Frame Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Frame Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No Frame Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Frame Styles matching the called parameters. @Extended contains the count of results returned.
@@ -2926,7 +2923,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("FrameStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -2972,9 +2969,9 @@ EndFunc   ;==>_LOWriter_FrameStylesGetNames
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -3004,7 +3001,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tShdwFrmt = $oFrameStyle.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -3034,7 +3031,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 	$oFrameStyle.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oFrameStyle.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -3115,13 +3112,10 @@ EndFunc   ;==>_LOWriter_FrameStyleTransparency
 ;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3156,7 +3150,7 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oFrameStyle.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
@@ -3207,10 +3201,10 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 
 	If ($oFrameStyle.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oFrameStyle.FillTransparenceGradientName = $sTGradName
-		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrameStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oFrameStyle.FillTransparenceGradient = $tStyleGradient
@@ -3643,8 +3637,8 @@ EndFunc   ;==>_LOWriter_FrameStyleTypeSize
 ;                  @Error 1 @Extended 5 Return 0 = $iRight not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iTop not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iBottom not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWrapType
@@ -3674,7 +3668,7 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 	If Not IsObj($oFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oFrameStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oPropInfo = $oFrameStyle.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 
@@ -3865,13 +3859,10 @@ EndFunc   ;==>_LOWriter_FrameTransparency
 ;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3905,7 +3896,7 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tGradient = $oFrame.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
@@ -3956,10 +3947,10 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 
 	If ($oFrame.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oFrame.FillTransparenceGradientName = $sTGradName
-		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oFrame.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oFrame.FillTransparenceGradient = $tGradient
@@ -4386,8 +4377,8 @@ EndFunc   ;==>_LOWriter_FrameTypeSize
 ;                  @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWrapType
@@ -4416,7 +4407,7 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oPropInfo = $oFrame.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 

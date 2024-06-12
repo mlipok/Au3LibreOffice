@@ -183,8 +183,8 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetAnchor
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document does not contain a Bookmark named in $sBookmarkName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Bookmark Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Bookmark Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved requested Bookmark Object. Returning requested Object.
 ; Author ........: donnyh13
@@ -206,7 +206,7 @@ Func _LOWriter_DocBookmarkGetObj(ByRef $oDoc, $sBookmarkName)
 	If Not _LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oBookmark = $oDoc.Bookmarks.getByName($sBookmarkName)
-	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmark)
 EndFunc   ;==>_LOWriter_DocBookmarkGetObj
@@ -325,8 +325,8 @@ EndFunc   ;==>_LOWriter_DocBookmarkModify
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
 ; Author ........: donnyh13
@@ -346,7 +346,7 @@ Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
 	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oBookmarks = $oDoc.getBookmarks()
-	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
 EndFunc   ;==>_LOWriter_DocBookmarksHasName
@@ -360,8 +360,8 @@ EndFunc   ;==>_LOWriter_DocBookmarksHasName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Array of Bookmark Names.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Bookmark Names.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Bookmarks, no results found.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Bookmarks, returning Array of Bookmark names, @Extended set to number of results.
@@ -381,7 +381,7 @@ Func _LOWriter_DocBookmarksList(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$asBookmarkNames = $oDoc.Bookmarks.getElementNames()
-	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return (UBound($asBookmarkNames) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarksList
@@ -633,13 +633,13 @@ EndFunc   ;==>_LOWriter_DocConnect
 ;                  @Error 1 @Extended 2 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sDelimiter not a String.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve ViewCursor object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create a backup of the ViewCursor's current location.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a Text Cursor in the first cell.
-;                  @Error 2 @Extended 4 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 5 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a backup of the ViewCursor's current location.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a Text Cursor in the first cell.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 4 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of CellNames.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ViewCursor object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Table was successfully converted to text.
 ; Author ........: donnyh13
@@ -669,26 +669,26 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 
 	; Retrieve the ViewCursor.
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 	$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
 	If Not IsObj($oViewCursorBackup) Then
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False) ; If That Failed, create a Backup Cursor at the beginning of the document.
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	EndIf
 
 	; Retrieve the first cell  in the table and create a text cursor in it to move the ViewCursor to.
 	$oCellTextCursor = $oTable.getCellByName($asCellNames[0]).Text.createTextCursor()
-	If Not IsObj($oCellTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCellTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$oViewCursor.gotoRange($oCellTextCursor, False)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTableToText", "", 0, $aArgs)
 
@@ -723,14 +723,14 @@ EndFunc   ;==>_LOWriter_DocConvertTableToText
 ;                  @Error 1 @Extended 8 Return 0 = $oCursor is a Table Cursor and is not supported.
 ;                  @Error 1 @Extended 9 Return 0 = $oCursor has no data selected.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve TextTables Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve ViewCursor object.
-;                  @Error 2 @Extended 5 Return 0 = Failed to create a backup of the ViewCursor's current location.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.frame.DispatchHelper" Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create a backup of the ViewCursor's current location.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to $oCursor's cursor type.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve new Table's Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve TextTables Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to $oCursor's cursor type.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ViewCursor object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve new Table's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Text was successfully converted to a Table, returning the new Table's Object.
 ; Author ........: donnyh13
@@ -758,7 +758,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	If Not IsBool($bDontSplitTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $asTables[$oTables.getCount()]
 	; Store all current Table Names.
 	For $i = 0 To $oTables.getCount() - 1
@@ -767,17 +767,17 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	Next
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 	; If Cursor has no data selected, return error.
 	If $oCursor.isCollapsed() Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	$atArgs[0] = __LOWriter_SetPropertyValue("Delimiter", $sDelimiter)
 	$atArgs[1] = __LOWriter_SetPropertyValue("WithHeader", $bHeader)
@@ -789,11 +789,11 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 		; Retrieve the ViewCursor.
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
-		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		; Create a Text cursor at the current ViewCursor position to move the Viewcursor back to.
 		$oViewCursorBackup = _LOWriter_DocCreateTextCursor($oDoc, False, True)
-		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+		If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 		$oViewCursor.gotoRange($oCursor, False)
 
@@ -822,7 +822,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 		EndIf
 	Next
 
-	Return (IsObj($oTable)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
+	Return (IsObj($oTable)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oTable)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0))
 EndFunc   ;==>_LOWriter_DocConvertTextToTable
 
 ; #FUNCTION# ====================================================================================================================
@@ -908,11 +908,11 @@ EndFunc   ;==>_LOWriter_DocCreate
 ;                  @Error 1 @Extended 3 Return 0 = $bCreateAtViewCursor not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bCreateAtEnd and $bCreateAtViewCursor both set to True, set either one to False.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve current ViewCursor Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create Cursor Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create Text Cursor Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Current ViewCursor is in unknown data type or failed detecting what data type.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve ViewCursor Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Retrieve Text Object.
+;                  @Error 3 @Extended 3 Return 0 = Current ViewCursor is in unknown data type or failed detecting what data type.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Object = Success, Cursor object was returned. @Extended can be on of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3 indicating the current created cursor is in that type of data.
 ; Author ........: donnyh13
@@ -939,20 +939,20 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 
 	If ($bCreateAtViewCursor = True) Then
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
-		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error Or Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$iCursorType = @extended
-		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
 		If __LOWriter_IntIsBetween($iCursorType, $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_HEADER_FOOTER) Then
 			$oCursor = $oText.createTextCursorByRange($oViewCursor)
 		Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; ViewCursor in unknown data type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; ViewCursor in unknown data type.
 		EndIf
 
 	Else
 		$oText = $oDoc.getText
-		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$oCursor = $oText.createTextCursor()
 		$iCursorType = $LOW_CURDATA_BODY_TEXT
 
@@ -963,7 +963,7 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 		EndIf
 	EndIf
 
-	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCursorType, $oCursor)
 EndFunc   ;==>_LOWriter_DocCreateTextCursor
@@ -985,8 +985,8 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ;                  @Error 1 @Extended 3 Return 0 = $sSubject not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $asKeywords not an Array.
 ;                  @Error 1 @Extended 5 Return 0 = $sComments not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sTitle
@@ -1016,7 +1016,7 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sTitle, $sSubject, $asKeywords, $sComments) Then
 		__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description())
@@ -1724,8 +1724,9 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ;                  @Error 1 @Extended 5 Return 0 = $iEditDuration not an integer.
 ;                  @Error 1 @Extended 5 Return 0 = $bApplyUserData not a Boolean.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Document Settings Object.
+;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Settings Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sNewAuthor
@@ -1761,10 +1762,10 @@ Func _LOWriter_DocGenProp(ByRef $oDoc, $sNewAuthor = Null, $iRevisions = Null, $
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSettings = $oDoc.createInstance("com.sun.star.text.DocumentSettings")
-	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oSettings) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If ($bResetUserData = True) Then
 		If Not IsString($sNewAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1817,8 +1818,8 @@ EndFunc   ;==>_LOWriter_DocGenProp
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sAuthor not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $tDateStruct not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sAuthor
@@ -1844,7 +1845,7 @@ Func _LOWriter_DocGenPropCreation(ByRef $oDoc, $sAuthor = Null, $tDateStruct = N
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sAuthor, $tDateStruct) Then
 		__LOWriter_ArrayFill($avCreate, $oDocProp.Author(), $oDocProp.CreationDate())
@@ -1878,8 +1879,8 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $tDateStruct not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sModifiedBy
@@ -1905,7 +1906,7 @@ Func _LOWriter_DocGenPropModification(ByRef $oDoc, $sModifiedBy = Null, $tDateSt
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sModifiedBy, $tDateStruct) Then
 		__LOWriter_ArrayFill($avMod, $oDocProp.ModifiedBy(), $oDocProp.ModificationDate())
@@ -1940,8 +1941,8 @@ EndFunc   ;==>_LOWriter_DocGenPropModification
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sPrintedBy not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $tDateStruct not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sPrintedBy
@@ -1967,7 +1968,7 @@ Func _LOWriter_DocGenPropPrint(ByRef $oDoc, $sPrintedBy = Null, $tDateStruct = N
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sPrintedBy, $tDateStruct) Then
 		__LOWriter_ArrayFill($avPrint, $oDocProp.PrintedBy(), $oDocProp.PrintDate())
@@ -2004,10 +2005,9 @@ EndFunc   ;==>_LOWriter_DocGenPropPrint
 ;                  @Error 1 @Extended 2 Return 0 = $sTemplateName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sTemplateURL not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $tDateStruct not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error converting Computer path to Libre Office URL.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
+;                  @Error 3 @Extended 2 Return 0 = Error converting Computer path to Libre Office URL.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sTemplateName
@@ -2034,7 +2034,7 @@ Func _LOWriter_DocGenPropTemplate(ByRef $oDoc, $sTemplateName = Null, $sTemplate
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oDocProp = $oDoc.DocumentProperties()
-	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sTemplateName, $sTemplateURL, $tDateStruct) Then
 		__LOWriter_ArrayFill($avTemplate, $oDocProp.TemplateName(), _LOWriter_PathConvert($oDocProp.TemplateURL(), $LOW_PATHCONV_PCPATH_RETURN), _
@@ -2051,7 +2051,7 @@ Func _LOWriter_DocGenPropTemplate(ByRef $oDoc, $sTemplateName = Null, $sTemplate
 	If ($sTemplateURL <> Null) Then
 		If Not IsString($sTemplateURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$sTemplateURL = _LOWriter_PathConvert($sTemplateURL, $LOW_PATHCONV_OFFICE_RETURN)
-		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$oDocProp.TemplateURL = $sTemplateURL
 		$iError = ($oDocProp.TemplateURL() = $sTemplateURL) ? ($iError) : (BitOR($iError, 2))
 	EndIf
@@ -2074,8 +2074,8 @@ EndFunc   ;==>_LOWriter_DocGenPropTemplate
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Document Statistics Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Document Statistics Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Array = Success. A 1 dimension, 0 based, 9 row Array of integers, in the order described in remarks.
 ; Author ........: donnyh13
@@ -2097,7 +2097,7 @@ Func _LOWriter_DocGetCounts(ByRef $oDoc)
 			$oDoc.WordCount(), $oDoc.CharacterCount())
 
 	$avDocStats = $oDoc.DocumentProperties.DocumentStatistics()
-	If Not IsArray($avDocStats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($avDocStats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($avDocStats) - 1
 		If ($avDocStats[$i].Name() = "NonWhitespaceCharacterCount") Then $aiCounts[5] = $avDocStats[$i].Value()
@@ -2236,8 +2236,8 @@ EndFunc   ;==>_LOWriter_DocGetString
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve ViewCursor Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve ViewCursor Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return $oViewCursor Object = Success. The Object for the Document's View Cursor is returned for use in other Cursor related functions.
 ; Author ........: donnyh13
@@ -2255,7 +2255,7 @@ Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
-	Return (IsObj($oViewCursor)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oViewCursor)) : (SetError($__LO_STATUS_INIT_ERROR, 1, 0)) ; Failed to Create ViewCursor
+	Return (IsObj($oViewCursor)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oViewCursor)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) ; Failed to Retrieve ViewCursor
 EndFunc   ;==>_LOWriter_DocGetViewCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2269,9 +2269,9 @@ EndFunc   ;==>_LOWriter_DocGetViewCursor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Frames Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shapes Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Frames found matching $sFrameName.
 ;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Frame found matching $sFrameName.
@@ -2292,13 +2292,13 @@ Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
 	; If No results, then search Shapes.
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
@@ -2386,8 +2386,8 @@ EndFunc   ;==>_LOWriter_DocHasPath
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Draw Page Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Draw Page Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Shapes found matching $sShapeName.
 ;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Shape found matching $sShapeName.
@@ -2408,7 +2408,7 @@ Func _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
 	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
@@ -2432,8 +2432,8 @@ EndFunc   ;==>_LOWriter_DocHasShapeName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Tables Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no tables found matching $sTableName.
 ;                  @Error 0 @Extended 1 Return True = Success. Search was successful, table found matching $sTableName.
@@ -2453,7 +2453,7 @@ Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
@@ -2546,10 +2546,10 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  @Error 1 @Extended 7 Return 0 = $oCursor is a TableCursor, and is not supported.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Cursor Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cursor type.
 ;                  @Error 3 @Extended 2 Return 0 = Current ViewCursor is in unknown data type or failed detecting what data type.
+;                  @Error 3 @Extended 3 Return 0 = Failed to Retrieve Text Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return 1 = Success, hyperlink was successfully inserted.
 ; Author ........: donnyh13
@@ -2588,10 +2588,10 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 
 		$oText = __LOWriter_CursorGetText($oDoc, $oTextCursor)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	Else
 		$oText = $oDoc.getText
-		If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		$oTextCursor = $oText.createTextCursor()
 		If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 		$oTextCursor.gotoEnd(False)
@@ -2986,9 +2986,9 @@ EndFunc   ;==>_LOWriter_DocOpen
 ;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Position and Size Structure Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Position and Size Structure Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iX
@@ -3020,7 +3020,7 @@ Func _LOWriter_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iX, $iY, $iWidth, $iHeight) Then
 		__LOWriter_ArrayFill($aiWinPosSize, $tWindowSize.X(), $tWindowSize.Y(), $tWindowSize.Width(), $tWindowSize.Height())
@@ -3050,7 +3050,7 @@ Func _LOWriter_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null
 	$oDoc.CurrentController.Frame.ContainerWindow.setPosSize($tWindowSize.X, $tWindowSize.Y, $tWindowSize.Width, $tWindowSize.Height, $iPosSize)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iX = Null) ? ($iError) : (($tWindowSize.X() = $iX) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iY = Null) ? ($iError) : (($tWindowSize.Y() = $iY) ? ($iError) : (BitOR($iError, 2)))
@@ -3796,13 +3796,13 @@ EndFunc   ;==>_LOWriter_DocReplaceAll
 ;                  @Error 1 @Extended 11 Return 0 = First Element in $atReplaceFormat not a Property Object.
 ;                  @Error 1 @Extended 12 Return 0 = Search Styles is True, $atFindFormat and $atReplaceFormat arrays are empty, (Thus searching for Paragraph Styles by Name contained in the document) but $sReplaceString is set to a Paragraph Style that does not exist.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ViewCursor object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating backup of ViewCursor location and selection.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 4 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating backup of ViewCursor location and selection.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.frame.DispatchHelper" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error converting Regular Expression String.
 ;                  @Error 3 @Extended 2 Return 0 = Error performing FindAllInRange Function.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ViewCursor object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return 1 = Success. Search and Replace was successful, number of replacements returned in @Extended.
 ; Author ........: donnyh13
@@ -3871,20 +3871,20 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 		Else ;No Replacement formatting, use UNO Execute method instead.
 
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
-			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			; Backup the ViewCursor location and selection.
 			$oViewCursorBackup = $oDoc.Text.createTextCursorByRange($oViewCursor)
-			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oViewCursorBackup) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			; Move the View Cursor to the input range.
 			$oViewCursor.gotoRange($oRange, False)
 
 			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			$oDispatcher = $oServiceManager.createInstance("com.sun.star.frame.DispatchHelper")
-			If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+			If Not IsObj($oDispatcher) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			$atArgs[0] = __LOWriter_SetPropertyValue("SearchItem.Backward", $oSrchDescript.SearchBackwards())
 			$atArgs[1] = __LOWriter_SetPropertyValue("SearchItem.AlgorithmType", $LOW_SEARCHFLAG_ABSOLUTE)

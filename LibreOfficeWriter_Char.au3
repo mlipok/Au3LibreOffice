@@ -291,11 +291,11 @@ EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $sCharStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sCharStyle name already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "CharacterStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.CharacterStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving Created Character Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.CharacterStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Character Style by Name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "CharacterStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error Retrieving Created Character Style Object.
+;                  @Error 3 @Extended 3 Return 0 = Error creating new Character Style by Name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New Character Style successfully created. Returning Character Style Object.
 ; Author ........: donnyh13
@@ -314,17 +314,17 @@ Func _LOWriter_CharStyleCreate(ByRef $oDoc, $sCharStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oCharStyles = $oDoc.StyleFamilies().getByName("CharacterStyles")
-	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.CharacterStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oCharStyles.insertByName($sCharStyle, $oStyle)
 
-	If Not $oCharStyles.hasByName($sCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oCharStyles.hasByName($sCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oCharStyle = $oCharStyles.getByName($sCharStyle)
-	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCharStyle)
 EndFunc   ;==>_LOWriter_CharStyleCreate
@@ -346,13 +346,12 @@ EndFunc   ;==>_LOWriter_CharStyleCreate
 ;                  @Error 1 @Extended 4 Return 0 = $bForceDelete not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sReplacementStyle not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Character Style called in $sReplacementStyle doesn't exist in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "CharacterStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Character Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $sCharStyle is not a User-Created Character Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $sCharStyle is in use and $bForceDelete is false.
-;                  @Error 3 @Extended 3 Return 0 = $sCharStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "CharacterStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Character Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $sCharStyle is not a User-Created Character Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $sCharStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 5 Return 0 = $sCharStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Requested Character Style was successfully deleted.
 ; Author ........: donnyh13
@@ -377,18 +376,18 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	If ($sReplacementStyle <> "") And Not _LOWriter_CharStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oCharStyles = $oDoc.StyleFamilies().getByName("CharacterStyles")
-	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCharStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sCharStyle = $oCharStyle.Name()
-	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oCharStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oCharStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oCharStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oCharStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($sReplacementStyle <> "") Then $oCharStyle.setParentStyle($sReplacementStyle)
 	; If User has called a specific style to replace this style, set it to that.
 
 	$oCharStyles.removeByName($sCharStyle)
-	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -593,8 +592,8 @@ EndFunc   ;==>_LOWriter_CharStyleFontColor
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sCharStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Character Style defined in $sCharStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Character Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Character Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Successfully retrieved and returned requested Character Style Object.
 ; Author ........: donnyh13
@@ -614,7 +613,7 @@ Func _LOWriter_CharStyleGetObj(ByRef $oDoc, $sCharStyle)
 	If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oCharStyle = $oDoc.StyleFamilies().getByName("CharacterStyles").getByName($sCharStyle)
-	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCharStyle)
 EndFunc   ;==>_LOWriter_CharStyleGetObj
@@ -910,8 +909,8 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Character Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Character Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. No Character Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Character Styles matching the input parameters. @Extended contains the count of results returned.
@@ -944,7 +943,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyles = $oDoc.StyleFamilies.getByName("CharacterStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -990,9 +989,9 @@ EndFunc   ;==>_LOWriter_CharStylesGetNames
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0 or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0 or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth

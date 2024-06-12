@@ -774,8 +774,8 @@ EndFunc   ;==>_LOCalc_DocHasPath
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Sheet matching $sName, True is returned. Else False.
 ; Author ........: donnyh13
@@ -795,7 +795,7 @@ Func _LOCalc_DocHasSheetName(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_Success, 0, True)
 
@@ -1081,9 +1081,9 @@ EndFunc   ;==>_LOCalc_DocOpen
 ;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Position and Size Structure Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Position and Size Structure Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Position and Size Structure Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iX
@@ -1115,7 +1115,7 @@ Func _LOCalc_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null, 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($iX, $iY, $iWidth, $iHeight) Then
 		__LOCalc_ArrayFill($aiWinPosSize, $tWindowSize.X(), $tWindowSize.Y(), $tWindowSize.Width(), $tWindowSize.Height())
@@ -1145,7 +1145,7 @@ Func _LOCalc_DocPosAndSize(ByRef $oDoc, $iX = Null, $iY = Null, $iWidth = Null, 
 	$oDoc.CurrentController.Frame.ContainerWindow.setPosSize($tWindowSize.X, $tWindowSize.Y, $tWindowSize.Width, $tWindowSize.Height, $iPosSize)
 
 	$tWindowSize = $oDoc.CurrentController.Frame.ContainerWindow.getPosSize()
-	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tWindowSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iX = Null) ? ($iError) : (($tWindowSize.X() = $iX) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iY = Null) ? ($iError) : (($tWindowSize.Y() = $iY) ? ($iError) : (BitOR($iError, 2)))
@@ -1555,10 +1555,11 @@ EndFunc   ;==>_LOCalc_DocSelectionCopy
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve current selection.
+;                  @Error 2 @Extended 1 Return 0 =
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve count of multiple selections.
-;                  @Error 3 @Extended 2 Return 0 = Failed to determine selection type.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve current selection.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve count of multiple selections.
+;                  @Error 3 @Extended 3 Return 0 = Failed to determine selection type.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Single cell selected or cursor is editing a cell, returning Cell Object.
 ;                  @Error 0 @Extended 1 Return Object = Success. Cell Range selected, returning Cell Range Object.
@@ -1581,7 +1582,7 @@ Func _LOCalc_DocSelectionGet(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oSelection = $oDoc.getCurrentSelection()
-	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Select
 
@@ -1593,7 +1594,7 @@ Func _LOCalc_DocSelectionGet(ByRef $oDoc)
 
 		Case $oSelection.supportsService("com.sun.star.sheet.SheetCellRanges") ; Multiple Ranges are selected.
 			$iCount = $oSelection.getCount()
-			If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			ReDim $aoSelections[$iCount]
 
@@ -1604,7 +1605,7 @@ Func _LOCalc_DocSelectionGet(ByRef $oDoc)
 			Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSelections)
 	EndSelect
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 EndFunc   ;==>_LOCalc_DocSelectionGet
 
 ; #FUNCTION# ====================================================================================================================
@@ -2475,11 +2476,10 @@ EndFunc   ;==>_LOCalc_DocWindowSplit
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Sheet Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Range Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve currently visible Range Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Sheet Object.
+;                  @Error 4 @Extended 3 Return 0 = Failed to retrieve Cell Range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning currently visible Range of cells as a Cell Range Object.
 ; Author ........: donnyh13
@@ -2502,10 +2502,10 @@ Func _LOCalc_DocWindowVisibleRange(ByRef $oDoc)
 	If Not IsObj($tRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheet = $oDoc.Sheets.getByIndex($tRange.Sheet())
-	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oRange = $oSheet.getCellRangeByPosition($tRange.StartColumn(), $tRange.StartRow(), $tRange.EndColumn(), $tRange.EndRow())
-	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRange)
 EndFunc   ;==>_LOCalc_DocWindowVisibleRange

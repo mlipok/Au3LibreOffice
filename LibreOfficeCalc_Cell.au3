@@ -117,9 +117,9 @@ EndFunc   ;==>_LOCalc_CellBackColor
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                  @Error 2 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Color when Bottom Border width not set.
@@ -245,9 +245,9 @@ EndFunc   ;==>_LOCalc_CellBorderPadding
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                  @Error 2 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style when Bottom Border width not set.
@@ -321,9 +321,9 @@ EndFunc   ;==>_LOCalc_CellBorderStyle
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                  @Error 2 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -740,8 +740,8 @@ EndFunc   ;==>_LOCalc_CellOverline
 ;                  @Error 1 @Extended 5 Return 0 = $bProtected not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bHideFormula not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bHideWhenPrint not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bHideAll
@@ -792,6 +792,8 @@ EndFunc   ;==>_LOCalc_CellProtection
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shadow Format Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iWidth

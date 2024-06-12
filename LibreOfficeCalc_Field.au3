@@ -514,16 +514,16 @@ EndFunc   ;==>_LOCalc_FieldPageNumberInsert
 ;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 3 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Text Fields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of paragraphs in Cell.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve Text Field Object.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve secondary Text Field Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify requested Field Types.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve total count of Fields.
-;                  @Error 3 @Extended 3 Return 0 = More fields found than total count of Fields. Try creating a new cursor, and trying again.
-;                  @Error 3 @Extended 4 Return 0 = Number of Fields found not equal to number of expected Fields. Try creating a new cursor, and trying again.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Text Fields Object/
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve total count of Fields.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Text Field Object.
+;                  @Error 3 @Extended 5 Return 0 = More fields found than total count of Fields. Try creating a new cursor, and trying again.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve secondary Text Field Object.
+;                  @Error 3 @Extended 7 Return 0 = Number of Fields found not equal to number of expected Fields. Try creating a new cursor, and trying again.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of maps containing Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
@@ -563,33 +563,33 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 	If $bFieldTypeNum Then ReDim $avTextFields[1][2]
 
 	$oFields = $oInternalCursor.Text.TextFields()
-	If Not IsObj($oFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iTotalFields = $oFields.Count()
-	If Not IsInt($iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsInt($iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oParEnum = $oInternalCursor.getText().createEnumeration()
-	If Not IsObj($oParEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oParEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	While $oParEnum.hasMoreElements()
 		$oPar = $oParEnum.nextElement()
 
 		$oTextEnum = $oPar.createEnumeration()
-		If Not IsObj($oTextEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($oTextEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		While $oTextEnum.hasMoreElements()
 			$oTextPortion = $oTextEnum.nextElement()
 
 			If ($oTextPortion.TextPortionType = "TextField") Then
 				$oTextField = $oTextPortion.TextField()
-				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
 
 					If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 						$oField = $oFields.getByIndex($iTotalFound)
-						If Not IsObj($oField) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 						If $bFieldTypeNum Then
 							$mFieldObj.EnumFieldObj = $oTextField
@@ -624,7 +624,7 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 		ReDim $avTextFields[$iCount]
 	EndIf
 
-	If $iTotalFields <> $iTotalFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	If $iTotalFields <> $iTotalFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $avTextFields)
 EndFunc   ;==>_LOCalc_FieldsGetList
