@@ -1578,7 +1578,7 @@ Func _LOCalc_SortFieldCreate($iIndex, $iDataType = $LOC_SORT_DATA_TYPE_AUTO, $bA
 
 	Local $tSortField
 
-	If Not __LOCalc_IntIsBetween($iIndex, 0, $iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iIndex, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -1638,7 +1638,7 @@ Func _LOCalc_SortFieldModify(ByRef $tSortField, $iIndex = Null, $iDataType = Nul
 	EndIf
 
 	If ($iIndex <> Null) Then
-		If Not __LOCalc_IntIsBetween($iIndex, 0, $iIndex) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not __LOCalc_IntIsBetween($iIndex, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tSortField.Field = $iIndex
 	EndIf
 

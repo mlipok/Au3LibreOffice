@@ -22,11 +22,11 @@ Global Const $__LOWCONST_SLEEP_DIV = 0
 
 ; Fill Style Type Constants
 Global Enum _
-		$__LOWCONST_FILL_STYLE_OFF, _                           ; 0 Fillstyle is off.
-		$__LOWCONST_FILL_STYLE_SOLID, _                         ; 1 Fillstyle is a solid color.
-		$__LOWCONST_FILL_STYLE_GRADIENT, _                      ; 2 Fillstyle is a gradient color.
-		$__LOWCONST_FILL_STYLE_HATCH, _                         ; 3 Fillstyle is a Hatch style color.
-		$__LOWCONST_FILL_STYLE_BITMAP                           ; 4 Fillstyle is a Bitmap.
+		$LOW_AREA_FILL_STYLE_OFF, _                             ; 0 Fillstyle is off.
+		$LOW_AREA_FILL_STYLE_SOLID, _                           ; 1 Fillstyle is a solid color.
+		$LOW_AREA_FILL_STYLE_GRADIENT, _                        ; 2 Fillstyle is a gradient color.
+		$LOW_AREA_FILL_STYLE_HATCH, _                           ; 3 Fillstyle is a Hatch style color.
+		$LOW_AREA_FILL_STYLE_BITMAP                             ; 4 Fillstyle is a Bitmap.
 
 ; Horizontal Alignment
 Global Const _

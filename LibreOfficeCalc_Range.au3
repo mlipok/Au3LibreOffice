@@ -199,7 +199,7 @@ Func _LOCalc_RangeColumnDelete(ByRef $oRange, $iColumn, $iCount = 1)
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iColumn, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOCalc_IntIsBetween($iCount, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oColumns.removeByIndex($iColumn, $iCount)
 
@@ -363,7 +363,7 @@ Func _LOCalc_RangeColumnInsert(ByRef $oRange, $iColumn, $iCount = 1)
 	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iColumn, 0, $oColumns.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOCalc_IntIsBetween($iCount, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oColumns.insertByIndex($iColumn, $iCount)
 
@@ -1321,7 +1321,7 @@ Func _LOCalc_RangeFill(ByRef $oRange, $iDirection, $iCount = 1)
 
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not __LOCalc_IntIsBetween($iDirection, $LOC_FILL_DIR_DOWN, $LOC_FILL_DIR_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOCalc_IntIsBetween($iCount, 0, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRange.fillAuto($iDirection, $iCount)
 
@@ -3346,7 +3346,7 @@ Func _LOCalc_RangeRowDelete(ByRef $oRange, $iRow, $iCount = 1)
 	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iRow, 0, $oRows.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOCalc_IntIsBetween($iCount, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRows.removeByIndex($iRow, $iCount)
 
@@ -3490,7 +3490,7 @@ Func _LOCalc_RangeRowInsert(ByRef $oRange, $iRow, $iCount = 1)
 	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iRow, 0, $oRows.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not __LOCalc_IntIsBetween($iCount, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRows.insertByIndex($iRow, $iCount)
 

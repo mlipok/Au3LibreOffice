@@ -455,7 +455,7 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iR
 	EndIf
 
 	If ($iAll <> Null) Then
-		If Not __LOCalc_IntIsBetween($iAll, 0, $iAll) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOCalc_IntIsBetween($iAll, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaTopMargin = $iAll
 		$oObj.ParaBottomMargin = $iAll
 		$oObj.ParaLeftMargin = $iAll
@@ -467,25 +467,25 @@ Func __LOCalc_CellBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $iR
 	EndIf
 
 	If ($iTop <> Null) Then
-		If Not __LOCalc_IntIsBetween($iTop, 0, $iTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.ParaTopMargin = $iTop
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaTopMargin(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iBottom <> Null) Then
-		If Not __LOCalc_IntIsBetween($iBottom, 0, $iBottom) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.ParaBottomMargin = $iBottom
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaBottomMargin(), $iBottom - 1, $iBottom + 1)) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iLeft <> Null) Then
-		If Not __LOCalc_IntIsBetween($iLeft, 0, $iLeft) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOCalc_IntIsBetween($iLeft, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.ParaLeftMargin = $iLeft
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaLeftMargin(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iRight <> Null) Then
-		If Not __LOCalc_IntIsBetween($iRight, 0, $iRight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOCalc_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.ParaRightMargin = $iRight
 		$iError = (__LOCalc_IntIsBetween($oObj.ParaRightMargin(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -2389,13 +2389,13 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_IntIsBetween
-; Description ...: Test whether an input is an Integer and is between two Numbers.
-; Syntax ........: __LOCalc_IntIsBetween($iTest, $nMin, $nMax[, $snNot = ""[, $snIncl = Default]])
+; Description ...: Test whether an input is an Integer and is between two Integers.
+; Syntax ........: __LOCalc_IntIsBetween($iTest, $iMin, $iMax[, $vNot = ""[, $vIncl = ""]])
 ; Parameters ....: $iTest               - an integer value. The Value to test.
-;                  $nMin                - a general number value. The minimum $iTest can be.
-;                  $nMax                - a general number value. The maximum $iTest can be.
-;                  $snNot               - [optional] a string value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
-;                  $snIncl              - [optional] a string value. Default is Default. Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
+;                  $iMin                - an integer value. The minimum $iTest can be.
+;                  $iMax                - [optional] an integer value. Default is 0. The maximum $iTest can be.
+;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
+;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
 ;                  Failure: False
 ;                  --Success--
@@ -2407,37 +2407,45 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOCalc_IntIsBetween($iTest, $nMin, $nMax, $snNot = "", $snIncl = Default)
-	Local $bMatch = False
-	Local $anNot, $anIncl
-
+Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 	If Not IsInt($iTest) Then Return False
-	If (@NumParams = 3) Then Return (($iTest < $nMin) Or ($iTest > $nMax)) ? (False) : (True)
 
-	If ($snNot <> "") Then
-		If IsString($snNot) And StringInStr($snNot, ":") Then
-			$anNot = StringSplit($snNot, ":")
-			For $i = 1 To $anNot[0]
-				If ($anNot[$i] = $iTest) Then Return False
-			Next
-		Else
-			If ($iTest = $snNot) Then Return False
-		EndIf
-	EndIf
+	Switch @NumParams
 
-	If (($iTest >= $nMin) And ($iTest <= $nMax)) Then Return True
+		Case 2
+			Return ($iTest < $iMin) ? (False) : (True)
 
-	If IsString($snIncl) And StringInStr($snIncl, ":") Then
-		$anIncl = StringSplit($snIncl, ":")
-		For $j = 1 To $anIncl[0]
-			$bMatch = ($anIncl[$j] = $iTest) ? (True) : (False)
-			If $bMatch Then ExitLoop
-		Next
-	ElseIf IsNumber($snIncl) Then
-		$bMatch = ($iTest = $snIncl) ? (True) : (False)
-	EndIf
+		Case 3
+			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
 
-	Return $bMatch
+		Case 4
+
+			If IsString($vNot) Then
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+
+			ElseIf IsInt($vNot) Then
+				If ($iTest = $vNot) Then Return False
+
+			EndIf
+
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+
+			If @NumParams = 5 Then ContinueCase
+
+			Return False
+
+		Case Else
+			If IsString($vIncl) Then
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+
+			ElseIf IsInt($vIncl) Then
+
+				If ($iTest = $vIncl) Then Return True
+			EndIf
+
+			Return False
+
+	EndSwitch
 EndFunc   ;==>__LOCalc_IntIsBetween
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
