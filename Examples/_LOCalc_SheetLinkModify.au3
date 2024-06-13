@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $oDoc, $oDoc2, $oSheet, $oSheet2, $oCellRange
 	Local $aavData[3]
-	Local $avRowData[2]
+	Local $avRowData[2], $avSettings[0]
 	Local $sFilePathName, $sPath
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -45,9 +45,9 @@ Func Example()
 
 	MsgBox($MB_OK, "", "I will now save this Document to the desktop folder then open a new document and link this Sheet from Document 1 into the new document.")
 
-	$sFilePathName = @DesktopDir & "\TestExportDoc_" & @MDAY & ".ods"
+	$sFilePathName = @TempDir & "\TestExportDoc_" & @MDAY & ".ods"
 
-	; Save The Document To Desktop Directory.
+	; Save The Document To Temp Directory.
 	$sPath = _LOCalc_DocSaveAs($oDoc, $sFilePathName)
 	If @error Then _ERROR($oDoc, "Failed to Save the Calc Document. Error:" & @error & " Extended:" & @extended)
 
@@ -55,8 +55,7 @@ Func Example()
 	$oDoc2 = _LOCalc_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended, Null, $sPath)
 
-	; Link the Sheet "New Sheet" from Document 1 into this Document, I'll use a function to retrieve the Sheet's name, but I could also just call the Sheet name as "New Sheet"
-	; Use Link mode Normal
+	; Link the Sheet "New Sheet" from Document 1 into this Document.
 	$oSheet2 = _LOCalc_SheetLink($oDoc, $oDoc2, _LOCalc_SheetName($oDoc, $oSheet), $LOC_SHEET_LINK_MODE_NORMAL, True)
 	If @error Then _ERROR($oDoc, "Failed to Link Calc Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
 
@@ -65,6 +64,54 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to activate Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
 
 	MsgBox($MB_OK, "", "I have linked the Sheet from Document 1 into Document 2, the new sheet is called: " & _LOCalc_SheetName($oDoc2, $oSheet2))
+
+	; Create a new Sheet named "Test Sheet" in the source Document.
+	$oSheet = _LOCalc_SheetAdd($oDoc, "Test Sheet")
+	If @error Then _ERROR($oDoc, "Failed to create a new Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	; Activate the new Sheet
+	_LOCalc_SheetActivate($oDoc, $oSheet)
+	If @error Then _ERROR($oDoc, "Failed to activate the Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	; Fill my arrays with the desired Number and String Values I want in Column A to B.
+	$avRowData[0] = 55 ; A1
+	$avRowData[1] = 74 ; B1
+	$aavData[0] = $avRowData
+
+	$avRowData[0] = "ABC" ; A2
+	$avRowData[1] = "Hi!" ; B2
+	$aavData[1] = $avRowData
+
+	$avRowData[0] = 234 ; A3
+	$avRowData[1] = -123 ; B3
+	$aavData[2] = $avRowData
+
+	; Retrieve Cell range B3 to C6
+	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B3", "C6")
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	; Fill the range with Data
+	_LOCalc_RangeData($oCellRange, $aavData)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	; Save the changes
+	_LOCalc_DocSave($oDoc)
+	If @error Then _ERROR($oDoc, "Failed to Save changes to Doc. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	MsgBox($MB_OK, "", "I will now modify the Linked Sheet in Document 2 to be linked to a different Sheet in Document 1, ""Test Sheet"".")
+
+	; Modify the linked Sheet to link to "Test Sheet" in Document 1.
+	_LOCalc_SheetLinkModify($oSheet2, Null, "Test Sheet")
+	If @error Then _ERROR($oDoc, "Failed to update Linked Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	; Retrieve the current Link settings.
+	$avSettings = _LOCalc_SheetLinkModify($oSheet2)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Linked Sheet settings. Error:" & @error & " Extended:" & @extended, $oDoc2, $sPath)
+
+	MsgBox($MB_OK, "", "Current Sheet's link settings are as follows: " & @CRLF & _
+			"The Save Path of the linked document is: " & $avSettings[0] & @CRLF & _
+			"The currently linked Sheet name is: " & $avSettings[1] & @CRLF & _
+			"The link mode is (See UDF Constants): " & $avSettings[2])
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
