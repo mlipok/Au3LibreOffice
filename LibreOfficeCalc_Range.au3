@@ -21,6 +21,7 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+; _LOCalc_RangeAutoOutline
 ; _LOCalc_RangeClearContents
 ; _LOCalc_RangeColumnDelete
 ; _LOCalc_RangeColumnGetName
@@ -42,6 +43,7 @@
 ; _LOCalc_RangeDatabaseHasByName
 ; _LOCalc_RangeDatabaseModify
 ; _LOCalc_RangeDelete
+; _LOCalc_RangeDetail
 ; _LOCalc_RangeFill
 ; _LOCalc_RangeFillSeries
 ; _LOCalc_RangeFilter
@@ -54,6 +56,7 @@
 ; _LOCalc_RangeGetCellByName
 ; _LOCalc_RangeGetCellByPosition
 ; _LOCalc_RangeGetSheet
+; _LOCalc_RangeGroup
 ; _LOCalc_RangeInsert
 ; _LOCalc_RangeIsMerged
 ; _LOCalc_RangeMerge
@@ -65,6 +68,8 @@
 ; _LOCalc_RangeNamedHasByName
 ; _LOCalc_RangeNamedModify
 ; _LOCalc_RangeNumbers
+; _LOCalc_RangeOutlineClearAll
+; _LOCalc_RangeOutlineShow
 ; _LOCalc_RangeQueryColumnDiff
 ; _LOCalc_RangeQueryContents
 ; _LOCalc_RangeQueryDependents
@@ -88,6 +93,42 @@
 ; _LOCalc_RangeValidation
 ; _LOCalc_RangeValidationSettings
 ; ===============================================================================================================================
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeAutoOutline
+; Description ...: Set up AutoOutline for a Range of Cells.
+; Syntax ........: _LOCalc_RangeAutoOutline(ByRef $oRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Structure.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. AutoOutline was successfully processed for range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeAutoOutline(ByRef $oRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddress
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tRangeAddress = $oRange.RangeAddress()
+	If Not IsObj($tRangeAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oRange.Spreadsheet.autoOutline($tRangeAddress)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeAutoOutline
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeClearContents
@@ -1202,6 +1243,51 @@ Func _LOCalc_RangeDelete(ByRef $oSheet, $oRange, $iMode)
 EndFunc   ;==>_LOCalc_RangeDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDetail
+; Description ...: Expand or Hide Grouped cells in a Range.
+; Syntax ........: _LOCalc_RangeDetail(ByRef $oRange[, $bShow = True])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $bShow               - [optional] a boolean value. Default is True. If True, grouped cells are expanded, If False, grouped cells are collapsed.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bShow not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Structure.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Expand or Hiding of Grouped cells was successfully processed for Range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDetail(ByRef $oRange, $bShow = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddress
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bShow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$tRangeAddress = $oRange.RangeAddress()
+	If Not IsObj($tRangeAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $bShow Then
+		$oRange.Spreadsheet.showDetail($tRangeAddress)
+
+	Else
+		$oRange.Spreadsheet.hideDetail($tRangeAddress)
+
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeDetail
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFill
 ; Description ...: Automatically fill cells with a value. See Remarks.
 ; Syntax ........: _LOCalc_RangeFill(ByRef $oRange, $iDirection[, $iCount = 1])
@@ -1801,6 +1887,54 @@ Func _LOCalc_RangeGetSheet(ByRef $oRange)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oSheet)
 EndFunc   ;==>_LOCalc_RangeGetSheet
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeGroup
+; Description ...: Group or Ungroup cells in a Range.
+; Syntax ........: _LOCalc_RangeGroup(ByRef $oRange[, $iOrientation = $LOC_GROUP_ORIENT_ROWS[, $bGroup = True]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $iOrientation        - [optional] an integer value. Default is $LOC_GROUP_ORIENT_ROWS. Whether to Group Rows or Columns. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $bGroup              - [optional] a boolean value. Default is True. If True Cells are Grouped, if False, cells are Ungrouped.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iOrientation not an Integer, less than 0 or greater than 1. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $bGroup not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Structure.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Group or Ungroup was successfully processed for range.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeGroup(ByRef $oRange, $iOrientation = $LOC_GROUP_ORIENT_ROWS, $bGroup = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tRangeAddress
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iOrientation, $LOC_GROUP_ORIENT_COLUMNS, $LOC_GROUP_ORIENT_ROWS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bGroup) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$tRangeAddress = $oRange.RangeAddress()
+	If Not IsObj($tRangeAddress) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $bGroup Then
+		$oRange.Spreadsheet.Group($tRangeAddress, $iOrientation)
+
+	Else
+		$oRange.Spreadsheet.Ungroup($tRangeAddress, $iOrientation)
+
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeGroup
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeInsert
@@ -2520,6 +2654,70 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeNumbers
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeOutlineClearAll
+; Description ...: Clear all Outline groups for a Sheet.
+; Syntax ........: _LOCalc_RangeOutlineClearAll(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Outlining successfully cleared.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeOutlineClearAll(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oSheet.clearOutline()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeOutlineClearAll
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeOutlineShow
+; Description ...: Show Outlined groups of cells up a specific level in a Sheet.
+; Syntax ........: _LOCalc_RangeOutlineShow(ByRef $oSheet, $iLevel[, $iOrientation = $LOC_GROUP_ORIENT_ROWS])
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $iLevel              - an integer value. The level of Outlines to show, beginning at 1 and continuing to the level input. Call 0 to collapse them all.
+;                  $iOrientation        - [optional] an integer value. Default is $LOC_GROUP_ORIENT_ROWS. The orientation of the Outlines. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iLevel not an Integer or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iOrientation not an Integer, less than 0 or greater than 1. See Constants $LOC_GROUP_ORIENT_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. command was successfully processed for the Sheet.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeOutlineShow(ByRef $oSheet, $iLevel, $iOrientation = $LOC_GROUP_ORIENT_ROWS)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iLevel, 0, $iLevel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iOrientation, $LOC_GROUP_ORIENT_COLUMNS, $LOC_GROUP_ORIENT_ROWS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oSheet.showLevel($iLevel, $iOrientation)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeOutlineShow
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeQueryColumnDiff

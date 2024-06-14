@@ -64,6 +64,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Individual Calc Element Files
 	- LibreOfficeCalc_Cell.au3
 	- LibreOfficeCalc_CellStyle.au3
+	- LibreOfficeCalc_Comments.au3
 	- LibreOfficeCalc_Constants.au3
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
@@ -98,6 +99,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellUnderline
 	- _LOCalc_CellValue
 - Cell/Cell Range Functions and Examples
+	- _LOCalc_RangeAutoOutline
 	- _LOCalc_RangeClearContents
 	- _LOCalc_RangeColumnDelete
 	- _LOCalc_RangeColumnGetName
@@ -119,6 +121,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeDatabaseHasByName
 	- _LOCalc_RangeDatabaseModify
 	- _LOCalc_RangeDelete
+	- _LOCalc_RangeDetail
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
@@ -131,6 +134,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeGetCellByName
 	- _LOCalc_RangeGetCellByPosition
 	- _LOCalc_RangeGetSheet
+	- _LOCalc_RangeGroup
 	- _LOCalc_RangeInsert
 	- _LOCalc_RangeIsMerged
 	- _LOCalc_RangeMerge
@@ -142,6 +146,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedHasByName
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNumbers
+	- _LOCalc_RangeOutlineClearAll
+	- _LOCalc_RangeOutlineShow
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
 	- _LOCalc_RangeQueryDependents
@@ -189,6 +195,34 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleTextOrient
 	- _LOCalc_CellStyleTextProperties
 	- _LOCalc_CellStyleUnderline
+- Comment Functions and Examples.
+	- _LOCalc_CommentAdd
+	- _LOCalc_CommentAreaColor
+	- _LOCalc_CommentAreaFillStyle
+	- _LOCalc_CommentAreaGradient
+	- _LOCalc_CommentAreaShadow
+	- _LOCalc_CommentAreaTransparency
+	- _LOCalc_CommentAreaTransparencyGradient
+	- _LOCalc_CommentCallout
+	- _LOCalc_CommentCreateTextCursor
+	- _LOCalc_CommentDelete
+	- _LOCalc_CommentGetCell
+	- _LOCalc_CommentGetLastEdit
+	- _LOCalc_CommentGetObjByCell
+	- _LOCalc_CommentGetObjByIndex
+	- _LOCalc_CommentLineArrowStyles
+	- _LOCalc_CommentLineProperties
+	- _LOCalc_CommentPosition
+	- _LOCalc_CommentRotate
+	- _LOCalc_CommentsGetCount
+	- _LOCalc_CommentsGetList
+	- _LOCalc_CommentSize
+	- _LOCalc_CommentText
+	- _LOCalc_CommentTextAnchor
+	- _LOCalc_CommentTextAnimation
+	- _LOCalc_CommentTextColumns
+	- _LOCalc_CommentTextSettings
+	- _LOCalc_CommentVisible
 - Cursor Functions and Examples
 	- _LOCalc_SheetCursorMove
 	- _LOCalc_TextCursorCharPosition
@@ -318,10 +352,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellUnderLine
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
+	- __LOCalc_CommentAreaShadowModify
+	- __LOCalc_CommentArrowStyleName
+	- __LOCalc_CommentGetObjByCell
+	- __LOCalc_CommentLineStyleName
 	- __LOCalc_CreateStruct
 	- __LOCalc_FieldGetObj
 	- __LOCalc_FieldTypeServices
 	- __LOCalc_FilterNameGet
+	- __LOCalc_GradientNameInsert
+	- __LOCalc_GradientPresets
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
 	- __LOCalc_IntIsBetween
@@ -334,6 +374,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_SetPropertyValue
 	- __LOCalc_SheetCursorMove
 	- __LOCalc_TextCursorMove
+	- __LOCalc_TransparencyGradientConvert
+	- __LOCalc_TransparencyGradientNameInsert
 	- __LOCalc_UnitConvert
 	- __LOCalc_VarsAreDefault
 	- __LOCalc_VarsAreNull
@@ -393,6 +435,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetIsProtected
 	- _LOCalc_SheetLink
+	- _LOCalc_SheetLinkModify
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
 	- _LOCalc_SheetPrintColumnsRepeat
@@ -406,6 +449,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetUnprotect
 	- _LOCalc_SheetVisible
 - Calc Constants
+	- $__LOCCONST_FILL_STYLE_*
 	- $LOC_BORDERSTYLE_*
 	- $LOC_BORDERWIDTH_*
 	- $LOC_CELL_ALIGN_HORI_*
@@ -416,6 +460,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_CELL_ROTATE_REF_*
 	- $LOC_CELL_TYPE_*
 	- $LOC_COLOR_*
+	- $LOC_COMMENT_ANCHOR_*
+	- $LOC_COMMENT_ANIMATION_DIR_*
+	- $LOC_COMMENT_ANIMATION_KIND_*
+	- $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*
+	- $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_*
+	- $LOC_COMMENT_CALLOUT_EXT_*
+	- $LOC_COMMENT_CALLOUT_STYLE_*
+	- $LOC_COMMENT_LINE_ARROW_TYPE_*
+	- $LOC_COMMENT_LINE_CAP_*
+	- $LOC_COMMENT_LINE_JOINT_*
+	- $LOC_COMMENT_LINE_STYLE_*
+	- $LOC_COMMENT_SHADOW_*
 	- $LOC_COMPUTE_*
 	- $LOC_CURTYPE_*
 	- $LOC_DUPLEX_*
@@ -427,6 +483,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_FILTER_OPERATOR_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_GRAD_NAME_*
+	- $LOC_GRAD_TYPE_*
+	- $LOC_GROUP_ORIENT_*
 	- $LOC_NAMED_RANGE_OPT_*
 	- $LOC_NUM_STYLE_*
 	- $LOC_PAGE_LAYOUT_*
@@ -452,6 +511,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.
+- Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
 
 ### Fixed
 
@@ -460,9 +520,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - NamedRange names incorrectly reported as invalid in certain functions when the name began with an underscore.
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNamedAdd
+- _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
 
 ### Changed
 
+- Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
 - __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
 

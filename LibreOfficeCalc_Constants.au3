@@ -20,6 +20,14 @@ Global Const $__LOCCONST_SLEEP_DIV = 0
 
 #Tidy_ILC_Pos=65
 
+; Fill Style Type Constants
+Global Enum _
+		$LOC_AREA_FILL_STYLE_OFF, _                             ; 0 Fill Style is off.
+		$LOC_AREA_FILL_STYLE_SOLID, _                           ; 1 Fill Style is a solid color.
+		$LOC_AREA_FILL_STYLE_GRADIENT, _                        ; 2 Fill Style is a gradient color.
+		$LOC_AREA_FILL_STYLE_HATCH, _                           ; 3 Fill Style is a Hatch style color.
+		$LOC_AREA_FILL_STYLE_BITMAP                             ; 4 Fill Style is a Bitmap.
+
 ; Border Style
 Global Const _
 		$LOC_BORDERSTYLE_NONE = 0x7FFF, _                       ; No border line.
@@ -135,6 +143,156 @@ Global Const _
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
 		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
 
+; Comment Text Anchor Position
+Global Enum _
+		$LOC_COMMENT_ANCHOR_TOP_LEFT, _                         ; The comment text is anchored in the Upper-Left corner of the comment box.
+		$LOC_COMMENT_ANCHOR_TOP_CENTER, _                       ; The comment text is anchored in the Upper-Center of the comment box.
+		$LOC_COMMENT_ANCHOR_TOP_RIGHT, _                        ; The comment text is anchored in the Upper-Right of the comment box.
+		$LOC_COMMENT_ANCHOR_MIDDLE_LEFT, _                      ; The comment text is anchored in the Middle-Left corner of the comment box.
+		$LOC_COMMENT_ANCHOR_MIDDLE_CENTER, _                    ; The comment text is anchored in the Middle-Center of the comment box.
+		$LOC_COMMENT_ANCHOR_MIDDLE_RIGHT, _                     ; The comment text is anchored in the Middle-Right of the comment box.
+		$LOC_COMMENT_ANCHOR_BOTTOM_LEFT, _                      ; The comment text is anchored in the Lower-Left corner of the comment box.
+		$LOC_COMMENT_ANCHOR_BOTTOM_CENTER, _                    ; The comment text is anchored in the Lower-Center of the comment box.
+		$LOC_COMMENT_ANCHOR_BOTTOM_RIGHT                        ; The comment text is anchored in the Lower-Right of the comment box.
+
+; Comment Animation Direction
+Global Const _
+		$LOC_COMMENT_ANIMATION_DIR_LEFT = 0, _                  ; The Text moves towards the Left.
+		$LOC_COMMENT_ANIMATION_DIR_RIGHT = 1, _                 ; The Text moves towards the Right.
+		$LOC_COMMENT_ANIMATION_DIR_UP = 2, _                    ; The Text moves towards the Top.
+		$LOC_COMMENT_ANIMATION_DIR_DOWN = 3                     ; The Text moves towards the Bottom.
+
+; Comment Animation Kind
+Global Const _
+		$LOC_COMMENT_ANIMATION_KIND_NONE = 0, _                 ; The Comment Text is not animated.
+		$LOC_COMMENT_ANIMATION_KIND_BLINK = 1, _                ; The Comment Text has a blinking animation.
+		$LOC_COMMENT_ANIMATION_KIND_SCROLL_THROUGH = 2, _       ; The Comment Text has a Scrolling animation.
+		$LOC_COMMENT_ANIMATION_KIND_SCROLL_ALTERNATE = 3, _     ; The Comment Text has a Scrolling back and forth animation.
+		$LOC_COMMENT_ANIMATION_KIND_SCROLL_IN = 4               ; The Comment Text Scrolls in animation.
+
+; Comment Connector Horizontal Alignment
+Global Const _
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_TOP = 0, _          ; Align the Connector line to the Top of the Comment's left or right side, when Connector position is set to Horizontal.
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_MIDDLE = 5000, _    ; Align the Connector line to the Middle of the Comment's left or right side, when Connector position is set to Horizontal.
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_BOTTOM = 10000      ; Align the Connector line to the Bottom of the Comment's left or right side, when Connector position is set to Horizontal.
+
+; Comment Connector Vertical Alignment
+Global Const _
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_LEFT = 0, _         ; Align the Connector line to the Left of the Comment's top or bottom side, when Connector position is set to Vertical.
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_CENTER = 5000, _    ; Align the Connector line to the Center of the Comment's top or bottom side, when Connector position is set to Vertical.
+		$LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_RIGHT = 10000       ; Align the Connector line to the Right of the Comment's top or bottom side, when Connector position is set to Vertical.
+
+; Comment Connector Line Position
+Global Const _
+		$LOC_COMMENT_CALLOUT_EXT_HORI = 0, _                    ; The Connector line extends Horizontally from the Comment.
+		$LOC_COMMENT_CALLOUT_EXT_VERT = 1, _                    ; The Connector line extends Vertically from the Comment.
+		$LOC_COMMENT_CALLOUT_EXT_OPTIMAL = 2, _                 ; The Connector line extends from the optimal position of the Comment.
+		$LOC_COMMENT_CALLOUT_EXT_FROM_LEFT = 3, _               ; The Connector line extends from the left of the Comment.
+		$LOC_COMMENT_CALLOUT_EXT_FROM_TOP = 4                   ; The Connector line extends from the top of the Comment.
+
+; Comment Connector Line Style
+Global Const _
+		$LOC_COMMENT_CALLOUT_STYLE_STRAIGHT = 0, _              ; The connecting line from the comment to the cell is straight.
+		$LOC_COMMENT_CALLOUT_STYLE_ANGLED = 1, _                ; The connecting line from the comment to the cell is angled.
+		$LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR = 2         ; The connecting line from the comment to the cell is angled and connected.
+
+; Arrowhead Type Constants
+Global Enum _
+		$LOC_COMMENT_LINE_ARROW_TYPE_NONE, _                    ; 0 -- No Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_ARROW_SHORT, _             ; 1 --Short Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CONCAVE_SHORT, _           ; 2 -- Short Concave Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_ARROW, _                   ; 3 -- Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_TRIANGLE, _                ; 4 -- Triangle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CONCAVE, _                 ; 5 -- Concave Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_ARROW_LARGE, _             ; 6 -- Large Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CIRCLE, _                  ; 7 -- Circle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE, _                  ; 8 -- Square Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_45, _               ; 9 -- Square Arrow head rotated 45 degrees.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DIAMOND, _                 ; 10 -- Diamond Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_HALF_CIRCLE, _             ; 11 -- Half Circle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSIONAL_LINES, _       ; 12 -- Dimension Lines head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSIONAL_LINE_ARROW, _  ; 13 -- Dimension Line Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DIMENSION_LINE, _          ; 14 -- Dimension Line head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_LINE_SHORT, _              ; 15 -- Short Line head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_LINE, _                    ; 16 -- Line head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_TRIANGLE_UNFILLED, _       ; 17 -- Unfilled Triangle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DIAMOND_UNFILLED, _        ; 18 -- Unfilled Diamond Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CIRCLE_UNFILLED, _         ; 19 -- Unfilled Circle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_45_UNFILLED, _      ; 20 -- Unfilled Square Arrow head, rotated 45 degrees.
+		$LOC_COMMENT_LINE_ARROW_TYPE_SQUARE_UNFILLED, _         ; 21 -- Unfilled Square Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_HALF_CIRCLE_UNFILLED, _    ; 22 -- Unfilled Half Circle Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_HALF_ARROW_LEFT, _         ; 23 -- Half Arrow left Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_HALF_ARROW_RIGHT, _        ; 24 -- Half Arrow right Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_REVERSED_ARROW, _          ; 25 -- Reversed Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_DOUBLE_ARROW, _            ; 26 -- Double Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_ONE, _                  ; 27 -- CF One Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_ONLY_ONE, _             ; 28 -- CF Only One Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_MANY, _                 ; 29 -- CF Many Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_MANY_ONE, _             ; 30 -- CF Many One Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_ONE, _             ; 31 -- CF Zero One Arrow head.
+		$LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_MANY               ; 32 -- CF Zero Many Arrow head.
+
+; Shape Line End Cap Constants.
+Global Const _
+		$LOC_COMMENT_LINE_CAP_FLAT = 0, _                       ; Also called Butt, the line will end without any additional shape.
+		$LOC_COMMENT_LINE_CAP_ROUND = 1, _                      ; The line will get a half circle as additional cap.
+		$LOC_COMMENT_LINE_CAP_SQUARE = 2                        ; The line uses a square for the line end.
+
+; Shape Line Joint Constants.
+Global Const _
+		$LOC_COMMENT_LINE_JOINT_NONE = 0, _                     ; The joint between lines will not be connected.
+		$LOC_COMMENT_LINE_JOINT_MIDDLE = 1, _                   ; The middle value between the joints is used. ## Note used?
+		$LOC_COMMENT_LINE_JOINT_BEVEL = 2, _                    ; The edges of the thick lines will be joined by lines.
+		$LOC_COMMENT_LINE_JOINT_MITER = 3, _                    ; The lines join at intersections.
+		$LOC_COMMENT_LINE_JOINT_ROUND = 4                       ; The lines join with an arc.
+
+; Shape Line Style Constants.
+Global Enum _
+		$LOC_COMMENT_LINE_STYLE_NONE, _                         ; 0 -- No Line is applied.
+		$LOC_COMMENT_LINE_STYLE_CONTINUOUS, _                   ; 1 -- A Solid Line.
+		$LOC_COMMENT_LINE_STYLE_DOT, _                          ; 2 -- A Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_DOT_ROUNDED, _                  ; 3 -- A Rounded Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DOT, _                     ; 4 -- A Long Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DOT_ROUNDED, _             ; 5 -- A Rounded Long Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_DASH, _                         ; 6 -- A Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_DASH_ROUNDED, _                 ; 7 -- A Rounded Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DASH, _                    ; 8 -- A Long Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DASH_ROUNDED, _            ; 9 -- A Rounded Long Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH, _                  ; 10 -- A Double Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_ROUNDED, _          ; 11 -- A Rounded Double Dash.
+		$LOC_COMMENT_LINE_STYLE_DASH_DOT, _                     ; 12 -- A Dashed and Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_DASH_DOT_ROUNDED, _             ; 13 -- A Rounded Dashed and Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DASH_DOT, _                ; 14 -- A Long Dashed and Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_LONG_DASH_DOT_ROUNDED, _        ; 15 -- A Rounded Long Dashed and Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT, _              ; 16 -- A Double Dash Dot Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_ROUNDED, _      ; 17 -- A Rounded Double Dash Dot Line
+		$LOC_COMMENT_LINE_STYLE_DASH_DOT_DOT, _                 ; 18 -- A Dash Dot Dot Line.
+		$LOC_COMMENT_LINE_STYLE_DASH_DOT_DOT_ROUNDED, _         ; 19 -- A Rounded Dash Dot Dot Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_DOT, _          ; 20 -- A Double Dash Dot Dot Line.
+		$LOC_COMMENT_LINE_STYLE_DOUBLE_DASH_DOT_DOT_ROUNDED, _  ; 21 -- A Rounded Double Dash Dot Dot Line.
+		$LOC_COMMENT_LINE_STYLE_ULTRAFINE_DOTTED, _             ; 22 -- A Ultrafine Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_FINE_DOTTED, _                  ; 23 -- A Fine Dotted Line.
+		$LOC_COMMENT_LINE_STYLE_ULTRAFINE_DASHED, _             ; 24 -- A Ultrafine Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_FINE_DASHED, _                  ; 25 -- A Fine Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_DASHED, _                       ; 26 -- A Dashed Line.
+		$LOC_COMMENT_LINE_STYLE_LINE_STYLE_9, _                 ; 27 -- Line Style 9.
+		$LOC_COMMENT_LINE_STYLE_3_DASHES_3_DOTS, _              ; 28 -- A Line consisting of 3 Dashes and 3 Dots.
+		$LOC_COMMENT_LINE_STYLE_ULTRAFINE_2_DOTS_3_DASHES, _    ; 29 -- A Ultrafine Line consisting of 2 Dots and 3 Dashes.
+		$LOC_COMMENT_LINE_STYLE_2_DOTS_1_DASH, _                ; 30 -- A Line consisting of 2 Dots and 1 Dash.
+		$LOC_COMMENT_LINE_STYLE_LINE_WITH_FINE_DOTS             ; 31 -- A Line with Fine Dots.
+
+; Comment Shadow Position
+Global Enum _
+		$LOC_COMMENT_SHADOW_TOP_LEFT, _                         ; The comment Shadow is positioned in the Upper-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_TOP_CENTER, _                       ; The comment Shadow is positioned in the Upper-Center of the comment box.
+		$LOC_COMMENT_SHADOW_TOP_RIGHT, _                        ; The comment Shadow is positioned in the Upper-Right corner of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_LEFT, _                      ; The comment Shadow is positioned in the Middle-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_CENTER, _                    ; The comment Shadow is positioned in the Middle-Center of the comment box.
+		$LOC_COMMENT_SHADOW_MIDDLE_RIGHT, _                     ; The comment Shadow is positioned in the Middle-Right of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_LEFT, _                      ; The comment Shadow is positioned in the Lower-Left corner of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_CENTER, _                    ; The comment Shadow is positioned in the Lower-Center of the comment box.
+		$LOC_COMMENT_SHADOW_BOTTOM_RIGHT                        ; The comment Shadow is positioned in the Lower-Right corner of the comment box.
+
 ; Compute Functions
 Global Const _
 		$LOC_COMPUTE_NONE = 0, _                                ; Nothing is calculated.
@@ -180,8 +338,8 @@ Global Enum Step *2 _
 Global Const _
 		$LOC_FILL_DATE_MODE_DAY = 0, _                          ; For each Cell a single day is added.
 		$LOC_FILL_DATE_MODE_WEEKDAY = 1, _                      ; For each Cell a single day is added, skipping weekends.
-		$LOC_FILL_DATE_MODE_MONTH = 2, _                        ; For each Cell one month is added without modifiying the day.
-		$LOC_FILL_DATE_MODE_YEAR = 3                            ; For each Cell a year is added without modifiying the day or month.
+		$LOC_FILL_DATE_MODE_MONTH = 2, _                        ; For each Cell one month is added without modifying the day.
+		$LOC_FILL_DATE_MODE_YEAR = 3                            ; For each Cell a year is added without modifying the day or month.
 
 ; Fill Direction
 Global Const _
@@ -248,6 +406,39 @@ Global Const _
 		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _                  ; The formula's result is a string.
 		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _                   ; The formula has an error of some form.
 		$LOC_FORMULA_RESULT_TYPE_ALL = 7                        ; All of the above types.
+
+; Gradient Names
+Global Const _
+		$LOC_GRAD_NAME_PASTEL_BOUQUET = "Pastel Bouquet", _     ; The "Pastel Bouquet" Gradient Preset.
+		$LOC_GRAD_NAME_PASTEL_DREAM = "Pastel Dream", _         ; The "Pastel Dream" Gradient Preset.
+		$LOC_GRAD_NAME_BLUE_TOUCH = "Blue Touch", _             ; The "Blue Touch" Gradient Preset.
+		$LOC_GRAD_NAME_BLANK_W_GRAY = "Blank with Gray", _      ; The "Blank with Gray" Gradient Preset.
+		$LOC_GRAD_NAME_LONDON_MIST = "London Mist", _           ; The "London Mist" Gradient Preset.
+		$LOC_GRAD_NAME_SUBMARINE = "Submarine", _               ; The "Submarine" Gradient Preset.
+		$LOC_GRAD_NAME_MIDNIGHT = "Midnight", _                 ; The "Midnight" Gradient Preset.
+		$LOC_GRAD_NAME_DEEP_OCEAN = "Deep Ocean", _             ; The "Deep Ocean" Gradient Preset.
+		$LOC_GRAD_NAME_MAHOGANY = "Mahogany", _                 ; The "Mahogany" Gradient Preset.
+		$LOC_GRAD_NAME_GREEN_GRASS = "Green Grass", _           ; The "Green Grass" Gradient Preset.
+		$LOC_GRAD_NAME_NEON_LIGHT = "Neon Light", _             ; The "Neon Light" Gradient Preset.
+		$LOC_GRAD_NAME_SUNSHINE = "Sunshine", _                 ; The "Sunshine" Gradient Preset.
+		$LOC_GRAD_NAME_RAINBOW = "Rainbow", _                   ; The "Rainbow" Gradient Preset.
+		$LOC_GRAD_NAME_SUNRISE = "Sunrise", _                   ; The "Sunrise" Gradient Preset.
+		$LOC_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset.
+
+; Gradient Type
+Global Const _
+		$LOC_GRAD_TYPE_OFF = -1, _                              ; Turn the Gradient off.
+		$LOC_GRAD_TYPE_LINEAR = 0, _                            ; Linear type Gradient
+		$LOC_GRAD_TYPE_AXIAL = 1, _                             ; Axial type Gradient
+		$LOC_GRAD_TYPE_RADIAL = 2, _                            ; Radial type Gradient
+		$LOC_GRAD_TYPE_ELLIPTICAL = 3, _                        ; Elliptical type Gradient
+		$LOC_GRAD_TYPE_SQUARE = 4, _                            ; Square type Gradient
+		$LOC_GRAD_TYPE_RECT = 5                                 ; Rectangle type Gradient
+
+; Group Orientation
+Global Const _
+		$LOC_GROUP_ORIENT_COLUMNS = 0, _                        ; Group using Columns.
+		$LOC_GROUP_ORIENT_ROWS = 1                              ; Group using Rows.
 
 ; Named Range Options
 Global Const _
