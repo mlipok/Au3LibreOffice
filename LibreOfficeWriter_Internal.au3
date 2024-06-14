@@ -808,9 +808,9 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	If ($iHighlight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
-;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR,2,0)
+;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
 ;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError,4)
+;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -2832,7 +2832,7 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Endnotes Object for document.
 ;                  @Error 3 @Extended 6 Return 0 = Cursor in unknown DataType
 ;                  --Success--
-;                  @Error 0 @Extended Integer Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 0 @Extended 0 Return Integer = Success, If $bReturnObject is False, Return value will be one of constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -3034,23 +3034,6 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ;                  Failure: False
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_IntIsBetween
-; Description ...:
-; Syntax ........: __LOWriter_IntIsBetween($iTest, $iMin[, $iMax = 0[, $vNot = ""[, $vIncl = ""]]])
-; Parameters ....: $iTest               - an integer value.
-;                  $iMin                - an integer value.
-;                  $iMax                - [optional] an integer value. Default is 0.
-;                  $vNot                - [optional] a variant value. Default is "".
-;                  $vIncl               - [optional] a variant value. Default is "".
-; Return values .: None
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

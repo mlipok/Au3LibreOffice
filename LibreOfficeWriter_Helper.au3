@@ -109,7 +109,7 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
-		Return $vUserFunction_Static
+		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then

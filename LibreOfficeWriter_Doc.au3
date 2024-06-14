@@ -1878,7 +1878,8 @@ EndFunc   ;==>_LOWriter_DocGenPropCreation
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $tDateStruct not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sModifiedBy not a String.
+;                  @Error 1 @Extended 3 Return 0 = $tDateStruct not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
@@ -2543,7 +2544,8 @@ EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 ;                  @Error 1 @Extended 4 Return 0 = $sLinkAddress not a String.
 ;                  @Error 1 @Extended 5 Return 0 = $bInsertAtViewCursor not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $oCursor is set to an Object variable, and $bInsertAtViewCursor is set to True. Change $oCursor to Default or set $bInsertAtViewCursor to False.
-;                  @Error 1 @Extended 7 Return 0 = $oCursor is a TableCursor, and is not supported.
+;                  @Error 1 @Extended 7 Return 0 = $bOverwrite not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $oCursor is a TableCursor, and is not supported.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create Cursor Object.
 ;                  --Processing Errors--
@@ -3474,6 +3476,9 @@ EndFunc   ;==>_LOWriter_DocPrintPageSettings
 ;                  @Error 1 @Extended 4 Return 0 = $iPaperHeight not an integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.awt.Size" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Printer setting "CanSetPaperFormat".
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Printer setting "CanSetPaperSize".
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iPaperFormat

@@ -247,19 +247,6 @@ EndFunc   ;==>_LOCalc_FieldFileNameInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_FieldGetAnchor
-; Description ...:
-; Syntax ........: _LOCalc_FieldGetAnchor(ByRef $mField)
-; Parameters ....: $mField              - [in/out] a map.
-; Return values .: None
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
 Func _LOCalc_FieldGetAnchor(ByRef $mField)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler

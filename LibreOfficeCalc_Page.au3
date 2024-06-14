@@ -1281,7 +1281,7 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ;                  |                               4 = Error setting $bSameOnFirst
 ;                  |                               8 = Error setting $iLeftMargin
 ;                  |                               16 = Error setting $iRightMargin
-;                  |                               32= Error setting $iSpacing
+;                  |                               32 = Error setting $iSpacing
 ;                  |                               64 = Error setting $iHeight
 ;                  |                               128 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
@@ -2662,6 +2662,8 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ;                  @Error 1 @Extended 5 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
 ;                  @Error 1 @Extended 6 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable2 is not an Integer, less than 1 or greater than 1000.
 ;                  @Error 1 @Extended 7 Return 0 = Current mode set to $LOC_SCALE_FIT_PAGES, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to determine Scale Mode.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iMode

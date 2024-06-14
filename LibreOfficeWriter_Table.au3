@@ -486,8 +486,8 @@ EndFunc   ;==>_LOWriter_TableColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested column higher than number of columns contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended $iCount Return 1: Full amount of columns deleted.
-;                  @Error 0 @Extended $iCount Return 2: $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 1: Full amount of columns deleted. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts columns and Rows starting at 0. So to delete the first column in a Table you would set $iColumn to 0.
@@ -1571,8 +1571,8 @@ EndFunc   ;==>_LOWriter_TableRowColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested row higher than number of rows contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended $iCount Return 1: Full amount of Rows deleted.
-;                  @Error 0 @Extended $iCount Return 2: $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 1: Full amount of Rows deleted. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts Rows starting at 0. So to delete the first Row in a Table you would set $iRow to 0.
@@ -1631,7 +1631,7 @@ Func _LOWriter_TableRowGetCount(ByRef $oTable)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
 	$iRowSize = $oTable.getRows.getCount()
 	If ($iRowSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve Row count.
-	Return $iRowSize
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iRowSize)
 EndFunc   ;==>_LOWriter_TableRowGetCount
 
 ; #FUNCTION# ====================================================================================================================
@@ -1920,7 +1920,7 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $bTran
 	EndIf
 
 	If ($bTransparent <> Null) Then
-		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5)
+		If Not IsBool($bTransparent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tShdwFrmt.IsTransparent = $bTransparent
 	EndIf
 

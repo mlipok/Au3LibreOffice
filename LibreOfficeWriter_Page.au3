@@ -2008,13 +2008,13 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	$oPageStyle.FooterFillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
@@ -2252,7 +2252,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ;                  |                               4 = Error setting $bSameOnFirst
 ;                  |                               8 = Error setting $iLeftMargin
 ;                  |                               16 = Error setting $iRightMargin
-;                  |                               32= Error setting $iSpacing
+;                  |                               32 = Error setting $iSpacing
 ;                  |                               64 = Error setting $bDynamicSpacing
 ;                  |                               128 = Error setting $iHeight
 ;                  |                               256 = Error setting $bAutoHeight
@@ -3162,13 +3162,13 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	$oPageStyle.HeaderFillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
@@ -3832,14 +3832,15 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
