@@ -374,7 +374,6 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_TransparencyGradientConvert
 	- __LOCalc_TransparencyGradientNameInsert
 	- __LOCalc_UnitConvert
-	- __LOCalc_VarsAreDefault
 	- __LOCalc_VarsAreNull
 	- __LOCalc_VersionCheck
 - Page Style Functions and Examples
@@ -524,6 +523,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
 - __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
+
+### Removed
+
+- __LOCalc_VarsAreDefault
 
 > [!NOTE]
 > **LibreOfficeWriter**
