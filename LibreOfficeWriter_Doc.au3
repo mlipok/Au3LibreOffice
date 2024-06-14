@@ -1722,7 +1722,7 @@ EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 ;                  @Error 1 @Extended 3 Return 0 = $sNewAuthor not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $iRevisions not an integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iEditDuration not an integer.
-;                  @Error 1 @Extended 5 Return 0 = $bApplyUserData not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bApplyUserData not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Document Settings Object.
 ;                  --Processing Errors--

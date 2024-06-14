@@ -1424,7 +1424,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0.
 ;                  @Error 1 @Extended 6 Return 0 = $iRight not an integer, or set to less than 0.
-;                  @Error 1 @Extended 8 Return 0 = $bConnectBorder not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bConnectBorder not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--

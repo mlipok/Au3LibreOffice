@@ -4271,7 +4271,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ;                  @Error 1 @Extended 2 Return 0 = $oRefField not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sRefMarkName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document does not contain a Reference Mark by the same name as called in $sRefMarkName.
-;                  @Error 1 @Extended 6 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
+;                  @Error 1 @Extended 5 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;                  --Property Setting Errors--

@@ -675,7 +675,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
+;                  @Error 1 @Extended 3 Return 0 = $oCellStyle is not a Cell Style object.
 ;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.

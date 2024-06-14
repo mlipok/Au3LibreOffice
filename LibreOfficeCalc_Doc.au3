@@ -2479,7 +2479,7 @@ EndFunc   ;==>_LOCalc_DocWindowSplit
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve currently visible Range Address.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Sheet Object.
-;                  @Error 4 @Extended 3 Return 0 = Failed to retrieve Cell Range Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Cell Range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning currently visible Range of cells as a Cell Range Object.
 ; Author ........: donnyh13

@@ -1398,7 +1398,7 @@ EndFunc   ;==>_LOWriter_TableMargin
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iTableAlign
 ;                  |                               2 = Error setting $bKeepTogether
-;                  |                               4 = Error setting $sTableName -- Table with same name already present
+;                  |                               4 = Error setting $sTableName (Table with same name already present)
 ;                  |                               8 = Error setting $bSplit
 ;                  |                               16 = Error setting $bSplitRows
 ;                  |                               32 = Error setting $bRepeatHeading

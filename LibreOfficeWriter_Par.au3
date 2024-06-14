@@ -253,7 +253,7 @@ EndFunc   ;==>_LOWriter_ParObjPaste
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oParagraph is not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oParagraph does not support Paragraph service -- Not a paragraph Object.
+;                  @Error 1 @Extended 2 Return 0 = $oParagraph does not support Paragraph service. Not a paragraph Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error enumerating Paragraph sections.
 ;                  --Success--

@@ -2203,7 +2203,7 @@ EndFunc   ;==>__LOCalc_NumIsBetween
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--

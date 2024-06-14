@@ -1828,7 +1828,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  @Error 1 @Extended 8 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
 ;                  @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 2 Return 0 = Error creating LineSpacing Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating LineSpacing Object.
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--

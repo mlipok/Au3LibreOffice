@@ -1785,7 +1785,7 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderCreateTextCursor
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve First Page Header Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Right Page Header Object.
-;                  @Error 4 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Header Object.
@@ -1870,8 +1870,8 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
