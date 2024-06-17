@@ -808,9 +808,9 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	If ($iHighlight <> Null) Then
 		If Not __LOWriter_IntIsBetween($iHighlight, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		; CharHighlight; same as CharBackColor---Libre seems to use back color for highlighting however, so using that for setting.
-;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR,2,0)
+;~ 		If Not __LOWriter_VersionCheck(4.2) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
 ;~ 		$oObj.CharHighlight = $iHighlight ;-- keeping old method in case.
-;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError,4)
+;~ 		$iError = ($oObj.CharHighlight() = $iHighlight) ? ($iError) : (BitOR($iError, 4)
 		$oObj.CharBackColor = $iHighlight
 		$iError = ($oObj.CharBackColor() = $iHighlight) ? ($iError) : (BitOR($iError, 4))
 	EndIf
@@ -1074,9 +1074,9 @@ EndFunc   ;==>__LOWriter_CharRotateScale
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, or less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, or less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow format Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1105,7 +1105,7 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tShdwFrmt = $oObj.CharShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1134,7 +1134,7 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 
 	$oObj.CharShadowFormat = $tShdwFrmt
 	$tShdwFrmt = $oObj.CharShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : (($tShdwFrmt.ShadowWidth() = $iWidth) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -1514,12 +1514,11 @@ EndFunc   ;==>__LOWriter_CreateStruct
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to get Cursor data type.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create Text Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create Object for creating TextObject.
-;                  @Error 3 @Extended 2 Return 0 = Cursor is in an unknown data field.
+;                  @Error 3 @Extended 1 Return 0 = Failed to get Cursor data type.
+;                  @Error 3 @Extended 2 Return 0 = Failed to create Object for creating TextObject.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Text Object.
+;                  @Error 3 @Extended 4 Return 0 = Cursor is in an unknown data field.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Object = Success, Text object was returned. @Extended will be one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
@@ -1541,20 +1540,20 @@ Func __LOWriter_CursorGetText(ByRef $oDoc, ByRef $oCursor)
 
 	$oReturnedObj = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor, True)
 	$iCursorDataType = @extended
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	If Not IsObj($oReturnedObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oReturnedObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Switch $iCursorDataType
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
 			$oText = $oReturnedObj.getText()
-			If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
 		Case $LOW_CURDATA_CELL
 			$oText = $oReturnedObj.getCellByName($oCursor.Cell.CellName)
-			If Not IsObj($oText) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
 		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_CursorGetText
 
@@ -1702,7 +1701,7 @@ EndFunc   ;==>__LOWriter_FieldCountType
 ;                  @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $avFieldTypes not an Array.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of fields in document.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of fields in document.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
@@ -1741,7 +1740,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	$iFieldTypeNumCol = ($bFieldType = False) ? ($iFieldTypeNumCol - 1) : ($iFieldTypeNumCol)
 
 	$oTextFields = $oDoc.getTextFields.createEnumeration()
-	If Not IsObj($oTextFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oTextFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	While $oTextFields.hasMoreElements()
 		$oTextField = $oTextFields.nextElement()
@@ -2195,10 +2194,9 @@ EndFunc   ;==>__LOWriter_FooterBorder
 ;                  $sSetting            - a string value. The setting Name.
 ; Return values .: Success: Variable Value.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Array of Printer setting objects.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Requested setting not found.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Printer setting objects.
+;                  @Error 3 @Extended 2 Return 0 = Requested setting not found.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Variable = Success. The requested setting's value.
 ; Author ........: donnyh13
@@ -2215,14 +2213,14 @@ Func __LOWriter_GetPrinterSetting(ByRef $oDoc, $sSetting)
 	Local $aoPrinterProperties
 
 	$aoPrinterProperties = $oDoc.getPrinter()
-	If Not IsArray($aoPrinterProperties) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aoPrinterProperties) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($aoPrinterProperties) - 1
 		If (($aoPrinterProperties[$i].Name()) = $sSetting) Then Return SetError($__LO_STATUS_SUCCESS, 0, $aoPrinterProperties[$i].Value())
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; No Matches
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; No Matches
 EndFunc   ;==>__LOWriter_GetPrinterSetting
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2236,8 +2234,8 @@ EndFunc   ;==>__LOWriter_GetPrinterSetting
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve DrawPage object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve DrawPage object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Document contained no shapes, returns the Shape name with a "1" appended.
 ;                  @Error 0 @Extended 1 Return String = Success. Returns the unique Shape name to use.
@@ -2258,7 +2256,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
 
@@ -2826,16 +2824,15 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bReturnObject not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $oCursor is a Table Cursor, or a View Cursor with table cells selected. Can't get data type from these types of Cursors.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Footnotes Object for document.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Endnotes Object for document.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving TextCell Object.
 ;                  @Error 3 @Extended 3 Return 0 = Unable to identify Foot/EndNote.
-;                  @Error 3 @Extended 4 Return 0 = Cursor in unknown DataType
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Footnotes Object for document.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Endnotes Object for document.
+;                  @Error 3 @Extended 6 Return 0 = Cursor in unknown DataType
 ;                  --Success--
-;                  @Error 0 @Extended Integer Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 0 @Extended 0 Return Integer = Success, If $bReturnObject is False, Return value will be one of constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -2877,7 +2874,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 
 		Case "SwXFootnote"
 			$oFootNotes = $oDoc.getFootnotes()
-			If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			$sNoteRefID = $oCursor.Text.ReferenceId()
 
 			If $oFootNotes.hasElements() Then
@@ -2898,7 +2895,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 
 			If ($bFound = False) Then
 				$oEndNotes = $oDoc.getEndnotes()
-				If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+				If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 				If $oEndNotes.hasElements() Then
 					For $i = 0 To $oEndNotes.getCount() - 1
@@ -2921,9 +2918,9 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 				$oReturnObject = $oFootEndNote
 				Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $iLWFootEndNote, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $iLWFootEndNote))
 			EndIf
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; no matches
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; no matches
 		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; unknown data type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; unknown data type.
 	EndSwitch
 EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 
@@ -3037,23 +3034,6 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ;                  Failure: False
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_IntIsBetween
-; Description ...:
-; Syntax ........: __LOWriter_IntIsBetween($iTest, $iMin[, $iMax = 0[, $vNot = ""[, $vIncl = ""]]])
-; Parameters ....: $iTest               - an integer value.
-;                  $iMin                - an integer value.
-;                  $iMax                - [optional] an integer value. Default is 0.
-;                  $vNot                - [optional] a variant value. Default is "".
-;                  $vIncl               - [optional] a variant value. Default is "".
-; Return values .: None
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3223,10 +3203,10 @@ EndFunc   ;==>__LOWriter_NumIsBetween
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Standard Macro Library.
-;                  @Error 2 @Extended 2 Return 0 = Error creating Macro in Document.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving Script Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Standard Macro Library.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Macro in Document.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving Script Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Function successfully created the Macro in Document. Returning Script Object.
 ; Author ........: donnyh13
@@ -3253,14 +3233,14 @@ Func __LOWriter_NumStyleCreateScript(ByRef $oDoc)
 	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
-	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
 	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sNumStyleScript)
-	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oScript = $oDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex?language=Basic&location=document")
-	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oScript)
 EndFunc   ;==>__LOWriter_NumStyleCreateScript
@@ -3274,10 +3254,9 @@ EndFunc   ;==>__LOWriter_NumStyleCreateScript
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Standard Macro Library.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error deleting Macro.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Standard Macro Library.
+;                  @Error 3 @Extended 2 Return 0 = Error deleting Macro.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Function successfully deleted the Macro in Document.
 ; Author ........: donnyh13
@@ -3300,10 +3279,10 @@ Func __LOWriter_NumStyleDeleteScript(ByRef $oDoc)
 	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
-	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
-	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_NumStyleDeleteScript
@@ -3449,12 +3428,11 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ;                  @Error 1 @Extended 2 Return 0 = $oNumRules not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iLevel not between -1 and 9 to indicate correct level.
 ;                  @Error 1 @Extended 4 Return 0 = $avSettings not an array.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error opening new document, and inserting ReplaceByIndex Script.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving "Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex" Macro in new document.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving Numbering Rules level.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error deleting ReplaceByIndex Macro from Document.
+;                  @Error 3 @Extended 1 Return 0 = Error opening new document, and inserting ReplaceByIndex Script.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex" Macro in new document.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving Numbering Rules level.
+;                  @Error 3 @Extended 4 Return 0 = Error deleting ReplaceByIndex Macro from Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested settings.
 ; Author ........: donnyh13
@@ -3488,9 +3466,9 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 
 	If Not IsObj($oScript) Then ; If creating my Mod. Script fails, open a new document and create a script in there.
 		$oNumStyleDoc = __LOWriter_NumStyleInitiateDocument()
-		If Not IsObj($oNumStyleDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oNumStyleDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$oScript = $oNumStyleDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex?language=Basic&location=document")
-		If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oScript) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$bNumDocOpen = True
 	EndIf
 
@@ -3502,7 +3480,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 
 		For $j = 0 To $iEndLevel ;Set the settings for each level.
 			$atNumLevel = $oNumRules.getByIndex($iGetLevel)
-			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			For $i = 0 To UBound($atNumLevel) - 1 ;Cycle through Array of Numbering Style settings and modify the settings.
 				If ($atNumLevel[$i].Name() = $sSettingName) Then
@@ -3562,7 +3540,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 		$oNumStyleDoc.Close(True)
 	Else
 		__LOWriter_NumStyleDeleteScript($oDoc)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -3630,8 +3608,8 @@ EndFunc   ;==>__LOWriter_NumStyleRetrieve
 ;                  @Error 1 @Extended 3 Return 0 = $bRelativeWidth not a boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $bRelativeHeight not a boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bRelativeHeight and $bRelativeWidth both set to False.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving Page Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving Page Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ; Author ........: donnyh13
@@ -3665,7 +3643,7 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
 	EndIf
 
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($bRelativeWidth = True) Then
 		$iPageWidth = $oPageStyle.Width() ; Retrieve total Page Style width
@@ -3982,8 +3960,8 @@ EndFunc   ;==>__LOWriter_ParBorderPadding
 ;                  @Error 1 @Extended 8 Return 0 = $iSpaceTxt not an Integer, or less than 0.
 ;                  @Error 1 @Extended 9 Return 0 = $bWholeWord not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $sCharStyle not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving DropCap Format Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumChar
@@ -4014,7 +3992,7 @@ Func __LOWriter_ParDropCaps(ByRef $oObj, $iNumChar, $iLines, $iSpcTxt, $bWholeWo
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$tDCFrmt = $oObj.DropCapFormat()
-	If Not IsObj($tDCFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tDCFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then
 		__LOWriter_ArrayFill($avDropCaps, $tDCFrmt.Count(), $tDCFrmt.Lines(), $tDCFrmt.Distance(), $oObj.DropCapWholeWord(), _
@@ -4071,8 +4049,8 @@ EndFunc   ;==>__LOWriter_ParDropCaps
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iTabStop not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve ParaTabStops Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve ParaTabStops Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = True if Paragraph has the requested TabStop. Else False.
 ; Author ........: donnyh13
@@ -4092,7 +4070,7 @@ Func __LOWriter_ParHasTabStop(ByRef $oObj, $iTabStop)
 	If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$atTabStops = $oObj.ParaTabStops()
-	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($atTabStops) - 1
 		If ($atTabStops[$i].Position() = $iTabStop) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
@@ -4436,9 +4414,9 @@ EndFunc   ;==>__LOWriter_ParPageBreak
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error Checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shadow Format Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shadow Format Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -4467,7 +4445,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tShdwFrmt = $oObj.ParaShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -4497,7 +4475,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 	$oObj.ParaShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oObj.ParaShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : (($tShdwFrmt.ShadowWidth() = $iWidth) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -4531,8 +4509,8 @@ EndFunc   ;==>__LOWriter_ParShadow
 ;                  @Error 1 @Extended 10 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
 ;                  @Error 1 @Extended 11 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
 ;                  @Error 1 @Extended 12 Return 0 = $bPageLineSpc not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaLineSpacing Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAbovePar
@@ -4602,7 +4580,7 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	If ($iLineSpcMode <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLineSpcMode, $LOW_LINE_SPC_MODE_PROP, $LOW_LINE_SPC_MODE_FIX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tLine = $oObj.ParaLineSpacing()
-		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$tLine.Mode = $iLineSpcMode
 		$oObj.ParaLineSpacing = $tLine
 		$iError = ($oObj.ParaLineSpacing.Mode() = $iLineSpcMode) ? ($iError) : (BitOR($iError, 8))
@@ -4611,7 +4589,7 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	If ($iLineSpcHeight <> Null) Then
 		If Not IsInt($iLineSpcHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tLine = $oObj.ParaLineSpacing()
-		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		Switch $tLine.Mode()
 			Case $LOW_LINE_SPC_MODE_PROP ;Proportional
@@ -4688,11 +4666,11 @@ EndFunc   ;==>__LOWriter_ParStyleNameToggle
 ;                  @Error 1 @Extended 7 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iDecChar not an Integer.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.style.TabStop" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the new Tabstop once inserted.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Array Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving list of TabStop Positions.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the new Tabstop once inserted.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return Integer = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                                     1 = Error setting $iPosition
@@ -4726,10 +4704,10 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$atTabStops = $oObj.ParaTabStops()
-	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tTabStruct = __LOWriter_CreateStruct("com.sun.star.style.TabStop")
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$tTabStruct.Position = $iPosition
 	$tTabStruct.FillChar = 32
@@ -4762,7 +4740,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
 		$aiTabList = __LOWriter_ParTabStopList($oObj) ; Get a list of existing tabstops to compare with
-		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
 		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
@@ -4777,7 +4755,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 			EndIf
 		Next
 
-		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; didn't find the new TabStop
+		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; didn't find the new TabStop
 	EndIf
 
 	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? ($iError) : (BitOR($iError, 1))
@@ -4800,10 +4778,9 @@ EndFunc   ;==>__LOWriter_ParTabStopCreate
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 6 Return 0 = Passed Object to internal function not an Object.
 ;                  @Error 1 @Extended 7 Return 0 = Passed Document Object to internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify and delete TabStop in Paragraph.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify and delete TabStop in Paragraph.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Returns true if TabStop was successfully deleted.
 ; Author ........: donnyh13
@@ -4828,7 +4805,7 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 
 	$atOldTabStops = $oObj.ParaTabStops()
 	ReDim $atNewTabStops[UBound($atOldTabStops)]
-	If Not IsArray($atOldTabStops) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atOldTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If (UBound($atOldTabStops) = 1) Then
 		$oDefaults = $oDoc.createInstance("com.sun.star.text.Defaults")
@@ -4854,7 +4831,7 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 
 	$oObj.ParaTabStops = $atNewTabStops
 
-	Return ($bDeleted) ? (SetError($__LO_STATUS_SUCCESS, 0, $bDeleted)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return ($bDeleted) ? (SetError($__LO_STATUS_SUCCESS, 0, $bDeleted)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>__LOWriter_ParTabStopDelete
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -4866,8 +4843,8 @@ EndFunc   ;==>__LOWriter_ParTabStopDelete
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object for internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. An Array of TabStops. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -4886,7 +4863,7 @@ Func __LOWriter_ParTabStopList(ByRef $oObj)
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$atTabStops = $oObj.ParaTabStops()
-	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $aiTabList[UBound($atTabStops)]
 
@@ -4915,12 +4892,11 @@ EndFunc   ;==>__LOWriter_ParTabStopList
 ;                  @Error 1 @Extended 7 Return 0 = $iFillChar not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iAlignment not an Integer, less than 0, or greater than 4. See Constants, $LOW_TAB_ALIGN_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 9 Return 0 = $iDecChar not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
-;                  @Error 2 @Extended 3 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ParaTabStops Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Requested TabStop Object.
+;                  @Error 3 @Extended 3 Return 0 = Paragraph style already contains a TabStop at the length/Position specified in $iPosition.
+;                  @Error 3 @Extended 4 Return 0 = Error retrieving list of TabStop Positions.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iPosition
@@ -4956,14 +4932,14 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$atTabStops = $oObj.ParaTabStops()
-	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($atTabStops) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($atTabStops) - 1
 		$tTabStruct = ($atTabStops[$i].Position() = $iTabStop) ? ($atTabStops[$i]) : (Null)
 		If IsObj($tTabStruct) Then ExitLoop
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
-	If Not IsObj($tTabStruct) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tTabStruct) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iPosition, $iFillChar, $iAlignment, $iDecChar) Then
 		__LOWriter_ArrayFill($aiTabSettings, $tTabStruct.Position(), $tTabStruct.FillChar(), $tTabStruct.Alignment(), $tTabStruct.DecimalChar())
@@ -4972,7 +4948,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 
 	If ($iPosition <> Null) Then
 		If Not IsInt($iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If __LOWriter_ParHasTabStop($oObj, $iPosition) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If __LOWriter_ParHasTabStop($oObj, $iPosition) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		$tTabStruct.Position = $iPosition
 		$iError = ($tTabStruct.Position() = $iPosition) ? ($iError) : (BitOR($iError, 1))
 		$bNewPosition = True
@@ -5001,7 +4977,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 
 	If $bNewPosition Then
 		$aiTabList = __LOWriter_ParTabStopList($oObj)
-		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oObj.ParaTabStops = $atTabStops
@@ -5197,10 +5173,10 @@ EndFunc   ;==>__LOWriter_SetPropertyValue
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
 ;                  @Error 2 @Extended 3 Return 0 = Failed to create "MirroredX" property structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5323,7 +5299,7 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -5331,7 +5307,7 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -5339,7 +5315,7 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateArrow
@@ -5362,10 +5338,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateArrow
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" or "com.sun.star.drawing.EllipseShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5491,7 +5467,7 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 	EndIf
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -5499,7 +5475,7 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -5527,10 +5503,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateBasic
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5588,7 +5564,7 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -5596,7 +5572,7 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -5604,7 +5580,7 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateCallout
@@ -5627,10 +5603,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateCallout
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5751,7 +5727,7 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -5759,7 +5735,7 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -5767,7 +5743,7 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
@@ -5790,11 +5766,11 @@ EndFunc   ;==>__LOWriter_Shape_CreateFlowchart
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create the requested Line type Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a Position structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
-;                  @Error 2 @Extended 5 Return 0 = Failed to create "com.sun.star.drawing.PolyPolygonBezierCoords" Structure.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create "com.sun.star.drawing.PolyPolygonBezierCoords" Structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -5819,7 +5795,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	If Not IsInt($iShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$tPolyCoords = __LOWriter_CreateStruct("com.sun.star.drawing.PolyPolygonBezierCoords")
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	Switch $iShapeType
 
@@ -6021,7 +5997,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	EndSwitch
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -6029,7 +6005,7 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -6065,10 +6041,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateLine
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -6142,7 +6118,7 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -6150,7 +6126,7 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -6158,7 +6134,7 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateStars
@@ -6181,10 +6157,10 @@ EndFunc   ;==>__LOWriter_Shape_CreateStars
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.drawing.CustomShape" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a property structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Size Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to create a unique Shape name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Size Structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to create a unique Shape name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning the newly created shape.
 ; Author ........: donnyh13
@@ -6287,7 +6263,7 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.CustomShapeGeometry = $atCusShapeGeo
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tPos.X = 0
 	$tPos.Y = 0
@@ -6295,7 +6271,7 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Position = $tPos
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tSize.Width = $iWidth
 	$tSize.Height = $iHeight
@@ -6303,7 +6279,7 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 	$oShape.Size = $tSize
 
 	$oShape.Name = __LOWriter_GetShapeName($oDoc, "Shape ")
-	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oShape)
 EndFunc   ;==>__LOWriter_Shape_CreateSymbol
@@ -6968,16 +6944,13 @@ EndFunc   ;==>__LOWriter_ShapePointGetSettings
 ;                  @Error 1 @Extended 2 Return 0 = $atPoints not an Array.
 ;                  @Error 1 @Extended 3 Return 0 = $iArrayElement not an Integer.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
-;                  @Error 2 @Extended 3 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify the next position point in the shape.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to identify the previous position point in the shape.
-;                  @Error 3 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
-;                  @Error 3 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
-;                  @Error 3 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
-;                  @Error 3 @Extended 6 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ; Author ........: donnyh13
@@ -7096,17 +7069,17 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$tControlPoint1 = $atPoints[$iArrayElement - 1]
 
 						$tControlPoint2 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X() - $iSymmetricalPointXValue, $atPoints[$iArrayElement].Y() - $iSymmetricalPointYValue)
-						If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 					EndIf
 
 				Else ; Previous point is a normal point, need to create new control points.
 
 					$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iPreviousArrayElement].X(), $atPoints[$iPreviousArrayElement].Y())
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 					$tControlPoint2 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X() - $iSymmetricalPointXValue, $atPoints[$iArrayElement].Y() - $iSymmetricalPointYValue)
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 				EndIf
 
 				If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Next point is a control Point, might just need to modify it.
@@ -7120,7 +7093,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 					Else ; There is only one control point, I need to create a new one and modify the other.
 						$tControlPoint3 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X() + $iSymmetricalPointXValue, $atPoints[$iArrayElement].Y() + $iSymmetricalPointYValue)
-						If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 						$tControlPoint4 = $atPoints[$iArrayElement + 1] ; Modify the Control Point.
 						$tControlPoint4.X = ($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5))
@@ -7130,10 +7103,10 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				Else ; Next point is a normal point, need to create new control points.
 
 					$tControlPoint3 = __LOWriter_CreatePoint(($atPoints[$iArrayElement].X() + $iSymmetricalPointXValue), ($atPoints[$iArrayElement].Y() + $iSymmetricalPointYValue))
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 					$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 				EndIf
 
 				$iOffset = 0
@@ -7349,7 +7322,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 					Else ; Create a new control point.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
-						If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 					EndIf
 
@@ -7368,10 +7341,10 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 				If ($bIsCurve = True) Then
 					$tControlPoint3 = __LOWriter_CreatePoint(Int($atPoints[$iArrayElement].X() + (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iArrayElement].Y() + (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 					$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
-					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 				EndIf
 
@@ -7586,9 +7559,9 @@ EndFunc   ;==>__LOWriter_ShapePointModify
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Object "TableBorder2".
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
@@ -7639,9 +7612,9 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	EndIf
 
 	$tBL2 = __LOWriter_CreateStruct("com.sun.star.table.BorderLine2")
-	$tTB2 = $oTable.TableBorder2
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	$tTB2 = $oTable.TableBorder2
+	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $iTop <> Null Then
 		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
@@ -7785,8 +7758,8 @@ EndFunc   ;==>__LOWriter_TableCursorMove
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sCellName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Names.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Names.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean: If the table contains the requested Cell Name, True is returned. Else False.
 ; Author ........: donnyh13
@@ -7806,7 +7779,7 @@ Func __LOWriter_TableHasCellName(ByRef $oTable, ByRef $sCellName)
 	If Not IsString($sCellName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$aCellNames = $oTable.getCellNames()
-	If Not IsArray($aCellNames) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($aCellNames) - 1
 		If StringInStr($aCellNames[$i], $sCellName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
@@ -7887,9 +7860,9 @@ EndFunc   ;==>__LOWriter_TableHasRowRange
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bSplitRows not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Table's Row count.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve first Row's current split row setting.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Table's Row count.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve first Row's current split row setting.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. All optional parameters were set to Null, Table Rows have multiple SplitRow settings, returning 0 to indicate this.
 ;                  @Error 0 @Extended 1 Return Boolean = Success. All optional parameters were set to Null, returning current split row setting as a Boolean.
@@ -7911,13 +7884,13 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$iRows = $oTable.getRows.getCount()
-	If Not IsInt($iRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsInt($iRows) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($bSplitRows = Null) Then ; Retrieve Split Rows Setting
 
 		; Retrieve the First Row's Split Row setting.
 		$bSplitRowTest = $oTable.getRows.getByIndex(0).IsSplitAllowed()
-		If Not IsBool($bSplitRowTest) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsBool($bSplitRowTest) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		For $i = 1 To $iRows - 1
 

@@ -109,7 +109,7 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
-		Return $vUserFunction_Static
+		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
@@ -572,9 +572,9 @@ EndFunc   ;==>_LOWriter_ConvertToMicrometer
 ;                  @Error 1 @Extended 2 Return 0 = $sFormat not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Create or Retrieve the Format key.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
 ;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
@@ -598,13 +598,13 @@ Func _LOWriter_DateFormatKeyCreate(ByRef $oDoc, $sFormat)
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOWriter_DateFormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -620,10 +620,9 @@ EndFunc   ;==>_LOWriter_DateFormatKeyCreate
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
 ;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to delete the format key.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete the format key.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Format Key was successfully deleted.
 ; Author ........: donnyh13
@@ -644,12 +643,12 @@ Func _LOWriter_DateFormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
 
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return (_LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOWriter_DateFormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -700,8 +699,8 @@ EndFunc   ;==>_LOWriter_DateFormatKeyExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
 ; Author ........: donnyh13
@@ -721,7 +720,7 @@ Func _LOWriter_DateFormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_DateFormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0) ; Failed to retrieve Key
+	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve Key
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOWriter_DateFormatKeyGetString
@@ -746,8 +745,9 @@ EndFunc   ;==>_LOWriter_DateFormatKeyGetString
 ;                  @Error 1 @Extended 6 Return 0 = Both $bDateOnly and $bTimeOnly set to True. Set one or both to false.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Date/Time Formats.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
@@ -784,9 +784,9 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iQueryType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	ReDim $avDTFormats[UBound($aiFormatKeys)][$iColumns]
 
@@ -1829,7 +1829,7 @@ EndFunc   ;==>_LOWriter_FindFormatModifyRotateScaleSpace
 ;                  @Error 1 @Extended 8 Return 0 = $iLineSpcMode set to 1 or 2(Minimum, or Leading) and $iLineSpcHeight less than 0 uM or greater than 10008 uM
 ;                  @Error 1 @Extended 9 Return 0 = $iLineSpcMode set to 3(Fixed) and $iLineSpcHeight less than 51 uM or greater than 10008 uM.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 2 Return 0 = Error creating LineSpacing Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating LineSpacing Object.
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 3.6.
 ;                  --Success--
@@ -2139,9 +2139,9 @@ EndFunc   ;==>_LOWriter_FindFormatModifyUnderline
 ;                  @Error 1 @Extended 2 Return 0 = $sFormat not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
 ;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
@@ -2165,13 +2165,13 @@ Func _LOWriter_FormatKeyCreate(ByRef $oDoc, $sFormat)
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOWriter_FormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -2187,10 +2187,9 @@ EndFunc   ;==>_LOWriter_FormatKeyCreate
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
 ;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to delete key.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete key.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Format Key was successfully deleted.
 ; Author ........: donnyh13
@@ -2211,12 +2210,12 @@ Func _LOWriter_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
 
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOWriter_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return (_LOWriter_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOWriter_FormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -2234,8 +2233,9 @@ EndFunc   ;==>_LOWriter_FormatKeyDelete
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Date/Time Formats.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return True = Success. Format Key exists in document.
 ;                  @Error 0 @Extended 1 Return False = Success. Format Key does not exist in document.
@@ -2260,9 +2260,9 @@ Func _LOWriter_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOW_FOR
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
 		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LO_STATUS_SUCCESS, 0, True) ; Doc does contain format Key
@@ -2285,9 +2285,9 @@ EndFunc   ;==>_LOWriter_FormatKeyExists
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOW_FORMAT_KEYS_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning the Standard Format for the requested Format Key Type.
 ; Author ........: donnyh13
@@ -2311,10 +2311,10 @@ Func _LOWriter_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iStandard = $oFormats.getStandardFormat($iFormatKeyType, $tLocale)
-	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iStandard)
 EndFunc   ;==>_LOWriter_FormatKeyGetStandard
@@ -2331,8 +2331,8 @@ EndFunc   ;==>_LOWriter_FormatKeyGetStandard
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
 ; Author ........: donnyh13
@@ -2352,7 +2352,7 @@ Func _LOWriter_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0) ; Key not found.
+	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOWriter_FormatKeyGetString
@@ -2374,8 +2374,9 @@ EndFunc   ;==>_LOWriter_FormatKeyGetString
 ;                  @Error 1 @Extended 4 Return 0 = $iFormatKeyType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve NumberFormats Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Format Keys.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve NumberFormats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Format Keys.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or three column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
@@ -2407,9 +2408,9 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 	$tLocale = __LOWriter_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 

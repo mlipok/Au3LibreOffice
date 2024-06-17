@@ -349,11 +349,11 @@ EndFunc   ;==>_LOCalc_CellStyleBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $sCellStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Cell Style name called in $sCellStyle already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "CellStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.CellStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving created Cell Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.CellStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Cell Style.
+;                  @Error 3 @Extended 1 Return 0 =  Error Retrieving "CellStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Cell Style.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving created Cell Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New Cell Style successfully created. Returning its Object.
 ; Author ........: donnyh13
@@ -373,19 +373,19 @@ Func _LOCalc_CellStyleCreate(ByRef $oDoc, $sCellStyle)
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oCellStyles = $oDoc.StyleFamilies().getByName("CellStyles")
-	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oStyle = $oDoc.createInstance("com.sun.star.style.CellStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oCellStyles.insertByName($sCellStyle, $oStyle)
 
-	If Not $oCellStyles.hasByName($sCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oCellStyles.hasByName($sCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oCellStyle = $oCellStyles.getByName($sCellStyle)
-	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCellStyle)
 EndFunc   ;==>_LOCalc_CellStyleCreate
@@ -407,13 +407,12 @@ EndFunc   ;==>_LOCalc_CellStyleCreate
 ;                  @Error 1 @Extended 4 Return 0 = $bForceDelete not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $sReplacementStyle not a String.
 ;                  @Error 1 @Extended 6 Return 0 = Cell Style called in $sReplacementStyle not found.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "CellStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Cell Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $oCellStyle is not a User-Created Cell Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $oCellStyle is in use and $bForceDelete is false.
-;                  @Error 3 @Extended 3 Return 0 = $oCellStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "CellStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Cell Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $oCellStyle is not a User-Created Cell Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $oCellStyle is in use and $bForceDelete is false.
+;                  @Error 3 @Extended 5 Return 0 = $oCellStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Cell Style called in $oCellStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -438,18 +437,18 @@ Func _LOCalc_CellStyleDelete(ByRef $oDoc, ByRef $oCellStyle, $bForceDelete = Fal
 	If ($sReplacementStyle <> "") And Not _LOCalc_CellStyleExists($oDoc, $sReplacementStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oCellStyles = $oDoc.StyleFamilies().getByName("CellStyles")
-	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCellStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sCellStyle = $oCellStyle.Name()
-	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oCellStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oCellStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oCellStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oCellStyle.isInUse() And Not ($bForceDelete) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
 	If ($oCellStyle.getParentStyle() = Null) Or ($sReplacementStyle <> "Default") Then $oCellStyle.setParentStyle($sReplacementStyle)
 	; If Parent style is blank set it to "Default", Or if not but User has called a specific style set it to that.
 
 	$oCellStyles.removeByName($sCellStyle)
-	Return ($oCellStyles.hasByName($sCellStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oCellStyles.hasByName($sCellStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_CellStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -638,8 +637,8 @@ EndFunc   ;==>_LOCalc_CellStyleFontColor
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sCellStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Cell Style called in $sCellStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Cell Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Cell Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Cell Style successfully retrieved, returning its Object.
 ; Author ........: donnyh13
@@ -659,7 +658,7 @@ Func _LOCalc_CellStyleGetObj(ByRef $oDoc, $sCellStyle)
 	If Not IsString($sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_CellStyleExists($oDoc, $sCellStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oCellStyle = $oDoc.StyleFamilies().getByName("CellStyles").getByName($sCellStyle)
-	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCellStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCellStyle)
 EndFunc   ;==>_LOCalc_CellStyleGetObj
@@ -676,7 +675,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellStyle not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCellStyle is not a Cell Style object.
+;                  @Error 1 @Extended 3 Return 0 = $oCellStyle is not a Cell Style object.
 ;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.
@@ -858,8 +857,8 @@ EndFunc   ;==>_LOCalc_CellStyleOverline
 ;                  @Error 1 @Extended 5 Return 0 = $bProtected not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bHideFormula not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bHideWhenPrint not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bHideAll
@@ -944,8 +943,8 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. No Cell Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the input parameters. @Extended contains the count of results returned.
@@ -973,7 +972,7 @@ Func _LOCalc_CellStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly =
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oStyles = $oDoc.StyleFamilies.getByName("CellStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $asStyles[$oStyles.getCount()]
 
@@ -1020,6 +1019,8 @@ EndFunc   ;==>_LOCalc_CellStylesGetNames
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shadow Format Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iWidth

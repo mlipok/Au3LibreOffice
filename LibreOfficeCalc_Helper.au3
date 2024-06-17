@@ -575,8 +575,9 @@ EndFunc   ;==>_LOCalc_ConvertToMicrometer
 ;                  @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully created a Filter descriptor Object, returning its Object.
 ; Author ........: donnyh13
@@ -615,10 +616,10 @@ Func _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField, $bCaseSensiti
 		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tCellInputAddr = $oCopyOutput.RangeAddress()
-		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
@@ -676,10 +677,10 @@ EndFunc   ;==>_LOCalc_FilterDescriptorCreate
 ;                  @Error 1 @Extended 11 Return 0 = $oCopyOutput not an Object.
 ;                  @Error 1 @Extended 12 Return 0 = $bSaveCriteria not a Boolean.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Object for Cell referenced in $oCopyOutput.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
-;                  --Success--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object for Cell referenced in $oCopyOutput.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Filter Descriptor was successfully modified.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
@@ -705,7 +706,7 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp, $bHeaders, $bCopyOutput, $oCopyOutput, $bSaveCriteria) Then
 		$oCell = $oRange.Spreadsheet.getCellByPosition($oFilterDesc.OutputPosition.Column(), $oFilterDesc.OutputPosition.Row())
-		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avFilter, $oFilterDesc.getFilterFields2(), $oFilterDesc.IsCaseSensitive(), $oFilterDesc.SkipDuplicates(), $oFilterDesc.UseRegularExpressions(), _
 				$oFilterDesc.ContainsHeader(), $oFilterDesc.CopyOutputData(), $oCell, $oFilterDesc.SaveOutputPosition())
@@ -751,10 +752,10 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tCellInputAddr = $oCopyOutput.RangeAddress()
-		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
@@ -921,9 +922,9 @@ EndFunc   ;==>_LOCalc_FilterFieldModify
 ;                  @Error 1 @Extended 2 Return 0 = $sFormat not a String.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Create or Retrieve the Format key.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
 ;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
@@ -947,13 +948,13 @@ Func _LOCalc_FormatKeyCreate(ByRef $oDoc, $sFormat)
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOCalc_FormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -969,10 +970,9 @@ EndFunc   ;==>_LOCalc_FormatKeyCreate
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
 ;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to delete key.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete key.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Format Key was successfully deleted.
 ; Author ........: donnyh13
@@ -993,12 +993,12 @@ Func _LOCalc_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
 
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOCalc_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return (_LOCalc_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOCalc_FormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -1016,8 +1016,9 @@ EndFunc   ;==>_LOCalc_FormatKeyDelete
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Date/Time Formats.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return True = Success. Format Key exists in document.
 ;                  @Error 0 @Extended 1 Return False = Success. Format Key does not exist in document.
@@ -1042,9 +1043,9 @@ Func _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOC_FORMA
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
 		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LO_STATUS_SUCCESS, 0, True) ; Doc does contain format Key
@@ -1067,9 +1068,9 @@ EndFunc   ;==>_LOCalc_FormatKeyExists
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning the Standard Format for the requested Format Key Type.
 ; Author ........: donnyh13
@@ -1093,10 +1094,10 @@ Func _LOCalc_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iStandard = $oFormats.getStandardFormat($iFormatKeyType, $tLocale)
-	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iStandard)
 EndFunc   ;==>_LOCalc_FormatKeyGetStandard
@@ -1113,8 +1114,8 @@ EndFunc   ;==>_LOCalc_FormatKeyGetStandard
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
 ; Author ........: donnyh13
@@ -1134,7 +1135,7 @@ Func _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0) ; Key not found.
+	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOCalc_FormatKeyGetString
@@ -1156,8 +1157,9 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ;                  @Error 1 @Extended 4 Return 0 = $iFormatKeyType not an Integer.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve NumberFormats Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Format Keys.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve NumberFormats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Format Keys.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
@@ -1189,9 +1191,9 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 

@@ -175,8 +175,8 @@ EndFunc   ;==>_LOCalc_RangeClearContents
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColumns not an Integer or less than 0, or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted requested columns.
 ; Author ........: donnyh13
@@ -196,7 +196,7 @@ Func _LOCalc_RangeColumnDelete(ByRef $oRange, $iColumn, $iCount = 1)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oColumns = $oRange.getColumns()
-	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iColumn, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -252,9 +252,9 @@ EndFunc   ;==>_LOCalc_RangeColumnGetName
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Range does not contain a column with name called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Columns Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Column Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Success, returning Column's Object.
 ; Author ........: donnyh13
@@ -274,12 +274,12 @@ Func _LOCalc_RangeColumnGetObjByName(ByRef $oRange, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumns = $oRange.getColumns()
-	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oColumns.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oColumn = $oColumns.getByName($sName)
-	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oColumn)
 EndFunc   ;==>_LOCalc_RangeColumnGetObjByName
@@ -295,9 +295,9 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer, or less than 0, or greater than number of columns contained in the Range.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Columns Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Column Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Success, returning Column's Object.
 ; Author ........: donnyh13
@@ -316,12 +316,12 @@ Func _LOCalc_RangeColumnGetObjByPosition(ByRef $oRange, $iColumn)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oColumns = $oRange.getColumns()
-	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iColumn, 0, $oColumns.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oColumn = $oColumns.getByIndex($iColumn)
-	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oColumn)
 EndFunc   ;==>_LOCalc_RangeColumnGetObjByPosition
@@ -339,8 +339,8 @@ EndFunc   ;==>_LOCalc_RangeColumnGetObjByPosition
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer or less than 0, or greater than number of Columns contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully inserted blank columns.
 ; Author ........: donnyh13
@@ -360,7 +360,7 @@ Func _LOCalc_RangeColumnInsert(ByRef $oRange, $iColumn, $iCount = 1)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oColumns = $oRange.getColumns()
-	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iColumn, 0, $oColumns.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -439,8 +439,8 @@ EndFunc   ;==>_LOCalc_RangeColumnPageBreak
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Columns Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning number of Columns contained in the Range.
 ; Author ........: donnyh13
@@ -459,7 +459,7 @@ Func _LOCalc_RangeColumnsGetCount(ByRef $oRange)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oColumns = $oRange.getColumns()
-	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oColumns.Count())
 EndFunc   ;==>_LOCalc_RangeColumnsGetCount
@@ -617,9 +617,10 @@ EndFunc   ;==>_LOCalc_RangeCompute
 ;                  @Error 1 @Extended 3 Return 0 = $oRangeDest not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bMove not a Boolean.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Source Cell Range Address.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Destination Cell Range Address.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create "com.sun.star.table.CellAddress" Struct.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.table.CellAddress" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Source Cell Range Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Destination Cell Range Address.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Cell or Cell range was successfully copied to destination.
 ;                  @Error 0 @Extended 1 Return 1 = Success. Cell or Cell range was successfully moved to destination.
@@ -643,13 +644,13 @@ Func _LOCalc_RangeCopyMove(ByRef $oSheet, ByRef $oRangeSrc, ByRef $oRangeDest, $
 	If Not IsBool($bMove) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$tCellSrcAddr = $oRangeSrc.RangeAddress()
-	If Not IsObj($tCellSrcAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellSrcAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tInputCellDestAddr = $oRangeDest.RangeAddress()
-	If Not IsObj($tInputCellDestAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tInputCellDestAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$tCellDestAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-	If Not IsObj($tCellDestAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tCellDestAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$tCellDestAddr.Sheet = $tInputCellDestAddr.Sheet()
 	$tCellDestAddr.Column = $tInputCellDestAddr.StartColumn()
@@ -720,17 +721,16 @@ EndFunc   ;==>_LOCalc_RangeCreateCursor
 ;                  @Error 1 @Extended 5 Return ? = Element of $aavData does not contain an array. Returning array element number of $aavData containing error.
 ;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aavData has less or more elements than number of columns in the cell range. Returning array element number of $aavData containing faulty array.
 ;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aavData has less or more elements than first Array contained in $aavData. Returning array element number of $aavData containing faulty array.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;                  @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;                  @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
-;                  @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
-;                  @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
+;                  @Error 3 @Extended 4 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;                  @Error 3 @Extended 5 Return 0 = Failed to re-size Cell Range Rows.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve End of Column from Cell Range.
+;                  @Error 3 @Extended 8 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Data was successfully set for the cell range.
 ;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aavData set to Null, returning an array containing arrays, which contain any data content contained in the cell range.
@@ -755,7 +755,7 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 
 	If ($aavData = Null) Then
 		$aavData = $oRange.getDataArray()
-		If Not IsArray($aavData) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsArray($aavData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aavData)
 	EndIf
 
@@ -765,28 +765,28 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iEnd = $oRange.RangeAddress.EndRow()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If $bStrictSize Then ; If Array is wrongly sized, return an error.
 		If (UBound($aavData) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Else ; Expand the Range to fit the Array
 		If (UBound($aavData) <> ($iEnd - $iStart + 1)) Then
-			If (($oRange.RangeAddress.StartRow() + UBound($aavData)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			If (($oRange.RangeAddress.StartRow() + UBound($aavData)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; Check if resizing range is possible.
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aavData) - 1))
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
 
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
 
@@ -803,9 +803,9 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 		Next
 
 		If (UBound($aavData[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
-			If (($oRange.RangeAddress.StartColumn() + UBound($aavData[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If (($oRange.RangeAddress.StartColumn() + UBound($aavData[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aavData[0]) - 1), $oRange.RangeAddress.EndRow())
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
 		EndIf
 
@@ -842,10 +842,9 @@ EndFunc   ;==>_LOCalc_RangeData
 ;                  @Error 1 @Extended 8 Return 0 = $bDontSaveImport not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bAutoFilter not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = Document called in $oDoc already contains a Database Range named the same as called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve new Database Range's Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve new Database Range's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully added a new Database Range, returning its Object.
 ; Author ........: donnyh13
@@ -872,14 +871,14 @@ Func _LOCalc_RangeDatabaseAdd(ByRef $oDoc, $oRange, $sName, $bColumnHeaders = Tr
 	If Not IsBool($bAutoFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oDatabaseRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 	$oDatabaseRanges.addNewByName($sName, $oRange.RangeAddress())
 
 	$oDatabaseRange = $oDatabaseRanges.getByName($sName)
-	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	With $oDatabaseRange
 		.ContainsHeader = $bColumnHeaders
@@ -904,11 +903,10 @@ EndFunc   ;==>_LOCalc_RangeDatabaseAdd
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oDatabaseRange not an Object and not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Database Range name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to delete requested Database Range.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Database Range name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to delete requested Database Range.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the requested Database Range.
 ; Author ........: donnyh13
@@ -929,14 +927,14 @@ Func _LOCalc_RangeDatabaseDelete(ByRef $oDoc, $oDatabaseRange)
 	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$sDatabaseRange = $oDatabaseRange.Name()
-	If Not IsString($sDatabaseRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oDatabaseRanges.removeByName($sDatabaseRange)
 
-	If $oDatabaseRanges.hasByName($sDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oDatabaseRanges.hasByName($sDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeDatabaseDelete
@@ -950,8 +948,8 @@ EndFunc   ;==>_LOCalc_RangeDatabaseDelete
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Database Ranges contained in the document. @extended set to number of results.
 ; Author ........: donnyh13
@@ -971,7 +969,7 @@ Func _LOCalc_RangeDatabaseGetNames(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $asNames[$oDatabaseRanges.Count()]
 
@@ -996,9 +994,9 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetNames
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document called in $oDoc does not contain a Database Range by the name called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Database Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Database Range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Database Range Object.
 ; Author ........: donnyh13
@@ -1018,12 +1016,12 @@ Func _LOCalc_RangeDatabaseGetObjByName(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oDatabaseRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oDatabaseRange = $oDatabaseRanges.getByName($sName)
-	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oDatabaseRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDatabaseRange)
 EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
@@ -1039,10 +1037,9 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to query whether document contains the called name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
 ; Author ........: donnyh13
@@ -1063,10 +1060,10 @@ Func _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$bExists = $oDatabaseRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
 EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
@@ -1099,11 +1096,8 @@ EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
 ;                  @Error 1 @Extended 9 Return 0 = $bKeepFormatting not a Boolean.
 ;                  @Error 1 @Extended 10 Return 0 = $bDontSaveImport not a Boolean.
 ;                  @Error 1 @Extended 11 Return 0 = $bAutoFilter not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Reference Position of Named Range.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $oRange
@@ -1140,7 +1134,7 @@ Func _LOCalc_RangeDatabaseModify(ByRef $oDoc, ByRef $oDatabaseRange, $oRange = N
 		$oRange = $oDoc.Sheets.getByIndex($oDatabaseRange.DataArea.Sheet()).getCellRangeByPosition( _
 				$oDatabaseRange.DataArea.StartColumn(), $oDatabaseRange.DataArea.StartRow(), _
 				$oDatabaseRange.DataArea.EndColumn(), $oDatabaseRange.DataArea.EndRow())
-		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avDatabaseRange, $oRange, $oDatabaseRange.Name(), $oDatabaseRange.ContainsHeader(), $oDatabaseRange.TotalsRow(), $oDatabaseRange.MoveCells(), _
 				$oDatabaseRange.KeepFormats(), $oDatabaseRange.StripData(), $oDatabaseRange.AutoFilter())
@@ -1219,8 +1213,8 @@ EndFunc   ;==>_LOCalc_RangeDatabaseModify
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0, or greater than 4. See Constants $LOC_CELL_DELETE_MODE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Cell range was successfully cleared.
 ; Author ........: donnyh13
@@ -1241,7 +1235,7 @@ Func _LOCalc_RangeDelete(ByRef $oSheet, $oRange, $iMode)
 	If Not __LOCalc_IntIsBetween($iMode, $LOC_CELL_DELETE_MODE_NONE, $LOC_CELL_DELETE_MODE_COLUMNS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tCellAddr = $oRange.RangeAddress()
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheet.removeRange($tCellAddr, $iMode)
 
@@ -1587,17 +1581,16 @@ EndFunc   ;==>_LOCalc_RangeFindNext
 ;                  @Error 1 @Extended 5 Return ? = Element of $aasFormulas does not contain an array. Returning array element number of $aasFormulas containing error.
 ;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aasFormulas has less or more elements than number of columns in the cell range. Returning array element number of $aasFormulas containing faulty array.
 ;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aasFormulas has less or more elements than first Array contained in $aasFormulas. Returning array element number of $aasFormulas containing faulty array.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;                  @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;                  @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
-;                  @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
-;                  @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
+;                  @Error 3 @Extended 4 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;                  @Error 3 @Extended 5 Return 0 = Failed to re-size Cell Range Rows.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve End of Column from Cell Range.
+;                  @Error 3 @Extended 8 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Formulas were successfully set for the cell range.
 ;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aasFormulas set to Null, returning an array containing arrays, which contain any Formula content contained in the cell range.
@@ -1621,7 +1614,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 
 	If ($aasFormulas = Null) Then
 		$aasFormulas = $oRange.getFormulaArray()
-		If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aasFormulas)
 	EndIf
 
@@ -1630,28 +1623,28 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iEnd = $oRange.RangeAddress.EndRow()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If $bStrictSize Then ; If Array is wrongly sized, return an error.
 		If (UBound($aasFormulas) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Else ; Expand the Range to fit the Array
 		If (UBound($aasFormulas) <> ($iEnd - $iStart + 1)) Then
-			If (($oRange.RangeAddress.StartRow() + UBound($aasFormulas)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			If (($oRange.RangeAddress.StartRow() + UBound($aasFormulas)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; Check if resizing range is possible.
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aasFormulas) - 1))
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
 
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
 
@@ -1668,9 +1661,9 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 		Next
 
 		If (UBound($aasFormulas[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
-			If (($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If (($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aasFormulas[0]) - 1), $oRange.RangeAddress.EndRow())
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
 		EndIf
 
@@ -1769,8 +1762,8 @@ EndFunc   ;==>_LOCalc_RangeGetAddressAsPosition
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sFromCellName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = $sToCellName not set to Null, and not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Cell or Cell Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Cell or Cell Range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved and returning requested Cell or Cell Range Object.
 ; Author ........: donnyh13
@@ -1793,7 +1786,7 @@ Func _LOCalc_RangeGetCellByName(ByRef $oRange, $sFromCellName, $sToCellName = Nu
 	If ($sToCellName <> Null) Then $sCellRange &= ":" & $sToCellName
 
 	$oCellRange = $oRange.getCellRangeByName($sCellRange)
-	If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCellRange)
 EndFunc   ;==>_LOCalc_RangeGetCellByName
@@ -1817,9 +1810,9 @@ EndFunc   ;==>_LOCalc_RangeGetCellByName
 ;                  @Error 1 @Extended 5 Return 0 = $iToRow not an Integer, or less than 0, or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 6 Return 0 = $iToColumn less than $iColumn.
 ;                  @Error 1 @Extended 7 Return 0 = $iToRow less than $iRow.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve an individual Cell's Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve a Cell Range's Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve an individual Cell's Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve a Cell Range's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved and returned an Individual Cell's Object.
 ;                  @Error 0 @Extended 1 Return Object = Success. Successfully retrieved and returned a Cell Range Object.
@@ -1850,12 +1843,12 @@ Func _LOCalc_RangeGetCellByPosition(ByRef $oRange, $iColumn, $iRow, $iToColumn =
 
 	If ($iToColumn = Null) And ($iToRow = Null) Then
 		$oCell = $oRange.getCellByPosition($iColumn, $iRow)
-		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 
 	Else
 		$oCellRange = $oRange.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow)
-		If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oCellRange)
 
 	EndIf
@@ -1956,8 +1949,8 @@ EndFunc   ;==>_LOCalc_RangeGroup
 ;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iMode not an Integer, less than 0, or greater than 4. See Constants $LOC_CELL_INSERT_MODE_* as defined in LibreOfficeCalc_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oRange.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Blank cells were successfully inserted.
 ; Author ........: donnyh13
@@ -1980,7 +1973,7 @@ Func _LOCalc_RangeInsert(ByRef $oSheet, $oRange, $iMode)
 	If Not __LOCalc_IntIsBetween($iMode, $LOC_CELL_INSERT_MODE_NONE, $LOC_CELL_INSERT_MODE_COLUMNS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tCellAddr = $oRange.RangeAddress()
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oSheet.insertCells($tCellAddr, $iMode)
 
@@ -2073,11 +2066,11 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ;                  @Error 1 @Extended 6 Return 0 = $vRange is a String and $oRefCell is not an Object.
 ;                  @Error 1 @Extended 7 Return 0 = Scope called in $oObj already contains a Named Range named the same as called in $sName.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Absolute Name of Range called in $vRange.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve new Named Range's Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Absolute Name of Range called in $vRange.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve new Named Range's Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully added a new Named Range, returning its Object.
 ; Author ........: donnyh13
@@ -2110,12 +2103,12 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 	If IsString($vRange) And Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oNamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 
 	$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If IsObj($vRange) Then
 
@@ -2133,7 +2126,7 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 		EndIf
 
 		$sRange = $vRange.AbsoluteName()
-		If Not IsString($sRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If Not IsString($sRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Else
 
@@ -2148,7 +2141,7 @@ Func _LOCalc_RangeNamedAdd(ByRef $oObj, $vRange, $sName, $iOptions = $LOC_NAMED_
 	$oNamedRanges.addNewByName($sName, $sRange, $tCellAddr, $iOptions)
 
 	$oNamedRange = $oNamedRanges.getByName($sName)
-	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
 EndFunc   ;==>_LOCalc_RangeNamedAdd
@@ -2250,10 +2243,10 @@ EndFunc   ;==>_LOCalc_RangeNamedChangeScope
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $vNamedRange not an Object and not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Scope called in $oObj does not contain a Named Range as called in $vNamedRange.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to delete requested Named Range.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Named Range's name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to delete requested Named Range.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the requested Named Range.
 ; Author ........: donnyh13
@@ -2275,11 +2268,11 @@ Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
 	If Not IsString($vNamedRange) And Not IsObj($vNamedRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If IsObj($vNamedRange) Then
 		$sNamedRange = $vNamedRange.Name()
-		If Not IsString($sNamedRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsString($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Else
 		$sNamedRange = $vNamedRange
@@ -2290,7 +2283,7 @@ Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
 
 	$oNamedRanges.removeByName($sNamedRange)
 
-	If $oNamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If $oNamedRanges.hasByName($sNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeNamedDelete
@@ -2304,8 +2297,8 @@ EndFunc   ;==>_LOCalc_RangeNamedDelete
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Named Ranges contained in the called scope. @extended set to number of results.
 ; Author ........: donnyh13
@@ -2325,7 +2318,7 @@ Func _LOCalc_RangeNamedGetNames(ByRef $oObj)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ReDim $asNames[$oNamedRanges.Count()]
 
@@ -2350,9 +2343,9 @@ EndFunc   ;==>_LOCalc_RangeNamedGetNames
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Scope called in $oObj does not contain a Named Range by the name called in $sName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Named Range Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Named Range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Named Range Object.
 ; Author ........: donnyh13
@@ -2372,12 +2365,12 @@ Func _LOCalc_RangeNamedGetObjByName(ByRef $oObj, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oNamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oNamedRange = $oNamedRanges.getByName($sName)
-	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oNamedRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
 EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
@@ -2393,10 +2386,9 @@ EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to query whether Scope contains the called name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
 ; Author ........: donnyh13
@@ -2417,10 +2409,10 @@ Func _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$bExists = $oNamedRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
 EndFunc   ;==>_LOCalc_RangeNamedHasByName
@@ -2446,11 +2438,10 @@ EndFunc   ;==>_LOCalc_RangeNamedHasByName
 ;                  @Error 1 @Extended 6 Return 0 = Scope containing Named Range already has a Named Range with the name as called in $sName.
 ;                  @Error 1 @Extended 7 Return 0 = $iOptions not an Integer, less than 0 or greater than 15 (all constants added together). See Constants $LOC_NAMED_RANGE_OPT_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $oRefCell not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Reference Position of Named Range.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Named Range's Scope Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Cell Object referenced by this Named Range.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Reference Position of Named Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Named Range's Scope Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $vRange
@@ -2489,7 +2480,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 
 	If __LOCalc_VarsAreNull($vRange, $sName, $iOptions, $oRefCell) Then
 		$oRefCell = $oDoc.Sheets.getByIndex($oNamedRange.ReferencePosition.Sheet()).getCellByPosition($oNamedRange.ReferencePosition.Column(), $oNamedRange.ReferencePosition.Row())
-		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avNamedRange, $oNamedRange.Content(), $oNamedRange.Name(), $oNamedRange.Type(), $oRefCell)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avNamedRange)
@@ -2500,7 +2491,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 
 		If IsObj($vRange) Then
 			$tCellAddr = $oNamedRange.ReferencePosition()
-			If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			$tCellAddr.Sheet = $vRange.RangeAddress.Sheet()
 			$tCellAddr.Column = $vRange.RangeAddress.StartColumn()
@@ -2525,7 +2516,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 		If StringRegExp($sName, "[^a-zA-Z0-9_]") Or StringRegExp($sName, "^[^a-zA-Z_]") Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		$oObj = __LOCalc_NamedRangeGetScopeObj($oDoc, $oNamedRange.Name(), $oNamedRange.TokenIndex(), $oNamedRange.Content())
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		If $oObj.NamedRanges.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oNamedRange.Name = $sName
@@ -2542,7 +2533,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 	If ($oRefCell <> Null) Then
 		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tCellAddr = $oNamedRange.ReferencePosition()
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$tCellAddr.Sheet = $oRefCell.RangeAddress.Sheet()
 		$tCellAddr.Column = $oRefCell.RangeAddress.StartColumn()
@@ -2571,17 +2562,16 @@ EndFunc   ;==>_LOCalc_RangeNamedModify
 ;                  @Error 1 @Extended 5 Return ? = Element of $aanNumbers does not contain an array. Returning array element number of $aanNumbers containing error.
 ;                  @Error 1 @Extended 6 Return ? = $bStrictSize set to True, and Array contained in $aanNumbers has less or more elements than number of columns in the cell range. Returning array element number of $aanNumbers containing faulty array.
 ;                  @Error 1 @Extended 7 Return ? = $bStrictSize set to False, and Array contained in $aanNumbers has less or more elements than first Array contained in $aanNumbers. Returning array element number of $aanNumbers containing faulty array.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
-;                  @Error 2 @Extended 4 Return 0 = Failed to re-size Cell Range Rows.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve Start of Column from Cell Range.
-;                  @Error 2 @Extended 6 Return 0 = Failed to retrieve End of Column from Cell Range.
-;                  @Error 2 @Extended 7 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
-;                  @Error 3 @Extended 2 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Formula Data contained in the Cell Range.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Start of Row from Cell Range.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve End of Row from Cell Range.
+;                  @Error 3 @Extended 4 Return 0 = Expanding Range would exceed number of Rows contained in Sheet.
+;                  @Error 3 @Extended 5 Return 0 = Failed to re-size Cell Range Rows.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Start of Column from Cell Range.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve End of Column from Cell Range.
+;                  @Error 3 @Extended 8 Return 0 = Expanding Range would exceed number of Columns contained in Sheet.
+;                  @Error 3 @Extended 9 Return 0 = Failed to re-size Cell Range Columns.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Values were successfully set for the cell range.
 ;                  @Error 0 @Extended 1 Return Array of Arrays = Success. $aanNumbers set to Null, returning an array containing arrays, which contain any numerical content contained in the cell range.
@@ -2605,7 +2595,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 
 	If ($aanNumbers = Null) Then
 		$aanNumbers = $oRange.getData()
-		If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aanNumbers)
 	EndIf
 
@@ -2614,28 +2604,28 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 
 	; Determine if the Array is sized appropriately
 	$iStart = $oRange.RangeAddress.StartRow()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iEnd = $oRange.RangeAddress.EndRow()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If $bStrictSize Then ; If Array is wrongly sized, return an error.
 		If (UBound($aanNumbers) <> ($iEnd - $iStart + 1)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Else ; Expand the Range to fit the Array
 		If (UBound($aanNumbers) <> ($iEnd - $iStart + 1)) Then
-			If (($oRange.RangeAddress.StartRow() + UBound($aanNumbers)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Check if resizing range is possible.
+			If (($oRange.RangeAddress.StartRow() + UBound($aanNumbers)) > $oRange.Spreadsheet.getRows.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; Check if resizing range is possible.
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), $oRange.RangeAddress.EndColumn(), ($oRange.RangeAddress.StartRow() + UBound($aanNumbers) - 1))
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 		EndIf
 
 	EndIf
 
 	$iStart = $oRange.RangeAddress.StartColumn()
-	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not IsInt($iStart) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	$iEnd = $oRange.RangeAddress.EndColumn()
-	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+	If Not IsInt($iEnd) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 	If $bStrictSize Then ; Check if the internal arrays are sized correctly, return error if not.
 
@@ -2652,9 +2642,9 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 		Next
 
 		If (UBound($aanNumbers[0]) <> ($iEnd - $iStart + 1)) Then ; Resize the Range.
-			If (($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If (($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0])) > $oRange.Spreadsheet.getColumns.getCount()) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 			$oRange = $oRange.Spreadsheet.getCellRangeByPosition($oRange.RangeAddress.StartColumn(), $oRange.RangeAddress.StartRow(), ($oRange.RangeAddress.StartColumn() + UBound($aanNumbers[0]) - 1), $oRange.RangeAddress.EndRow())
-			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+			If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
 		EndIf
 
@@ -2741,12 +2731,11 @@ EndFunc   ;==>_LOCalc_RangeOutlineShow
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellToCompare not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCellToCompare is not a single cell, cell ranges are not supported.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Address Struct from $oCellToCompare.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to query column differences.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve query result cell addresses.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve cell range Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Address Struct from $oCellToCompare.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query column differences.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve query result cell addresses.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve cell range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning query results array of Cell Range Objects. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -2769,17 +2758,17 @@ Func _LOCalc_RangeQueryColumnDiff(ByRef $oRange, $oCellToCompare)
 	If Not ($oCellToCompare.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tCellAddr = $oCellToCompare.CellAddress()
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oRanges = $oRange.queryColumnDifferences($tCellAddr)
-	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aoRanges = $oRanges.getRangeAddresses()
-	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($aoRanges) - 1
 		$aoRanges[$i] = $oRange.Spreadsheet.getCellRangeByPosition($aoRanges[$i].StartColumn(), $aoRanges[$i].StartRow(), $aoRanges[$i].EndColumn(), $aoRanges[$i].EndRow())
-		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
@@ -2995,12 +2984,11 @@ EndFunc   ;==>_LOCalc_RangeQueryFormula
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oCell.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to query cell range intersections.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve query result cell addresses.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve cell range Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Range Address Struct from $oCell.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query cell range intersections.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve query result cell addresses.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve cell range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning query results array of Cell Range Objects. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -3022,17 +3010,17 @@ Func _LOCalc_RangeQueryIntersection(ByRef $oRange, $oCell)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$tRangeAddr = $oCell.RangeAddress()
-	If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tRangeAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oRanges = $oRange.queryIntersection($tRangeAddr)
-	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aoRanges = $oRanges.getRangeAddresses()
-	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($aoRanges) - 1
 		$aoRanges[$i] = $oCell.Spreadsheet.getCellRangeByPosition($aoRanges[$i].StartColumn(), $aoRanges[$i].StartRow(), $aoRanges[$i].EndColumn(), $aoRanges[$i].EndRow())
-		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
@@ -3102,12 +3090,11 @@ EndFunc   ;==>_LOCalc_RangeQueryPrecedents
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCellToCompare not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oCellToCompare is not a single cell, cell ranges are not supported.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Address Struct from $oCellToCompare.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to query row differences.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve query result cell addresses.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve cell range Object.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Address Struct from $oCellToCompare.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query row differences.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve query result cell addresses.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve cell range Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning query results array of Cell Range Objects. @Extended set to number of results.
 ; Author ........: donnyh13
@@ -3130,17 +3117,17 @@ Func _LOCalc_RangeQueryRowDiff(ByRef $oRange, $oCellToCompare)
 	If Not ($oCellToCompare.supportsService("com.sun.star.sheet.SheetCell")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tCellAddr = $oCellToCompare.CellAddress()
-	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oRanges = $oRange.queryRowDifferences($tCellAddr)
-	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsObj($oRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$aoRanges = $oRanges.getRangeAddresses()
-	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsArray($aoRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($aoRanges) - 1
 		$aoRanges[$i] = $oRange.Spreadsheet.getCellRangeByPosition($aoRanges[$i].StartColumn(), $aoRanges[$i].StartRow(), $aoRanges[$i].EndColumn(), $aoRanges[$i].EndRow())
-		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsObj($aoRanges[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
@@ -3322,8 +3309,8 @@ EndFunc   ;==>_LOCalc_RangeReplaceAll
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Rows Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted requested rows.
 ; Author ........: donnyh13
@@ -3343,7 +3330,7 @@ Func _LOCalc_RangeRowDelete(ByRef $oRange, $iRow, $iCount = 1)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oRows = $oRange.getRows()
-	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iRow, 0, $oRows.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -3365,9 +3352,9 @@ EndFunc   ;==>_LOCalc_RangeRowDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Rows Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Row Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Row Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Success, returning Row's Object.
 ; Author ........: donnyh13
@@ -3386,12 +3373,12 @@ Func _LOCalc_RangeRowGetObjByPosition(ByRef $oRange, $iRow)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oRows = $oRange.getRows()
-	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iRow, 0, $oRows.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oRow = $oRows.getByIndex($iRow)
-	If Not IsObj($oRow) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oRow) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRow)
 EndFunc   ;==>_LOCalc_RangeRowGetObjByPosition
@@ -3466,8 +3453,8 @@ EndFunc   ;==>_LOCalc_RangeRowHeight
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer or less than 0, or greater than number of Rows contained in the Range.
 ;                  @Error 1 @Extended 3 Return 0 = $iCount not an Integer, or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Rows Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully inserted blank rows.
 ; Author ........: donnyh13
@@ -3487,7 +3474,7 @@ Func _LOCalc_RangeRowInsert(ByRef $oRange, $iRow, $iCount = 1)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oRows = $oRange.getRows()
-	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOCalc_IntIsBetween($iRow, 0, $oRows.Count() - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOCalc_IntIsBetween($iCount, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -3566,8 +3553,8 @@ EndFunc   ;==>_LOCalc_RangeRowPageBreak
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Rows Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Rows Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returning number of Rows contained in the Range.
 ; Author ........: donnyh13
@@ -3586,7 +3573,7 @@ Func _LOCalc_RangeRowsGetCount(ByRef $oRange)
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oRows = $oRange.getRows()
-	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRows) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRows.Count())
 EndFunc   ;==>_LOCalc_RangeRowsGetCount
@@ -3662,11 +3649,7 @@ EndFunc   ;==>_LOCalc_RangeRowVisible
 ;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCellOutput not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Sort Descriptor.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve output cell Range Address.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve the Standard Macro library object.
-;                  @Error 2 @Extended 5 Return 0 = Failed to insert temporary Macro.
-;                  @Error 2 @Extended 6 Return 0 = Failed to retrieve temporary Macro Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Column called in $tSortField is greater than number of Columns contained in called Range.
 ;                  @Error 3 @Extended 2 Return 0 = Row called in $tSortField is greater than number of Rows contained in called Range.
@@ -3674,7 +3657,11 @@ EndFunc   ;==>_LOCalc_RangeRowVisible
 ;                  @Error 3 @Extended 4 Return 0 = Row called in $tSortField2 is greater than number of Rows contained in called Range.
 ;                  @Error 3 @Extended 5 Return 0 = Column called in $tSortField3 is greater than number of Columns contained in called Range.
 ;                  @Error 3 @Extended 6 Return 0 = Row called in $tSortField3 is greater than number of Rows contained in called Range.
-;                  @Error 3 @Extended 7 Return 0 = Failed to remove temporary Macro.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve output cell Range Address.
+;                  @Error 3 @Extended 8 Return 0 = Failed to retrieve the Standard Macro library object.
+;                  @Error 3 @Extended 9 Return 0 = Failed to insert temporary Macro.
+;                  @Error 3 @Extended 10 Return 0 = Failed to retrieve temporary Macro Object.
+;                  @Error 3 @Extended 11 Return 0 = Failed to remove temporary Macro.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Sort was successfully processed for requested Range.
 ; Author ........: donnyh13
@@ -3750,10 +3737,10 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 		If Not IsObj($oCellOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 		$tCellInputAddr = $oCellOutput.RangeAddress()
-		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 
 		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
@@ -3805,14 +3792,14 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 	$oDoc.BasicLibraries.VBACompatibilityMode = $oDoc.BasicLibraries.VBACompatibilityMode()
 
 	$oStandardLibrary = $oDoc.BasicLibraries.Standard()
-	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+	If Not IsObj($oStandardLibrary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
 
 	$oStandardLibrary.insertByName("AU3LibreOffice_UDF_Macros", $sMacro)
-	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+	If Not $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
 
 	$oScript = $oDoc.getScriptProvider().getScript("vnd.sun.star.script:Standard.AU3LibreOffice_UDF_Macros.AU3LibreOffice_Sort?language=Basic&location=document")
-	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+	If Not IsObj($oScript) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 10, 0)
 
 	$aoParam[0] = $oRange
 	$aoParam[1] = $avSortDesc
@@ -3821,7 +3808,7 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 	$oScript.Invoke($aoParam, $aDummyArray, $aDummyArray)
 
 	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then $oStandardLibrary.removeByName("AU3LibreOffice_UDF_Macros")
-	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+	If $oStandardLibrary.hasByName("AU3LibreOffice_UDF_Macros") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 11, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeSort
