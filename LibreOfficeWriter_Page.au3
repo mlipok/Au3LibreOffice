@@ -208,11 +208,10 @@ EndFunc   ;==>_LOWriter_PageStyleAreaFillStyle
 ;                  @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -252,7 +251,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oPageStyle.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -331,10 +330,10 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	If ($oPageStyle.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oPageStyle.FillGradientName = $sGradName
-		If ($oPageStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oPageStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oPageStyle.FillGradient = $tStyleGradient
@@ -634,8 +633,8 @@ EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 ;                  @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 7 Return 0 = $iHeight not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iPosition not an Integer, less than 0, or greater than 2. See constants, $LOW_ALIGN_VERT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bSeparatorOn
@@ -666,7 +665,7 @@ Func _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle, $bSeparatorOn = Null,
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oPageStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
@@ -727,8 +726,8 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSeparator
 ;                  @Error 1 @Extended 1 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iColumns not an Integer or less than 1.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iColumns
@@ -753,7 +752,7 @@ Func _LOWriter_PageStyleColumnSettings(ByRef $oPageStyle, $iColumns = Null)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oTextColumns = $oPageStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iColumns) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oTextColumns.ColumnCount())
 
@@ -787,11 +786,11 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSettings
 ;                  @Error 1 @Extended 6 Return 0 = $iGlobalSpacing not an Integer.
 ;                  @Error 1 @Extended 7 Return 0 = $iSpacing not an Integer.
 ;                  @Error 1 @Extended 8 Return 0 = $iWidth not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Text Columns Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Column Object Array.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = No columns present for requested Page Style.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Columns Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Page Style Column Object Array.
+;                  @Error 3 @Extended 3 Return 0 = No columns present for requested Page Style.
+;                  @Error 3 @Extended 4 Return 0 = No columns present for requested Page Style.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $bAutoWidth
@@ -824,10 +823,10 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oTextColumns = $oPageStyle.TextColumns()
-	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oTextColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$atColumns = $oTextColumns.Columns()
-	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
@@ -904,7 +903,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 			; Retrieve Array of columns again for testing.
 			$atColumns = $oTextColumns.Columns()
-			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			; See if setting spacing worked. Spacing is equally divided between the two adjoining columns, so retrieve the first columns right
 			; margin, and the next column's left margin.
@@ -922,7 +921,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 
 		; Retrieve Array of columns again for testing.
 		$atColumns = $oPageStyle.TextColumns.Columns()
-		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($atColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atColumns[$iColumn].Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
 
@@ -942,11 +941,11 @@ EndFunc   ;==>_LOWriter_PageStyleColumnSize
 ;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Page Style name called in $sPageStyle already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Page Style by name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Page Style by name.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning its Object.
 ; Author ........: donnyh13
@@ -965,17 +964,17 @@ Func _LOWriter_PageStyleCreate(ByRef $oDoc, $sPageStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
-	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.PageStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oPageStyles.insertByName($sPageStyle, $oStyle)
 
-	If Not $oPageStyles.hasByName($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oPageStyles.hasByName($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oPageStyle = $oPageStyles.getByName($sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oPageStyle)
 EndFunc   ;==>_LOWriter_PageStyleCreate
@@ -992,13 +991,12 @@ EndFunc   ;==>_LOWriter_PageStyleCreate
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $oPageStyle is in use and cannot be deleted.
-;                  @Error 3 @Extended 3 Return 0 = $oPageStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Page Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $oPageStyle is in use and cannot be deleted.
+;                  @Error 3 @Extended 5 Return 0 = $oPageStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Page Style called in $oPageStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -1020,16 +1018,16 @@ Func _LOWriter_PageStyleDelete(ByRef $oDoc, ByRef $oPageStyle)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
-	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sPageStyle = $oPageStyle.Name()
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oPageStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oPageStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error.
+	If Not $oPageStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oPageStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error.
 
 	$oPageStyles.removeByName($sPageStyle)
 
-	Return ($oPageStyles.hasByName($sPageStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oPageStyles.hasByName($sPageStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -1336,12 +1334,11 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaFillStyle
 ;                  @Error 1 @Extended 12 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 13 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 14 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -1382,7 +1379,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tStyleGradient = $oPageStyle.FooterFillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -1461,10 +1458,10 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($oPageStyle.FooterFillGradientName = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.FooterFillGradientName = $sGradName
-		If ($oPageStyle.FooterFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.FooterFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.FooterFillGradient = $tStyleGradient
@@ -1763,11 +1760,10 @@ EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1799,7 +1795,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1829,7 +1825,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$oPageStyle.FooterShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -1913,14 +1909,11 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iStart Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 10 Return 0 = $iEnd Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -1956,7 +1949,7 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tStyleGradient = $oPageStyle.FooterFillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
@@ -2007,21 +2000,21 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	If ($oPageStyle.FooterFillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.FooterFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.FooterFillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.FooterFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.FooterFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleFooterTransparencyGradient
@@ -2198,8 +2191,8 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteLine
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Page Style called in $sPageStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Page Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Page Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Page Style successfully retrieved, returning Page Style Object.
 ; Author ........: donnyh13
@@ -2219,7 +2212,7 @@ Func _LOWriter_PageStyleGetObj(ByRef $oDoc, $sPageStyle)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oPageStyle)
 EndFunc   ;==>_LOWriter_PageStyleGetObj
@@ -2259,7 +2252,7 @@ EndFunc   ;==>_LOWriter_PageStyleGetObj
 ;                  |                               4 = Error setting $bSameOnFirst
 ;                  |                               8 = Error setting $iLeftMargin
 ;                  |                               16 = Error setting $iRightMargin
-;                  |                               32= Error setting $iSpacing
+;                  |                               32 = Error setting $iSpacing
 ;                  |                               64 = Error setting $bDynamicSpacing
 ;                  |                               128 = Error setting $iHeight
 ;                  |                               256 = Error setting $bAutoHeight
@@ -2496,12 +2489,11 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaFillStyle
 ;                  @Error 1 @Extended 12 Return 0 = $iToColor Not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 13 Return 0 = $iFromIntense Not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -2542,7 +2534,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tStyleGradient = $oPageStyle.HeaderFillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -2621,10 +2613,10 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($oPageStyle.HeaderFillGradientName = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.HeaderFillGradientName = $sGradName
-		If ($oPageStyle.HeaderFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.HeaderFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.HeaderFillGradient = $tStyleGradient
@@ -2923,11 +2915,10 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -2958,7 +2949,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -2988,7 +2979,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 	$oPageStyle.HeaderShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -3072,14 +3063,11 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3115,7 +3103,7 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tStyleGradient = $oPageStyle.HeaderFillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
@@ -3166,21 +3154,21 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 
 	If ($oPageStyle.HeaderFillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.HeaderFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.HeaderFillTransparenceGradient = $tStyleGradient
 
-	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 128)))
+	$iError = ($iType = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 1)))
+	$iError = ($iXCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 2)))
+	$iError = ($iYCenter = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 4)))
+	$iError = ($iAngle = Null) ? ($iError) : ((($oPageStyle.HeaderFillTransparenceGradient.Angle() / 10) = $iAngle) ? ($iError) : (BitOR($iError, 8)))
+	$iError = ($iTransitionStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.Border() = $iTransitionStart) ? ($iError) : (BitOR($iError, 16)))
+	$iError = ($iStart = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.StartColor() = __LOWriter_TransparencyGradientConvert($iStart)) ? ($iError) : (BitOR($iError, 32)))
+	$iError = ($iEnd = Null) ? ($iError) : (($oPageStyle.HeaderFillTransparenceGradient.EndColor() = __LOWriter_TransparencyGradientConvert($iEnd)) ? ($iError) : (BitOR($iError, 64)))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_PageStyleHeaderTransparencyGradient
@@ -3636,8 +3624,8 @@ EndFunc   ;==>_LOWriter_PageStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
@@ -3665,7 +3653,7 @@ Func _LOWriter_PageStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	Local $oStyles = $oDoc.StyleFamilies.getByName("PageStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -3710,9 +3698,9 @@ EndFunc   ;==>_LOWriter_PageStylesGetNames
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -3742,7 +3730,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tShdwFrmt = $oPageStyle.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -3772,7 +3760,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 	$oPageStyle.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -3844,21 +3832,19 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not a Page Style Object.
-;                  @Error 1 @Extended 3 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 4 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 5 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 6 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
-;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
-;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
+;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
+;                  @Error 1 @Extended 4 Return 0 = $iType not an Integer, less than -1, or greater than 5, see constants, $LOW_GRAD_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iXCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 6 Return 0 = $iYCenter not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 7 Return 0 = $iAngle not an Integer, less than 0, or greater than 359.
+;                  @Error 1 @Extended 8 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 9 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
+;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3893,7 +3879,7 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$tStyleGradient = $oPageStyle.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
@@ -3944,10 +3930,10 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 
 	If ($oPageStyle.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oPageStyle.FillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oPageStyle.FillTransparenceGradient = $tStyleGradient

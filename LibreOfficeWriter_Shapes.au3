@@ -168,11 +168,10 @@ EndFunc   ;==>_LOWriter_ShapeAreaFillStyle
 ;                  @Error 1 @Extended 11 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 12 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -211,7 +210,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tStyleGradient = $oShape.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, $iFromIntense, $iToIntense) Then
 		__LOWriter_ArrayFill($avGradient, $oShape.FillGradientName(), $tStyleGradient.Style(), _
@@ -290,10 +289,10 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 	If ($oShape.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oShape.FillGradientName = $sGradName
-		If ($oShape.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oShape.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oShape.FillGradient = $tStyleGradient
@@ -323,10 +322,9 @@ EndFunc   ;==>_LOWriter_ShapeAreaGradient
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oShape not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Shape with the same name still exists in document after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shape's name.
+;                  @Error 3 @Extended 2 Return 0 = Shape with the same name still exists in document after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Shape was successfully deleted.
 ; Author ........: donnyh13
@@ -346,11 +344,11 @@ Func _LOWriter_ShapeDelete(ByRef $oDoc, $oShape)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$sShapeName = $oShape.Name()
-	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oDoc.getDrawPage().remove($oShape)
 
-	Return (_LOWriter_DocHasShapeName($oDoc, $sShapeName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return (_LOWriter_DocHasShapeName($oDoc, $sShapeName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -398,10 +396,9 @@ EndFunc   ;==>_LOWriter_ShapeGetAnchor
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Draw Page Object
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Shape requested in $sShapeName not found in document.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Draw Page Object.
+;                  @Error 3 @Extended 2 Return 0 = Shape requested in $sShapeName not found in document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success, Returning the requested Shape Object.
 ; Author ........: donnyh13
@@ -421,7 +418,7 @@ Func _LOWriter_ShapeGetObjByName(ByRef $oDoc, $sShapeName)
 	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
 		For $i = 0 To $oShapes.getCount() - 1
@@ -431,7 +428,7 @@ Func _LOWriter_ShapeGetObjByName(ByRef $oDoc, $sShapeName)
 		Next
 	EndIf
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ;Shape not found
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ;Shape not found
 EndFunc   ;==>_LOWriter_ShapeGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -443,13 +440,12 @@ EndFunc   ;==>_LOWriter_ShapeGetObjByName
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve CustomShapeGeometry Array.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry "Type" value.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to determine CustomShape's type.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify what type of "com.sun.star.drawing.EllipseShape" called shape is.
-;                  @Error 3 @Extended 3 Return 0 = Called Shape is a unknown shape type.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve CustomShapeGeometry Array.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry "Type" value.
+;                  @Error 3 @Extended 3 Return 0 = Failed to determine CustomShape's type.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify what type of "com.sun.star.drawing.EllipseShape" called shape is.
+;                  @Error 3 @Extended 5 Return 0 = Called Shape is a unknown shape type.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Integer = Success. Shape is a Custom Shape Type. Returning appropriate Constant for shape type if successfully identified, else -1 if identification failed. See Remarks #1. See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
 ;                  @Error 0 @Extended 2 Return Integer = Success. Shape is a *_BASIC_CIRCLE_SEGMENT or *_BASIC_ARC Type Shape. Returning appropriate Constant, See Constants, $LOW_SHAPE_TYPE_* as defined in LibreOfficeWriter_Constants.au3
@@ -508,13 +504,13 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 
 		Case "com.sun.star.drawing.CustomShape"
 			$atCusShapeGeo = $oShape.CustomShapeGeometry()
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 			For $i = 0 To UBound($atCusShapeGeo) - 1
 
 				If ($atCusShapeGeo[$i].Name() = "Type") Then
 					$sType = $atCusShapeGeo[$i].Value()
-					If Not IsString($sType) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+					If Not IsString($sType) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 					ExitLoop
 				EndIf
 
@@ -522,7 +518,7 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 			Next
 
 			$iReturn = __LOWriter_Shape_GetCustomType($sType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 			Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
 
@@ -534,7 +530,7 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 				Return SetError($__LO_STATUS_SUCCESS, 2, $LOW_SHAPE_TYPE_BASIC_ARC)
 
 			Else
-				Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+				Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 			EndIf
 
@@ -558,7 +554,7 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 ;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
 
 		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Unknown shape type.
+			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; Unknown shape type.
 
 	EndSwitch
 
@@ -583,12 +579,12 @@ EndFunc   ;==>_LOWriter_ShapeGetType
 ;                  @Error 1 @Extended 5 Return 0 = $iHeight not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = Cursor called in $oCursor is a Table Cursor, and cannot be used.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the Position Structure.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create requested Shape.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to determine Cursor type.
-;                  @Error 3 @Extended 2 Return 0 = Failed to create requested Shape.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve CustomShapeGeometry Array of Structures.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve PolyPolygonBezier Structure.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve the Position Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. The Shape was successfully inserted. Returning the Shape's Object.
 ; Author ........: donnyh13
@@ -632,59 +628,59 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY To $LOW_SHAPE_TYPE_ARROWS_PENTAGON ; Create an Arrow Shape.
 			$oShape = __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_BASIC_ARC To $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT ; Create a Basic Shape.
 			$oShape = __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then ; Arc and Circle Segment shapes are different from the rest, and don't have CustomShapeGeometry property.
 				$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-				If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+				If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 			EndIf
 
 		Case $LOW_SHAPE_TYPE_CALLOUT_CLOUD To $LOW_SHAPE_TYPE_CALLOUT_ROUND ; Create a Callout Shape.
 			$oShape = __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_FLOWCHART_CARD To $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR ; Create a Flowchart Shape.
 			$oShape = __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_LINE_CURVE To $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED ; Create a Line Shape.
 			$oShape = __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tPolyCoords = $oShape.PolyPolygonBezier()
-			If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+			If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		Case $LOW_SHAPE_TYPE_STARS_4_POINT To $LOW_SHAPE_TYPE_STARS_SIGNET ; Create a Star or Banner Shape.
 			$oShape = __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND To $LOW_SHAPE_TYPE_SYMBOL_PUZZLE ; Create a Symbol Shape.
 			$oShape = __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
-			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
-			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	EndSwitch
 
 	$tPos = $oShape.Position() ; Backup the position, as it is generally lost upon insertion.
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	$oCursor.Text.insertTextContent($oCursor, $oShape, False)
 
@@ -1060,8 +1056,8 @@ EndFunc   ;==>_LOWriter_ShapeName
 ;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iX
@@ -1088,7 +1084,7 @@ Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iX, $iY, $bProtectPos) Then
 		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oShape.MoveProtect())
@@ -1192,8 +1188,8 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Shapes Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
 ; Author ........: donnyh13
@@ -1214,7 +1210,7 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
 		ReDim $asShapeNames[$oShapes.getCount()][2]
@@ -1257,16 +1253,16 @@ EndFunc   ;==>_LOWriter_ShapesGetNames
 ;                  @Error 1 @Extended 8 Return 0 = First or Last Points in a shape can only be a "Normal" type point.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure.
-;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;                  @Error 2 @Extended 3 Return 0 = Failed to Retrieve Array of Points.
-;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
-;                  @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
-;                  @Error 2 @Extended 6 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
-;                  @Error 2 @Extended 7 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
-;                  @Error 2 @Extended 8 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Create a new Position Point Structure for the First Control Point.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;                  @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;                  @Error 3 @Extended 5 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. New Position Point was successfully added to the Shape.
 ; Author ........: donnyh13
@@ -1306,10 +1302,10 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
-	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
-	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If ($iPoint = 0) Then
 		$iArrayElement = -1
@@ -1331,7 +1327,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 	EndIf
 
-	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($iArrayElement = -1) Then ; Insertion will be at the beginning of the Points.
 
@@ -1343,11 +1339,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			ReDim $avArray2[UBound($aiFlags) + 3]
 			; Make the control Point's Coordinates the new Point's Coordinates, plus half the difference between this new point and the next point, which will be the first element in the Points array.
 			$tControlPoint1 = __LOWriter_CreatePoint(Int(($iX + (($atPoints[0]).X() - $iX) * .5)), Int(($iY + (($atPoints[0]).Y() - $iY) * .5)))
-			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			; Make the next control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be the first element in the Points array.
 			$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[0].X() - (($atPoints[0].X() - $iX) * .5)), Int($atPoints[0].Y() - (($atPoints[0].Y() - $iY) * .5)))
-			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			$avArray[0] = $tPoint ; Place the new point at the beginning of the array.
 			$avArray2[0] = $iPointType ; Place the new point's Type at the beginning of the array.
@@ -1426,7 +1422,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
-		If Not IsInt($iNextArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsInt($iNextArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Point Type is a curve of some form. Create four control points.
 
@@ -1435,7 +1431,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			If ($aiFlags[$iArrayElement + 1] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 
 				$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y()) ; If the point I am inserting after is normal, the control point has the same coordinates.
-				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			Else
 
@@ -1449,11 +1445,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			; Make the Second control Point's Coordinates the New Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 			$tControlPoint2 = __LOWriter_CreatePoint(($iX - $iSymmetricalPointXValue), ($iY - $iSymmetricalPointYValue))
-			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			; Make the Third control Point's Coordinates the New Point's Coordinates, plus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 			$tControlPoint3 = __LOWriter_CreatePoint(($iX + $iSymmetricalPointXValue), ($iY + ($iSymmetricalPointYValue)))
-			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 			; Check if the second point after the point I am placing the new point after is a normal point or not. If the second Point Type after this point is a Control point, copy it.
 			If ($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then
@@ -1463,7 +1459,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 				$tControlPoint4 = __LOWriter_CreatePoint(($atPoints[$iNextArrayElement].X() - $iSymmetricalPointXValue), ($atPoints[$iNextArrayElement].Y() - $iSymmetricalPointYValue))
-				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 			EndIf
 
@@ -1528,7 +1524,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 					; Make the Second control Point's Coordinates the New Point's Coordintes, minus half the difference between this new point and the previous point, which will be in the $iArrayElement of the Points array.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($iX - (($iX - $atPoints[$iArrayElement].X()) * .5)), Int($iY - (($iY - $atPoints[$iArrayElement].Y()) * .5)))
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 				EndIf
 
@@ -1536,7 +1532,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 					; Make the Third control Point's Coordinates the New Point's Coordintes
 					$tControlPoint3 = __LOWriter_CreatePoint($iX, $iY)
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 					If (($iArrayElement + 2 < $iNextArrayElement) And $atPoints[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; If the second point after the point I am inserting ahead of is a control point, copy it.
 
@@ -1546,7 +1542,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 						; Make the Fourth control Point's Coordinates the Next Point's Coordintes, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
-						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 					EndIf
 
 				EndIf
@@ -1555,13 +1551,13 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 					; Make the Third control Point's Coordinates the New Point's Coordinates, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint3 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
 					If Not IsObj($tControlPoint4) Then ; If I haven't already made Control Point 4, create #4 and add two elements to the main array.
 
 						; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
-						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 7, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 
 					EndIf
 
@@ -1647,11 +1643,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 					; Make the First control Point's Coordinates the New Point's Coordinates, plus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint1 = __LOWriter_CreatePoint(Int($iX + (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($iY + (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 					; Make the Second control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 					$iReDimCount += 2 ; Add 2 elements in the Array because I had to create two control points.
 
@@ -1703,7 +1699,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 	EndIf
 
 	$tPolyCoords = $oShape.PolyPolygonBezier()
-	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_INIT_ERROR, 8, 0)
+	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	ReDim $avArray[1]
 
@@ -1733,8 +1729,8 @@ EndFunc   ;==>_LOWriter_ShapePointsAdd
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Integer = Success. Returns total number of points present in a shape.
 ; Author ........: donnyh13
@@ -1757,7 +1753,7 @@ Func _LOWriter_ShapePointsGetCount(ByRef $oShape)
 
 	; Retrieve the Array of Point Type Constants. There is one flag per point, so I can just use these to count them by.
 	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
-	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($aiFlags) - 1
 
@@ -1791,13 +1787,12 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ;                  @Error 1 @Extended 7 Return 0 = $PointType set to other than Normal while $iPoint is referencing first or last point.
 ;                  @Error 1 @Extended 8 Return 0 = $bIsCurve not a Boolean.
 ;                  @Error 1 @Extended 9 Return 0 = $bIsCurve cannot be set for last point in a shape.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
-;                  @Error 2 @Extended 3 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve current settings for requested point.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve current settings for requested point.
+;                  @Error 3 @Extended 5 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Failed to modify the requested point.
 ;                  --Success--
@@ -1831,10 +1826,10 @@ Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null,
 	If Not __LOWriter_IntIsBetween($iPoint, 1, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
 
 	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
-	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
-	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	; Identify the Array element to modify the point.
 	For $i = 0 To UBound($aiFlags) - 1
@@ -1849,11 +1844,11 @@ Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null,
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iX, $iY, $iPointType, $bIsCurve) Then
 		__LOWriter_ShapePointGetSettings($avPosPoint, $aiFlags, $atPoints, $iArrayElement)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosPoint)
 	EndIf
@@ -1882,7 +1877,7 @@ Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null,
 	If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 
 	$tPolyCoords = $oShape.PolyPolygonBezier()
-	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	; Each Array needs to be nested in an array.
 	$avArray[0] = $atPoints
@@ -1913,16 +1908,16 @@ EndFunc   ;==>_LOWriter_ShapePointsModify
 ;                  @Error 1 @Extended 2 Return 0 = $oShape does not have property "PolyPolygonBezier", and consequently does not have Position Points that can be modified.
 ;                  @Error 1 @Extended 3 Return 0 = $iPoint not an Integer, less than 1 or greater than number of points in the shape.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
-;                  @Error 2 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
-;                  @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
-;                  @Error 2 @Extended 4 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
-;                  @Error 2 @Extended 5 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
-;                  @Error 2 @Extended 6 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create a new Position Point Structure for the Second Control Point.
+;                  @Error 2 @Extended 2 Return 0 = Failed to Create a new Position Point Structure for the Third Control Point.
+;                  @Error 2 @Extended 3 Return 0 = Failed to Create a new Position Point Structure for the Fourth Control Point.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to identify the requested Array element.
-;                  @Error 3 @Extended 2 Return 0 = Failed to identify the next normal Point in the Array of Points.
-;                  @Error 3 @Extended 3 Return 0 = Failed to identify the Previous normal Point in the Array of Points.
+;                  @Error 3 @Extended 1 Return 0 = Failed to Retrieve Array of Point Type Flags.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Retrieve Array of Points.
+;                  @Error 3 @Extended 3 Return 0 = Failed to identify the requested Array element.
+;                  @Error 3 @Extended 4 Return 0 = Failed to identify the next normal Point in the Array of Points.
+;                  @Error 3 @Extended 5 Return 0 = Failed to identify the Previous normal Point in the Array of Points.
+;                  @Error 3 @Extended 6 Return 0 = Failed to Retrieve PolyPolygonBezier Structure.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Position Point was successfully deleted from the Shape.
 ; Author ........: donnyh13
@@ -1949,10 +1944,10 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 	If Not __LOWriter_IntIsBetween($iPoint, 1, _LOWriter_ShapePointsGetCount($oShape)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Error if point called is not between 0 or number of points.
 
 	$aiFlags = $oShape.PolyPolygonBezier.Flags()[0]
-	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$atPoints = $oShape.PolyPolygonBezier.Coordinates()[0]
-	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsArray($atPoints) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	; Identify the Array element to remove the point.
 	For $i = 0 To UBound($aiFlags) - 1
@@ -1967,7 +1962,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If ($iArrayElement <> UBound($atPoints) - 1) Then ; If The requested point to be deleted is not at the end of the Array of points, find the next regular point.
 
@@ -1982,7 +1977,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
-		If Not IsInt($iNextArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If Not IsInt($iNextArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	Else
 		$iNextArrayElement = -1
@@ -2002,7 +1997,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
-		If Not IsInt($iPreviousArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If Not IsInt($iPreviousArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
 	Else
 		$iPreviousArrayElement = -1
@@ -2063,7 +2058,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				Else ; Point before the next Point is not a control point, create a new one.
 					; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
-					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 				EndIf
 
@@ -2080,7 +2075,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 					Else ; Point before the next Point is not a control point, create a new one.
 						; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 						$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
-						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 					EndIf
 
@@ -2151,7 +2146,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			Else
 				; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 				$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
-				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			EndIf
 
@@ -2161,7 +2156,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			Else
 				; Make the New control Point's Coordinates the same as the previous point.
 				$tControlPoint3 = __LOWriter_CreatePoint($atPoints[$iPreviousArrayElement].X(), $atPoints[$iPreviousArrayElement].Y())
-				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			EndIf
 
@@ -2237,7 +2232,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 	EndIf
 
 	$tPolyCoords = $oShape.PolyPolygonBezier()
-	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_INIT_ERROR, 6, 0)
+	If Not IsObj($tPolyCoords) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 	ReDim $avArray[1]
 
@@ -2253,7 +2248,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 	; Apply it twice, as after modifying points, the Point types get lost.
 	$oShape.PolyPolygonBezier = $tPolyCoords
-
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ShapePointsRemove
@@ -2387,13 +2381,10 @@ EndFunc   ;==>_LOWriter_ShapeTransparency
 ;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -2427,7 +2418,7 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tGradient = $oShape.FillTransparenceGradient()
-	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
@@ -2478,10 +2469,10 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 
 	If ($oShape.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oShape.FillTransparenceGradientName = $sTGradName
-		If ($oShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oShape.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oShape.FillTransparenceGradient = $tGradient
@@ -2746,6 +2737,8 @@ EndFunc   ;==>_LOWriter_ShapeTypePosition
 ;                  @Error 1 @Extended 2 Return 0 = $iWidth not an Integer, or less than 51.
 ;                  @Error 1 @Extended 3 Return 0 = $iHeight not an Integer, or less than 51.
 ;                  @Error 1 @Extended 4 Return 0 = $bProtectSize not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shape Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -2774,7 +2767,7 @@ Func _LOWriter_ShapeTypeSize(ByRef $oShape, $iWidth = Null, $iHeight = Null, $bP
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tSize = $oShape.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
 		__LOWriter_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oShape.SizeProtect())
@@ -2827,8 +2820,8 @@ EndFunc   ;==>_LOWriter_ShapeTypeSize
 ;                  @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWrapType
@@ -2857,7 +2850,7 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oPropInfo = $oShape.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 

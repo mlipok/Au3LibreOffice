@@ -263,9 +263,9 @@ EndFunc   ;==>__LOCalc_CellBackColor
 ;                  @Error 1 @Extended 11 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
-;                  @Error 2 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Internal command error. More than one set to True. UDF Must be fixed.
+;                  @Error 3 @Extended 2 Return 0 = Error Retrieving TableBorder2 Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended 1 Return 0 = Cannot set Top Border Style/Color when Top Border width not set.
 ;                  @Error 4 @Extended 2 Return 0 = Cannot set Bottom Border Style/Color when Bottom Border width not set.
@@ -318,9 +318,9 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	EndIf
 
 	$tBL2 = __LOCalc_CreateStruct("com.sun.star.table.BorderLine2")
-	$tTB2 = $oRange.TableBorder2
 	If Not IsObj($tBL2) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	$tTB2 = $oRange.TableBorder2
+	If Not IsObj($tTB2) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If $iTop <> Null Then
 		If Not $bWid And ($tTB2.TopLine.LineWidth() = 0) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0) ; If Width not set, cant set color or style.
@@ -820,8 +820,8 @@ EndFunc   ;==>__LOCalc_CellOverLine
 ;                  @Error 1 @Extended 5 Return 0 = $bProtected not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $bHideFormula not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $bHideWhenPrint not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Protection Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $bHideAll
@@ -851,7 +851,7 @@ Func __LOCalc_CellProtection(ByRef $oObj, $bHideAll, $bProtected, $bHideFormula,
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tCellProtection = $oObj.CellProtection()
-	If Not IsObj($tCellProtection) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCellProtection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($bHideAll, $bProtected, $bHideFormula, $bHideWhenPrint) Then
 		__LOCalc_ArrayFill($abProtection, $tCellProtection.IsHidden(), $tCellProtection.IsLocked(), $tCellProtection.IsFormulaHidden(), $tCellProtection.IsPrintHidden())
@@ -905,6 +905,8 @@ EndFunc   ;==>__LOCalc_CellProtection
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 6 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 7 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shadow Format Structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iWidth
@@ -933,7 +935,7 @@ Func __LOCalc_CellShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocatio
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$tShdwFrmt = $oObj.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOCalc_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -2052,16 +2054,16 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ;                  @Error 1 @Extended 1 Return 0 = $oTextcursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Text Fields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of paragraphs in Cell.
-;                  @Error 2 @Extended 3 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
-;                  @Error 2 @Extended 4 Return 0 = Failed to retrieve Text Field Object.
-;                  @Error 2 @Extended 5 Return 0 = Failed to retrieve Alternate Text Field Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of Text Portions in Paragraph.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to identify requested Field Types.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve total Fields count.
-;                  @Error 3 @Extended 3 Return 0 = Number of identified fields is greater than number of expected fields.
-;                  @Error 3 @Extended 4 Return 0 = Failed to identify newly created Field.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Text Fields Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve total Fields count.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Text Field Object.
+;                  @Error 3 @Extended 5 Return 0 = Number of identified fields is greater than number of expected fields.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Alternate Text Field Object.
+;                  @Error 3 @Extended 7 Return 0 = Failed to identify newly created Field.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Map = Success. Returning newly inserted Field's Object inside of a map.
 ; Author ........: donnyh13
@@ -2093,34 +2095,34 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$oFields = $oInternalCursor.Text.TextFields()
-	If Not IsObj($oFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iTotalFields = $oFields.Count()
-	If Not IsInt($iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+	If Not IsInt($iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$oParEnum = $oInternalCursor.getText().createEnumeration()
-	If Not IsObj($oParEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oParEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	While $oParEnum.hasMoreElements()
 		$oPar = $oParEnum.nextElement()
 
 		$oTextEnum = $oPar.createEnumeration()
-		If Not IsObj($oTextEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($oTextEnum) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		While $oTextEnum.hasMoreElements()
 			$oTextPortion = $oTextEnum.nextElement()
 
 			If ($oTextPortion.TextPortionType = "TextField") Then
 				$oTextField = $oTextPortion.TextField()
-				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+				If Not IsObj($oTextField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
 
 					If $oTextField.supportsService($avFieldTypes[$i][1]) And ($oInternalCursor.compareRegionEnds($oInternalCursor, $oTextField.Anchor.End()) = 0) Then
 
 						$oField = $oFields.getByIndex($iTotalFound)
-						If Not IsObj($oField) Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
+						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
 						$mFieldObj.EnumFieldObj = $oTextField
 						$mFieldObj.FieldObj = $oField
@@ -2135,7 +2137,7 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 
 	WEnd
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
 EndFunc   ;==>__LOCalc_FieldGetObj
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -2571,7 +2573,7 @@ EndFunc   ;==>__LOCalc_NumIsBetween
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 9 Return 0 = Variable passed to internal function not an Object.
+;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error Creating Object "com.sun.star.table.BorderLine2"
 ;                  --Processing Errors--

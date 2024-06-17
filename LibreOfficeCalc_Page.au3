@@ -394,11 +394,11 @@ EndFunc   ;==>_LOCalc_PageStyleBorderWidth
 ;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Page Style name called in $sPageStyle already exists in document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.PageStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Page Style by name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "PageStyle" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Page Style by name.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving Created Page Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New page Style successfully created. Returning its Object.
 ; Author ........: donnyh13
@@ -417,17 +417,17 @@ Func _LOCalc_PageStyleCreate(ByRef $oDoc, $sPageStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
-	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.PageStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oPageStyles.insertByName($sPageStyle, $oStyle)
 
-	If Not $oPageStyles.hasByName($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oPageStyles.hasByName($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oPageStyle = $oPageStyles.getByName($sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oPageStyle)
 EndFunc   ;==>_LOCalc_PageStyleCreate
@@ -444,13 +444,12 @@ EndFunc   ;==>_LOCalc_PageStyleCreate
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oPageStyle not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oPageStyle not a Page Style Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Page Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $oPageStyle is in use and cannot be deleted.
-;                  @Error 3 @Extended 3 Return 0 = $oPageStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "PageStyles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Page Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $oPageStyle is not a User-Created Page Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $oPageStyle is in use and cannot be deleted.
+;                  @Error 3 @Extended 5 Return 0 = $oPageStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Page Style called in $oPageStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -472,16 +471,16 @@ Func _LOCalc_PageStyleDelete(ByRef $oDoc, ByRef $oPageStyle)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oPageStyles = $oDoc.StyleFamilies().getByName("PageStyles")
-	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sPageStyle = $oPageStyle.Name()
-	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oPageStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oPageStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error.
+	If Not $oPageStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oPageStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error.
 
 	$oPageStyles.removeByName($sPageStyle)
 
-	Return ($oPageStyles.hasByName($sPageStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oPageStyles.hasByName($sPageStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_PageStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -1051,10 +1050,10 @@ EndFunc   ;==>_LOCalc_PageStyleFooterCreateTextCursor
 ;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Footer Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Footer Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Footer Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve First Page Footer Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Right Page Footer Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Left Page Footer Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Footer Object.
@@ -1083,7 +1082,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	If ($oFirstPage = Default) Then
 		$oFooter = $oPageStyle.FirstPageFooterContent()
-		If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -1094,7 +1093,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	If ($oRightPage = Default) Then
 		If Not IsObj($oFooter) Then ; Only retrieve the Object if I haven't retrieved one already.
 			$oFooter = $oPageStyle.RightPageFooterContent()
-			If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndIf
 
 	ElseIf IsObj($oRightPage) Then
@@ -1106,7 +1105,7 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	If ($oLeftPage = Default) Then
 		If Not IsObj($oFooter) Then ; Only retrieve the Object if I haven't retrieved one already.
 			$oFooter = $oPageStyle.LeftPageFooterContent()
-			If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			If Not IsObj($oFooter) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		EndIf
 
 	ElseIf IsObj($oLeftPage) Then
@@ -1136,11 +1135,10 @@ EndFunc   ;==>_LOCalc_PageStyleFooterObj
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1172,7 +1170,7 @@ Func _LOCalc_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 	If ($oPageStyle.FooterIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOCalc_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOCalc_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1202,7 +1200,7 @@ Func _LOCalc_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 	$oPageStyle.FooterShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.FooterShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOCalc_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -1224,8 +1222,8 @@ EndFunc   ;==>_LOCalc_PageStyleFooterShadow
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sPageStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Page Style called in $sPageStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Page Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Page Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Page Style successfully retrieved, returning Page Style Object.
 ; Author ........: donnyh13
@@ -1245,7 +1243,7 @@ Func _LOCalc_PageStyleGetObj(ByRef $oDoc, $sPageStyle)
 	If Not IsString($sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($sPageStyle)
-	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oPageStyle)
 EndFunc   ;==>_LOCalc_PageStyleGetObj
@@ -1283,7 +1281,7 @@ EndFunc   ;==>_LOCalc_PageStyleGetObj
 ;                  |                               4 = Error setting $bSameOnFirst
 ;                  |                               8 = Error setting $iLeftMargin
 ;                  |                               16 = Error setting $iRightMargin
-;                  |                               32= Error setting $iSpacing
+;                  |                               32 = Error setting $iSpacing
 ;                  |                               64 = Error setting $iHeight
 ;                  |                               128 = Error setting $bAutoHeight
 ;                  --Version Related Errors--
@@ -1784,10 +1782,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderCreateTextCursor
 ;                  @Error 1 @Extended 6 Return 0 = Object called in $oFirstPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 7 Return 0 = Object called in $oRightPage not a Header/Footer Object.
 ;                  @Error 1 @Extended 8 Return 0 = Object called in $oLeftPage not a Header/Footer Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve First Page Header Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Right Page Header Object.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve First Page Header Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Right Page Header Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Left Page Header Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Object = Success. One of the three parameters ($oFirstPage, $oRightPage, $oLeftPage) was set to Default keyword, returning the specified Header Object.
@@ -1816,7 +1814,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 
 	If ($oFirstPage = Default) Then
 		$oHeader = $oPageStyle.FirstPageHeaderContent()
-		If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
@@ -1827,7 +1825,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	If ($oRightPage = Default) Then
 		If Not IsObj($oHeader) Then ; Only retrieve the Object if I haven't retrieved one already.
 			$oHeader = $oPageStyle.RightPageHeaderContent()
-			If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+			If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		EndIf
 
 	ElseIf IsObj($oRightPage) Then
@@ -1839,7 +1837,7 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	If ($oLeftPage = Default) Then
 		If Not IsObj($oHeader) Then ; Only retrieve the Object if I haven't retrieved one already.
 			$oHeader = $oPageStyle.LeftPageHeaderContent()
-			If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+			If Not IsObj($oHeader) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		EndIf
 
 	ElseIf IsObj($oLeftPage) Then
@@ -1870,11 +1868,10 @@ EndFunc   ;==>_LOCalc_PageStyleHeaderObj
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 7 Return 0 = Variable passed to internal function not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving ShadowFormat Object for Error Checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1905,7 +1902,7 @@ Func _LOCalc_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($oPageStyle.HeaderIsOn() = False) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOCalc_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOCalc_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1935,7 +1932,7 @@ Func _LOCalc_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = 
 	$oPageStyle.HeaderShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.HeaderShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOCalc_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -2321,8 +2318,8 @@ EndFunc   ;==>_LOCalc_PageStyleSet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Page Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No Page Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Page Styles matching the input parameters. @Extended contains the count of results returned.
@@ -2348,7 +2345,7 @@ Func _LOCalc_PageStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly =
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	Local $oStyles = $oDoc.StyleFamilies.getByName("PageStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then
@@ -2393,9 +2390,9 @@ EndFunc   ;==>_LOCalc_PageStylesGetNames
 ;                  @Error 1 @Extended 4 Return 0 = $iColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOC_SHADOW_* as defined in LibreOfficeCalc_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -2425,7 +2422,7 @@ Func _LOCalc_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, 
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tShdwFrmt = $oPageStyle.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOCalc_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOCalc_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -2455,7 +2452,7 @@ Func _LOCalc_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null, 
 	$oPageStyle.ShadowFormat = $tShdwFrmt
 	; Error Checking
 	$tShdwFrmt = $oPageStyle.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOCalc_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -2665,6 +2662,8 @@ EndFunc   ;==>_LOCalc_PageStyleSheetPrint
 ;                  @Error 1 @Extended 5 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
 ;                  @Error 1 @Extended 6 Return 0 = Current mode set to $LOC_SCALE_FIT_WIDTH_HEIGHT, but $iVariable2 is not an Integer, less than 1 or greater than 1000.
 ;                  @Error 1 @Extended 7 Return 0 = Current mode set to $LOC_SCALE_FIT_PAGES, but $iVariable1 is not an Integer, less than 1 or greater than 1000.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to determine Scale Mode.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iMode

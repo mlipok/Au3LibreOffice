@@ -185,11 +185,10 @@ EndFunc   ;==>_LOWriter_ImageAreaFillStyle
 ;                  @Error 1 @Extended 11 Return 0 = $iToColor not an Integer, less than 0, or greater than 16777215.
 ;                  @Error 1 @Extended 12 Return 0 = $iFromIntense not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -228,7 +227,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tStyleGradient = $oImage.FillGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sGradientName, $iType, $iIncrement, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iFromColor, $iToColor, _
 			$iFromIntense, $iToIntense) Then
@@ -308,10 +307,10 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If ($oImage.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oImage.FillGradientName = $sGradName
-		If ($oImage.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oImage.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oImage.FillGradient = $tStyleGradient
@@ -398,13 +397,10 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparency
 ;                  @Error 1 @Extended 7 Return 0 = $iTransitionStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 8 Return 0 = $iStart not an Integer, less than 0, or greater than 100.
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 2 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -438,7 +434,7 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$tStyleGradient = $oImage.FillTransparenceGradient()
-	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tStyleGradient) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
@@ -453,46 +449,46 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
-		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not __LOWriter_IntIsBetween($iType, $LOW_GRAD_TYPE_LINEAR, $LOW_GRAD_TYPE_RECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tStyleGradient.Style = $iType
 	EndIf
 
 	If ($iXCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iXCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tStyleGradient.XOffset = $iXCenter
 	EndIf
 
 	If ($iYCenter <> Null) Then
-		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iYCenter, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tStyleGradient.YOffset = $iYCenter
 	EndIf
 
 	If ($iAngle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iTransitionStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tStyleGradient.Border = $iTransitionStart
 	EndIf
 
 	If ($iStart <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 	EndIf
 
 	If ($iEnd <> Null) Then
-		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 	EndIf
 
 	If ($oImage.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$oImage.FillTransparenceGradientName = $sTGradName
-		If ($oImage.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If ($oImage.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	$oImage.FillTransparenceGradient = $tStyleGradient
@@ -892,9 +888,9 @@ EndFunc   ;==>_LOWriter_ImageColorAdjust
 ;                  @Error 1 @Extended 4 Return 0 = $iRight not an integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iTop not an integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iBottom not an integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve the image Crop structure.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve the image Size structure.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the image Crop structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the image Size structure.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iLeft
@@ -929,10 +925,10 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 	$bKeepScaleInternal = ($bKeepScale = Null) ? ($bKeepScaleInternal) : ($bKeepScale)
 
 	$tCrop = $oImage.GraphicCrop()
-	If Not IsObj($tCrop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tCrop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tSize = $oImage.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iLeft, $iRight, $iTop, $iBottom, $bKeepScale) Then
 		__LOWriter_ArrayFill($avImage, $tCrop.Left(), $tCrop.Right(), $tCrop.Top(), $tCrop.Bottom(), $bKeepScaleInternal)
@@ -1058,9 +1054,9 @@ EndFunc   ;==>_LOWriter_ImageGetAnchor
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sImage not a string.
 ;                  @Error 1 @Extended 3 Return 0 = Image name called in $sImage not found in document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested Image object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested Image object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully found requested Image by name, returning Image Object.
 ; Author ........: donnyh13
@@ -1080,12 +1076,12 @@ Func _LOWriter_ImageGetObjByName(ByRef $oDoc, $sImage)
 	If Not IsString($sImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oImages = $oDoc.GraphicObjects()
-	If Not IsObj($oImages) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oImages) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oImages.hasByName($sImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oImage = $oImages.getByName($sImage)
-	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oImage)
 EndFunc   ;==>_LOWriter_ImageGetObjByName
@@ -1543,8 +1539,8 @@ EndFunc   ;==>_LOWriter_ImageReplace
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Image Names. @Extended set to number of Names returned.
 ;                  @Error 0 @Extended 0 Return 1 = Success. Document contains no images.
@@ -1564,7 +1560,7 @@ Func _LOWriter_ImagesGetNames(ByRef $oDoc)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oImages = $oDoc.GraphicObjects()
-	If Not IsObj($oImages) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oImages) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If $oImages.hasElements() Then
 		ReDim $asImages[$oImages.getCount()]
 		For $i = 0 To $oImages.getCount() - 1
@@ -1595,9 +1591,9 @@ EndFunc   ;==>_LOWriter_ImagesGetNames
 ;                  @Error 1 @Extended 3 Return 0 = $iColor not an Integer, less than -1, or greater than 16777215.
 ;                  @Error 1 @Extended 4 Return 0 = $bTransparent not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iLocation not an Integer, less than 0, or greater than 4. See Constants, $LOW_SHADOW_* as defined in LibreOfficeWriter_Constants.au3.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving ShadowFormat Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving ShadowFormat Object for Error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWidth
@@ -1626,7 +1622,7 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTran
 
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$tShdwFrmt = $oImage.ShadowFormat()
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
@@ -1656,7 +1652,7 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTran
 	$oImage.ShadowFormat = $tShdwFrmt
 	;Error Checking
 	$tShdwFrmt = $oImage.ShadowFormat
-	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($tShdwFrmt.ShadowWidth(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iColor = Null) ? ($iError) : (($tShdwFrmt.Color() = $iColor) ? ($iError) : (BitOR($iError, 2)))
@@ -1685,10 +1681,10 @@ EndFunc   ;==>_LOWriter_ImageShadow
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iHeight not an integer.
 ;                  @Error 1 @Extended 6 Return 0 = $bOriginalSize not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve the image's Actual Size structure.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve the image's Size structure.
-;                  @Error 2 @Extended 3 Return 0 = Failed to retrieve the image's Size structure again after setting scale sizing.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the image's Actual Size structure.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the image's Size structure.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the image's Size structure again after setting scale sizing.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
 ;                  |                               1 = Error setting $iScaleWidth
@@ -1719,10 +1715,10 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$tOrigSize = $oImage.ActualSize()
-	If Not IsObj($tOrigSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($tOrigSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$tSize = $oImage.Size()
-	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($iScaleWidth, $iScaleHeight, $iWidth, $iHeight, $bOriginalSize) Then
 		__LOWriter_ArrayFill($avImage, Round(($tSize.Width() / $tOrigSize.Width()) * 100), _
@@ -1746,7 +1742,7 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		$oImage.Size = $tSize
 
 		$tSize = $oImage.Size() ;Retrieve the size Struct again.
-		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		;Error checking
 		$iError = ($iScaleWidth = Null) ? ($iError) : ((Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? ($iError) : (BitOR($iError, 1)))
@@ -2192,8 +2188,8 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ;                  @Error 1 @Extended 4 Return 0 = $iRight not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = $iBottom not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Property Set Info Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iWrapType
@@ -2222,7 +2218,7 @@ Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRigh
 
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oPropInfo = $oImage.getPropertySetInfo()
-	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
 

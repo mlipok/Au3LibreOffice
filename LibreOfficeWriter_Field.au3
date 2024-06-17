@@ -1066,9 +1066,9 @@ EndFunc   ;==>_LOWriter_FieldDateTimeModify
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oField not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bDeleteMaster not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving TextFieldMaster Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Field Master Array of dependent fields.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFieldMaster Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Field Master Array of dependent fields.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the field with the Text Master Field.
 ;                  @Error 0 @Extended 1 Return 1 = Success. Successfully deleted the field.
@@ -1091,10 +1091,10 @@ Func _LOWriter_FieldDelete(ByRef $oField, $bDeleteMaster = False)
 
 	If ($bDeleteMaster = True) And ($oField.TextFieldMaster.Name() <> "") Then
 		$oFieldMaster = $oField.TextFieldMaster()
-		If Not IsObj($oFieldMaster) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oFieldMaster) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$aoDependents = $oFieldMaster.DependentTextFields()
-		If Not IsArray($aoDependents) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsArray($aoDependents) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		If (UBound($aoDependents) > 0) Then
 			For $i = 0 To UBound($aoDependents) - 1
@@ -4021,8 +4021,9 @@ EndFunc   ;==>_LOWriter_FieldRefGetType
 ;                  @Error 1 @Extended 6 Return 0 = Document does not contain a Reference Mark by the same name as called in $sRefMarkName.
 ;                  @Error 1 @Extended 7 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create "com.sun.star.text.TextField.GetReference" Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.text.TextField.GetReference" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully Inserted a Reference Field, returning its Object.
 ; Author ........: donnyh13
@@ -4045,12 +4046,12 @@ Func _LOWriter_FieldRefInsert(ByRef $oDoc, ByRef $oCursor, $sRefMarkName, $bOver
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oRefMarks.hasByName($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oMarkRefField = $oDoc.createInstance("com.sun.star.text.TextField.GetReference")
-	If Not IsObj($oMarkRefField) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oMarkRefField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oMarkRefField.SourceName = $sRefMarkName
 	$oMarkRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_REF_MARK
@@ -4079,11 +4080,10 @@ EndFunc   ;==>_LOWriter_FieldRefInsert
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document does not contain a Reference Mark named the same as called in $sName
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Reference Mark object called in $sName.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to delete Reference Mark, but document still contains a Reference Mark by that name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Reference Mark object called in $sName.
+;                  @Error 3 @Extended 3 Return 0 = Attempted to delete Reference Mark, but document still contains a Reference Mark by that name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted requested Reference Mark.
 ; Author ........: donnyh13
@@ -4103,16 +4103,16 @@ Func _LOWriter_FieldRefMarkDelete(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRefMark = $oRefMarks.getByName($sName)
-	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oRefMark.dispose()
 
-	Return ($oRefMarks.hasByName($sName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oRefMarks.hasByName($sName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -4127,9 +4127,9 @@ EndFunc   ;==>_LOWriter_FieldRefMarkDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document does not contain a Reference Mark named the same as called in $sName
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Reference Mark object called in $sName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Reference Mark object called in $sName.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Reference Mark Anchor Cursor Object.
 ; Author ........: donnyh13
@@ -4149,12 +4149,12 @@ Func _LOWriter_FieldRefMarkGetAnchor(ByRef $oDoc, $sName)
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oRefMark = $oRefMarks.getByName($sName)
-	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oRefMark.Anchor.Text.createTextCursorByRange($oRefMark.Anchor()))
 EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
@@ -4168,9 +4168,9 @@ EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. No Reference Marks found in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
@@ -4191,10 +4191,10 @@ Func _LOWriter_FieldRefMarkList(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asRefMarks = $oRefMarks.getElementNames()
-	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return (UBound($asRefMarks) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldRefMarkList
@@ -4217,8 +4217,9 @@ EndFunc   ;==>_LOWriter_FieldRefMarkList
 ;                  @Error 1 @Extended 5 Return 0 = $bOverwrite not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = Document already contains a Reference Mark by the same name as called in $sName.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Reference Marks Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.text.ReferenceMark" Object.
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.ReferenceMark" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Reference Marks Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1. = Success. Successfully created a Reference Mark.
 ; Author ........: donnyh13
@@ -4241,12 +4242,12 @@ Func _LOWriter_FieldRefMarkSet(ByRef $oDoc, ByRef $oCursor, $sName, $bOverwrite 
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$oRefMarks = $oDoc.getReferenceMarks()
-	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oRefMarks.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$oRefMark = $oDoc.createInstance("com.sun.star.text.ReferenceMark")
-	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oRefMark) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oRefMark.Name = $sName
 
@@ -4270,9 +4271,9 @@ EndFunc   ;==>_LOWriter_FieldRefMarkSet
 ;                  @Error 1 @Extended 2 Return 0 = $oRefField not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $sRefMarkName not a String.
 ;                  @Error 1 @Extended 4 Return 0 = Document does not contain a Reference Mark by the same name as called in $sRefMarkName.
-;                  @Error 1 @Extended 6 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
+;                  @Error 1 @Extended 5 Return 0 = $iRefUsing not an Integer, less than 0, or greater than 4.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sRefMarkName
@@ -4307,7 +4308,7 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 	If ($sRefMarkName <> Null) Then
 		If Not IsString($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oRefMarks = $oDoc.getReferenceMarks()
-		If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		If Not $oRefMarks.hasByName($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oRefField.SourceName = $sRefMarkName
 		$oRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_REF_MARK ;Set Type to RefMark in case input field Obj is a diff type.
@@ -4344,8 +4345,9 @@ EndFunc   ;==>_LOWriter_FieldRefModify
 ;                  @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $avFieldTypes passed to internal function not an Array. UDF needs fixed.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error converting Field type Constants.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of fields in document.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of fields in document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting Field type Constants.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
@@ -4372,7 +4374,7 @@ Func _LOWriter_FieldsAdvGetList(ByRef $oDoc, $iType = $LOW_FIELD_ADV_TYPE_ALL, $
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$avFieldTypes = __LOWriter_FieldTypeServices($iType, True, False)
-	If @error > 0 Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$vReturn = __LOWriter_FieldsGetList($oDoc, $bSupportedServices, $bFieldType, $bFieldTypeNum, $avFieldTypes)
 
@@ -4398,8 +4400,9 @@ EndFunc   ;==>_LOWriter_FieldsAdvGetList
 ;                  @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $avFieldTypes passed to internal function not an Array. UDF needs fixed.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error converting Field type Constants.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of fields in document.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of fields in document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting Field type Constants.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
@@ -4426,7 +4429,7 @@ Func _LOWriter_FieldsDocInfoGetList(ByRef $oDoc, $iType = $LOW_FIELD_DOCINFO_TYP
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$avFieldTypes = __LOWriter_FieldTypeServices($iType, False, True)
-	If @error > 0 Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$vReturn = __LOWriter_FieldsGetList($oDoc, $bSupportedServices, $bFieldType, $bFieldTypeNum, $avFieldTypes)
 
@@ -4597,6 +4600,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ;                  @Error 1 @Extended 9 Return 0 = $bIsVisible not a Boolean.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.SetExpression" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating Master Field Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Set Variable field, returning its Object.
 ; Author ........: donnyh13
@@ -4669,8 +4673,9 @@ EndFunc   ;==>_LOWriter_FieldSetVarInsert
 ;                  @Error 1 @Extended 2 Return 0 = $sMasterFieldName not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Document already contains a MasterField by the name called in $sMasterFieldName
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to Create MasterField Object.
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create MasterField Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully created the MasterField, returning its Object.
 ; Author ........: donnyh13
@@ -4693,11 +4698,11 @@ Func _LOWriter_FieldSetVarMasterCreate(ByRef $oDoc, $sMasterFieldName)
 
 	$sFullFieldName = $sField & "." & $sMasterFieldName
 	$oMasterFields = $oDoc.getTextFieldMasters()
-	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oMasterfield = $oDoc.createInstance($sField)
-	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oMasterfield.Name = $sMasterFieldName
 
@@ -4716,11 +4721,10 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterCreate
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $vMasterField not a String and not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $vMasterField is a String, but document does not contain a Masterfield by that name.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve MasterField object called in $vMasterField.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Attempted to delete MasterField, but document still contains a MasterField by that name.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve MasterField object called in $vMasterField.
+;                  @Error 3 @Extended 3 Return 0 = Attempted to delete MasterField, but document still contains a MasterField by that name.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted requested MasterField.
 ; Author ........: donnyh13
@@ -4742,7 +4746,7 @@ Func _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 	If Not IsString($vMasterField) And Not IsObj($vMasterField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
-	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If IsObj($vMasterField) Then
 		$sFullFieldName = $sField & "." & $vMasterField.Name()
@@ -4753,11 +4757,11 @@ Func _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 		$oMasterfield = $oMasterFields.getByName($sFullFieldName)
 	EndIf
 
-	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oMasterfield.dispose()
 
-	Return ($oMasterFields.hasByName($sFullFieldName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oMasterFields.hasByName($sFullFieldName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldSetVarMasterDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -4771,8 +4775,8 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterDelete
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sMasterFieldName not a String.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a MasterField called in $sMasterFieldName, then True is returned, Else false.
 ; Author ........: donnyh13
@@ -4794,7 +4798,7 @@ Func _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 	$sFullFieldName &= $sMasterFieldName
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
-	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
@@ -4812,9 +4816,9 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sMasterFieldName not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = Document does not contain FieldMaster named as called in $sMasterFieldName.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve requested FieldMaster Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve requested FieldMaster Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved requested FieldMaster Object, returning its Object.
 ; Author ........: donnyh13
@@ -4836,11 +4840,11 @@ Func _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
 	$sFullFieldName &= $sMasterFieldName
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
-	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If Not $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oMasterfield = $oMasterFields.getByName($sFullFieldName)
-	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oMasterfield)
 EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
@@ -4854,9 +4858,9 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
-;                  @Error 2 @Extended 2 Return 0 = Failed to retrieve Array of MasterField Objects.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve MasterFields Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of MasterField Objects.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully retrieved Array of Set Variable MasterField Names, returning Array of Set Variable MasterField Names with @Extended set to number of results.
 ; Author ........: donnyh13
@@ -4878,10 +4882,10 @@ Func _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oMasterFields = $oDoc.getTextFieldMasters()
-	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$asMasterFields = $oMasterFields.getElementNames()
-	If Not IsArray($asMasterFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsArray($asMasterFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	ReDim $asSetVarMasters[UBound($asMasterFields)]
 
@@ -4908,8 +4912,8 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterList
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oMasterfield not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve dependent fields Array.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve dependent fields Array.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for dependent fields, but MasterField has none.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for dependent fields, returning Array of dependent SetVariable Fields, with @Extended set to number of results.
@@ -4929,7 +4933,7 @@ Func _LOWriter_FieldSetVarMasterListFields(ByRef $oMasterfield)
 	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$aoDependFields = $oMasterfield.DependentTextFields()
-	If Not IsArray($aoDependFields) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsArray($aoDependFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return (UBound($aoDependFields) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoDependFields), $aoDependFields)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldSetVarMasterListFields
@@ -5032,8 +5036,9 @@ EndFunc   ;==>_LOWriter_FieldSetVarModify
 ;                  @Error 1 @Extended 5 Return 0 = $bFieldTypeNum not a Boolean.
 ;                  @Error 1 @Extended 6 Return 0 = $avFieldTypes passed to internal function not an Array. UDF needs fixed.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error converting Field type Constants.
-;                  @Error 2 @Extended 2 Return 0 = Failed to create enumeration of fields in document.
+;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of fields in document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting Field type Constants.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Text Field Objects with @Extended set to number of results. See Remarks for Array sizing.
 ; Author ........: donnyh13
@@ -5060,7 +5065,7 @@ Func _LOWriter_FieldsGetList(ByRef $oDoc, $iType = $LOW_FIELD_TYPE_ALL, $bSuppor
 	If Not IsBool($bFieldTypeNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$avFieldTypes = __LOWriter_FieldTypeServices($iType)
-	If (@error > 0) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$vReturn = __LOWriter_FieldsGetList($oDoc, $bSupportedServices, $bFieldType, $bFieldTypeNum, $avFieldTypes)
 

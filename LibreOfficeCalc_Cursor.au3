@@ -528,7 +528,7 @@ EndFunc   ;==>_LOCalc_TextCursorGoToRange
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sString not a string..
 ;                  @Error 1 @Extended 3 Return 0 = $bOverwrite not a Boolean.
-;                  @Error 1 @Extended 5 Return 0 = $oCursor is not a Text Cursor.
+;                  @Error 1 @Extended 4 Return 0 = $oCursor is not a Text Cursor.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Cursor type.
 ;                  --Success--
@@ -568,6 +568,8 @@ EndFunc   ;==>_LOCalc_TextCursorInsertString
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCursor unknown cursor type.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cursor Type.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean. = Success. Successfully queried whether cursor's selection is collapsed. Returning Boolean result, True = Cursor has no data selected, False = cursor has data selected.
 ; Author ........: donnyh13

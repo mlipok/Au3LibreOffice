@@ -48,11 +48,11 @@
 ;                  @Error 1 @Extended 2 Return 0 = $sNumStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Numbering Style name called in $sNumStyle already exists in this document.
 ;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error Retrieving "NumberingStyle" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error Creating "com.sun.star.style.NumberingStyle" Object.
-;                  @Error 2 @Extended 3 Return 0 = Error Retrieving New Numbering Style Object.
+;                  @Error 2 @Extended 1 Return 0 = Error Creating "com.sun.star.style.NumberingStyle" Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error creating new Numbering Style by Name.
+;                  @Error 3 @Extended 1 Return 0 = Error Retrieving "NumberingStyle" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error creating new Numbering Style by Name.
+;                  @Error 3 @Extended 3 Return 0 = Error Retrieving New Numbering Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. New Numbering Style successfully created. Returning Numbering Style Object.
 ; Author ........: donnyh13
@@ -71,17 +71,17 @@ Func _LOWriter_NumStyleCreate(ByRef $oDoc, $sNumStyle)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$oNumStyles = $oDoc.StyleFamilies().getByName("NumberingStyles")
-	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oStyle = $oDoc.createInstance("com.sun.star.style.NumberingStyle")
-	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	$oNumStyles.insertByName($sNumStyle, $oStyle)
 
-	If Not $oNumStyles.hasByName($sNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not $oNumStyles.hasByName($sNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	$oNumStyle = $oNumStyles.getByName($sNumStyle)
-	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNumStyle)
 EndFunc   ;==>_LOWriter_NumStyleCreate
@@ -122,11 +122,10 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 15 Return 0 = $sBulletFont not a string.
 ;                  @Error 1 @Extended 16 Return 0 = Font style called in $sBulletFont not found in document.
 ;                  @Error 1 @Extended 17 Return 0 = $iCharDecimal not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving NumberingRules Object for error checking.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving NumberingRules Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumFormat
@@ -168,10 +167,10 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	$iLevel = ($iLevel - 1) ; Numbering Levels are  0 based, minus 1 to compensate.
 
 	$oNumRules = $oNumStyle.NumberingRules()
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iNumFormat, $iStartAt, $sCharStyle, $iSubLevels, $sSepBefore, $sSepAfter, $bConsecutiveNum, $sBulletFont, $iCharDecimal) Then
-		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; can only get settings for one level at a time.
+		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; can only get settings for one level at a time.
 
 		If (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $LOW_NUM_STYLE_CHAR_SPECIAL) Then
 			__LOWriter_ArrayFill($avCustomize, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType"), _
@@ -278,7 +277,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	$oNumStyle.NumberingRules = $oNumRules
 
 	$oNumRules = $oNumStyle.NumberingRules() ; Retrieve Numbering Rules a second time for error checking.
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
 
 	; Error Checking
@@ -307,13 +306,12 @@ EndFunc   ;==>_LOWriter_NumStyleCustomize
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oNumStyle not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $oNumStyle not a Numbering Style Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving "Numbering Styles" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving Numbering Style Name.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = $sNumStyle is not a User-Created Numbering Style and cannot be deleted.
-;                  @Error 3 @Extended 2 Return 0 = $sNumStyle is in use and cannot be deleted.
-;                  @Error 3 @Extended 3 Return 0 = $sNumStyle still exists after deletion attempt.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving "Numbering Styles" Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Style Name.
+;                  @Error 3 @Extended 3 Return 0 = $sNumStyle is not a User-Created Numbering Style and cannot be deleted.
+;                  @Error 3 @Extended 4 Return 0 = $sNumStyle is in use and cannot be deleted.
+;                  @Error 3 @Extended 5 Return 0 = $sNumStyle still exists after deletion attempt.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. $sNumStyle was successfully deleted.
 ; Author ........: donnyh13
@@ -335,16 +333,16 @@ Func _LOWriter_NumStyleDelete(ByRef $oDoc, $oNumStyle)
 	If Not $oNumStyle.supportsService("com.sun.star.style.Style") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oNumStyles = $oDoc.StyleFamilies().getByName("NumberingStyles")
-	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNumStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$sNumStyle = $oNumStyle.Name()
-	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If Not $oNumStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oNumStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; If Style is in use return an error unless force delete is true.
+	If Not $oNumStyle.isUserDefined() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+	If $oNumStyle.isInUse() Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0) ; If Style is in use return an error unless force delete is true.
 
 	$oNumStyles.removeByName($sNumStyle)
 
-	Return ($oNumStyles.hasByName($sNumStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return ($oNumStyles.hasByName($sNumStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStyleDelete
 
 ; #FUNCTION# ====================================================================================================================
@@ -390,8 +388,8 @@ EndFunc   ;==>_LOWriter_NumStyleExists
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sNumStyle not a String.
 ;                  @Error 1 @Extended 3 Return 0 = Numbering Style Style called in $sNumStyle not found in Document.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Numbering Style Style Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Style Style Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Object = Success. Numbering Style Style successfully retrieved, returning its Object.
 ; Author ........: donnyh13
@@ -411,7 +409,7 @@ Func _LOWriter_NumStyleGetObj(ByRef $oDoc, $sNumStyle)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oNumStyle = $oDoc.StyleFamilies().getByName("NumberingStyles").getByName($sNumStyle)
-	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNumStyle)
 EndFunc   ;==>_LOWriter_NumStyleGetObj
@@ -512,11 +510,10 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  @Error 1 @Extended 7 Return 0 = $iFollowedBy not an integer, less than 0, or higher than 2. See Constants, $LOW_FOLLOW_BY_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  @Error 1 @Extended 8 Return 0 = $iTabstop not an Integer.
 ;                  @Error 1 @Extended 9 Return 0 = $iIndent not an Integer.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
-;                  @Error 2 @Extended 2 Return 0 = Error retrieving NumberingRules Object for error checking.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
+;                  @Error 3 @Extended 3 Return 0 = Error retrieving NumberingRules Object for error checking.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAlignedAt
@@ -553,10 +550,10 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 	$iLevel = ($iLevel - 1) ; Numbering Levels are  0 based, minus 1 to compensate.
 
 	$oNumRules = $oNumStyle.NumberingRules()
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iAlignedAt, $iNumAlign, $iFollowedBy, $iTabStop, $iIndent) Then
-		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; only get settings for one level at a time.
+		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; only get settings for one level at a time.
 		__LOWriter_ArrayFill($avPosition, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), _
 				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Adjust"), _
 				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "LabelFollowedBy"), _
@@ -609,7 +606,7 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 
 	; Error Checking:
 	$oNumRules = $oNumStyle.NumberingRules()
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
 
 	$iError = ($iAlignedAt = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
@@ -714,8 +711,8 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bUserOnly not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $bAppliedOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failed to retrieve Numbering Styles Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Numbering Styles Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 0 = Success. No Numbering Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Numbering Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
@@ -741,7 +738,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	If Not IsBool($bUserOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bAppliedOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	Local $oStyles = $oDoc.StyleFamilies.getByName("NumberingStyles")
-	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oStyles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	ReDim $aStyles[$oStyles.getCount()]
 
 	If Not $bUserOnly And Not $bAppliedOnly Then

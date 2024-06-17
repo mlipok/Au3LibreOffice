@@ -421,8 +421,8 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Endnotes Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Endnotes Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Endnotes, none contained in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Endnotes, Returning Array of Endnote Objects. @Extended set to number found.
@@ -444,7 +444,7 @@ Func _LOWriter_EndnotesGetList(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oEndNotes = $oDoc.getEndnotes()
-	If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iCount = $oEndNotes.getCount()
 
@@ -919,8 +919,8 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Error retrieving Footnotes Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Footnotes Object.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Footnotes, none contained in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Footnotes, Returning Array of Footnote Objects. @Extended set to number found.
@@ -942,7 +942,7 @@ Func _LOWriter_FootnotesGetList(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	$oFootNotes = $oDoc.getFootnotes()
-	If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iCount = $oFootNotes.getCount()
 
