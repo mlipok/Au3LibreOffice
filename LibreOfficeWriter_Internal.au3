@@ -1471,7 +1471,7 @@ EndFunc   ;==>__LOWriter_CreatePoint
 ; Name ..........: __LOWriter_CreateStruct
 ; Description ...: Retrieves a Struct.
 ; Syntax ........: __LOWriter_CreateStruct($sStructName)
-; Parameters ....: $sStructName - a string value. Name of structure to create.
+; Parameters ....: $sStructName         - a string value. Name of structure to create.
 ; Return values .: Success: Structure.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1507,8 +1507,8 @@ EndFunc   ;==>__LOWriter_CreateStruct
 ; Name ..........: __LOWriter_CursorGetText
 ; Description ...: Retrieves a Text object appropriate for the type of cursor.
 ; Syntax ........: __LOWriter_CursorGetText(ByRef $oDoc, $oCursor)
-; Parameters ....: $oDoc        - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor     - [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
+; Parameters ....: $oDoc                - [in/out] A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Text or View Cursor Object returned from any Cursor Object creation or retrieval functions.
 ; Return values .: Success: Object.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1867,14 +1867,14 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_FilterNameGet
 ; Description ...: Retrieves the correct L.O. Filtername for use in SaveAs and Export.
-; Syntax ........: __LOWriter_FilterNameGet(ByRef $sDocSavePath[, $bIncludeExportFilters = False])
-; Parameters ....: $sDocSavePath           - [in/out] a string value. Full path with extension.
-;                  $bIncludeExportFilters  - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
+; Syntax ........: __LOWriter_FilterNameGet(ByRef $sDocSavePath[, $bExportFilters = False])
+; Parameters ....: $sDocSavePath        - [in/out] a string value. Full path with extension.
+;                  $bExportFilters      - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
 ; Return values .: Success: String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sDocSavePath is not a string.
-;                  @Error 1 @Extended 2 Return 0 = $bIncludeExportFilters not a Boolean.
+;                  @Error 1 @Extended 2 Return 0 = $bExportFilters not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sDocSavePath is not a correct path or URL.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Success. Returns required filtername from "SaveAs" FilterNames.
@@ -1889,14 +1889,14 @@ EndFunc   ;==>__LOWriter_FieldTypeServices
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = False)
+Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 	Local $iLength, $iSlashLocation, $iDotLocation
 	Local Const $STR_NOCASESENSE = 0, $STR_STRIPALL = 8
 	Local $sFileExtension, $sFilterName
 	Local $msSaveAsFilters[], $msExportFilters[]
 
 	If Not IsString($sDocSavePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bIncludeExportFilters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bExportFilters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$iLength = StringLen($sDocSavePath)
 
 	$msSaveAsFilters[".doc"] = "MS Word 97"
@@ -1913,7 +1913,7 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = Fals
 	$msSaveAsFilters[".uot"] = "UOF text"
 	$msSaveAsFilters[".xml"] = "MS Word 2003 XML"
 
-	If $bIncludeExportFilters Then
+	If $bExportFilters Then
 		$msExportFilters[".epub"] = "EPUB"
 		$msExportFilters[".jfif"] = "writer_jpg_Export"
 		$msExportFilters[".jif"] = "writer_jpg_Export"
@@ -1948,7 +1948,7 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = Fals
 
 	If IsString($sFilterName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sFilterName)
 
-	If $bIncludeExportFilters Then $sFilterName = $msExportFilters[$sFileExtension]
+	If $bExportFilters Then $sFilterName = $msExportFilters[$sFileExtension]
 
 	If IsString($sFilterName) Then Return SetError($__LO_STATUS_SUCCESS, 2, $sFilterName)
 
@@ -2814,9 +2814,9 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ; Name ..........: __LOWriter_Internal_CursorGetDataType
 ; Description ...: Get what type of Text data the cursor object is currently in. Internal version of CursorGetDataType.
 ; Syntax ........: __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor[, $bReturnObject = False])
-; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCursor              - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
-;                  $bReturnObject        - [optional] a boolean value. Default is False. If True, return the object used for creating a Text Object etc.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oCursor             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions.
+;                  $bReturnObject       - [optional] a boolean value. Default is False. If True, return the object used for creating a Text Object etc.
 ; Return values .: Success: Object or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -8303,7 +8303,7 @@ EndFunc   ;==>__LOWriter_VarsAreNull
 ; Name ..........: __LOWriter_VersionCheck
 ; Description ...: Test if the currently installed LibreOffice version is high enough to support a certain function.
 ; Syntax ........: __LOWriter_VersionCheck($fRequiredVersion)
-; Parameters ....: $fRequiredVersion            - a floating point value. The version of LibreOffice required.
+; Parameters ....: $fRequiredVersion    - a floating point value. The version of LibreOffice required.
 ; Return values .: Success: Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

@@ -1811,7 +1811,7 @@ EndFunc   ;==>_LOWriter_TableSetData
 ; Name ..........: _LOWriter_TablesGetNames
 ; Description ...: List the names of all tables contained in a document.
 ; Syntax ........: _LOWriter_TablesGetNames(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array of Strings.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

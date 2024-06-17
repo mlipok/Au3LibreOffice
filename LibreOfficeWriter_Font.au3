@@ -68,7 +68,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ; Name ..........: _LOWriter_FontsList
 ; Description ...: Retrieve a list of currently available fonts.
 ; Syntax ........: _LOWriter_FontsList(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

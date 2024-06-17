@@ -2183,8 +2183,8 @@ EndFunc   ;==>_LOWriter_PageStyleFootnoteLine
 ; Name ..........: _LOWriter_PageStyleGetObj
 ; Description ...: Retrieve a Page Style Object for use with other Page Style functions.
 ; Syntax ........: _LOWriter_PageStyleGetObj(ByRef $oDoc, $sPageStyle)
-; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sPageStyle           - a string value. The Page Style name to retrieve the Object for.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sPageStyle          - a string value. The Page Style name to retrieve the Object for.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
