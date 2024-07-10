@@ -673,6 +673,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
 - Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
 - Missing Data Type in _LOWriter_CursorGetDataType example.
+- _LOWriter_DocCreateTextCursor would throw an error when creating a Text Cursor at the ViewCursor position.
+- When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
+- Incorrect usage of ObjEvent.
 
 ### Removed
 

@@ -1733,6 +1733,8 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 	$iColumns = ($bFieldType = False) ? ($iColumns - 1) : ($iColumns)
 	$iColumns = ($bFieldTypeNum = False) ? ($iColumns - 1) : ($iColumns)
 
+	If ($iColumns = 1) Then ReDim $avTextFields[UBound($avTextFields)]
+
 	; If Supported Services Option is False, change the column position of FieldType
 	$iFieldTypeCol = ($bSupportedServices = False) ? ($iFieldTypeCol - 1) : ($iFieldTypeCol)
 
@@ -1749,22 +1751,36 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 
 			If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 
-				$avTextFields[$iCount][0] = $oTextField
+				If ($iColumns = 1) Then
+					$avTextFields[$iCount] = $oTextField
 
-				If ($bSupportedServices = True) Then $avTextFields[$iCount][1] = $avFieldTypes[$i][1]
-				If ($bFieldType = True) Then $avTextFields[$iCount][$iFieldTypeCol] = $oTextField.getPresentation(True)
-				If ($bFieldTypeNum = True) Then $avTextFields[$iCount][$iFieldTypeNumCol] = $avFieldTypes[$i][0]
+					$iCount += 1
+					If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2]
+					ExitLoop
+				Else
 
-				$iCount += 1
-				If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2][$iColumns]
-				ExitLoop
+					$avTextFields[$iCount][0] = $oTextField
+
+					If ($bSupportedServices = True) Then $avTextFields[$iCount][1] = $avFieldTypes[$i][1]
+					If ($bFieldType = True) Then $avTextFields[$iCount][$iFieldTypeCol] = $oTextField.getPresentation(True)
+					If ($bFieldTypeNum = True) Then $avTextFields[$iCount][$iFieldTypeNumCol] = $avFieldTypes[$i][0]
+
+					$iCount += 1
+					If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2][$iColumns]
+					ExitLoop
+				EndIf
 			EndIf
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
 
 	WEnd
 
-	ReDim $avTextFields[$iCount][$iColumns]
+	If ($iColumns = 1) Then
+		ReDim $avTextFields[$iCount]
+	Else
+		ReDim $avTextFields[$iCount][$iColumns]
+	EndIf
+
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $avTextFields)
 EndFunc   ;==>__LOWriter_FieldsGetList
 
@@ -2770,7 +2786,7 @@ EndFunc   ;==>__LOWriter_HeaderBorder
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $oSize

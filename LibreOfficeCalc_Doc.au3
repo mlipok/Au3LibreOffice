@@ -994,15 +994,15 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bReadOnly = Null, $sPassword = Null, $bLoadAsTemplate = Null, $sFilterName = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
 	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
 	Local $iError = 0
 	Local $oDoc, $oServiceManager, $oDesktop
 	Local $aoProperties[0]
 	Local $vProperty
 	Local $sFileURL
-
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOCalc_InternalComErrorHandler")
-	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$sFileURL = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN)
@@ -1522,8 +1522,8 @@ EndFunc   ;==>_LOCalc_DocSaveAs
 ; Modified ......:
 ; Remarks .......: Data you desire to be copied must be selected first, see _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti.
 ;                  This function works essentially the same as Copy/ Ctrl+C, except it doesn't use your clipboard.
-;				   The Object returned is used in _LOCalc_DocSelectionPaste to insert the data again.
-;				   Data copied can be inserted into the same or another document.
+;                  The Object returned is used in _LOCalc_DocSelectionPaste to insert the data again.
+;                  Data copied can be inserted into the same or another document.
 ; Related .......: _LOCalc_DocSelectionPaste, _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti
 ; Link ..........:
 ; Example .......: Yes
