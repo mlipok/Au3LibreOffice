@@ -11,14 +11,14 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 |    Version       |    Changes                         |    Download                 |     Released   |    Compare on GitHub       |
 |:-----------------|:----------------------------------:|:---------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](#0100---2024-04-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.10.0**   | [Change Log](#0100---2024-08-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
 |    **v0.9.1**    | [Change Log](#091---2023-10-28)    | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
 |    **v0.9.0**    | [Change Log](#090---2023-10-28)    | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
 |    **v0.0.0.3**  | [Change Log](#0003---2023-08-10)   | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
 |    **v0.0.0.2**  | [Change Log](#0002---2023-07-16)   | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
 |    **v0.0.0.1**  | [Change Log](#0001---2023-07-02)   | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
-## [0.10.0] - 2024-04-
+## [0.10.0] - 2024-08-
 
 ### Project
 
@@ -53,6 +53,95 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Double spaces from Headers.
 - Tabs from headers, replaced with spaces.
 - Manual line breaks from headers.
+
+> [!NOTE]
+> **LibreOfficeBase**
+
+### Added
+
+- Main Base File
+	- LibreOfficeBase.au3
+- Individual Base Element Files
+	- LibreOfficeBase_Constants.au3
+	- LibreOfficeBase_Database.au3
+	- LibreOfficeBase_Doc.au3
+	- LibreOfficeBase_Helper.au3
+	- LibreOfficeBase_Internal.au3
+	- LibreOfficeBase_Table.au3
+
+- Base Constants
+	- $LOB_DATA_TYPE_*
+	- $LOB_PATHCONV_*
+
+- Base Database functions
+_LOBase_DatabaseConnectionClose
+	- _LOBase_DatabaseConnectionGet
+	- _LOBase_DatabaseGetObjByDoc
+	- _LOBase_DatabaseGetObjByURL
+	- _LOBase_DatabaseIsReadOnly
+	- _LOBase_DatabaseName
+	- _LOBase_DatabaseRegisteredAdd
+	- _LOBase_DatabaseRegisteredExists
+	- _LOBase_DatabaseRegisteredGetNames
+	- _LOBase_DatabaseRegisteredRemoveByName
+	- _LOBase_DatabaseRequiresPassword
+
+- Base Doc functions
+	- _LOBase_DocClose
+	- _LOBase_DocConnect
+	- _LOBase_DocCreate
+	- _LOBase_DocDatabaseType
+	- _LOBase_DocGetName
+	- _LOBase_DocGetPath
+	- _LOBase_DocHasPath
+	- _LOBase_DocIsActive
+	- _LOBase_DocIsModified
+	- _LOBase_DocMaximize
+	- _LOBase_DocMinimize
+	- _LOBase_DocOpen
+	- _LOBase_DocSave
+	- _LOBase_DocSaveAs
+	- _LOBase_DocSaveCopy
+	- _LOBase_DocTableUIClose
+	- _LOBase_DocTableUIOpenByName
+	- _LOBase_DocTableUIOpenByObject
+	- _LOBase_DocVisible
+
+- Base Helper functions
+	- _LOBase_ComError_UserFunction
+	- _LOBase_PathConvert
+	- _LOBase_VersionGet
+
+- Base Internal functions
+	- __LOBase_AddTo1DArray
+	- __LOBase_ArrayFill
+	- __LOBase_ColTransferProps
+	- __LOBase_ColTypeName
+	- __LOBase_CreateStruct
+	- __LOBase_InternalComErrorHandler
+	- __LOBase_IntIsBetween
+	- __LOBase_SetPropertyValue
+	- __LOBase_VarsAreNull
+	- __LOBase_VersionCheck
+
+- Base Table functions
+	- _LOBase_TableAdd
+	- _LOBase_TableColAdd
+	- _LOBase_TableColDefinition
+	- _LOBase_TableColDelete
+	- _LOBase_TableColGetObjByIndex
+	- _LOBase_TableColGetObjByName
+	- _LOBase_TableColProperties
+	- _LOBase_TableColsGetCount
+	- _LOBase_TableColsGetNames
+	- _LOBase_TableDelete
+	- _LOBase_TableExists
+	- _LOBase_TableGetObjByIndex
+	- _LOBase_TableGetObjByName
+	- _LOBase_TableName
+	- _LOBase_TablePrimaryKey
+	- _LOBase_TablesGetCount
+	- _LOBase_TablesGetNames
 
 > [!NOTE]
 > **LibreOfficeCalc**

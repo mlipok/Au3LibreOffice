@@ -12,7 +12,7 @@ Au3LibreOffice UDF currently provides support for the following LibreOffice comp
 
 - **Writer**
 - **Calc** **Development Nearing Completion**
-- ~~Base~~ ***Development Pending***
+- **Base** **Development Begun**
 - ~~Impress~~ ***Development Pending***
 
 Support for other components will be provided as time permits.
