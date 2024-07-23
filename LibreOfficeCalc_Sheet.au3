@@ -1495,7 +1495,7 @@ EndFunc   ;==>_LOCalc_SheetsGetNames
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......: _LOCalc_ConvertColorFromLong, _LOCalc_ConvertColorToLong
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_SheetTabColor(ByRef $oSheet, $iColor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
