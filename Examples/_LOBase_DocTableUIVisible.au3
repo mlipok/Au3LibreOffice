@@ -1,5 +1,5 @@
-#include <File.au3>
 #include <MsgBoxConstants.au3>
+#include <File.au3>
 
 #include "..\LibreOfficeBase.au3"
 
@@ -11,9 +11,9 @@ Example()
 If IsString($sPath) Then FileDelete($sPath)
 
 Func Example()
-	Local $oDoc, $oDBase, $oConnection, $oTable
-	Local $sSavePath, $sNames = ""
-	Local $asColumns[0]
+	Local $oDoc, $oDBase, $oConnection, $oTable, $oTableUI
+	Local $sSavePath
+	Local $bReturn
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -42,21 +42,36 @@ Func Example()
 	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
-	; Add a Column to the Table.
-	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_NUMERIC, "", "A New Number Column.")
-	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended)
+	; Open the Table UI.
+	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
+	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended)
 
-	; Retrieve a list of Columns
-	$asColumns = _LOBase_TableColsGetNames($oTable)
-	If @error Then Return _ERROR($oDoc, "Failed to retrieve array of Column names. Error:" & @error & " Extended:" & @extended)
+	MsgBox($MB_OK, "", "I have just opened the Table UI, press Ok to make the window invisible.")
 
-	For $i = 0 To @extended - 1
-		$sNames &= $asColumns[$i] & @CRLF
-	Next
+	; Make the Table UI Window invisible by setting visible to False
+	_LOBase_DocTableUIVisible($oTableUI, False)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Window visibility settings. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "The Table contains the following columns: " & @CRLF & _
-			$sNames & @CRLF & @CRLF & _
-			"Press Ok to delete close the document.")
+	; Test if the document is Visible
+	$bReturn = _LOBase_DocTableUIVisible($oTableUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "Is the Table window currently visible? True/False: " & $bReturn & @CRLF & @CRLF & _
+			"Press Ok to make the window visible again.")
+
+	; Make the window visible by setting visible to True
+	_LOBase_DocTableUIVisible($oTableUI, True)
+	If (@error > 0) Then _ERROR($oDoc, "Failed to change Table Window visibility settings. Error:" & @error & " Extended:" & @extended)
+
+	; Test if the document is Visible
+	$bReturn = _LOBase_DocTableUIVisible($oTableUI)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended)
+
+	MsgBox($MB_OK, "", "Is the Table window now visible? True/False: " & $bReturn)
+
+	; Close Table UI.
+	_LOBase_DocTableUIClose($oTableUI)
+	If @error Then Return _ERROR($oDoc, "Failed to close Table UI. Error:" & @error & " Extended:" & @extended)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -71,5 +86,5 @@ EndFunc
 Func _ERROR($oDoc, $sErrorText)
 	MsgBox($MB_OK, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
-	If IsString($sPath) Then FileDelete($sPath)
+	Exit
 EndFunc

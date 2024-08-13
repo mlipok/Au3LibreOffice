@@ -38,17 +38,17 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Table to the Database.
-	_LOBase_TableAdd($oConnection, "New_Table", "Col1")
+	_LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "I have added a table named ""New_Table""." & @CRLF & _
+	MsgBox($MB_OK, "", "I have added a table named ""tblNew_Table""." & @CRLF & _
 			"Press OK to open the Table UI in Viewing/ Data editing mode.")
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "New_Table")
+	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "I have opened the table named ""New_Table"" in Viewing/ Data editing mode." & @CRLF & _
+	MsgBox($MB_OK, "", "I have opened the table named ""tblNew_Table"" in Viewing/ Data editing mode." & @CRLF & _
 			"Press OK to close the window reopen the table in editing mode.")
 
 	; Close Table UI.
@@ -56,10 +56,10 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to close Table UI. Error:" & @error & " Extended:" & @extended)
 
 	; Open the Table UI.
-	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "New_Table", True)
+	$oTableUI = _LOBase_DocTableUIOpenByName($oDoc, $oConnection, "tblNew_Table", True)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "I have opened the table named ""New_Table"" in Editing mode." & @CRLF & _
+	MsgBox($MB_OK, "", "I have opened the table named ""tblNew_Table"" in Editing mode." & @CRLF & _
 			"Press OK to close the window and document and delete the document.")
 
 	; Close Table UI.

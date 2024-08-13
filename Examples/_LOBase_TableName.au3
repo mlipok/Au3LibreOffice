@@ -38,7 +38,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Table to the Database.
-	$oTable = _LOBase_TableAdd($oConnection, "New_Table", "Col1")
+	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Table's name
@@ -49,7 +49,7 @@ Func Example()
 			"Press ok to change the Table's Name.")
 
 	; Change the Table's name
-	_LOBase_TableName($oTable, "AutoIt_Table")
+	_LOBase_TableName($oTable, "tblAutoIt_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to modify Table Name. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve the Table's name

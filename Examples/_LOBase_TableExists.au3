@@ -39,14 +39,14 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Table to the Database.
-	_LOBase_TableAdd($oConnection, "New_Table", "Col1")
+	_LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
-	; Check if the Database contains a Table name "New_Table"
-	$bReturn = _LOBase_TableExists($oConnection, "New_Table")
+	; Check if the Database contains a Table name "tblNew_Table"
+	$bReturn = _LOBase_TableExists($oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to query Database. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "Does the Database contain a Table named ""New_Table""? True/False: " & $bReturn)
+	MsgBox($MB_OK, "", "Does the Database contain a Table named ""tblNew_Table""? True/False: " & $bReturn)
 
 	; Check if the Database contains a Table name "Fake_Table"
 	$bReturn = _LOBase_TableExists($oConnection, "Fake_Table")

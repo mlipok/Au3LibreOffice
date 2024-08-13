@@ -38,7 +38,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Table to the Database.
-	$oTable = _LOBase_TableAdd($oConnection, "New_Table", "Col1")
+	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Column to the Table.
@@ -49,7 +49,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended)
 
-	MsgBox($MB_OK, "", "I have added a Column to the table named ""New_Table"", and have opened the Table." & @CRLF & _
+	MsgBox($MB_OK, "", "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
 			"Press OK to close the window and document and delete the document.")
 
 	; Close Table UI.

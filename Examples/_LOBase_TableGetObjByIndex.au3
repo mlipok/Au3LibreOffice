@@ -40,11 +40,11 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a Table to the Database.
-	_LOBase_TableAdd($oConnection, "New_Table", "Col1")
+	_LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Add a second Table to the Database.
-	_LOBase_TableAdd($oConnection, "AutoIt_Table", "Col")
+	_LOBase_TableAdd($oConnection, "tblAutoIt_Table", "Col")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended)
 
 	; Retrieve a count of Tables.

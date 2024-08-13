@@ -105,6 +105,7 @@ _LOBase_DatabaseConnectionClose
 	- _LOBase_DocTableUIClose
 	- _LOBase_DocTableUIOpenByName
 	- _LOBase_DocTableUIOpenByObject
+	- _LOBase_DocTableUIVisible
 	- _LOBase_DocVisible
 
 - Base Helper functions
