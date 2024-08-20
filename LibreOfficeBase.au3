@@ -10,6 +10,7 @@
 ; Other includes for Base
 #include "LibreOfficeBase_Database.au3"
 #include "LibreOfficeBase_Doc.au3"
+#include "LibreOfficeBase_SQLStatement.au3"
 #include "LibreOfficeBase_Table.au3"
 
 ;~ _LOBase_ComError_UserFunction(ConsoleWrite)

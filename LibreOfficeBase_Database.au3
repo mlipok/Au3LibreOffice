@@ -103,7 +103,7 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oDBaseContext, $oServiceManager, $oDBConnection, $oHandler
+	Local $oServiceManager, $oDBConnection, $oHandler
 
 	If Not IsObj($oDBase) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sUser) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -115,7 +115,7 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 		If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$oHandler = $oServiceManager.createInstance("com.sun.star.task.InteractionHandler")
-		If Not IsObj($oDBaseContext) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($oHandler) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$oDBConnection = $oDBase.ConnectWithCompletion($oHandler)
 

@@ -23,6 +23,8 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOBase_ComError_UserFunction
+; _LOBase_DateStructCreate
+; _LOBase_DateStructModify
 ; _LOBase_PathConvert
 ; _LOBase_VersionGet
 ; ===============================================================================================================================
@@ -98,6 +100,236 @@ Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOBase_ComError_UserFunction
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_DateStructCreate
+; Description ...: Create a Date Structure for inserting a Date into certain other functions.
+; Syntax ........: _LOBase_DateStructCreate([$iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
+; Parameters ....: $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Set to 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Set to 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, in integer format. Min 0, Max 999,999,999.
+;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
+; Return values .: Success: Structure.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iYear not an Integer.
+;                  @Error 1 @Extended 2 Return 0 = $iYear not 4 digits long.
+;                  @Error 1 @Extended 3 Return 0 = $iMonth not an Integer, less than 0, or greater than 12.
+;                  @Error 1 @Extended 4 Return 0 = $iDay not an Integer, less than 0, or greater than 31.
+;                  @Error 1 @Extended 5 Return 0 = $iHours not an Integer, less than 0, or greater than 23.
+;                  @Error 1 @Extended 6 Return 0 = $iMinutes not an Integer, less than 0, or greater than 59.
+;                  @Error 1 @Extended 7 Return 0 = $iSeconds not an Integer, less than 0, or greater than 59.
+;                  @Error 1 @Extended 8 Return 0 = $iNanoSeconds not an Integer, less than 0, or greater than 999999999.
+;                  @Error 1 @Extended 9 Return 0 = $bIsUTC not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.util.DateTime" Object.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Structure = Success. Successfully created the Date/Time Structure, Returning its Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Calling a value with Null keyword will auto fill the value with the current value, such as current hour, etc.
+; Related .......: _LOBase_DateStructModify
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHours = Null, $iMinutes = Null, $iSeconds = Null, $iNanoSeconds = Null, $bIsUTC = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tDateStruct
+
+	$tDateStruct = __LOBase_CreateStruct("com.sun.star.util.DateTime")
+	If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If ($iYear <> Null) Then
+		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tDateStruct.Year = $iYear
+	Else
+		$tDateStruct.Year = @YEAR
+	EndIf
+
+	If ($iMonth <> Null) Then
+		If Not __LOBase_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tDateStruct.Month = $iMonth
+	Else
+		$tDateStruct.Month = @MON
+	EndIf
+
+	If ($iDay <> Null) Then
+		If Not __LOBase_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$tDateStruct.Day = $iDay
+	Else
+		$tDateStruct.Day = @MDAY
+	EndIf
+
+	If ($iHours <> Null) Then
+		If Not __LOBase_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$tDateStruct.Hours = $iHours
+	Else
+		$tDateStruct.Hours = @HOUR
+	EndIf
+
+	If ($iMinutes <> Null) Then
+		If Not __LOBase_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$tDateStruct.Minutes = $iMinutes
+	Else
+		$tDateStruct.Minutes = @MIN
+	EndIf
+
+	If ($iSeconds <> Null) Then
+		If Not __LOBase_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$tDateStruct.Seconds = $iSeconds
+	Else
+		$tDateStruct.Seconds = @SEC
+	EndIf
+
+	If ($iNanoSeconds <> Null) Then
+		If Not __LOBase_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$tDateStruct.NanoSeconds = $iNanoSeconds
+	Else
+		$tDateStruct.NanoSeconds = 0
+	EndIf
+
+	If ($bIsUTC <> Null) Then
+		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOBase_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$tDateStruct.IsUTC = $bIsUTC
+	Else
+		If __LOBase_VersionCheck(4.1) Then $tDateStruct.IsUTC = False
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $tDateStruct)
+EndFunc   ;==>_LOBase_DateStructCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_DateStructModify
+; Description ...: Set or retrieve Date Structure settings.
+; Syntax ........: _LOBase_DateStructModify(ByRef $tDateStruct[, $iYear = Null[, $iMonth = Null[, $iDay = Null[, $iHours = Null[, $iMinutes = Null[, $iSeconds = Null[, $iNanoSeconds = Null[, $bIsUTC = Null]]]]]]]])
+; Parameters ....: $tDateStruct         - [in/out] a dll struct value. The Date Structure to modify, returned from a _LOBase_DateStructCreate, or setting retrieval function. Structure will be directly modified.
+;                  $iYear               - [optional] an integer value. Default is Null. The Year, in 4 digit integer format.
+;                  $iMonth              - [optional] an integer value (0-12). Default is Null. The Month, in 2 digit integer format. Set to 0 for Void date.
+;                  $iDay                - [optional] an integer value (0-31). Default is Null. The Day, in 2 digit integer format. Set to 0 for Void date.
+;                  $iHours              - [optional] an integer value (0-23). Default is Null. The Hour, in 2 digit integer format.
+;                  $iMinutes            - [optional] an integer value (0-59). Default is Null. Minutes, in 2 digit integer format.
+;                  $iSeconds            - [optional] an integer value (0-59). Default is Null. Seconds, in 2 digit integer format.
+;                  $iNanoSeconds        - [optional] an integer value (0-999,999,999). Default is Null. Nano-Second, in integer format.
+;                  $bIsUTC              - [optional] a boolean value. Default is Null. If true: time zone is UTC Else false: unknown time zone. Libre Office version 4.1 and up.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $tDateStruct not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iYear not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iYear not 4 digits long.
+;                  @Error 1 @Extended 4 Return 0 = $iMonth not an Integer, less than 0, or greater than 12.
+;                  @Error 1 @Extended 5 Return 0 = $iDay not an Integer, less than 0, or greater than 31.
+;                  @Error 1 @Extended 6 Return 0 = $iHours not an Integer, less than 0, or greater than 23.
+;                  @Error 1 @Extended 7 Return 0 = $iMinutes not an Integer, less than 0, or greater than 59.
+;                  @Error 1 @Extended 8 Return 0 = $iSeconds not an Integer, less than 0, or greater than 59.
+;                  @Error 1 @Extended 9 Return 0 = $iNanoSeconds not an Integer, less than 0, or greater than 999999999.
+;                  @Error 1 @Extended 10 Return 0 = $bIsUTC not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
+;                  |                               1 = Error setting $iYear
+;                  |                               2 = Error setting $iMonth
+;                  |                               4 = Error setting $iDay
+;                  |                               8 = Error setting $iHours
+;                  |                               16 = Error setting $iMinutes
+;                  |                               32 = Error setting $iSeconds
+;                  |                               64 = Error setting $iNanoSeconds
+;                  |                               128 = Error setting $bIsUTC
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 8 Element Array with values in order of function parameters. If current Libre Office version is less than 4.1, the Array will contain 7 elements, as $bIsUTC will be eliminated.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOBase_DateStructCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Null, $iDay = Null, $iHours = Null, $iMinutes = Null, $iSeconds = Null, $iNanoSeconds = Null, $bIsUTC = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avMod[7]
+
+	If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOBase_VarsAreNull($iYear, $iMonth, $iDay, $iHours, $iMinutes, $iSeconds, $iNanoSeconds, $bIsUTC) Then
+		If __LOBase_VersionCheck(4.1) Then
+			__LOBase_ArrayFill($avMod, $tDateStruct.Year(), $tDateStruct.Month(), $tDateStruct.Day(), $tDateStruct.Hours(), _
+					$tDateStruct.Minutes(), $tDateStruct.Seconds(), $tDateStruct.NanoSeconds(), $tDateStruct.IsUTC())
+		Else
+			__LOBase_ArrayFill($avMod, $tDateStruct.Year(), $tDateStruct.Month(), $tDateStruct.Day(), $tDateStruct.Hours(), _
+					$tDateStruct.Minutes(), $tDateStruct.Seconds(), $tDateStruct.NanoSeconds())
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avMod)
+	EndIf
+
+	If ($iYear <> Null) Then
+		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tDateStruct.Year = $iYear
+		$iError = ($tDateStruct.Year() = $iYear) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iMonth <> Null) Then
+		If Not __LOBase_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$tDateStruct.Month = $iMonth
+		$iError = ($tDateStruct.Month() = $iMonth) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iDay <> Null) Then
+		If Not __LOBase_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$tDateStruct.Day = $iDay
+		$iError = ($tDateStruct.Day() = $iDay) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($iHours <> Null) Then
+		If Not __LOBase_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$tDateStruct.Hours = $iHours
+		$iError = ($tDateStruct.Hours() = $iHours) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($iMinutes <> Null) Then
+		If Not __LOBase_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$tDateStruct.Minutes = $iMinutes
+		$iError = ($tDateStruct.Minutes() = $iMinutes) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($iSeconds <> Null) Then
+		If Not __LOBase_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$tDateStruct.Seconds = $iSeconds
+		$iError = ($tDateStruct.Seconds() = $iSeconds) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($iNanoSeconds <> Null) Then
+		If Not __LOBase_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$tDateStruct.NanoSeconds = $iNanoSeconds
+		$iError = ($tDateStruct.NanoSeconds() = $iNanoSeconds) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($bIsUTC <> Null) Then
+		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOBase_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$tDateStruct.IsUTC = $bIsUTC
+		$iError = ($tDateStruct.IsUTC() = $bIsUTC) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_DateStructModify
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_PathConvert

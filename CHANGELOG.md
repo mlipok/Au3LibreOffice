@@ -67,11 +67,20 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeBase_Doc.au3
 	- LibreOfficeBase_Helper.au3
 	- LibreOfficeBase_Internal.au3
+	- LibreOfficeBase_SQLStatement.au3
 	- LibreOfficeBase_Table.au3
 
 - Base Constants
+	- $LOB_DATA_SET_TYPE_*
 	- $LOB_DATA_TYPE_*
 	- $LOB_PATHCONV_*
+	- $LOB_RESULT_CURSOR_MOVE_*
+	- $LOB_RESULT_CURSOR_QUERY_*
+	- $LOB_RESULT_ROW_MOD_*
+	- $LOB_RESULT_ROW_QUERY_IS_ROW_*
+	- $LOB_RESULT_ROW_READ_*
+	- $LOB_RESULT_ROW_UPDATE_*
+	- $LOB_RESULT_TYPE_*
 
 - Base Database functions
 _LOBase_DatabaseConnectionClose
@@ -110,6 +119,8 @@ _LOBase_DatabaseConnectionClose
 
 - Base Helper functions
 	- _LOBase_ComError_UserFunction
+	- _LOBase_DateStructCreate
+	- _LOBase_DateStructModify
 	- _LOBase_PathConvert
 	- _LOBase_VersionGet
 
@@ -124,6 +135,19 @@ _LOBase_DatabaseConnectionClose
 	- __LOBase_SetPropertyValue
 	- __LOBase_VarsAreNull
 	- __LOBase_VersionCheck
+
+- Base SQL Statement functions
+	- _LOBase_SQLResultCursorMove
+	- _LOBase_SQLResultCursorQuery
+	- _LOBase_SQLResultRowModify
+	- _LOBase_SQLResultRowQuery
+	- _LOBase_SQLResultRowRead
+	- _LOBase_SQLResultRowRefresh
+	- _LOBase_SQLResultRowUpdate
+	- _LOBase_SQLStatementCreate
+	- _LOBase_SQLStatementExecuteQuery
+	- _LOBase_SQLStatementExecuteUpdate
+	- _LOBase_SQLStatementPreparedSetData
 
 - Base Table functions
 	- _LOBase_TableAdd

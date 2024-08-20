@@ -237,6 +237,37 @@ Func _LOBase_TableColAdd(ByRef $oTable, $sName, $iType, $sTypeName = "", $sDescr
 	$oColumn.Type = $iType
 	$oColumn.TypeName = $sTypeName
 	$oColumn.HelpText = $sDescription
+
+	Switch $iType
+
+		Case $LOB_DATA_TYPE_BOOLEAN
+			$oColumn.Precision = 1
+
+		Case $LOB_DATA_TYPE_TINYINT
+			$oColumn.Precision = 3
+
+		Case $LOB_DATA_TYPE_SMALLINT, $LOB_DATA_TYPE_FLOAT
+			$oColumn.Precision = 5
+
+		Case $LOB_DATA_TYPE_INTEGER
+			$oColumn.Precision = 10
+
+		Case $LOB_DATA_TYPE_REAL, $LOB_DATA_TYPE_DOUBLE
+			$oColumn.Precision = 17
+
+		Case $LOB_DATA_TYPE_BIGINT
+			$oColumn.Precision = 19
+
+		Case $LOB_DATA_TYPE_LONGVARBINARY, $LOB_DATA_TYPE_VARBINARY, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_BINARY, $LOB_DATA_TYPE_CHAR, _
+				$LOB_DATA_TYPE_VARCHAR, $LOB_DATA_TYPE_NVARCHAR, $LOB_DATA_TYPE_OTHER
+			$oColumn.Precision = 2147483647
+
+		Case $LOB_DATA_TYPE_NUMERIC, $LOB_DATA_TYPE_DECIMAL
+			$oColumn.Precision = 646456993
+
+	EndSwitch
+
+
 	$oColumns.appendByDescriptor($oColumn)
 
 	If Not $oColumns.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
