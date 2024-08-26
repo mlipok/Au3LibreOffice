@@ -64,7 +64,6 @@
 ; __LOCalc_TransparencyGradientConvert
 ; __LOCalc_TransparencyGradientNameInsert
 ; __LOCalc_UnitConvert
-; __LOCalc_VarsAreDefault
 ; __LOCalc_VarsAreNull
 ; __LOCalc_VersionCheck
 ; ===============================================================================================================================
@@ -3325,36 +3324,6 @@ Func __LOCalc_UnitConvert($nValue, $iReturnType)
 			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndSwitch
 EndFunc   ;==>__LOCalc_UnitConvert
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOCalc_VarsAreDefault
-; Description ...: Tests whether all input parameters are equal to Default keyword.
-; Syntax ........: __LOCalc_VarsAreDefault($vVar1[, $vVar2 = Default[, $vVar3 = Default[, $vVar4 = Default[, $vVar5 = Default[, $vVar6 = Default[, $vVar7 = Default[, $vVar8 = Default]]]]]]])
-; Parameters ....: $vVar1               - a variant value.
-;                  $vVar2               - [optional] a variant value. Default is Default.
-;                  $vVar3               - [optional] a variant value. Default is Default.
-;                  $vVar4               - [optional] a variant value. Default is Default.
-;                  $vVar5               - [optional] a variant value. Default is Default.
-;                  $vVar6               - [optional] a variant value. Default is Default.
-;                  $vVar7               - [optional] a variant value. Default is Default.
-;                  $vVar8               - [optional] a variant value. Default is Default.
-; Return values .: Success: Boolean
-;                  Failure: False
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = If All parameters are Equal to Default, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOCalc_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
-	Local $bAllDefault1, $bAllDefault2
-	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? (True) : (False)
-	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? (True) : (False)
-	Return ($bAllDefault1 And $bAllDefault2) ? (True) : (False)
-EndFunc   ;==>__LOCalc_VarsAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_VarsAreNull

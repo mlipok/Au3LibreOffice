@@ -491,7 +491,6 @@ _LOBase_DatabaseConnectionClose
 	- __LOCalc_TransparencyGradientConvert
 	- __LOCalc_TransparencyGradientNameInsert
 	- __LOCalc_UnitConvert
-	- __LOCalc_VarsAreDefault
 	- __LOCalc_VarsAreNull
 	- __LOCalc_VersionCheck
 - Page Style Functions and Examples
@@ -641,6 +640,10 @@ _LOBase_DatabaseConnectionClose
 - Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
 - __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
+
+### Removed
+
+- __LOCalc_VarsAreDefault
 
 > [!NOTE]
 > **LibreOfficeWriter**
