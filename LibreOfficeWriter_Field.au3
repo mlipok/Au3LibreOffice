@@ -1179,14 +1179,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCommentsModify
 ; Description ...: Set or Retrieve a Document Information Comments Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoCommentField[, $bIsFixed = Null[, $sComments = Null]])
-; Parameters ....: $oDocInfoCommentField  - [in/out] an object. A Doc Info Comments field Object from a previous _LOWriter_FieldDocInfoCommentsInsert, or _LOWriter_FieldsGetList function.
-;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $sComments             - [optional] a string value. Default is Null. The Comments text to display, note, $bIsFixed must be True for this to be displayed.
+; Syntax ........: _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoComment[, $bIsFixed = Null[, $sComments = Null]])
+; Parameters ....: $oDocInfoComment     - [in/out] an object. A Doc Info Comments field Object from a previous _LOWriter_FieldDocInfoCommentsInsert, or _LOWriter_FieldsGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $sComments           - [optional] a string value. Default is Null. The Comments text to display, note, $bIsFixed must be True for this to be displayed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoCommentField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoComment not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sComments not a String.
 ;                  --Property Setting Errors--
@@ -1204,33 +1204,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCommentsInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoCommentField, $bIsFixed = Null, $sComments = Null)
+Func _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoComment, $bIsFixed = Null, $sComments = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoCom[2]
 
-	If Not IsObj($oDocInfoCommentField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sComments) Then
-		__LOWriter_ArrayFill($avDocInfoCom, $oDocInfoCommentField.IsFixed(), $oDocInfoCommentField.Content())
+		__LOWriter_ArrayFill($avDocInfoCom, $oDocInfoComment.IsFixed(), $oDocInfoComment.Content())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoCom)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoCommentField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoCommentField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoComment.IsFixed = $bIsFixed
+		$iError = ($oDocInfoComment.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sComments <> Null) Then
 		If Not IsString($sComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoCommentField.Content = $sComments
-		$iError = ($oDocInfoCommentField.Content() = $sComments) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoComment.Content = $sComments
+		$iError = ($oDocInfoComment.Content() = $sComments) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoCommentField.IsFixed() = False) Then $oDocInfoCommentField.Update()
+	If ($oDocInfoComment.IsFixed() = False) Then $oDocInfoComment.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoCommentsModify
@@ -1302,14 +1302,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateAuthModify
 ; Description ...: Set or Retrieve a Document Information Create Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
-; Parameters ....: $oDocInfoCreateAuthField  - [in/out] an object. A Created By Author field Object from a previous _LOWriter_FieldDocInfoCreateAuthInsert or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed                 - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $sAuthor                  - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
+; Syntax ........: _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuth[, $bIsFixed = Null[, $sAuthor = Null]])
+; Parameters ....: $oDocInfoCreateAuth  - [in/out] an object. A Created By Author field Object from a previous _LOWriter_FieldDocInfoCreateAuthInsert or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $sAuthor             - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoCreateAuthField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoCreateAuth not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
@@ -1327,33 +1327,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuthField, $bIsFixed = Null, $sAuthor = Null)
+Func _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuth, $bIsFixed = Null, $sAuthor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	If Not IsObj($oDocInfoCreateAuthField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoCreateAuth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
-		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoCreateAuthField.IsFixed(), $oDocInfoCreateAuthField.Author())
+		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoCreateAuth.IsFixed(), $oDocInfoCreateAuth.Author())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoCreateAuthField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoCreateAuthField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoCreateAuth.IsFixed = $bIsFixed
+		$iError = ($oDocInfoCreateAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoCreateAuthField.Author = $sAuthor
-		$iError = ($oDocInfoCreateAuthField.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoCreateAuth.Author = $sAuthor
+		$iError = ($oDocInfoCreateAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoCreateAuthField.IsFixed() = False) Then $oDocInfoCreateAuthField.Update()
+	If ($oDocInfoCreateAuth.IsFixed() = False) Then $oDocInfoCreateAuth.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoCreateAuthModify
@@ -1423,16 +1423,16 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoCreateDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Create Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCreateDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
-; Parameters ....: $oDoc                     - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oDocInfoCreateDtTmField  - [in/out] an object. A Created at Date/Time field Object from a previous _LOWriter_FieldDocInfoCreateDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed                 - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey           - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+; Syntax ........: _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCreateDtTm[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oDocInfoCreateDtTm  - [in/out] an object. A Created at Date/Time field Object from a previous _LOWriter_FieldDocInfoCreateDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oDocInfoCreateDtTmField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oDocInfoCreateDtTm not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $iDateFormatKey not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iDateFormatKey not found in document.
@@ -1451,7 +1451,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCreateDtTmField, $bIsFixed = Null, $iDateFormatKey = Null)
+Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCreateDtTm, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1459,33 +1459,33 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 	Local $avDocInfoCrtDate[2]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oDocInfoCreateDtTmField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDocInfoCreateDtTm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
 		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000 from
 		; the value.
-		$iNumberFormat = $oDocInfoCreateDtTmField.NumberFormat()
+		$iNumberFormat = $oDocInfoCreateDtTm.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
-		__LOWriter_ArrayFill($avDocInfoCrtDate, $oDocInfoCreateDtTmField.IsFixed(), $iNumberFormat)
+		__LOWriter_ArrayFill($avDocInfoCrtDate, $oDocInfoCreateDtTm.IsFixed(), $iNumberFormat)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoCrtDate)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoCreateDtTmField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoCreateDtTmField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoCreateDtTm.IsFixed = $bIsFixed
+		$iError = ($oDocInfoCreateDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$oDocInfoCreateDtTmField.NumberFormat = $iDateFormatKey
-		$iError = ($oDocInfoCreateDtTmField.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoCreateDtTm.NumberFormat = $iDateFormatKey
+		$iError = ($oDocInfoCreateDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoCreateDtTmField.IsFixed() = False) Then $oDocInfoCreateDtTmField.Update()
+	If ($oDocInfoCreateDtTm.IsFixed() = False) Then $oDocInfoCreateDtTm.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoCreateDateTimeModify
@@ -1555,14 +1555,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoEditTimeModify
 ; Description ...: Set or Retrieve a Document Information Total Editing Time Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTimeField[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
-; Parameters ....: $oDocInfoEditTimeField - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iTimeFormatKey        - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+; Syntax ........: _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime[, $bIsFixed = Null[, $iTimeFormatKey = Null]])
+; Parameters ....: $oDocInfoEditTime    - [in/out] an object. A Doc Info Total Editing Time field Object from a previous _LOWriter_FieldDocInfoEditTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $iTimeFormatKey      - [optional] an integer value. Default is Null. A Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoEditTimeField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoEditTime not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $iTimeFormatKey not an Integer.
 ;                  @Error 1 @Extended 4 Return 0 = $iTimeFormatKey not found in document.
@@ -1581,40 +1581,40 @@ EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTimeField, $bIsFixed = Null, $iTimeFormatKey = Null)
+Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime, $bIsFixed = Null, $iTimeFormatKey = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0, $iNumberFormat
 	Local $avDocInfoEditTm[2]
 
-	If Not IsObj($oDocInfoEditTimeField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoEditTime) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iTimeFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
 		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
 		; from the value.
-		$iNumberFormat = $oDocInfoEditTimeField.NumberFormat()
+		$iNumberFormat = $oDocInfoEditTime.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
-		__LOWriter_ArrayFill($avDocInfoEditTm, $oDocInfoEditTimeField.IsFixed(), $iNumberFormat)
+		__LOWriter_ArrayFill($avDocInfoEditTm, $oDocInfoEditTime.IsFixed(), $iNumberFormat)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoEditTm)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoEditTimeField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoEditTimeField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoEditTime.IsFixed = $bIsFixed
+		$iError = ($oDocInfoEditTime.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iTimeFormatKey <> Null) Then
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not IsInt($iTimeFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		$oDocInfoEditTimeField.NumberFormat = $iTimeFormatKey
-		$iError = ($oDocInfoEditTimeField.NumberFormat() = $iTimeFormatKey) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoEditTime.NumberFormat = $iTimeFormatKey
+		$iError = ($oDocInfoEditTime.NumberFormat() = $iTimeFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoEditTimeField.IsFixed() = False) Then $oDocInfoEditTimeField.Update()
+	If ($oDocInfoEditTime.IsFixed() = False) Then $oDocInfoEditTime.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoEditTimeModify
@@ -1686,14 +1686,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoKeywordsModify
 ; Description ...: Set or Retrieve a Document Information Keywords Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeywordField[, $bIsFixed = Null[, $sKeywords = Null]])
-; Parameters ....: $oDocInfoKeywordField  - [in/out] an object. A Doc Info Keywords field Object from a previous _LOWriter_FieldDocInfoKeywordsInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $sKeywords             - [optional] a string value. Default is Null. The Keywords text to display, note, $bIsFixed must be True for this to be displayed.
+; Syntax ........: _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeyword[, $bIsFixed = Null[, $sKeywords = Null]])
+; Parameters ....: $oDocInfoKeyword     - [in/out] an object. A Doc Info Keywords field Object from a previous _LOWriter_FieldDocInfoKeywordsInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $sKeywords           - [optional] a string value. Default is Null. The Keywords text to display, note, $bIsFixed must be True for this to be displayed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoKeywordField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoKeyword not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sKeywords not a String.
 ;                  --Property Setting Errors--
@@ -1711,33 +1711,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeywordField, $bIsFixed = Null, $sKeywords = Null)
+Func _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeyword, $bIsFixed = Null, $sKeywords = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoKyWrd[2]
 
-	If Not IsObj($oDocInfoKeywordField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoKeyword) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sKeywords) Then
-		__LOWriter_ArrayFill($avDocInfoKyWrd, $oDocInfoKeywordField.IsFixed(), $oDocInfoKeywordField.Content())
+		__LOWriter_ArrayFill($avDocInfoKyWrd, $oDocInfoKeyword.IsFixed(), $oDocInfoKeyword.Content())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoKyWrd)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoKeywordField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoKeywordField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoKeyword.IsFixed = $bIsFixed
+		$iError = ($oDocInfoKeyword.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sKeywords <> Null) Then
 		If Not IsString($sKeywords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoKeywordField.Content = $sKeywords
-		$iError = ($oDocInfoKeywordField.Content() = $sKeywords) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoKeyword.Content = $sKeywords
+		$iError = ($oDocInfoKeyword.Content() = $sKeywords) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoKeywordField.IsFixed() = False) Then $oDocInfoKeywordField.Update()
+	If ($oDocInfoKeyword.IsFixed() = False) Then $oDocInfoKeyword.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoKeywordsModify
@@ -1809,14 +1809,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModAuthModify
 ; Description ...: Set or Retrieve a Document Information Modification Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
-; Parameters ....: $oDocInfoModAuthField  - [in/out] an object. A Modified By Author field Object from a previous _LOWriter_FieldDocInfoModAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $sAuthor               - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
+; Syntax ........: _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuth[, $bIsFixed = Null[, $sAuthor = Null]])
+; Parameters ....: $oDocInfoModAuth     - [in/out] an object. A Modified By Author field Object from a previous _LOWriter_FieldDocInfoModAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $sAuthor             - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoModAuthField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoModAuth not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
@@ -1834,33 +1834,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModAuthInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuthField, $bIsFixed = Null, $sAuthor = Null)
+Func _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuth, $bIsFixed = Null, $sAuthor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	If Not IsObj($oDocInfoModAuthField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoModAuth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
-		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoModAuthField.IsFixed(), $oDocInfoModAuthField.Author())
+		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoModAuth.IsFixed(), $oDocInfoModAuth.Author())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoModAuthField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoModAuthField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoModAuth.IsFixed = $bIsFixed
+		$iError = ($oDocInfoModAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoModAuthField.Author = $sAuthor
-		$iError = ($oDocInfoModAuthField.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoModAuth.Author = $sAuthor
+		$iError = ($oDocInfoModAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoModAuthField.IsFixed() = False) Then $oDocInfoModAuthField.Update()
+	If ($oDocInfoModAuth.IsFixed() = False) Then $oDocInfoModAuth.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoModAuthModify
@@ -1930,11 +1930,11 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoModDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Modification Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
-; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oDocInfoModDtTmField  - [in/out] an object. A Modified at Date/Time field Object from a previous _LOWriter_FieldDocInfoModDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed              - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey        - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+; Syntax ........: _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oDocInfoModDtTm     - [in/out] an object. A Modified at Date/Time field Object from a previous _LOWriter_FieldDocInfoModDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1958,7 +1958,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTmField, $bIsFixed = Null, $iDateFormatKey = Null)
+Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1966,33 +1966,33 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 	Local $avDocInfoModDate[2]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oDocInfoModDtTmField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDocInfoModDtTm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
 		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
 		; from the value.
-		$iNumberFormat = $oDocInfoModDtTmField.NumberFormat()
+		$iNumberFormat = $oDocInfoModDtTm.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
-		__LOWriter_ArrayFill($avDocInfoModDate, $oDocInfoModDtTmField.IsFixed(), $iNumberFormat)
+		__LOWriter_ArrayFill($avDocInfoModDate, $oDocInfoModDtTm.IsFixed(), $iNumberFormat)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModDate)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoModDtTmField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoModDtTmField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoModDtTm.IsFixed = $bIsFixed
+		$iError = ($oDocInfoModDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$oDocInfoModDtTmField.NumberFormat = $iDateFormatKey
-		$iError = ($oDocInfoModDtTmField.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoModDtTm.NumberFormat = $iDateFormatKey
+		$iError = ($oDocInfoModDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoModDtTmField.IsFixed() = False) Then $oDocInfoModDtTmField.Update()
+	If ($oDocInfoModDtTm.IsFixed() = False) Then $oDocInfoModDtTm.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoModDateTimeModify
@@ -2064,14 +2064,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintAuthModify
 ; Description ...: Set or Retrieve a Document Information Last Print Author Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuthField[, $bIsFixed = Null[, $sAuthor = Null]])
-; Parameters ....: $oDocInfoPrintAuthField  - [in/out] an object. A Printed By Author field Object from a previous _LOWriter_FieldDocInfoPrintAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed                - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $sAuthor                 - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
+; Syntax ........: _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuth[, $bIsFixed = Null[, $sAuthor = Null]])
+; Parameters ....: $oDocInfoPrintAuth   - [in/out] an object. A Printed By Author field Object from a previous _LOWriter_FieldDocInfoPrintAuthInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $sAuthor             - [optional] a string value. Default is Null. The Author's name, note, $bIsFixed must be set to True in order for this to remain as set.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoPrintAuthField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoPrintAuth not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sAuthor not a String.
 ;                  --Property Setting Errors--
@@ -2089,33 +2089,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuthField, $bIsFixed = Null, $sAuthor = Null)
+Func _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuth, $bIsFixed = Null, $sAuthor = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoModAuth[2]
 
-	If Not IsObj($oDocInfoPrintAuthField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoPrintAuth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
-		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoPrintAuthField.IsFixed(), $oDocInfoPrintAuthField.Author())
+		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoPrintAuth.IsFixed(), $oDocInfoPrintAuth.Author())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoPrintAuthField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoPrintAuthField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoPrintAuth.IsFixed = $bIsFixed
+		$iError = ($oDocInfoPrintAuth.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sAuthor <> Null) Then
 		If Not IsString($sAuthor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoPrintAuthField.Author = $sAuthor
-		$iError = ($oDocInfoPrintAuthField.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoPrintAuth.Author = $sAuthor
+		$iError = ($oDocInfoPrintAuth.Author() = $sAuthor) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoPrintAuthField.IsFixed() = False) Then $oDocInfoPrintAuthField.Update()
+	If ($oDocInfoPrintAuth.IsFixed() = False) Then $oDocInfoPrintAuth.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoPrintAuthModify
@@ -2185,16 +2185,16 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoPrintDateTimeModify
 ; Description ...: Set or Retrieve a Document Information Last Print Date/Time Field.
-; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrintDtTmField[, $bIsFixed = Null[, $iDateFormatKey = Null]])
-; Parameters ....: $oDoc                    - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oDocInfoPrintDtTmField  - [in/out] an object. A Printed at Date/Time field Object from a previous _LOWriter_FieldDocInfoPrintDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
-;                  $bIsFixed                - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
-;                  $iDateFormatKey          - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
+; Syntax ........: _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrintDtTm[, $bIsFixed = Null[, $iDateFormatKey = Null]])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oDocInfoPrintDtTm   - [in/out] an object. A Printed at Date/Time field Object from a previous _LOWriter_FieldDocInfoPrintDateTimeInsert, or _LOWriter_FieldsDocInfoGetList function.
+;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
+;                  $iDateFormatKey      - [optional] an integer value. Default is Null. A Date or Time Format Key returned from a previous _LOWriter_DateFormatKeyCreate or _LOWriter_DateFormatKeyList function.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oDocInfoPrintDtTmField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oDocInfoPrintDtTm not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 4 Return 0 = $iDateFormatKey not an Integer.
 ;                  @Error 1 @Extended 5 Return 0 = $iDateFormatKey not found in document.
@@ -2213,7 +2213,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrintDtTmField, $bIsFixed = Null, $iDateFormatKey = Null)
+Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrintDtTm, $bIsFixed = Null, $iDateFormatKey = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2221,33 +2221,33 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 	Local $avDocInfoPrntDate[2]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oDocInfoPrintDtTmField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsObj($oDocInfoPrintDtTm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iDateFormatKey) Then
 		; Libre Office Seems to insert its Number formats by adding 10,000 to the number, but if I insert that same value, it
 		; fails/causes the wrong format to be used, so, If the Number format is greater than or equal to 10,000, Minus 10,000
 		; from the value.
-		$iNumberFormat = $oDocInfoPrintDtTmField.NumberFormat()
+		$iNumberFormat = $oDocInfoPrintDtTm.NumberFormat()
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
-		__LOWriter_ArrayFill($avDocInfoPrntDate, $oDocInfoPrintDtTmField.IsFixed(), $iNumberFormat)
+		__LOWriter_ArrayFill($avDocInfoPrntDate, $oDocInfoPrintDtTm.IsFixed(), $iNumberFormat)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoPrntDate)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoPrintDtTmField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoPrintDtTmField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoPrintDtTm.IsFixed = $bIsFixed
+		$iError = ($oDocInfoPrintDtTm.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iDateFormatKey <> Null) Then
 		If Not IsInt($iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If Not _LOWriter_DateFormatKeyExists($oDoc, $iDateFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$oDocInfoPrintDtTmField.NumberFormat = $iDateFormatKey
-		$iError = ($oDocInfoPrintDtTmField.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoPrintDtTm.NumberFormat = $iDateFormatKey
+		$iError = ($oDocInfoPrintDtTm.NumberFormat() = $iDateFormatKey) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoPrintDtTmField.IsFixed() = False) Then $oDocInfoPrintDtTmField.Update()
+	If ($oDocInfoPrintDtTm.IsFixed() = False) Then $oDocInfoPrintDtTm.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoPrintDateTimeModify
@@ -2319,14 +2319,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoRevNumModify
 ; Description ...: Set or Retrieve a Document Information Revision Number Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNumField[, $bIsFixed = Null[, $iRevNum = Null]])
-; Parameters ....: $oDocInfoRevNumField - [in/out] an object. A Doc Info Revision Number field Object from a previous _LOWriter_FieldDocInfoRevNumInsert, or _LOWriter_FieldsDocInfoGetList function.
+; Syntax ........: _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNum[, $bIsFixed = Null[, $iRevNum = Null]])
+; Parameters ....: $oDocInfoRevNum      - [in/out] an object. A Doc Info Revision Number field Object from a previous _LOWriter_FieldDocInfoRevNumInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $iRevNum             - [optional] a Integer value. Default is Null. The Revision Number Integer to display, note, $bIsFixed must be True for this to be displayed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoRevNumField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoRevNum not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $iRevNum not an Integer.
 ;                  --Property Setting Errors--
@@ -2344,33 +2344,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoRevNumInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNumField, $bIsFixed = Null, $iRevNum = Null)
+Func _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNum, $bIsFixed = Null, $iRevNum = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoRev[2]
 
-	If Not IsObj($oDocInfoRevNumField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoRevNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iRevNum) Then
-		__LOWriter_ArrayFill($avDocInfoRev, $oDocInfoRevNumField.IsFixed(), $oDocInfoRevNumField.Revision())
+		__LOWriter_ArrayFill($avDocInfoRev, $oDocInfoRevNum.IsFixed(), $oDocInfoRevNum.Revision())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoRev)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoRevNumField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoRevNumField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoRevNum.IsFixed = $bIsFixed
+		$iError = ($oDocInfoRevNum.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($iRevNum <> Null) Then
 		If Not IsInt($iRevNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoRevNumField.Revision = $iRevNum
-		$iError = ($oDocInfoRevNumField.Revision() = $iRevNum) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoRevNum.Revision = $iRevNum
+		$iError = ($oDocInfoRevNum.Revision() = $iRevNum) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoRevNumField.IsFixed() = False) Then $oDocInfoRevNumField.Update()
+	If ($oDocInfoRevNum.IsFixed() = False) Then $oDocInfoRevNum.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoRevNumModify
@@ -2442,14 +2442,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoSubjectModify
 ; Description ...: Set or Retrieve a Document Information Subject Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSubField[, $bIsFixed = Null[, $sSubject = Null]])
-; Parameters ....: $oDocInfoSubField    - [in/out] an object. A Doc Info Subject field Object from a previous _LOWriter_FieldDocInfoSubjectInsert, or _LOWriter_FieldsDocInfoGetList function.
+; Syntax ........: _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSub[, $bIsFixed = Null[, $sSubject = Null]])
+; Parameters ....: $oDocInfoSub         - [in/out] an object. A Doc Info Subject field Object from a previous _LOWriter_FieldDocInfoSubjectInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sSubject            - [optional] a string value. Default is Null. The Subject text to display, note, $bIsFixed must be True for this to be displayed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoSubField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoSub not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sSubject not a String.
 ;                  --Property Setting Errors--
@@ -2467,33 +2467,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoSubjectInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSubField, $bIsFixed = Null, $sSubject = Null)
+Func _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSub, $bIsFixed = Null, $sSubject = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoSub[2]
 
-	If Not IsObj($oDocInfoSubField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoSub) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sSubject) Then
-		__LOWriter_ArrayFill($avDocInfoSub, $oDocInfoSubField.IsFixed(), $oDocInfoSubField.Content())
+		__LOWriter_ArrayFill($avDocInfoSub, $oDocInfoSub.IsFixed(), $oDocInfoSub.Content())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoSub)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoSubField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoSubField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoSub.IsFixed = $bIsFixed
+		$iError = ($oDocInfoSub.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sSubject <> Null) Then
 		If Not IsString($sSubject) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoSubField.Content = $sSubject
-		$iError = ($oDocInfoSubField.Content() = $sSubject) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoSub.Content = $sSubject
+		$iError = ($oDocInfoSub.Content() = $sSubject) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoSubField.IsFixed() = False) Then $oDocInfoSubField.Update()
+	If ($oDocInfoSub.IsFixed() = False) Then $oDocInfoSub.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoSubjectModify
@@ -2565,14 +2565,14 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleInsert
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldDocInfoTitleModify
 ; Description ...: Set or Retrieve a Document Information Title Field's settings.
-; Syntax ........: _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitleField[, $bIsFixed = Null[, $sTitle = Null]])
-; Parameters ....: $oDocInfoTitleField  - [in/out] an object. A Doc Info Title field Object from a previous _LOWriter_FieldDocInfoTitleInsert, or _LOWriter_FieldsDocInfoGetList function.
+; Syntax ........: _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitle[, $bIsFixed = Null[, $sTitle = Null]])
+; Parameters ....: $oDocInfoTitle       - [in/out] an object. A Doc Info Title field Object from a previous _LOWriter_FieldDocInfoTitleInsert, or _LOWriter_FieldsDocInfoGetList function.
 ;                  $bIsFixed            - [optional] a boolean value. Default is Null. If True, the value is static, that is, the value does not update if the source changes or all fields are updated.
 ;                  $sTitle              - [optional] a string value. Default is Null. The Title text to display, note, $bIsFixed must be True for this to be displayed.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDocInfoTitleField not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDocInfoTitle not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $bIsFixed not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sTitle not a String.
 ;                  --Property Setting Errors--
@@ -2590,33 +2590,33 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleInsert
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitleField, $bIsFixed = Null, $sTitle = Null)
+Func _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitle, $bIsFixed = Null, $sTitle = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $iError = 0
 	Local $avDocInfoTitle[2]
 
-	If Not IsObj($oDocInfoTitleField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDocInfoTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sTitle) Then
-		__LOWriter_ArrayFill($avDocInfoTitle, $oDocInfoTitleField.IsFixed(), $oDocInfoTitleField.Content())
+		__LOWriter_ArrayFill($avDocInfoTitle, $oDocInfoTitle.IsFixed(), $oDocInfoTitle.Content())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoTitle)
 	EndIf
 
 	If ($bIsFixed <> Null) Then
 		If Not IsBool($bIsFixed) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oDocInfoTitleField.IsFixed = $bIsFixed
-		$iError = ($oDocInfoTitleField.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
+		$oDocInfoTitle.IsFixed = $bIsFixed
+		$iError = ($oDocInfoTitle.IsFixed() = $bIsFixed) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($sTitle <> Null) Then
 		If Not IsString($sTitle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oDocInfoTitleField.Content = $sTitle
-		$iError = ($oDocInfoTitleField.Content() = $sTitle) ? ($iError) : (BitOR($iError, 2))
+		$oDocInfoTitle.Content = $sTitle
+		$iError = ($oDocInfoTitle.Content() = $sTitle) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oDocInfoTitleField.IsFixed() = False) Then $oDocInfoTitleField.Update()
+	If ($oDocInfoTitle.IsFixed() = False) Then $oDocInfoTitle.Update()
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
@@ -5728,8 +5728,8 @@ EndFunc   ;==>_LOWriter_FieldVarShowPageInsert
 ; Name ..........: _LOWriter_FieldVarShowPageModify
 ; Description ...: Set or Retrieve a Show Page Variable Field's settings.
 ; Syntax ........: _LOWriter_FieldVarShowPageModify(ByRef $oPageShowField[, $iNumFormat = Null])
-; Parameters ....: $oPageShowField        - [in/out] an object. A Show Page Variable field Object from a previous _LOWriter_FieldVarShowPageInsert, or _LOWriter_FieldsGetList function.
-;                  $iNumFormat            - [optional] an integer value (0-71). Default is Null. The numbering format to use for Show Page Variable numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
+; Parameters ....: $oPageShowField      - [in/out] an object. A Show Page Variable field Object from a previous _LOWriter_FieldVarShowPageInsert, or _LOWriter_FieldsGetList function.
+;                  $iNumFormat          - [optional] an integer value (0-71). Default is Null. The numbering format to use for Show Page Variable numbering. See Constants, $LOW_NUM_STYLE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Return values .: Success: 1 or Integer.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

@@ -2010,7 +2010,7 @@ EndFunc   ;==>__LOCalc_CommentLineStyleName
 ; Name ..........: __LOCalc_CreateStruct
 ; Description ...: Creates a Struct.
 ; Syntax ........: __LOCalc_CreateStruct($sStructName)
-; Parameters ....: $sStructName - a string value. Name of structure to create.
+; Parameters ....: $sStructName         - a string value. Name of structure to create.
 ; Return values .: Success: Structure.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2189,14 +2189,14 @@ EndFunc   ;==>__LOCalc_FieldTypeServices
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_FilterNameGet
 ; Description ...: Retrieves the correct L.O. Filtername for use in SaveAs and Export.
-; Syntax ........: __LOCalc_FilterNameGet(ByRef $sDocSavePath[, $bIncludeExportFilters = False])
-; Parameters ....: $sDocSavePath           - [in/out] a string value. Full path with extension.
-;                  $bIncludeExportFilters  - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
+; Syntax ........: __LOCalc_FilterNameGet(ByRef $sDocSavePath[, $bExportFilters = False])
+; Parameters ....: $sDocSavePath        - [in/out] a string value. Full path with extension.
+;                  $bExportFilters      - [optional] a boolean value. Default is False. If True, includes the FilterNames that can be used to Export only, in the search.
 ; Return values .: Success: String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $sDocSavePath is not a string.
-;                  @Error 1 @Extended 2 Return 0 = $bIncludeExportFilters not a Boolean.
+;                  @Error 1 @Extended 2 Return 0 = $bExportFilters not a Boolean.
 ;                  @Error 1 @Extended 3 Return 0 = $sDocSavePath is not a correct path or URL.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return String = Success. Returns required filtername from "SaveAs" FilterNames.
@@ -2211,14 +2211,14 @@ EndFunc   ;==>__LOCalc_FieldTypeServices
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = False)
+Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 	Local $iLength, $iSlashLocation, $iDotLocation
 	Local Const $STR_NOCASESENSE = 0, $STR_STRIPALL = 8
 	Local $sFileExtension, $sFilterName
 	Local $msSaveAsFilters[], $msExportFilters[]
 
 	If Not IsString($sDocSavePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bIncludeExportFilters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bExportFilters) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$iLength = StringLen($sDocSavePath)
 
 	$msSaveAsFilters[".csv"] = "Text - txt - csv (StarCalc)"
@@ -2251,7 +2251,7 @@ Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = False)
 	$msSaveAsFilters[".xlw"] = "MS Excel 97"
 	$msSaveAsFilters[".xml"] = "OpenDocument Spreadsheet Flat XML"
 
-	If $bIncludeExportFilters Then
+	If $bExportFilters Then
 		$msExportFilters[".jfif"] = "calc_jpg_Export"
 		$msExportFilters[".jif"] = "calc_jpg_Export"
 		$msExportFilters[".jpe"] = "calc_jpg_Export"
@@ -2284,7 +2284,7 @@ Func __LOCalc_FilterNameGet(ByRef $sDocSavePath, $bIncludeExportFilters = False)
 
 	If IsString($sFilterName) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sFilterName)
 
-	If $bIncludeExportFilters Then $sFilterName = $msExportFilters[$sFileExtension]
+	If $bExportFilters Then $sFilterName = $msExportFilters[$sFileExtension]
 
 	If IsString($sFilterName) Then Return SetError($__LO_STATUS_SUCCESS, 2, $sFilterName)
 
@@ -3366,7 +3366,7 @@ EndFunc   ;==>__LOCalc_VarsAreNull
 ; Name ..........: __LOCalc_VersionCheck
 ; Description ...: Test if the currently installed LibreOffice version is high enough to support a certain function.
 ; Syntax ........: __LOCalc_VersionCheck($fRequiredVersion)
-; Parameters ....: $fRequiredVersion            - a floating point value. The version of LibreOffice required.
+; Parameters ....: $fRequiredVersion    - a floating point value. The version of LibreOffice required.
 ; Return values .: Success: Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
