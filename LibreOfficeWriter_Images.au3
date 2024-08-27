@@ -1348,7 +1348,7 @@ EndFunc   ;==>_LOWriter_ImageModify
 ; Name ..........: _LOWriter_ImageOptions
 ; Description ...: Set or Retrieve Image Options.
 ; Syntax ........: _LOWriter_ImageOptions(ByRef $oImage[, $bProtectContent = Null[, $bProtectPos = Null[, $bProtectSize = Null[, $bPrint = Null]]]])
-; Parameters ....: $oImage           - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
+; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $bProtectContent     - [optional] a boolean value. Default is Null. If True, Prevents changes to the contents of the Image.
 ;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, Locks the position of the Image in the current document.
 ;                  $bProtectSize        - [optional] a boolean value. Default is Null. If True, Locks the size of the Image.
@@ -2173,7 +2173,7 @@ EndFunc   ;==>_LOWriter_ImageTypeSize
 ; Name ..........: _LOWriter_ImageWrap
 ; Description ...: Set or Retrieve Image Wrap and Spacing settings.
 ; Syntax ........: _LOWriter_ImageWrap(ByRef $oImage[, $iWrapType = Null[, $iLeft = Null[, $iRight = Null[, $iTop = Null[, $iBottom = Null]]]]])
-; Parameters ....: $oImage           - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
+; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iWrapType           - [optional] an integer value (0-5). Default is Null. The way to wrap text around the Image. See Constants, $LOW_WRAP_MODE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iLeft               - [optional] an integer value. Default is Null. The amount of space between the left edge of the Image and the text. Set in Micrometers.
 ;                  $iRight              - [optional] an integer value. Default is Null. The amount of space between the Right edge of the Image and the text. Set in Micrometers.

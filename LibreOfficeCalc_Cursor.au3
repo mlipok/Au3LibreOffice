@@ -439,7 +439,7 @@ EndFunc   ;==>_LOCalc_TextCursorFontColor
 ; Name ..........: _LOCalc_TextCursorGetString
 ; Description ...: Retrieve the string of text currently selected by a cursor or contained in a paragraph object.
 ; Syntax ........: _LOCalc_TextCursorGetString(ByRef $oObj)
-; Parameters ....: $oObj             - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
+; Parameters ....: $oObj                - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

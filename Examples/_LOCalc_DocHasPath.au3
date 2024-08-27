@@ -23,7 +23,7 @@ Func Example()
 	; Create a unique file name
 	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".ods")
 
-	; Save The New Blank Doc To Desktop Directory.
+	; Save The New Blank Doc To Temp Directory.
 	$sPath = _LOCalc_DocSaveAs($oDoc, $sSavePath, "", True)
 	If @error Then _ERROR($oDoc, "Failed to save the Calc Document. Error:" & @error & " Extended:" & @extended)
 

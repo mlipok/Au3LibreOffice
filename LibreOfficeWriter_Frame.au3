@@ -1443,7 +1443,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ; Name ..........: _LOWriter_FramesGetNames
 ; Description ...: List the names of all frames contained in a document.
 ; Syntax ........: _LOWriter_FramesGetNames(ByRef $oDoc[, $bSearchShapes = False])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSearchShapes       - [optional] a boolean value. Default is False. If True, function searches and adds any Frames listed as "Shapes" in the document to the array of Frame names. See remarks.
 ; Return values .: Success: Array of Strings.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -2465,8 +2465,8 @@ EndFunc   ;==>_LOWriter_FrameStyleColumnSize
 ; Name ..........: _LOWriter_FrameStyleCreate
 ; Description ...: Create a new Frame Style in a Document.
 ; Syntax ........: _LOWriter_FrameStyleCreate(ByRef $oDoc, $sFrameStyle)
-; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFrameStyle           - a string value. The Name of the New Frame Style to Create.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sFrameStyle         - a string value. The Name of the New Frame Style to Create.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2578,7 +2578,7 @@ EndFunc   ;==>_LOWriter_FrameStyleDelete
 ; Description ...: Check whether a Document contains a specific Frame Style by name.
 ; Syntax ........: _LOWriter_FrameStyleExists(ByRef $oDoc, $sFrameStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFrameStyle           - a string value. The Frame Style Name to search for.
+;                  $sFrameStyle         - a string value. The Frame Style Name to search for.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2608,8 +2608,8 @@ EndFunc   ;==>_LOWriter_FrameStyleExists
 ; Name ..........: _LOWriter_FrameStyleGetObj
 ; Description ...: Retrieve a Frame Style Object for use with other Frame Style functions.
 ; Syntax ........: _LOWriter_FrameStyleGetObj(ByRef $oDoc, $sFrameStyle)
-; Parameters ....: $oDoc                  - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFrameStyle           - a string value. The Frame Style name to retrieve the Object for.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sFrameStyle         - a string value. The Frame Style name to retrieve the Object for.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2847,9 +2847,9 @@ EndFunc   ;==>_LOWriter_FrameStyleOrganizer
 ; Name ..........: _LOWriter_FrameStyleSet
 ; Description ...: Set a Frame to a certain Frame style.
 ; Syntax ........: _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
-; Parameters ....: $oDoc                 - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oFrameObj            - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
-;                  $sFrameStyle          - a string value. The Frame Style name to set the frame to.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oFrameObj           - [in/out] an object. A Frame object returned by a previous _LOWriter_FrameCreate, _LOWriter_FrameGetObjByName, or _LOWriter_FrameGetObjByCursor function.
+;                  $sFrameStyle         - a string value. The Frame Style name to set the frame to.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

@@ -311,8 +311,8 @@ EndFunc   ;==>_LOWriter_ParObjSectionsGet
 ; Name ..........: _LOWriter_ParObjSelect
 ; Description ...: Causes a Paragraph Object to be selected by the ViewCursor.
 ; Syntax ........: _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
-; Parameters ....: $oDoc             - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj             - [in/out] an object. A Paragraph Object returned from _LOWriter_ParObjCreateList, a Table or Frame Object, or a Text Cursor with data selected, can be used.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oObj                - [in/out] an object. A Paragraph Object returned from _LOWriter_ParObjCreateList, a Table or Frame Object, or a Text Cursor with data selected, can be used.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1573,9 +1573,9 @@ EndFunc   ;==>_LOWriter_ParStyleRotateScale
 ; Name ..........: _LOWriter_ParStyleSet
 ; Description ...: Set a Paragraph style for a paragraph by Cursor or paragraph Object.
 ; Syntax ........: _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oObj           - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
-;                  $sParStyle      - a string value. The Paragraph Style name to set the paragraph to.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object returned from _LOWriter_ParObjCreateList function.
+;                  $sParStyle           - a string value. The Paragraph Style name to set the paragraph to.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1613,9 +1613,9 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ; Name ..........: _LOWriter_ParStylesGetNames
 ; Description ...: Retrieve a list of all Paragraph Style names available for a document.
 ; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $bUserOnly      - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
-;                  $bAppliedOnly   - [optional] a boolean value. Default is False. If True only Applied Paragraph Styles are returned.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
+;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Paragraph Styles are returned.
 ; Return values .: Success: Integer or Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

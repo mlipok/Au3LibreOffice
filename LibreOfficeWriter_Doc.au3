@@ -390,7 +390,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksList
 ; Name ..........: _LOWriter_DocClose
 ; Description ...: Close an existing Writer Document, returning its save path if applicable.
 ; Syntax ........: _LOWriter_DocClose(ByRef $oDoc[, $bSaveChanges = True[, $sSaveName = ""[, $bDeliverOwnership = True]]])
-; Parameters ....: $oDoc                   - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSaveChanges        - [optional] a boolean value. Default is True. If true, saves changes if any were made before closing. See remarks.
 ;                  $sSaveName           - [optional] a string value. Default is "". The file name to save the file as, if the file hasn't been saved before. See Remarks.
 ;                  $bDeliverOwnership   - [optional] a boolean value. Default is True. If True, deliver ownership of the document Object from the script to LibreOffice, recommended is True.
@@ -829,8 +829,8 @@ EndFunc   ;==>_LOWriter_DocConvertTextToTable
 ; Name ..........: _LOWriter_DocCreate
 ; Description ...: Open a new Libre Office Writer Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOWriter_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: $bForceNew       - [optional] a boolean value. Default is True. If True, force opening a new Writer Document instead of checking for a usable blank.
-;                  $bHidden         - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Parameters ....: $bForceNew           - [optional] a boolean value. Default is True. If True, force opening a new Writer Document instead of checking for a usable blank.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -941,8 +941,8 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
 		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$oText = __LOWriter_CursorGetText($oDoc, $oViewCursor)
-		If @error Or Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		$iCursorType = @extended
+		If @error Or Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		If __LOWriter_IntIsBetween($iCursorType, $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_HEADER_FOOTER) Then
 			$oCursor = $oText.createTextCursorByRange($oViewCursor)
@@ -1250,12 +1250,12 @@ EndFunc   ;==>_LOWriter_DocExecuteDispatch
 ; Name ..........: _LOWriter_DocExport
 ; Description ...: Export a Document with the specified file name to the path specified, with any parameters used.
 ; Syntax ........: _LOWriter_DocExport(ByRef $oDoc, $sFilePath[, $bSamePath = False[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFilePath      - a string value. Full path to save the document to, including Filename and extension. See Remarks.
-;                  $bSamePath      - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
-;                  $sFilterName    - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .odt extension is used instead, with the filter name of "writer8".
-;                  $bOverwrite     - [optional] a boolean value. Default is Null. If True, file will be overwritten.
-;                  $sPassword      - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension. See Remarks.
+;                  $bSamePath           - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
+;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .odt extension is used instead, with the filter name of "writer8".
+;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, file will be overwritten.
+;                  $sPassword           - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2195,7 +2195,7 @@ EndFunc   ;==>_LOWriter_DocGetPath
 ; Name ..........: _LOWriter_DocGetString
 ; Description ...: Retrieve the string of text currently selected or contained in a paragraph object.
 ; Syntax ........: _LOWriter_DocGetString(ByRef $oObj)
-; Parameters ....: $oObj             - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions with Data selected, or a Paragraph Object returned from _LOWriter_ParObjCreateList function.
+; Parameters ....: $oObj                - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions with Data selected, or a Paragraph Object returned from _LOWriter_ParObjCreateList function.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2232,7 +2232,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 ; Name ..........: _LOWriter_DocGetViewCursor
 ; Description ...: Retrieve the ViewCursor Object from a Document.
 ; Syntax ........: _LOWriter_DocGetViewCursor(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -2338,7 +2338,7 @@ EndFunc   ;==>_LOWriter_DocHasFrameName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -3933,7 +3933,7 @@ EndFunc   ;==>_LOWriter_DocReplaceAllInRange
 ; Name ..........: _LOWriter_DocSave
 ; Description ...: Save any changes made to a Document.
 ; Syntax ........: _LOWriter_DocSave(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

@@ -282,8 +282,8 @@ EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 ; Name ..........: _LOWriter_CharStyleCreate
 ; Description ...: Create a new Character Style in a Document.
 ; Syntax ........: _LOWriter_CharStyleCreate(ByRef $oDoc, $sCharStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sCharStyle     - a string value. The name of the new Character Style to create.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCharStyle          - a string value. The name of the new Character Style to create.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -446,8 +446,8 @@ EndFunc   ;==>_LOWriter_CharStyleEffect
 ; Name ..........: _LOWriter_CharStyleExists
 ; Description ...: Check whether a document contains a Character Style by Name.
 ; Syntax ........: _LOWriter_CharStyleExists(ByRef $oDoc, $sCharStyle)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sCharStyle     - a string value. The Character Style name to search for.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sCharStyle          - a string value. The Character Style name to search for.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

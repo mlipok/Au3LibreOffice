@@ -1246,8 +1246,8 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 
 	If IsObj($oCursor) Then
 		$oText = __LOWriter_CursorGetText($oDoc, $oCursor)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		$iCursorDataType = @extended
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		Switch $iCursorDataType
 			Case $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE
@@ -1419,7 +1419,7 @@ EndFunc   ;==>_LOWriter_TableMargin
 ; ===============================================================================================================================
 Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogether = Null, $sTableName = Null, $bSplit = Null, $bSplitRows = Null, $bRepeatHeading = Null, $iHeaderRows = Null)
 	Local $iError = 0
-	Local $oComError = ObjEvent("AutoIt.Error", "__LOWriter_InternalComErrorHandler")
+	Local $oComError = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	Local $avProperties[4]
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -1811,7 +1811,7 @@ EndFunc   ;==>_LOWriter_TableSetData
 ; Name ..........: _LOWriter_TablesGetNames
 ; Description ...: List the names of all tables contained in a document.
 ; Syntax ........: _LOWriter_TablesGetNames(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 1 or Array of Strings.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

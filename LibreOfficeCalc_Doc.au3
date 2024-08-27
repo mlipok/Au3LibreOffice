@@ -99,7 +99,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If $bSaveChanges is true and the document hasn't been saved yet, the document is saved to the desktop.
-;                  If $sSaveName is undefined, it is saved as an .odt document to the desktop, named Year-Month-Day_Hour-Minute-Second.ods. $sSaveName may be a name only without an extension, in which case the file will be saved in .ods format. Or you may define your own format by including an extension, such as "Test.xlsx"
+;                  If $sSaveName is undefined, it is saved as an .ods document to the desktop, named Year-Month-Day_Hour-Minute-Second.ods. $sSaveName may be a name only without an extension, in which case the file will be saved in .ods format. Or you may define your own format by including an extension, such as "Test.xlsx"
 ; Related .......: _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_DocSaveAs, _LOCalc_DocSave
 ; Link ..........:
 ; Example .......: Yes
@@ -379,8 +379,8 @@ EndFunc   ;==>_LOCalc_DocConnect
 ; Name ..........: _LOCalc_DocCreate
 ; Description ...: Open a new Libre Office Calc Document or Connect to an existing blank, unsaved, writable document.
 ; Syntax ........: _LOCalc_DocCreate([$bForceNew = True[, $bHidden = False]])
-; Parameters ....: $bForceNew       - [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
-;                  $bHidden         - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
+; Parameters ....: $bForceNew           - [optional] a boolean value. Default is True. If True, force opening a new Calc Document instead of checking for a usable blank.
+;                  $bHidden             - [optional] a boolean value. Default is False. If True opens the new document invisible or changes the existing document to invisible.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -567,12 +567,12 @@ EndFunc   ;==>_LOCalc_DocEnumPrintersAlt
 ; Name ..........: _LOCalc_DocExport
 ; Description ...: Export a Document with the specified file name to the path specified, with any parameters used.
 ; Syntax ........: _LOCalc_DocExport(ByRef $oDoc, $sFilePath[, $bSamePath = False[, $sFilterName = ""[, $bOverwrite = Null[, $sPassword = Null]]]])
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $sFilePath      - a string value. Full path to save the document to, including Filename and extension. See Remarks.
-;                  $bSamePath      - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
-;                  $sFilterName    - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .ods extension is used instead, with the filter name of "calc8".
-;                  $bOverwrite     - [optional] a boolean value. Default is Null. If True, file will be overwritten.
-;                  $sPassword      - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sFilePath           - a string value. Full path to save the document to, including Filename and extension. See Remarks.
+;                  $bSamePath           - [optional] a boolean value. Default is False. If True, uses the path of the current document to export to. See Remarks
+;                  $sFilterName         - [optional] a string value. Default is "". Filter name. If set to "" (blank string), Filter is chosen automatically based on the file extension. If no extension is present, or if not matched to the list of extensions in this UDF, the .ods extension is used instead, with the filter name of "calc8".
+;                  $bOverwrite          - [optional] a boolean value. Default is Null. If True, file will be overwritten.
+;                  $sPassword           - [optional] a string value. Default is Null. Password String to set for the document. (Not all file formats can have a Password set). "" (blank string) or Null = No Password.
 ; Return values .: Success: String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -994,15 +994,15 @@ EndFunc   ;==>_LOCalc_DocMinimize
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bReadOnly = Null, $sPassword = Null, $bLoadAsTemplate = Null, $sFilterName = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
 	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
 	Local $iError = 0
 	Local $oDoc, $oServiceManager, $oDesktop
 	Local $aoProperties[0]
 	Local $vProperty
 	Local $sFileURL
-
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
 
 	If Not IsString($sFilePath) Or Not FileExists($sFilePath) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$sFileURL = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN)
@@ -1407,7 +1407,7 @@ EndFunc   ;==>_LOCalc_DocRedoIsPossible
 ; Name ..........: _LOCalc_DocSave
 ; Description ...: Save any changes made to a Document.
 ; Syntax ........: _LOCalc_DocSave(ByRef $oDoc)
-; Parameters ....: $oDoc           - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1522,8 +1522,8 @@ EndFunc   ;==>_LOCalc_DocSaveAs
 ; Modified ......:
 ; Remarks .......: Data you desire to be copied must be selected first, see _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti.
 ;                  This function works essentially the same as Copy/ Ctrl+C, except it doesn't use your clipboard.
-;				   The Object returned is used in _LOCalc_DocSelectionPaste to insert the data again.
-;				   Data copied can be inserted into the same or another document.
+;                  The Object returned is used in _LOCalc_DocSelectionPaste to insert the data again.
+;                  Data copied can be inserted into the same or another document.
 ; Related .......: _LOCalc_DocSelectionPaste, _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti
 ; Link ..........:
 ; Example .......: Yes
