@@ -437,7 +437,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 		WEnd
 	EndIf
 
-	If Not IsObj($aArgs[0]) Then Return $iError = BitOR($iError, 1)
+	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 	$oDoc = $oDesktop.loadComponentFromURL("private:factory/scalc", "_blank", $iURLFrameCreate, $aArgs)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 

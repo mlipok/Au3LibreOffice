@@ -520,6 +520,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNamedAdd
 - _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
+- _LOCalc_DocCreate would return if there was an error creating a property, instead of increasing the error count.
 
 ### Changed
 
@@ -679,6 +680,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocCreateTextCursor would throw an error when creating a Text Cursor at the ViewCursor position.
 - When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
 - Incorrect usage of ObjEvent.
+- _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- _LOWriter_DocCreate and _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
 
 ### Removed
 
