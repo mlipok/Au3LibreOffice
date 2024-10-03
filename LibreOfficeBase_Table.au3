@@ -32,6 +32,11 @@
 ; _LOBase_TableExists
 ; _LOBase_TableGetObjByIndex
 ; _LOBase_TableGetObjByName
+; _LOBase_TableIndexAdd
+; _LOBase_TableIndexDelete
+; _LOBase_TableIndexesCount
+; _LOBase_TableIndexesGetNames
+; _LOBase_TableIndexModify
 ; _LOBase_TableName
 ; _LOBase_TablePrimaryKey
 ; _LOBase_TablesGetCount
@@ -58,7 +63,8 @@
 ;                  @Error 1 @Extended 5 Return 0 = $iColType not an Integer, less than -16, or greater than 2014
 ;                  @Error 1 @Extended 6 Return 0 = $sColTypeName not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $sColDesc not a String.
-;                  @Error 1 @Extended 8 Return 0 = Table name called in $sName already exists.
+;                  @Error 1 @Extended 8 Return 0 = Table name called in $sName already used as a Table name.
+;                  @Error 1 @Extended 9 Return 0 = Table name called in $sName already used as a Query name.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Table Descriptor.
 ;                  @Error 2 @Extended 2 Return 0 = Failed to create a Column Descriptor.
@@ -104,6 +110,7 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	If $oTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If $oConnection.Queries.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 
 	$oTableDesc = $oTables.createDataDescriptor()
 	If Not IsObj($oTableDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -180,7 +187,7 @@ EndFunc   ;==>_LOBase_TableAdd
 ; Name ..........: _LOBase_TableColAdd
 ; Description ...: Add a new Column to a Table.
 ; Syntax ........: _LOBase_TableColAdd(ByRef $oTable, $sName, $iType[, $sTypeName = ""[, $sDescription = ""]])
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $sName               - a string value. The unique Column Name.
 ;                  $iType               - an integer value (-16-2014). The Column Type. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  $sTypeName           - [optional] a string value. Default is "". If the column type is a user-defined type, then a fully-qualified type name will be entered here.
@@ -392,7 +399,7 @@ EndFunc   ;==>_LOBase_TableColDefinition
 ; Name ..........: _LOBase_TableColDelete
 ; Description ...: Delete a Column from a Table.
 ; Syntax ........: _LOBase_TableColDelete(ByRef $oTable, ByRef $oColumn)
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $oColumn             - [in/out] an object. A Column object returned by a previous _LOBase_TableColGetObjByIndex or _LOBase_TableColGetObjByName function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -438,7 +445,7 @@ EndFunc   ;==>_LOBase_TableColDelete
 ; Name ..........: _LOBase_TableColGetObjByIndex
 ; Description ...: Retrieve a Table Column's Object by Index.
 ; Syntax ........: _LOBase_TableColGetObjByIndex(ByRef $oTable, $iIndex)
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $iIndex              - an integer value. The Index of the Column to retrieve the Column for. 0 Based.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -480,7 +487,7 @@ EndFunc   ;==>_LOBase_TableColGetObjByIndex
 ; Name ..........: _LOBase_TableColGetObjByName
 ; Description ...: Retrieve a Table Column's Object by name.
 ; Syntax ........: _LOBase_TableColGetObjByName(ByRef $oTable, $sName)
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $sName               - a string value. The name of the Column to retrieve the Object for.
 ; Return values .: Success: Object
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -524,7 +531,7 @@ EndFunc   ;==>_LOBase_TableColGetObjByName
 ; Name ..........: _LOBase_TableColProperties
 ; Description ...: Set or Retrieve Column properties.
 ; Syntax ........: _LOBase_TableColProperties(ByRef $oTable, ByRef $oColumn[, $iLength = Null[, $sDefaultVal = Null[, $bRequired = Null[, $iDecimalPlace = Null[, $bAutoValue = Null]]]]])
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $oColumn             - [in/out] an object. A Column object returned by a previous _LOBase_TableColGetObjByIndex or _LOBase_TableColGetObjByName function.
 ;                  $iLength             - [optional] an integer value. Default is Null. The maximum number of characters allowed to be entered.
 ;                  $sDefaultVal         - [optional] a string value. Default is Null. The Default value of the column. See remarks.
@@ -642,7 +649,7 @@ EndFunc   ;==>_LOBase_TableColProperties
 ; Name ..........: _LOBase_TableColsGetCount
 ; Description ...: Retrieve a count of the number of columns contained in a Table.
 ; Syntax ........: _LOBase_TableColsGetCount(ByRef $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -681,7 +688,7 @@ EndFunc   ;==>_LOBase_TableColsGetCount
 ; Name ..........: _LOBase_TableColsGetNames
 ; Description ...: Retrieve an array of Column names contained in a Table.
 ; Syntax ........: _LOBase_TableColsGetNames(ByRef $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -721,7 +728,7 @@ EndFunc   ;==>_LOBase_TableColsGetNames
 ; Description ...: Delete a Table from a Database.
 ; Syntax ........: _LOBase_TableDelete(ByRef $oConnection, ByRef $oTable)
 ; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
-;                  $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+;                  $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -817,7 +824,7 @@ EndFunc   ;==>_LOBase_TableExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_TableGetObjByIndex
-; Description ...: Retrieve a Table's Object by name.
+; Description ...: Retrieve a Table's Object by Index.
 ; Syntax ........: _LOBase_TableGetObjByIndex(ByRef $oConnection, $iTable)
 ; Parameters ....: $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
 ;                  $iTable              - an integer value. The Index value of the Table to retrieve. 0 Based.
@@ -912,10 +919,357 @@ Func _LOBase_TableGetObjByName(ByRef $oConnection, $sName)
 EndFunc   ;==>_LOBase_TableGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_TableIndexAdd
+; Description ...: Add an Index to a Table.
+; Syntax ........: _LOBase_TableIndexAdd(ByRef $oTable, $sName, $avColumns[, $bIsUnique = False])
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+;                  $sName               - a string value. The name of the new Index.
+;                  $avColumns           - an array of variants. A 2 column array of Column names and accompanying Boolean values. See Remarks.
+;                  $bIsUnique           - [optional] a boolean value. Default is False. If True the Indexed Column(s) can contain only unique entries.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Table does not have an Index with the name called in $sName.
+;                  @Error 1 @Extended 4 Return 0 = $avColumns is not an Array, or has 0 Elements, or does not contain 2 columns.
+;                  @Error 1 @Extended 5 Return 0 = $bIsUnique not a Boolean.
+;                  @Error 1 @Extended 6 Return ? = Column 1 (0th Column) of $avColumns contains a non-string. Returning problem Element number.
+;                  @Error 1 @Extended 7 Return ? = Column name called in Column 1 (0th Column) of $avColumns does not exist in Table. Returning problem Element number.
+;                  @Error 1 @Extended 8 Return ? = Column 2 (1) of $avColumns contains a non-Boolean value. Returning problem Element number.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create an Index Descriptor.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a Column Descriptor.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to append the new Index.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. New Index was successfully added to the Table.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Array called in $avColumns needs to be a 2 Column array, the Column name must be placed in the first (0th) column, and a Boolean value indicating whether the Column should should be sorted Ascending (True) or Descending (False) be found in the second (1st) column.
+;                  An example of creating an Array for $avColumns would be: Local $avColumns[1][2] = [["ColumnName", [True]]. This would sort the Column named "ColumnName" in Ascending order.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_TableIndexAdd(ByRef $oTable, $sName, $avColumns, $bIsUnique = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oIndexDesc, $oColumnDesc
+	Local Const $__UBOUND_COLUMNS = 2
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsArray($avColumns) Or (UBound($avColumns) < 1) Or (UBound($avColumns, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsBool($bIsUnique) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oIndexDesc = $oTable.Indexes.createDataDescriptor()
+	If Not IsObj($oIndexDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oIndexDesc.Name = $sName
+	$oIndexDesc.IsUnique = $bIsUnique
+
+	For $i = 0 To UBound($avColumns) - 1
+		If Not IsString($avColumns[$i][0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+		If Not $oTable.Columns.hasByName($avColumns[$i][0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i)
+		If Not IsBool($avColumns[$i][1]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, $i)
+
+		$oColumnDesc = $oIndexDesc.Columns.createDataDescriptor()
+		If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		$oColumnDesc.setName($avColumns[$i][0])
+		$oColumnDesc.IsAscending = $avColumns[$i][1]
+		$oIndexDesc.Columns.appendByDescriptor($oColumnDesc)
+		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+	Next
+
+	$oTable.Indexes.appendByDescriptor($oIndexDesc)
+	If Not $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_TableIndexAdd
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_TableIndexDelete
+; Description ...: Delete a Table Index by name.
+; Syntax ........: _LOBase_TableIndexDelete(ByRef $oTable, $sName)
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+;                  $sName               - a string value. The Index name to delete.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Table called in $oTable does not contain an Index with the name called in $sName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to delete the Index.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the Index.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_TableIndexDelete(ByRef $oTable, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oTable.Indexes.dropByName($sName)
+	If $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_TableIndexDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_TableIndexesCount
+; Description ...: Retrieve a count of Indexes for a Table.
+; Syntax ........: _LOBase_TableIndexesCount(ByRef $oTable)
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Index Count.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Indexes contained in the Table.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_TableIndexesCount(ByRef $oTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oTable.Indexes.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iCount)
+EndFunc   ;==>_LOBase_TableIndexesCount
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_TableIndexesGetNames
+; Description ...: Retrieve an array of Table Index names.
+; Syntax ........: _LOBase_TableIndexesGetNames(ByRef $oTable)
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Index names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an Array of Index names. @Extended is set to the number of Elements contained in the Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_TableIndexesGetNames(ByRef $oTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asIndex[0]
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$asIndex = $oTable.Indexes.ElementNames()
+	If Not IsArray($asIndex) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asIndex), $asIndex)
+EndFunc   ;==>_LOBase_TableIndexesGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_TableIndexModify
+; Description ...: Modify the columns used in an Index.
+; Syntax ........: _LOBase_TableIndexModify(ByRef $oTable, $sName[, $avColumns = Null[, $bIsUnique = Null]])
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+;                  $sName               - a string value. The Index name to modify.
+;                  $avColumns           - [optional] an array of variants. Default is Null. A 2 column array of Column names and accompanying Boolean values. See Remarks.
+;                  $bIsUnique           - [optional] a boolean value. Default is Null. If True the Indexed Column(s) can contain only unique entries.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Table called in $oTable does not contain an Index with the name called in $sName.
+;                  @Error 1 @Extended 4 Return 0 = $avColumns is not an Array, or has 0 Elements, or does not contain 2 columns.
+;                  @Error 1 @Extended 5 Return ? = Column 1 (0th Column) of $avColumns contains a non-string. Returning problem Element number.
+;                  @Error 1 @Extended 6 Return ? = Column name called in Column 1 (0th Column) of $avColumns does not exist in Table. Returning problem Element number.
+;                  @Error 1 @Extended 7 Return ? = Column 2 (1) of $avColumns contains a non-Boolean value. Returning problem Element number.
+;                  @Error 1 @Extended 8 Return 0 = $bIsUnique not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create an Index Descriptor.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a Column Descriptor.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Index's Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve a Column Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve array of Column names contained in the Index.
+;                  @Error 3 @Extended 4 Return 0 =Failed to delete old Index.
+;                  @Error 3 @Extended 5 Return 0 = Failed to add modified Index.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve new Index Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $avColumns
+;                  |                               2 = Error setting $bIsUnique
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+;
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Array called in $avColumns needs to be a 2 Column array, the Column name must be placed in the first (0th) column, and a Boolean value indicating whether the Column should should be sorted Ascending (True) or Descending (False) be found in the second (1st) column.
+;                  An example of creating an Array for $avColumns would be: Local $avColumns[1][2] = [["ColumnName", [True]]. This would sort the Column named "ColumnName" in Ascending order.
+;                  When retrieving the current settings, the returned array will be as described above for the $avColumns value.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  The error checking for newly set Columns or Ascending/Descending values doesn't check the content of the Index's columns vs those called in $avColumns, only the number of Columns.
+;                  According to LibreOffice SDK API, some databases ignore the Ascending/Descending settings. In my limited testing, embedded HSQLDB seems to always be set to Ascending.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUnique = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oColumn, $oColumnDesc, $oIndex, $oIndexDesc
+	Local $avSettings[2], $avCurrentColumns[0][2], $asIndexColumns[0]
+	Local $bDelete = True
+	Local Const $__STR_STRIPLEADING = 1, $__STR_STRIPTRAILING = 2, $__UBOUND_COLUMNS = 2
+	Local $iError = 0
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oIndex = $oTable.Indexes.getByName($sName)
+	If Not IsObj($oIndex) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $avCurrentColumns[$oIndex.Columns.Count()][2]
+
+	For $i = 0 To $oIndex.Columns.Count() - 1
+		$oColumn = $oIndex.Columns.getByIndex($i)
+		If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		$avCurrentColumns[$i][0] = $oColumn.Name()
+		$avCurrentColumns[$i][1] = $oColumn.IsAscending()
+		Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+	Next
+
+	If __LOBase_VarsAreNull($avColumns, $bIsUnique) Then
+		__LOBase_ArrayFill($avSettings, $avCurrentColumns, $oIndex.IsUnique())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSettings)
+	EndIf
+
+	If ($avColumns <> Null) Then
+		If Not IsArray($avColumns) Or (UBound($avColumns) < 1) Or (UBound($avColumns, $__UBOUND_COLUMNS) <> 2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		For $i = 0 To UBound($avColumns) - 1
+			If Not IsString($avColumns[$i][0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If Not $oTable.Columns.hasByName($avColumns[$i][0]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+			If Not IsBool($avColumns[$i][1]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i)
+
+			If $oIndex.Columns.hasByName($avColumns[$i][0]) Then
+
+				$oColumn = $oIndex.Columns.getByName($avColumns[$i][0])
+				If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+				If ($oColumn.IsAscending() <> $avColumns[$i][1]) Then
+					$oIndex.Columns.dropByName($avColumns[$i][0])
+
+					$oColumnDesc = $oIndex.Columns.createDataDescriptor()
+					If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+					$oColumnDesc.setName($avColumns[$i][0])
+					$oColumnDesc.IsAscending = $avColumns[$i][1]
+					$oIndex.Columns.appendByDescriptor($oColumnDesc)
+				EndIf
+
+			Else
+				$oColumnDesc = $oIndex.Columns.createDataDescriptor()
+				If Not IsObj($oColumnDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+				$oColumnDesc.setName($avColumns[$i][0])
+				$oColumnDesc.IsAscending = $avColumns[$i][1]
+				$oIndex.Columns.appendByDescriptor($oColumnDesc)
+
+			EndIf
+
+			Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		$asIndexColumns = $oIndex.Columns.ElementNames()
+		If Not IsArray($asIndexColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		For $i = 0 To UBound($asIndexColumns) - 1
+
+			For $k = 0 To UBound($avColumns) - 1
+				If (StringStripWS($avColumns[$k][0], ($__STR_STRIPLEADING + $__STR_STRIPTRAILING)) = $asIndexColumns[$i]) Then
+					$bDelete = False
+					ExitLoop
+				EndIf
+
+			Next
+			If $bDelete Then $oIndex.Columns.dropByName($asIndexColumns[$i])
+			$bDelete = True
+			Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+		$iError = ($oIndex.Columns.Count() = UBound($avColumns)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bIsUnique <> Null) Then
+		If Not IsBool($bIsUnique) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+		If ($oIndex.IsUnique() <> $bIsUnique) Then
+
+			$oIndexDesc = $oTable.Indexes.createDataDescriptor()
+			If Not IsObj($oIndexDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+			$oIndexDesc.Name = $sName
+			$oIndexDesc.IsUnique = $bIsUnique
+
+			For $i = 0 To $oIndex.Columns.Count() - 1
+				$oColumn = $oIndex.Columns.getByIndex($i)
+				If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+				$oIndexDesc.Columns.appendByDescriptor($oColumn)
+				Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
+			Next
+
+			$oTable.Indexes.dropByName($sName)
+
+			If $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+			$oTable.Indexes.appendByDescriptor($oIndexDesc)
+			If Not $oTable.Indexes.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+			$oIndex = $oTable.Indexes.getByName($sName)
+			If Not IsObj($oIndex) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+		EndIf
+		$iError = ($oIndex.IsUnique() = $bIsUnique) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOBase_TableIndexModify
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_TableName
 ; Description ...: Set or Retrieve the Table's name.
 ; Syntax ........: _LOBase_TableName(ByRef $oTable[, $sName = Null])
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $sName               - [optional] a string value. Default is Null. The new name to set the Table to. See Remarks.
 ; Return values .: Success: 1 or String
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -930,7 +1284,7 @@ EndFunc   ;==>_LOBase_TableGetObjByName
 ;                  @Error 0 @Extended 1 Return String = Success. $sName set to Null, returning current Table Name.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: This function does not check if the new name already exists.
+; Remarks .......: This function does not check if the new name already exists in Tables or Queries.
 ;                  According to LibreOffice SDK API IDL XRename Interface, It would seem some Database types don't support the renaming of Tables.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ; Related .......: _LOBase_TableExists
@@ -957,7 +1311,7 @@ EndFunc   ;==>_LOBase_TableName
 ; Name ..........: _LOBase_TablePrimaryKey
 ; Description ...: Set or Retrieve the primary key for a Table.
 ; Syntax ........: _LOBase_TablePrimaryKey(ByRef $oTable[, $aoPrimary = Null])
-; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $aoPrimary           - [optional] an array of objects. Default is Null. An array containing Column Objects (Returned from a previous _LOBase_TableColGetObjByIndex or _LOBase_TableColGetObjByName function).
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
