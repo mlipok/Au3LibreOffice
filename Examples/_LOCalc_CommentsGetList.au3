@@ -22,7 +22,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a comment to Cell B7
-	$oComment = _LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
+	_LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
 	If @error Then _ERROR($oDoc, "Failed to add a comment. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell A1
@@ -30,7 +30,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a comment to Cell A1
-	$oComment = _LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
+	_LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
 	If @error Then _ERROR($oDoc, "Failed to add a comment. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell E7
@@ -38,7 +38,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a comment to Cell E7
-	$oComment = _LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
+	_LOCalc_CommentAdd($oCell, "This is a Comment added by AutoIt! ")
 	If @error Then _ERROR($oDoc, "Failed to add a comment. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Comments contained in this sheet.

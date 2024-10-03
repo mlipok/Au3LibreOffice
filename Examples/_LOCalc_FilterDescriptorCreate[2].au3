@@ -53,22 +53,24 @@ Func Example()
 
 	; Create my first Filter Field, I will insert it directly into my Array.
 	; Make this Filter Field apply to Column A (0, because Columns are 0 based internally in Libre Office Calc.)
-	; Set Numeric to False, and my value to 0 to skip it, String = \d (any Number Value), Condition to "Contains" my value. I don't need to worry about Operator, because this is the first Field in my Array.)
+	; Set Numeric to False, and my value to 0 to skip it, String = \d (any Number Value), Condition to "Contains" my value. (I don't need to worry about Operator, because this is the first Field in my Array.)
 	$atFilterFields[0] = _LOCalc_FilterFieldCreate(0, False, 0, "\d", $LOC_FILTER_CONDITION_CONTAINS)
 	If @error Then _ERROR($oDoc, "Failed to create a Filter Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create my second Filter Field.
 	; Make this Filter Field apply to Column B (1)
 	; Set Numeric to False, and my value to 0 to skip it, Set String to "[A-Z]" to obtain any Captitals, Condition to "Contain" my value (0).
-	; Set Operator to OR, because I want to find either Cells containing Digits in COlumn A, or Capitals in Column B.
+	; Set Operator to OR, because I want to find either Cells containing Digits in Column A, or Capitals in Column B.
 	$atFilterFields[1] = _LOCalc_FilterFieldCreate(1, True, 0, "", $LOC_FILTER_CONDITION_CONTAINS, $LOC_FILTER_OPERATOR_OR)
 	If @error Then _ERROR($oDoc, "Failed to create a Filter Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Filter Descriptor.
 	; Use my Filter Fields Array I just created, Set Case Sensitive to True, Skip Duplicates to False, Use Regular Expressions = True, Headers = False,
-	; Orientation = Rows, Copy Output = True, and set Output to Cell D5
-	$oFilterDesc = _LOCalc_FilterDescriptorCreate($oCellRange, $atFilterFields, True, False, True, False, $LOC_FILTER_ORIENTATION_ROWS, True, $oCell)
+	; Copy Output = True, and set Output to Cell D5
+	$oFilterDesc = _LOCalc_FilterDescriptorCreate($oCellRange, $atFilterFields, True, False, True, False, True, $oCell)
 	If @error Then _ERROR($oDoc, "Failed to create a Filter Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+
+	MsgBox(0, "", "Press ok to filter the range.")
 
 	; Perform a Filter operation on Range A1 to B5.
 	_LOCalc_RangeFilter($oCellRange, $oFilterDesc)

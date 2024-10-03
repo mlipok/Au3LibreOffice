@@ -6,7 +6,6 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oCell
-	Local $iCellType
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -17,7 +16,7 @@ Func Example()
 	If @error Then _ERROR("Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the top left most cell, 0, 0, or A1.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 0, 0)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 0, 0)
 	If @error Then _ERROR("Failed to retrieve A1 Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set A1 Cell Value to 20
@@ -25,15 +24,15 @@ Func Example()
 	If @error Then _ERROR("Failed to Set A1 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the 1, 1,  or B2 Cell.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 1, 1)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 1, 1)
 	If @error Then _ERROR("Failed to retrieve B2 Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set B2 Cell text to "Equals"
-	_LOCalc_CellText($oCell, "Equals")
+	_LOCalc_CellString($oCell, "Equals")
 	If @error Then _ERROR("Failed to Set B2 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the 2, 2, or C3 Cell.
-	$oCell = _LOCalc_SheetGetCellByPosition($oSheet, 2, 2)
+	$oCell = _LOCalc_RangeGetCellByPosition($oSheet, 2, 2)
 	If @error Then _ERROR("Failed to retrieve C3 Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set C3 Cell formula to "=A1 * 2
