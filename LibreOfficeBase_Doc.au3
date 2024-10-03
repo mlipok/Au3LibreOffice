@@ -159,12 +159,12 @@ EndFunc   ;==>_LOBase_DocClose
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function does not open a connection to the Database, but retrieves an Object for the currently opened Document(s).
-;                  $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.ods Or file:///C:/file/Test.ods) of the document, or the full Title with extension, (i.e: Test.ods), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.ods, Test2.xlsx etc.).
+;                  $sFile can be either the full Path (Name and extension included; e.g: C:\file\Test.ods Or file:///C:/file/Test.ods) of the document, or the full Title with extension, (e.g: Test.ods), or a partial file path (e.g: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (e.g: test, would match Test1.ods, Test2.xlsx etc.).
 ;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]. each result is stored in a separate row;
-;                  Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
-;                  Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.xlsx
-;                  Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.xlsx
-;                  Row 2, Column 0 contain the Object variable for the next document. And so on. i.e. $aArray[1][0] = $oDoc2
+;                  Row 1, Column 0 contains the Object for that document. e.g. $aArray[0][0] = $oDoc
+;                  Row 1, Column 1 contains the Document's full title and extension. e.g. $aArray[0][1] = This Test File.xlsx
+;                  Row 1, Column 2 contains the document's full file path. e.g. $aArray[0][2] = C:\Folder1\Folder2\This Test File.xlsx
+;                  Row 2, Column 0 contains the Object for the next document. And so on. e.g. $aArray[1][0] = $oDoc2
 ; Related .......: _LOBase_DocOpen, _LOBase_DocClose, _LOBase_DocCreate
 ; Link ..........:
 ; Example .......: Yes
