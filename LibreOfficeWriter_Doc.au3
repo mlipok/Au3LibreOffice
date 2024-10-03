@@ -502,7 +502,7 @@ EndFunc   ;==>_LOWriter_DocClose
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (i.e: Test.odt), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.).
-;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]. each result is stored in a separate row;
+;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]). each result is stored in a separate row;
 ;                  -Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
 ;                  -Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.docx
 ;                  -Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.docx
