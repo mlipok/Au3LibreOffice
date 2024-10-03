@@ -347,7 +347,8 @@ Func _LOBase_DocCreate($bForceNew = True, $bHidden = False, $bWizard = False)
 		WEnd
 	EndIf
 
-	If Not IsObj($aArgs[0]) Then Return $iError = BitOR($iError, 1)
+	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
+
 	If $bWizard Then
 		$oDoc = $oDesktop.loadComponentFromURL("private:factory/sdatabase?Interactive", "_blank", $iURLFrameCreate, $aArgs)
 	Else
@@ -1030,7 +1031,7 @@ EndFunc   ;==>_LOBase_DocTableUIOpenByName
 ; Syntax ........: _LOBase_DocTableUIOpenByObject(ByRef $oDoc, ByRef $oConnection, ByRef $oTable[, $bEdit = False[, $bVisible = True]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOBase_DocOpen, _LOBase_DocConnect, or _LOBase_DocCreate function.
 ;                  $oConnection         - [in/out] an object. A Connection object returned by a previous _LOBase_DatabaseConnectionGet function.
-;                  $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
+;                  $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex, _LOBase_TableGetObjByName or _LOBase_TableAdd function.
 ;                  $bEdit               - [optional] a boolean value. Default is False. If True, the Table is opened in editing mode to add or remove columns. If False, the table is opened in data viewing mode, to modify Table Data.
 ;                  $bVisible            - [optional] a boolean value. Default is True. If True, the UI window will be visible.
 ; Return values .: Success: Object
