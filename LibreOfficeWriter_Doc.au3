@@ -501,12 +501,12 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 0 @Extended 6 Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (i.e: Test.odt), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.odt, Test2.docx etc.).
+; Remarks .......: $sFile can be either the full Path (Name and extension included; e.g: C:\file\Test.odt Or file:///C:/file/Test.odt) of the document, or the full Title with extension, (e.g: Test.odt), or a partial file path (e.g: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (e.g: test, would match Test1.odt, Test2.docx etc.).
 ;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]). each result is stored in a separate row;
-;                  -Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
-;                  -Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.docx
-;                  -Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.docx
-;                  -Row 2, Column 0 contain the Object variable for the next document. And so on. i.e. $aArray[1][0] = $oDoc2
+;                  -Row 1, Column 0 contains the Object for that document. e.g. $aArray[0][0] = $oDoc
+;                  -Row 1, Column 1 contains the Document's full title and extension. e.g. $aArray[0][1] = This Test File.docx
+;                  -Row 1, Column 2 contains the document's full file path. e.g. $aArray[0][2] = C:\Folder1\Folder2\This Test File.docx
+;                  -Row 2, Column 0 contains the Object for the next document. And so on. e.g. $aArray[1][0] = $oDoc2
 ; Related .......: _LOWriter_DocOpen, _LOWriter_DocClose, _LOWriter_DocCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -3099,7 +3099,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
-;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
+;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
@@ -4110,7 +4110,7 @@ EndFunc   ;==>_LOWriter_DocUndo
 ; Modified ......:
 ; Remarks .......: This begins an Undo Action Group, any functions and actions done after this function is called will be grouped together, and if undone, all actions will be undone together at once.
 ;                  _LOWriter_DocUndoActionEnd must be called after this function before this undo group will become available in the Undo Action list.
-;                  _LOWriter_DocUndoActionBegin can be nested, i.e. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOWriter_DocUndoActionEnd will appear.
+;                  _LOWriter_DocUndoActionBegin can be nested, e.g. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOWriter_DocUndoActionEnd will appear.
 ; Related .......: _LOWriter_DocUndoActionEnd
 ; Link ..........:
 ; Example .......: Yes
