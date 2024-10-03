@@ -14,7 +14,7 @@ Func Example()
 	#forceref $oCOM_Error
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then _ERROR("Error creating Service Manager Object")
+	If Not IsObj($oServiceManager) Then _ERROR("Error creating Service Manager Object" & " On Line: " & @ScriptLineNumber)
 
 	; Assign my function to a variable to pass to the ComError User Error.
 	$MyFunc = _FunctionForErrors
@@ -24,7 +24,7 @@ Func Example()
 	; the second function parameter is my first optional Parameter, a String, my second optional Parameter is an integer, my third
 	; optional parameter is a boolean, the fourth optional parameter is a String, and the fifth optional parameter  is an integer.
 	_LOBase_ComError_UserFunction($MyFunc, "My First Parameter", 05, False, "Another String", 100)
-	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I will now cause a COM Error, to demonstrate the function.")
 
@@ -33,7 +33,7 @@ Func Example()
 
 	; I will now set the function again, this time with less Parameters.
 	_LOBase_ComError_UserFunction($MyFunc, "My First Parameter", 2023, "I have only three Parameters now.")
-	If @error Then _ERROR("Error Assigning User COM Error Function. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error Assigning User COM Error Function. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I will cause another COM Error, to demonstrate the function.")
 
@@ -45,7 +45,7 @@ Func Example()
 	; Return the currently set User Function and any Parameters by calling the Default keyword in the first parameter.
 	$aReturn = _LOBase_ComError_UserFunction(Default) ; Since I set parameters, the return will be an Array.
 
-	If Not IsArray($aReturn) Then _ERROR("Error retrieving function Array. Error:" & @error & " Extended:" & @extended)
+	If Not IsArray($aReturn) Then _ERROR("Error retrieving function Array. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Array will be in order of function parameters. The function will be in the first (zeroth) element.
 	$ReturnedFunc = $aReturn[0]

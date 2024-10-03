@@ -10,11 +10,11 @@ Func Example()
 
 	; Retrieve the Database Object for the already included Database, "Bibliography", that comes with the LibreOffice installation.
 	$oDBase = _LOBase_DatabaseGetObjByURL("Bibliography")
-	If @error Then Return _ERROR("Failed to Retrieve the Database Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then Return _ERROR("Failed to Retrieve the Database Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the Database is Read Only.
 	$bReturn = _LOBase_DatabaseIsReadOnly($oDBase)
-	If @error Then Return _ERROR("Failed to Query Database for Read-Only status. Error:" & @error & " Extended:" & @extended)
+	If @error Then Return _ERROR("Failed to Query Database for Read-Only status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Is the Database ""Bibliography"", currently set to Read Only? True/False: " & $bReturn)
 

@@ -9,15 +9,15 @@ Func Example()
 
 	; Retrieve the current full Office version number and name.
 	$sVersionAndName = _LOBase_VersionGet(False, True)
-	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current full Office version number.
 	$sFullVersion = _LOBase_VersionGet()
-	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current simple Office version number.
 	$sSimpleVersion = _LOBase_VersionGet(True)
-	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to retrieve L.O. version information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Your current full Libre Office version, including the name is: " & $sVersionAndName & @CRLF & _
 			"Your current full Libre Office version is: " & $sFullVersion & @CRLF & _
