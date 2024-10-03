@@ -25,7 +25,7 @@ Func Example()
 	$oField = _LOWriter_FieldStatCountInsert($oDoc, $oViewCursor, $LOW_FIELD_COUNT_TYPE_WORDS, False, $LOW_NUM_STYLE_CHARS_LOWER_LETTER)
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Count Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Count Field settings.")
 
 	; Modify the Count Field settings. Set the Count type to $LOW_FIELD_COUNT_TYPE_PARAGRAPHS, set Numbering format to  $LOW_NUM_STYLE_ARABIC
 	_LOWriter_FieldStatCountModify($oDoc, $oField, $LOW_FIELD_COUNT_TYPE_PARAGRAPHS, $LOW_NUM_STYLE_ARABIC)
@@ -35,11 +35,11 @@ Func Example()
 	$avSettings = _LOWriter_FieldStatCountModify($oDoc, $oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Count Field's type is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Count Field's Numbering format type is, (see UDF Constants): " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

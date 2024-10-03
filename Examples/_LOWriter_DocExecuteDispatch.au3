@@ -55,14 +55,14 @@ Func Example()
 				_LOWriter_DocExecuteDispatch($oDoc, $sExecuteCommand)
 				If @error Then _ERROR($oDoc, "Failed to execute a dispatch command. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-				MsgBox($MB_OK, "Executed Command", "The command """ & $sExecuteCommand & """ was successfully performed.")
+				MsgBox($MB_OK + $MB_TOPMOST, Default, "The command """ & $sExecuteCommand & """ was successfully performed.")
 		EndSwitch
 	WEnd
 
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

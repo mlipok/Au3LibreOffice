@@ -31,7 +31,7 @@ Func Example()
 	$oField = _LOWriter_FieldCommentInsert($oDoc, $oViewCursor, False, "This is a note", "Daniel", $tDateStruct, "D.", "A Name", True)
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the comment Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the comment Field.")
 
 	; Create a new Date Structure, leaving all blank will create a Date Structure with today's date.
 	$tDateStruct = _LOWriter_DateStructCreate()
@@ -62,7 +62,7 @@ Func Example()
 		EndIf
 	Next
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Comment's content is: " & $avSettings[0] & @CRLF & _
 			"The Comment's Author is: " & $avSettings[1] & @CRLF & _
 			"The Comment's Creation date is: " & $sDateTime & @CRLF & _
@@ -70,7 +70,7 @@ Func Example()
 			"The Comment's Author's Name is: " & $avSettings[4] & @CRLF & _
 			"Is the Comment resolved? True/False: " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -79,7 +79,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

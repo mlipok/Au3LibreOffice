@@ -20,7 +20,7 @@ Func Example()
 	$asPageStyles = _LOCalc_PageStylesGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of page style names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now insert a list of available Page styles. There are " & @extended & " results.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now insert a list of available Page styles. There are " & @extended & " results.")
 
 	; Retrieve Cell A1
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A1")
@@ -48,7 +48,7 @@ Func Example()
 	$asPageStyles = _LOCalc_PageStylesGetNames($oDoc, False, True)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of page style names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now insert a list of used Page styles. There is " & @extended & " result.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now insert a list of used Page styles. There is " & @extended & " result.")
 
 	; Retrieve Cell B1
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B1")
@@ -88,7 +88,7 @@ Func Example()
 	_LOCalc_RangeColumnWidth($oColumn, True)
 	If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -97,7 +97,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -41,23 +41,23 @@ Func Example()
 	If IsObj($oResult) Then
 		$sResultString = _LOWriter_DocGetString($oResult)
 		If @error Then _ERROR($oDoc, "Failed to retrieve String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-		MsgBox($MB_OK, "", "The search was successful, I searched using similarity, and found the following word: " & $sResultString)
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched using similarity, and found the following word: " & $sResultString)
 	Else
-		MsgBox($MB_OK, "", "The search was successful, but returned no results.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, but returned no results.")
 	EndIf
 
 	; Retrieve the current Similarity settings.
 	$avSim = _LOWriter_SearchDescriptorSimilarityModify($oSrchDesc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Search Descriptor's Similarity settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Search Descriptor's Similarity settings are as follows: " & @CRLF & _
 			"Search using Similarity? True/False: " & $avSim[0] & @CRLF & _
 			"Combine Similarity values together? True/False: " & $avSim[1] & @CRLF & _
 			"The max number of characters that can be removed from the search term is: " & $avSim[2] & @CRLF & _
 			"The max number of characters that can be added to the search term is: " & $avSim[3] & @CRLF & _
 			"The max number of characters that can be exchanged in the search term is: " & $avSim[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -66,7 +66,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

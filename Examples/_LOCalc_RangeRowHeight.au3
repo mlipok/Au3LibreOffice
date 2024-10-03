@@ -33,7 +33,7 @@ Func Example()
 	$avHeight = _LOCalc_RangeRowHeight($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Row 5's Height settings are:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Row 5's Height settings are:" & @CRLF & _
 			"Is the Row's height set to optimal? True/False: " & $avHeight[0] & @CRLF & _
 			"Row 5's current height is, in Micrometers: " & $avHeight[1] & @CRLF & _
 			"Press Ok to set Row 5 to optimal height now.")
@@ -46,11 +46,11 @@ Func Example()
 	$avHeight = _LOCalc_RangeRowHeight($oRow)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Row 5's new Height settings are:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Row 5's new Height settings are:" & @CRLF & _
 			"Is the Row's height set to optimal? True/False: " & $avHeight[0] & @CRLF & _
 			"Row 5's current height is, in Micrometers: " & $avHeight[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -59,7 +59,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

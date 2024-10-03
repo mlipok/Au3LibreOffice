@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldVarSetPageInsert($oDoc, $oViewCursor, False, True, 5)
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Set Page Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Set Page Field settings.")
 
 	; Modify the Set Page Field settings. Set Reference to False, and Offset to 2.
 	_LOWriter_FieldVarSetPageModify($oField, False, 2)
@@ -34,11 +34,11 @@ Func Example()
 	$avSettings = _LOWriter_FieldVarSetPageModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"Is the Set Page Reference Point enabled? True/False: " & $avSettings[0] & @CRLF & _
 			"The page number offset is: " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -47,7 +47,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

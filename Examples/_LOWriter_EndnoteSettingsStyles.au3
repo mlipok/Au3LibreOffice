@@ -33,13 +33,13 @@ Func Example()
 	$avSettings = _LOWriter_EndnoteSettingsStyles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Endnote settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document's current Endnote Style settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document's current Endnote Style settings are as follows: " & @CRLF & _
 			"The Paragraph Style to use for Endnote content is: " & $avSettings[0] & @CRLF & _
 			"The Page Style to use for Endnotes is: " & $avSettings[1] & @CRLF & _
 			"The Character Style to use for the Endnote Anchor in the Document text is: " & $avSettings[2] & @CRLF & _
 			"The Character Style to use for the Endnote area is: " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

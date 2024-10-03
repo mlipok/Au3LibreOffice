@@ -57,7 +57,7 @@ Func Example()
 	$avSettings = _LOCalc_RangeNamedModify($oDoc, $oNamedRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Named Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Named Range's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Named Range's current settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Named range is: " & $avSettings[0] & @CRLF & _
 			"The Named Range name is: " & $avSettings[1] & @CRLF & _
 			"The Options, if any, set for this Named Range is (as an Integer): " & $avSettings[2] & @CRLF & _
@@ -105,7 +105,7 @@ Func Example()
 	$avSettings = _LOCalc_RangeNamedModify($oDoc, $oNamedRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Named Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Named Range's new settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Named Range's new settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Named range is: " & $avSettings[0] & @CRLF & _
 			"The Named Range name is: " & $avSettings[1] & @CRLF & _
 			"The Options, if any, set for this Named Range is (as an Integer): " & $avSettings[2] & @CRLF & _
@@ -128,7 +128,7 @@ Func Example()
 	$avSettings = _LOCalc_RangeNamedModify($oDoc, $oNamedRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Named Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Named Range's new settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Named Range's new settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Named range is: " & $avSettings[0] & @CRLF & _
 			"The Named Range name is: " & $avSettings[1] & @CRLF & _
 			"The Options, if any, set for this Named Range is (as an Integer): " & $avSettings[2] & @CRLF & _
@@ -140,7 +140,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

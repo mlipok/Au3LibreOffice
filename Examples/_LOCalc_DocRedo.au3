@@ -35,13 +35,13 @@ Func Example()
 	_LOCalc_DocUndo($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to perform an undo action. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to perform a redo action once.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to perform a redo action once.")
 
 	; Perform one redo action.
 	_LOCalc_DocRedo($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to perform a redo action. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -50,7 +50,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

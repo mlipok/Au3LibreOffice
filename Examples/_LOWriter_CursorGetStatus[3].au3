@@ -47,7 +47,7 @@ Func Example()
 	$sReturn = _LOWriter_CursorGetStatus($oTableCursor, $LOW_CURSOR_STAT_GET_RANGE_NAME)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Text Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "When the Table cursor has no cells selected, the cell the Table cursor is presently in, is returned. The Table cursor is in cell: " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "When the Table cursor has no cells selected, the cell the Table cursor is presently in, is returned. The Table cursor is in cell: " & _
 			$sReturn)
 
 	; Move the TableCursor right Twice, selecting cells as I go.
@@ -58,10 +58,10 @@ Func Example()
 	$sReturn = _LOWriter_CursorGetStatus($oTableCursor, $LOW_CURSOR_STAT_GET_RANGE_NAME)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Text Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "When the Table cursor has cells selected, the beginning cell and the ending cell, are returned, separated by a colon." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "When the Table cursor has cells selected, the beginning cell and the ending cell, are returned, separated by a colon." & @CRLF & _
 			"The Table cursor has the following cell range selected: " & $sReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -70,7 +70,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

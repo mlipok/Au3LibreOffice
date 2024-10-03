@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_TextCursorInsertString($oTextCursor, "Hello World! Testing.")
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now select the words ""Hello World!"".")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now select the words ""Hello World!"".")
 
 	; Go to the Start.
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_START, 1, False)
@@ -42,9 +42,9 @@ Func Example()
 	$sReturn = _LOCalc_TextCursorGetString($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve text selected by Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Text Cursor has the following Text selected: " & $sReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Text Cursor has the following Text selected: " & $sReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

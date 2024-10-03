@@ -32,7 +32,7 @@ Func Example()
 	$bReturn = _LOCalc_TextCursorIsCollapsed($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to check cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the Text Cursor's selection currently empty? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Text Cursor's selection currently empty? True/False: " & $bReturn)
 
 	; Move the Text Cursor left 3 spaces, selecting as I move.
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GO_LEFT, 3, True)
@@ -42,9 +42,9 @@ Func Example()
 	$bReturn = _LOCalc_TextCursorIsCollapsed($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to check cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now is the Text Cursor's selection currently empty? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now is the Text Cursor's selection currently empty? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

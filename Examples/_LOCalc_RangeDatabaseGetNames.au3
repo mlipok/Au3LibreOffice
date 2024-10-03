@@ -50,7 +50,7 @@ Func Example()
 		$sRanges &= '"' & $asDatabase[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Database Range names currently set for this document are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database Range names currently set for this document are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

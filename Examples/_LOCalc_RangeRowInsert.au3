@@ -33,13 +33,13 @@ Func Example()
 
 	Next
 
-	MsgBox($MB_OK, "", "I will now Insert 2 new Rows starting at Row 2.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now Insert 2 new Rows starting at Row 2.")
 
 	; Insert new Rows at Row 2, Row 2 is counted as Row 1 because L.O. Rows are 0 based.
 	_LOCalc_RangeRowInsert($oSheet, 1, 2)
 	If @error Then _ERROR($oDoc, "Failed to delete rows. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now Retrieve Cell Range B4 to D6, and insert a new Row in the second down Row position.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now Retrieve Cell Range B4 to D6, and insert a new Row in the second down Row position.")
 
 	; Retrieve Cell Range B4 to D6.
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B4", "D6")
@@ -49,7 +49,7 @@ Func Example()
 	_LOCalc_RangeRowInsert($oCellRange, 1)
 	If @error Then _ERROR($oDoc, "Failed to delete rows. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -19,7 +19,7 @@ Func Example()
 	$oSheetCursor = _LOCalc_SheetCreateCursor($oSheet)
 	If @error Then _ERROR($oDoc, "Failed to create a Sheet Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created a Sheet Cursor for the entire Sheet, the range Address of the area selected by the Cursor is (this will be the entire sheet): " & _LOCalc_RangeGetAddressAsName($oSheetCursor) & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a Sheet Cursor for the entire Sheet, the range Address of the area selected by the Cursor is (this will be the entire sheet): " & _LOCalc_RangeGetAddressAsName($oSheetCursor) & @CRLF & _
 			"I will now move the cursor left 1 Space, then set the background color to Blue.")
 
 	; Move the Cursor 1 Space Previous(Left)
@@ -30,7 +30,7 @@ Func Example()
 	_LOCalc_CellBackColor($oSheetCursor, $LOC_COLOR_BLUE)
 	If @error Then _ERROR($oDoc, "Failed to set background color for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now move the cursor right 1 Space, then expand the selection to cover 3 columns, and 6 Rows, then set the background color to Red.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now move the cursor right 1 Space, then expand the selection to cover 3 columns, and 6 Rows, then set the background color to Red.")
 
 	; Move the Cursor 1 Spaces Next(Right)
 	_LOCalc_SheetCursorMove($oSheetCursor, $LOC_SHEETCUR_GOTO_NEXT, 0, 0, 1)
@@ -44,7 +44,7 @@ Func Example()
 	_LOCalc_CellBackColor($oSheetCursor, $LOC_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to set background color for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

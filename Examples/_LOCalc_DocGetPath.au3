@@ -24,15 +24,15 @@ Func Example()
 	If _LOCalc_DocHasPath($oDoc) Then $sReturn = _LOCalc_DocGetPath($oDoc, False)
 	If (@error > 0) Or ($sReturn = "") Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The document's save location/Path is: " & $sReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document's save location/Path is: " & $sReturn)
 
 	; Retrieve the Document's Save Path again, the return will be a string, and the path will be a Libre Office URL.
 	$sReturn = _LOCalc_DocGetPath($oDoc, True)
 	If (@error > 0) Or ($sReturn = "") Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The document's save location/Path, in Libre Office URL format, is: " & $sReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document's save location/Path, in Libre Office URL format, is: " & $sReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -44,7 +44,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

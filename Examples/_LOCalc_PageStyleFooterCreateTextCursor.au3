@@ -39,7 +39,7 @@ Func Example()
 	_LOCalc_PageStyleFooterObj($oPageStyle, Null, $oFooter)
 	If @error Then _ERROR($oDoc, "Failed to set Footer Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "To see the new text, switch to Page Styles in the UI, go to Modify the ""Default"" page style, select Footer, select Edit, and look at ""Footer(Rest)"" tab." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "To see the new text, switch to Page Styles in the UI, go to Modify the ""Default"" page style, select Footer, select Edit, and look at ""Footer(Rest)"" tab." & @CRLF & _
 			"Press ok to close the document.")
 
 	; Close the document.
@@ -49,7 +49,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

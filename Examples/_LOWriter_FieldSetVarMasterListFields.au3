@@ -38,13 +38,13 @@ Func Example()
 
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I found " & $iResults & " dependent fields for this Master Field. Press Ok to delete one of these fields.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I found " & $iResults & " dependent fields for this Master Field. Press Ok to delete one of these fields.")
 
 	; Delete the last Field result.
 	_LOWriter_FieldDelete($aoFields[$iResults - 1])
 	If @error Then _ERROR($oDoc, "Failed to delete a Dependent field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -53,7 +53,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

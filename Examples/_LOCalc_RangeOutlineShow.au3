@@ -59,19 +59,19 @@ Func Example()
 	_LOCalc_RangeGroup($oCellRange, $LOC_GROUP_ORIENT_COLUMNS, True)
 	If @error Then _ERROR($oDoc, "Failed to group Cell range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to only levels 1 to 2 of Grouped cells.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to only levels 1 to 2 of Grouped cells.")
 
 	; Show grouped levels 1 to 2 for Columns
 	_LOCalc_RangeOutlineShow($oSheet, 2, $LOC_GROUP_ORIENT_COLUMNS)
 	If @error Then _ERROR($oDoc, "Failed to hide Cell range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to collapse all Grouped cells.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to collapse all Grouped cells.")
 
 	; Collapse all grouped levels of Cells for Columns
 	_LOCalc_RangeOutlineShow($oSheet, 0, $LOC_GROUP_ORIENT_COLUMNS)
 	If @error Then _ERROR($oDoc, "Failed to hide Cell range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -80,7 +80,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

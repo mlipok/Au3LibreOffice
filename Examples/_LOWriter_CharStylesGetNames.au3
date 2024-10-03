@@ -20,7 +20,7 @@ Func Example()
 	$asCharStyles = _LOWriter_CharStylesGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Character style names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now insert a list of available Character styles. There are " & @extended & " results.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now insert a list of available Character styles. There are " & @extended & " results.")
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "The Character Styles available in this document are:" & @CR & @CR)
@@ -36,7 +36,7 @@ Func Example()
 	$asCharStyles = _LOWriter_CharStylesGetNames($oDoc, False, True)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Character style names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now display a list of used Character styles. There are " & @extended & " results.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now display a list of used Character styles. There are " & @extended & " results.")
 
 	; Move the View Cursor to the end of the document
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_End)
@@ -56,7 +56,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -65,7 +65,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

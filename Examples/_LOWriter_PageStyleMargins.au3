@@ -47,7 +47,7 @@ Func Example()
 
 	; If Libre Office version is higher or equal to 7.2 then display the Gutter margin setting.
 	If (_LOWriter_VersionGet(True) >= 7.2) Then
-		MsgBox($MB_OK, "", "The Page Style's current Margin settings are as follows: " & @CRLF & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Margin settings are as follows: " & @CRLF & _
 				"The Left page margin, in Micrometers, is: " & $avPageStyleSettings[0] & @CRLF & _
 				"The Right page margin, in Micrometers, is: " & $avPageStyleSettings[1] & @CRLF & _
 				"The Top page margin, in Micrometers, is: " & $avPageStyleSettings[2] & @CRLF & _
@@ -55,14 +55,14 @@ Func Example()
 				"The Gutter page margin, in Micrometers, is: " & $avPageStyleSettings[4])
 
 	Else ; Display all other margin settings, except the Gutter margin.
-		MsgBox($MB_OK, "", "The Page Style's current Margin settings are as follows: " & @CRLF & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Margin settings are as follows: " & @CRLF & _
 				"The Left page margin, in Micrometers, is: " & $avPageStyleSettings[0] & @CRLF & _
 				"The Right page margin, in Micrometers, is: " & $avPageStyleSettings[1] & @CRLF & _
 				"The Top page margin, in Micrometers, is: " & $avPageStyleSettings[2] & @CRLF & _
 				"The Bottom page margin, in Micrometers, is: " & $avPageStyleSettings[3])
 	EndIf
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -71,7 +71,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

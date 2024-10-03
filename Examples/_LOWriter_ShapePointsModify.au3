@@ -33,19 +33,19 @@ Func Example()
 	; Add 400 Micrometers to the Y coordinate
 	$iNewY = $avArray[1] + 400
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Point.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Shape's Point.")
 
 	; Apply the modified X and Y coordinates
 	_LOWriter_ShapePointsModify($oShape, 3, $iNewX, $iNewY)
 	If @error Then _ERROR($oDoc, "Failed to modify Shape point. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Third Point type.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Shape's Third Point type.")
 
 	; Modify the Shape's Third point to be a Symmetrical Point Type
 	_LOWriter_ShapePointsModify($oShape, 3, Null, Null, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
 	If @error Then _ERROR($oDoc, "Failed to modify Shape point. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Shape's Third Point to no longer be a curve.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Shape's Third Point to no longer be a curve.")
 
 	; Modify the Shape's Third point to be a normal point again
 	_LOWriter_ShapePointsModify($oShape, 3, Null, Null, Null, False)
@@ -55,12 +55,12 @@ Func Example()
 	$avArray = _LOWriter_ShapePointsModify($oShape, 3)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Array of settings for a Shape point. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Shape's X Coordinate is, in Micrometers: " & $avArray[0] & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's X Coordinate is, in Micrometers: " & $avArray[0] & @CRLF & _
 			"The Shape's Y Coordinate is, in Micrometers: " & $avArray[1] & @CRLF & _
 			"The Shape's Point Type is, (See UDF Constants): " & $avArray[2] & @CRLF & _
 			"Is this point a Curve? True/False: " & $avArray[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -69,7 +69,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

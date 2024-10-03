@@ -51,13 +51,13 @@ Func Example()
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to remove numbers and strings from the cell Range A1:A4. Notice Cell A4 contains a formula, and will remain.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to remove numbers and strings from the cell Range A1:A4. Notice Cell A4 contains a formula, and will remain.")
 
 	; Remove Strings and numbers from the cell range, BitOR the two constants together.
 	_LOCalc_RangeClearContents($oCellRange, BitOR($LOC_CELL_FLAG_VALUE, $LOC_CELL_FLAG_STRING))
 	If @error Then _ERROR($oDoc, "Failed to clear Cell contents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -66,7 +66,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

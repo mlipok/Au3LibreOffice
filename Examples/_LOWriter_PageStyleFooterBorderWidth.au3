@@ -28,13 +28,13 @@ Func Example()
 	$avPageStyleSettings = _LOWriter_PageStyleFooterBorderWidth($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Page Style's current Footer Border Width settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footer Border Width settings are as follows: " & @CRLF & _
 			"The Top Border Width is, in Micrometers, (see UDF constants): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Bottom Border Width is, in Micrometers, (see UDF constants): " & $avPageStyleSettings[1] & @CRLF & _
 			"The Left Border Width is, in Micrometers, (see UDF constants): " & $avPageStyleSettings[2] & @CRLF & _
 			"The Right Border Width is, in Micrometers, (see UDF constants): " & $avPageStyleSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -43,7 +43,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

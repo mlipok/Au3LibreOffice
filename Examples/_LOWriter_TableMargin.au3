@@ -45,13 +45,13 @@ Func Example()
 	$avTableProps = _LOWriter_TableMargin($oTable)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Current Text Table Margin settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table Margin settings are: " & @CRLF & _
 			"Top Table Margin: " & $avTableProps[0] & " Micrometers" & @CRLF & _
 			"Bottom Table Margin: " & $avTableProps[1] & " Micrometers" & @CRLF & _
 			"Left Table Margin: " & $avTableProps[2] & " Micrometers" & @CRLF & _
 			"Right Table Margin: " & $avTableProps[3] & " Micrometers")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

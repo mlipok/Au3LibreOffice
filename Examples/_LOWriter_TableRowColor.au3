@@ -55,11 +55,11 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve the row background color settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Array elements will be in order of function's parameters.
-	MsgBox($MB_OK, "", "The background color settings for the Third row down, (Row 2), is: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The background color settings for the Third row down, (Row 2), is: " & @CRLF & _
 			"Background color: " & $avColor[0] & @CRLF & _
 			"Background color is transparent? True/False: " & $avColor[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

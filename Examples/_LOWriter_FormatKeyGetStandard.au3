@@ -16,10 +16,10 @@ Func Example()
 	$iFormatKey = _LOWriter_FormatKeyGetStandard($oDoc, $LOW_FORMAT_KEYS_DURATION)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the standard format key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Standard format key number for format key type $LOC_FORMAT_KEYS_DURATION is: " & $iFormatKey & " It looks like this: " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Standard format key number for format key type $LOC_FORMAT_KEYS_DURATION is: " & $iFormatKey & " It looks like this: " & _
 			_LOWriter_FormatKeyGetString($oDoc, $iFormatKey))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -28,7 +28,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

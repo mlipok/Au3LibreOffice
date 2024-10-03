@@ -17,7 +17,7 @@ Func Example()
 	$iFormatKey = _LOWriter_DateFormatKeyCreate($oDoc, "H:MM:SS AM/PM -- M/NNN(D)/YYYY")
 	If @error Then _ERROR($oDoc, "Failed to create a Date/Time Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I created a new DateTime format key. Press Ok to delete it now.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I created a new DateTime format key. Press Ok to delete it now.")
 
 	; Delete the newly created Format Key.
 	_LOWriter_DateFormatKeyDelete($oDoc, $iFormatKey)
@@ -28,12 +28,12 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to search for a Date/Time Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($bExists = True) Then
-		MsgBox($MB_OK, "", "I failed to delete the DateTime format key.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "I failed to delete the DateTime format key.")
 	Else
-		MsgBox($MB_OK, "", "I successfully deleted the new DateTime format key.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "I successfully deleted the new DateTime format key.")
 	EndIf
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -42,7 +42,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

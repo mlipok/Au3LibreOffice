@@ -38,7 +38,7 @@ Func Example()
 	$avSettings = _LOWriter_FrameColumnSeparator($oFrame)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Frame settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Frame's current Column Separator Line settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Frame's current Column Separator Line settings are as follows: " & @CRLF & _
 			"Is Column separated by a line? True/False: " & $avSettings[0] & @CRLF & _
 			"The Separator Line style is, (see UDF constants): " & $avSettings[1] & @CRLF & _
 			"The Separator Line width is, in Micrometers: " & $avSettings[2] & @CRLF & _
@@ -46,7 +46,7 @@ Func Example()
 			"The Separator Line length percentage is: " & $avSettings[4] & @CRLF & _
 			"The Separator Line position is, (see UDF constants): " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -55,7 +55,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

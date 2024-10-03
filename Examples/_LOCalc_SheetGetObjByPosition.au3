@@ -23,15 +23,15 @@ Func Example()
 	$oSheet = _LOCalc_SheetGetObjByPosition($oDoc, 0)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve the Sheet's Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Sheet currently at position 0 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Sheet currently at position 0 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
 
 	; Retrieve the Sheet Object for the sheet at position 2
 	$oSheet = _LOCalc_SheetGetObjByPosition($oDoc, 2)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve the Sheet's Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Sheet currently at position 2 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Sheet currently at position 2 has the name of: " & _LOCalc_SheetName($oDoc, $oSheet))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -40,7 +40,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

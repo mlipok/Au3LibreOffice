@@ -13,7 +13,7 @@ Func Example()
 	; Minimum Libre version is 4.1, Check Libre Office Version.
 	If (_LOWriter_VersionGet(True) < 4.1) Then _ERROR("Current Libre Office version lower than 4.1, this function cannot be used." & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will list your currently available printers.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers.")
 
 	; Retrieve Array of available printers.
 	$asPrinters = _LOWriter_DocEnumPrinters()
@@ -31,7 +31,7 @@ Func Example()
 	If (_LOWriter_VersionGet(True) < 6.3) Then
 		_ERROR("Libre Office version is less than 6.3, I cannot list your default printer." & " On Line: " & @ScriptLineNumber)
 	Else
-		MsgBox($MB_OK, "", "I will list your currently default printer next.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently default printer next.")
 	EndIf
 
 	; Return default printer.
@@ -39,14 +39,14 @@ Func Example()
 	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then
-		MsgBox($MB_OK, "", "You do not have a default printer.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "You do not have a default printer.")
 	Else
-		MsgBox($MB_OK, "", "Your default printer is: " & $sDefault)
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "Your default printer is: " & $sDefault)
 	EndIf
 
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	Exit
 EndFunc

@@ -38,7 +38,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Query Cells that Intersect in the ranges. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	$iResults = @extended
 
-	MsgBox($MB_OK, "", "I will now highlight in yellow the cell ranges that are intersecting between Cell Range 1 and Cell Range 2.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now highlight in yellow the cell ranges that are intersecting between Cell Range 1 and Cell Range 2.")
 
 	; Cycle through the results and set the background color to yellow for each Cell range found
 	For $i = 0 To $iResults - 1
@@ -46,7 +46,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set Cell Range Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -55,7 +55,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

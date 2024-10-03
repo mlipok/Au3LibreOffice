@@ -52,13 +52,13 @@ Func Example()
 	$avCharStyleSettings = _LOWriter_CharStyleBorderColor($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Character style's current Border color settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current Border color settings are as follows: " & @CRLF & _
 			"Top color, in long color format: " & $avCharStyleSettings[0] & @CRLF & _
 			"Bottom color, in long color format: " & $avCharStyleSettings[1] & @CRLF & _
 			"Left color, in long color format: " & $avCharStyleSettings[2] & @CRLF & _
 			"Right color, in long color format: " & $avCharStyleSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

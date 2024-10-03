@@ -28,7 +28,7 @@ Func Example()
 	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve A1 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell A1 currently contains the following content: " & $sContent)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell A1 currently contains the following content: " & $sContent)
 
 	; Retrieve the B2 Cell.
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B2")
@@ -42,7 +42,7 @@ Func Example()
 	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve B2 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell B2 currently contains the following content: " & $sContent)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell B2 currently contains the following content: " & $sContent)
 
 	; Retrieve the D1 Cell.
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "D1")
@@ -56,9 +56,9 @@ Func Example()
 	$sContent = _LOCalc_CellString($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve D1 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell D1 currently contains the following content: " & $sContent)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell D1 currently contains the following content: " & $sContent)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

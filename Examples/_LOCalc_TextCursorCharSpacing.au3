@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_TextCursorInsertString($oTextCursor, "Hi!")
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the word ""Hi!"" to 23 Pt's spacing (Kerning).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the word ""Hi!"" to 23 Pt's spacing (Kerning).")
 
 	; Go to the Start.
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_START, 1, False)
@@ -46,11 +46,11 @@ Func Example()
 	$avSettings = _LOCalc_TextCursorCharSpacing($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Character spacing settings at the Cursor's current position are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Character spacing settings at the Cursor's current position are as follows: " & @CRLF & _
 			"Is automatic spacing (Kerning) active? True/False: " & $avSettings[0] & @CRLF & _
 			"The spacing amount is, in Printer's Points: " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

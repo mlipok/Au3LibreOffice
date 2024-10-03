@@ -34,7 +34,7 @@ Func Example()
 	$oField = _LOWriter_FieldInputListInsert($oDoc, $oViewCursor, False, $asItems, "Pick One", "Option 3")
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Input List Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Input List Field.")
 
 	; Fill the second new Array
 	$asNewItems[0] = "Choice 1"
@@ -46,7 +46,7 @@ Func Example()
 	_LOWriter_FieldInputListModify($oField, $asNewItems, "Three Choices", "Choice 2")
 	If @error Then _ERROR($oDoc, "Failed to modify field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Pick an Option in the Input List and then press ok.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Pick an Option in the Input List and then press ok.")
 
 	; Retrieve current Field settings.
 	$avSettings = _LOWriter_FieldInputListModify($oField)
@@ -57,12 +57,12 @@ Func Example()
 		$sChoices &= @CRLF & ($avSettings[0])[$i]
 	Next
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Input List's available choices are: " & $sChoices & @CRLF & _
 			"The Input List's name is: " & $avSettings[1] & @CRLF & _
 			"The currently selected item is: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -71,7 +71,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

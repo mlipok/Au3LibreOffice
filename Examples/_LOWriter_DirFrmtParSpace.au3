@@ -47,7 +47,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtParSpace($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Paragraph Line Spacing settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Paragraph Line Spacing settings are as follows: " & @CRLF & _
 			"Spacing above the paragraph, in Micrometers: " & $avSettings[0] & @CRLF & _
 			"Spacing below the paragraph, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Do not apply spacing if above and/or below paragraph are the same style? True/False: " & $avSettings[2] & @CRLF & _
@@ -59,7 +59,7 @@ Func Example()
 	_LOWriter_DirFrmtParSpace($oViewCursor, Default, Default, Default, Default, Default, Default)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

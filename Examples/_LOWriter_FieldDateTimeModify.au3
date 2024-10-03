@@ -36,7 +36,7 @@ Func Example()
 	$oField = _LOWriter_FieldDateTimeInsert($oDoc, $oViewCursor, False, False, $tDateStruct, True, -1, $iDateFormatKey)
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Date/Time Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Date/Time Field.")
 
 	; Create a new Date Structure, Year = 1992, Month = 4, Day = 28, Hour = 12, Minute == 00 , Sec == 00.
 	$tDateStruct = _LOWriter_DateStructCreate(1992, 04, 28, 12, 00, 00)
@@ -71,14 +71,14 @@ Func Example()
 		EndIf
 	Next
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"Is the Date/Time Fixed at that time? True/False: " & $avSettings[0] & @CRLF & _
 			"The Date/Time Field is set to the current Date and Time: " & $sDateTime & @CRLF & _
 			"Is this set as a Date, and not a time? True/False: " & $avSettings[2] & @CRLF & _
 			"The Offset is set to: " & $avSettings[3] & @CRLF & _
 			"The DateTime Format Key used is: " & $avSettings[4] & " Which looks like: " & _LOWriter_DateFormatKeyGetString($oDoc, $avSettings[4]))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -87,7 +87,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

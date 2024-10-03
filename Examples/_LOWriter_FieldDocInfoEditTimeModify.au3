@@ -33,7 +33,7 @@ Func Example()
 	$oField = _LOWriter_FieldDocInfoEditTimeInsert($oDoc, $oViewCursor, False, True, $iTimeFormatKey)
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Doc Info Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Doc Info Field settings.")
 
 	; Create or retrieve a different DateFormat Key, Hour, Minute
 	$iTimeFormatKey = _LOWriter_DateFormatKeyCreate($oDoc, "H:MM:")
@@ -47,12 +47,12 @@ Func Example()
 	$avSettings = _LOWriter_FieldDocInfoEditTimeModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Doc Info Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Doc Info Field settings are: " & @CRLF & _
 			"Is the content of this field fixed? True/ False: " & $avSettings[0] & @CRLF & _
 			"The Time Format key used is: " & $avSettings[1] & " and looks like: " & @CRLF & _
 			_LOWriter_DateFormatKeyGetString($oDoc, $avSettings[1]))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -61,7 +61,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

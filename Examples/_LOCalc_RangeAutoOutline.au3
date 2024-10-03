@@ -52,13 +52,13 @@ Func Example()
 	_LOCalc_CellFormula($oCell, "=SUM(E1:G1)")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to set up AutoOutline for the Sheet.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to set up AutoOutline for the Sheet.")
 
 	; Set up AutoOutline for the Range.
 	_LOCalc_RangeAutoOutline($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to set up Auto Outline for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

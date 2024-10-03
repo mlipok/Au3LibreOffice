@@ -82,13 +82,13 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to mark Cell precedents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	WEnd
 
-	MsgBox($MB_OK, "", "I have caused most types of Detective Markings to be present, press ok to clear them all from the sheet.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have caused most types of Detective Markings to be present, press ok to clear them all from the sheet.")
 
 	; Clear all markings from the Sheet
 	_LOCalc_SheetDetectiveClear($oSheet)
 	If @error Then _ERROR($oDoc, "Failed to clear Detective markings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -96,7 +96,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

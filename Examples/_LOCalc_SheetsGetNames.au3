@@ -77,7 +77,7 @@ Func Example()
 
 	_ArrayDisplay($asSheets)
 
-	MsgBox($MB_OK, "", "I will now display a list of Linked Sheet names.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now display a list of Linked Sheet names.")
 
 	; Retrieve an Array of Linked Sheet names.
 	$asSheets = _LOCalc_SheetsGetNames($oDoc2, True)
@@ -85,7 +85,7 @@ Func Example()
 
 	_ArrayDisplay($asSheets)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc2, False)
@@ -96,7 +96,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oDoc2 = Null, $sPath = Null)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOCalc_DocClose($oDoc2, False)
 	If IsString($sPath) Then FileDelete($sPath)

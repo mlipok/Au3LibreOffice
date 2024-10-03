@@ -30,7 +30,7 @@ Func Example()
 	$avPageStyleSettings = _LOWriter_PageStyleFootnoteLine($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Page Style's current Footnote separator line settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footnote separator line settings are as follows: " & @CRLF & _
 			"The Separator line Position is, (see UDF Constants): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Separator line Style is, (see UDF Constants): " & $avPageStyleSettings[1] & @CRLF & _
 			"The Separator line's thickness is, in Printer's Points: " & $avPageStyleSettings[2] & @CRLF & _
@@ -38,7 +38,7 @@ Func Example()
 			"The percentage of the Separator line's length, is: " & $avPageStyleSettings[4] & @CRLF & _
 			"The distance between the Footnote body and the separator line, in Micrometers, is: " & $avPageStyleSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -47,7 +47,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -24,7 +24,7 @@ Func Example()
 	$sName = _LOCalc_RangeColumnGetName($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have retrieved Column #2, (The third column in the Sheet), the Column's name is: " & $sName & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have retrieved Column #2, (The third column in the Sheet), the Column's name is: " & $sName & @CRLF & @CRLF & _
 			"I will now retrieve Cell Range C1 to F5 and retrieve the third Column in the Cell Range.")
 
 	; Retrieve Cell Range C1 to F5.
@@ -39,9 +39,9 @@ Func Example()
 	$sName = _LOCalc_RangeColumnGetName($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have retrieved Column #2, (The third column in the Cell Range), the Column's name is: " & $sName)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have retrieved Column #2, (The third column in the Cell Range), the Column's name is: " & $sName)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -50,7 +50,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -13,7 +13,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created a blank L.O. Writer Doc, I will now Connect to it and use the new Object returned to close it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a blank L.O. Writer Doc, I will now Connect to it and use the new Object returned to close it.")
 
 	; Connect to the Current Document.
 	$oDoc2 = _LOWriter_DocConnect("", True)
@@ -35,7 +35,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $oDoc2, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOWriter_DocClose($oDoc2, False)
 	Exit

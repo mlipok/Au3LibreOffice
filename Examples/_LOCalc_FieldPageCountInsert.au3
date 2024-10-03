@@ -40,11 +40,11 @@ Func Example()
 	_LOCalc_PageStyleHeaderObj($oPageStyle, $oHeader)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style header object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have inserted a Page Count field on the left side first page header." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have inserted a Page Count field on the left side first page header." & @CRLF & _
 			"To see the field in Left side header, go to: Format->Page Style->Header->Edit. The Field will be in ""Left Area""." & @CRLF & _
 			"When finished, please close the opened pages, or else the document will not close correctly.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

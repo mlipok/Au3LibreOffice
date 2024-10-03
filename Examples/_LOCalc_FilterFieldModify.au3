@@ -70,7 +70,7 @@ Func Example()
 	_LOCalc_RangeFilter($oCellRange, $oFilterDesc)
 	If @error Then _ERROR($oDoc, "Failed to perform Filter Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now modify the Filter Field, I will modify the Filter Field for Column B, and now look for values containing 3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now modify the Filter Field, I will modify the Filter Field for Column B, and now look for values containing 3.")
 
 	; Modify my second Filter Field (for Column B).
 	; Set my value to 3 and set Condition to "Contains" my value (3).
@@ -89,7 +89,7 @@ Func Example()
 	$avSettings = _LOCalc_FilterFieldModify($atFilterFields[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve Filter Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The first Filter Field's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The first Filter Field's current settings are as follows: " & @CRLF & _
 			"The Column number this Filter is intended for is: " & $avSettings[0] & @CRLF & _
 			"Is the Filter a Number? True/False: " & $avSettings[1] & @CRLF & _
 			"The Filter numerical value is: " & $avSettings[2] & @CRLF & _
@@ -99,7 +99,7 @@ Func Example()
 			"Note: Since this is the first filter field in my array, the Operator is ignored, but the Operator otherwise determines if both this and the previous" & @CRLF & _
 			"filter field need to match or if either one or the other only need to match.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -108,7 +108,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

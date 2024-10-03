@@ -25,14 +25,14 @@ Func Example()
 	$avParStyleSettings = _LOWriter_ParStyleOrganizer($oDoc, $oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Paragraph's current Organizer settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Organizer settings are as follows: " & @CRLF & _
 			"The Paragraph Style's name is: " & $avParStyleSettings[0] & @CRLF & _
 			"The Paragraph Style's name that comes after this style is: " & $avParStyleSettings[1] & @CRLF & _
 			"The Parent paragraph Style of this style is: " & $avParStyleSettings[2] & @CRLF & _
 			"Does this style auto update its settings? True/False: " & $avParStyleSettings[3] & @CRLF & _
 			"Is this style hidden in the User Interface? True/False: " & $avParStyleSettings[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

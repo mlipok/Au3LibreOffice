@@ -28,7 +28,7 @@ Func Example()
 	$avSettings = _LOCalc_CellBorderWidth($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell B2's Border Width settings are as follows (in Micrometers): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell B2's Border Width settings are as follows (in Micrometers): " & @CRLF & _
 			"Top Border Width: " & $avSettings[0] & @CRLF & _
 			"Bottom Border Width: " & $avSettings[1] & @CRLF & _
 			"Left Border Width: " & $avSettings[2] & @CRLF & _
@@ -51,7 +51,7 @@ Func Example()
 	$avSettings = _LOCalc_CellBorderWidth($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Range's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell Range D2-E5's Border Width settings are as follows (in Micrometers): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell Range D2-E5's Border Width settings are as follows (in Micrometers): " & @CRLF & _
 			"Top Border Width: " & $avSettings[0] & @CRLF & _
 			"Bottom Border Width: " & $avSettings[1] & @CRLF & _
 			"Left Border Width: " & $avSettings[2] & @CRLF & _
@@ -61,7 +61,7 @@ Func Example()
 			"Top-Left to Bottom-Right Diagonal Border Width: " & $avSettings[6] & @CRLF & _
 			"Bottom-Left to Top-Right Diagonal Border Width: " & $avSettings[7])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -70,7 +70,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

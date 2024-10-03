@@ -20,7 +20,7 @@ Func Example()
 	$avReturn = _LOWriter_DocGenProp($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The document's author is: " & $avReturn[0] & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document's author is: " & $avReturn[0] & @CRLF & _
 			"This document has been revised " & $avReturn[1] & " times." & @CRLF & _
 			"The total revision time, in seconds is: " & $avReturn[2] & @CRLF & _
 			"Are the User-specific settings saved and loaded in this document? True/False: " & $avReturn[3] & @CRLF & @CRLF & _
@@ -34,12 +34,12 @@ Func Example()
 	$avReturn = _LOWriter_DocGenProp($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The document's new author is: " & $avReturn[0] & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document's new author is: " & $avReturn[0] & @CRLF & _
 			"This document has been revised " & $avReturn[1] & " times." & @CRLF & _
 			"The total revision time, in seconds is: " & $avReturn[2] & @CRLF & _
 			"Are the User-specific settings saved and loaded in this document? True/False: " & $avReturn[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

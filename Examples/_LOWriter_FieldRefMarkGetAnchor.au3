@@ -43,7 +43,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, @CR & @CR & "The Reference Mark names contained in this document are: " & @CR)
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will retrieve the anchor for Ref. 2 and insert some text after it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will retrieve the anchor for Ref. 2 and insert some text after it.")
 
 	; Retrieve the Reference Mark's Anchor (Text Cursor).
 	$oRefAnchor = _LOWriter_FieldRefMarkGetAnchor($oDoc, "Ref. 2")
@@ -57,7 +57,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oRefAnchor, " Some new text")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -66,7 +66,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

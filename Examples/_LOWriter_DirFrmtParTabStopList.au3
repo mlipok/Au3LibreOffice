@@ -54,12 +54,12 @@ Func Example()
 	$aiTabStops = _LOWriter_DirFrmtParTabStopList($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Paragraph tab stop positions. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The number of Tabstops found is " & @extended & @CRLF & @CRLF & "I will now display the array of tab stop positions.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The number of Tabstops found is " & @extended & @CRLF & @CRLF & "I will now display the array of tab stop positions.")
 
 	; Display the Array.
 	_ArrayDisplay($aiTabStops)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

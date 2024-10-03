@@ -41,7 +41,7 @@ Func Example()
 	$avParStyleSettings = _LOWriter_ParStyleBorderPadding($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
 			"All Padding distance, in Micrometers: " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avParStyleSettings[1] & @CRLF & _
@@ -62,7 +62,7 @@ Func Example()
 	$avParStyleSettings = _LOWriter_ParStyleBorderPadding($oParStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Paragraph's current Border padding distance settings are as follows: " & @CRLF & _
 			"All Padding distance, in Micrometers: " & $avParStyleSettings[0] & " This setting is best only used to set the distance, as" & _
 			" the value will still be present, even though there are individual settings per side present." & @CRLF & _
 			"Top Padding distance, in Micrometers: " & $avParStyleSettings[1] & @CRLF & _
@@ -70,7 +70,7 @@ Func Example()
 			"Left Padding distance, in Micrometers: " & $avParStyleSettings[3] & @CRLF & _
 			"Right Padding distance, in Micrometers: " & $avParStyleSettings[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -79,7 +79,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

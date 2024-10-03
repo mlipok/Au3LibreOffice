@@ -29,7 +29,7 @@ Func Example()
 	$mField = _LOCalc_FieldHyperlinkInsert($oDoc, $oTextCursor, "https://www.FakerURL.com", "A Fake Website")
 	If @error Then _ERROR($oDoc, "Failed to insert field at Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have inserted a Hyperlink field in cell A1. Press ok to modify it now.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have inserted a Hyperlink field in cell A1. Press ok to modify it now.")
 
 	; Modify the Hyperlink URL, and also the display text.
 	_LOCalc_FieldHyperlinkModify($mField, "https://www.autoitscript.com/site/autoit/", "AutoIt Website")
@@ -39,12 +39,12 @@ Func Example()
 	$avSettings = _LOCalc_FieldHyperlinkModify($mField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Field's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Hyperlink Field's settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Hyperlink Field's settings are as follows: " & @CRLF & _
 			"The Hyperlink's URL is: " & $avSettings[0] & @CRLF & _
 			"The Hyperlink's display text is: " & $avSettings[1] & @CRLF & _
 			"The target frame set for the Hyperlink is (Will be empty if none is set): " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

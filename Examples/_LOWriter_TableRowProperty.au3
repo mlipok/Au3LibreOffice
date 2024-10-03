@@ -51,7 +51,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve row settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Array elements will be in order of function's parameters.
-	MsgBox($MB_OK, "", "The settings for the Third row down, (Row 2), are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The settings for the Third row down, (Row 2), are: " & @CRLF & _
 			"Height: " & $avRowProps[0] & @CRLF & _
 			"Is Auto Height? True/False: " & $avRowProps[1] & @CRLF & _
 			"Is the Row allowed to split between pages? True/False: " & $avRowProps[2])
@@ -69,12 +69,12 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve row settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Array elements will be in order of function's parameters.
-	MsgBox($MB_OK, "", "The new settings for the Third row down, (Row 2), are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The new settings for the Third row down, (Row 2), are: " & @CRLF & _
 			"Height: " & $avRowProps[0] & @CRLF & _
 			"Is Auto Height? True/False: " & $avRowProps[1] & @CRLF & _
 			"Is the Row allowed to split between pages? True/False: " & $avRowProps[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -83,7 +83,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

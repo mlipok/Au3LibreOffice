@@ -45,12 +45,12 @@ Func Example()
 	$avSettings = _LOCalc_CommentSize($oComment)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Comment's Size settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Size settings are as follows: " & @CRLF & _
 			"The Width of the Comment box is, in Micrometers: " & $avSettings[0] & @CRLF & _
 			"The Height of the comment box is, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Is the Size protected from User changes? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -59,7 +59,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

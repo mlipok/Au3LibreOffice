@@ -25,7 +25,7 @@ Func Example()
 	$oField = _LOWriter_FieldFuncPlaceholderInsert($oDoc, $oViewCursor, False, $LOW_FIELD_PLACEHOLD_TYPE_GRAPHIC, "A Graphic Placeholder.", "Click Me")
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Placeholder Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Placeholder Field settings.")
 
 	; Modify the Placeholder Field settings. Set the Placeholder type to $LOW_FIELD_PLACEHOLD_TYPE_TABLE, Set the Name to "A Table Placeholder",
 	; And Reference to "Hover Me"
@@ -36,12 +36,12 @@ Func Example()
 	$avSettings = _LOWriter_FieldFuncPlaceholderModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Placeholder Field Type is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Placeholder Field name is: " & $avSettings[1] & @CRLF & _
 			"The Placeholder Field's Reference Text is: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -50,7 +50,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -84,7 +84,7 @@ Func Example()
 
 	WEnd
 
-	MsgBox($MB_OK, "", "The search was successful, I searched, and found the following words within the selection: " & $sResultString & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched, and found the following words within the selection: " & $sResultString & @CRLF & @CRLF & _
 			"Did you notice the search didn't find the word ""SEarCH"" in the footnote? I will search again, this time with Exhaustive set to True.")
 
 	; Search the word "search" within the ViewCursor selection exhaustively.
@@ -112,9 +112,9 @@ Func Example()
 
 	WEnd
 
-	MsgBox($MB_OK, "", "The search was successful, I searched, and found the following word within the selection: " & $sResultString)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched, and found the following word within the selection: " & $sResultString)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -123,7 +123,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

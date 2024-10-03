@@ -50,9 +50,9 @@ Func Example()
 	$sData = _LOWriter_TableGetData($oTable, 1, 1)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The returned data was: " & @CRLF & $sData)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The returned data was: " & @CRLF & $sData)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -61,7 +61,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

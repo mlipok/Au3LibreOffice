@@ -29,13 +29,13 @@ Func Example()
 		$sKeywords = $sKeywords & $asReturnedKeywords[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The document's description properties are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document's description properties are: " & @CRLF & _
 			"The Document's title is: " & $avReturn[0] & @CRLF & _
 			"The Document's Subject is: " & $avReturn[1] & @CRLF & _
 			"The Keywords for this document are: " & @CRLF & $sKeywords & _
 			"The Comments for this document are: " & $avReturn[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -44,7 +44,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

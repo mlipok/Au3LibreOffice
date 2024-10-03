@@ -40,7 +40,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtCharRotateScale($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The selected text's current rotation and scale width settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current rotation and scale width settings are as follows: " & @CRLF & _
 			"Rotation in degrees: " & $avSettings[0] & @CRLF & _
 			"Scale width, in percentage: " & $avSettings[1] & @CRLF & _
 			"Rotation fit to line? True/False: " & $avSettings[2] & @CRLF & @CRLF & _
@@ -50,7 +50,7 @@ Func Example()
 	_LOWriter_DirFrmtCharRotateScale($oViewCursor, Default, Default, Default)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -59,7 +59,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

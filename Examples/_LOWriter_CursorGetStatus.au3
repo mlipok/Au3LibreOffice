@@ -25,7 +25,7 @@ Func Example()
 	$bReturn = _LOWriter_CursorGetStatus($oViewCursor, $LOW_CURSOR_STAT_IS_END_OF_LINE)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the ViewCursor at the end of a line? True/False: " & $bReturn & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the ViewCursor at the end of a line? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"I will now move the cursor to the beginning, and test again.")
 
 	; Move the Cursor to the beginning of the document.
@@ -36,15 +36,15 @@ Func Example()
 	$bReturn = _LOWriter_CursorGetStatus($oViewCursor, $LOW_CURSOR_STAT_IS_END_OF_LINE)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the ViewCursor at the end of a line? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the ViewCursor at the end of a line? True/False: " & $bReturn)
 
 	; Retrieve the page number the ViewCursor is currently on.
 	$iPage = _LOWriter_CursorGetStatus($oViewCursor, $LOW_CURSOR_STAT_GET_PAGE)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The ViewCursor is currently on page " & $iPage)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The ViewCursor is currently on page " & $iPage)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -53,7 +53,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

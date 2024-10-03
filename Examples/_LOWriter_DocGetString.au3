@@ -35,7 +35,7 @@ Func Example()
 	$sString = _LOWriter_DocGetString($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The text selected by the View Cursor was: " & $sString & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The text selected by the View Cursor was: " & $sString & @CRLF & @CRLF & _
 			"Press ok to close the document.")
 
 	; Close the document.
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

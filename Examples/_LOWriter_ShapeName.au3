@@ -24,7 +24,7 @@ Func Example()
 	$sName = _LOWriter_ShapeName($oDoc, $oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "Name", "The Shape's current name is: " & $sName)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's current name is: " & $sName)
 
 	; Change the Shape's name to "AutoIt Test"
 	$sName = _LOWriter_ShapeName($oDoc, $oShape, "AutoIt Test")
@@ -34,9 +34,9 @@ Func Example()
 	$sName = _LOWriter_ShapeName($oDoc, $oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "Name", "The Shape's new name is: " & $sName)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's new name is: " & $sName)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

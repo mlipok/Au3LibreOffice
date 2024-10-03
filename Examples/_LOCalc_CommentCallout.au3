@@ -37,7 +37,7 @@ Func Example()
 	$avSettings = _LOCalc_CommentCallout($oComment)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Comment's Callout settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Callout settings are as follows: " & @CRLF & _
 			"The Callout Connector Style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Callout Connector line spacing from the comment box is, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"The Callout Connector line position on the Comment box is (See UDF Constants): " & $avSettings[2] & @CRLF & _
@@ -45,7 +45,7 @@ Func Example()
 			"Is the Callout Connector line Optimally sized? True/False (Only available for $LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR): " & $avSettings[4] & @CRLF & _
 			"The length of the Callout line is, in Micrometers (Only used if Optimal sizing is false): " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -54,7 +54,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

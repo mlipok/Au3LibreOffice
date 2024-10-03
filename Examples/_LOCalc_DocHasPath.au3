@@ -18,7 +18,7 @@ Func Example()
 	$bReturn = _LOCalc_DocHasPath($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does this document have a Save location/Path? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document have a Save location/Path? True/False: " & $bReturn)
 
 	; Create a unique file name
 	$sSavePath = _TempFile(@TempDir & "\", "DocTestFile_", ".ods")
@@ -31,9 +31,9 @@ Func Example()
 	$bReturn = _LOCalc_DocHasPath($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve document information. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does this document have a Save location/Path? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document have a Save location/Path? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

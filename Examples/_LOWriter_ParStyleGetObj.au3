@@ -19,7 +19,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text to demonstrate getting the paragraph style object.")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now retrieve the default paragraph style object, and modify some of its settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now retrieve the default paragraph style object, and modify some of its settings.")
 
 	; Retrieve the "Default Paragraph Style" object.
 	$oParStyle = _LOWriter_ParStyleGetObj($oDoc, "Default Paragraph Style")
@@ -29,7 +29,7 @@ Func Example()
 	_LOWriter_ParStyleFont($oDoc, $oParStyle, Null, Null, Null, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -38,7 +38,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

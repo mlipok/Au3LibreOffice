@@ -24,12 +24,12 @@ Func Example()
 	$avSettings = _LOCalc_CellStyleOrganizer($oDoc, $oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Paragraph style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Cell Style's current Organizer settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell Style's current Organizer settings are as follows: " & @CRLF & _
 			"The Cell Style's name is: " & $avSettings[0] & @CRLF & _
 			"The Parent Cell Style of this style is: " & $avSettings[1] & @CRLF & _
 			"Is this Cell style hidden in the User Interface? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -38,7 +38,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

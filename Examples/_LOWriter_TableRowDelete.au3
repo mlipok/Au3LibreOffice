@@ -45,19 +45,19 @@ Func Example()
 		Next
 	Next
 
-	MsgBox($MB_OK, "", "I am going to delete the top row of the Table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to delete the top row of the Table.")
 
 	; Delete the top Row. (Row 0).
 	_LOWriter_TableRowDelete($oTable, 0, 1)
 	If @error Then _ERROR($oDoc, "Failed to delete a row from the Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I am going to delete 2 rows from the 2nd down row (Row 1).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to delete 2 rows from the 2nd down row (Row 1).")
 
 	; Delete two rows from the 2nd down Row. (Row 1).
 	_LOWriter_TableRowDelete($oTable, 1, 2)
 	If @error Then _ERROR($oDoc, "Failed to delete a row from the Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -66,7 +66,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

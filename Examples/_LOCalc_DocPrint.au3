@@ -46,7 +46,7 @@ Func Example()
 	_LOCalc_RangeNumbers($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now print the new Calc Document. I suggest turning off your printer so you can cancel the print job without wasting paper.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now print the new Calc Document. I suggest turning off your printer so you can cancel the print job without wasting paper.")
 
 	; Print the document, 1 copy, Collate = True, "ALL" Pages, Wait = True, Duplex  = Off
 	_LOCalc_DocPrint($oDoc, 1, True, "ALL", True, $LOC_DUPLEX_OFF)
@@ -56,11 +56,11 @@ Func Example()
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now printed the document and then closed it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now printed the document and then closed it.")
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

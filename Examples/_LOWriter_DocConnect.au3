@@ -16,7 +16,7 @@ Func Example()
 	$sDocName = _LOWriter_DocGetName($oDoc, False)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to retrieve Writer Document name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created a blank L.O. Writer Doc, I will now Connect to it and use the new Object returned to close it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created a blank L.O. Writer Doc, I will now Connect to it and use the new Object returned to close it.")
 
 	; Connect to the document.
 	$oDoc2 = _LOWriter_DocConnect($sDocName)
@@ -28,7 +28,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $oDoc2, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOWriter_DocClose($oDoc2, False)
 	Exit

@@ -37,7 +37,7 @@ Func Example()
 	$avSettings = _LOCalc_CommentTextSettings($oComment)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Comment's Text settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Text settings are as follows: " & @CRLF & _
 			"Is the Comment Box's width adjusted to fit the Text's width? True/False: " & $avSettings[0] & @CRLF & _
 			"Is the Comment Box's height adjusted to fit the Text's height? True/False: " & $avSettings[1] & @CRLF & _
 			"Is the Text's font size adjusted to fit the Comment Box? True/False: " & $avSettings[2] & @CRLF & _
@@ -47,7 +47,7 @@ Func Example()
 			"The Top Spacing between the text and the Comment box border is, in Micrometers: " & $avSettings[6] & @CRLF & _
 			"The Bottom Spacing between the text and the Comment box border is, in Micrometers: " & $avSettings[7])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -56,7 +56,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

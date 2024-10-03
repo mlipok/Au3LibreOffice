@@ -45,20 +45,20 @@ Func Example()
 		Next
 	Next
 
-	MsgBox($MB_OK, "", "I am going to add to the top of the Table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to add to the top of the Table.")
 
 	; Add a Row above row 0 (First row)
 	_LOWriter_TableRowInsert($oTable, 1, 0)
 	If @error Then _ERROR($oDoc, "Failed to add a row to Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I am going to add 2 rows at the bottom of the table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to add 2 rows at the bottom of the table.")
 
 	; Add 2 Rows at the end, or below the last row 5 (last row), I add one row number to the last row number, (Row 5) to add a row at the very
 	; bottom of the table, because Libre Office Tables are 0 based.
 	_LOWriter_TableRowInsert($oTable, 2, 6)
 	If @error Then _ERROR($oDoc, "Failed to add a row to Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

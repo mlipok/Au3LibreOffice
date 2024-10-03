@@ -16,7 +16,7 @@ Func Example()
 	$bReturn = _LOWriter_DocIsModified($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to query document status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Has the document been modified since being created or saved? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Has the document been modified since being created or saved? True/False: " & $bReturn)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
@@ -30,9 +30,9 @@ Func Example()
 	$bReturn = _LOWriter_DocIsModified($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to query document status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now has the document been modified since being created or saved? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now has the document been modified since being created or saved? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

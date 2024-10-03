@@ -43,7 +43,7 @@ Func Example()
 	$asUndo = _LOCalc_DocUndoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of undo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Here is a list of available Undo Actions. Notice it lists only our Undo Action Group, not any of the other string inserts." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of available Undo Actions. Notice it lists only our Undo Action Group, not any of the other string inserts." & @CRLF & _
 			"That is because I have not ended the undo Action Group yet.")
 
 	; Display the available Undo action titles.
@@ -74,12 +74,12 @@ Func Example()
 	$asUndo = _LOCalc_DocUndoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of undo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Here is a list of available Undo Actions. Notice it still lists our Undo Action Group, and also the individual Cell filling I did after ending the Undo Group record.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of available Undo Actions. Notice it still lists our Undo Action Group, and also the individual Cell filling I did after ending the Undo Group record.")
 
 	; Display the available Undo action titles again, if any.
 	_ArrayDisplay($asUndo)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -88,7 +88,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

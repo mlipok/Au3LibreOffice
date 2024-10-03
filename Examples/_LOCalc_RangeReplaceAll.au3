@@ -61,7 +61,7 @@ Func Example()
 	$oSrchDesc = _LOCalc_SearchDescriptorCreate($oSheet, False, True, False, $LOC_SEARCH_IN_VALUES, False, True)
 	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will perform a Find and Replace all in the Sheet, looking for all cells that contain ""0"" at the  end and replacing it with ""Zero""." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will perform a Find and Replace all in the Sheet, looking for all cells that contain ""0"" at the  end and replacing it with ""Zero""." & _
 			" I will also set the background color of each result to a random background color.")
 
 	; Perform a Find and replace for the Entire Sheet, Searching for any cells containing 0$, and replacing it with "Zero".
@@ -88,7 +88,7 @@ Func Example()
 
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -96,7 +96,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

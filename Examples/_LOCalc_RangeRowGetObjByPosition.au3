@@ -23,7 +23,7 @@ Func Example()
 	_LOCalc_CellBackColor($oRow, $LOC_COLOR_BLACK)
 	If @error Then _ERROR($oDoc, "Failed to set Row's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now Retrieve Cell Range D3 to F7, and set the fourth down row's background color to black also, using the Cell Range." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now Retrieve Cell Range D3 to F7, and set the fourth down row's background color to black also, using the Cell Range." & @CRLF & _
 			"Notice it doesn't matter that the Cell Range doesn't cover the entire Row, the whole Row is set to black.")
 
 	; Retrieve Cell Range D3 to F7.
@@ -38,7 +38,7 @@ Func Example()
 	_LOCalc_CellBackColor($oRow, $LOC_COLOR_BLACK)
 	If @error Then _ERROR($oDoc, "Failed to set Row's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -47,7 +47,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

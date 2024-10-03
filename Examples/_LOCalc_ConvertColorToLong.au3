@@ -7,7 +7,7 @@ Example()
 Func Example()
 	Local $iRGB_TO_LONG, $iHEX_TO_LONG, $iCMYK_TO_LONG, $iHSB_TO_LONG
 
-	MsgBox($MB_OK, "", "I am going to demonstrate how to find the Long color format integer value from R(ed), G(reen), B(lue) values, a Hexadecimal value, " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to demonstrate how to find the Long color format integer value from R(ed), G(reen), B(lue) values, a Hexadecimal value, " & _
 			" C(yan), M(agenta), Y(ellow), and K(ey) values, and H(ue), S(aturation) B(rightness) values, from the color constant $LOC_COLOR_MAGENTA. According to " & _
 			"Libre Office, Magenta has the following color values: RGB = R, 191; G, 0; B, 65;" & @CRLF & _
 			"Hexadecimal = bf0041" & @CRLF & _
@@ -31,7 +31,7 @@ Func Example()
 	$iHSB_TO_LONG = _LOCalc_ConvertColorToLong("340", "100", "75")
 	If @error Then _ERROR("Failed to convert HSB color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The expected result is 12517441, the conversion results are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The expected result is 12517441, the conversion results are as follows: " & @CRLF & _
 			"RGB->Long = " & $iRGB_TO_LONG & @CRLF & _
 			"Hex->Long = " & $iHEX_TO_LONG & @CRLF & _
 			"CMYK->Long = " & $iCMYK_TO_LONG & @CRLF & _
@@ -41,6 +41,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	Exit
 EndFunc

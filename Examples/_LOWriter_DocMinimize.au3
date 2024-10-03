@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to minimize the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to minimize the document.")
 
 	; Minimize the document.
 	_LOWriter_DocMinimize($oDoc, True)
@@ -22,14 +22,14 @@ Func Example()
 	$bReturn = _LOWriter_DocMinimize($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to query Document status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the document currently minimized? True/False: " & $bReturn & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the document currently minimized? True/False: " & $bReturn & @CRLF & _
 			"Press Ok to restore the document to its previous position.")
 
 	; Restore the document to its original size.
 	_LOWriter_DocMinimize($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to restore Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -38,7 +38,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

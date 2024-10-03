@@ -48,12 +48,12 @@ Func Example()
 	$avCharStyleSettings = _LOWriter_CharStyleStrikeOut($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Character style's current Strikeout settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current Strikeout settings are as follows: " & @CRLF & _
 			"Strikeout words only? True/False: " & $avCharStyleSettings[0] & @CRLF & _
 			"Strike out words? True/False: " & $avCharStyleSettings[1] & @CRLF & _
 			"Strikeout line style, (See UDF Constants): " & $avCharStyleSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -62,7 +62,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

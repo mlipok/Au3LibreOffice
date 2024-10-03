@@ -20,7 +20,7 @@ Func Example()
 	$bExists = _LOCalc_CellStyleExists($oDoc, "NewCellStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Cell Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a Cell style called ""NewCellStyle"" exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a Cell style called ""NewCellStyle"" exist in the document? True/False: " & $bExists)
 
 	; Delete the newly created Cell Style.
 	_LOCalc_CellStyleDelete($oDoc, $oCellStyle)
@@ -30,9 +30,9 @@ Func Example()
 	$bExists = _LOCalc_CellStyleExists($oDoc, "NewCellStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Cell Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now does a Cell style called ""NewCellStyle"" exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now does a Cell style called ""NewCellStyle"" exist in the document? True/False: " & $bExists)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

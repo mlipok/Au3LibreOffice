@@ -30,14 +30,14 @@ Func Example()
 	$asStyles = _LOWriter_DirFrmtGetCurStyles($aoParagraphs[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve current styles in the text selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "These styles are currently set for the Paragraph. Some may be blank, indicating no style is set for that style " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "These styles are currently set for the Paragraph. Some may be blank, indicating no style is set for that style " & _
 			"type: " & @CRLF & _
 			"Paragraph Style: " & $asStyles[0] & @CRLF & _
 			"Character Style: " & $asStyles[1] & @CRLF & _
 			"Page Style: " & $asStyles[2] & @CRLF & _
 			"Numbering Style: " & $asStyles[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -46,7 +46,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -33,13 +33,13 @@ Func Example()
 
 	Next
 
-	MsgBox($MB_OK, "", "I will now delete Rows 2 and 3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now delete Rows 2 and 3.")
 
 	; Delete Rows 2 and 3, Row 2 is counted as Row 1 because L.O. Rows are 0 based.
 	_LOCalc_RangeRowDelete($oSheet, 1, 2)
 	If @error Then _ERROR($oDoc, "Failed to delete rows. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now retrieve Cell Range C3 to D5 and delete Row 3's contents using the range.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now retrieve Cell Range C3 to D5 and delete Row 3's contents using the range.")
 
 	; Retrieve Cell Range C3 to D5.
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "C3", "D5")
@@ -49,7 +49,7 @@ Func Example()
 	_LOCalc_RangeRowDelete($oCellRange, 0)
 	If @error Then _ERROR($oDoc, "Failed to delete column. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

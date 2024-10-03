@@ -33,13 +33,13 @@ Func Example()
 	$avPageStyleSettings = _LOCalc_PageStyleHeaderShadow($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Page Style's current Header Shadow settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Header Shadow settings are as follows: " & @CRLF & _
 			"The shadow width is, is Micrometers: " & $avPageStyleSettings[0] & @CRLF & _
 			"The Shadow color is, in Long Color format: " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the Color transparent? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"The Shadow location is, (see UDF Constants): " & $avPageStyleSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

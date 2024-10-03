@@ -43,7 +43,7 @@ Func Example()
 	_LOCalc_RangeData($oCellRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now save this Document to the desktop folder then open a new document and link this Sheet from Document 1 into the new document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now save this Document to the desktop folder then open a new document and link this Sheet from Document 1 into the new document.")
 
 	$sFilePathName = @TempDir & "\TestExportDoc_" & @MDAY & ".ods"
 
@@ -63,7 +63,7 @@ Func Example()
 	_LOCalc_SheetActivate($oDoc2, $oSheet2)
 	If @error Then _ERROR($oDoc, "Failed to activate Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2, $sPath)
 
-	MsgBox($MB_OK, "", "I have linked the Sheet from Document 1 into Document 2, the new sheet is called: " & _LOCalc_SheetName($oDoc2, $oSheet2))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have linked the Sheet from Document 1 into Document 2, the new sheet is called: " & _LOCalc_SheetName($oDoc2, $oSheet2))
 
 	; Create a new Sheet named "Test Sheet" in the source Document.
 	$oSheet = _LOCalc_SheetAdd($oDoc, "Test Sheet")
@@ -98,7 +98,7 @@ Func Example()
 	_LOCalc_DocSave($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to Save changes to Doc. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2, $sPath)
 
-	MsgBox($MB_OK, "", "I will now modify the Linked Sheet in Document 2 to be linked to a different Sheet in Document 1, ""Test Sheet"".")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now modify the Linked Sheet in Document 2 to be linked to a different Sheet in Document 1, ""Test Sheet"".")
 
 	; Modify the linked Sheet to link to "Test Sheet" in Document 1.
 	_LOCalc_SheetLinkModify($oSheet2, Null, "Test Sheet")
@@ -108,12 +108,12 @@ Func Example()
 	$avSettings = _LOCalc_SheetLinkModify($oSheet2)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Linked Sheet settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2, $sPath)
 
-	MsgBox($MB_OK, "", "Current Sheet's link settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Current Sheet's link settings are as follows: " & @CRLF & _
 			"The Save Path of the linked document is: " & $avSettings[0] & @CRLF & _
 			"The currently linked Sheet name is: " & $avSettings[1] & @CRLF & _
 			"The link mode is (See UDF Constants): " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -129,7 +129,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oDoc2 = Null, $sPath = Null)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOCalc_DocClose($oDoc2, False)
 	If IsString($sPath) Then FileDelete($sPath)

@@ -78,7 +78,7 @@ Func Example()
 	_LOCalc_SearchDescriptorSimilarityModify($oSrchDesc, True, False, 2, 3, 1)
 	If @error Then _ERROR($oDoc, "Failed to modify Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will perform a Find in the Sheet, looking for all cells that contain ""Seven"" using a similarity search." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will perform a Find in the Sheet, looking for all cells that contain ""Seven"" using a similarity search." & _
 			" I will  set the background color of each result to a random background color.")
 
 	; Perform a Find all for the Entire Sheet, Search for any cells containing Seven.
@@ -91,7 +91,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -99,7 +99,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

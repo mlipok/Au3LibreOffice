@@ -56,7 +56,7 @@ Func Example()
 	_LOCalc_SheetPrintColumnsRepeat($oSheet, $oCellRange, True)
 	If @error Then _ERROR($oDoc, "Failed to set Column Heading Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have set the Columns A1 to B1 to repeat automatically on every printed page to the right.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have set the Columns A1 to B1 to repeat automatically on every printed page to the right.")
 
 	; Retrieve the current print ranges set for this sheet.
 	$avSettings = _LOCalc_SheetPrintColumnsRepeat($oSheet)
@@ -66,7 +66,7 @@ Func Example()
 	$sRanges &= _LOCalc_RangeGetAddressAsName($avSettings[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Range(s) currently set to be repeated as Column Headers are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Range(s) currently set to be repeated as Column Headers are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"I will now reset the Column Repeat Range.")
 
 	; Reset the Row repeat Range to the whole sheet.
@@ -83,7 +83,7 @@ Func Example()
 	$sRanges &= _LOCalc_RangeGetAddressAsName($avSettings[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Range(s) currently set to be repeated as Column Headers are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Range(s) currently set to be repeated as Column Headers are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -91,7 +91,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

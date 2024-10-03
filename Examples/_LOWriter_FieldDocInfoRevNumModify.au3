@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldDocInfoRevNumInsert($oDoc, $oViewCursor, False, True, 25)
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Doc Info Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Doc Info Field settings.")
 
 	; Set the Document's General Property settings, Set the Revision Number to 75
 	_LOWriter_DocGenProp($oDoc, Null, 75)
@@ -38,11 +38,11 @@ Func Example()
 	$avSettings = _LOWriter_FieldDocInfoRevNumModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Doc Info Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Doc Info Field settings are: " & @CRLF & _
 			"Is the content of this field fixed? True/ False: " & $avSettings[0] & @CRLF & _
 			"This document has been revised: " & $avSettings[1] & " times.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -51,7 +51,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -33,7 +33,7 @@ Func Example()
 	$asUndo = _LOWriter_DocUndoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of undo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Here is a list of available Undo Actions. Notice each action, such as inserting a new line is listed." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of available Undo Actions. Notice each action, such as inserting a new line is listed." & @CRLF & _
 			"I will reset the Undo and Redo Actions lists, insert some more text, but this time group all the actions together as one Undo action, and then show the Undo Actions list again.")
 
 	; Display the available Undo action titles.
@@ -66,7 +66,7 @@ Func Example()
 	; Display the available Undo action titles again, if any.
 	_ArrayDisplay($asUndo)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -75,7 +75,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

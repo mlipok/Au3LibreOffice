@@ -49,7 +49,7 @@ Func Example()
 	_LOWriter_FieldRefMarkSet($oDoc, $oViewCursor, "Ref. 3", False)
 	If @error Then _ERROR($oDoc, "Failed to insert a Reference Mark. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Reference Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Reference Field.")
 
 	; Modify the Reference Field settings. Set the Referenced Mark to "Ref. 2", and Refer using $LOW_FIELD_REF_USING_ABOVE_BELOW
 	_LOWriter_FieldRefModify($oDoc, $oField, "Ref. 2", $LOW_FIELD_REF_USING_ABOVE_BELOW)
@@ -59,11 +59,11 @@ Func Example()
 	$avSettings = _LOWriter_FieldRefModify($oDoc, $oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Reference Mark name being referenced is: " & $avSettings[0] & @CRLF & _
 			"The Referenced mark is being referenced using this format, (see UDF Constants): " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -72,7 +72,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

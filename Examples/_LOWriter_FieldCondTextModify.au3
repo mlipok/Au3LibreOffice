@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldCondTextInsert($oDoc, $oViewCursor, False, "(1+1) > 2", "Yes", "No!")
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Conditional Text Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Conditional Text Field.")
 
 	; Modify the Conditional Text Field settings. Set the New condition to If the Page Count = 1 Then display "There is 1 Page" , else display "There are many pages"
 	_LOWriter_FieldCondTextModify($oField, "PAGE == 1", "There is 1 Page", "There are many pages")
@@ -34,13 +34,13 @@ Func Example()
 	$avSettings = _LOWriter_FieldCondTextModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Conditional Text Field's Condition to evaluate is: " & $avSettings[0] & @CRLF & _
 			"If the condition is true, display this text: " & $avSettings[1] & @CRLF & _
 			"If the condition is False, display this text: " & $avSettings[2] & @CRLF & _
 			"Is the condition currently evaluated as True? True/False: " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -49,7 +49,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

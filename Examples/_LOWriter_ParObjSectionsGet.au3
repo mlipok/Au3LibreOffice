@@ -44,7 +44,7 @@ Func Example()
 	$aoSections = _LOWriter_ParObjSectionsGet($aoParagraphs[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Paragraph Object sections. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "There were " & @extended & " paragraph sections returned." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " paragraph sections returned." & _
 			" As an example of what a paragraph section can be used for, I will change the font size of the first paragraph section to 22 point.")
 
 	; An example of what I can do with a paragraph section Object. Set the first paragraph section's font size to 22 point. The Object
@@ -55,7 +55,7 @@ Func Example()
 	; Display the paragraph sections.
 	_ArrayDisplay($aoSections)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -64,7 +64,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

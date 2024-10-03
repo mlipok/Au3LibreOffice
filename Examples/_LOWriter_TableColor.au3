@@ -32,11 +32,11 @@ Func Example()
 	$avTableProps = _LOWriter_TableColor($oTable)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Current Text Table color settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current Text Table color settings are: " & @CRLF & _
 			"Table background color: " & $avTableProps[0] & @CRLF & _
 			"Background is transparent? True/False: " & $avTableProps[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -41,9 +41,9 @@ Func Example()
 	$iReturn = _LOCalc_CellStyleNumberFormat($oDoc, $oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Style's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The ""Default"" Cell Style Numbering Format Key is: " & $iReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The ""Default"" Cell Style Numbering Format Key is: " & $iReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

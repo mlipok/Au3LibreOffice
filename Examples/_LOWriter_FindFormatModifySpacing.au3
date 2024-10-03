@@ -52,13 +52,13 @@ Func Example()
 	If IsObj($oResult) Then
 		$sResultString = _LOWriter_DocGetString($oResult)
 		If @error Then _ERROR($oDoc, "Failed to retrieve String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-		MsgBox($MB_OK, "", "The search was successful, I searched using a Find Format, looking for any paragraphs that have the Proportional line spacing, " & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched using a Find Format, looking for any paragraphs that have the Proportional line spacing, " & _
 				"containing the word ""Search"", and found the following: " & $sResultString)
 	Else
-		MsgBox($MB_OK, "", "The search was successful, but returned no results.")
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, but returned no results.")
 	EndIf
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

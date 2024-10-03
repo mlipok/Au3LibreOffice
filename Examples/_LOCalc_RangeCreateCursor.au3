@@ -19,7 +19,7 @@ Func Example()
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will create a Sheet Cursor for the Range A1 to A5, then I will set the background Color to Black to show what area that Cursor is covering.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will create a Sheet Cursor for the Range A1 to A5, then I will set the background Color to Black to show what area that Cursor is covering.")
 
 	; Create a Sheet Cursor for the Range.
 	$oSheetCursor = _LOCalc_RangeCreateCursor($oSheet, $oCellRange)
@@ -29,7 +29,7 @@ Func Example()
 	_LOCalc_CellBackColor($oSheetCursor, $LOC_COLOR_BLACK)
 	If @error Then _ERROR($oDoc, "Failed to set background color for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now move the cursor right 5 Spaces, then set the background color to Blue.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now move the cursor right 5 Spaces, then set the background color to Blue.")
 
 	; Move the Cursor 5 Spaces Next(Right)
 	_LOCalc_SheetCursorMove($oSheetCursor, $LOC_SHEETCUR_GOTO_NEXT, 0, 0, 5)
@@ -39,7 +39,7 @@ Func Example()
 	_LOCalc_CellBackColor($oSheetCursor, $LOC_COLOR_BLUE)
 	If @error Then _ERROR($oDoc, "Failed to set background color for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now move the cursor right 1 Space, then expand the selection to cover 3 columns, and 6 Rows, then set the background color to Red.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now move the cursor right 1 Space, then expand the selection to cover 3 columns, and 6 Rows, then set the background color to Red.")
 
 	; Move the Cursor 1 Spaces Next(Right)
 	_LOCalc_SheetCursorMove($oSheetCursor, $LOC_SHEETCUR_GOTO_NEXT, 0, 0, 1)
@@ -53,7 +53,7 @@ Func Example()
 	_LOCalc_CellBackColor($oSheetCursor, $LOC_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to set background color for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -62,7 +62,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

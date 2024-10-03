@@ -36,7 +36,7 @@ Func Example()
 	$sFormula = _LOCalc_CellFormula($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell A2 Formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current formula set for cell A2 is: " & $sFormula)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current formula set for cell A2 is: " & $sFormula)
 
 	; Retrieve the A3 Cell.
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A3")
@@ -50,7 +50,7 @@ Func Example()
 	$sFormula = _LOCalc_CellFormula($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell A3 Formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current formula set for cell A3 is: " & $sFormula)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current formula set for cell A3 is: " & $sFormula)
 
 	; Retrieve the A4 Cell.
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A4")
@@ -64,9 +64,9 @@ Func Example()
 	$sFormula = _LOCalc_CellFormula($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell A4 Formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current formula set for cell A4 is: " & $sFormula)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current formula set for cell A4 is: " & $sFormula)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -75,7 +75,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

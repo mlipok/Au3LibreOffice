@@ -28,7 +28,7 @@ Func Example()
 	$iReturn = _LOWriter_DocViewCursorGetPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The ViewCursor is located at the following position:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The ViewCursor is located at the following position:" & @CRLF & _
 			"Horizontal, measured in Micrometers: " & $iReturn & @CRLF & _
 			"Vertical, measured in Micrometers: " & @extended & @CRLF & @CRLF & _
 			"Press ok, and I will now move the cursor to the end of the document.")
@@ -41,11 +41,11 @@ Func Example()
 	$iReturn = _LOWriter_DocViewCursorGetPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The ViewCursor is now located at the following position:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The ViewCursor is now located at the following position:" & @CRLF & _
 			"Horizontal, measured in Micrometers: " & $iReturn & @CRLF & _
 			"Vertical, measured in Micrometers: " & @extended)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -54,7 +54,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

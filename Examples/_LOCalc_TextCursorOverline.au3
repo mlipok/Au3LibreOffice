@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_TextCursorInsertString($oTextCursor, "Hi! Testing.")
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now select all the words, and set Overline only words to True, Overline style, Dash Dot, and Overline in the color Gold.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now select all the words, and set Overline only words to True, Overline style, Dash Dot, and Overline in the color Gold.")
 
 	; Go to the Start.
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_START, 1, False)
@@ -46,13 +46,13 @@ Func Example()
 	$avSettings = _LOCalc_TextCursorOverline($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Overline settings at the Cursor's current position are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Overline settings at the Cursor's current position are as follows: " & @CRLF & _
 			"Are words only Overlined? True/False: " & $avSettings[0] & @CRLF & _
 			"The Overline style is (See UDF Constants): " & $avSettings[1] & @CRLF & _
 			"Is the Overline colored? True/False: " & $avSettings[2] & @CRLF & _
 			"The Overline color is (in Long Integer format): " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

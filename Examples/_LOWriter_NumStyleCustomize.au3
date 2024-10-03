@@ -54,7 +54,7 @@ Func Example()
 	$avSettings = _LOWriter_NumStyleCustomize($oDoc, $oNumStyle, 2)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Numbering Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Numbering style's current Customization settings for level 2 are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Numbering style's current Customization settings for level 2 are as follows: " & @CRLF & _
 			"The Number format used is, (see UDF constants): " & $avSettings[0] & @CRLF & _
 			"The Numbering starts at: " & $avSettings[1] & @CRLF & _
 			"The Character Style to use is: " & $avSettings[2] & @CRLF & _
@@ -63,7 +63,7 @@ Func Example()
 			"The Separator After the Numbering symbol is: " & $avSettings[5] & @CRLF & _
 			"Consecutively number levels? True/False: " & $avSettings[6])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -72,7 +72,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -45,20 +45,20 @@ Func Example()
 		Next
 	Next
 
-	MsgBox($MB_OK, "", "I am going to add a column before the first column in this table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to add a column before the first column in this table.")
 
 	; Insert 1 column before the 0th (first) column
 	_LOWriter_TableColumnInsert($oTable, 1, 0)
 	If @error Then _ERROR($oDoc, "Failed to insert column into Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I am going to add another 2 columns after the last column in this table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to add another 2 columns after the last column in this table.")
 
 	; Insert 2 columns after the 3rd (last) column, to do this, I add one to the current number of columns, remembering that column numbering
 	; starts at 0.
 	_LOWriter_TableColumnInsert($oTable, 2, 4)
 	If @error Then _ERROR($oDoc, "Failed to insert column into Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

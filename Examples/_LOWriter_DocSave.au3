@@ -13,7 +13,7 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now save the new Writer Document to the desktop folder.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now save the new Writer Document to the desktop folder.")
 
 	$sFilePathName = _TempFile(@DesktopDir & "\", "TestExportDoc_", ".odt")
 
@@ -21,7 +21,7 @@ Func Example()
 	$sPath = _LOWriter_DocSaveAs($oDoc, $sFilePathName)
 	If @error Then _ERROR($oDoc, "Failed to Save the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created and saved the document to your Desktop, found at the following Path: " _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved the document to your Desktop, found at the following Path: " _
 			& $sPath & @CRLF & "Press Ok to write some data to it and then save the changes and close the document.")
 
 	; Retrieve the document view cursor to insert text with.
@@ -40,13 +40,13 @@ Func Example()
 	_LOWriter_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have written and saved the data, and closed the document. I will now open it up again to show it worked.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have written and saved the data, and closed the document. I will now open it up again to show it worked.")
 
 	; Open the document.
 	$oDoc = _LOWriter_DocOpen($sPath)
 	If @error Then _ERROR($oDoc, "Failed to open Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document was successfully opened. Press OK to close and delete it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document was successfully opened. Press OK to close and delete it.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -57,7 +57,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

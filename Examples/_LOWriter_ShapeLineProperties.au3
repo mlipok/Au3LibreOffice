@@ -34,7 +34,7 @@ Func Example()
 	$avSettings = _LOWriter_ShapeLineProperties($oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Shape's Line Properties settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's Line Properties settings are as follows: " & @CRLF & _
 			"The Line Style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Line color is, is long Color format: " & $avSettings[1] & @CRLF & _
 			"The Line's Width is, in Micrometers: " & $avSettings[2] & @CRLF & _
@@ -42,7 +42,7 @@ Func Example()
 			"The Line Corner Style is, (See UDF Constants): " & $avSettings[4] & @CRLF & _
 			"The Line Cap Style is, (See UDF Constants): " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -51,7 +51,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

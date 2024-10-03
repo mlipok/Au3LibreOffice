@@ -38,7 +38,7 @@ Func Example()
 	$avPageStyleSettings = _LOCalc_PageStyleFooter($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Page Style's current Footer settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Footer settings are as follows: " & @CRLF & _
 			"Is the Footer on for this Page Style? True/False: " & $avPageStyleSettings[0] & @CRLF & _
 			"Is the content on Left and Right pages the same? True/False: " & $avPageStyleSettings[1] & @CRLF & _
 			"Is the content on the first page the same? True/False: " & $avPageStyleSettings[2] & @CRLF & _
@@ -48,7 +48,7 @@ Func Example()
 			"The height of the Footer, in Micrometers: " & $avPageStyleSettings[6] & @CRLF & _
 			"Is the height of the Footer automatically adjusted? True/False: " & $avPageStyleSettings[7])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -57,7 +57,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -71,13 +71,13 @@ Func Example()
 	; set the modified data back into the array
 	$avData[2] = $avColumn
 
-	MsgBox($MB_OK, "", "I am about to modify the Table data.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am about to modify the Table data.")
 
 	; Set the Table Data
 	_LOWriter_TableSetData($oTable, $avData)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -86,7 +86,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

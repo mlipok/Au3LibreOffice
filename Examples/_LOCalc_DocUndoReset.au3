@@ -51,7 +51,7 @@ Func Example()
 	$asRedo = _LOCalc_DocRedoGetAllActionTitles($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Here is a list of the available Undo actions, and the available Redo actions. Notice I also started an Undo Action group, which is listed in the Undo list.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of the available Undo actions, and the available Redo actions. Notice I also started an Undo Action group, which is listed in the Undo list.")
 
 	; Display the available Undo action titles.
 	_ArrayDisplay($asUndo)
@@ -63,7 +63,7 @@ Func Example()
 	_LOCalc_DocUndoReset($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to Reset undo/redo action titles. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have reset the Undo/Redo Actions lists. I will retrieve the available Undo and Redo Actions lists again and show that they are now empty, including my Undo action group.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have reset the Undo/Redo Actions lists. I will retrieve the available Undo and Redo Actions lists again and show that they are now empty, including my Undo action group.")
 
 	; Retrieve an array of available undo action titles again.
 	$asUndo = _LOCalc_DocUndoGetAllActionTitles($oDoc)
@@ -79,7 +79,7 @@ Func Example()
 	; Display the available Redo action titles.
 	_ArrayDisplay($asRedo)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -88,7 +88,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

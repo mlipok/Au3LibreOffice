@@ -43,7 +43,7 @@ Func Example()
 	$iVertOrient = _LOWriter_CellVertOrient($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table cell current vertical orientation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now demonstrate modifying a cell's vertical text orientation. The current setting is: " & $iVertOrient & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now demonstrate modifying a cell's vertical text orientation. The current setting is: " & $iVertOrient & _
 			@CRLF & " The possible settings are: " & @CRLF & "$LOW_ORIENT_VERT_NONE(0)," & @CRLF & "$LOW_ORIENT_VERT_TOP(1)," & @CRLF & _
 			"$LOW_ORIENT_VERT_CENTER(2)," & @CRLF & "$LOW_ORIENT_VERT_BOTTOM(3)")
 
@@ -54,7 +54,7 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text vertically aligned to the bottom.")
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_BOTTOM(3).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_BOTTOM(3).")
 
 	_LOWriter_CellVertOrient($oCell, $LOW_ORIENT_VERT_CENTER)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell vertical orientation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -63,7 +63,7 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text vertically aligned to the Center.")
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_CENTER(2).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_CENTER(2).")
 
 	_LOWriter_CellVertOrient($oCell, $LOW_ORIENT_VERT_TOP)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell vertical orientation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -72,9 +72,9 @@ Func Example()
 	_LOWriter_CellString($oCell, "Text vertically aligned to the Top.")
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_TOP(1).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now set the Vertical Orientation to $LOW_ORIENT_VERT_TOP(1).")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -83,7 +83,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

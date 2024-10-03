@@ -65,13 +65,13 @@ Func Example()
 	$oFilterDesc = _LOCalc_FilterDescriptorCreate($oCellRange, $atFilterFields, False, True, False, False)
 	If @error Then _ERROR($oDoc, "Failed to create a Filter Descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to perform the Filtering Operation.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to perform the Filtering Operation.")
 
 	; Perform a Filter operation on Range A1 to B5.
 	_LOCalc_RangeFilter($oCellRange, $oFilterDesc)
 	If @error Then _ERROR($oDoc, "Failed to perform Filter Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -79,7 +79,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

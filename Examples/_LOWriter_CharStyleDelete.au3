@@ -20,7 +20,7 @@ Func Example()
 	$bExists = _LOWriter_CharStyleExists($oDoc, "NewCharStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Character Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a Character style called ""NewCharStyle"" exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a Character style called ""NewCharStyle"" exist in the document? True/False: " & $bExists)
 
 	; Delete the Character style, Force delete if it is in use, and replace it with Character style "Example".
 	_LOWriter_CharStyleDelete($oDoc, $oCharStyle, True, "Example")
@@ -29,9 +29,9 @@ Func Example()
 	$bExists = _LOWriter_CharStyleExists($oDoc, "NewCharStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Character Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a Character style called ""NewCharStyle"" still exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a Character style called ""NewCharStyle"" still exist in the document? True/False: " & $bExists)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -40,7 +40,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

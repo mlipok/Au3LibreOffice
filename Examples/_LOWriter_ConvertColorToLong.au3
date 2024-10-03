@@ -28,7 +28,7 @@ Func Example()
 	_LOWriter_TableColor($oTable, $LOW_COLOR_MAGENTA, False)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I am going to demonstrate how to find the Long color format integer value from R(ed), G(reen), B(lue) values, a Hexadecimal value, " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to demonstrate how to find the Long color format integer value from R(ed), G(reen), B(lue) values, a Hexadecimal value, " & _
 			" C(yan), M(agenta), Y(ellow), and K(ey) values, and H(ue), S(aturation) B(rightness) values, from the color constant $LOW_COLOR_MAGENTA. According to " & _
 			"Libre Office, Magenta has the following color values: RGB = R, 191; G, 0; B, 65;" & @CRLF & _
 			"Hexadecimal = bf0041" & @CRLF & _
@@ -52,14 +52,14 @@ Func Example()
 	$iHSB_TO_LONG = _LOWriter_ConvertColorToLong("340", "100", "75")
 	If @error Then _ERROR($oDoc, "Failed to convert HSB color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The expected result is 12517441, the conversion results are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The expected result is 12517441, the conversion results are as follows: " & @CRLF & _
 			"RGB->Long = " & $iRGB_TO_LONG & @CRLF & _
 			"Hex->Long = " & $iHEX_TO_LONG & @CRLF & _
 			"CMYK->Long = " & $iCMYK_TO_LONG & @CRLF & _
 			"HSB->Long = " & $iHSB_TO_LONG & @CRLF & @CRLF & _
 			"HSB is a little off, however that is as close as I can mathematically get it. It shouldn't cause a noticeable color difference.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

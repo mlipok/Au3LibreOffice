@@ -16,7 +16,7 @@ Func Example()
 $bReturn = _LOCalc_DocColumnsRowsAreFrozen($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to query Document for frozen panes. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Are there any frozen panes in the document? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Are there any frozen panes in the document? True/False: " & $bReturn)
 
 	; Freeze the first Row in the Document.
 	_LOCalc_DocColumnsRowsFreeze($oDoc, 0, 1)
@@ -26,16 +26,16 @@ $bReturn = _LOCalc_DocColumnsRowsAreFrozen($oDoc)
 $bReturn = _LOCalc_DocColumnsRowsAreFrozen($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to query Document for frozen panes. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now are there any frozen panes in the document? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now are there any frozen panes in the document? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

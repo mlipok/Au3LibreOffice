@@ -27,13 +27,13 @@ Func Example()
 	_LOCalc_CellStyleBackColor($oCellStyle, $LOC_COLOR_TEAL)
 	If @error Then _ERROR($oDoc, "Failed to set Cell Style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the current Cell style to ""Status."" for Cell Range A2-B3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the current Cell style to ""Status."" for Cell Range A2-B3.")
 
 	; Set the Cell range to Cell style "Status"
 	_LOCalc_CellStyleSet($oDoc, $oCellRange, "Status")
 	If @error Then _ERROR($oDoc, "Failed to set the Cell style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -42,7 +42,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

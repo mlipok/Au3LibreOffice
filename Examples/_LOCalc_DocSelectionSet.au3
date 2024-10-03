@@ -23,7 +23,7 @@ Func Example()
 	_LOCalc_DocSelectionSet($oDoc, $oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to select Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have selected the Cell Range A1:A5. Now I will select an Individual cell (B3).")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have selected the Cell Range A1:A5. Now I will select an Individual cell (B3).")
 
 	; Retrieve Cell B3
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "B3")
@@ -33,7 +33,7 @@ Func Example()
 	_LOCalc_DocSelectionSet($oDoc, $oCell)
 	If @error Then _ERROR($oDoc, "Failed to select Cell. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now selected the Cell B3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now selected the Cell B3.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

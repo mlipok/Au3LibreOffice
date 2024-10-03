@@ -33,13 +33,13 @@ Func Example()
 	$avSettings = _LOWriter_FootnoteSettingsContinuation($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Footnote settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document's current Footnote Continuation settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document's current Footnote Continuation settings are as follows: " & @CRLF & _
 			"The text that appears at the end of a Footnote to indicate it is continued is: " & $avSettings[0] & @CRLF & _
 			"The text that appears at the beginning of a Footnote to indicate it was continued is: " & $avSettings[1] & @CRLF & _
 			"Note, Libre Office automatically inserts a Page number after the continuation notices, so where ""Page"" appears, there would be a page number " & _
 			"directly after it.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

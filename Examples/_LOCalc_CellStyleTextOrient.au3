@@ -45,13 +45,13 @@ Func Example()
 	$avSettings = _LOCalc_CellStyleTextOrient($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Cell Style's current Text Orientation settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell Style's current Text Orientation settings are as follows: " & @CRLF & _
 			"The Cell Style Content Rotation is (in degrees): " & $avSettings[0] & @CRLF & _
 			"The Rotation reference is (See UDF Constants): " & $avSettings[1] & @CRLF & _
 			"Is Text stacked vertically? True/False: " & $avSettings[2] & @CRLF & _
 			"Is Asian layout active? True/False: " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

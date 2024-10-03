@@ -32,7 +32,7 @@ Func Example()
 	$oSetVarField = _LOWriter_FieldSetVarInsert($oDoc, $oViewCursor, $sMasterFieldName, "2300", False)
 	If @error Then _ERROR($oDoc, "Failed to insert a text field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Set Variable Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Set Variable Field.")
 
 	; Retrieve this Number Format key, #,##0
 	$iFormatKey = _LOWriter_FormatKeyCreate($oDoc, "#,##0")
@@ -45,12 +45,12 @@ Func Example()
 	$avSettings = _LOWriter_FieldSetVarModify($oDoc, $oSetVarField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Set Variable Field's current value is: " & $avSettings[0] & @CRLF & _
 			"The Number Format key used to display the Set Variable Field's value is: " & $avSettings[1] & @CRLF & _
 			"Is the Set Variable Field visible in the document? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -59,7 +59,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

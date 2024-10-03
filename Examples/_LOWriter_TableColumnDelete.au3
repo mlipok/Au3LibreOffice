@@ -45,17 +45,17 @@ Func Example()
 		Next
 	Next
 
-	MsgBox($MB_OK, "", "I am going to delete the 3rd column over, Column 2, in this table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to delete the 3rd column over, Column 2, in this table.")
 
 	_LOWriter_TableColumnDelete($oTable, 2, 1)
 	If @error Then _ERROR($oDoc, "Failed to delete Text Table Column. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I am going to delete the columns from the 2nd column over, Column 1, to the last column in this table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I am going to delete the columns from the 2nd column over, Column 1, to the last column in this table.")
 
 	_LOWriter_TableColumnDelete($oTable, 1, 2)
 	If @error Then _ERROR($oDoc, "Failed to delete Text Table Column. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -64,7 +64,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

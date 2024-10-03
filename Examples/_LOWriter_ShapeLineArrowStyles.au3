@@ -34,7 +34,7 @@ Func Example()
 	$avSettings = _LOWriter_ShapeLineArrowStyles($oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Shape settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Shape's Arrow Style settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Shape's Arrow Style settings are as follows: " & @CRLF & _
 			"The Start Arrowhead Style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Start Arrowhead Width is, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Is the Start Arrowhead centered on the line end? True/False: " & $avSettings[2] & @CRLF & _
@@ -43,7 +43,7 @@ Func Example()
 			"The End Arrowhead Width is, in Micrometers: " & $avSettings[5] & @CRLF & _
 			"Is the Start Arrowhead centered on the line end? True/False: " & $avSettings[6])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

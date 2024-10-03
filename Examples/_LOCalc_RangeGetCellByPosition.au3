@@ -39,7 +39,7 @@ Func Example()
 	_LOCalc_CellFormula($oCell, "=A1 * 2")
 	If @error Then _ERROR($oDoc, "Failed to Set C3 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now Retrieve Cell Range B4 to D6, and Retrieve the Cell positioned at 2, 2, then set its Background color to Red.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now Retrieve Cell Range B4 to D6, and Retrieve the Cell positioned at 2, 2, then set its Background color to Red.")
 
 	; Retrieve Cell Range B4 to D6.
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B4", "D6")
@@ -53,7 +53,7 @@ Func Example()
 	_LOCalc_CellBackColor($oCell, $LOC_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to set Cell's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -62,7 +62,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

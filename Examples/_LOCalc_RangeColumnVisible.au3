@@ -24,7 +24,7 @@ Func Example()
 	$bVisible = _LOCalc_RangeColumnVisible($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's current visibility setting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is Column D currently visible? True/False: " & $bVisible)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is Column D currently visible? True/False: " & $bVisible)
 
 	; Set Column D to invisible.
 	_LOCalc_RangeColumnVisible($oColumn, False)
@@ -34,9 +34,9 @@ Func Example()
 	$bVisible = _LOCalc_RangeColumnVisible($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column's current visibility setting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now is Column D visible? True/False: " & $bVisible)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now is Column D visible? True/False: " & $bVisible)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -58,7 +58,7 @@ Func Example()
 	_LOCalc_RangeSort($oDoc, $oCellRange, $tSortField, False, False, False)
 	If @error Then _ERROR($oDoc, "Failed to perform Sort Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have performed a Sorting Operation for Range A1 to B5. I will now modify the sort field, and perform the sort operation again.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have performed a Sorting Operation for Range A1 to B5. I will now modify the sort field, and perform the sort operation again.")
 
 	; Modify The Sort Field.
 	; Make this Sort Field apply to Row Column A (0, because Columns are 0 based internally in Libre Office Calc.)
@@ -75,13 +75,13 @@ Func Example()
 	$avSettings = _LOCalc_SortFieldModify($tSortField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Sort Field's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Sort Field's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Sort Field's current settings are as follows: " & @CRLF & _
 			"Which Column or Row is this Sort Field being applied to?: " & $avSettings[0] & @CRLF & _
 			"What data type is this Sort Field set to? (See UDF constants): " & $avSettings[1] & @CRLF & _
 			"Will data be sorted in ascending order? True/False: " & $avSettings[2] & @CRLF & _
 			"Is the sort Case Sensitive? True/False: " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -89,7 +89,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

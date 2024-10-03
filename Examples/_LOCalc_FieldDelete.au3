@@ -30,13 +30,13 @@ Func Example()
 	$mField = _LOCalc_FieldDateTimeInsert($oDoc, $oTextCursor, True)
 	If @error Then _ERROR($oDoc, "Failed to insert field at Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to delete the newly inserted Field from cell A1.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to delete the newly inserted Field from cell A1.")
 
 	; Delete the Field
 	_LOCalc_FieldDelete($mField)
 	If @error Then _ERROR($oDoc, "Failed to delete field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now insert a field into the header, and then demonstrate how to delete it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now insert a field into the header, and then demonstrate how to delete it.")
 
 	; Retrieve the currently active Sheet's Page Style name.
 	$sPageStyle = _LOCalc_PageStyleSet($oDoc, $oSheet)
@@ -62,7 +62,7 @@ Func Example()
 	_LOCalc_PageStyleHeaderObj($oPageStyle, $oHeader)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style header object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have inserted the Field into the Left Side header, I will now demonstrate deleting it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have inserted the Field into the Left Side header, I will now demonstrate deleting it.")
 
 	; Retrieve the Header Object
 	$oHeader = _LOCalc_PageStyleHeaderObj($oPageStyle, Default)
@@ -84,7 +84,7 @@ Func Example()
 	_LOCalc_PageStyleHeaderObj($oPageStyle, $oHeader)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Page Style header object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -92,7 +92,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

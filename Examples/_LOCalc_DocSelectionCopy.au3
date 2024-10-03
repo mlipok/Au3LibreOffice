@@ -35,7 +35,7 @@ Func Example()
 	_LOCalc_RangeData($oRange, $aavData)
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now select the Range A1:A3 and copy it, then paste it in to the document beginning at Cell C4.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now select the Range A1:A3 and copy it, then paste it in to the document beginning at Cell C4.")
 
 	; Select the Range.
 	_LOCalc_DocSelectionSet($oDoc, $oRange)
@@ -57,14 +57,14 @@ Func Example()
 	_LOCalc_DocSelectionPaste($oDoc, $oSelection)
 	If @error Then _ERROR($oDoc, "Failed to paste Selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

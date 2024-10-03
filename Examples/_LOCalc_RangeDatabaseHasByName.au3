@@ -28,13 +28,13 @@ Func Example()
 	$bReturn = _LOCalc_RangeDatabaseHasByName($oDoc, "My AutoIt Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Database Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the document contain a Database Range with the name of ""My AutoIt Range""? " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Database Range with the name of ""My AutoIt Range""? " & $bReturn)
 
 	; Check if the document contains a Database Range with the name of "Fake Range".
 	$bReturn = _LOCalc_RangeDatabaseHasByName($oDoc, "Fake Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Database Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the document contain a Database Range with the name of ""Fake Range""? " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Database Range with the name of ""Fake Range""? " & $bReturn)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -42,7 +42,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

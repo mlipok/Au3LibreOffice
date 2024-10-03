@@ -37,7 +37,7 @@ Func Example()
 	$avSettings = _LOCalc_CommentAreaTransparencyGradient($oDoc, $oComment)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Comment's Transparency Gradient settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Transparency Gradient settings are as follows: " & @CRLF & _
 			"The Transparency Gradient shape type is (see UDF constants): " & $avSettings[0] & @CRLF & _
 			"The Horizontal offset percentage is: " & $avSettings[1] & @CRLF & _
 			"The Vertical offset percentage is: " & $avSettings[2] & @CRLF & _
@@ -46,7 +46,7 @@ Func Example()
 			"The beginning transparency percentage is: " & $avSettings[5] & @CRLF & _
 			"The ending transparency percentage is: " & $avSettings[6])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -55,7 +55,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

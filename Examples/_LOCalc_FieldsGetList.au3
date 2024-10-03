@@ -66,9 +66,9 @@ Func Example()
 				"And the current display of the field is: " & _LOCalc_FieldCurrentDisplayGet($avFields[$i][0]) & @CRLF & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "I Found " & $iResults & " fields, the Fields found are: " & @CRLF & @CRLF & $sString)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I Found " & $iResults & " fields, the Fields found are: " & @CRLF & @CRLF & $sString)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -76,7 +76,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -66,7 +66,7 @@ Func Example()
 	_LOCalc_SheetPrintRangeModify($oSheet, $aoPrintRanges)
 	If @error Then _ERROR($oDoc, "Failed to set Print Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have set Range A1:A5 and C1:C3 to be printed only, skipping Ranges B1:B5 and C4:C5, you can test it if you like by printing the sheet to pdf or xps.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have set Range A1:A5 and C1:C3 to be printed only, skipping Ranges B1:B5 and C4:C5, you can test it if you like by printing the sheet to pdf or xps.")
 
 	; Retrieve the current print ranges set for this sheet.
 	$aoPrintRanges = _LOCalc_SheetPrintRangeModify($oSheet)
@@ -78,7 +78,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "The Ranges currently set to print are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Ranges currently set to print are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"I will now reset the Print Range.")
 
 	; Reset the print Range to the whole sheet.
@@ -97,7 +97,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "The Range(s) currently set to print are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Range(s) currently set to print are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -105,7 +105,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -25,7 +25,7 @@ Func Example()
 	$aiCounts = _LOWriter_DocGetCounts($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve document counts. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The document counts are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The document counts are as follows: " & @CRLF & _
 			"Number of Pages: " & $aiCounts[0] & @CRLF & _
 			"Number of Lines: " & $aiCounts[1] & @CRLF & _
 			"Number of Paragraphs: " & $aiCounts[2] & @CRLF & _
@@ -36,7 +36,7 @@ Func Example()
 			"Number of Images/Graphics: " & $aiCounts[7] & @CRLF & _
 			"Number of Objects: " & $aiCounts[8])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

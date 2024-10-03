@@ -19,7 +19,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some text before I set the Character Style to ""Emphasis"". ")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the current character style to ""Emphasis.""")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the current character style to ""Emphasis.""")
 
 	; Set the character style to Emphasis using the ViewCursor.
 	_LOWriter_CharStyleSet($oDoc, $oViewCursor, "Emphasis")
@@ -29,7 +29,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Some emphasized text.")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -38,7 +38,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

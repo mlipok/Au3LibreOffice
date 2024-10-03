@@ -56,7 +56,7 @@ Func Example()
 	$aoPortions = _LOCalc_TextCursorParObjSectionsGet($aoPar[0])
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of Text Portion Objects. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I retrieved an Array of Text portion Object for the first Paragraph of Cell A1" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I retrieved an Array of Text portion Object for the first Paragraph of Cell A1" & @CRLF & _
 			"I will now move the Text cursor to, and select, the middle word of the paragraph which hasn't been formatted yet using the Paragraph Text portion Object." & @CRLF & _
 			"Then I will set the Font Style to Stencil.")
 
@@ -68,7 +68,7 @@ Func Example()
 	_LOCalc_TextCursorFont($oDoc, $oTextCursor, "Stencil")
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -76,7 +76,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

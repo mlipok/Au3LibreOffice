@@ -23,7 +23,7 @@ Func Example()
 	$oBookmark = _LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
 	If @error Then _ERROR($oDoc, "Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will retrieve the anchor for ""New Bookmark"" and insert some text after it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will retrieve the anchor for ""New Bookmark"" and insert some text after it.")
 
 	; Retrieve the Bookmark's Anchor (Text Cursor).
 	$oBookAnchor = _LOWriter_DocBookmarkGetAnchor($oBookmark)
@@ -37,7 +37,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oBookAnchor, " Some new text")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -46,7 +46,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

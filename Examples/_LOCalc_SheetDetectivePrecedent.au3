@@ -55,25 +55,25 @@ Func Example()
 	_LOCalc_CellFormula($oCell, "=SUM(B1; B2)")
 	If @error Then _ERROR($oDoc, "Failed to Set C3 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to mark one level of precedents for cell C3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to mark one level of precedents for cell C3.")
 
 	; Mark one level of precedents for Cell C3
 	_LOCalc_SheetDetectivePrecedent($oCell)
 	If @error Then _ERROR($oDoc, "Failed to mark C3 Cell precedents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to mark one more level of precedents for cell C3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to mark one more level of precedents for cell C3.")
 
 	; Mark one level of precedents for Cell C3
 	_LOCalc_SheetDetectivePrecedent($oCell)
 	If @error Then _ERROR($oDoc, "Failed to mark C3 Cell precedents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to remove one level of precedent markings for cell C3.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to remove one level of precedent markings for cell C3.")
 
 	; Mark one level of precedents for Cell C3
 	_LOCalc_SheetDetectivePrecedent($oCell, False)
 	If @error Then _ERROR($oDoc, "Failed to mark C3 Cell precedents. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -81,7 +81,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

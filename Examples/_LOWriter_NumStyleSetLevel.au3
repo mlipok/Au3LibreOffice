@@ -19,7 +19,7 @@ Func Example()
 	_LOWriter_NumStyleSet($oDoc, $oViewCursor, "Numbering 123")
 	If @error Then _ERROR($oDoc, "Failed to Set the Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to insert 5 lines and set each to a different level of Numbering.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to insert 5 lines and set each to a different level of Numbering.")
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Level 1" & @CR)
@@ -57,7 +57,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Level 5" & @CR)
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I could also insert the text first and then set the level.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I could also insert the text first and then set the level.")
 
 	; Insert some text.
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Level 6")
@@ -107,7 +107,7 @@ Func Example()
 	_LOWriter_NumStyleSetLevel($oViewCursor, 3)
 	If @error Then _ERROR($oDoc, "Failed to set the Numbering Style level. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -116,7 +116,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

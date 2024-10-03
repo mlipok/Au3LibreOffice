@@ -16,7 +16,7 @@ Func Example()
 	$asFonts = _LOCalc_FontsList($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Array of font names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "There were " & @extended & " fonts found. I will now display the results in the Calc sheet. The Array will have four columns, " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " fonts found. I will now display the results in the Calc sheet. The Array will have four columns, " & @CRLF & _
 			"-the first column contains the font name, " & @CRLF & _
 			"-the second column contains the style name, " & @CRLF & _
 			"-the third column contains the Font weight (Bold) value, (see constants)," & @CRLF & _
@@ -73,7 +73,7 @@ Next
 	_LOCalc_RangeColumnWidth($oColumn, True)
 	If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -82,7 +82,7 @@ Next
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

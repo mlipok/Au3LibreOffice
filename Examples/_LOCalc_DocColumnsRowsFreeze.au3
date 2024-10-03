@@ -37,16 +37,16 @@ Func Example()
 	_LOCalc_DocColumnsRowsFreeze($oDoc, 0, 1)
 	If @error Then _ERROR($oDoc, "Failed to freeze Document panes. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have Frozen the top row of the Document with some headers, try scrolling the document down.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have Frozen the top row of the Document with some headers, try scrolling the document down.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

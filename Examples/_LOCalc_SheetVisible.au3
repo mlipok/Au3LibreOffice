@@ -19,19 +19,19 @@ Func Example()
 	$oSheet = _LOCalc_SheetAdd($oDoc, "First Sheet")
 	If @error Then _ERROR($oDoc, "Failed to create a new Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to make the Sheet named, ""First Sheet"" disappear.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to make the Sheet named, ""First Sheet"" disappear.")
 
 	; Set "First Sheet to be invisible.
 	_LOCalc_SheetVisible($oSheet, False)
 	If @error Then _ERROR($oDoc, "Failed to set Sheet visibility. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to make the Sheet named, ""First Sheet"" visible again.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to make the Sheet named, ""First Sheet"" visible again.")
 
 	; Set "First Sheet to be visible.
 	_LOCalc_SheetVisible($oSheet, True)
 	If @error Then _ERROR($oDoc, "Failed to set Sheet visibility. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -40,7 +40,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

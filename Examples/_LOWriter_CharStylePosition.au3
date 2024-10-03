@@ -48,7 +48,7 @@ Func Example()
 	$avCharStyleSettings = _LOWriter_CharStylePosition($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Character style's current position settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current position settings are as follows: " & @CRLF & _
 			"Is Auto-Superscript? True/False: " & $avCharStyleSettings[0] & @CRLF & _
 			"Current Superscript percentage (If Auto, then it will be 14000): " & $avCharStyleSettings[1] & @CRLF & _
 			"Is Auto-Subscript? True/False: " & $avCharStyleSettings[2] & @CRLF & _
@@ -64,14 +64,14 @@ Func Example()
 	$avCharStyleSettings = _LOWriter_CharStylePosition($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Character style's new position settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's new position settings are as follows: " & @CRLF & _
 			"Is Auto-Superscript? True/False: " & $avCharStyleSettings[0] & @CRLF & _
 			"Current Superscript percentage (If Auto, then it will be 14000): " & $avCharStyleSettings[1] & @CRLF & _
 			"Is Auto-Subscript? True/False: " & $avCharStyleSettings[2] & @CRLF & _
 			"Current Subscript percentage (If Auto, then it will be -14000): " & $avCharStyleSettings[3] & @CRLF & _
 			"Relative size percentage: " & $avCharStyleSettings[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -80,7 +80,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

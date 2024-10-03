@@ -16,7 +16,7 @@ Func Example()
 	$iFormatKey = _LOWriter_DateFormatKeyCreate($oDoc, "H:MM:SS AM/PM -- M/NNN(D)/YYYY")
 	If @error Then _ERROR($oDoc, "Failed to create a Date/Time Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I created a new DateTime format key, its key number is: " & $iFormatKey & " and it looks like this: " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I created a new DateTime format key, its key number is: " & $iFormatKey & " and it looks like this: " & _
 			_LOWriter_DateFormatKeyGetString($oDoc, $iFormatKey) & @CRLF & @CRLF & "Press Ok to insert a Date Field using this key into the document.")
 
 	; Retrieve the document view cursor to insert text with.
@@ -27,7 +27,7 @@ Func Example()
 	_LOWriter_FieldDateTimeInsert($oDoc, $oViewCursor, False, Null, Null, Null, Null, $iFormatKey)
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -36,7 +36,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

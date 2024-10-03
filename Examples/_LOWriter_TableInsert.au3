@@ -19,13 +19,13 @@ Func Example()
 	$oTable = _LOWriter_TableCreate($oDoc, 5, 3, True, $LOW_COLOR_TEAL, "CustomTableName")
 	If @error Then _ERROR($oDoc, "Failed to create Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created the Table Object, but it doesn't exist in the document until I insert it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created the Table Object, but it doesn't exist in the document until I insert it.")
 
 	; Insert the Table into the document at the View Cursor's location.
 	$oTable = _LOWriter_TableInsert($oDoc, $oViewCursor, $oTable)
 	If @error Then _ERROR($oDoc, "Failed to insert Text Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -34,7 +34,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

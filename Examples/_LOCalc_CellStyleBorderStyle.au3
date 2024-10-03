@@ -28,7 +28,7 @@ Func Example()
 	$avSettings = _LOCalc_CellStyleBorderStyle($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Default Cell Style's Border Style settings are as follows (See UDF Constants): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Default Cell Style's Border Style settings are as follows (See UDF Constants): " & @CRLF & _
 			"Top Border Style is: " & $avSettings[0] & @CRLF & _
 			"Bottom Border Style is: " & $avSettings[1] & @CRLF & _
 			"Left Border Style is: " & $avSettings[2] & @CRLF & _
@@ -36,7 +36,7 @@ Func Example()
 			"Top-Left to Bottom-Right Diagonal Border Style is: " & $avSettings[4] & @CRLF & _
 			"Bottom-Left to Top-Right Diagonal Border Style is: " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_TextCursorInsertString($oTextCursor, "Hi! Testing.")
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the word ""Hi!"" to Engraved relief style.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the word ""Hi!"" to Engraved relief style.")
 
 	; Go to the Start.
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_START, 1, False)
@@ -42,7 +42,7 @@ Func Example()
 	_LOCalc_TextCursorEffect($oTextCursor, $LOC_RELIEF_ENGRAVED)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now select the word ""Testing"" and set it to .")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now select the word ""Testing"" and set it to .")
 
 	; Move the cursor to the right once
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GO_RIGHT, 1, False)
@@ -60,12 +60,12 @@ Func Example()
 	$avSettings = _LOCalc_TextCursorEffect($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Character effect settings at the Cursor's current position are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Character effect settings at the Cursor's current position are as follows: " & @CRLF & _
 			"The relief style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"Are the characters outlined? True/False: " & $avSettings[1] & @CRLF & _
 			"Are the characters shadowed? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -73,7 +73,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -29,14 +29,14 @@ Func Example()
 	$avSettings = _LOWriter_ImageWrapOptions($oImage)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Image settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Image's wrap option settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Image's wrap option settings are as follows: " & @CRLF & _
 			"Create a new paragraph below the Image? True/False: " & $avSettings[0] & @CRLF & _
 			"Contour Text around the Image? True/False: " & $avSettings[1] & @CRLF & _
 			"Contour text only around the outside of the Image? True/False: " & $avSettings[2] & @CRLF & _
 			"Place the Image in the background? True/False: " & $avSettings[3] & @CRLF & _
 			"Allow multiple Images to overlap? True/False: " & $avSettings[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

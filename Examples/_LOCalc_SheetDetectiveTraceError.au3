@@ -23,13 +23,13 @@ Func Example()
 	_LOCalc_CellFormula($oCell, "=A1-A2 / C5*D3")
 	If @error Then _ERROR($oDoc, "Failed to Set B2 Cell content. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to trace all cells with causing errors for cell B2.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to trace all cells with causing errors for cell B2.")
 
 	; Mark all errors for cells B2
 	_LOCalc_SheetDetectiveTraceError($oCell)
 	If @error Then _ERROR($oDoc, "Failed to mark cells containing errors for B2 Cell. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -37,7 +37,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

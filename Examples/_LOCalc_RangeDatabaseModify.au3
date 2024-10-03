@@ -28,7 +28,7 @@ Func Example()
 	$avSettings = _LOCalc_RangeDatabaseModify($oDoc, $oDataBase)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Database Range's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database Range's current settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Database range is: " & _LOCalc_RangeGetAddressAsName($avSettings[0]) & @CRLF & _
 			"The Database Range name is: " & $avSettings[1] & @CRLF & _
 			"Is the top row considered a Header? True/False: " & $avSettings[2] & @CRLF & _
@@ -52,7 +52,7 @@ Func Example()
 	$avSettings = _LOCalc_RangeDatabaseModify($oDoc, $oDataBase)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Database Range's new settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database Range's new settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Database range is: " & _LOCalc_RangeGetAddressAsName($avSettings[0]) & @CRLF & _
 			"The Database Range name is: " & $avSettings[1] & @CRLF & _
 			"Is the top row considered a Header? True/False: " & $avSettings[2] & @CRLF & _
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

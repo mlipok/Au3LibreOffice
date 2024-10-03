@@ -32,7 +32,7 @@ Func Example()
 	$iPosition = _LOCalc_SheetMove($oDoc, $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet's current position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Sheet1 is currently in the position of: " & $iPosition)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Sheet1 is currently in the position of: " & $iPosition)
 
 	; Move the sheet named "Sheet1" to the last position.
 	_LOCalc_SheetMove($oDoc, $oSheet, 3)
@@ -42,9 +42,9 @@ Func Example()
 	$iPosition = _LOCalc_SheetMove($oDoc, $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Sheet's current position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Sheet1 is now in the position of: " & $iPosition)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Sheet1 is now in the position of: " & $iPosition)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -53,7 +53,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

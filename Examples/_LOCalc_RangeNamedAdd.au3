@@ -42,7 +42,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges)
 
 	; Retrieve a list of Local Named ranges for this Sheet.
 	$asNamedRanges = _LOCalc_RangeNamedGetNames($oSheet)
@@ -55,7 +55,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

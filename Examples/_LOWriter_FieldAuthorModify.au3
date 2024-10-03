@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldAuthorInsert($oDoc, $oViewCursor, False, True, "Auto It", True)
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Author Field.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Author Field.")
 
 	; Modify the Author Field settings. Set Is Fixed to False.
 	_LOWriter_FieldAuthorModify($oField, False)
@@ -34,12 +34,12 @@ Func Example()
 	$avSettings = _LOWriter_FieldAuthorModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Author Field's content fixed? True/False: " & $avSettings[0] & @CRLF & _
 			"The Author is: " & $avSettings[1] & @CRLF & _
 			"Is the Author's full name shown? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -48,7 +48,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

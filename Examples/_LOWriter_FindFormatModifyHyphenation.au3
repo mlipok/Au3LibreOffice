@@ -43,7 +43,7 @@ Func Example()
 	_LOWriter_FindFormatModifyHyphenation($atFindFormat, True)
 	If @error Then _ERROR($oDoc, "Failed to modify a Find format array. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "As of May 27th 2023, searching for any of these attribute will fail. If you watch closely, once you click ok, and I perform the " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "As of May 27th 2023, searching for any of these attribute will fail. If you watch closely, once you click ok, and I perform the " & _
 			"search, all instances of ""Search"" will disappear. Libre Office is aware of the bug, but haven't decided how to fix it yet.")
 
 	; Search for the word "search".
@@ -56,15 +56,15 @@ Func Example()
 	If IsArray($aoResults) Then
 		For $i = 0 To UBound($aoResults) - 1
 			$sResultString = _LOWriter_DocGetString($aoResults[$i])
-			If (@error > 0) Then MsgBox($MB_OK, "", "Failed to retrieve String. Error:" & @error & " Extended:" & @extended)
+			If (@error > 0) Then MsgBox($MB_OK + $MB_TOPMOST, Default, "Failed to retrieve String. Error:" & @error & " Extended:" & @extended)
 		Next
 
-		MsgBox($MB_OK, "", "The search was successful, I searched using a Find Format, looking for any paragraphs that are hyphenated, " & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The search was successful, I searched using a Find Format, looking for any paragraphs that are hyphenated, " & _
 				"containing the word ""Search"", and found the following: " & $sResultString)
 
 	EndIf
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -73,7 +73,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

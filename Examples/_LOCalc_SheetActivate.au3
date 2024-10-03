@@ -15,13 +15,13 @@ Func Example()
 	$oSheet = _LOCalc_SheetAdd($oDoc, "New Sheet", 1)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to activate the ""New Sheet""")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to activate the ""New Sheet""")
 
 	; Activate the "New Sheet"
 	_LOCalc_SheetActivate($oDoc, $oSheet)
 	If @error Then _ERROR($oDoc, "Failed to Activate a Calc Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -30,7 +30,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

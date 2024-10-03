@@ -12,13 +12,13 @@ Func Example()
 	$oDoc = _LOWriter_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now show your current print Size settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now show your current print Size settings.")
 
 	; Call the function with all optional settings left as Null to retrieve the current settings.
 	$avSettings = _LOWriter_DocPrintSizeSettings($oDoc)
 	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "Current Settings", "Your current print size settings are as follows: " & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Your current print size settings are as follows: " & @CRLF & @CRLF & _
 			"Paper format:— " & $avSettings[0] & @CRLF & _
 			"0 =$LOW_PAPER_A3;" & @CRLF & _
 			"1 = $LOW_PAPER_A4;" & @CRLF & _
@@ -46,7 +46,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Display the new settings.
-	MsgBox($MB_OK, "Current Settings", "Your new print size settings are as follows: " & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Your new print size settings are as follows: " & @CRLF & @CRLF & _
 			"Paper format:— " & $avSettingsNew[0] & @CRLF & _
 			"0 =$LOW_PAPER_A3;" & @CRLF & _
 			"1 = $LOW_PAPER_A4;" & @CRLF & _
@@ -74,7 +74,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Error retrieving Writer Document Print settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Display the new settings.
-	MsgBox($MB_OK, "Current Settings", "Your new print size settings are as follows: " & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Your new print size settings are as follows: " & @CRLF & @CRLF & _
 			"Paper format:— " & $avSettingsNew[0] & @CRLF & _
 			"0 =$LOW_PAPER_A3;" & @CRLF & _
 			"1 = $LOW_PAPER_A4;" & @CRLF & _
@@ -104,7 +104,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

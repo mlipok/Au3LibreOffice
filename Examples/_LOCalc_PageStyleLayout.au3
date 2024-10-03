@@ -25,14 +25,14 @@ Func Example()
 	$avPageStyleSettings = _LOCalc_PageStyleLayout($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Page Style's current Layout settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Page Style's current Layout settings are as follows: " & @CRLF & _
 			"The current Page Layout is, (see UDF constants): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Numbering format used is, (See UDF constants): " & $avPageStyleSettings[1] & @CRLF & _
 			"Will the Table be Aligned to the center Horizontally? True/False: " & $avPageStyleSettings[2] & @CRLF & _
 			"Will the Table be Aligned to the center Vertically? True/False: " & $avPageStyleSettings[3] & @CRLF & _
 			"The paper tray to use, when printing this document is: " & $avPageStyleSettings[4])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -25,11 +25,11 @@ Func Example()
 	$avColor = _LOCalc_CellStyleBackColor($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Style's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", """Default"" Cell Style's Background color settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, """Default"" Cell Style's Background color settings are: " & @CRLF & _
 			"The Cell Style's Background color is, in Long integer format: " & $avColor[0] & @CRLF & _
 			"Is the Cell Style's Background color transparent? True/False: " & $avColor[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -38,7 +38,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

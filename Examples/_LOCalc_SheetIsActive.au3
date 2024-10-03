@@ -19,10 +19,10 @@ Func Example()
 	$oSheet2 = _LOCalc_SheetAdd($oDoc, "New Sheet", 1)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is Sheet1 currently Active? True/False: " & _LOCalc_SheetIsActive($oDoc, $oSheet1) & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is Sheet1 currently Active? True/False: " & _LOCalc_SheetIsActive($oDoc, $oSheet1) & @CRLF & _
 			"Is ""New Sheet"" currently active? True/False: " & _LOCalc_SheetIsActive($oDoc, $oSheet2))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -31,7 +31,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -81,7 +81,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Please insert a User Field here.--> ")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have no functions currently that insert any ""Advanced"" Fields, if you would like a demonstration, please follow to prompts, First go to: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have no functions currently that insert any ""Advanced"" Fields, if you would like a demonstration, please follow to prompts, First go to: " & @CRLF & _
 			"Insert, Field, More Fields, Variables, Click on ""User Field"" and enter ""Test"" as ""name"", and 1234 as value, then click insert. Press Ok on this MsgBox.")
 
 	; Insert 2 newlines.
@@ -92,7 +92,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Please insert a DDE Field here.--> ")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Next go to: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Next go to: " & @CRLF & _
 			"Insert, Field, More Fields, Variables, Click on ""DDE Field"" and enter ""Test"" as ""name"", and 1234 as value, then click insert. Press Ok on this MsgBox.")
 
 	; Insert 2 newlines.
@@ -103,7 +103,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Please insert a Database Name Field here.--> ")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Next go to: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Next go to: " & @CRLF & _
 			"Insert, Field, More Fields, Database, Click on ""Database Name"" and drop down ""Bibliography"", select ""Biblio"", then click insert. Press Ok on this MsgBox.")
 
 	; Retrieve an array of Advanced Fields. The Doc Info Field, and regular fields, wont be listed in this array.
@@ -118,7 +118,7 @@ Func Example()
 
 	_ArrayDisplay($avFields)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -127,7 +127,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

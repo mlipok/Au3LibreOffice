@@ -19,7 +19,7 @@ Func Example()
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A5")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now merge range A1:A5.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now merge range A1:A5.")
 
 	; Merge the Range A1:A5.
 	_LOCalc_RangeMerge($oCellRange, True)
@@ -29,13 +29,13 @@ Func Example()
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "C2", "C4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now merge range C2:C4.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now merge range C2:C4.")
 
 	; Merge the Range C2:C4.
 	_LOCalc_RangeMerge($oCellRange, True)
 	If @error Then _ERROR($oDoc, "Failed to merge the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now un-merge range A4:C4. Notice nothing happens.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now un-merge range A4:C4. Notice nothing happens.")
 
 	; Retrieve Cell range A4 to C4
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A4", "C4")
@@ -45,7 +45,7 @@ Func Example()
 	_LOCalc_RangeMerge($oCellRange, False)
 	If @error Then _ERROR($oDoc, "Failed to merge the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now un-merge range A1:C1. Notice the merged range of A1:A5 will become un-merged.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now un-merge range A1:C1. Notice the merged range of A1:A5 will become un-merged.")
 
 	; Retrieve Cell range A1 to C1
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C1")
@@ -55,7 +55,7 @@ Func Example()
 	_LOCalc_RangeMerge($oCellRange, False)
 	If @error Then _ERROR($oDoc, "Failed to merge the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -20,10 +20,10 @@ Func Example()
 	$bResult2 = _LOWriter_FontExists($oDoc, "Fake Font")
 	If @error Then _ERROR($oDoc, "Failed to check for font name existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the document have a font called ""Times New Roman"" ? True/False: " & $bResult1 & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document have a font called ""Times New Roman"" ? True/False: " & $bResult1 & @CRLF & @CRLF & _
 			"Does the document have a font called ""Fake Font"" ? True/False: " & $bResult2)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -32,7 +32,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

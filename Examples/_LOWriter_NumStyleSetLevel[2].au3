@@ -60,7 +60,7 @@ Func Example()
 	_LOWriter_DocInsertString($oDoc, $oViewCursor, "Level 10")
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now I will retrieve Paragraph Objects for all of these paragraphs and set the Numbering level using a For Next loop.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now I will retrieve Paragraph Objects for all of these paragraphs and set the Numbering level using a For Next loop.")
 
 	; Retrieve Array of Paragraph Objects.
 	$aoPars = _LOWriter_ParObjCreateList($oViewCursor)
@@ -74,7 +74,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set the Numbering Style level. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -83,7 +83,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

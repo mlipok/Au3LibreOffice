@@ -40,7 +40,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtCharPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The selected text's current position settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current position settings are as follows: " & @CRLF & _
 			"Is Auto-Superscript? True/False: " & $avSettings[0] & @CRLF & _
 			"Current Superscript percentage (If Auto, then it will be 14000): " & $avSettings[1] & @CRLF & _
 			"Is Auto-Subscript? True/False: " & $avSettings[2] & @CRLF & _
@@ -56,7 +56,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtCharPosition($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The selected text's new position settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's new position settings are as follows: " & @CRLF & _
 			"Is Auto-Superscript? True/False: " & $avSettings[0] & @CRLF & _
 			"Current Superscript percentage (If Auto, then it will be 14000): " & $avSettings[1] & @CRLF & _
 			"Is Auto-Subscript? True/False: " & $avSettings[2] & @CRLF & _
@@ -68,7 +68,7 @@ Func Example()
 	_LOWriter_DirFrmtCharPosition($oViewCursor, Null, Null, Null, Null, Null, True)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -77,7 +77,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

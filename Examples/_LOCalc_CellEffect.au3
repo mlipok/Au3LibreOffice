@@ -32,7 +32,7 @@ Func Example()
 	$avSettings = _LOCalc_CellEffect($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Cell's current Font Effects settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell's current Font Effects settings are as follows: " & @CRLF & _
 			"Relief style (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"Are the words outlined? True/False: " & $avSettings[1] & @CRLF & _
 			"Do the words have a shadow? True/False: " & $avSettings[2])
@@ -45,12 +45,12 @@ Func Example()
 	$avSettings = _LOCalc_CellEffect($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now the Cell's current Font Effects settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now the Cell's current Font Effects settings are as follows: " & @CRLF & _
 			"Relief style (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"Are the words outlined? True/False: " & $avSettings[1] & @CRLF & _
 			"Do the words have a shadow? True/False: " & $avSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -59,7 +59,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

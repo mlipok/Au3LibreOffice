@@ -42,7 +42,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"I will now retrieve the Object for this Named Range and delete it.")
 
 	; Retrieve the Object for the global Named Range "My_Global_Named_Range"
@@ -64,7 +64,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Global Named Range names currently set for this document are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"Now I will demonstrate the same for a local (Sheet) Named Range.")
 
 	; Retrieve a list of Local Named ranges for this Sheet.
@@ -78,7 +78,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"I will now retrieve the Object for this Named Range and delete it.")
 
 	; Retrieve the Object for the local Named Range "A_Local_Named_Range"
@@ -100,7 +100,7 @@ Func Example()
 		$sRanges &= '"' & $asNamedRanges[$i] & '"' & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Local Named Range names currently set for this Sheet are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -108,7 +108,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

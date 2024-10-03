@@ -53,14 +53,14 @@ Func Example()
 	$tSortField = _LOCalc_SortFieldCreate(1, $LOC_SORT_DATA_TYPE_ALPHANUMERIC, True)
 	If @error Then _ERROR($oDoc, "Failed to create a Sort Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to perform the Sorting Operation.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to perform the Sorting Operation.")
 
 	; Perform a Sort operation on Range A1 to B5.
 	; Set SortColumns to False, meaning sort Rows Top to Bottom, Has Headers= False, Bind format = False
 	_LOCalc_RangeSort($oDoc, $oCellRange, $tSortField, False, False, False)
 	If @error Then _ERROR($oDoc, "Failed to perform Sort Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -68,7 +68,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -41,7 +41,7 @@ Func Example()
 	$avSettings = _LOWriter_DirFrmtFont($oDoc, $oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The selected text's current Font settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current Font settings are as follows: " & @CRLF & _
 			"Font name: " & $avSettings[0] & @CRLF & _
 			"Font size: " & $avSettings[1] & @CRLF & _
 			"Italic/Posture setting (See UDF Constants): " & $avSettings[2] & @CRLF & _
@@ -52,7 +52,7 @@ Func Example()
 	_LOWriter_DirFrmtFont($oDoc, $oViewCursor, Default, Default, Default, Default)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -61,7 +61,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

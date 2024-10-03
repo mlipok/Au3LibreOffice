@@ -39,7 +39,7 @@ Func Example()
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "B4")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now fill Cell Range A1 to B4 with Formulas." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now fill Cell Range A1 to B4 with Formulas." & @CRLF & _
 			"I will then replace Cell A4 with a String, and B3 with a Number, to demonstrate what is returned by _LOCalc_RangeFormula when it encounters these data types.")
 
 	; Fill the range with Data
@@ -73,11 +73,11 @@ Func Example()
 
 		Next
 
-		MsgBox($MB_OK, "", "Array $aavData[" & $i & "] contains the following Formulas:" & @CRLF & $sData)
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "Array $aavData[" & $i & "] contains the following Formulas:" & @CRLF & $sData)
 		$sData = ""
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -86,7 +86,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -48,14 +48,14 @@ Func Example()
 	$aoPar = _LOCalc_TextCursorParObjCreateList($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve array of paragraph Objects. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I retrieved an Array of Paragraph Objects for Cell A1, there were " & UBound($aoPar) & " Paragraphs returned." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I retrieved an Array of Paragraph Objects for Cell A1, there were " & UBound($aoPar) & " Paragraphs returned." & @CRLF & _
 			"I will now set the first Paragraph Object's font settings to use 16 point Arial font type.")
 
 	; Set the first paragraph Object's font to Arial, and font size to 16.
 	_LOCalc_TextCursorFont($oDoc, $aoPar[0], "Arial", 16)
 	If @error Then _ERROR($oDoc, "Failed to set text formatting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

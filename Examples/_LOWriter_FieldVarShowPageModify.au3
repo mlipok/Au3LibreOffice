@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldVarShowPageInsert($oDoc, $oViewCursor, False, $LOW_NUM_STYLE_CHARS_UPPER_LETTER_N)
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Show Page Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Show Page Field settings.")
 
 	; Modify the Show Page Field settings. Set the Number format to $LOW_NUM_STYLE_ROMAN_UPPER
 	_LOWriter_FieldVarShowPageModify($oField, $LOW_NUM_STYLE_ROMAN_UPPER)
@@ -34,9 +34,9 @@ Func Example()
 	$iSetting = _LOWriter_FieldVarShowPageModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Show Page Field number format setting is, (see UDF Constants): " & $iSetting)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Show Page Field number format setting is, (see UDF Constants): " & $iSetting)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

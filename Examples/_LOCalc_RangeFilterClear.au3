@@ -69,13 +69,13 @@ Func Example()
 	_LOCalc_RangeFilter($oCellRange, $oFilterDesc)
 	If @error Then _ERROR($oDoc, "Failed to perform Filter Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have performed a Filtering operation on the Range A1 to B5, press Ok to clear the Filter.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have performed a Filtering operation on the Range A1 to B5, press Ok to clear the Filter.")
 
 	; Clear the existing Filter.
 	_LOCalc_RangeFilterClear($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to clear Filter for the Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -83,7 +83,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

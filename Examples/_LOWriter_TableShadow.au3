@@ -38,13 +38,13 @@ Func Example()
 	$avShadow = _LOWriter_TableShadow($oTable)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Table shadow settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Table shadow values are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table shadow values are as follows: " & @CRLF & _
 			"Width = " & $avShadow[0] & " Micrometers." & @CRLF & _
 			"Color = " & $avShadow[1] & " Long color format." & @CRLF & _
 			"Is Color Transparent? True/False = " & $avShadow[2] & @CRLF & _
 			"Shadow Location (See constants) = " & $avShadow[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -53,7 +53,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

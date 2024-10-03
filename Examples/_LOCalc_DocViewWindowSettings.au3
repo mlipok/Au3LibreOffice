@@ -16,7 +16,7 @@ Func Example()
 	$avOrigSettings = _LOCalc_DocViewWindowSettings($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window View settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Document Window view settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Document Window view settings are: " & @CRLF & _
 			"Are Column/Row headers shown? True/False: " & $avOrigSettings[0] & @CRLF & _
 			"Is the Horizontal Scroll bar visible? True/False: " & $avOrigSettings[1] & @CRLF & _
 			"Is the vertical scroll bar visible? True/False: " & $avOrigSettings[2] & @CRLF & _
@@ -38,7 +38,7 @@ Func Example()
 		$avSettings = _LOCalc_DocViewWindowSettings($oDoc)
 		If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "The current Document Window view settings are: " & @CRLF & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Document Window view settings are: " & @CRLF & _
 				"Are Column/Row headers shown? True/False: " & $avSettings[0] & @CRLF & _
 				"Is the Horizontal Scroll bar visible? True/False: " & $avSettings[1] & @CRLF & _
 				"Is the vertical scroll bar visible? True/False: " & $avSettings[2] & @CRLF & _
@@ -55,7 +55,7 @@ Func Example()
 	EndIf
 
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -32,11 +32,11 @@ Func Example()
 	$oField = _LOWriter_FieldRefInsert($oDoc, $oViewCursor, "Ref. 1", False, $LOW_FIELD_REF_USING_PAGE_NUM_STYLED)
 	If @error Then _ERROR($oDoc, "Failed to insert a field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Reference Field is referencing following type: " & _LOWriter_FieldRefGetType($oField) & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Reference Field is referencing following type: " & _LOWriter_FieldRefGetType($oField) & @CRLF & @CRLF & _
 			"The Possible types are: " & @CRLF & "$LOW_FIELD_REF_TYPE_REF_MARK(0)" & @CRLF & "$LOW_FIELD_REF_TYPE_SEQ_FIELD(1)" & @CRLF & _
 			"$LOW_FIELD_REF_TYPE_BOOKMARK(2)" & @CRLF & "$LOW_FIELD_REF_TYPE_FOOTNOTE(3)" & @CRLF & "$LOW_FIELD_REF_TYPE_ENDNOTE(4)")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -45,7 +45,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

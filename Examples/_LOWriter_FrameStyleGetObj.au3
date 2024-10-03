@@ -23,7 +23,7 @@ Func Example()
 	_LOWriter_FrameStyleSet($oDoc, $oFrame, "Labels")
 	If @error Then _ERROR($oDoc, "Failed to set the Text Frame style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now retrieve the Labels Frame style object, and modify some of its settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now retrieve the Labels Frame style object, and modify some of its settings.")
 
 	; Retrieve the "Labels" frame Style object.
 	$oFrameStyle = _LOWriter_FrameStyleGetObj($oDoc, "Labels")
@@ -33,7 +33,7 @@ Func Example()
 	_LOWriter_FrameStyleAreaColor($oFrameStyle, $LOW_COLOR_RED, False)
 	If @error Then _ERROR($oDoc, "Failed to set the Frame style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -42,7 +42,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

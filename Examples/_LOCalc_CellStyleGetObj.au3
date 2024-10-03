@@ -11,7 +11,7 @@ Func Example()
 	$oDoc = _LOCalc_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now retrieve the default Cell style object, and modify some of its settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now retrieve the default Cell style object, and modify some of its settings.")
 
 	; Retrieve the "Default" Cell Style object.
 	$oCellStyle = _LOCalc_CellStyleGetObj($oDoc, "Default")
@@ -21,7 +21,7 @@ Func Example()
 	_LOCalc_CellStyleBackColor($oCellStyle, $LOC_COLOR_RED)
 	If @error Then _ERROR($oDoc, "Failed to set the Cell style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -30,7 +30,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

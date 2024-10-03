@@ -40,7 +40,7 @@ Func Example()
 	$bReturn2 = _LOCalc_RangeNamedHasByName($oDoc, "My_Global_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the document contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"Does the document contain a Named Range with the name of ""My_Global_Named_Range""? True/False: " & $bReturn2)
 
 	; Check if the Sheet contains a Named Range with the name of "A_Local_Named_Range".
@@ -51,7 +51,7 @@ Func Example()
 	$bReturn2 = _LOCalc_RangeNamedHasByName($oSheet, "My_Global_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the Sheet contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the Sheet contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"Does the Sheet contain a Named Range with the name of ""My_Global_Named_Range""? True/False: " & $bReturn2)
 
 	; Close the document.
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

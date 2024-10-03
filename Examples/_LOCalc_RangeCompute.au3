@@ -46,15 +46,15 @@ Func Example()
 	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_SUM)
 	If @error Then _ERROR($oDoc, "Failed to Compute Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The SUM of the Cell Range is: " & $nResult)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The SUM of the Cell Range is: " & $nResult)
 
 	; Perform an AVERAGE Compute Function on the Range.
 	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_AVERAGE)
 	If @error Then _ERROR($oDoc, "Failed to Compute Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The AVERAGE of the Cell Range is: " & $nResult)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The AVERAGE of the Cell Range is: " & $nResult)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

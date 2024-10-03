@@ -24,7 +24,7 @@ Func Example()
 	$oField = _LOWriter_FieldFuncInputInsert($oDoc, $oViewCursor, False, "New Input", "Some Text")
 	If @error Then _ERROR($oDoc, "Failed to insert a Field. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to modify the Input Field settings.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to modify the Input Field settings.")
 
 	; Modify the Input Field settings. Set the Reference to "An Input", and Text to "Different Text"
 	_LOWriter_FieldFuncInputModify($oField, "An Input", "Different Text")
@@ -34,11 +34,11 @@ Func Example()
 	$avSettings = _LOWriter_FieldFuncInputModify($oField)
 	If @error Then _ERROR($oDoc, "Failed to retrieve field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Field settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Field settings are: " & @CRLF & _
 			"The Input Field's Reference is: " & $avSettings[0] & @CRLF & _
 			"The Input Field's current Text is: " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -47,7 +47,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

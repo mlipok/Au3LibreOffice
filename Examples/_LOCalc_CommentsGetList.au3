@@ -46,7 +46,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to retrieve Array of comments. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	$iCount = @extended
 
-	MsgBox($MB_OK, "", "There are currently " & $iCount & " comments contained in this Sheet." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "There are currently " & $iCount & " comments contained in this Sheet." & @CRLF & _
 			"Press Ok to make them all visible.")
 
 	For $i = 0 To $iCount - 1
@@ -55,7 +55,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set comment visibility. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -64,7 +64,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

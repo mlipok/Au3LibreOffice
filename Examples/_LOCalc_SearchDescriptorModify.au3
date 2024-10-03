@@ -88,7 +88,7 @@ Func Example()
 	$oSrchDesc = _LOCalc_SearchDescriptorCreate($oSheet, True, False, True, $LOC_SEARCH_IN_VALUES, False, False, True)
 	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will perform a Find in the Sheet, looking for the first cell that contain ""Seven*""." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will perform a Find in the Sheet, looking for the first cell that contain ""Seven*""." & _
 			" If found, I will  set the background color of each result to a random background color.")
 
 	; Perform a Find for the Entire Sheet, Search for any cells containing Seven*, ("*" is a wildcard meaning any sequence of characters)
@@ -102,7 +102,7 @@ Func Example()
 
 	EndIf
 
-	MsgBox($MB_OK, "", "I will now modify the Search descriptor to search in Rows instead of Columns, forward instead of backwards, " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now modify the Search descriptor to search in Rows instead of Columns, forward instead of backwards, " & _
 			"Use Regular Expressions instead of Wildcards, and search in Formulas. I will then perform a search for the Regular Expression ""\d{2}"", " & _
 			"which will search for any cells containing two digits in their formulas.")
 
@@ -121,7 +121,7 @@ Func Example()
 
 	EndIf
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -129,7 +129,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

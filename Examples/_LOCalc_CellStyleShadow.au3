@@ -49,13 +49,13 @@ Func Example()
 	$avSettings = _LOCalc_CellStyleShadow($oCellStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Cell Style's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Cell Style's Shadow settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cell Style's Shadow settings are as follows: " & @CRLF & _
 			"Shadow width, in Micrometers: " & $avSettings[0] & @CRLF & _
 			"Shadow color in long color format: " & $avSettings[1] & @CRLF & _
 			"Is shadow color transparent? True/False: " & $avSettings[2] & @CRLF & _
 			"Shadow location, (see UDF Constants): " & $avSettings[3])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -64,7 +64,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

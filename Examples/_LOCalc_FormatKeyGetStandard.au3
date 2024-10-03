@@ -16,10 +16,10 @@ Func Example()
 	$iFormatKey = _LOCalc_FormatKeyGetStandard($oDoc, $LOC_FORMAT_KEYS_FRACTION)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the standard format key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Standard format key number for format key type $LOC_FORMAT_KEYS_FRACTION is: " & $iFormatKey & ". It looks like this: " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Standard format key number for format key type $LOC_FORMAT_KEYS_FRACTION is: " & $iFormatKey & ". It looks like this: " & _
 			_LOCalc_FormatKeyGetString($oDoc, $iFormatKey))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -28,7 +28,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

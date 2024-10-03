@@ -33,7 +33,7 @@ Func Example()
 	$avSettings = _LOWriter_FootnoteSettingsAutoNumber($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Footnote settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document's current Footnote Auto Numbering settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document's current Footnote Auto Numbering settings are as follows: " & @CRLF & _
 			"The Auto Numbering Number Style used for Footnotes is, (see UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The number to start Footnote AutoNumbering at is: " & $avSettings[1] & @CRLF & _
 			"The string before the footnote label is: " & $avSettings[2] & @CRLF & _
@@ -41,7 +41,7 @@ Func Example()
 			"The Footnote Counting type is, (see UDF Constants): " & $avSettings[4] & @CRLF & _
 			"Place the Footnotes at the end of the Document? True/False: " & $avSettings[5])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -50,7 +50,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

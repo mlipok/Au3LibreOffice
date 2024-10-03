@@ -28,7 +28,7 @@ Func Example()
 	$iCellType = _LOCalc_CellGetType($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell Type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell A1's Data Type is: " & $iCellType & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell A1's Data Type is: " & $iCellType & @CRLF & @CRLF & _
 			"$LOC_CELL_TYPE_EMPTY = 0," & @CRLF & _
 			"$LOC_CELL_TYPE_VALUE = 1," & @CRLF & _
 			"$LOC_CELL_TYPE_TEXT = 2," & @CRLF & _
@@ -42,7 +42,7 @@ Func Example()
 	$iCellType = _LOCalc_CellGetType($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell Type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell A2's Data Type is: " & $iCellType & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell A2's Data Type is: " & $iCellType & @CRLF & @CRLF & _
 			"$LOC_CELL_TYPE_EMPTY = 0," & @CRLF & _
 			"$LOC_CELL_TYPE_VALUE = 1," & @CRLF & _
 			"$LOC_CELL_TYPE_TEXT = 2," & @CRLF & _
@@ -60,7 +60,7 @@ Func Example()
 	$iCellType = _LOCalc_CellGetType($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell Type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell A3's Data Type is: " & $iCellType & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell A3's Data Type is: " & $iCellType & @CRLF & @CRLF & _
 			"$LOC_CELL_TYPE_EMPTY = 0," & @CRLF & _
 			"$LOC_CELL_TYPE_VALUE = 1," & @CRLF & _
 			"$LOC_CELL_TYPE_TEXT = 2," & @CRLF & _
@@ -78,13 +78,13 @@ Func Example()
 	$iCellType = _LOCalc_CellGetType($oCell)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Cell Type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Cell A4's Data Type is: " & $iCellType & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Cell A4's Data Type is: " & $iCellType & @CRLF & @CRLF & _
 			"$LOC_CELL_TYPE_EMPTY = 0," & @CRLF & _
 			"$LOC_CELL_TYPE_VALUE = 1," & @CRLF & _
 			"$LOC_CELL_TYPE_TEXT = 2," & @CRLF & _
 			"$LOC_CELL_TYPE_FORMULA = 3")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -93,7 +93,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

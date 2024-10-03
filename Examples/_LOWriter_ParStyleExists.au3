@@ -20,15 +20,15 @@ Func Example()
 	$bExists = _LOWriter_ParStyleExists($oDoc, "NewParStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Paragraph Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a Paragraph style called ""NewParStyle"" exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a Paragraph style called ""NewParStyle"" exist in the document? True/False: " & $bExists)
 
 	; Check if a fake paragraph style exists.
 	$bExists = _LOWriter_ParStyleExists($oDoc, "FakeParStyle")
 	If @error Then _ERROR($oDoc, "Failed to test for Paragraph Style existing in document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a Paragraph style called ""FakeParStyle"" exist in the document? True/False: " & $bExists)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a Paragraph style called ""FakeParStyle"" exist in the document? True/False: " & $bExists)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -37,7 +37,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

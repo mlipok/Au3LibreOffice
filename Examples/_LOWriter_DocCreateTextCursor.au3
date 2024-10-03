@@ -22,13 +22,13 @@ Func Example()
 			"Fourth Line of Text.")
 	If @error Then _ERROR($oDoc, "Failed to insert text into the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will create a text cursor now.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will create a text cursor now.")
 
 	; Create a TextCursor, I called false for $bCreateAtEnd, the cursor will be created at the beginning of the document.
 	$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to create Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now move the TextCursor right 6 spaces, not selecting any text, and then right 4 spaces selecting the word ""Line"".")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now move the TextCursor right 6 spaces, not selecting any text, and then right 4 spaces selecting the word ""Line"".")
 
 	; Move the Text Cursor right 6 spaces, not selecting the text.
 	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GO_RIGHT, 6, False)
@@ -38,14 +38,14 @@ Func Example()
 	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GO_RIGHT, 4, True)
 	If @error Then _ERROR($oDoc, "Failed to move TextCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The text is selected by the Text Cursor, you won't be able to see anything though, as the TextCursor is invisible." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The text is selected by the Text Cursor, you won't be able to see anything though, as the TextCursor is invisible." & _
 			" I will now replace the word ""Line"" with the word ""Paragraph"".")
 
 	; Insert the word "Paragraph", and overwrite any text selected by the cursor.
 	_LOWriter_DocInsertString($oDoc, $oTextCursor, "Paragraph", True)
 	If @error Then _ERROR($oDoc, "Failed to insert text at the TextCursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -54,7 +54,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

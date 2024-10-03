@@ -57,7 +57,7 @@ Func Example()
 	$oPar = _LOWriter_ParObjCopy($oDoc)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to copy the paragraphs. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now copied the paragraph, and the object pointing to this copy is stored in $oPar." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now copied the paragraph, and the object pointing to this copy is stored in $oPar." & _
 			" I will now open a second document and paste the paragraph in there, and it will have preserved its formatting.")
 
 	; Create a New, visible, Blank Libre Office Document.
@@ -68,7 +68,7 @@ Func Example()
 	_LOWriter_ParObjPaste($oDoc2, $oPar)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to paste the paragraph object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I can even paste the same paragraph several times if I want.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I can even paste the same paragraph several times if I want.")
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor2 = _LOWriter_DocGetViewCursor($oDoc2)
@@ -82,7 +82,7 @@ Func Example()
 	_LOWriter_ParObjPaste($oDoc2, $oPar)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to paste the paragraph object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the documents.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the documents.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -95,7 +95,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $oDoc2, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOWriter_DocClose($oDoc2, False)
 	Exit

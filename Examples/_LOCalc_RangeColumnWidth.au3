@@ -33,7 +33,7 @@ Func Example()
 	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Width settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Column C's Width settings are:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Column C's Width settings are:" & @CRLF & _
 			"Is the Column's Width set to optimal? True/False: " & $avWidth[0] & @CRLF & _
 			"Column C's current Width is, in Micrometers: " & $avWidth[1] & @CRLF & _
 			"Notice that the Column Width is still showing Optimal Width is True, this is the only value it will return." & @CRLF & _
@@ -47,11 +47,11 @@ Func Example()
 	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Column Width settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Column C's new Width settings are:" & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Column C's new Width settings are:" & @CRLF & _
 			"Is the Column's Width set to optimal? True/False: " & $avWidth[0] & @CRLF & _
 			"Column C's current Width is, in Micrometers: " & $avWidth[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

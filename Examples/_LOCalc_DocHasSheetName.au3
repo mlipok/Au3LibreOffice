@@ -16,15 +16,15 @@ Func Example()
 	$bResult = _LOCalc_DocHasSheetName($oDoc, "Sheet1")
 	If @error Then _ERROR($oDoc, "Failed to check if a Sheet existed in a Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does this document contain a Sheet named ""Sheet1"" ? True/False: " & $bResult)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document contain a Sheet named ""Sheet1"" ? True/False: " & $bResult)
 
 	; Test if the document contains a Sheet called "FakeSheet"
 	$bResult = _LOCalc_DocHasSheetName($oDoc, "FakeSheet")
 	If @error Then _ERROR($oDoc, "Failed to check if a Sheet existed in a Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does this document contain a Sheet named ""FakeSheet"" ? True/False: " & $bResult)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document contain a Sheet named ""FakeSheet"" ? True/False: " & $bResult)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -33,7 +33,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -24,13 +24,13 @@ Func Example()
 	$avPageStyleSettings = _LOCalc_PageStyleSheetScale($oPageStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Page style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Because I know I set the Scale Mode to $LOC_SCALE_FIT_WIDTH_HEIGHT, I know the return will have 3 elements, otherwise it would only contain 2." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Because I know I set the Scale Mode to $LOC_SCALE_FIT_WIDTH_HEIGHT, I know the return will have 3 elements, otherwise it would only contain 2." & @CRLF & _
 			"The Page Style's current Sheet Scale settings are as follows: " & @CRLF & _
 			"The Scaling Mode is (See UDF Constants): " & $avPageStyleSettings[0] & @CRLF & _
 			"The Width set for mode $LOC_SCALE_FIT_WIDTH_HEIGHT, is: " & $avPageStyleSettings[1] & @CRLF & _
 			"The Height for mode $LOC_SCALE_FIT_WIDTH_HEIGHT, is: " & $avPageStyleSettings[2])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -39,7 +39,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

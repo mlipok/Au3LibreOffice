@@ -61,7 +61,7 @@ Func Example()
 	$oSrchDesc = _LOCalc_SearchDescriptorCreate($oSheet, False, True, False, $LOC_SEARCH_IN_VALUES, True, False, True)
 	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will perform a Find All in the Sheet, looking for any cells that only contain ""2?"" (""?"" is a wildcard for any character)." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will perform a Find All in the Sheet, looking for any cells that only contain ""2?"" (""?"" is a wildcard for any character)." & _
 			" I will then set the background color of each individual result to a random background color.")
 
 	; Perform a Find All for the Entire Sheet, Search for any cells containing 2? "?" is a wildcard for any character.
@@ -74,7 +74,7 @@ Func Example()
 		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -82,7 +82,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

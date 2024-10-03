@@ -23,7 +23,7 @@ Func Example()
 	$iPt_From_MicroM = _LOCalc_ConvertFromMicrometer(Null, Null, Null, 2540)
 	If @error Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "2540 Micrometers converted to Inches = " & $iInch_From_MicroM & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "2540 Micrometers converted to Inches = " & $iInch_From_MicroM & @CRLF & _
 			"2540 Micrometers to CM = " & $iCM_From_MicroM & @CRLF & _
 			"2540 Micrometers to MM = " & $iMM_From_MicroM & @CRLF & _
 			"2540 Micrometers to Printer's Points = " & $iPt_From_MicroM & @CRLF & @CRLF & _
@@ -32,6 +32,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	Exit
 EndFunc

@@ -50,14 +50,14 @@ Func Example()
 	_LOCalc_RangeValidation($oRange, $LOC_VALIDATION_TYPE_WHOLE, $LOC_VALIDATION_COND_BETWEEN, "1", "10")
 	If @error Then _ERROR($oDoc, "Failed to set Range Validation settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have set validation rules for the Cell Range A1:B3 to only allow Whole numbers between 1 and 10." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have set validation rules for the Cell Range A1:B3 to only allow Whole numbers between 1 and 10." & @CRLF & _
 			"Press Ok to mark any invalid data in the Sheet.")
 
 	; Mark all cells containing invalid data
 	_LOCalc_SheetDetectiveInvalidData($oSheet)
 	If @error Then _ERROR($oDoc, "Failed to mark cells containing invalid data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -65,7 +65,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

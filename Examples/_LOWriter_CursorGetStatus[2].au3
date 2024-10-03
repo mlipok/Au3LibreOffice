@@ -24,7 +24,7 @@ Func Example()
 	$bReturn = _LOWriter_CursorGetStatus($oTextCursor, $LOW_CURSOR_STAT_IS_END_OF_WORD)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Text Cursor Status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the TextCursor at the end of a Word? True/False: " & $bReturn & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the TextCursor at the end of a Word? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"I will now move the cursor, and test again.")
 
 	; Move the Cursor to left 3 spaces.
@@ -35,15 +35,15 @@ Func Example()
 	$bReturn = _LOWriter_CursorGetStatus($oTextCursor, $LOW_CURSOR_STAT_IS_END_OF_WORD)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Text Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the TextCursor at the end of a Word? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the TextCursor at the end of a Word? True/False: " & $bReturn)
 
 	; Check if the TextCursor is currently collapsed, meaning whether or not it has anything selected.
 	$bReturn = _LOWriter_CursorGetStatus($oTextCursor, $LOW_CURSOR_STAT_IS_COLLAPSED)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Text Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is nothing selected by the TextCursor? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is nothing selected by the TextCursor? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -52,7 +52,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

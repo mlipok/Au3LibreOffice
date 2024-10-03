@@ -28,7 +28,7 @@ Func Example()
 	_LOCalc_TextCursorInsertString($oTextCursor, "Hi! ")
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the word ""Hi!"" to Bold and Italic Arial font, size 16.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the word ""Hi!"" to Bold and Italic Arial font, size 16.")
 
 	; Select the word Hi!
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_START, 1, True)
@@ -38,7 +38,7 @@ Func Example()
 	_LOCalc_TextCursorFont($oDoc, $oTextCursor, "Arial", 16, $LOC_POSTURE_ITALIC, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set text font. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now set the font to Stencil, no Bold or Italic and font size 14, and then insert some text.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the font to Stencil, no Bold or Italic and font size 14, and then insert some text.")
 
 	; Move the cursor to the end
 	_LOCalc_TextCursorMove($oTextCursor, $LOC_TEXTCUR_GOTO_END, 1, False)
@@ -56,7 +56,7 @@ Func Example()
 	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
 			"The Font name is: " & $avSettings[0] & @CRLF & _
 			"The Font size is: " & $avSettings[1] & @CRLF & _
 			"The current Italic setting is (See UDF Constants): " & $avSettings[2] & @CRLF & _
@@ -71,14 +71,14 @@ Func Example()
 	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
 			"The Font name is: " & $avSettings[0] & @CRLF & _
 			"The Font size is: " & $avSettings[1] & @CRLF & _
 			"The current Italic setting is (See UDF Constants): " & $avSettings[2] & @CRLF & _
 			"The current Bold setting is (See UDF Constants): " & $avSettings[3] & @CRLF & _
 			"Notice the values are weird when multiple font settings are present in a selection.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -86,7 +86,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

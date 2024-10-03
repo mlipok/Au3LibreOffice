@@ -35,7 +35,7 @@ Func Example()
 	$bCellProtected = _LOWriter_CellProtect($oCell)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Text Table cell current write protection setting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now demonstrate modifying a cell's write protection setting. The current setting is: " & $bCellProtected & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now demonstrate modifying a cell's write protection setting. The current setting is: " & $bCellProtected & _
 			@CRLF & " The possible settings are: " & @CRLF & "True, which means the cell cannot be edited, or " & @CRLF & _
 			"False, which means the cell can be edited.")
 
@@ -43,13 +43,13 @@ Func Example()
 	_LOWriter_CellProtect($oCell, True)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell write protection setting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now set the cell protection to True, attempt to edit the text, and then press ok.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now set the cell protection to True, attempt to edit the text, and then press ok.")
 
 	; Set the cell protection to False.
 	_LOWriter_CellProtect($oCell, False)
 	If @error Then _ERROR($oDoc, "Failed to set Text Table cell write protection setting. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now set the cell protection to False, now try to edit the text, and then press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now set the cell protection to False, now try to edit the text, and then press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

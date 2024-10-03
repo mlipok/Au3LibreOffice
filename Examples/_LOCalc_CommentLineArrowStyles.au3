@@ -38,7 +38,7 @@ Func Example()
 	$avSettings = _LOCalc_CommentLineArrowStyles($oComment)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Comment settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Comment's Line Arrow Style settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Comment's Line Arrow Style settings are as follows: " & @CRLF & _
 			"The Start Line Arrow style is (See UDF Constants): " & $avSettings[0] & @CRLF & _
 			"The Start Line Arrow Width is, in Micrometers: " & $avSettings[1] & @CRLF & _
 			"Is the Start Line Arrow head centered on the end of the line? True/False: " & $avSettings[2] & @CRLF & _
@@ -47,7 +47,7 @@ Func Example()
 			"The End Line Arrow Width is, in Micrometers: " & $avSettings[5] & @CRLF & _
 			"Is the End Line Arrow head centered on the end of the line? True/False: " & $avSettings[6])
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -56,7 +56,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

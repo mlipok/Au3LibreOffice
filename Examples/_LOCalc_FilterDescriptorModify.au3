@@ -78,7 +78,7 @@ Func Example()
 	_LOCalc_RangeFilter($oCellRange, $oFilterDesc)
 	If @error Then _ERROR($oDoc, "Failed to perform Filter Operation. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now modify the Filter Descriptor to not skip duplicates, to look for Column B to contain a 0, and output the results to Cell F7.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now modify the Filter Descriptor to not skip duplicates, to look for Column B to contain a 0, and output the results to Cell F7.")
 
 	; Retrieve Cell F7
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "F7")
@@ -102,7 +102,7 @@ Func Example()
 	$avSettings = _LOCalc_FilterDescriptorModify($oCellRange, $oFilterDesc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Filter descriptor settings.. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Filter Descriptor's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Filter Descriptor's current settings are as follows: " & @CRLF & _
 			"The Filter Fields Array has " & UBound($avSettings[0]) & " elements." & @CRLF & _
 			"Is the Filtering Case Sensitive? True/False: " & $avSettings[1] & @CRLF & _
 			"Are Duplicate results skipped? True/False: " & $avSettings[2] & @CRLF & _
@@ -114,7 +114,7 @@ Func Example()
 			"Note: The Output cell always contains a Cell Object, even if Copy output is False, always Check if Copy Results is set to True First." & @CRLF & _
 			"Source and Destination can only be linked if Source Range is a Named Database Range.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -123,7 +123,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

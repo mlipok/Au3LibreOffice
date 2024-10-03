@@ -25,7 +25,7 @@ Func Example()
 	$iCount = _LOWriter_ShapePointsGetCount($oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The number of points in this shape is: " & $iCount)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The number of points in this shape is: " & $iCount)
 
 	; Retrieve the Shape's current settings for its first point.
 	$avArray = _LOWriter_ShapePointsModify($oShape, 1)
@@ -39,7 +39,7 @@ Func Example()
 	; Add 1600 Micrometers to the Y coordinate
 	$iNewY = $avArray[1] + 1600
 
-	MsgBox($MB_OK, "", "Press Ok to insert the new Point into the shape.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to insert the new Point into the shape.")
 
 	; Add the new Point using the new X and Y coordinates. The new point will be added after the called point (1), The point's type will be Symmetrical.
 	_LOWriter_ShapePointsAdd($oShape, 1, $iNewX, $iNewY, $LOW_SHAPE_POINT_TYPE_SYMMETRIC)
@@ -49,9 +49,9 @@ Func Example()
 	$iCount = _LOWriter_ShapePointsGetCount($oShape)
 	If @error Then _ERROR($oDoc, "Failed to retrieve a count of Points contained in the shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The new number of points in this shape is: " & $iCount)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The new number of points in this shape is: " & $iCount)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -60,7 +60,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

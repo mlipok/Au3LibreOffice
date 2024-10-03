@@ -33,13 +33,13 @@ Func Example()
 
 	Next
 
-	MsgBox($MB_OK, "", "I will now delete columns B and C.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now delete columns B and C.")
 
 	; Delete Columns B and C, B is column 1 because L.O. Columns are 0 based.
 	_LOCalc_RangeColumnDelete($oSheet, 1, 2)
 	If @error Then _ERROR($oDoc, "Failed to delete columns. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now retrieve Cell Range C1 to D3 and delete Column C's contents using the range.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now retrieve Cell Range C1 to D3 and delete Column C's contents using the range.")
 
 	; Retrieve Cell Range C1 to D3.
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "C1", "D3")
@@ -49,7 +49,7 @@ Func Example()
 	_LOCalc_RangeColumnDelete($oCellRange, 0)
 	If @error Then _ERROR($oDoc, "Failed to delete column. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -58,7 +58,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

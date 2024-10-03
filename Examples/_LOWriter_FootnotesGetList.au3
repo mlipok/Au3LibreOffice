@@ -32,7 +32,7 @@ Func Example()
 	_LOWriter_FootnoteInsert($oDoc, $oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to insert a Footnote. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to delete the first Footnote.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to delete the first Footnote.")
 
 	; Retrieve an array of Footnote Objects.
 	$aoFootnotes = _LOWriter_FootnotesGetList($oDoc)
@@ -42,7 +42,7 @@ Func Example()
 	_LOWriter_FootnoteDelete($aoFootnotes[0])
 	If @error Then _ERROR($oDoc, "Failed to delete a Footnote. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -51,7 +51,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

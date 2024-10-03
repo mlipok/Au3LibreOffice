@@ -36,19 +36,18 @@ Func Example()
 	_LOWriter_ParObjSelect($oDoc, $aoPars[1])
 	If @error Then _ERROR($oDoc, "Failed to select the paragraph. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have selected the second paragraph. I could go forward and use _LOWriter_ParObjCopy to copy it, or I could " & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have selected the second paragraph. I could go forward and use _LOWriter_ParObjCopy to copy it, or I could " & _
 			"apply direct formatting if I wanted to. But I will now demonstrate selecting a Table using the object returned by creating it.")
 
 	; Select the Table
 	_LOWriter_ParObjSelect($oDoc, $oTable)
 	If @error Then _ERROR($oDoc, "Failed to select the table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have selected the Table. I could go forward and use _LOWriter_ParObjCopy to copy it, etc." & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have selected the Table. I could go forward and use _LOWriter_ParObjCopy to copy it, etc." & _
 			" I could also use ViewCursor moves, such as GoTo_Start to locate the Viewcursor at the beginning of the Table. But " & _
 			"I will now demonstrate selecting the same content a TextCursor has selected by inputting the TextCursor Object.")
 	_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_START, 1, False)
 
-	MsgBox(0, "", "")
 	; Create a TextCursor.
 	$oTextCursor = _LOWriter_DocCreateTextCursor($oDoc, False)
 	If @error Then _ERROR($oDoc, "Failed to create a text cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
@@ -61,14 +60,14 @@ Func Example()
 	_LOWriter_CursorMove($oTextCursor, $LOW_TEXTCUR_GOTO_END_OF_WORD, 1, True)
 	If @error Then _ERROR($oDoc, "Failed to move a text cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The text cursor currently has data selected, but you can't see it because only selections made with the ViewCursor" & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The text cursor currently has data selected, but you can't see it because only selections made with the ViewCursor" & _
 			" are visible. I will now select the data the TextCursor has selected.")
 
 	; Select the data the TextCursor has selected
 	_LOWriter_ParObjSelect($oDoc, $oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to select the TextCursor Data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
@@ -77,7 +76,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc

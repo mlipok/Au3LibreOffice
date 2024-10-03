@@ -24,7 +24,7 @@ Func Example()
 	$asAddress = _LOCalc_RangeGetAddressAsPosition($oCellRange)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Address for Cell Range A1 to C5 in Sheet 1 is: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Address for Cell Range A1 to C5 in Sheet 1 is: " & @CRLF & _
 			"The Sheet index number is: " & $asAddress[0] & @CRLF & _
 			"I can use this to retrieve the Sheet by Position." & @CRLF & _
 			"The top-left cell's Column index of the Cell Range is: " & $asAddress[1] & @CRLF & _
@@ -33,7 +33,7 @@ Func Example()
 			"The bottom-right cell's Row index of the Cell Range is: " & $asAddress[4] & @CRLF & _
 			"Remember Columns and Rows are 0 based.")
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
@@ -41,7 +41,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc
