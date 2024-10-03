@@ -41,7 +41,8 @@ Global Enum _
 		$LOB_DATA_SET_TYPE_OBJECT                               ; Puts the given Object into the SQL command.
 
 ; Database Data Types
-Global Const _
+
+Global Const _; com.sun.star.sdbc.DataType Constant Group
 		$LOB_DATA_TYPE_LONGNVARCHAR = -16, _                    ; L.O. 24.2
 		$LOB_DATA_TYPE_NCHAR = -15, _                           ; L.O. 24.2
 		$LOB_DATA_TYPE_NVARCHAR = -9, _                         ; L.O. 24.2
@@ -107,6 +108,34 @@ Global Enum _
 		$LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST, _               ; Is the cursor after the last row when it is moved on with next.
 		$LOB_RESULT_CURSOR_QUERY_GET_ROW                        ; Retrieve the current row number.
 
+; Column Nullability Constants.
+Global Const _; com.sun.star.sdbc.ColumnValue Constant Group
+		$LOB_RESULT_METADATA_COLUMN_NOT_NULLABLE = 0, _; The column does not allow NULL values.
+		$LOB_RESULT_METADATA_COLUMN_NULLABLE = 1, _; The column does allow NULL values.
+		$LOB_RESULT_METADATA_COLUMN_UNKNOWN_NULLABLE = 2;  The nullability of the column is unknown.
+
+; Column Metadata Query
+Global Enum _
+		$LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, _; Gets a column's table's catalog name. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME, _; Gets a column's table's schema. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME, _; Gets a column's table name. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_DISP_SIZE, _; Gets the column's normal max width in chars. Returns an Integer.
+		$LOB_RESULT_METADATA_QUERY_GET_LABEL, _; Gets the suggested column title for use in printouts and displays. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_NAME, _; Gets a column's name. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_TYPE, _; Gets the column's SQL type. Returns an Integer. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
+		$LOB_RESULT_METADATA_QUERY_GET_TYPE_NAME, _; Gets the column's database-specific type name. Returns a String.
+		$LOB_RESULT_METADATA_QUERY_GET_LENGTH, _; Gets a column's number of decimal digits. Returns an Integer.
+		$LOB_RESULT_METADATA_QUERY_GET_DECIMAL_PLACE, _; Gets a column's number of digits to right of the decimal point. Returns an Integer.
+		$LOB_RESULT_METADATA_QUERY_IS_AUTO_VALUE, _; Query whether the column is automatically numbered, thus read-only (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_CASE_SENSITIVE, _; Query whether a column's case matters (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_CURRENCY, _; Query whether the column is a cash value (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_NULLABLE, _; Query the nullability of values in the designated column. Returns an Integer. See Constants, $LOB_RESULT_METADATA_COLUMN_* as defined in LibreOfficeBase_Constants.au3.
+		$LOB_RESULT_METADATA_QUERY_IS_READ_ONLY, _; Query whether a column is definitely not writable (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_WRITABLE, _; Query whether it is possible for a write on the column to succeed (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE, _; Query whether a write on the column will definitely succeed (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE, _; Query whether the column can be used in a where clause (True if so). Returns a Boolean.
+		$LOB_RESULT_METADATA_QUERY_IS_SIGNED; Query whether values in the column are signed numbers (True if so). Returns a Boolean.
+
 ; Result Set Row Modification Commands.
 Global Enum _
 		$LOB_RESULT_ROW_MOD_NULL, _                             ; Sets the column content to NULL
@@ -154,8 +183,3 @@ Global Enum _
 		$LOB_RESULT_ROW_UPDATE_MOVE_TO_INSERT, _                ; Moves the cursor into a row corresponding to a new record.
 		$LOB_RESULT_ROW_UPDATE_MOVE_TO_CURRENT                  ; After the entry of a new record, returns the cursor to its previous position.
 
-; Database Result Set Type Constants
-Global Const _
-		$LOB_RESULT_TYPE_FORWARD_ONLY = 1003, _                 ; The Result Set cursor may move only forward.
-		$LOB_RESULT_TYPE_SCROLL_INSENSITIVE = 1004, _           ; The Result Set is scrollable but generally not sensitive to changes made by others.
-		$LOB_RESULT_TYPE_SCROLL_SENSITIVE = 1005                ; The Result Set is scrollable and generally sensitive to changes made by others.

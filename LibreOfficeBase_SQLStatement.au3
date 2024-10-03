@@ -22,6 +22,9 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+; _LOBase_SQLResultColumnMetaDataQuery
+; _LOBase_SQLResultColumnsGetCount
+; _LOBase_SQLResultColumnsGetNames
 ; _LOBase_SQLResultCursorMove
 ; _LOBase_SQLResultCursorQuery
 ; _LOBase_SQLResultRowModify
@@ -34,6 +37,168 @@
 ; _LOBase_SQLStatementExecuteUpdate
 ; _LOBase_SQLStatementPreparedSetData
 ; ===============================================================================================================================
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_SQLResultColumnMetaDataQuery
+; Description ...: Query a Result set for current column status or settings.
+; Syntax ........: _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
+; Parameters ....: $oResult             - [in/out] an object. A Result Set object returned by a previous _LOBase_SQLStatementExecuteQuery function.
+;                  $iColumn             - an integer value. The column to perform the Query on. 1 based.
+;                  $iQuery              - an integer value. The Query command to perform. See Constants, $LOB_RESULT_METADATA_QUERY_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .:  Success: Variable
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oResult not a Result Set Object.
+;                  @Error 1 @Extended 3 Return 0 = $iColumn not an Integer, less than 1, or greater than number of Columns contained in Result Set.
+;                  @Error 1 @Extended 4 Return 0 = $iQuery not an Integer, less than 0, or greater than 18. See Constants, $LOB_RESULT_METADATA_QUERY_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column Count.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Execute Query.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Variable = Success. Returning Query result. See Query description for expected return type.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $vReturn
+	Local $asCommands[19]
+	Local $iCount
+
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME] = ".getCatalogName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME] = ".getSchemaName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME] = ".getTableName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_DISP_SIZE] = ".getColumnDisplaySize"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_LABEL] = ".getColumnLabel"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_NAME] = ".getColumnName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TYPE] = ".getColumnType"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TYPE_NAME] = ".getColumnTypeName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_LENGTH] = ".getPrecision"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_DECIMAL_PLACE] = ".getScale"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_AUTO_VALUE] = ".isAutoIncrement"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_CASE_SENSITIVE] = ".isCaseSensitive"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_CURRENCY] = ".isCurrency"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_NULLABLE] = ".isNullable"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_READ_ONLY] = ".isReadOnly"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE] = ".isWritable"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE] = ".isDefinitelyWritable"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE] = ".isSearchable"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_SIGNED] = ".isSigned"
+
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$iCount = $oResult.Columns.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If Not __LOBase_IntIsBetween($iColumn, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_SIGNED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	Switch $iQuery
+
+		Case $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME, $LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME, $LOB_RESULT_METADATA_QUERY_GET_LABEL, _
+				$LOB_RESULT_METADATA_QUERY_GET_NAME, $LOB_RESULT_METADATA_QUERY_GET_TYPE_NAME
+			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
+			If @error Or Not IsString($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Case $LOB_RESULT_METADATA_QUERY_GET_DISP_SIZE, $LOB_RESULT_METADATA_QUERY_GET_TYPE, $LOB_RESULT_METADATA_QUERY_GET_LENGTH, $LOB_RESULT_METADATA_QUERY_GET_DECIMAL_PLACE, _
+				$LOB_RESULT_METADATA_QUERY_IS_NULLABLE
+			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
+			If @error Or Not IsInt($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Case $LOB_RESULT_METADATA_QUERY_IS_AUTO_VALUE, $LOB_RESULT_METADATA_QUERY_IS_CASE_SENSITIVE, $LOB_RESULT_METADATA_QUERY_IS_CURRENCY, $LOB_RESULT_METADATA_QUERY_IS_READ_ONLY, _
+				$LOB_RESULT_METADATA_QUERY_IS_WRITABLE, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE, $LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE, $LOB_RESULT_METADATA_QUERY_IS_SIGNED
+			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
+			If @error Or Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	EndSwitch
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
+EndFunc   ;==>_LOBase_SQLResultColumnMetaDataQuery
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_SQLResultColumnsGetCount
+; Description ...: Retrieve a count of Columns returned in a Result Set.
+; Syntax ........: _LOBase_SQLResultColumnsGetCount(ByRef $oResult)
+; Parameters ....: $oResult             - [in/out] an object. A Result Set object returned by a previous _LOBase_SQLStatementExecuteQuery function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oResult not a Result Set Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column Count.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning count of Columns contained in the Result Set.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_SQLResultColumnsGetCount(ByRef $oResult)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iReturn
+
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$iReturn = $oResult.MetaData.ColumnCount()
+	If Not IsInt($iReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
+EndFunc   ;==>_LOBase_SQLResultColumnsGetCount
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_SQLResultColumnsGetNames
+; Description ...: Retrieve an Array of Column names Returned in a Result Set.
+; Syntax ........: _LOBase_SQLResultColumnsGetNames(ByRef $oResult)
+; Parameters ....: $oResult             - [in/out] an object. A Result Set object returned by a previous _LOBase_SQLStatementExecuteQuery function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oResult not a Result Set Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Column Names.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Count.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Column Names contained in the Result Set. @Extended is set to the number of Elements contained in the Array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_SQLResultColumnsGetNames(ByRef $oResult)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asReturn[0]
+	Local $iCount
+
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$asReturn = $oResult.Columns.ElementNames()
+	If Not IsArray($asReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$iCount = $oResult.Columns.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asReturn)
+EndFunc   ;==>_LOBase_SQLResultColumnsGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_SQLResultCursorMove
