@@ -65,25 +65,29 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- LibreOfficeBase_Constants.au3
 	- LibreOfficeBase_Database.au3
 	- LibreOfficeBase_Doc.au3
+	- LibreOfficeBase_Form.au3
 	- LibreOfficeBase_Helper.au3
 	- LibreOfficeBase_Internal.au3
+	- LibreOfficeBase_Query.au3
 	- LibreOfficeBase_SQLStatement.au3
 	- LibreOfficeBase_Table.au3
 
-- Base Constants
+- Constants
 	- $LOB_DATA_SET_TYPE_*
 	- $LOB_DATA_TYPE_*
 	- $LOB_PATHCONV_*
 	- $LOB_RESULT_CURSOR_MOVE_*
 	- $LOB_RESULT_CURSOR_QUERY_*
+	- $LOB_RESULT_METADATA_COLUMN_*
+	- $LOB_RESULT_METADATA_QUERY_*
 	- $LOB_RESULT_ROW_MOD_*
 	- $LOB_RESULT_ROW_QUERY_IS_ROW_*
 	- $LOB_RESULT_ROW_READ_*
 	- $LOB_RESULT_ROW_UPDATE_*
 	- $LOB_RESULT_TYPE_*
 
-- Base Database functions
-_LOBase_DatabaseConnectionClose
+- Database functions
+	- _LOBase_DatabaseConnectionClose
 	- _LOBase_DatabaseConnectionGet
 	- _LOBase_DatabaseGetObjByDoc
 	- _LOBase_DatabaseGetObjByURL
@@ -95,7 +99,7 @@ _LOBase_DatabaseConnectionClose
 	- _LOBase_DatabaseRegisteredRemoveByName
 	- _LOBase_DatabaseRequiresPassword
 
-- Base Doc functions
+- Doc functions
 	- _LOBase_DocClose
 	- _LOBase_DocConnect
 	- _LOBase_DocCreate
@@ -117,14 +121,31 @@ _LOBase_DatabaseConnectionClose
 	- _LOBase_DocTableUIVisible
 	- _LOBase_DocVisible
 
-- Base Helper functions
+- Form Functions
+	- _LOBase_FormClose
+	- _LOBase_FormConnect
+	- _LOBase_FormCreate
+	- _LOBase_FormDelete
+	- _LOBase_FormExists
+	- _LOBase_FormFolderCreate
+	- _LOBase_FormFolderDelete
+	- _LOBase_FormFolderExists
+	- _LOBase_FormFolderRename
+	- _LOBase_FormFoldersGetCount
+	- _LOBase_FormFoldersGetNames
+	- _LOBase_FormOpen
+	- _LOBase_FormRename
+	- _LOBase_FormsGetCount
+	- _LOBase_FormsGetNames
+
+- Helper functions
 	- _LOBase_ComError_UserFunction
 	- _LOBase_DateStructCreate
 	- _LOBase_DateStructModify
 	- _LOBase_PathConvert
 	- _LOBase_VersionGet
 
-- Base Internal functions
+- Internal functions
 	- __LOBase_AddTo1DArray
 	- __LOBase_ArrayFill
 	- __LOBase_ColTransferProps
@@ -136,7 +157,27 @@ _LOBase_DatabaseConnectionClose
 	- __LOBase_VarsAreNull
 	- __LOBase_VersionCheck
 
-- Base SQL Statement functions
+- Query functions
+	- _LOBase_QueriesGetCount
+	- _LOBase_QueriesGetNames
+	- _LOBase_QueryAddByName
+	- _LOBase_QueryAddBySQL
+	- _LOBase_QueryDelete
+	- _LOBase_QueryExists
+	- _LOBase_QueryFieldGetObjByIndex
+	- _LOBase_QueryFieldGetObjByName
+	- _LOBase_QueryFieldModify
+	- _LOBase_QueryFieldsGetCount
+	- _LOBase_QueryFieldsGetNames
+	- _LOBase_QueryGetObjByIndex
+	- _LOBase_QueryGetObjByName
+	- _LOBase_QueryName
+	- _LOBase_QuerySQLCommand
+
+- SQL Statement functions
+	- _LOBase_SQLResultColumnMetaDataQuery
+	- _LOBase_SQLResultColumnsGetCount
+	- _LOBase_SQLResultColumnsGetNames
 	- _LOBase_SQLResultCursorMove
 	- _LOBase_SQLResultCursorQuery
 	- _LOBase_SQLResultRowModify
@@ -149,7 +190,7 @@ _LOBase_DatabaseConnectionClose
 	- _LOBase_SQLStatementExecuteUpdate
 	- _LOBase_SQLStatementPreparedSetData
 
-- Base Table functions
+- Table functions
 	- _LOBase_TableAdd
 	- _LOBase_TableColAdd
 	- _LOBase_TableColDefinition
@@ -163,6 +204,11 @@ _LOBase_DatabaseConnectionClose
 	- _LOBase_TableExists
 	- _LOBase_TableGetObjByIndex
 	- _LOBase_TableGetObjByName
+	- _LOBase_TableIndexAdd
+	- _LOBase_TableIndexDelete
+	- _LOBase_TableIndexesCount
+	- _LOBase_TableIndexesGetNames
+	- _LOBase_TableIndexModify
 	- _LOBase_TableName
 	- _LOBase_TablePrimaryKey
 	- _LOBase_TablesGetCount
