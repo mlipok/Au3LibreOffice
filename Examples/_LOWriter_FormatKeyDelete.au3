@@ -10,18 +10,18 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a New Number Format Key.
 	$iFormatKey = _LOWriter_FormatKeyCreate($oDoc, "#,##0.000")
-	If @error Then _ERROR($oDoc, "Failed to create a Format Key. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I created a new Number format key. Its Format Key number is: " & $iFormatKey & " It looks like this: " & _
 			_LOWriter_FormatKeyGetString($oDoc, $iFormatKey) & @CRLF & @CRLF & "Press Ok to delete it.")
 
 	; Delete the Format Key.
 	_LOWriter_FormatKeyDelete($oDoc, $iFormatKey)
-	If @error Then _ERROR($oDoc, "Failed to delete a Format Key. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to delete a Format Key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Does the document still have the Number format I created? True/False: " & _LOWriter_FormatKeyExists($oDoc, $iFormatKey))
 
@@ -29,7 +29,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

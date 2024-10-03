@@ -17,19 +17,19 @@ Func Example()
 
 	; Convert RGB to Long Color format, the RGB values are input as integers in their order.
 	$iRGB_TO_LONG = _LOCalc_ConvertColorToLong(191, 0, 65)
-	If @error Then _ERROR("Failed to convert RGB color value to Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert RGB color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert Hex to Long color format, Hex is input as a string.
 	$iHEX_TO_LONG = _LOCalc_ConvertColorToLong("bf0041")
-	If @error Then _ERROR("Failed to convert HEX color value to Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert HEX color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert CMYK to Long Color format, the CMYK values are input as integers in their order.
 	$iCMYK_TO_LONG = _LOCalc_ConvertColorToLong(0, 100, 66, 25)
-	If @error Then _ERROR("Failed to convert CMYK color value to Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert CMYK color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert HSB to Long Color format, the HSB values are input as strings in their order.
 	$iHSB_TO_LONG = _LOCalc_ConvertColorToLong("340", "100", "75")
-	If @error Then _ERROR("Failed to convert HSB color value to Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert HSB color value to Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "The expected result is 12517441, the conversion results are as follows: " & @CRLF & _
 			"RGB->Long = " & $iRGB_TO_LONG & @CRLF & _

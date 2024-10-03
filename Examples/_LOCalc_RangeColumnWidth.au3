@@ -11,27 +11,27 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Column C's Object.
 	$oColumn = _LOCalc_RangeColumnGetObjByName($oSheet, "C")
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Column Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Column Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/2 an inch to Micrometers
 	$iMicrometers = _LOCalc_ConvertToMicrometer(0.5)
-	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Column C's Width to 1/2 inch.
 	_LOCalc_RangeColumnWidth($oColumn, Null, $iMicrometers)
-	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Column C's current Width settings. Return will be an array with setting values in order of Function parameters.
 	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Row Width settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Row Width settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Column C's Width settings are:" & @CRLF & _
 			"Is the Column's Width set to optimal? True/False: " & $avWidth[0] & @CRLF & _
@@ -41,11 +41,11 @@ Func Example()
 
 	; Set Column C's Width to Optimal = True again.
 	_LOCalc_RangeColumnWidth($oColumn, True)
-	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Column Width. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Column C's Width settings again.
 	$avWidth = _LOCalc_RangeColumnWidth($oColumn)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Column Width settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Column Width settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Column C's new Width settings are:" & @CRLF & _
 			"Is the Column's Width set to optimal? True/False: " & $avWidth[0] & @CRLF & _
@@ -55,7 +55,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

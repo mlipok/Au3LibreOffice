@@ -10,26 +10,26 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Numbering Style named "Test Style"
 	$oNumStyle = _LOWriter_NumStyleCreate($oDoc, "Test Style")
-	If @error Then _ERROR($oDoc, "Failed to create a Numbering Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; See if a Numbering Style called "Test Style" exists.
 	$bReturn = _LOWriter_NumStyleExists($oDoc, "Test Style")
-	If @error Then _ERROR($oDoc, "Failed to query for Numbering Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to query for Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Does a Numbering style called ""Test Style"" exist for this document? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"Press Ok to delete the newly created Numbering Style.")
 
 	; Delete the newly created Numbering Style.
 	_LOWriter_NumStyleDelete($oDoc, $oNumStyle)
-	If @error Then _ERROR($oDoc, "Failed to delete a Numbering Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to delete a Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; See if a Numbering Style called "Test Style" exists.
 	$bReturn = _LOWriter_NumStyleExists($oDoc, "Test Style")
-	If @error Then _ERROR($oDoc, "Failed to query for Numbering Style. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to query for Numbering Style. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Does a Numbering style called ""Test Style"" exist for this document? True/False: " & $bReturn)
 
@@ -37,7 +37,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

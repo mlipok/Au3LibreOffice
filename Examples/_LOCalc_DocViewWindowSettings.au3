@@ -10,11 +10,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current Document View Window Settings
 	$avOrigSettings = _LOCalc_DocViewWindowSettings($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window View settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window View settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "The current Document Window view settings are: " & @CRLF & _
 			"Are Column/Row headers shown? True/False: " & $avOrigSettings[0] & @CRLF & _
@@ -32,11 +32,11 @@ Func Example()
 		; Set Document Window settings, Set Display Headers = False, Display horizontal Scroll bar = False, display vertical scroll bar = False,
 		; Display Sheet Tabs = False, Display Outline Symbols = True, Display Charts = False, display Drawings = False, Display Graphics/Objects = True
 		_LOCalc_DocViewWindowSettings($oDoc, False, False, False, False, True, False, True, True)
-		If @error Then _ERROR($oDoc, "Failed to set Document Window settings. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to set Document Window settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		; Retrieve the current Document View Window Settings
 		$avSettings = _LOCalc_DocViewWindowSettings($oDoc)
-		If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window settings. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to retrieve current Document Window settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		MsgBox($MB_OK, "", "The current Document Window view settings are: " & @CRLF & _
 				"Are Column/Row headers shown? True/False: " & $avSettings[0] & @CRLF & _
@@ -51,7 +51,7 @@ Func Example()
 		; Return settings to User's old settings.
 		_LOCalc_DocViewWindowSettings($oDoc, $avOrigSettings[0], $avOrigSettings[1], $avOrigSettings[2], $avOrigSettings[3], $avOrigSettings[4], $avOrigSettings[5], _
 				$avOrigSettings[6], $avOrigSettings[7])
-		If @error Then _ERROR($oDoc, "Failed to re-set Document Window settings to user's previous values. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to re-set Document Window settings to user's previous values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	EndIf
 
 
@@ -59,7 +59,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

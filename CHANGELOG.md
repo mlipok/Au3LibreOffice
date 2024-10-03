@@ -511,6 +511,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.
 - Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
+- Line numbers to Example Error messages.
 
 ### Fixed
 
@@ -593,6 +594,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_PageStyleFooterAreaFillStyle
 - _LOWriter_PageStyleHeaderAreaFillStyle
 - _LOWriter_ShapeAreaFillStyle
+- Line numbers to Example Error messages.
 
 ### Changed
 

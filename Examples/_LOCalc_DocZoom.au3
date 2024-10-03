@@ -11,11 +11,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current zoom settings. Return value will be in order of function parameters.
 	$aiArray = _LOCalc_DocZoom($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve current zoom settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve current zoom settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$iZoom = Int($aiArray[1] * .75) ; Set my new zoom value to 75% of the current zoom value.
 
@@ -27,24 +27,24 @@ Func Example()
 
 	; Skip zoom type and set the zoom to my new value.
 	_LOCalc_DocZoom($oDoc, Null, $iZoom)
-	If @error Then _ERROR($oDoc, "Failed to set zoom value. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set zoom value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current zoom value again.
 	$aiArray = _LOCalc_DocZoom($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve current zoom value. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve current zoom value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Your new zoom value is: " & $aiArray[1] & "%. And the Zoom type is now: " & $aiArray[0] & @CRLF & _
 			" I will now set zoom type to $LOC_ZOOMTYPE_OPTIMAL.")
 
 	; Set the zoom to the Zoom type of $LOC_ZOOMTYPE_OPTIMAL.
 	_LOCalc_DocZoom($oDoc, $LOC_ZOOMTYPE_OPTIMAL)
-	If @error Then _ERROR($oDoc, "Failed to set zoom value. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set zoom value. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

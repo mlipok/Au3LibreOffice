@@ -13,7 +13,7 @@ Func Example()
 	#forceref $oCOM_Error
 
 	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If Not IsObj($oServiceManager) Then _ERROR("Error creating Service Manager Object")
+	If Not IsObj($oServiceManager) Then _ERROR("Error creating Service Manager Object" & " On Line: " & @ScriptLineNumber)
 
 	; Assign my function to a variable to pass to the ComError User Error.
 	$MyFunc = _FunctionForErrors
@@ -21,7 +21,7 @@ Func Example()
 	; Now set the User COM Error function
 	; The First Parameter is my User function I want called any time there is a COM Error.
 	_LOCalc_ComError_UserFunction($MyFunc)
-	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I will now cause a COM Error, to demonstrate the function.")
 

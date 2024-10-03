@@ -10,32 +10,32 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the currently Active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to Retrieve the currently Active Sheet's Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Retrieve the currently Active Sheet's Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Protect the current sheet with the password 1234
 	_LOCalc_SheetProtect($oSheet, "1234")
-	If @error Then _ERROR($oDoc, "Failed to password protect the current sheet. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to password protect the current sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the Sheet is currently protected
 	$bProtected = _LOCalc_SheetIsProtected($oSheet)
-	If @error Then _ERROR($oDoc, "Failed to check if Sheet is currently password protected. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to check if Sheet is currently password protected. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Is the currently active Sheet protected? True/False: " & $bProtected & @CRLF & _
 			"Press ok to unprotect the Sheet now.")
 
 	; Unprotect the Sheet.
 	_LOCalc_SheetUnprotect($oSheet, "1234")
-	If @error Then _ERROR($oDoc, "Failed to remove password protection from the current sheet. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to remove password protection from the current sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

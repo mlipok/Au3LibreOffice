@@ -12,7 +12,7 @@ Func Example()
 	MsgBox($MB_OK, "", "I will list your currently available printers")
 
 	$asPrinters = _LOWriter_DocEnumPrintersAlt()
-	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "There were " & @extended & " results.")
 
@@ -21,7 +21,7 @@ Func Example()
 	MsgBox($MB_OK, "", "I will list your currently default printer next.")
 
 	$sDefault = _LOWriter_DocEnumPrintersAlt("", True)
-	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then
 		MsgBox($MB_OK, "", "You do not have a default printer.")
@@ -37,7 +37,7 @@ Func Example()
 	EndIf
 
 	$asPrinters = _LOWriter_DocEnumPrintersAlt($sSearch)
-	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "There were: " & @extended & " results")
 

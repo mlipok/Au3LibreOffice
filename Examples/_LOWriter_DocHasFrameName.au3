@@ -10,29 +10,29 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Insert a Frame into the document.
 	$oFrame = _LOWriter_FrameCreate($oDoc, $oViewCursor, "AutoItTest", 3000, 3000)
-	If @error Then _ERROR($oDoc, "Failed to create a Frame. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Frame. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the document has a Frame by the name of "AutoItTest"
 	$bReturn = _LOWriter_DocHasFrameName($oDoc, "AutoItTest")
-	If @error Then _ERROR($oDoc, "Failed to look for Text Frame name. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to look for Text Frame name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Does this document contain a Frame named ""AutoItTest""? True/ False. " & $bReturn)
 
 	; Delete the Frame.
 	_LOWriter_FrameDelete($oDoc, $oFrame)
-	If @error Then _ERROR($oDoc, "Failed to delete Text Frame. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to delete Text Frame. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check again, if the document has a Frame by the name of "AutoItTest"
 	$bReturn = _LOWriter_DocHasFrameName($oDoc, "AutoItTest")
-	If @error Then _ERROR($oDoc, "Failed to look for Text Frame name. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to look for Text Frame name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Now does this document contain a Frame named ""AutoItTest""? True/ False. " & $bReturn)
 
@@ -40,7 +40,7 @@ Func Example()
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

@@ -11,11 +11,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill my arrays with the desired Number and String Values I want in Column A to H.
 	$avRowData[0] = 1 ; A8
@@ -50,35 +50,35 @@ Func Example()
 
 	; Retrieve Cell range A8 to H10
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A8", "H10")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill the range with Data
 	_LOCalc_RangeData($oCellRange, $aavData)
-	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a Search Descriptor, Backwards = False, Search Rows = True, Match Case = False, Search in = Values, Match entire cell = True, Use Regular expressions = False,
 	; Use wildcards = True.
 	$oSrchDesc = _LOCalc_SearchDescriptorCreate($oSheet, False, True, False, $LOC_SEARCH_IN_VALUES, True, False, True)
-	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I will perform a Find All in the Sheet, looking for any cells that only contain ""2?"" (""?"" is a wildcard for any character)." & _
 			" I will then set the background color of each individual result to a random background color.")
 
 	; Perform a Find All for the Entire Sheet, Search for any cells containing 2? "?" is a wildcard for any character.
 	$avResults = _LOCalc_RangeFindAll($oSheet, $oSrchDesc, "2?")
-	If @error Then _ERROR($oDoc, "Failed to perform the Find All function for requested Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to perform the Find All function for requested Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($avResults) - 1
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($avResults[$i], Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
-		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
 	MsgBox($MB_OK, "", "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

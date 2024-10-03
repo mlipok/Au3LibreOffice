@@ -11,11 +11,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill my arrays with the desired Number and String Values I want in Column A to H.
 	$avRowData[0] = "Seventy" ; A8
@@ -50,55 +50,55 @@ Func Example()
 
 	; Retrieve Cell range A8 to H10
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A8", "H10")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill the range with Data
 	_LOCalc_RangeData($oCellRange, $aavData)
-	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell "A2"
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "A2")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Cell A2 to a formula
 	_LOCalc_CellFormula($oCell, "=B8 + D9")
-	If @error Then _ERROR($oDoc, "Failed to set Cell formula. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Cell formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell "C3"
 	$oCell = _LOCalc_RangeGetCellByName($oSheet, "C3")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Cell C3 to a formula
 	_LOCalc_CellFormula($oCell, "=SUM(G8:G10)")
-	If @error Then _ERROR($oDoc, "Failed to set Cell formula. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Cell formula. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the columns A to H's width to Optimal.
 	For $i = 0 To 7
 		; Retrieve Column's Object
 		$oColumn = _LOCalc_RangeColumnGetObjByPosition($oSheet, $i)
-		If @error Then _ERROR($oDoc, "Failed to retrieve Column Object by Position. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Column Object by Position. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 		; Set Column's width to optimal.
 		_LOCalc_RangeColumnWidth($oColumn, True)
-		If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to set Cell width to Optimal. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	Next
 
 	; Create a Search Descriptor, Backwards = True, Search Rows = False, Match Case = True, Search in = Values, Entire Cell and Regular Expressions = False, Wildcards = True.
 	$oSrchDesc = _LOCalc_SearchDescriptorCreate($oSheet, True, False, True, $LOC_SEARCH_IN_VALUES, False, False, True)
-	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "I will perform a Find in the Sheet, looking for the first cell that contain ""Seven*""." & _
 			" If found, I will  set the background color of each result to a random background color.")
 
 	; Perform a Find for the Entire Sheet, Search for any cells containing Seven*, ("*" is a wildcard meaning any sequence of characters)
 	$oResult = _LOCalc_RangeFindNext($oSheet, $oSrchDesc, "Seven*")
-	If @error Then _ERROR($oDoc, "Failed to perform Replace for the Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to perform Replace for the Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If IsObj($oResult) Then
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($oResult, Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
-		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	EndIf
 
@@ -108,16 +108,16 @@ Func Example()
 
 	; Modify the Search Descriptor, Backwards = False, Search Rows = True, skip Match Case, Search in = Formulas, Regular Expressions = True, Wildcards = False.
 	_LOCalc_SearchDescriptorModify($oSrchDesc, False, True, Null, $LOC_SEARCH_IN_FORMULAS, Null, True, False)
-	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a Search descriptor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Perform a Find for the Entire Sheet, Search for any cells containing \d{2}.
 	$oResult = _LOCalc_RangeFindNext($oSheet, $oSrchDesc, "\d{2}")
-	If @error Then _ERROR($oDoc, "Failed to perform Replace for the Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to perform Replace for the Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If IsObj($oResult) Then
 		; Set the Cell Background color to a Random value.
 		_LOCalc_CellBackColor($oResult, Random($LOC_COLOR_BLACK, $LOC_COLOR_WHITE, 1), False)
-		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to set Cell Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	EndIf
 
@@ -125,7 +125,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

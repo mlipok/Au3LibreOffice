@@ -10,23 +10,23 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell range A1 to A5
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "A5")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the range A1:A5 as a Database Range.
 	$oDataBase = _LOCalc_RangeDatabaseAdd($oDoc, $oCellRange, "My AutoIt Range")
-	If @error Then _ERROR($oDoc, "Failed to add Cell Range to list of Database Ranges. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to add Cell Range to list of Database Ranges. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_RangeDatabaseModify($oDoc, $oDataBase)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "The Database Range's current settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Database range is: " & _LOCalc_RangeGetAddressAsName($avSettings[0]) & @CRLF & _
@@ -41,16 +41,16 @@ Func Example()
 
 	; Retrieve the Range B2:C5.
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "B2", "C5")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Modify the Database Range's settings, change the Range to cover B2:C5, set the name to "AU3LibreOffice Range", Column Header = False, Totals Row = True,
 	; Add/Remove Cells = False, Keep formatting = False, Ignore contents of range when saving document = True, Auto Filter = True.
 	_LOCalc_RangeDatabaseModify($oDoc, $oDataBase, $oCellRange, "AU3LibreOffice Range", False, True, False, False, True, True)
-	If @error Then _ERROR($oDoc, "Failed to set Database Range settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Database Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
 	$avSettings = _LOCalc_RangeDatabaseModify($oDoc, $oDataBase)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Database Range settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "The Database Range's new settings are as follows: " & @CRLF & _
 			"The Range currently covered by this Database range is: " & _LOCalc_RangeGetAddressAsName($avSettings[0]) & @CRLF & _
@@ -64,7 +64,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)

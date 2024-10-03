@@ -13,19 +13,19 @@ Func Example()
 
 	; Convert to RGB From Long Color format, the RGB values are returned as an array in their order.
 	$aiRGB = _LOCalc_ConvertColorFromLong(Null, $LOC_COLOR_MAGENTA)
-	If @error Then _ERROR("Failed to convert to RGB color value from Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to RGB color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to Hex From Long color format, Hex is returned as a string.
 	$sHex = _LOCalc_ConvertColorFromLong($LOC_COLOR_MAGENTA)
-	If @error Then _ERROR("Failed to convert to HEX color value from Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to HEX color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to CMYK From Long Color format, the CMYK values are returned as an array in their order.
 	$aiCMYK = _LOCalc_ConvertColorFromLong(Null, Null, Null, $LOC_COLOR_MAGENTA)
-	If @error Then _ERROR("Failed to convert to CMYK color value from Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to CMYK color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert to HSB From Long Color format, the HSB values are returned as an array in their order.
 	$aiHSB = _LOCalc_ConvertColorFromLong(Null, Null, $LOC_COLOR_MAGENTA)
-	If @error Then _ERROR("Failed to convert to HSB color value from Long color format integer. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to HSB color value from Long color format integer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "The conversion results are as follows: " & @CRLF & _
 			"Long->RGB = " & "R, " & $aiRGB[0] & "; G, " & $aiRGB[1] & "; B, " & $aiRGB[2] & " Should be: R, 191; G, 0; B, 65" & @CRLF & _

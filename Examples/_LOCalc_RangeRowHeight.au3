@@ -11,27 +11,27 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Row 5's Object. Remember L.O. Rows are 0 based.
 	$oRow = _LOCalc_RangeRowGetObjByPosition($oSheet, 4)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the Row Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the Row Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 1/2 an inch to Micrometers
 	$iMicrometers = _LOCalc_ConvertToMicrometer(0.5)
-	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to convert Inches to Micrometers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set Row 5's Height to 1/2 inch.
 	_LOCalc_RangeRowHeight($oRow, Null, $iMicrometers)
-	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Row 5's current height settings. Return will be an array with setting values in order of Function parameters.
 	$avHeight = _LOCalc_RangeRowHeight($oRow)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Row 5's Height settings are:" & @CRLF & _
 			"Is the Row's height set to optimal? True/False: " & $avHeight[0] & @CRLF & _
@@ -40,11 +40,11 @@ Func Example()
 
 	; Set Row 5's Height to Optimal.
 	_LOCalc_RangeRowHeight($oRow, True)
-	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Row Height. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Row 5's height settings again.
 	$avHeight = _LOCalc_RangeRowHeight($oRow)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Row Height settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "Row 5's new Height settings are:" & @CRLF & _
 			"Is the Row's height set to optimal? True/False: " & $avHeight[0] & @CRLF & _
@@ -54,7 +54,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 

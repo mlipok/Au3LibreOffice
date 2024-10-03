@@ -9,19 +9,19 @@ Func Example()
 
 	; Convert 1 Inch to Micrometers.
 	$iInch_To_MicroM = _LOCalc_ConvertToMicrometer(1)
-	If @error Then _ERROR("Failed to convert to Micrometers from Inch. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to Micrometers from Inch. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 2.54 Centimeters to Micrometers.
 	$iCM_To_MicroM = _LOCalc_ConvertToMicrometer(Null, 2.54)
-	If @error Then _ERROR("Failed to convert to Micrometers from Centimeter. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to Micrometers from Centimeter. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 25.40 Millimeters to Micrometers.
 	$iMM_To_MicroM = _LOCalc_ConvertToMicrometer(Null, Null, 25.4)
-	If @error Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Convert 72 Printer's Points to Micrometers.
 	$iPt_To_MicroM = _LOCalc_ConvertToMicrometer(Null, Null, Null, 72)
-	If @error Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR("Failed to convert to Micrometers from Millimeter. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "", "1 Inch converted to Micrometers = " & $iInch_To_MicroM & @CRLF & _
 			"2.54 Cm to Micrometers = " & $iCM_To_MicroM & @CRLF & _

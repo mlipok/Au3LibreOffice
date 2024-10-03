@@ -9,7 +9,7 @@ Func Example()
 	Local $sSaveName, $sSavepath
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "Success", "A New Calc Document was successfully opened. Press OK to close and save it.")
 
@@ -18,7 +18,7 @@ Func Example()
 
 	; Close the document, save changes.
 	$sSavepath = _LOCalc_DocClose($oDoc, True, $sSaveName)
-	If @error Then _ERROR($oDoc, "Failed to close and save opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close and save opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK, "Success", "The Calc Document was successfully saved to the following path: " & $sSavepath & @CRLF & _
 			"Press OK to Delete it.")

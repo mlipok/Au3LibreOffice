@@ -11,7 +11,7 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$hGui = GUICreate("Calc Selection Example.", 200, 400, -1, -1, -1, $WS_EX_TOPMOST)
 	$hTest = GUICtrlCreateButton("Test", 5, 70, 50, 30)
@@ -34,7 +34,7 @@ Func Example()
 			Case $hTest
 				; Retrieve the current selection in the Document.
 				$vReturn = _LOCalc_DocSelectionGet($oDoc)
-				If @error Then _ERROR($oDoc, "Failed to retrieve the current selection. Error:" & @error & " Extended:" & @extended)
+				If @error Then _ERROR($oDoc, "Failed to retrieve the current selection. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 				Switch @extended
 
@@ -62,7 +62,7 @@ Func Example()
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
