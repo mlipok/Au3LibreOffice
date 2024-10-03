@@ -43,7 +43,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Add a Column to the Table.
-	$oColumn = _LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_NUMERIC, "", "A New Number Column.")
+	_LOBase_TableColAdd($oTable, "AutoIt Col", $LOB_DATA_TYPE_NUMERIC, "", "A New Number Column.")
 	If @error Then Return _ERROR($oDoc, "Failed to add a Column to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve a count of Columns.
