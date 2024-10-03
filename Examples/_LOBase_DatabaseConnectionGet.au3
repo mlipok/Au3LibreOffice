@@ -15,7 +15,7 @@ Func Example()
 	$oConnection = _LOBase_DatabaseConnectionGet($oDBase)
 	If @error Then Return _ERROR($oConnection, "Failed to create a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have connected to the Database ""Bibliography"", it contains " & _LOBase_TablesGetCount($oConnection) & " Table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have connected to the Database ""Bibliography"", it contains " & _LOBase_TablesGetCount($oConnection) & " Table.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -24,6 +24,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oConnection, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oConnection) Then _LOBase_DatabaseConnectionClose($oConnection)
 EndFunc

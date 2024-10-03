@@ -41,7 +41,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to Execute a SQL Statement Query. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	Do
-		MsgBox($MB_OK, "", "The Current status of the Result Set Cursor is: " & @CRLF & _
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current status of the Result Set Cursor is: " & @CRLF & _
 		"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST)& @CRLF & _
 		"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST)& @CRLF & _
 		"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST)& @CRLF & _
@@ -54,14 +54,14 @@ Func Example()
 
 		Until _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)
 
-	MsgBox($MB_OK, "", "The Current status of the Result Set Cursor is: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Current status of the Result Set Cursor is: " & @CRLF & _
 		"IS_BEFORE_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST)& @CRLF & _
 		"IS_FIRST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_FIRST)& @CRLF & _
 		"IS_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST)& @CRLF & _
 		"IS_AFTER_LAST? True/False : " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST)& @CRLF & _
 		"GET_ROW: " & _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW))
 
-	MsgBox($MB_OK, "", "Press Ok to Close and Delete the Document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Close and Delete the Document.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -289,7 +289,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

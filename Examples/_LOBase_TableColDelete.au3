@@ -54,7 +54,7 @@ Func Example()
 		$sNames &= $asColumns[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Table contains the following columns: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table contains the following columns: " & @CRLF & _
 			$sNames & @CRLF & @CRLF & _
 			"Press Ok to delete one column.")
 
@@ -76,7 +76,7 @@ Func Example()
 		$sNames &= $asColumns[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Table contains the following columns: " & @CRLF & $sNames)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table contains the following columns: " & @CRLF & $sNames)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -89,7 +89,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

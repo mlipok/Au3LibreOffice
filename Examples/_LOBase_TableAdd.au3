@@ -45,7 +45,7 @@ Func Example()
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have added a table to this Document. Please select ""Tables"" and see that there is a Table present there named ""tblNew_Table""." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a table to this Document. Please select ""Tables"" and see that there is a Table present there named ""tblNew_Table""." & @CRLF & _
 			"Press OK to close and delete the document.")
 
 	; Close the document.
@@ -55,7 +55,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

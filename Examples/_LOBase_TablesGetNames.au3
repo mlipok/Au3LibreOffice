@@ -54,7 +54,7 @@ Func Example()
 		$sNames &= $asTables[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "This Database contains the following Tables: " & @CRLF & $sNames)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "This Database contains the following Tables: " & @CRLF & $sNames)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

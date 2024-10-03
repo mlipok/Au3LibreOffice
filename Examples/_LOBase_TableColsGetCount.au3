@@ -50,7 +50,7 @@ Func Example()
 	$iCount = _LOBase_TableColsGetCount($oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve count of Columns. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "There are " & $iCount & " Columns contained in the Table.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "There are " & $iCount & " Columns contained in the Table.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -63,7 +63,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

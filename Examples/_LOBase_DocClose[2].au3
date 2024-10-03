@@ -17,7 +17,7 @@ Func Example()
 	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then Return _ERROR($oDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "Success", "A New Base Document was successfully opened. Press OK to close and save it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "A New Base Document was successfully opened. Press OK to close and save it.")
 
 	; Set the Database type.
 	_LOBase_DocDatabaseType($oDoc)
@@ -30,11 +30,11 @@ Func Example()
 	$sSavepath = _LOBase_DocClose($oDoc, True, $sSaveName)
 	If @error Then Return _ERROR($oDoc, "Failed to close and save opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "Success", "The Base Document was successfully saved to the following path: " & $sSavepath & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Base Document was successfully saved to the following path: " & $sSavepath & @CRLF & _
 			"Press OK to Delete it.")
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

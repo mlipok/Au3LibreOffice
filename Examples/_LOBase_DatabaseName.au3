@@ -37,7 +37,7 @@ Func Example()
 	$sName = _LOBase_DatabaseName($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to Retrieve the Database Name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Database's name is (The return will be the save path, as it is not registered): " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database's name is (The return will be the save path, as it is not registered): " & @CRLF & _
 			$sName & @CRLF & @CRLF & "Press ok to see the return for a registered Database's name.")
 
 	; Close the document.
@@ -52,11 +52,11 @@ Func Example()
 	$sName = _LOBase_DatabaseName($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to Retrieve the Database Name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The registered Database's Name is: " & $sName)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The registered Database's Name is: " & $sName)
 
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

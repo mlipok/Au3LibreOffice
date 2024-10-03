@@ -12,15 +12,15 @@ Func Example()
 	$bReturn = _LOBase_DatabaseRegisteredExists("Bibliography")
 	If @error Then Return _ERROR("Failed to check for registered Database by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is there a Registered Database by the name of ""Bibliography""? True/ False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is there a Registered Database by the name of ""Bibliography""? True/ False: " & $bReturn)
 
 	; See if the Database "FakeNamedDatabase" is registered.
 	$bReturn = _LOBase_DatabaseRegisteredExists("FakeNamedDatabase")
 	If @error Then Return _ERROR("Failed to check for registered Database by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is there a Registered Database by the name of ""FakeNamedDatabase""? True/ False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is there a Registered Database by the name of ""FakeNamedDatabase""? True/ False: " & $bReturn)
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 EndFunc

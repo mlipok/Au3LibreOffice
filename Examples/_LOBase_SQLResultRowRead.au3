@@ -54,7 +54,7 @@ Func Example()
 		$sValue = _LOBase_SQLResultRowRead($oResult, $LOB_RESULT_ROW_READ_STRING, $i)
 		If @error Then Return _ERROR($oDoc, "Failed to read Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oTableUI)
 
-		MsgBox($MB_OK, "", "Row 1, Column Number " & $i & " contains the following value: " & $sValue)
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "Row 1, Column Number " & $i & " contains the following value: " & $sValue)
 	Next
 
 	; Close the Table UI
@@ -287,7 +287,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oTableUI = Null)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oTableUI) Then _LOBase_DocTableUIClose($oTableUI)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)

@@ -49,7 +49,7 @@ Func Example()
 	$nValue = _LOBase_SQLResultRowRead($oResult, $LOB_RESULT_ROW_READ_DOUBLE, 5)
 	If @error Then Return _ERROR($oDoc, "Failed to read Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current price for pens is set at " & $nValue & ".")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current price for pens is set at " & $nValue & ".")
 
 	; My first entry is for pens, I wish to increase the price from 1.99 to 2.50.
 	_LOBase_SQLResultRowModify($oResult, $LOB_RESULT_ROW_MOD_DOUBLE, 5, 2.50)
@@ -59,7 +59,7 @@ Func Example()
 	$nValue = _LOBase_SQLResultRowRead($oResult, $LOB_RESULT_ROW_MOD_DOUBLE, 5)
 	If @error Then Return _ERROR($oDoc, "Failed to read Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The new price for pens is set at " & $nValue & ". Press ok to reset the row's data.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The new price for pens is set at " & $nValue & ". Press ok to reset the row's data.")
 
 	; Refresh the Row.
 	_LOBase_SQLResultRowRefresh($oResult)
@@ -69,7 +69,7 @@ Func Example()
 	$nValue = _LOBase_SQLResultRowRead($oResult, $LOB_RESULT_ROW_READ_DOUBLE, 5)
 	If @error Then Return _ERROR($oDoc, "Failed to read Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current price for pens is set at " & $nValue & "." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current price for pens is set at " & $nValue & "." & @CRLF & _
 			"Press Ok to Close and Delete the Document.")
 
 	; Close the connection.
@@ -298,7 +298,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

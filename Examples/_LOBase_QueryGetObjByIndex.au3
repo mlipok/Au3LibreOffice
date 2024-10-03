@@ -53,13 +53,13 @@ Func Example()
 	$sSQL = _LOBase_QuerySQLCommand($oQuery)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve Query SQL command. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "This Query's SQL command is: " & $sSQL)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "This Query's SQL command is: " & $sSQL)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -68,6 +68,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

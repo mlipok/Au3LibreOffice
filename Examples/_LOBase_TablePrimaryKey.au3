@@ -61,7 +61,7 @@ Func Example()
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "The Primary Key Column name is " & $asSettings[0])
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Primary Key Column name is " & $asSettings[0])
 
 	Next
 
@@ -70,7 +70,7 @@ Func Example()
 	_LOBase_TablePrimaryKey($oTable, $aoKeys)
 	If @error Then Return _ERROR($oDoc, "Failed to set Table Primary key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now modified the Table's primary key to ""AutoIt Col"" column.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now modified the Table's primary key to ""AutoIt Col"" column.")
 
 	; Retrieve the current Primary key for the Table.
 	$aoPrimaryKey = _LOBase_TablePrimaryKey($oTable)
@@ -82,7 +82,7 @@ Func Example()
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "The Primary Key Column name is " & $asSettings[0])
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Primary Key Column name is " & $asSettings[0])
 
 	Next
 
@@ -93,7 +93,7 @@ Func Example()
 	_LOBase_TablePrimaryKey($oTable, $aoKeys)
 	If @error Then Return _ERROR($oDoc, "Failed to set Table Primary key. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have now modified the Table's primary keys to ""AutoIt Col"" and ""New Col"" columns.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have now modified the Table's primary keys to ""AutoIt Col"" and ""New Col"" columns.")
 
 	; Retrieve the current Primary key for the Table.
 	$aoPrimaryKey = _LOBase_TablePrimaryKey($oTable)
@@ -105,11 +105,11 @@ Func Example()
 		$asSettings = _LOBase_TableColDefinition($oTable, $aoPrimaryKey[$i])
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "One of the Primary Key Columns has the name of " & $asSettings[0])
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "One of the Primary Key Columns has the name of " & $asSettings[0])
 
 	Next
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -122,7 +122,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

@@ -49,7 +49,7 @@ Func Example()
 	$iRow = _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Row Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Result Set Cursor is currently on Row: " & $iRow)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Result Set Cursor is currently on Row: " & $iRow)
 
 	; Move the Cursor to the last record.
 	_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_LAST)
@@ -59,7 +59,7 @@ Func Example()
 	$iRow = _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Row Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Result Set Cursor is currently on Row: " & $iRow)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Result Set Cursor is currently on Row: " & $iRow)
 
 	; Move the Cursor to the 4th record.
 	_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_ABSOLUTE, 4)
@@ -69,7 +69,7 @@ Func Example()
 	$iRow = _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Row Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Result Set Cursor is currently on Row: " & $iRow)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Result Set Cursor is currently on Row: " & $iRow)
 
 	; Move the Cursor back 3 records.
 	_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_RELATIVE, -3)
@@ -79,7 +79,7 @@ Func Example()
 	$iRow = _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Row Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Result Set Cursor is currently on Row: " & $iRow)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Result Set Cursor is currently on Row: " & $iRow)
 
 	; Move the Cursor to "Before First".
 	_LOBase_SQLResultCursorMove($oResult, $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST)
@@ -89,7 +89,7 @@ Func Example()
 	$iRow = _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_GET_ROW)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Row Cursor status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Result Set Cursor is currently on Row: " & $iRow & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Result Set Cursor is currently on Row: " & $iRow & @CRLF & _
 			"Press Ok to Close and Delete the Document.")
 
 	; Close the connection.
@@ -318,7 +318,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

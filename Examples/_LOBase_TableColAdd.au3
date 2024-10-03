@@ -49,7 +49,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a Column to the table named ""tblNew_Table"", and have opened the Table." & @CRLF & _
 			"Press OK to close the window and document and delete the document.")
 
 	; Close Table UI.
@@ -67,7 +67,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

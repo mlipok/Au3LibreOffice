@@ -58,7 +58,7 @@ Func Example()
 		$sQueries &= $asQueries[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all queries contained in the document:" & @CRLF & $sQueries & @CRLF & @CRLF & "I will now delete the ""qryAutoIt_Query"" Query.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all queries contained in the document:" & @CRLF & $sQueries & @CRLF & @CRLF & "I will now delete the ""qryAutoIt_Query"" Query.")
 
 	; Delete the Query
 	_LOBase_QueryDelete($oConnection, $oQuery)
@@ -74,13 +74,13 @@ Func Example()
 		$sQueries &= $asQueries[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all queries contained in the document:" & @CRLF & $sQueries)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all queries contained in the document:" & @CRLF & $sQueries)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -89,6 +89,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

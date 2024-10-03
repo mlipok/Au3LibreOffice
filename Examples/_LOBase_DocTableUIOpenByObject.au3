@@ -41,14 +41,14 @@ Func Example()
 	$oTable = _LOBase_TableAdd($oConnection, "tblNew_Table", "Col1")
 	If @error Then Return _ERROR($oDoc, "Failed to add a table to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have added a table named ""tblNew_Table""." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added a table named ""tblNew_Table""." & @CRLF & _
 			"Press OK to open the Table UI in Viewing/ Data editing mode.")
 
 	; Open the Table UI.
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have opened the table named ""tblNew_Table"" in Viewing/ Data editing mode." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the table named ""tblNew_Table"" in Viewing/ Data editing mode." & @CRLF & _
 			"Press OK to close the window reopen the table in editing mode.")
 
 	; Close Table UI.
@@ -59,7 +59,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable, True)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have opened the table named ""tblNew_Table"" in Editing mode." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have opened the table named ""tblNew_Table"" in Editing mode." & @CRLF & _
 			"Press OK to close the window and document and delete the document.")
 
 	; Close Table UI.
@@ -77,7 +77,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

@@ -46,13 +46,13 @@ Func Example()
 	$bReturn = _LOBase_TableExists($oConnection, "tblNew_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to query Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the Database contain a Table named ""tblNew_Table""? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the Database contain a Table named ""tblNew_Table""? True/False: " & $bReturn)
 
 	; Check if the Database contains a Table name "Fake_Table"
 	$bReturn = _LOBase_TableExists($oConnection, "Fake_Table")
 	If @error Then Return _ERROR($oDoc, "Failed to query Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does the Database contain a Table named ""Fake_Table""? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the Database contain a Table named ""Fake_Table""? True/False: " & $bReturn)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -65,7 +65,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

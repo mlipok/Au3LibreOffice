@@ -62,7 +62,7 @@ Func Example()
 		$sForms &= $asForms[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of forms contained in the document." & @CRLF & $sForms & @CRLF & @CRLF & "I will now rename the two forms.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of forms contained in the document." & @CRLF & $sForms & @CRLF & @CRLF & "I will now rename the two forms.")
 
 	; Rename the Form "frmAutoIt_Form" to "frmFirst_Form"
 	_LOBase_FormRename($oDoc, "frmAutoIt_Form", "frmFirst_Form")
@@ -82,9 +82,9 @@ Func Example()
 		$sForms &= $asForms[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a new list of forms contained in the document." & @CRLF & $sForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a new list of forms contained in the document." & @CRLF & $sForms)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -93,6 +93,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

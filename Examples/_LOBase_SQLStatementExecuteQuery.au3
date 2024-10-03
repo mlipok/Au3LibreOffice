@@ -36,7 +36,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox(0, "", "Press Ok to Query the Table for all entries with less than 12,000 posts.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Query the Table for all entries with less than 12,000 posts.")
 
 	; Create a Statement Object
 	$oStatement = _LOBase_SQLStatementCreate($oConnection)
@@ -60,7 +60,7 @@ Func Example()
 		; See if  this is the last result.
 	Until _LOBase_SQLResultCursorQuery($oResult, $LOB_RESULT_CURSOR_QUERY_IS_LAST)
 
-	MsgBox(0, "", "The Following users have post counts less than 12,000" & @CRLF & $sUsers & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Following users have post counts less than 12,000" & @CRLF & $sUsers & @CRLF & _
 			"Press Ok to Close and Delete the Document.")
 
 	; Close the Table UI
@@ -197,7 +197,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oTableUI = Null)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oTableUI) Then _LOBase_DocTableUIClose($oTableUI)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)

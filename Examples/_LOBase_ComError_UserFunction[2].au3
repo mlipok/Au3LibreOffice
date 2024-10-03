@@ -26,7 +26,7 @@ Func Example()
 	_LOBase_ComError_UserFunction($MyFunc, "My First Parameter", 05, False, "Another String", 100)
 	If @error Then _ERROR("Error Assigning User COM Error Function.  Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now cause a COM Error, to demonstrate the function.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now cause a COM Error, to demonstrate the function.")
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
@@ -35,12 +35,12 @@ Func Example()
 	_LOBase_ComError_UserFunction($MyFunc, "My First Parameter", 2023, "I have only three Parameters now.")
 	If @error Then _ERROR("Error Assigning User COM Error Function. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will cause another COM Error, to demonstrate the function.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will cause another COM Error, to demonstrate the function.")
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
 
-	MsgBox($MB_OK, "", "Now I will retrieve the function's name that I set.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now I will retrieve the function's name that I set.")
 
 	; Return the currently set User Function and any Parameters by calling the Default keyword in the first parameter.
 	$aReturn = _LOBase_ComError_UserFunction(Default) ; Since I set parameters, the return will be an Array.
@@ -50,14 +50,14 @@ Func Example()
 	; Array will be in order of function parameters. The function will be in the first (zeroth) element.
 	$ReturnedFunc = $aReturn[0]
 
-	MsgBox($MB_OK, "", "The function's name is: " & FuncName($ReturnedFunc))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The function's name is: " & FuncName($ReturnedFunc))
 
-	MsgBox($MB_OK, "", "I Will now clear my set function from being called.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I Will now clear my set function from being called.")
 
 	; Clear the set User Function be calling it with Null in the first Parameter.
 	_LOBase_ComError_UserFunction(Null)
 
-	MsgBox($MB_OK, "", "I will cause another COM Error, to show the function is no longer set.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will cause another COM Error, to show the function is no longer set.")
 
 	; Create a COM Error by calling a non existent Method.
 	$oServiceManager.FakeMethod()
@@ -66,7 +66,7 @@ EndFunc
 
 Func _FunctionForErrors($oObjectError, $vParam1 = Null, $vParam2 = Null, $vParam3 = Null, $vParam4 = Null, $vParam5 = Null)
 
-	MsgBox($MB_OK, "A COM Error occurred, here's what we know:", _
+	MsgBox($MB_OK, "COM Error", "A COM Error occurred, here's what we know:" & @CRLF & _
 			"Error Number: 0x" & Hex($oObjectError.number, 8) & @CRLF & _
 			"Description: " & $oObjectError.windescription & @CRLF & _
 			"At line: " & $oObjectError.scriptline & @CRLF & _
@@ -88,6 +88,6 @@ Func _FunctionForErrors($oObjectError, $vParam1 = Null, $vParam2 = Null, $vParam
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	Exit
 EndFunc

@@ -49,7 +49,7 @@ Func Example()
 	$bReturn = _LOBase_SQLResultRowQuery($oResult, $LOB_RESULT_ROW_QUERY_IS_ROW_UPDATED)
 	If @error Then Return _ERROR($oDoc, "Failed to Query Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Has this Row been modified? True/False: " & $bReturn & @CRLF & "I will now modify the first row's value.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Has this Row been modified? True/False: " & $bReturn & @CRLF & "I will now modify the first row's value.")
 
 	; Modify the Row
 	; My first entry is for pens, modify the price from 1.99 to 2.50.
@@ -60,7 +60,7 @@ Func Example()
 	$bReturn = _LOBase_SQLResultRowQuery($oResult, $LOB_RESULT_ROW_QUERY_IS_ROW_UPDATED)
 	If @error Then Return _ERROR($oDoc, "Failed to Query Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have modified the Row, but haven't updated it yet, does it show as being modified? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have modified the Row, but haven't updated it yet, does it show as being modified? True/False: " & $bReturn)
 
 	; Update the Row.
 	_LOBase_SQLResultRowUpdate($oResult, $LOB_RESULT_ROW_UPDATE_UPDATE)
@@ -70,7 +70,7 @@ Func Example()
 	$bReturn = _LOBase_SQLResultRowQuery($oResult, $LOB_RESULT_ROW_QUERY_IS_ROW_UPDATED)
 	If @error Then Return _ERROR($oDoc, "Failed to Query Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Now has this Row been modified? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now has this Row been modified? True/False: " & $bReturn)
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -298,7 +298,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

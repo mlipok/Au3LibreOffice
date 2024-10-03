@@ -78,7 +78,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to Close Table UI and retrieve the date and time values.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Close Table UI and retrieve the date and time values.")
 
 	; Close the Table UI
 	_LOBase_DocTableUIClose($oTableUI)
@@ -104,7 +104,7 @@ Func Example()
 	$avReturn = _LOBase_DateStructModify($tDateTime)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve Date and Time values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Date and Time Values are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Date and Time Values are: " & @CRLF & _
 			"Year: " & $avReturn[0] & @CRLF & _
 			"Month: " & $avReturn[1] & @CRLF & _
 			"Day: " & $avReturn[2] & @CRLF & _
@@ -122,7 +122,7 @@ Func Example()
 	$tDateTime = _LOBase_SQLResultRowModify($oResult, $LOB_RESULT_ROW_MOD_TIMESTAMP, 4, $tDateTime)
 	If @error Then Return _ERROR($oDoc, "Failed to modify Result Row. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will not modify the Time value in the time column.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will not modify the Time value in the time column.")
 
 	; Retrieve the Timestamp value
 	$tDateTime = _LOBase_SQLResultRowRead($oResult, $LOB_RESULT_ROW_READ_TIME, 3)
@@ -132,7 +132,7 @@ Func Example()
 	$avReturn = _LOBase_DateStructModify($tDateTime)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve Time values. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The current Time Values are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The current Time Values are: " & @CRLF & _
 			"Hour: " & $avReturn[3] & @CRLF & _
 			"Minute: " & $avReturn[4] & @CRLF & _
 			"Second: " & $avReturn[5] & @CRLF & _
@@ -155,7 +155,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press Ok to Close and Delete the Document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to Close and Delete the Document.")
 
 	; Close the Table UI
 	_LOBase_DocTableUIClose($oTableUI)
@@ -210,7 +210,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

@@ -55,7 +55,7 @@ Func Example()
 	$avSettings = _LOBase_TableColProperties($oTable, $oColumn)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve the Column's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Column's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Column's current settings are as follows: " & @CRLF & _
 			"The Maximum number of characters that can be entered is: " & $avSettings[0] & @CRLF & _
 			"The Default value is: " & $avSettings[1] & @CRLF & _
 			"Is this column required to be filled in? True/False: " & $avSettings[2] & @CRLF & _
@@ -73,7 +73,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

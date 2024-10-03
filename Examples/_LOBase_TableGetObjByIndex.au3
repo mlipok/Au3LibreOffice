@@ -60,7 +60,7 @@ Func Example()
 		$sName = _LOBase_TableName($oTable)
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Table Name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "The Table with Index number " & $i & " has the name of: " & $sName)
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Table with Index number " & $i & " has the name of: " & $sName)
 	Next
 
 	; Close the connection.
@@ -74,7 +74,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

@@ -45,18 +45,18 @@ Func Example()
 	$vReturn = _LOBase_SQLResultColumnMetaDataQuery($oResult, 3, $LOB_RESULT_METADATA_QUERY_GET_NAME)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Set Column data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The third column's name in the Result set is: " & $vReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The third column's name in the Result set is: " & $vReturn)
 
 	; Perform a Query on the fifth column
 	$vReturn = _LOBase_SQLResultColumnMetaDataQuery($oResult, 5, $LOB_RESULT_METADATA_QUERY_IS_NULLABLE)
 	If @error Then Return _ERROR($oDoc, "Failed to query Result Set Column data. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The fifth column's nullability is: " & $vReturn & @CRLF & @CRLF & "The Result will correspond to one of the following constants: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The fifth column's nullability is: " & $vReturn & @CRLF & @CRLF & "The Result will correspond to one of the following constants: " & @CRLF & _
 			"$LOB_RESULT_METADATA_COLUMN_NOT_NULLABLE" & @TAB & $LOB_RESULT_METADATA_COLUMN_NOT_NULLABLE & @CRLF & _
 			"$LOB_RESULT_METADATA_COLUMN_NULLABLE" & @TAB & $LOB_RESULT_METADATA_COLUMN_NULLABLE & @CRLF & _
 			"$LOB_RESULT_METADATA_COLUMN_NOT_NULLABLE" & @TAB & $LOB_RESULT_METADATA_COLUMN_UNKNOWN_NULLABLE)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -284,7 +284,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

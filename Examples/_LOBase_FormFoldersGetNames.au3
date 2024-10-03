@@ -54,7 +54,7 @@ Func Example()
 		$sFolders &= $asFolders[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all folders contained in the document." & @CRLF & $sFolders)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all folders contained in the document." & @CRLF & $sFolders)
 
 	; Retrieve an array of Folder names found in "Folder2".
 	$asFolders = _LOBase_FormFoldersGetNames($oDoc, True, "AutoIt_Folder/Folder2")
@@ -66,7 +66,7 @@ Func Example()
 		$sFolders &= $asFolders[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all folders contained in ""Folder2"" and all sub-directories." & @CRLF & $sFolders)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all folders contained in ""Folder2"" and all sub-directories." & @CRLF & $sFolders)
 
 	; Retrieve an array of Folder names found in "AutoIt_Folder", non-exhaustively.
 	$asFolders = _LOBase_FormFoldersGetNames($oDoc, False, "AutoIt_Folder")
@@ -78,9 +78,9 @@ Func Example()
 		$sFolders &= $asFolders[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all folders contained in ""AutoIt_Folder"", non-exhaustively." & @CRLF & $sFolders)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all folders contained in ""AutoIt_Folder"", non-exhaustively." & @CRLF & $sFolders)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -89,6 +89,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

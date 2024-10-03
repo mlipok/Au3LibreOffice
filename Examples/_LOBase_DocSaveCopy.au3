@@ -32,14 +32,14 @@ Func Example()
 	$sPath = _LOBase_DocSaveAs($oDoc, $sSavePath, True)
 	If @error Then Return _ERROR($oDoc, "Failed to save the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created and saved a blank L.O. Base Doc to your Desktop, found at the following Path: " _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved a blank L.O. Base Doc to your Desktop, found at the following Path: " _
 			& $sPath & @CRLF & "Press Ok to save a copy to the desktop also.")
 
 	; Save a copy to the Desktop
 	$sPathCopy = _LOBase_DocSaveCopy($oDoc, @DesktopDir & "\A Copied Doc.odb")
 	If @error Then Return _ERROR($oDoc, "Failed to save a copy of the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have saved a copy of this L.O. Base Doc to your Desktop, found at the following Path: " _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have saved a copy of this L.O. Base Doc to your Desktop, found at the following Path: " _
 			& $sPathCopy & @CRLF & "Press Ok to close the document and delete both files.")
 
 	; Close the document.
@@ -49,7 +49,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

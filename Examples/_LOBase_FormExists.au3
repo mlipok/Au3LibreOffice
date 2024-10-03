@@ -58,27 +58,27 @@ Func Example()
 	$bReturn = _LOBase_FormExists($oDoc, "frmAutoIt_Form", True)
 	If @error Then Return _ERROR($oDoc, "Failed to query if a form exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a form exist in the document with the name of ""frmAutoIt_Form""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a form exist in the document with the name of ""frmAutoIt_Form""? True/False. " & $bReturn)
 
 	; See if a form exists with the name "frmAutoIt_Form2" with Exhaustive set to True.
 	$bReturn = _LOBase_FormExists($oDoc, "frmAutoIt_Form2", True)
 	If @error Then Return _ERROR($oDoc, "Failed to query if a form exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a form exist in the document with the name of ""frmAutoIt_Form2""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a form exist in the document with the name of ""frmAutoIt_Form2""? True/False. " & $bReturn)
 
 	; See if a form exists with the name "frmAutoIt_Form" in the folder "AutoIt_Folder".
 	$bReturn = _LOBase_FormExists($oDoc, "AutoIt_Folder/frmAutoIt_Form")
 	If @error Then Return _ERROR($oDoc, "Failed to query if a form exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a form exist in the document with the name of ""frmAutoIt_Form"" inside the folder ""AutoIt_Folder""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a form exist in the document with the name of ""frmAutoIt_Form"" inside the folder ""AutoIt_Folder""? True/False. " & $bReturn)
 
 	; See if a form exists with the name "frmAutoIt_Form2" in the folder "AutoIt_Folder".
 	$bReturn = _LOBase_FormExists($oDoc, "AutoIt_Folder/frmAutoIt_Form2")
 	If @error Then Return _ERROR($oDoc, "Failed to query if a form exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a form exist in the document with the name of ""frmAutoIt_Form2"" inside the folder ""AutoIt_Folder""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a form exist in the document with the name of ""frmAutoIt_Form2"" inside the folder ""AutoIt_Folder""? True/False. " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -87,6 +87,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

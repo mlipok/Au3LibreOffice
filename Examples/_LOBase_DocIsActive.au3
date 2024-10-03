@@ -19,14 +19,14 @@ Func Example()
 	$bReturn = _LOBase_DocIsActive($oDoc)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to query document status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is Document 1 the active document? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is Document 1 the active document? True/False: " & $bReturn)
 
 	$bReturn = _LOBase_DocIsActive($oDoc2)
 	If @error Then _ERROR($oDoc, $oDoc2, "Failed to query document status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is Document 2 the active document? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is Document 2 the active document? True/False: " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close both documents.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close both documents.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -39,7 +39,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $oDoc2, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOBase_DocClose($oDoc2, False)
 	Exit

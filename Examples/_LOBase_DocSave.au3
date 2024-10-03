@@ -18,7 +18,7 @@ Func Example()
 	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then Return _ERROR($oDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now save the new Base Document to the desktop folder.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now save the new Base Document to the desktop folder.")
 
 	; Create a unique file name
 	$sSavePath = _TempFile(@DesktopDir & "\", "DocTestFile_", ".odb")
@@ -31,7 +31,7 @@ Func Example()
 	$sPath = _LOBase_DocSaveAs($oDoc, $sSavePath, True)
 	If @error Then Return _ERROR($oDoc, "Failed to save the Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created and saved the document to your Desktop, found at the following Path: " _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved the document to your Desktop, found at the following Path: " _
 			& $sPath & @CRLF & "Press Ok to write some data to it and then save the changes and close the document.")
 
 	; Retrieve the Database Object.
@@ -58,13 +58,13 @@ Func Example()
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have written and saved the data, and closed the document. I will now open it up again to show it worked.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have written and saved the data, and closed the document. I will now open it up again to show it worked.")
 
 	; Open the document.
 	$oDoc = _LOBase_DocOpen($sPath)
 	If @error Then Return _ERROR($oDoc, "Failed to open Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document was successfully opened. Please select ""Tables"" and see that there is a Table present there. Press OK to close and delete the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document was successfully opened. Please select ""Tables"" and see that there is a Table present there. Press OK to close and delete the document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -73,7 +73,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

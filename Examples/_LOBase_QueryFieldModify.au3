@@ -58,7 +58,7 @@ Func Example()
 	$asSettings = _LOBase_QueryFieldModify($oQueryField)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve Query Field Settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have retrieved the Object for the first Query Field in the Query ""qryAutoIt_Query"". Its current settings are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have retrieved the Object for the first Query Field in the Query ""qryAutoIt_Query"". Its current settings are: " & @CRLF & _
 			"The Current Alias is: " & $asSettings[0] & @CRLF & _
 			"Is the Field Visible in the Query result? True/False: " & $asSettings[1] & @CRLF & _
 			"The Field's real name is: " & $asSettings[2])
@@ -67,7 +67,7 @@ Func Example()
 	_LOBase_DatabaseConnectionClose($oConnection)
 	If @error Then Return _ERROR($oDoc, "Failed to close a connection to the Database. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -76,6 +76,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

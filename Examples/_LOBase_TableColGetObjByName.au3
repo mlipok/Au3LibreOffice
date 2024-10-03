@@ -59,7 +59,7 @@ Func Example()
 		$asSettings = _LOBase_TableColDefinition($oTable, $oColumn)
 		If @error Then Return _ERROR($oDoc, "Failed to retrieve Column Properties. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-		MsgBox($MB_OK, "", "The Column with name of " & $asColumns[$i] & " is a data type of: " & $asSettings[2])
+		MsgBox($MB_OK + $MB_TOPMOST, Default, "The Column with name of " & $asColumns[$i] & " is a data type of: " & $asSettings[2])
 	Next
 
 	; Close the connection.
@@ -73,7 +73,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

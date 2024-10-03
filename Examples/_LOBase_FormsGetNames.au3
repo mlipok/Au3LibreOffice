@@ -70,7 +70,7 @@ Func Example()
 		$sForms &= $asForms[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all forms contained in the document." & @CRLF & $sForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all forms contained in the document." & @CRLF & $sForms)
 
 	; Retrieve an array of Form names found in "Folder2".
 	$asForms = _LOBase_FormsGetNames($oDoc, True, "AutoIt_Folder/Folder2")
@@ -82,7 +82,7 @@ Func Example()
 		$sForms &= $asForms[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all forms contained in ""Folder2"" and all sub-directories." & @CRLF & $sForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all forms contained in ""Folder2"" and all sub-directories." & @CRLF & $sForms)
 
 	; Retrieve an array of Form names found in "AutoIt_Folder", non-exhaustively.
 	$asForms = _LOBase_FormsGetNames($oDoc, False, "AutoIt_Folder")
@@ -94,9 +94,9 @@ Func Example()
 		$sForms &= $asForms[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "Here is a list of all forms contained in ""AutoIt_Folder"", non-exhaustively." & @CRLF & $sForms)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Here is a list of all forms contained in ""AutoIt_Folder"", non-exhaustively." & @CRLF & $sForms)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -105,6 +105,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

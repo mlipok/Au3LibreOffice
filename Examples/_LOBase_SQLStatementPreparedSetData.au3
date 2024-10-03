@@ -113,7 +113,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table User Interface. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox(0, "", "I have added Data to the Table using a Prepared Statement. I have also just opened the Table User Interface to show that it worked." & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have added Data to the Table using a Prepared Statement. I have also just opened the Table User Interface to show that it worked." & @CRLF & _
 			"Press Ok to Close and Delete the Document.")
 
 	; Close the Table UI
@@ -173,7 +173,7 @@ Func _FillDatabase(ByRef $oDoc, ByRef $oConnection, ByRef $oTable)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

@@ -41,7 +41,7 @@ Func Example()
 	$sName = _LOBase_DatabaseName($oDBase)
 	If @error Then Return _ERROR($oDoc, "Failed to Retrieve the Database Name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have registered a Database with the Name: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have registered a Database with the Name: " & @CRLF & _
 			$sName & @CRLF & @CRLF & "Press ok to unregister the Database and delete the file.")
 
 	; Unregister the Database
@@ -55,6 +55,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

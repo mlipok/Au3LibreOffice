@@ -102,11 +102,11 @@ Func Example()
 		$sColumns &= "Column Name: " & """" & ($avSettings[0])[$i][0] & """" & @CRLF & "Sort Ascending? True/False: " & ($avSettings[0])[$i][1] & @CRLF & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Index, ""Item_Index"" has the following settings: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Index, ""Item_Index"" has the following settings: " & @CRLF & _
 			"The Columns contained in the Index are: " & @CRLF & $sColumns & @CRLF & @CRLF & _
 			"Is the Index to contain only Unique values? True/False: " & $avSettings[1])
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the connection.
 	_LOBase_DatabaseConnectionClose($oConnection)
@@ -119,7 +119,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 

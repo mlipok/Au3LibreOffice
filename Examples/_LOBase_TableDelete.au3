@@ -50,7 +50,7 @@ Func Example()
 		$sNames &= $asTables[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Database contains the following Tables: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database contains the following Tables: " & @CRLF & _
 			$sNames & @CRLF & @CRLF & _
 			"Press Ok to delete the only Table.")
 
@@ -68,7 +68,7 @@ Func Example()
 		$sNames &= $asTables[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK, "", "The Database contains the following Tables: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Database contains the following Tables: " & @CRLF & _
 			$sNames & @CRLF & @CRLF & _
 			"Press Ok to close the database.")
 
@@ -83,7 +83,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc

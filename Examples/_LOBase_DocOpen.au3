@@ -14,7 +14,7 @@ Func Example()
 	Local $oDoc
 	Local $sSavePath
 
-	MsgBox($MB_OK, "", "I will Create and Save a new Base Doc to begin this example, a screen will flash up and disappear after pressing OK.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will Create and Save a new Base Doc to begin this example, a screen will flash up and disappear after pressing OK.")
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOBase_DocCreate(True, False)
@@ -35,14 +35,14 @@ Func Example()
 	_LOBase_DocClose($oDoc, False)
 	If @error Then Return _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have created and saved a blank L.O. Base Doc to your Temporary Directory, found at the following Path: " _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have created and saved a blank L.O. Base Doc to your Temporary Directory, found at the following Path: " _
 			& $sPath & @CRLF & "I will now open it.")
 
 	; Open the document.
 	$oDoc = _LOBase_DocOpen($sPath)
 	If @error Then Return _ERROR($oDoc, "Failed to open Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Document was successfully opened. Press OK to close and delete it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Document was successfully opened. Press OK to close and delete it.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -51,6 +51,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

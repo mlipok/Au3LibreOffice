@@ -16,10 +16,10 @@ Func Example()
 	$bReturn = _LOBase_DatabaseIsReadOnly($oDBase)
 	If @error Then Return _ERROR("Failed to Query Database for Read-Only status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the Database ""Bibliography"", currently set to Read Only? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Database ""Bibliography"", currently set to Read Only? True/False: " & $bReturn)
 
 EndFunc
 
 Func _ERROR($sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 EndFunc

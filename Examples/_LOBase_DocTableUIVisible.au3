@@ -46,7 +46,7 @@ Func Example()
 	$oTableUI = _LOBase_DocTableUIOpenByObject($oDoc, $oConnection, $oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to open Table UI. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have just opened the Table UI, press Ok to make the window invisible.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have just opened the Table UI, press Ok to make the window invisible.")
 
 	; Make the Table UI Window invisible by setting visible to False
 	_LOBase_DocTableUIVisible($oTableUI, False)
@@ -56,7 +56,7 @@ Func Example()
 	$bReturn = _LOBase_DocTableUIVisible($oTableUI)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the Table window currently visible? True/False: " & $bReturn & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Table window currently visible? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"Press Ok to make the window visible again.")
 
 	; Make the window visible by setting visible to True
@@ -67,7 +67,7 @@ Func Example()
 	$bReturn = _LOBase_DocTableUIVisible($oTableUI)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Window visibility status. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Is the Table window now visible? True/False: " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the Table window now visible? True/False: " & $bReturn)
 
 	; Close Table UI.
 	_LOBase_DocTableUIClose($oTableUI)
@@ -84,7 +84,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	Exit
 EndFunc

@@ -47,7 +47,7 @@ Func Example()
 		Sleep(10)
 	Next
 
-	MsgBox($MB_OK, "", "The Registered Database Names are: " & @CRLF & $sNames)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Registered Database Names are: " & @CRLF & $sNames)
 
 	; Unregister the Database
 	_LOBase_DatabaseRegisteredRemoveByName("AutoIt_Database")
@@ -60,6 +60,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

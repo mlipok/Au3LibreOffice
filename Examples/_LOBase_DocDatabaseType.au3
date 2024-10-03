@@ -12,7 +12,7 @@ Func Example()
 	$oDoc = _LOBase_DocCreate(True, False)
 	If @error Then _ERROR($oDoc, "Failed to Create a new Base Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "A New Base Document was successfully opened. I will now set and Retrieve the Database type.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "A New Base Document was successfully opened. I will now set and Retrieve the Database type.")
 
 	; Set the Database type, leave it as Default value ("sdbc:embedded:hsqldb").
 	_LOBase_DocDatabaseType($oDoc)
@@ -22,7 +22,7 @@ Func Example()
 	$sDBType = _LOBase_DocDatabaseType($oDoc, Null)
 	If @error Then _ERROR($oDoc, "Failed to Retrieve Base Document Database type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Base Document's Database type is: " & $sDBType)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Base Document's Database type is: " & $sDBType)
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -31,7 +31,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	Exit
 EndFunc

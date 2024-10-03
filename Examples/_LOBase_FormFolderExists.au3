@@ -46,21 +46,21 @@ Func Example()
 	$bReturn = _LOBase_FormFolderExists($oDoc, "AutoIt_Folder", True)
 	If @error Then Return _ERROR($oDoc, "Failed to query if a folder exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a folder exist in the document with the name of ""AutoIt_Folder""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a folder exist in the document with the name of ""AutoIt_Folder""? True/False. " & $bReturn)
 
 	; See if a folder exists with the name "Folder3"
 	$bReturn = _LOBase_FormFolderExists($oDoc, "Folder3", True)
 	If @error Then Return _ERROR($oDoc, "Failed to query if a folder exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a folder exist in the document with the name of ""Folder3""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a folder exist in the document with the name of ""Folder3""? True/False. " & $bReturn)
 
 	; See if a folder exists with the name "Folder3" within "AutoIt_Folder" with Exhaustive set to False.
 	$bReturn = _LOBase_FormFolderExists($oDoc, "AutoIt_Folder/Folder3", False)
 	If @error Then Return _ERROR($oDoc, "Failed to query if a folder exists by name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "Does a folder exist in the document with the name of ""Folder3"" within the folder ""AutoIt_Folder""? True/False. " & $bReturn)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does a folder exist in the document with the name of ""Folder3"" within the folder ""AutoIt_Folder""? True/False. " & $bReturn)
 
-	MsgBox($MB_OK, "", "Press ok to close the Base document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the Base document.")
 
 	; Close the document.
 	_LOBase_DocClose($oDoc, False)
@@ -69,6 +69,6 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 EndFunc

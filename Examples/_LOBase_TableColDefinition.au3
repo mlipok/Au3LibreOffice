@@ -54,7 +54,7 @@ Func Example()
 	$avSettings = _LOBase_TableColDefinition($oTable, $oColumn)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve the Column's current settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The Column's current settings are as follows: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Column's current settings are as follows: " & @CRLF & _
 			"The Column name is: " & $avSettings[0] & @CRLF & _
 			"The Column data type is (see UDF Constants): " & $avSettings[1] & @CRLF & _
 			"The Column's Data Type name is (if type is set to other): " & $avSettings[2] & @CRLF & _
@@ -71,7 +71,7 @@ Func Example()
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOBase_DocClose($oDoc, False)
 	If IsString($sPath) Then FileDelete($sPath)
 EndFunc
