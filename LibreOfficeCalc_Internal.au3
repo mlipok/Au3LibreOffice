@@ -2419,7 +2419,7 @@ Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 		Case 3
 			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
 
-		Case 4
+		Case 4, 5
 
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
