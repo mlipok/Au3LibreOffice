@@ -23,9 +23,9 @@ Func Example()
 
 	; Retrieve Array of Printers
 	$aPrinters = _LOWriter_DocEnumPrintersAlt()
-	If (@error > 0) Or Not IsArray($aPrinters) Then _ERROR($oDoc, "Error retrieving Array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	If (@error > 0) Then _ERROR($oDoc, "Error retrieving Array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	If ($aPrinters[0] <= 1) Then _ERROR($oDoc, "one or no Printers found. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	If (@extended <= 1) Then _ERROR($oDoc, "one or no Printers found. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Changes the printer Name setting to another Printer.
 	_LOWriter_DocPrintMiscSettings($oDoc, Null, $aPrinters[2])
