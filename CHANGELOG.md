@@ -523,6 +523,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedAdd
 - _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
 - _LOCalc_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- LibreOfficeCalc_Cell.au3 was missing an Include file.
+- Several Cell or Cell range functions that should support Column/Rows would not work with them.
 
 ### Changed
 
@@ -686,6 +688,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Incorrect usage of ObjEvent.
 - _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
 - _LOWriter_DocCreate and _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
+- __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
+- LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
+- _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
 
 ### Removed
 
