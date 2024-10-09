@@ -34,7 +34,7 @@ Func Example()
 	$oRow = _LOCalc_RangeRowGetObjByPosition($oCellRange, 3)
 	If @error Then _ERROR($oDoc, "Failed to retrieve Row Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set Row 4's Background color to Black.
+	; Set Row 6's Background color to Black.
 	_LOCalc_CellBackColor($oRow, $LOC_COLOR_BLACK)
 	If @error Then _ERROR($oDoc, "Failed to set Row's Background color. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
