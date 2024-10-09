@@ -3143,7 +3143,7 @@ Func __LOCalc_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPercen
 	Local $iReturn
 
 	If ($iPercentToLong <> Null) Then
-		$iReturn = (255 * ($iPercentToLong / 100)) ; Change percentage to decimal and times by White color (255 RGB)
+		$iReturn = ((255 * ($iPercentToLong / 100)) + .5) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOCalc_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
 	ElseIf ($iLongToPercent <> Null) Then
