@@ -305,6 +305,7 @@ EndFunc   ;==>_LOBase_TableColAdd
 ;                  @Error 1 @Extended 5 Return 0 = $iType not an integer, less than -16 or greater than 2014. See Constants, $LOB_DATA_TYPE_* as defined in LibreOfficeBase_Constants.au3.
 ;                  @Error 1 @Extended 6 Return 0 = $sTypeName not a String.
 ;                  @Error 1 @Extended 7 Return 0 = $sDescription not a String.
+;                  @Error 1 @Extended 8 Return 0 = Column called in $oColumn not a Table Column and does not support a description. See Remarks.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create a Column descriptor.
 ;                  --Processing Errors--
@@ -320,11 +321,12 @@ EndFunc   ;==>_LOBase_TableColAdd
 ;                  |                               8 = Error setting $sDescription
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 or 4 Element Array with values in order of function parameters. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Column Objects retrieved for primary keys do not support a Description text, thus if a Primary Key Column is called in $oColumn, that parameter will be omitted from the returned array when retrieving the settings.
 ; Related .......: _LOBase_TableColProperties
 ; Link ..........:
 ; Example .......: Yes
@@ -336,13 +338,19 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 	Local $oNewCol
 	Local $sOldName
 	Local $iError = 0
-	Local $asSettings[4]
+	Local $asSettings[3]
 
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOBase_VarsAreNull($sName, $iType, $sTypeName, $sDescription) Then
+		If $oColumn.supportsService("com.sun.star.sdbcx.KeyColumn") Then ; Key Column
+		__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName())
+
+		Else
 		__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName(), $oColumn.HelpText())
+	EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asSettings)
 	EndIf
 
@@ -388,6 +396,7 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 	If ($sDescription <> Null) Then
 		If Not IsString($sDescription) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not $oColumn.supportsService("com.sun.star.sdbcx.Column") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Normal Column
 		$oNewCol.HelpText = $sDescription
 		$iError = ($oColumn.HelpText() = $sDescription) ? ($iError) : (BitOR($iError, 8))
 	EndIf
