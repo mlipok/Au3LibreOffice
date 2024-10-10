@@ -2276,7 +2276,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 
 	If $oShapes.hasElements() Then
 
-		For $i = 1 To $oShapes.getCount + 1
+		For $i = 1 To $oShapes.getCount() - 1
 
 			For $j = 0 To $oShapes.getCount() - 1
 				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
@@ -8269,7 +8269,7 @@ Func __LOWriter_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPerc
 	Local $iReturn
 
 	If ($iPercentToLong <> Null) Then
-		$iReturn = ((255 * ($iPercentToLong / 100)) + .5) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
+		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOWriter_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
 	ElseIf ($iLongToPercent <> Null) Then

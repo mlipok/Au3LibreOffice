@@ -691,6 +691,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
 - LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
 - _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
+- __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
 
 ### Removed
 
