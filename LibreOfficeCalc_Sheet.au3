@@ -10,6 +10,7 @@
 #include "LibreOfficeCalc_Internal.au3"
 
 ; Other includes for Calc
+#include "LibreOfficeCalc_Doc.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF

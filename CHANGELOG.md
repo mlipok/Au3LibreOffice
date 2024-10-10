@@ -525,6 +525,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOCalc_DocCreate would return if there was an error creating a property, instead of increasing the error count.
 - LibreOfficeCalc_Cell.au3 was missing an Include file.
 - Several Cell or Cell range functions that should support Column/Rows would not work with them.
+- LibreOfficeCalc_Sheet.au3 was missing an Include file.
 
 ### Changed
 
