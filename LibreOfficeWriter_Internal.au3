@@ -2797,6 +2797,223 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				EndIf
 			EndWith
 
+		Case $LOW_GRAD_NAME_RAINBOW
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_RADIAL
+				.StepCount = 0
+				.XOffset = 50
+				.YOffset = 100
+				.Angle = 0
+				.Border = 0
+				.StartColor = $LOW_COLOR_WHITE
+				.EndColor = $LOW_COLOR_WHITE
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[7]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0.2
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.2
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 0
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.4
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[3] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.65
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 1
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[4] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.8
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 0
+					$tStopColor.Blue = 1
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[5] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.8
+					$atColorStop[6] = $tColorStop
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNRISE
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_LINEAR
+				.StepCount = 0
+				.XOffset = 0
+				.YOffset = 0
+				.Angle = 0
+				.Border = 0
+				.StartColor = 3713206
+				.EndColor = 14065797
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[4]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.505882352941176
+					$tStopColor.Green = 0.784313725490196
+					$tStopColor.Blue = 0.768627450980392
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.75
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.717647058823529
+					$tStopColor.Green = 0.807843137254902
+					$tStopColor.Blue = 0.698039215686275
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 1
+					$atColorStop[3] = $tColorStop
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNDOWN
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_LINEAR
+				.StepCount = 0
+				.XOffset = 0
+				.YOffset = 0
+				.Angle = 0
+				.Border = 0
+				.StartColor = 985943
+				.EndColor = 16759664
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[5]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.3
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.392156862745098
+					$tStopColor.Green = 0.305882352941177
+					$tStopColor.Blue = 0.690196078431373
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.827450980392157
+					$tStopColor.Green = 0.572549019607843
+					$tStopColor.Blue = 0.83921568627451
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.75
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.996078431372549
+					$tStopColor.Green = 0.733333333333333
+					$tStopColor.Blue = 0.76078431372549
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[3] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 1
+					$atColorStop[4] = $tColorStop
+				EndIf
+			EndWith
+
 		Case Else ;Custom Gradient Name
 			__LOWriter_GradientNameInsert($oDoc, $tGradient, $sGradientName)
 			If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
