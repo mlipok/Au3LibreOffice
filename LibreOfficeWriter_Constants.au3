@@ -373,7 +373,10 @@ Global Const _
 		$LOW_GRAD_NAME_NEON_LIGHT = "Neon Light", _             ; The "Neon Light" Gradient Preset.
 		$LOW_GRAD_NAME_SUNSHINE = "Sunshine", _                 ; The "Sunshine" Gradient Preset.
 		$LOW_GRAD_NAME_PRESENT = "Present", _                   ; The "Present" Gradient Preset.
-		$LOW_GRAD_NAME_MAHOGANY = "Mahogany"                    ; The "Mahogany" Gradient Preset.
+		$LOW_GRAD_NAME_MAHOGANY = "Mahogany", _                 ; The "Mahogany" Gradient Preset.
+		$LOW_GRAD_NAME_RAINBOW = "Rainbow", _                   ; The "Rainbow" Gradient Preset. L.O. 7.6+
+		$LOW_GRAD_NAME_SUNRISE = "Sunrise", _                   ; The "Sunrise" Gradient Preset. L.O. 7.6+
+		$LOW_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset. L.O. 7.6+
 
 ; Gradient Type
 Global Const _

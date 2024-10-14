@@ -2276,7 +2276,7 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 
 	If $oShapes.hasElements() Then
 
-		For $i = 1 To $oShapes.getCount + 1
+		For $i = 1 To $oShapes.getCount() - 1
 
 			For $j = 0 To $oShapes.getCount() - 1
 				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
@@ -2310,7 +2310,7 @@ EndFunc   ;==>__LOWriter_GetShapeName
 ;                  @Error 1 @Extended 3 Return 0 = $sGradientName not a string.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.drawing.GradientTable" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" or "com.sun.star.awt.Gradient2" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error creating Gradient Name.
 ;                  --Success--
@@ -2331,10 +2331,13 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 	Local $tNewGradient
 	Local $oGradTable
 	Local $iCount = 1
+	Local $sGradient = "com.sun.star.awt.Gradient2"
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($tGradient) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsString($sGradientName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	If Not __LOWriter_VersionCheck(7.6) Then $sGradient = "com.sun.star.awt.Gradient"
 
 	$oGradTable = $oDoc.createInstance("com.sun.star.drawing.GradientTable")
 	If Not IsObj($oGradTable) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -2347,7 +2350,7 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 		$sGradientName = $sGradientName & $iCount
 	EndIf
 
-	$tNewGradient = __LOWriter_CreateStruct("com.sun.star.awt.Gradient")
+	$tNewGradient = __LOWriter_CreateStruct($sGradient)
 	If Not IsObj($tNewGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
@@ -2361,6 +2364,9 @@ Func __LOWriter_GradientNameInsert(ByRef $oDoc, $tGradient, $sGradientName = "Gr
 		.EndColor = $tGradient.EndColor()
 		.StartIntensity = $tGradient.StartIntensity()
 		.EndIntensity = $tGradient.EndIntensity()
+
+		If __LOWriter_VersionCheck(7.6) Then .ColorStops = $tGradient.ColorStops()
+
 	EndWith
 
 	If Not $oGradTable.hasByName($sGradientName) Then
@@ -2383,6 +2389,8 @@ EndFunc   ;==>__LOWriter_GradientNameInsert
 ;                  $bHeader             - [optional] a boolean value. Default is False. If True, settings are being set for Header Fill Gradient. If both are false, settings are for The Page itself.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.awt.ColorStop" Struct.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to create Gradient name.
 ;                  --Success--
@@ -2395,6 +2403,23 @@ EndFunc   ;==>__LOWriter_GradientNameInsert
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $sGradientName, $bFooter = False, $bHeader = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tColorStop, $tStopColor
+	Local $atColorStop[2]
+
+	If __LOWriter_VersionCheck(7.6) Then
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$atColorStop[0] = $tColorStop
+
+		$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+		If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		$atColorStop[1] = $tColorStop
+	EndIf
 
 	Switch $sGradientName
 		Case $LOW_GRAD_NAME_PASTEL_BOUQUET
@@ -2410,6 +2435,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 16766935
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_PASTEL_DREAM
@@ -2425,6 +2460,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 11847644
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_BLUE_TOUCH
@@ -2440,6 +2485,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 14608111
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_BLANK_W_GRAY
@@ -2455,6 +2510,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 14540253
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_SPOTTED_GRAY
@@ -2470,6 +2535,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 15658734
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_LONDON_MIST
@@ -2485,6 +2560,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 6710886
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_TEAL_TO_BLUE
@@ -2500,6 +2585,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 5866416
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_MIDNIGHT
@@ -2515,6 +2610,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 2777241
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_DEEP_OCEAN
@@ -2530,6 +2635,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 7512015
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUBMARINE
@@ -2545,6 +2660,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 11847644
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_GREEN_GRASS
@@ -2560,6 +2685,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 8508442
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_NEON_LIGHT
@@ -2575,6 +2710,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = $LOW_COLOR_WHITE
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_SUNSHINE
@@ -2590,6 +2735,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 16776960
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_PRESENT
@@ -2605,6 +2760,16 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 16728064
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
 			EndWith
 
 		Case $LOW_GRAD_NAME_MAHOGANY
@@ -2620,6 +2785,233 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				.EndColor = 9250846
 				.StartIntensity = 100
 				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = $atColorStop[1]
+					$tColorStop.StopOffset = 1
+					$atColorStop[1] = $tColorStop
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_RAINBOW
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_RADIAL
+				.StepCount = 0
+				.XOffset = 50
+				.YOffset = 100
+				.Angle = 0
+				.Border = 0
+				.StartColor = $LOW_COLOR_WHITE
+				.EndColor = $LOW_COLOR_WHITE
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[7]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0.2
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.2
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 0
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.4
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 0
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[3] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.65
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0
+					$tStopColor.Green = 1
+					$tStopColor.Blue = 1
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[4] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.8
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 1
+					$tStopColor.Green = 0
+					$tStopColor.Blue = 1
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[5] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.8
+					$atColorStop[6] = $tColorStop
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNRISE
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_LINEAR
+				.StepCount = 0
+				.XOffset = 0
+				.YOffset = 0
+				.Angle = 0
+				.Border = 0
+				.StartColor = 3713206
+				.EndColor = 14065797
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[4]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.505882352941176
+					$tStopColor.Green = 0.784313725490196
+					$tStopColor.Blue = 0.768627450980392
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.75
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.717647058823529
+					$tStopColor.Green = 0.807843137254902
+					$tStopColor.Blue = 0.698039215686275
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 1
+					$atColorStop[3] = $tColorStop
+				EndIf
+			EndWith
+
+		Case $LOW_GRAD_NAME_SUNDOWN
+
+			With $tGradient
+				.Style = $LOW_GRAD_TYPE_LINEAR
+				.StepCount = 0
+				.XOffset = 0
+				.YOffset = 0
+				.Angle = 0
+				.Border = 0
+				.StartColor = 985943
+				.EndColor = 16759664
+				.StartIntensity = 100
+				.EndIntensity = 100
+
+				If __LOWriter_VersionCheck(7.6) Then
+					ReDim $atColorStop[5]
+
+					$tColorStop = $atColorStop[0]
+					$tColorStop.StopOffset = 0
+					$atColorStop[0] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.3
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.392156862745098
+					$tStopColor.Green = 0.305882352941177
+					$tStopColor.Blue = 0.690196078431373
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[1] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.5
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.827450980392157
+					$tStopColor.Green = 0.572549019607843
+					$tStopColor.Blue = 0.83921568627451
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[2] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 0.75
+
+					$tStopColor = $tColorStop.StopColor()
+					$tStopColor.Red = 0.996078431372549
+					$tStopColor.Green = 0.733333333333333
+					$tStopColor.Blue = 0.76078431372549
+					$tColorStop.StopColor = $tStopColor
+
+					$atColorStop[3] = $tColorStop
+
+					$tColorStop = __LOWriter_CreateStruct("com.sun.star.awt.ColorStop")
+					If Not IsObj($tColorStop) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+					$tColorStop.StopOffset = 1
+					$atColorStop[4] = $tColorStop
+				EndIf
 			EndWith
 
 		Case Else ;Custom Gradient Name
@@ -2637,6 +3029,34 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			EndIf
 			Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndSwitch
+
+	If __LOWriter_VersionCheck(7.6) Then
+		$tColorStop = $atColorStop[0] ; "Start Color" Value.
+
+		$tStopColor = $tColorStop.StopColor()
+
+		$tStopColor.Red = (BitAND(BitShift($tGradient.StartColor(), 16), 0xff) / 255)
+		$tStopColor.Green = (BitAND(BitShift($tGradient.StartColor(), 8), 0xff) / 255)
+		$tStopColor.Blue = (BitAND($tGradient.StartColor(), 0xff) / 255)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStop[0] = $tColorStop
+
+		$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last element is "End Color" Value.
+
+		$tStopColor = $tColorStop.StopColor()
+
+		$tStopColor.Red = (BitAND(BitShift($tGradient.EndColor(), 16), 0xff) / 255)
+		$tStopColor.Green = (BitAND(BitShift($tGradient.EndColor(), 8), 0xff) / 255)
+		$tStopColor.Blue = (BitAND($tGradient.EndColor(), 0xff) / 255)
+
+		$tColorStop.StopColor = $tStopColor
+
+		$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+		$tGradient.ColorStops = $atColorStop
+	EndIf
 
 	__LOWriter_GradientNameInsert($oDoc, $tGradient, $sGradientName)
 	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -3068,7 +3488,7 @@ Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 		Case 3
 			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
 
-		Case 4
+		Case 4, 5
 
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
@@ -8066,7 +8486,7 @@ Func __LOWriter_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPerc
 	Local $iReturn
 
 	If ($iPercentToLong <> Null) Then
-		$iReturn = (255 * ($iPercentToLong / 100)) ; Change percentage to decimal and times by White color (255 RGB)
+		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOWriter_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
 	ElseIf ($iLongToPercent <> Null) Then
@@ -8092,7 +8512,7 @@ EndFunc   ;==>__LOWriter_TransparencyGradientConvert
 ;                  @Error 1 @Extended 2 Return 0 = $tTGradient not an Object.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.drawing.TransparencyGradientTable" Object.
-;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" structure.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.awt.Gradient" or "com.sun.star.awt.Gradient2" structure.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error creating Transparency Gradient Name.
 ;                  --Success--
@@ -8112,9 +8532,12 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 	Local $tNewTGradient
 	Local $oTGradTable
 	Local $iCount = 1
+	Local $sGradient = "com.sun.star.awt.Gradient2"
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($tTGradient) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If Not __LOWriter_VersionCheck(7.6) Then $sGradient = "com.sun.star.awt.Gradient"
 
 	$oTGradTable = $oDoc.createInstance("com.sun.star.drawing.TransparencyGradientTable")
 	If Not IsObj($oTGradTable) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -8124,7 +8547,7 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
-	$tNewTGradient = __LOWriter_CreateStruct("com.sun.star.awt.Gradient")
+	$tNewTGradient = __LOWriter_CreateStruct($sGradient)
 	If Not IsObj($tNewTGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
@@ -8136,6 +8559,8 @@ Func __LOWriter_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 		.Border = $tTGradient.Border()
 		.StartColor = $tTGradient.StartColor()
 		.EndColor = $tTGradient.EndColor()
+
+		If __LOWriter_VersionCheck(7.6) Then .ColorStops = $tTGradient.ColorStops()
 	EndWith
 
 	$oTGradTable.insertByName("Transparency " & $iCount, $tNewTGradient)

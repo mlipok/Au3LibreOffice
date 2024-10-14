@@ -2419,7 +2419,7 @@ Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 		Case 3
 			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
 
-		Case 4
+		Case 4, 5
 
 			If IsString($vNot) Then
 				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
@@ -3143,7 +3143,7 @@ Func __LOCalc_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPercen
 	Local $iReturn
 
 	If ($iPercentToLong <> Null) Then
-		$iReturn = (255 * ($iPercentToLong / 100)) ; Change percentage to decimal and times by White color (255 RGB)
+		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOCalc_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
 	ElseIf ($iLongToPercent <> Null) Then
@@ -3189,9 +3189,12 @@ Func __LOCalc_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 	Local $tNewTGradient
 	Local $oTGradTable
 	Local $iCount = 1
+	Local $sGradient = "com.sun.star.awt.Gradient2"
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($tTGradient) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If Not __LOCalc_VersionCheck(7.6) Then $sGradient = "com.sun.star.awt.Gradient"
 
 	$oTGradTable = $oDoc.createInstance("com.sun.star.drawing.TransparencyGradientTable")
 	If Not IsObj($oTGradTable) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -3201,7 +3204,7 @@ Func __LOCalc_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 		Sleep((IsInt($iCount / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
-	$tNewTGradient = __LOCalc_CreateStruct("com.sun.star.awt.Gradient")
+	$tNewTGradient = __LOCalc_CreateStruct($sGradient)
 	If Not IsObj($tNewTGradient) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	; Copy the settings over from the input Style Gradient to my new one. This may not be necessary? But just in case.
@@ -3213,6 +3216,8 @@ Func __LOCalc_TransparencyGradientNameInsert(ByRef $oDoc, $tTGradient)
 		.Border = $tTGradient.Border()
 		.StartColor = $tTGradient.StartColor()
 		.EndColor = $tTGradient.EndColor()
+
+		If __LOCalc_VersionCheck(7.6) Then .ColorStops = $tTGradient.ColorStops()
 	EndWith
 
 	$oTGradTable.insertByName("Transparency " & $iCount, $tNewTGradient)

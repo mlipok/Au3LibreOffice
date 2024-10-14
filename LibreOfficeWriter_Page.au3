@@ -210,8 +210,9 @@ EndFunc   ;==>_LOWriter_PageStyleAreaFillStyle
 ;                  @Error 1 @Extended 14 Return 0 = $iToIntense Not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -242,10 +243,11 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $iError = 0
 	Local $avGradient[11]
 	Local $sGradName
+	Local $atColorStop[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -310,11 +312,49 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	If ($iFromColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.StartColor = $iFromColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iFromColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iToColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$tStyleGradient.EndColor = $iToColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iToColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iFromIntense <> Null) Then
@@ -330,10 +370,10 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	If ($oPageStyle.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.FillGradientName = $sGradName
-		If ($oPageStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.FillGradient = $tStyleGradient
@@ -1337,8 +1377,9 @@ EndFunc   ;==>_LOWriter_PageStyleFooterAreaFillStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -1369,10 +1410,11 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $iError = 0
 	Local $avGradient[11]
 	Local $sGradName
+	Local $atColorStop[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1438,11 +1480,49 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($iFromColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.StartColor = $iFromColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iFromColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iToColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$tStyleGradient.EndColor = $iToColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iToColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iFromIntense <> Null) Then
@@ -1458,10 +1538,10 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($oPageStyle.FooterFillGradientName = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$oPageStyle.FooterFillGradientName = $sGradName
-		If ($oPageStyle.FooterFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If ($oPageStyle.FooterFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oPageStyle.FooterFillGradient = $tStyleGradient
@@ -1912,8 +1992,9 @@ EndFunc   ;==>_LOWriter_PageStyleFooterTransparency
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Footers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -1939,10 +2020,12 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $sTGradName
 	Local $iError = 0
 	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -1991,19 +2074,61 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If ($iStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iEnd <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($oPageStyle.FooterFillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$oPageStyle.FooterFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If ($oPageStyle.FooterFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oPageStyle.FooterFillTransparenceGradient = $tStyleGradient
@@ -2492,8 +2617,9 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderAreaFillStyle
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -2524,10 +2650,11 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $iError = 0
 	Local $avGradient[11]
 	Local $sGradName
+	Local $atColorStop[0]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -2593,11 +2720,49 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($iFromColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.StartColor = $iFromColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iFromColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iToColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$tStyleGradient.EndColor = $iToColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iToColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iFromIntense <> Null) Then
@@ -2613,10 +2778,10 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($oPageStyle.HeaderFillGradientName = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$oPageStyle.HeaderFillGradientName = $sGradName
-		If ($oPageStyle.HeaderFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If ($oPageStyle.HeaderFillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oPageStyle.HeaderFillGradient = $tStyleGradient
@@ -3066,8 +3231,9 @@ EndFunc   ;==>_LOWriter_PageStyleHeaderTransparency
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Headers are not enabled for this Page Style.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 4 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 5 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3093,10 +3259,12 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $sTGradName
 	Local $iError = 0
 	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -3145,19 +3313,61 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 	If ($iStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iEnd <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($oPageStyle.HeaderFillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 		$oPageStyle.HeaderFillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If ($oPageStyle.HeaderFillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 	EndIf
 
 	$oPageStyle.HeaderFillTransparenceGradient = $tStyleGradient
@@ -3843,8 +4053,9 @@ EndFunc   ;==>_LOWriter_PageStyleTransparency
 ;                  @Error 1 @Extended 10 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -3870,10 +4081,12 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $sTGradName
 	Local $iError = 0
 	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -3921,19 +4134,61 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 	If ($iStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iEnd <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($oPageStyle.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oPageStyle.FillTransparenceGradientName = $sTGradName
-		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oPageStyle.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oPageStyle.FillTransparenceGradient = $tStyleGradient

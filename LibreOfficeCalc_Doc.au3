@@ -257,12 +257,12 @@ EndFunc   ;==>_LOCalc_DocColumnsRowsFreeze
 ;                  @Error 0 @Extended 6 Return Array = Success, An Array of all matching Libre Text documents from a partial Title or Path search. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: $sFile can be either the full Path (Name and extension included; i.e: C:\file\Test.ods Or file:///C:/file/Test.ods) of the document, or the full Title with extension, (i.e: Test.ods), or a partial file path (i.e: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (i.e: test, would match Test1.ods, Test2.xlsx etc.).
-;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]. each result is stored in a separate row;
-;                  Row 1, Column 0 contain the Object variable for that document. i.e. $aArray[0][0] = $oDoc
-;                  Row 1, Column 1 contains the Document's full title and extension. i.e. $aArray[0][1] = This Test File.xlsx
-;                  Row 1, Column 2 contains the document's full file path. i.e. $aArray[0][2] = C:\Folder1\Folder2\This Test File.xlsx
-;                  Row 2, Column 0 contain the Object variable for the next document. And so on. i.e. $aArray[1][0] = $oDoc2
+; Remarks .......: $sFile can be either the full Path (Name and extension included; e.g: C:\file\Test.ods Or file:///C:/file/Test.ods) of the document, or the full Title with extension, (e.g: Test.ods), or a partial file path (e.g: file1\file2\Test Or file1\file2 Or file1/file2/ etc.), or a partial name (e.g: test, would match Test1.ods, Test2.xlsx etc.).
+;                  Partial file path searches and file name searches, as well as the connect all option, return arrays with three columns per result. ($aArray[0][3]). each result is stored in a separate row;
+;                  Row 1, Column 0 contains the Object for that document. e.g. $aArray[0][0] = $oDoc
+;                  Row 1, Column 1 contains the Document's full title and extension. e.g. $aArray[0][1] = This Test File.xlsx
+;                  Row 1, Column 2 contains the document's full file path. e.g. $aArray[0][2] = C:\Folder1\Folder2\This Test File.xlsx
+;                  Row 2, Column 0 contains the Object for the next document. And so on. e.g. $aArray[1][0] = $oDoc2
 ; Related .......: _LOCalc_DocOpen, _LOCalc_DocClose, _LOCalc_DocCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -437,7 +437,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 		WEnd
 	EndIf
 
-	If Not IsObj($aArgs[0]) Then Return $iError = BitOR($iError, 1)
+	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 	$oDoc = $oDesktop.loadComponentFromURL("private:factory/scalc", "_blank", $iURLFrameCreate, $aArgs)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
 
@@ -1191,7 +1191,7 @@ EndFunc   ;==>_LOCalc_DocPosAndSize
 ; Modified ......:
 ; Remarks .......: Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
 ;                  Based on OOoCalc UDF Print function by GMK.
-;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. i.e. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
+;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  To set the output paper size, you would have to modify the Page Style used for the sheet.
 ; Related .......: _LOCalc_SheetPrintColumnsRepeat, _LOCalc_SheetPrintRowsRepeat
 ; Link ..........:
@@ -1810,7 +1810,7 @@ EndFunc   ;==>_LOCalc_DocUndo
 ; Modified ......:
 ; Remarks .......: This begins an Undo Action Group, any functions and actions done after this function is called will be grouped together, and if undone, all actions will be undone together at once.
 ;                  _LOCalc_DocUndoActionEnd must be called after this function before this undo group will become available in the Undo Action list.
-;                  _LOCalc_DocUndoActionBegin can be nested, i.e. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOCalc_DocUndoActionEnd will appear.
+;                  _LOCalc_DocUndoActionBegin can be nested, e.g. call this function multiple times without ending the first undo action, but only the last group that is ended with _LOCalc_DocUndoActionEnd will appear.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

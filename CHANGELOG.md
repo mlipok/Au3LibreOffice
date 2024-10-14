@@ -511,6 +511,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_ZOOMTYPE_*
 - Auto size option to Range Data, Formulas, and Numbers fill functions.
 - Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
+- Line numbers to Example Error messages.
+- Top-Most attribute to Example message boxes.
 
 ### Fixed
 
@@ -520,6 +522,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNamedAdd
 - _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
+- _LOCalc_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- LibreOfficeCalc_Cell.au3 was missing an Include file.
+- Several Cell or Cell range functions that should support Column/Rows would not work with them.
+- LibreOfficeCalc_Sheet.au3 was missing an Include file.
 
 ### Changed
 
@@ -592,6 +598,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_PageStyleFooterAreaFillStyle
 - _LOWriter_PageStyleHeaderAreaFillStyle
 - _LOWriter_ShapeAreaFillStyle
+- Line numbers to Example Error messages.
+- Top-Most attribute to Example message boxes.
 
 ### Changed
 
@@ -679,6 +687,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_DocCreateTextCursor would throw an error when creating a Text Cursor at the ViewCursor position.
 - When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
 - Incorrect usage of ObjEvent.
+- _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- _LOWriter_DocCreate and _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
+- __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
+- LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
+- _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
+- __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
 
 ### Removed
 
