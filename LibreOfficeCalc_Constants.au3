@@ -421,9 +421,9 @@ Global Const _
 		$LOC_GRAD_NAME_GREEN_GRASS = "Green Grass", _           ; The "Green Grass" Gradient Preset.
 		$LOC_GRAD_NAME_NEON_LIGHT = "Neon Light", _             ; The "Neon Light" Gradient Preset.
 		$LOC_GRAD_NAME_SUNSHINE = "Sunshine", _                 ; The "Sunshine" Gradient Preset.
-		$LOC_GRAD_NAME_RAINBOW = "Rainbow", _                   ; The "Rainbow" Gradient Preset.
-		$LOC_GRAD_NAME_SUNRISE = "Sunrise", _                   ; The "Sunrise" Gradient Preset.
-		$LOC_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset.
+		$LOC_GRAD_NAME_RAINBOW = "Rainbow", _                   ; The "Rainbow" Gradient Preset. L.O. 7.6+
+		$LOC_GRAD_NAME_SUNRISE = "Sunrise", _                   ; The "Sunrise" Gradient Preset. L.O. 7.6+
+		$LOC_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset. L.O. 7.6+
 
 ; Gradient Type
 Global Const _

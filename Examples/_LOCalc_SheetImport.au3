@@ -11,15 +11,15 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Create a new Sheet named "New Sheet".
 	$oSheet = _LOCalc_SheetAdd($oDoc, "New Sheet")
-	If @error Then _ERROR($oDoc, "Failed to create a new Sheet. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to create a new Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Activate the new Sheet
 	_LOCalc_SheetActivate($oDoc, $oSheet)
-	If @error Then _ERROR($oDoc, "Failed to activate the Sheet. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to activate the Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill my arrays with the desired Number and String Values I want in Column A to B.
 	$avRowData[0] = "Seventy" ; A1
@@ -37,42 +37,42 @@ Func Example()
 
 	; Retrieve Cell range A1 to B3
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "B3")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill the range with Data
 	_LOCalc_RangeData($oCellRange, $aavData)
-	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I will now open a new document and import this Sheet into it.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now open a new document and import this Sheet into it.")
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc2 = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Import the Sheet "New Sheet" from Document 1 into this Document, I'll use a function to retrieve the Sheet's name, but I could also just call the Sheet name as "New Sheet"
 	$oSheet2 = _LOCalc_SheetImport($oDoc, $oDoc2, _LOCalc_SheetName($oDoc, $oSheet))
-	If @error Then _ERROR($oDoc, "Failed to import Calc Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2)
+	If @error Then _ERROR($oDoc, "Failed to import Calc Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2)
 
 	; Activate the new Sheet
 	_LOCalc_SheetActivate($oDoc2, $oSheet2)
-	If @error Then _ERROR($oDoc, "Failed to activate Sheet. Error:" & @error & " Extended:" & @extended, $oDoc2)
+	If @error Then _ERROR($oDoc, "Failed to activate Sheet. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2)
 
-	MsgBox($MB_OK, "", "I have imported the Sheet from Document 1 into Document 2, the new sheet is called: " & _LOCalc_SheetName($oDoc2, $oSheet2))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have imported the Sheet from Document 1 into Document 2, the new sheet is called: " & _LOCalc_SheetName($oDoc2, $oSheet2))
 
-	MsgBox($MB_OK, "", "Press ok to close the document.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended, $oDoc2)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc2, False)
-	If @error Then _ERROR($oDoc2, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended, $oDoc2)
+	If @error Then _ERROR($oDoc2, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber, $oDoc2)
 
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText, $oDoc2 = Null)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	If IsObj($oDoc2) Then _LOCalc_DocClose($oDoc2, False)
 	Exit

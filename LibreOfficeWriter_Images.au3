@@ -187,8 +187,9 @@ EndFunc   ;==>_LOWriter_ImageAreaFillStyle
 ;                  @Error 1 @Extended 13 Return 0 = $iToIntense not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sGradientName
@@ -219,10 +220,11 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $iError = 0
 	Local $avGradient[11]
 	Local $sGradName
+	Local $atColorStop
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -276,7 +278,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -287,11 +289,49 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If ($iFromColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFromColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.StartColor = $iFromColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iFromColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iToColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iToColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$tStyleGradient.EndColor = $iToColor
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$tStopColor.Red = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
+			$tStopColor.Green = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
+			$tStopColor.Blue = (BitAND($iToColor, 0xff) / 255)
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iFromIntense <> Null) Then
@@ -307,10 +347,10 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	If ($oImage.FillGradientName() = "") Then
 
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oImage.FillGradientName = $sGradName
-		If ($oImage.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oImage.FillGradientName <> $sGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oImage.FillGradient = $tStyleGradient
@@ -399,8 +439,9 @@ EndFunc   ;==>_LOWriter_ImageAreaTransparency
 ;                  @Error 1 @Extended 9 Return 0 = $iEnd not an Integer, less than 0, or greater than 100.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving "FillTransparenceGradient" Object.
-;                  @Error 3 @Extended 2 Return 0 = Error creating Transparency Gradient Name.
-;                  @Error 3 @Extended 3 Return 0 = Error setting Transparency Gradient Name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve ColorStops Array.
+;                  @Error 3 @Extended 3 Return 0 = Error creating Transparency Gradient Name.
+;                  @Error 3 @Extended 4 Return 0 = Error setting Transparency Gradient Name.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iType
@@ -426,10 +467,12 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tStyleGradient
+	Local $tStyleGradient, $tColorStop, $tStopColor
 	Local $iError = 0
 	Local $sTGradName
 	Local $aiTransparent[7]
+	Local $atColorStop
+	Local $fValue
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -476,19 +519,61 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	If ($iStart <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[0] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iEnd <> Null) Then
 		If Not __LOWriter_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
+
+		If __LOWriter_VersionCheck(7.6) Then
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
+
+			$tStopColor = $tColorStop.StopColor()
+
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
+
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
+
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($oImage.FillTransparenceGradientName() = "") Then
 		$sTGradName = __LOWriter_TransparencyGradientNameInsert($oDoc, $tStyleGradient)
-		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$oImage.FillTransparenceGradientName = $sTGradName
-		If ($oImage.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+		If ($oImage.FillTransparenceGradientName <> $sTGradName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndIf
 
 	$oImage.FillTransparenceGradient = $tStyleGradient

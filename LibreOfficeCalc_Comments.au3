@@ -329,60 +329,56 @@ Func _LOCalc_CommentAreaGradient(ByRef $oComment, $sGradientName = Null, $iType 
 		If Not __LOCalc_IntIsBetween($iFromColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tStyleGradient.StartColor = $iFromColor
 
-		$nRed = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
-		$nGreen = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
-		$nBlue = (BitAND($iFromColor, 0xff) / 255)
+		If __LOCalc_VersionCheck(7.6) Then
+			$nRed = (BitAND(BitShift($iFromColor, 16), 0xff) / 255)
+			$nGreen = (BitAND(BitShift($iFromColor, 8), 0xff) / 255)
+			$nBlue = (BitAND($iFromColor, 0xff) / 255)
 
-		$atColorStop = $tStyleGradient.ColorStops()
-		If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tColorStop = ($atColorStop[0].StopOffset() = 0) ? ($atColorStop[0]) : ($atColorStop[1]) ; StopOffset 0 is the "From Color" Value.
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "From Color" Value.
 
-		$tStopColor = $tColorStop.StopColor()
+			$tStopColor = $tColorStop.StopColor()
 
-		$tStopColor.Red = $nRed
-		$tStopColor.Green = $nGreen
-		$tStopColor.Blue = $nBlue
+			$tStopColor.Red = $nRed
+			$tStopColor.Green = $nGreen
+			$tStopColor.Blue = $nBlue
 
-		$tColorStop.StopColor = $tStopColor
+			$tColorStop.StopColor = $tStopColor
 
-		If ($atColorStop[0].StopOffset() = 0) Then
 			$atColorStop[0] = $tColorStop
-		Else
-			$atColorStop[1] = $tColorStop
-		EndIf
 
-		$tStyleGradient.ColorStops = $atColorStop
+			$tStyleGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iToColor <> Null) Then
 		If Not __LOCalc_IntIsBetween($iToColor, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$tStyleGradient.EndColor = $iToColor
 
-		$nRed = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
-		$nGreen = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
-		$nBlue = (BitAND($iToColor, 0xff) / 255)
+		If __LOCalc_VersionCheck(7.6) Then
+			$nRed = (BitAND(BitShift($iToColor, 16), 0xff) / 255)
+			$nGreen = (BitAND(BitShift($iToColor, 8), 0xff) / 255)
+			$nBlue = (BitAND($iToColor, 0xff) / 255)
 
-		$atColorStop = $tStyleGradient.ColorStops()
-		If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+			$atColorStop = $tStyleGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		$tColorStop = ($atColorStop[1].StopOffset() = 1) ? ($atColorStop[1]) : ($atColorStop[0]) ; StopOffset 1 is the "To Color" Value.
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; Last StopOffset is the "To Color" Value.
 
-		$tStopColor = $tColorStop.StopColor()
+			$tStopColor = $tColorStop.StopColor()
 
-		$tStopColor.Red = $nRed
-		$tStopColor.Green = $nGreen
-		$tStopColor.Blue = $nBlue
+			$tStopColor.Red = $nRed
+			$tStopColor.Green = $nGreen
+			$tStopColor.Blue = $nBlue
 
-		$tColorStop.StopColor = $tStopColor
+			$tColorStop.StopColor = $tStopColor
 
-		If ($atColorStop[1].StopOffset() = 1) Then
-			$atColorStop[1] = $tColorStop
-		Else
-			$atColorStop[0] = $tColorStop
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tStyleGradient.ColorStops = $atColorStop
 		EndIf
-
-		$tStyleGradient.ColorStops = $atColorStop
 	EndIf
 
 	If ($iFromIntense <> Null) Then
@@ -571,7 +567,7 @@ Func _LOCalc_CommentAreaTransparency(ByRef $oComment, $iTransparency = Null)
 	If __LOCalc_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oAnnotationShape.FillTransparence())
 
 	If Not __LOCalc_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oAnnotationShape.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
+	$oAnnotationShape.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
 	$oAnnotationShape.FillTransparence = $iTransparency
 	$iError = ($oAnnotationShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -640,6 +636,7 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 	Local $aiTransparent[7]
 	Local $atColorStop
 	Local $oAnnotationShape
+	Local $fValue
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -691,52 +688,52 @@ Func _LOCalc_CommentAreaTransparencyGradient(ByRef $oDoc, ByRef $oComment, $iTyp
 		If Not __LOCalc_IntIsBetween($iStart, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tGradient.StartColor = __LOCalc_TransparencyGradientConvert($iStart)
 
-		$atColorStop = $tGradient.ColorStops()
-		If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If __LOCalc_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tColorStop = ($atColorStop[0].StopOffset() = 0) ? ($atColorStop[0]) : ($atColorStop[1]) ; StopOffset 0 is the "From Color" Value.
+			$tColorStop = $atColorStop[0] ; StopOffset 0 is the "Start" Value.
 
-		$tStopColor = $tColorStop.StopColor()
+			$tStopColor = $tColorStop.StopColor()
 
-		$tStopColor.Red = ($iStart / 100)
-		$tStopColor.Green = ($iStart / 100)
-		$tStopColor.Blue = ($iStart / 100)
+			$fValue = $iStart / 100 ; Value is a decimal percentage value.
 
-		$tColorStop.StopColor = $tStopColor
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
 
-		If ($atColorStop[0].StopOffset() = 0) Then
+			$tColorStop.StopColor = $tStopColor
+
 			$atColorStop[0] = $tColorStop
-		Else
-			$atColorStop[1] = $tColorStop
-		EndIf
 
-		$tGradient.ColorStops = $atColorStop
+			$tGradient.ColorStops = $atColorStop
+		EndIf
 	EndIf
 
 	If ($iEnd <> Null) Then
 		If Not __LOCalc_IntIsBetween($iEnd, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$tGradient.EndColor = __LOCalc_TransparencyGradientConvert($iEnd)
 
-		$atColorStop = $tGradient.ColorStops()
-		If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		If __LOCalc_VersionCheck(7.6) Then
+			$atColorStop = $tGradient.ColorStops()
+			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		$tColorStop = ($atColorStop[1].StopOffset() = 1) ? ($atColorStop[1]) : ($atColorStop[0]) ; StopOffset 1 is the "To Color" Value.
+			$tColorStop = $atColorStop[UBound($atColorStop) - 1] ; StopOffset 0 is the "End" Value.
 
-		$tStopColor = $tColorStop.StopColor()
+			$tStopColor = $tColorStop.StopColor()
 
-		$tStopColor.Red = ($iEnd / 100)
-		$tStopColor.Green = ($iEnd / 100)
-		$tStopColor.Blue = ($iEnd / 100)
+			$fValue = $iEnd / 100 ; Value is a decimal percentage value.
 
-		$tColorStop.StopColor = $tStopColor
+			$tStopColor.Red = $fValue
+			$tStopColor.Green = $fValue
+			$tStopColor.Blue = $fValue
 
-		If ($atColorStop[1].StopOffset() = 1) Then
-			$atColorStop[1] = $tColorStop
-		Else
-			$atColorStop[0] = $tColorStop
+			$tColorStop.StopColor = $tStopColor
+
+			$atColorStop[UBound($atColorStop) - 1] = $tColorStop
+
+			$tGradient.ColorStops = $atColorStop
 		EndIf
-
-		$tGradient.ColorStops = $atColorStop
 	EndIf
 
 	If ($oAnnotationShape.FillTransparenceGradientName() = "") Then

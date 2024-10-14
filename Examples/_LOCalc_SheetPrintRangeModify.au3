@@ -14,11 +14,11 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
-	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the active Sheet.
 	$oSheet = _LOCalc_SheetGetActive($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the currently active Sheet Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill my arrays with the desired Number Values I want in Column A and B.
 	$avRowData[0] = 1 ; A1
@@ -48,64 +48,64 @@ Func Example()
 
 	; Retrieve Cell range A1 to C5
 	$oCellRange = _LOCalc_RangeGetCellByName($oSheet, "A1", "C5")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Fill the range with Data
 	_LOCalc_RangeNumbers($oCellRange, $aavData)
-	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell range A1 to A5
 	$aoPrintRanges[0] = _LOCalc_RangeGetCellByName($oSheet, "A1", "A5")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell range C1 to C3
 	$aoPrintRanges[1] = _LOCalc_RangeGetCellByName($oSheet, "C1", "C3")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cell Range Object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Print Ranges to A1:A5 and C1:C3.
 	_LOCalc_SheetPrintRangeModify($oSheet, $aoPrintRanges)
-	If @error Then _ERROR($oDoc, "Failed to set Print Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Print Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "I have set Range A1:A5 and C1:C3 to be printed only, skipping Ranges B1:B5 and C4:C5, you can test it if you like by printing the sheet to pdf or xps.")
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "I have set Range A1:A5 and C1:C3 to be printed only, skipping Ranges B1:B5 and C4:C5, you can test it if you like by printing the sheet to pdf or xps.")
 
 	; Retrieve the current print ranges set for this sheet.
 	$aoPrintRanges = _LOCalc_SheetPrintRangeModify($oSheet)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Print Range array. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Print Range array. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve Cell Range Addresses.
 	For $i = 0 To UBound($aoPrintRanges) - 1
 		$sRanges &= _LOCalc_RangeGetAddressAsName($aoPrintRanges[$i]) & @CRLF
-		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "The Ranges currently set to print are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Ranges currently set to print are: " & @CRLF & $sRanges & @CRLF & @CRLF & _
 			"I will now reset the Print Range.")
 
 	; Reset the print Range to the whole sheet.
 	_LOCalc_SheetPrintRangeModify($oSheet, $aEmpty)
-	If @error Then _ERROR($oDoc, "Failed to set Print Range. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to set Print Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current print ranges set for this sheet.
 	$aoPrintRanges = _LOCalc_SheetPrintRangeModify($oSheet)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Print Range array. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Print Range array. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	$sRanges = ""
 
 	; Retrieve Cell Range Addresses. (This wont be called because the array will be empty.)
 	For $i = 0 To UBound($aoPrintRanges) - 1
 		$sRanges &= _LOCalc_RangeGetAddressAsName($aoPrintRanges[$i]) & @CRLF
-		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended)
+		If @error Then _ERROR($oDoc, "Failed to retrieve Range address. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	Next
 
-	MsgBox($MB_OK, "", "The Range(s) currently set to print are: " & @CRLF & $sRanges)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Range(s) currently set to print are: " & @CRLF & $sRanges)
 
 	; Close the document.
 	_LOCalc_DocClose($oDoc, False)
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOCalc_DocClose($oDoc, False)
 	Exit
 EndFunc

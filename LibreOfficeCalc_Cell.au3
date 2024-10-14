@@ -10,6 +10,7 @@
 #include "LibreOfficeCalc_Internal.au3"
 
 ; Other includes for Calc
+#include "LibreOfficeCalc_Font.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -56,7 +57,7 @@
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character Properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Passed Object to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iBackColor not an Integer, set less than -1 or greater than 16777215.
 ;                  @Error 1 @Extended 5 Return 0 = $bBackTransparent not an Object.
@@ -82,7 +83,9 @@ Func _LOCalc_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent =
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellBackColor($oCell, $iBackColor, $bBackTransparent)
 	Return SetError(@error, @extended, $vReturn)
@@ -105,7 +108,7 @@ EndFunc   ;==>_LOCalc_CellBackColor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to less than 0, or greater than 16,777,215.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to less than 0, or greater than 16,777,215.
@@ -149,7 +152,9 @@ Func _LOCalc_CellBorderColor(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0); Row Obj
 
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -178,7 +183,7 @@ EndFunc   ;==>_LOCalc_CellBorderColor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iAll not an Integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iTop not an Integer, or less than 0.
@@ -210,7 +215,9 @@ Func _LOCalc_CellBorderPadding(ByRef $oCell, $iAll = Null, $iTop = Null, $iBotto
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellBorderPadding($oCell, $iAll, $iTop, $iBottom, $iLeft, $iRight)
 	Return SetError(@error, @extended, $vReturn)
@@ -233,7 +240,7 @@ EndFunc   ;==>_LOCalc_CellBorderPadding
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or set to higher than 17, and not equal to 0x7FFF, or less than 0. See Constants $LOC_BORDERSTYLE_* as defined in LibreOfficeCalc_Constants.au3.
@@ -277,7 +284,9 @@ Func _LOCalc_CellBorderStyle(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -309,7 +318,7 @@ EndFunc   ;==>_LOCalc_CellBorderStyle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = $iTop not an integer, or less than 0.
 ;                  @Error 1 @Extended 4 Return 0 = $iBottom not an integer, or less than 0.
 ;                  @Error 1 @Extended 5 Return 0 = $iLeft not an integer, or less than 0.
@@ -345,7 +354,9 @@ Func _LOCalc_CellBorderWidth(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	If ($iTop <> Null) And Not __LOCalc_IntIsBetween($iTop, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If ($iBottom <> Null) And Not __LOCalc_IntIsBetween($iBottom, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
@@ -417,7 +428,7 @@ EndFunc   ;==>_LOCalc_CellCreateTextCursor
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants, $LOC_RELIEF_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $bOutline not a Boolean.
@@ -445,7 +456,9 @@ Func _LOCalc_CellEffect(ByRef $oCell, $iRelief = Null, $bOutline = Null, $bShado
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellEffect($oCell, $iRelief, $bOutline, $bShadow)
 	Return SetError(@error, @extended, $vReturn)
@@ -466,7 +479,7 @@ EndFunc   ;==>_LOCalc_CellEffect
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 3 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not available.
 ;                  @Error 1 @Extended 5 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
@@ -500,7 +513,9 @@ Func _LOCalc_CellFont(ByRef $oDoc, ByRef $oCell, $sFontName = Null, $nFontSize =
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Row Obj
 
 	If ($sFontName <> Null) And Not _LOCalc_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
@@ -518,7 +533,7 @@ EndFunc   ;==>_LOCalc_CellFont
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iFontColor not an Integer, less than 0, or greater than 16777215.
 ;                  --Property Setting Errors--
@@ -542,7 +557,9 @@ Func _LOCalc_CellFontColor(ByRef $oCell, $iFontColor = Null)
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellFontColor($oCell, $iFontColor)
 	Return SetError(@error, @extended, $vReturn)
@@ -639,7 +656,7 @@ EndFunc   ;==>_LOCalc_CellGetType
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 3 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 4 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 5 Return 0 = $iFormatKey not an Integer.
 ;                  @Error 1 @Extended 6 Return 0 = Format Key called in $iFormatKey not found in document.
@@ -665,7 +682,9 @@ Func _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell, $iFormatKey = Null)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCell, $iFormatKey)
 	Return SetError(@error, @extended, $vReturn)
@@ -684,7 +703,7 @@ EndFunc   ;==>_LOCalc_CellNumberFormat
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iOverLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
@@ -715,7 +734,9 @@ Func _LOCalc_CellOverline(ByRef $oCell, $bWordOnly = Null, $iOverLineStyle = Nul
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellOverLine($oCell, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
 	Return SetError(@error, @extended, $vReturn)
@@ -734,7 +755,7 @@ EndFunc   ;==>_LOCalc_CellOverline
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bHideAll not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bProtected not a Boolean.
@@ -767,7 +788,9 @@ Func _LOCalc_CellProtection(ByRef $oCell, $bHideAll = Null, $bProtected = Null, 
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellProtection($oCell, $bHideAll, $bProtected, $bHideFormula, $bHideWhenPrint)
 	Return SetError(@error, @extended, $vReturn)
@@ -786,7 +809,7 @@ EndFunc   ;==>_LOCalc_CellProtection
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iWidth not an Integer, less than 0, or greater than 5009.
 ;                  @Error 1 @Extended 5 Return 0 = $iColor not an Integer, less than 0, or greater than 16,777,215.
@@ -819,7 +842,9 @@ Func _LOCalc_CellShadow(ByRef $oCell, $iWidth = Null, $iColor = Null, $bTranspar
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellShadow($oCell, $iWidth, $iColor, $bTransparent, $iLocation)
 	Return SetError(@error, @extended, $vReturn)
@@ -837,7 +862,7 @@ EndFunc   ;==>_LOCalc_CellShadow
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bStrikeOut not a Boolean.
@@ -865,7 +890,9 @@ Func _LOCalc_CellStrikeOut(ByRef $oCell, $bWordOnly = Null, $bStrikeOut = Null, 
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellStrikeOut($oCell, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
 	Return SetError(@error, @extended, $vReturn)
@@ -926,7 +953,7 @@ EndFunc   ;==>_LOCalc_CellString
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iHoriAlign not an Integer, less than 0, or greater than 6. See Constants, $LOC_CELL_ALIGN_HORI_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  @Error 1 @Extended 5 Return 0 = $iVertAlign not an Integer, less than 0, or greater than 5. See Constants, $LOC_CELL_ALIGN_VERT_* as defined in LibreOfficeCalc_Constants.au3.
@@ -954,7 +981,9 @@ Func _LOCalc_CellTextAlign(ByRef $oCell, $iHoriAlign = Null, $iVertAlign = Null,
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextAlign($oCell, $iHoriAlign, $iVertAlign, $iIndent)
 	Return SetError(@error, @extended, $vReturn)
@@ -973,7 +1002,7 @@ EndFunc   ;==>_LOCalc_CellTextAlign
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $iRotate not an Integer, less than 0, or greater than 359.
 ;                  @Error 1 @Extended 5 Return 0 = $iReference not an Integer, less than 0, or greater than 1 but not equal to 3. See Constants $LOC_CELL_ROTATE_REF_* as defined in LibreOfficeCalc_Constants.au3.
@@ -1003,7 +1032,9 @@ Func _LOCalc_CellTextOrient(ByRef $oCell, $iRotate = Null, $iReference = Null, $
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextOrient($oCell, $iRotate, $iReference, $bVerticalStack, $bAsianLayout)
 	Return SetError(@error, @extended, $vReturn)
@@ -1022,7 +1053,7 @@ EndFunc   ;==>_LOCalc_CellTextOrient
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bAutoWrapText not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $bHyphen not a Boolean.
@@ -1052,7 +1083,9 @@ Func _LOCalc_CellTextProperties(ByRef $oCell, $bAutoWrapText = Null, $bHyphen = 
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextProperties($oCell, $bAutoWrapText, $bHyphen, $bShrinkToFit, $iTextDirection)
 	Return SetError(@error, @extended, $vReturn)
@@ -1071,7 +1104,7 @@ EndFunc   ;==>_LOCalc_CellTextProperties
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oCell not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties.
+;                  @Error 1 @Extended 2 Return 0 = $oCell does not support Character properties, or Table Column, or Table Row service.
 ;                  @Error 1 @Extended 3 Return 0 = Variable passed to internal function not an Object.
 ;                  @Error 1 @Extended 4 Return 0 = $bWordOnly not a Boolean.
 ;                  @Error 1 @Extended 5 Return 0 = $iUnderLineStyle not an Integer, less than 0, or greater than 18. See constants, $LOC_UNDERLINE_* as defined in LibreOfficeCalc_Constants.au3. See Remarks.
@@ -1101,7 +1134,9 @@ Func _LOCalc_CellUnderline(ByRef $oCell, $bWordOnly = Null, $iUnderLineStyle = N
 	Local $vReturn
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oCell.supportsService("com.sun.star.style.CharacterProperties") _
+			And Not $oCell.supportsService("com.sun.star.table.TableColumn") _ ; Column Obj
+			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellUnderLine($oCell, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
 	Return SetError(@error, @extended, $vReturn)
