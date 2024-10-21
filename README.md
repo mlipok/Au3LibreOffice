@@ -12,7 +12,7 @@ Au3LibreOffice UDF currently provides support for the following LibreOffice comp
 
 - **Writer**
 - **Calc** **Development Nearing Completion**
-- **Base** **Development Begun**
+- **Base** **In Development**
 - ~~Impress~~ ***Development Pending***
 
 Support for other components will be provided as time permits.
@@ -32,8 +32,8 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
 ## Notes
 
 - This UDF currently works **only** with the **INSTALLED** version of LibreOffice. The **Portable** version will **Not work**.
-- For those using AutoIt versions **older** than ***3.3.16.1,*** one internal function used for “Saving as” and “Exporting” documents uses Maps, which will **Not** be recognized as proper syntax in AutoIt. In Calc, all Fields related functions use Maps.
-- LibreOffice uses Micrometers for sizing internally, all functions in this UDF, unless otherwise stated, use Micrometers. A converter has been created for converting to/from Inches, Centimeters, Printer’s Points, and Millimeters to/from Micrometers, for all sizing needs. _ConvertFromMicrometer, and _ConvertToMicrometer. Either for Writer (LOWriter) or Calc (LOCalc).
+- For those using AutoIt versions **older** than ***3.3.16.1,*** some internal functions use Maps, which will **Not** be recognized as proper syntax in the older AutoIt versions.
+- LibreOffice uses Micrometers for sizing internally, all functions in this UDF, unless otherwise stated, use Micrometers. A converter has been created for converting to/from Inches, Centimeters, Printer’s Points, and Millimeters to/from Micrometers, for all sizing needs. *_ConvertFromMicrometer, and *_ConvertToMicrometer. Either for Writer (LOWriter) or Calc (LOCalc).
 - LibreOffice uses the Long color format for all color settings, A converter has also been created for converting from/to Hex; (R)ed, (G)reen, (Blue); (H)ue, (S)aturation, and (B)rightness; and (C)yan, (M)agenta, (Y)ellow, Blac(K); to/from long color format. _ConvertColorFromLong, and _ConvertColorToLong. Either for Writer (LOWriter) or Calc (LOCalc).
 - This UDF was first made public here: <https://www.autoitscript.com/forum/index.php?showtopic=210514>
 
@@ -46,15 +46,15 @@ Distributed under the MIT License. See the [LICENSE](LICENSE) for more informati
   - *“WriterDemo.au3”* by @mLipok. [WriterDemo](https://www.autoitscript.com/forum/topic/204665-libreopenoffice-writer/?do=findComment&comment=1471711)
   - *Printers Management UDF* by @jguinch. [Printers Management UDF](https://www.autoitscript.com/forum/topic/155485-printers-management-udf/)
   - *Word* UDF supplied with AutoIt by @water.
-- Thanks to Andrew Pitonyak for his invaluable book on writing Open Office/ Libre Office Macros, and his Macro collection document.
+- Thanks to Andrew Pitonyak for his invaluable books on writing Open Office/Libre Office Macros, and his Macro collection document.
   - [OpenOffice.org Macros Explained — OOME Third Edition](https://www.pitonyak.org/OOME_3_0.pdf)
   - [OpenOffice.org Macros Explained — OOME Fourth Edition](https://www.pitonyak.org/OOME_4_1.odt)
   - [Useful Macro Information For OpenOffice.org](https://www.pitonyak.org/AndrewMacro.pdf)
+  - [OpenOffice.org Base Macro Programming](https://www.pitonyak.org/database/AndrewBase.odt)
   - Andrew Pitonyak's website: <https://www.pitonyak.org/oo.php>
 - Thanks to the maintainers
   - Thanks to [@mLipok](https://github.com/mLipok) for hosting this project on his GitHub. As well as his tireless energy during the long hours of development, code review and clean-up.
   - Thanks to [@donnyh13](https://github.com/donnyh13) for the initial project creation and development.
-  - **Big thanks** to all the hard-working contributors.
 
 ## Links
 
