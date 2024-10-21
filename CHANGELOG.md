@@ -75,6 +75,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Constants
 	- $LOB_DATA_SET_TYPE_*
 	- $LOB_DATA_TYPE_*
+	- $LOB_DBASE_BEST_ROW_SCOPE_*
+	- $LOB_DBASE_META_*
+	- $LOB_DBASE_RESULT_SET_CONCURRENCY_*
+	- $LOB_DBASE_TRANSACTION_ISOLATION_*
 	- $LOB_PATHCONV_*
 	- $LOB_RESULT_CURSOR_MOVE_*
 	- $LOB_RESULT_CURSOR_QUERY_*
@@ -87,17 +91,22 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOB_RESULT_TYPE_*
 
 - Database functions
+	- _LOBase_DatabaseAutoCommit
+	- _LOBase_DatabaseCommit
 	- _LOBase_DatabaseConnectionClose
 	- _LOBase_DatabaseConnectionGet
+	- _LOBase_DatabaseGetDefaultQuote
 	- _LOBase_DatabaseGetObjByDoc
 	- _LOBase_DatabaseGetObjByURL
 	- _LOBase_DatabaseIsReadOnly
+	- _LOBase_DatabaseMetaDataQuery
 	- _LOBase_DatabaseName
 	- _LOBase_DatabaseRegisteredAdd
 	- _LOBase_DatabaseRegisteredExists
 	- _LOBase_DatabaseRegisteredGetNames
 	- _LOBase_DatabaseRegisteredRemoveByName
 	- _LOBase_DatabaseRequiresPassword
+	- _LOBase_DatabaseRollback
 
 - Doc functions
 	- _LOBase_DocClose
@@ -133,8 +142,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOBase_FormFolderRename
 	- _LOBase_FormFoldersGetCount
 	- _LOBase_FormFoldersGetNames
+	- _LOBase_FormIsModified
 	- _LOBase_FormOpen
 	- _LOBase_FormRename
+	- _LOBase_FormSave
 	- _LOBase_FormsGetCount
 	- _LOBase_FormsGetNames
 
@@ -151,6 +162,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOBase_ColTransferProps
 	- __LOBase_ColTypeName
 	- __LOBase_CreateStruct
+	- __LOBase_DatabaseMetaGetQuery
 	- __LOBase_InternalComErrorHandler
 	- __LOBase_IntIsBetween
 	- __LOBase_SetPropertyValue

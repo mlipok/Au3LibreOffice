@@ -15,6 +15,7 @@
 ; Description ...: Provides basic functionality through AutoIt for Adding, Deleting, and modifying, etc. L.O. Base Forms.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
+; Notes .........: Forms are simply Writer Documents stored internally in an obd file. Most _LOWriter_* functions should work with a form document object also.
 ;
 ; ===============================================================================================================================
 
@@ -30,8 +31,10 @@
 ; _LOBase_FormFolderRename
 ; _LOBase_FormFoldersGetCount
 ; _LOBase_FormFoldersGetNames
+; _LOBase_FormIsModified
 ; _LOBase_FormOpen
 ; _LOBase_FormRename
+; _LOBase_FormSave
 ; _LOBase_FormsGetCount
 ; _LOBase_FormsGetNames
 ; ===============================================================================================================================
@@ -41,7 +44,7 @@
 ; Description ...: Close an opened Form Document.
 ; Syntax ........: _LOBase_FormClose(ByRef $oFormDoc[, $bForceClose = False])
 ; Parameters ....: $oFormDoc            - [in/out] an object. A Form Document object returned by a previous _LOBase_FormOpen, _LOBase_FormConnect, or _LOBase_FormCreate function.
-;                  $bForceClose         - [optional] a boolean value. Default is False. If True, the Form document will be closed regardless if there are unsaved changes.
+;                  $bForceClose         - [optional] a boolean value. Default is False. If True, the Form document will be closed regardless if there are unsaved changes. See remarks.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -62,7 +65,7 @@
 ;                  @Error 0 @Extended 0 Return Boolean = Success. Returning a Boolean value of whether the Form Document was successfully closed (True), or not.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If there are unsaved changes in the document when close is called, and $bForceClose is True, they will be lost.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -87,6 +90,7 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 
 	If Not $oFormDoc.hasLocation() Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
+	; Retrieve the unique name of the form.
 	; file:///C:/Folder1/Autoit/Libre%20Office%20Base%20Info/Testing.odb/Obj61/
 	$asResult = StringRegExp($oFormDoc.NameSpace(), "/([a-zA-Z0-9]+)/$", $__STR_REGEXPARRAYMATCH)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -159,6 +163,8 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 	EndIf
 
 	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
+
+	If $oFormDoc.isModified() Then $oFormDoc.Modified = False ; Set modified to false, so the user wont be prompted.
 
 	$bReturn = $oForm.Close()
 
@@ -1091,6 +1097,32 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 EndFunc   ;==>_LOBase_FormFoldersGetNames
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormIsModified
+; Description ...: Test whether the form has been modified since being created or since the last save.
+; Syntax ........: _LOBase_FormIsModified(ByRef $oFormDoc)
+; Parameters ....: $oFormDoc            - [in/out] an object. A Form Document object returned by a previous _LOBase_FormOpen, _LOBase_FormConnect, or _LOBase_FormCreate function.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormDoc not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Form has been modified since last being saved.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_FormIsModified(ByRef $oFormDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormDoc.isModified())
+EndFunc   ;==>_LOBase_FormIsModified
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormOpen
 ; Description ...: Open a Form Document
 ; Syntax ........: _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName[, $bDesign = True[, $bVisible = True]])
@@ -1243,6 +1275,128 @@ Func _LOBase_FormRename(ByRef $oDoc, $sForm, $sNewName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_FormRename
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOBase_FormSave
+; Description ...: Save any changes made to a Document.
+; Syntax ........: _LOBase_FormSave(ByRef $oFormDoc)
+; Parameters ....: $oFormDoc            - [in/out] an object. A Form Document object returned by a previous _LOBase_FormOpen, _LOBase_FormConnect, or _LOBase_FormCreate function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oFormDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Document called in $oFormDoc has not been saved to a Base Document yet or is read only.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Form Document's Unique Identifier String.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify Form Document's name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Form Documents Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Array of Form and Folder names.
+;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Form or Folder Object.
+;                  @Error 3 @Extended 6 Return 0 = Failed to retrieve Array of Form and Folder names for Sub-Folder.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve Object in Sub-Folder.
+;                  @Error 3 @Extended 8 Return 0 = Failed to identify Form in Parent Document.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully saved.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOBase_FormSave(ByRef $oFormDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSource, $oForm, $oObj
+	Local $asResult[0], $asNames[0], $asFolderList[0]
+	Local $iCount = 0, $iFolders = 1
+	Local $avFolders[0][2]
+	Local $sUniqueString, $sTitle
+	Local Enum $iName, $iObj, $iPrefix
+	Local Const $__STR_REGEXPARRAYMATCH = 1
+
+	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oFormDoc.hasLocation Or $oFormDoc.isReadOnly Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	; Retrieve the unique name of the form.
+	; file:///C:/Folder1/Autoit/Libre%20Office%20Base%20Info/Testing.odb/Obj61/
+	$asResult = StringRegExp($oFormDoc.NameSpace(), "/([a-zA-Z0-9]+)/$", $__STR_REGEXPARRAYMATCH)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$sUniqueString = $asResult[0]
+
+	; "Testing.odb : abc1Form2"
+	$asResult = StringRegExp($oFormDoc.Title(), "\: (.+)$", $__STR_REGEXPARRAYMATCH)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	$sTitle = $asResult[0]
+
+	$oSource = $oFormDoc.Parent.FormDocuments()
+	If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$asNames = $oSource.getElementNames()
+	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	If $oSource.hasByName($sTitle) And $oSource.getByName($sTitle).supportsService("com.sun.star.ucb.Content") And ($oSource.getByName($sTitle).PersistentName() = $sUniqueString) Then
+		$oForm = $oSource.getByName($sTitle)
+
+	Else
+
+		For $i = 0 To UBound($asNames) - 1
+
+			$oObj = $oSource.getByName($asNames[$i])
+			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+			If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
+				ReDim $avFolders[1][2]
+				$avFolders[0][$iName] = $asNames[$i]
+				$avFolders[0][$iObj] = $oObj
+
+			EndIf
+
+			While ($iCount < UBound($avFolders))
+
+				If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
+						($avFolders[$iCount][$iObj].getByName($sTitle).PersistentName() = $sUniqueString) Then
+					$oForm = $avFolders[$iCount][$iObj].getByName($sTitle)
+					ExitLoop
+				EndIf
+
+				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
+				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+				For $k = 0 To UBound($asFolderList) - 1
+					$oObj = $avFolders[$iCount][$iObj].getByName($asFolderList[$k])
+					If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+
+					If $oObj.supportsService("com.sun.star.sdb.Forms") Then ; Folder.
+						ReDim $avFolders[$iFolders + 1][2]
+						$avFolders[$iFolders][$iName] = $asFolderList[$k]
+						$avFolders[$iFolders][$iObj] = $oObj
+
+						$iFolders += 1
+
+					EndIf
+
+				Next
+
+				$iCount += 1
+			WEnd
+
+			If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
+			$iCount = 0
+			$iFolders = 1
+
+		Next
+	EndIf
+
+	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+
+	$oForm.Store()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOBase_FormSave
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_FormsGetCount

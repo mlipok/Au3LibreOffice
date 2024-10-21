@@ -25,6 +25,7 @@
 ; __LOBase_ColTransferProps
 ; __LOBase_ColTypeName
 ; __LOBase_CreateStruct
+; __LOBase_DatabaseMetaGetQuery
 ; __LOBase_InternalComErrorHandler
 ; __LOBase_IntIsBetween
 ; __LOBase_SetPropertyValue
@@ -342,6 +343,181 @@ Func __LOBase_CreateStruct($sStructName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $tStruct)
 EndFunc   ;==>__LOBase_CreateStruct
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOBase_DatabaseMetaGetQuery
+; Description ...: Return the Query command from a Constant value.
+; Syntax ........: __LOBase_DatabaseMetaGetQuery($iQuery)
+; Parameters ....: $iQuery              - an integer value. The Query to retrieve the command for. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
+; Return values .: Success: String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iQuery not an Integer, less than 0 or greater than number of query commands. See Constants, $LOB_DBASE_META_* as defined in LibreOfficeBase_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Returning the requested Query command.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOBase_DatabaseMetaGetQuery($iQuery)
+	Local $asMetaQueries[148]
+
+	If Not __LOBase_IntIsBetween($iQuery, 0, UBound($asMetaQueries)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$asMetaQueries[$LOB_DBASE_META_ALL_PROCEDURES_ARE_CALLABLE] = ".allProceduresAreCallable"
+	$asMetaQueries[$LOB_DBASE_META_ALL_TABLES_ARE_SELECTABLE] = ".allTablesAreSelectable"
+	$asMetaQueries[$LOB_DBASE_META_DATA_DEFINITION_CAUSES_TRANSACTION_COMMIT] = ".dataDefinitionCausesTransactionCommit"
+	$asMetaQueries[$LOB_DBASE_META_DATA_DEFINITION_IGNORED_IN_TRANSACTIONS] = ".dataDefinitionIgnoredInTransactions"
+	$asMetaQueries[$LOB_DBASE_META_DELETES_ARE_DETECTED] = ".deletesAreDetected"
+	$asMetaQueries[$LOB_DBASE_META_DOES_MAX_ROW_SIZE_INCLUDE_BLOBS] = ".doesMaxRowSizeIncludeBlobs"
+	$asMetaQueries[$LOB_DBASE_META_GET_BEST_ROW_ID] = ".getBestRowIdentifier"
+	$asMetaQueries[$LOB_DBASE_META_GET_CATALOG_SEPARATOR] = ".getCatalogSeparator"
+	$asMetaQueries[$LOB_DBASE_META_GET_CATALOG_TERM] = ".getCatalogTerm"
+	$asMetaQueries[$LOB_DBASE_META_GET_CATALOGS] = ".getCatalogs"
+	$asMetaQueries[$LOB_DBASE_META_GET_COLS] = ".getColumns"
+	$asMetaQueries[$LOB_DBASE_META_GET_COL_PRIVILEGES] = ".getColumnPrivileges"
+	$asMetaQueries[$LOB_DBASE_META_GET_CROSS_REF] = ".getCrossReference"
+	$asMetaQueries[$LOB_DBASE_META_GET_DATABASE_PRODUCT_NAME] = ".getDatabaseProductName"
+	$asMetaQueries[$LOB_DBASE_META_GET_DATABASE_PRODUCT_VERSION] = ".getDatabaseProductVersion"
+	$asMetaQueries[$LOB_DBASE_META_GET_DEFAULT_TRANSACTION_ISOLATION] = ".getDefaultTransactionIsolation"
+	$asMetaQueries[$LOB_DBASE_META_GET_DRIVER_MAJOR_VERSION] = ".getDriverMajorVersion"
+	$asMetaQueries[$LOB_DBASE_META_GET_DRIVER_MINOR_VERSION] = ".getDriverMinorVersion"
+	$asMetaQueries[$LOB_DBASE_META_GET_DRIVER_NAME] = ".getDriverName"
+	$asMetaQueries[$LOB_DBASE_META_GET_DRIVER_VERSION] = ".getDriverVersion"
+	$asMetaQueries[$LOB_DBASE_META_GET_EXPORTED_KEYS] = ".getExportedKeys"
+	$asMetaQueries[$LOB_DBASE_META_GET_EXTRA_NAME_CHARS] = ".getExtraNameCharacters"
+	$asMetaQueries[$LOB_DBASE_META_GET_IDENTIFIER_QUOTE_STRING] = ".getIdentifierQuoteString"
+	$asMetaQueries[$LOB_DBASE_META_GET_IMPORTED_KEYS] = ".getImportedKeys"
+	$asMetaQueries[$LOB_DBASE_META_GET_INDEX_INFO] = ".getIndexInfo"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_BINARY_LITERAL_LEN] = ".getMaxBinaryLiteralLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_CATALOG_NAME_LEN] = ".getMaxCatalogNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_CHAR_LITERAL_LEN] = ".getMaxCharLiteralLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COL_NAME_LEN] = ".getMaxColumnNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COLS_IN_GROUP_BY] = ".getMaxColumnsInGroupBy"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COLS_IN_INDEX] = ".getMaxColumnsInIndex"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COLS_IN_ORDER_BY] = ".getMaxColumnsInOrderBy"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COLS_IN_SEL] = ".getMaxColumnsInSelect"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_COLS_IN_TABLE] = ".getMaxColumnsInTable"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_CONNECTIONS] = ".getMaxConnections"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_CURSOR_NAME_LEN] = ".getMaxCursorNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_INDEX_LEN] = ".getMaxIndexLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_PROCEDURE_NAME_LEN] = ".getMaxProcedureNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_ROW_SIZE] = ".getMaxRowSize"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_SCHEMA_NAME_LEN] = ".getMaxSchemaNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_STATEMENT_LEN] = ".getMaxStatementLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_STATEMENTS] = ".getMaxStatements"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_TABLE_NAME_LEN] = ".getMaxTableNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_TABLES_IN_SEL] = ".getMaxTablesInSelect"
+	$asMetaQueries[$LOB_DBASE_META_GET_MAX_USER_NAME_LEN] = ".getMaxUserNameLength"
+	$asMetaQueries[$LOB_DBASE_META_GET_NUMERIC_FUNCS] = ".getNumericFunctions"
+	$asMetaQueries[$LOB_DBASE_META_GET_PRIMARY_KEY] = ".getPrimaryKeys"
+	$asMetaQueries[$LOB_DBASE_META_GET_PROCEDURE_COLS] = ".getProcedureColumns"
+	$asMetaQueries[$LOB_DBASE_META_GET_PROCEDURE_TERM] = ".getProcedureTerm"
+	$asMetaQueries[$LOB_DBASE_META_GET_PROCEDURES] = ".getProcedures"
+	$asMetaQueries[$LOB_DBASE_META_GET_SCHEMA_TERM] = ".getSchemaTerm"
+	$asMetaQueries[$LOB_DBASE_META_GET_SCHEMAS] = ".getSchemas"
+	$asMetaQueries[$LOB_DBASE_META_GET_SEARCH_STRING_ESCAPE] = ".getSearchStringEscape"
+	$asMetaQueries[$LOB_DBASE_META_GET_SQL_KEYWORDS] = ".getSQLKeywords"
+	$asMetaQueries[$LOB_DBASE_META_GET_STRING_FUNCS] = ".getStringFunctions"
+	$asMetaQueries[$LOB_DBASE_META_GET_SYSTEM_FUNCS] = ".getSystemFunctions"
+	$asMetaQueries[$LOB_DBASE_META_GET_TABLE_PRIVILEGES] = ".getTablePrivileges"
+	$asMetaQueries[$LOB_DBASE_META_GET_TABLE_TYPES] = ".getTableTypes"
+	$asMetaQueries[$LOB_DBASE_META_GET_TABLES] = ".getTables"
+	$asMetaQueries[$LOB_DBASE_META_GET_TIME_DATE_FUNCS] = ".getTimeDateFunctions"
+	$asMetaQueries[$LOB_DBASE_META_GET_TYPE_INFO] = ".getTypeInfo"
+	$asMetaQueries[$LOB_DBASE_META_GET_UDTS] = ".getUDTs"
+	$asMetaQueries[$LOB_DBASE_META_GET_URL] = ".getURL"
+	$asMetaQueries[$LOB_DBASE_META_GET_USERNAME] = ".getUserName"
+	$asMetaQueries[$LOB_DBASE_META_GET_VERSION_COLS] = ".getVersionColumns"
+	$asMetaQueries[$LOB_DBASE_META_INSERTS_ARE_DETECTED] = ".insertsAreDetected"
+	$asMetaQueries[$LOB_DBASE_META_IS_CATALOG_AT_START] = ".isCatalogAtStart"
+	$asMetaQueries[$LOB_DBASE_META_IS_READ_ONLY] = ".isReadOnly"
+	$asMetaQueries[$LOB_DBASE_META_NULL_PLUS_NON_NULL_IS_NULL] = ".nullPlusNonNullIsNull"
+	$asMetaQueries[$LOB_DBASE_META_NULLS_ARE_SORTED_AT_END] = ".nullsAreSortedAtEnd"
+	$asMetaQueries[$LOB_DBASE_META_NULLS_ARE_SORTED_AT_START] = ".nullsAreSortedAtStart"
+	$asMetaQueries[$LOB_DBASE_META_NULLS_ARE_SORTED_HIGH] = ".nullsAreSortedHigh"
+	$asMetaQueries[$LOB_DBASE_META_NULLS_ARE_SORTED_LOW] = ".nullsAreSortedLow"
+	$asMetaQueries[$LOB_DBASE_META_OTHERS_DELETES_ARE_VISIBLE] = ".othersDeletesAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_OTHERS_INSERTS_ARE_VISIBLE] = ".othersInsertsAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_OTHERS_UPDATES_ARE_VISIBLE] = ".othersUpdatesAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_OWN_DELETES_ARE_VISIBLE] = ".ownDeletesAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_OWN_INSERTS_ARE_VISIBLE] = ".ownInsertsAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_OWN_UPDATES_ARE_VISIBLE] = ".ownUpdatesAreVisible"
+	$asMetaQueries[$LOB_DBASE_META_STORES_LOWER_CASE_IDS] = ".storesLowerCaseIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_STORES_MIXED_CASE_IDS] = ".storesMixedCaseIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_STORES_UPPER_CASE_IDS] = ".storesUpperCaseIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_STORES_LOWER_CASE_QUOTED_IDS] = ".storesLowerCaseQuotedIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_STORES_MIXED_CASE_QUOTED_IDS] = ".storesMixedCaseQuotedIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_STORES_UPPER_CASE_QUOTED_IDS] = ".storesUpperCaseQuotedIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ALTER_TABLE_WITH_ADD_COL] = ".supportsAlterTableWithAddColumn"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ALTER_TABLE_WITH_DROP_COL] = ".supportsAlterTableWithDropColumn"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ANSI92_ENTRY_LEVEL_SQL] = ".supportsANSI92EntryLevelSQL"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ANSI92_FULL_SQL] = ".supportsANSI92FullSQL"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ANSI92_INTERMEDIATE_SQL] = ".supportsANSI92IntermediateSQL"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_BATCH_UPDATES] = ".supportsBatchUpdates"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CATALOGS_IN_DATA_MANIPULATION] = ".supportsCatalogsInDataManipulation"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CATALOGS_IN_INDEX_DEFINITIONS] = ".supportsCatalogsInIndexDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CATALOGS_IN_PRIVILEGE_DEFINITIONS] = ".supportsCatalogsInPrivilegeDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CATALOGS_IN_PROCEDURE_CALLS] = ".supportsCatalogsInProcedureCalls"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CATALOGS_IN_TABLE_DEFINITION] = ".supportsCatalogsInTableDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_COL_ALIASING] = ".supportsColumnAliasing"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CONVERT] = ".supportsConvert"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CORE_SQL_GRAMMAR] = ".supportsCoreSQLGrammar"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_CORRELATED_SUBQUERIES] = ".supportsCorrelatedSubqueries"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_DATA_DEFINITION_AND_DATA_MANIPULATION_TRANSACTIONS] = ".supportsDataDefinitionAndDataManipulationTransactions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_DATA_MANIPULATION_TRANSACTIONS_ONLY] = ".supportsDataManipulationTransactionsOnly"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_DIFF_TABLE_CORRELATION_NAMES] = ".supportsDifferentTableCorrelationNames"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_EXPRESSIONS_IN_ORDER_BY] = ".supportsExpressionsInOrderBy"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_EXTENDED_SQL_GRAMMAR] = ".supportsExtendedSQLGrammar"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_FULL_OUTER_JOINS] = ".supportsFullOuterJoins"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_GROUP_BY] = ".supportsGroupBy"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_GROUP_BY_BEYOND_SELECT] = ".supportsGroupByBeyondSelect"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_GROUP_BY_UNRELATED] = ".supportsGroupByUnrelated"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_INTEGRITY_ENHANCMENT_FACILITY] = ".supportsIntegrityEnhancementFacility"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_LIKE_ESCAPE_CLAUSE] = ".supportsLikeEscapeClause"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_LIMITED_OUTER_JOINS] = ".supportsLimitedOuterJoins"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_MINIMUM_SQL_GRAMMAR] = ".supportsMinimumSQLGrammar"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_MIXED_CASE_IDS] = ".supportsMixedCaseIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_MIXED_CASE_QUOTED_IDS] = ".supportsMixedCaseQuotedIdentifiers"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_MULTIPLE_RESULT_SETS] = ".supportsMultipleResultSets"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_MULTIPLE_TRANSACTIONS] = ".supportsMultipleTransactions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_NON_NULLABLE_COLS] = ".supportsNonNullableColumns"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_OPEN_CURSORS_ACROSS_COMMIT] = ".supportsOpenCursorsAcrossCommit"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_OPEN_CURSORS_ACROSS_ROLLBACK] = ".supportsOpenCursorsAcrossRollback"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_OPEN_STATEMENTS_ACROSS_COMMIT] = ".supportsOpenStatementsAcrossCommit"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_OPEN_STATEMENTS_ACROSS_ROLLBACK] = ".supportsOpenStatementsAcrossRollback"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_ORDER_BY_UNRELATED] = ".supportsOrderByUnrelated"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_OUTER_JOINS] = ".supportsOuterJoins"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_POSITIONED_DELETE] = ".supportsPositionedDelete"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_POSITIONED_UPDATE] = ".supportsPositionedUpdate"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_RESULT_SET_CONCURRENCY] = ".supportsResultSetConcurrency"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_RESULT_SET_TYPE] = ".supportsResultSetType"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SCHEMAS_IN_DATA_MANIPULATION] = ".supportsSchemasInDataManipulation"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SCHEMAS_IN_INDEX_DEFINITIONS] = ".supportsSchemasInIndexDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SCHEMAS_IN_PRIVILEGE_DEFINITIONS] = ".supportsSchemasInPrivilegeDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SCHEMAS_IN_PROCEDURE_CALLS] = ".supportsSchemasInProcedureCalls"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SCHEMAS_IN_TABLE_DEFINITION] = ".supportsSchemasInTableDefinitions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SELECT_FOR_UPDATE] = ".supportsSelectForUpdate"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_STORED_PROCEDURES] = ".supportsStoredProcedures"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SUBQUERIES_IN_COMPARISONS] = ".supportsSubqueriesInComparisons"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SUBQUERIES_IN_EXISTS] = ".supportsSubqueriesInExists"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SUBQUERIES_IN_INS] = ".supportsSubqueriesInIns"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_SUBQUERIES_IN_QUANTIFIEDS] = ".supportsSubqueriesInQuantifieds"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_TABLE_CORRELATION_NAMES] = ".supportsTableCorrelationNames"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_TRANSACTION_ISOLATION_LEVEL] = ".supportsTransactionIsolationLevel"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_TRANSACTIONS] = ".supportsTransactions"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_TYPE_CONVERSION] = ".supportsTypeConversion"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_UNION] = ".supportsUnion"
+	$asMetaQueries[$LOB_DBASE_META_SUPPORTS_UNION_ALL] = ".supportsUnionAll"
+	$asMetaQueries[$LOB_DBASE_META_UPDATES_ARE_DETECTED] = ".updatesAreDetected"
+	$asMetaQueries[$LOB_DBASE_META_USES_LOCAL_FILE_PER_TABLE] = ".usesLocalFilePerTable"
+	$asMetaQueries[$LOB_DBASE_META_USES_LOCAL_FILES] = ".usesLocalFiles"
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $asMetaQueries[$iQuery])
+EndFunc   ;==>__LOBase_DatabaseMetaGetQuery
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOBase_InternalComErrorHandler
