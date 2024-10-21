@@ -45,7 +45,7 @@
 ; Parameters ....: $oResult             - [in/out] an object. A Result Set object returned by a previous _LOBase_SQLStatementExecuteQuery function.
 ;                  $iColumn             - an integer value. The column to perform the Query on. 1 based.
 ;                  $iQuery              - an integer value. The Query command to perform. See Constants, $LOB_RESULT_METADATA_QUERY_* as defined in LibreOfficeBase_Constants.au3.
-; Return values .:  Success: Variable
+; Return values .: Success: Variable
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oResult not an Object.
@@ -73,24 +73,24 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 	Local $iCount
 
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME] = ".getCatalogName"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME] = ".getSchemaName"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME] = ".getTableName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_DECIMAL_PLACE] = ".getScale"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_DISP_SIZE] = ".getColumnDisplaySize"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_LABEL] = ".getColumnLabel"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_LENGTH] = ".getPrecision"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_NAME] = ".getColumnName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME] = ".getSchemaName"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME] = ".getTableName"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TYPE] = ".getColumnType"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_TYPE_NAME] = ".getColumnTypeName"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_LENGTH] = ".getPrecision"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_GET_DECIMAL_PLACE] = ".getScale"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_AUTO_VALUE] = ".isAutoIncrement"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_CASE_SENSITIVE] = ".isCaseSensitive"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_CURRENCY] = ".isCurrency"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_NULLABLE] = ".isNullable"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_READ_ONLY] = ".isReadOnly"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE] = ".isWritable"
-	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE] = ".isDefinitelyWritable"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE] = ".isSearchable"
 	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_SIGNED] = ".isSigned"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE] = ".isWritable"
+	$asCommands[$LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE] = ".isDefinitelyWritable"
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -99,7 +99,7 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If Not __LOBase_IntIsBetween($iColumn, 1, $iCount) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_SIGNED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iQuery
 
@@ -114,7 +114,7 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 			If @error Or Not IsInt($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		Case $LOB_RESULT_METADATA_QUERY_IS_AUTO_VALUE, $LOB_RESULT_METADATA_QUERY_IS_CASE_SENSITIVE, $LOB_RESULT_METADATA_QUERY_IS_CURRENCY, $LOB_RESULT_METADATA_QUERY_IS_READ_ONLY, _
-				$LOB_RESULT_METADATA_QUERY_IS_WRITABLE, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE, $LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE, $LOB_RESULT_METADATA_QUERY_IS_SIGNED
+				$LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE, $LOB_RESULT_METADATA_QUERY_IS_SIGNED, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE
 			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
 			If @error Or Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
