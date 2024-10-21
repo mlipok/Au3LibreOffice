@@ -7,6 +7,7 @@
 ; Description ...: Constants for various functions in the Libre Office UDF.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
+; Note ..........: Descriptions for some Constants are taken from the LibreOffice SDK API documentation.
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
