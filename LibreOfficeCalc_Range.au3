@@ -47,6 +47,7 @@
 ; _LOCalc_RangeFill
 ; _LOCalc_RangeFillSeries
 ; _LOCalc_RangeFilter
+; _LOCalc_RangeFilterAdvanced
 ; _LOCalc_RangeFilterClear
 ; _LOCalc_RangeFindAll
 ; _LOCalc_RangeFindNext
@@ -1416,6 +1417,45 @@ Func _LOCalc_RangeFilter(ByRef $oRange, ByRef $oFilterDesc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeFilter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFilterAdvanced
+; Description ...: Apply an advanced filter to a Range.
+; Syntax ........: _LOCalc_RangeFilterAdvanced(ByRef $oRange, ByRef $oFilterDescRange)
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oFilterDescRange    - [in/out] an object. The Range containing the Filter Criteria. See remarks. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFilterDescRange not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Range was successfully filtered.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: $oFilterDescRange will be a range containing the filter criteria as described in the L.O. help file for Advanced Filters. It can be from anywhere in the same Calc Document, the same Sheet, or a completely different sheet. Named Ranges can also be used.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeFilterAdvanced(ByRef $oRange, ByRef $oFilterDescRange)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFilterDesc
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oFilterDescRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oFilterDesc = $oFilterDescRange.createFilterDescriptorByObject($oRange)
+	If Not IsObj($oFilterDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$oRange.filter($oFilterDesc)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFilterAdvanced
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFilterClear

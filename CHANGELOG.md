@@ -125,6 +125,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
+	- _LOCalc_RangeFilterAdvanced
 	- _LOCalc_RangeFilterClear
 	- _LOCalc_RangeFindAll
 	- _LOCalc_RangeFindNext
