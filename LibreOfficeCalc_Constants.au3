@@ -294,21 +294,21 @@ Global Enum _
 		$LOC_COMMENT_SHADOW_BOTTOM_CENTER, _                    ; The comment Shadow is positioned in the Lower-Center of the comment box.
 		$LOC_COMMENT_SHADOW_BOTTOM_RIGHT                        ; The comment Shadow is positioned in the Lower-Right corner of the comment box.
 
-; Compute Functions
-Global Const _
-		$LOC_COMPUTE_NONE = 0, _                                ; Nothing is calculated.
-		$LOC_COMPUTE_AUTO = 1, _                                ; Uses SUM if all values in the range are numbers, else uses COUNT.
-		$LOC_COMPUTE_SUM = 2, _                                 ; Adds all numerical values in the Range.
-		$LOC_COMPUTE_COUNT = 3, _                               ; Count all cells containing a string or value.
-		$LOC_COMPUTE_AVERAGE = 4, _                             ; Average all numerical values in a range.
-		$LOC_COMPUTE_MAX = 5, _                                 ; Find the maximum numerical value in the range.
-		$LOC_COMPUTE_MIN = 6, _                                 ; Find the minimum numerical value in the range.
-		$LOC_COMPUTE_PRODUCT = 7, _                             ; The result of multiplying of all numbers in the range.
-		$LOC_COMPUTE_COUNTNUMS = 8, _                           ; Count the number of cells containing numerical values in the range.
-		$LOC_COMPUTE_STDEV = 9, _                               ; Standard deviation based on a sample.
-		$LOC_COMPUTE_STDEVP = 10, _                             ; Standard deviation based on the entire population.
-		$LOC_COMPUTE_VAR = 11, _                                ; Variance based on a sample.
-		$LOC_COMPUTE_VARP = 12                                  ; Variance based on the entire population.
+; General Computation Functions
+Global Const _                                                  ; com.sun.star.sheet.GeneralFunction"
+		$LOC_COMPUTE_FUNC_NONE = 0, _                           ; Nothing is calculated.
+		$LOC_COMPUTE_FUNC_AUTO = 1, _                           ; Uses SUM if all values in the range are numbers, else uses COUNT.
+		$LOC_COMPUTE_FUNC_SUM = 2, _                            ; Adds all numerical values in the Range.
+		$LOC_COMPUTE_FUNC_COUNT = 3, _                          ; Count all cells containing a string or value.
+		$LOC_COMPUTE_FUNC_AVERAGE = 4, _                        ; Average all numerical values in a range.
+		$LOC_COMPUTE_FUNC_MAX = 5, _                            ; Find the maximum numerical value in the range.
+		$LOC_COMPUTE_FUNC_MIN = 6, _                            ; Find the minimum numerical value in the range.
+		$LOC_COMPUTE_FUNC_PRODUCT = 7, _                        ; The result of multiplying of all numbers in the range.
+		$LOC_COMPUTE_FUNC_COUNTNUMS = 8, _                      ; Count the number of cells containing numerical values in the range.
+		$LOC_COMPUTE_FUNC_STDEV = 9, _                          ; Standard deviation based on a sample.
+		$LOC_COMPUTE_FUNC_STDEVP = 10, _                        ; Standard deviation based on the entire population.
+		$LOC_COMPUTE_FUNC_VAR = 11, _                           ; Variance based on a sample.
+		$LOC_COMPUTE_FUNC_VARP = 12                             ; Variance based on the entire population.
 
 ; Cursor Type Related Constants
 Global Const _

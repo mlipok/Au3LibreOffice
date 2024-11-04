@@ -43,13 +43,13 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to fill Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Perform a SUM Compute Function on the Range.
-	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_SUM)
+	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_FUNC_SUM)
 	If @error Then _ERROR($oDoc, "Failed to Compute Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The SUM of the Cell Range is: " & $nResult)
 
 	; Perform an AVERAGE Compute Function on the Range.
-	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_AVERAGE)
+	$nResult = _LOCalc_RangeCompute($oCellRange, $LOC_COMPUTE_FUNC_AVERAGE)
 	If @error Then _ERROR($oDoc, "Failed to Compute Cell Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The AVERAGE of the Cell Range is: " & $nResult)
