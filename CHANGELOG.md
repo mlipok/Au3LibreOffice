@@ -149,6 +149,29 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeNumbers
 	- _LOCalc_RangeOutlineClearAll
 	- _LOCalc_RangeOutlineShow
+	- _LOCalc_RangePivotDelete
+	- _LOCalc_RangePivotDest
+	- _LOCalc_RangePivotExists
+	- _LOCalc_RangePivotFieldGetObjByName
+	- _LOCalc_RangePivotFieldItemsGetList
+	- _LOCalc_RangePivotFieldsColumnsGetList
+	- _LOCalc_RangePivotFieldsDataGetList
+	- _LOCalc_RangePivotFieldSettings
+	- _LOCalc_RangePivotFieldsFiltersGetList
+	- _LOCalc_RangePivotFieldsGetList
+	- _LOCalc_RangePivotFieldsRowsGetList
+	- _LOCalc_RangePivotFieldsUnusedGetList
+	- _LOCalc_RangePivotFilter
+	- _LOCalc_RangePivotFilterClear
+	- _LOCalc_RangePivotGetObjByIndex
+	- _LOCalc_RangePivotGetObjByName
+	- _LOCalc_RangePivotInsert
+	- _LOCalc_RangePivotName
+	- _LOCalc_RangePivotRefresh
+	- _LOCalc_RangePivotSettings
+	- _LOCalc_RangePivotsGetCount
+	- _LOCalc_RangePivotsGetList
+	- _LOCalc_RangePivotSource
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
 	- _LOCalc_RangeQueryDependents
@@ -472,7 +495,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_COMMENT_LINE_JOINT_*
 	- $LOC_COMMENT_LINE_STYLE_*
 	- $LOC_COMMENT_SHADOW_*
-	- $LOC_COMPUTE_*
+	- $LOC_COMPUTE_FUNC_*
 	- $LOC_CURTYPE_*
 	- $LOC_DUPLEX_*
 	- $LOC_FIELD_TYPE_*
@@ -492,6 +515,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_PAPER_HEIGHT_*
 	- $LOC_PAPER_WIDTH_*
 	- $LOC_PATHCONV_*
+	- $LOC_PIVOT_TBL_FIELD_BASE_*
+	- $LOC_PIVOT_TBL_FIELD_DISP_*
+	- $LOC_PIVOT_TBL_FIELD_TYPE_*
 	- $LOC_POSTURE_*
 	- $LOC_RELIEF_*
 	- $LOC_SCALE_*
@@ -533,6 +559,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
 - __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
+- Renamed Constant $LOC_COMPUTE_* to $LOC_COMPUTE_FUNC_*
 
 ### Removed
 

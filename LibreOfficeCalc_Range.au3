@@ -71,6 +71,29 @@
 ; _LOCalc_RangeNumbers
 ; _LOCalc_RangeOutlineClearAll
 ; _LOCalc_RangeOutlineShow
+; _LOCalc_RangePivotDelete
+; _LOCalc_RangePivotDest
+; _LOCalc_RangePivotExists
+; _LOCalc_RangePivotFieldGetObjByName
+; _LOCalc_RangePivotFieldItemsGetList
+; _LOCalc_RangePivotFieldsColumnsGetList
+; _LOCalc_RangePivotFieldsDataGetList
+; _LOCalc_RangePivotFieldSettings
+; _LOCalc_RangePivotFieldsFiltersGetList
+; _LOCalc_RangePivotFieldsGetList
+; _LOCalc_RangePivotFieldsRowsGetList
+; _LOCalc_RangePivotFieldsUnusedGetList
+; _LOCalc_RangePivotFilter
+; _LOCalc_RangePivotFilterClear
+; _LOCalc_RangePivotGetObjByIndex
+; _LOCalc_RangePivotGetObjByName
+; _LOCalc_RangePivotInsert
+; _LOCalc_RangePivotName
+; _LOCalc_RangePivotRefresh
+; _LOCalc_RangePivotSettings
+; _LOCalc_RangePivotsGetCount
+; _LOCalc_RangePivotsGetList
+; _LOCalc_RangePivotSource
 ; _LOCalc_RangeQueryColumnDiff
 ; _LOCalc_RangeQueryContents
 ; _LOCalc_RangeQueryDependents
@@ -570,12 +593,12 @@ EndFunc   ;==>_LOCalc_RangeColumnWidth
 ; Description ...: Perform a Computation function on a Range. See Remarks.
 ; Syntax ........: _LOCalc_RangeCompute(ByRef $oRange, $iFunction)
 ; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
-;                  $iFunction           - an integer value (0-12). The Computation Function to perform. See Constants $LOC_COMPUTE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iFunction           - an integer value (0-12). The Computation Function to perform. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Number
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iFunction not an Integer, less than 0 or greater than 12. See Constants $LOC_COMPUTE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $iFunction not an Integer, less than 0 or greater than 12. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to perform computation.
 ;                  --Success--
@@ -594,7 +617,7 @@ Func _LOCalc_RangeCompute(ByRef $oRange, $iFunction)
 	Local $nResult
 
 	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOCalc_IntIsBetween($iFunction, $LOC_COMPUTE_NONE, $LOC_COMPUTE_VARP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_IntIsBetween($iFunction, $LOC_COMPUTE_FUNC_NONE, $LOC_COMPUTE_FUNC_VARP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$nResult = $oRange.computeFunction($iFunction)
 	If Not IsNumber($nResult) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -2758,6 +2781,1377 @@ Func _LOCalc_RangeOutlineShow(ByRef $oSheet, $iLevel, $iOrientation = $LOC_GROUP
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeOutlineShow
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotDelete
+; Description ...: Delete a Pivot Table.
+; Syntax ........: _LOCalc_RangePivotDelete(ByRef $oDoc, ByRef $oPivotTable)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an object.
+;                  @Error 1 @Extended 2 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 3 Return 0 = Document called in $oDoc does not contain the Pivot Table called in $oPivotTable.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve the Pivot Table's parent Sheet.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Pivot Table's name.
+;                  @Error 3 @Extended 3 Return 0 = Failed to delete the Pivot Table.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Pivot Table was deleted successfully.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotDelete(ByRef $oDoc, ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $sName
+	Local $oSheet
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	; Get the sheet that contains the Pivot Table.
+	$oSheet = $oDoc.Sheets.getByIndex($oPivotTable.OutputRange.Sheet())
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$sName = $oPivotTable.Name()
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If Not $oSheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Wrong Doc object called?
+
+	$oSheet.DataPilotTables.removeByName($sName)
+	If $oSheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangePivotDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotDest
+; Description ...: Set or Retrieve the Pivot Table's Destination Range.
+; Syntax ........: _LOCalc_RangePivotDest(ByRef $oDoc, ByRef $oPivotTable[, $oDestRange = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $oDestRange          - [optional] an object. Default is Null. The Range to output the Pivot Table to. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1 or Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oDestRange not an Object.
+;                  @Error 1 @Extended 4 Return 0 = Range called in $oDestRange is within the source range.
+;                  @Error 1 @Extended 5 Return 0 = Document called in $oDoc does not contain the Pivot Table called in $oPivotTable.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Data Pilot Descriptor Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create com.sun.star.table.CellAddress Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Source Range Parent Sheet.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Range Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve the Pivot Table's name.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Pivot Table Field Object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to delete the original Pivot Table.
+;                  @Error 3 @Extended 6 Return 0 = Failed to insert new Pivot Table.
+;                  @Error 3 @Extended 7 Return 0 = Failed to retrieve new Pivot Table Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $oDestRange
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were set to Null, returning current destination Range Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore the current setting will be lost, because to change the output range, the entire Pivot Table needs to be copied over and re-inserted.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Any existing data within the Destination range will be overwritten.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotDest(ByRef $oDoc, ByRef $oPivotTable, $oDestRange = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheet, $oOrigRange, $oNewPivotTable, $oPivotDesc, $oPivotField
+	Local $tCellAddr
+	Local $sName
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oSheet = $oDoc.Sheets.getByIndex($oPivotTable.OutputRange.Sheet())
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oOrigRange = $oSheet.getCellRangeByPosition($oPivotTable.OutputRange.StartColumn(), $oPivotTable.OutputRange.StartRow(), $oPivotTable.OutputRange.EndColumn(), $oPivotTable.OutputRange.EndRow())
+	If Not IsObj($oOrigRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If ($oDestRange = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oOrigRange)
+
+	If Not IsObj($oDestRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPivotDesc = $oDestRange.Spreadsheet.DataPilotTables.createDataPilotDescriptor()
+	If Not IsObj($oPivotDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	If ($oPivotTable.SourceRange.Sheet() = $oDestRange.RangeAddress.Sheet()) And _
+			__LOCalc_IntIsBetween($oDestRange.RangeAddress.StartColumn(), $oPivotTable.SourceRange.StartColumn(), $oPivotTable.SourceRange.EndColumn()) And _
+			__LOCalc_IntIsBetween($oDestRange.RangeAddress.StartRow(), $oPivotTable.SourceRange.StartRow(), $oPivotTable.SourceRange.EndRow()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$tCellAddr.Sheet = $oDestRange.RangeAddress.Sheet()
+	$tCellAddr.Column = $oDestRange.RangeAddress.StartColumn()
+	$tCellAddr.Row = $oDestRange.RangeAddress.StartRow()
+
+	$sName = $oPivotTable.Name()
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	If Not $oOrigRange.Spreadsheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	; Transfer properties to Pivot descriptor.
+	$oPivotDesc.SourceRange = $oPivotTable.SourceRange()
+
+	With $oPivotDesc
+		.ColumnGrand = $oPivotTable.ColumnGrand()
+		.RowGrand = $oPivotTable.RowGrand()
+		.IgnoreEmptyRows = $oPivotTable.IgnoreEmptyRows()
+		.RepeatIfEmpty = $oPivotTable.RepeatIfEmpty()
+		.ShowFilterButton = $oPivotTable.ShowFilterButton()
+		.DrillDownOnDoubleClick = $oPivotTable.DrillDownOnDoubleClick()
+	EndWith
+
+	For $i = 0 To $oPivotTable.ColumnFields.Count() - 1
+		$oPivotField = $oPivotTable.ColumnFields.getByIndex($i)
+		If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Orientation = $oPivotField.Orientation()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Function = $oPivotField.Function()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).ShowEmpty = $oPivotField.ShowEmpty()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	For $i = 0 To $oPivotTable.RowFields.Count() - 1
+		$oPivotField = $oPivotTable.RowFields.getByIndex($i)
+		If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Orientation = $oPivotField.Orientation()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Function = $oPivotField.Function()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).ShowEmpty = $oPivotField.ShowEmpty()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	For $i = 0 To $oPivotTable.PageFields.Count() - 1
+		$oPivotField = $oPivotTable.PageFields.getByIndex($i)
+		If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Orientation = $oPivotField.Orientation()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Function = $oPivotField.Function()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).ShowEmpty = $oPivotField.ShowEmpty()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	For $i = 0 To $oPivotTable.DataFields.Count() - 1
+		$oPivotField = $oPivotTable.DataFields.getByIndex($i)
+		If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Orientation = $oPivotField.Orientation()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Function = $oPivotField.Function()
+		$oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).ShowEmpty = $oPivotField.ShowEmpty()
+		If IsObj($oPivotField.Reference()) Then $oPivotDesc.DataPilotFields.getByName($oPivotField.Name()).Reference = $oPivotField.Reference()
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	With $oPivotDesc.FilterDescriptor
+		.ContainsHeader = $oPivotTable.FilterDescriptor.ContainsHeader()
+		.CopyOutputData = $oPivotTable.FilterDescriptor.CopyOutputData()
+		.FilterFields = $oPivotTable.FilterDescriptor.FilterFields()
+		.FilterFields2 = $oPivotTable.FilterDescriptor.FilterFields2()
+		.FilterFields3 = $oPivotTable.FilterDescriptor.FilterFields3()
+		.IsCaseSensitive = $oPivotTable.FilterDescriptor.IsCaseSensitive()
+		.Orientation = $oPivotTable.FilterDescriptor.Orientation()
+		.OutputPosition = $oPivotTable.FilterDescriptor.OutputPosition()
+		.SaveOutputPosition = $oPivotTable.FilterDescriptor.SaveOutputPosition()
+		.SkipDuplicates = $oPivotTable.FilterDescriptor.SkipDuplicates()
+		.UseRegularExpressions = $oPivotTable.FilterDescriptor.UseRegularExpressions()
+	EndWith
+
+	$oOrigRange.Spreadsheet.DataPilotTables.removeByName($sName)
+	If $oOrigRange.Spreadsheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	$oDestRange.Spreadsheet.DataPilotTables.insertNewByName($sName, $tCellAddr, $oPivotDesc)
+	If Not $oDestRange.Spreadsheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+	$oNewPivotTable = $oDestRange.Spreadsheet.DataPilotTables.getByName($sName)
+	If Not IsObj($oNewPivotTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+
+	$oPivotTable = $oNewPivotTable
+
+	If ($oPivotTable.Name() <> $sName) Then $oPivotTable.Name = $sName
+
+	If Not (($oPivotTable.OutputRange.Sheet() = $oDestRange.RangeAddress.Sheet()) And _
+			($oPivotTable.OutputRange.StartColumn() = $oDestRange.RangeAddress.StartColumn()) And _
+			($oPivotTable.OutputRange.StartRow() = $oDestRange.RangeAddress.StartRow())) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangePivotDest
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotExists
+; Description ...: Query if a Pivot Table with a specific name exists in a Sheet.
+; Syntax ........: _LOCalc_RangePivotExists(ByRef $oSheet, $sName)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The Pivot Table name to look for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to query Sheet for Pivot Table name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returning Boolean whether the Sheet contains a Pivot Table with the called name (True) or not (False).
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotExists(ByRef $oSheet, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $bReturn
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$bReturn = $oSheet.DataPilotTables.hasByName($sName)
+	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
+EndFunc   ;==>_LOCalc_RangePivotExists
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldGetObjByName
+; Description ...: Retrieve an Object for one of the Pivot Table Fields by Name.
+; Syntax ........: _LOCalc_RangePivotFieldGetObjByName(ByRef $oPivotTable, $sName)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $sName               - a string value. The Pivot Field name to retrieve the Object for.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Pivot Table called in $oPivotTable does not contain a Field with name called in $sName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Pivot Table Field Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Pivot Table Field Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldGetObjByName(ByRef $oPivotTable, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oPivotField
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not $oPivotTable.DataPilotFields.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPivotField = $oPivotTable.DataPilotFields.getByName($sName)
+	If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oPivotField)
+EndFunc   ;==>_LOCalc_RangePivotFieldGetObjByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldItemsGetList
+; Description ...: Retrieve an array of Item names contained in a Field.
+; Syntax ........: _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+; Parameters ....: $oPivotField         - [in/out] an object. A Pivot Table Field object returned by a previous _LOCalc_RangePivotFieldGetObjByName function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotField not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve array of Item names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning array of Item names contained in the Column/Field. @Extended is set to the number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The element names are the items contained in each row for a specific column/field.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asPivotFieldItems[0]
+
+	If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$asPivotFieldItems = $oPivotField.Items.ElementNames()
+	If Not IsArray($asPivotFieldItems) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asPivotFieldItems), $asPivotFieldItems)
+EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsColumnsGetList
+; Description ...: Retrieve an array of Field Names set as Column Fields.
+; Syntax ........: _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names currently set as Column Fields, contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.ColumnFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.ColumnFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsDataGetList
+; Description ...: Retrieve an array of Field Names set as Data Fields.
+; Syntax ........: _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names currently set as Data Fields, contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.DataFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.DataFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldSettings
+; Description ...: Set or Retrieve Pivot Field settings.
+; Syntax ........: _LOCalc_RangePivotFieldSettings(ByRef $oPivotField[, $iFieldType = Null[, $iFunc = Null[, $bShowEmpty = Null[, $iDisplayType = Null[, $sBaseField = Null[, $iBaseItem = Null[, $sBaseItem = Null]]]]]]])
+; Parameters ....: $oPivotField         - [in/out] an object. A Pivot Table Field object returned by a previous _LOCalc_RangePivotFieldGetObjByName function.
+;                  $iFieldType          - [optional] an integer value (0-4). Default is Null. The type of the Field, or field layout, either a Column, Row, Filter or Data Field or not used at all. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iFunc               - [optional] an integer value (0-12). Default is Null. The Function used by the field to calculate the subtotal. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $bShowEmpty          - [optional] a boolean value. Default is Null. If True, empty Columns and Rows will be included in the results table.
+;                  $iDisplayType        - [optional] an integer value (0-8). Default is Null. The type of calculation to be done to the results. See Constants $LOC_PIVOT_TBL_FIELD_DISP_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $sBaseField          - [optional] a string value. Default is Null. The Field to base the calculation upon.
+;                  $iBaseItem           - [optional] an integer value (0-2). Default is Null. The type of Base Item to base the calculation on. See remarks. See Constants $LOC_PIVOT_TBL_FIELD_BASE_ITEM_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $sBaseItem           - [optional] a string value. Default is Null. The base item's name to base the calculation on, if $iBaseItem is set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iFieldType not an Integer, less than 0 or greater than 4. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 3 Return 0 = $iFunc not an Integer, less than 0 or greater than 12. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $bShowEmpty not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iDisplayType not an Integer, less than 0 or greater than 8. See Constants $LOC_PIVOT_TBL_FIELD_DISP_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $sBaseField not a String.
+;                  @Error 1 @Extended 7 Return 0 = $iBaseItem not an Integer, less than 0 or greater than 2. See Constants $LOC_PIVOT_TBL_FIELD_BASE_ITEM_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iBaseItem set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, and $sBaseItem is not set and no previous value is set.
+;                  @Error 1 @Extended 9 Return 0 = $sBaseItem not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.sheet.DataPilotFieldReference" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Structure.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iFieldType
+;                  |                               2 = Error setting $iFunc
+;                  |                               4 = Error setting $bShowEmpty
+;                  |                               8 = Error setting $iDisplayType
+;                  |                               16 = Error setting $sBaseField
+;                  |                               32 = Error setting $iBaseItem
+;                  |                               64 = Error setting $sBaseItem
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: It is the user's responsibility to ensure the a Base Item's name is correct, and exists, also field names etc.
+;                  If $iBaseItem is set to $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, you must fill in $sBaseItem also.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iFunc = Null, $bShowEmpty = Null, $iDisplayType = Null, $sBaseField = Null, $iBaseItem = Null, $sBaseItem = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avPivotField[7]
+	Local $tReference
+	Local $iError = 0
+
+	If Not IsObj($oPivotField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iFieldType, $iFunc, $bShowEmpty, $iDisplayType, $sBaseField, $iBaseItem, $sBaseItem) Then
+		If IsObj($oPivotField.Reference()) Then
+			__LOCalc_ArrayFill($avPivotField, $oPivotField.Orientation(), $oPivotField.Function(), $oPivotField.ShowEmpty(), $oPivotField.Reference.ReferenceType(), _
+					$oPivotField.Reference.ReferenceField(), $oPivotField.Reference.ReferenceItemType(), $oPivotField.Reference.ReferenceItemName())
+
+		Else
+			__LOCalc_ArrayFill($avPivotField, $oPivotField.Orientation(), $oPivotField.Function(), $oPivotField.ShowEmpty(), $LOC_PIVOT_TBL_FIELD_DISP_NONE, "", _
+					$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, "")
+
+		EndIf
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPivotField)
+	EndIf
+
+	If ($iFieldType <> Null) Then
+		If Not __LOCalc_IntIsBetween($iFieldType, $LOC_PIVOT_TBL_FIELD_TYPE_HIDDEN, $LOC_PIVOT_TBL_FIELD_TYPE_DATA) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+		$oPivotField.Orientation = $iFieldType
+		$iError = ($oPivotField.Orientation() = $iFieldType) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($iFunc <> Null) Then
+		If Not __LOCalc_IntIsBetween($iFunc, $LOC_COMPUTE_FUNC_NONE, $LOC_COMPUTE_FUNC_VARP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oPivotField.Function = $iFunc
+		$iError = ($oPivotField.Function() = $iFunc) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bShowEmpty <> Null) Then
+		If Not IsBool($bShowEmpty) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+		$oPivotField.ShowEmpty = $bShowEmpty
+		$iError = ($oPivotField.ShowEmpty() = $bShowEmpty) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($oPivotField.Orientation() = $LOC_PIVOT_TBL_FIELD_TYPE_DATA) Then
+
+		If IsObj($oPivotField.Reference()) Then
+			$tReference = $oPivotField.Reference()
+			If Not IsObj($tReference) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+		Else
+			$tReference = __LOCalc_CreateStruct("com.sun.star.sheet.DataPilotFieldReference")
+			If Not IsObj($tReference) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+		EndIf
+
+		If ($iDisplayType <> Null) Then
+			If Not __LOCalc_IntIsBetween($iDisplayType, $LOC_PIVOT_TBL_FIELD_DISP_NONE, $LOC_PIVOT_TBL_FIELD_DISP_INDEX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+			$tReference.ReferenceType = $iDisplayType
+		EndIf
+
+		If ($sBaseField <> Null) Then
+			If Not IsString($sBaseField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+			$tReference.ReferenceField = $sBaseField
+		EndIf
+
+		If ($iBaseItem <> Null) Then
+			If Not __LOCalc_IntIsBetween($iBaseItem, $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED, $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NEXT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			If ($iBaseItem = $LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED) And ($sBaseItem = Null) And ($tReference.ReferenceItemName() = "") Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$tReference.ReferenceItemType = $iBaseItem
+		EndIf
+
+		If ($sBaseItem <> Null) Then
+			If Not IsString($sBaseItem) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+
+			$tReference.ReferenceItemName = $sBaseItem
+		EndIf
+
+		$oPivotField.Reference = $tReference
+
+		$iError = ($iDisplayType = Null) ? ($iError) : (($oPivotField.Reference.ReferenceType() = $iDisplayType) ? ($iError) : (BitOR($iError, 8)))
+		$iError = ($sBaseField = Null) ? ($iError) : (($oPivotField.Reference.ReferenceField() = $sBaseField) ? ($iError) : (BitOR($iError, 16)))
+		$iError = ($iBaseItem = Null) ? ($iError) : (($oPivotField.Reference.ReferenceItemType() = $iBaseItem) ? ($iError) : (BitOR($iError, 32)))
+		$iError = ($sBaseItem = Null) ? ($iError) : (($oPivotField.Reference.ReferenceItemName() = $sBaseItem) ? ($iError) : (BitOR($iError, 64)))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangePivotFieldSettings
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsFiltersGetList
+; Description ...: Retrieve an array of Field Names set as Filter Fields.
+; Syntax ........: _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names currently set as Filter Fields, contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.PageFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.PageFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsGetList
+; Description ...: Retrieve an array of Fields available in the Pivot Table Source.
+; Syntax ........: _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: There is always a "Data" field present.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.DataPilotFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.DataPilotFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsRowsGetList
+; Description ...: Retrieve an array of Field Names set as Row Fields.
+; Syntax ........: _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names currently set as Row Fields, contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.RowFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.RowFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFieldsUnusedGetList
+; Description ...: Retrieve an array of Field Names not current used in any of the Fields.
+; Syntax ........: _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Table Fields.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Field Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Field Names currently not used in any field types, contained in the Pivot Table. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: There is always a "Data" field present.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oPivotTable.HiddenFields.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oPivotTable.HiddenFields.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFilter
+; Description ...: Apply a Filter to a Pivot Table.
+; Syntax ........: _LOCalc_RangePivotFilter(ByRef $oPivotTable[, $atFilterField = Null[, $bCaseSensitive = Null[, $bSkipDupl = Null[, $bUseRegExp = Null]]]])
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $atFilterField       - [optional] an array of dll structs. Default is Null. A single column Array of Filter Fields previously created by _LOCalc_FilterFieldCreate. Maximum of 3 Fields allowed.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is Null. If True, the Filtering operation will be case sensitive.
+;                  $bSkipDupl           - [optional] a boolean value. Default is Null. If True, Duplicate values will be skipped in the list of filtered data.
+;                  $bUseRegExp          - [optional] a boolean value. Default is Null. If True, the String Value set will be considered as using Regular expressions.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $atFilterField not an array or has more than 3 elements.
+;                  @Error 1 @Extended 3 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
+;                  @Error 1 @Extended 4 Return 0 = $bCaseSensitive not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bSkipDupl not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bUseRegExp not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $atFilterField
+;                  |                               2 = Error setting $bCaseSensitive
+;                  |                               4 = Error setting $bSkipDupl
+;                  |                               8 = Error setting $bUseRegExp
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOCalc_RangePivotFilterClear, _LOCalc_FilterFieldCreate
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFilter(ByRef $oPivotTable, $atFilterField = Null, $bCaseSensitive = Null, $bSkipDupl = Null, $bUseRegExp = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avFilter[4]
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp) Then
+		__LOCalc_ArrayFill($avFilter, $oPivotTable.FilterDescriptor.getFilterFields2(), $oPivotTable.FilterDescriptor.IsCaseSensitive(), _
+				$oPivotTable.FilterDescriptor.SkipDuplicates(), $oPivotTable.FilterDescriptor.UseRegularExpressions())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
+	EndIf
+
+	If ($atFilterField <> Null) Then
+		If Not IsArray($atFilterField) Or (UBound($atFilterField) > 3) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		For $i = 0 To UBound($atFilterField) - 1
+			If Not IsObj($atFilterField[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i)
+		Next
+
+		$oPivotTable.FilterDescriptor.setFilterFields2($atFilterField)
+		$iError = (UBound($oPivotTable.FilterDescriptor.getFilterFields2()) = UBound($atFilterField)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bCaseSensitive <> Null) Then
+		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oPivotTable.FilterDescriptor.IsCaseSensitive = $bCaseSensitive
+		$iError = ($oPivotTable.FilterDescriptor.IsCaseSensitive() = $bCaseSensitive) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bSkipDupl <> Null) Then
+		If Not IsBool($bSkipDupl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oPivotTable.FilterDescriptor.SkipDuplicates = $bSkipDupl
+		$iError = ($oPivotTable.FilterDescriptor.SkipDuplicates() = $bSkipDupl) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bUseRegExp <> Null) Then
+		If Not IsBool($bUseRegExp) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oPivotTable.FilterDescriptor.UseRegularExpressions = $bUseRegExp
+		$iError = ($oPivotTable.FilterDescriptor.UseRegularExpressions() = $bUseRegExp) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangePivotFilter
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotFilterClear
+; Description ...: Clear any previous filters for a Pivot Table.
+; Syntax ........: _LOCalc_RangePivotFilterClear(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to clear previous filter.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully cleared the Pivot Table Filter.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOCalc_RangePivotFilter
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotFilterClear(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aEmpty[0]
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oPivotTable.FilterDescriptor.setFilterFields($aEmpty)
+	$oPivotTable.FilterDescriptor.setFilterFields2($aEmpty)
+	$oPivotTable.FilterDescriptor.setFilterFields3($aEmpty)
+
+	If Not (UBound($oPivotTable.FilterDescriptor.getFilterFields()) = 0) Or _
+			Not (UBound($oPivotTable.FilterDescriptor.getFilterFields2()) = 0) Or _
+			Not (UBound($oPivotTable.FilterDescriptor.getFilterFields3()) = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangePivotFilterClear
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotGetObjByIndex
+; Description ...: Retrieve the Object for a Pivot table by Index.
+; Syntax ........: _LOCalc_RangePivotGetObjByIndex(ByRef $oSheet, $iIndex)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $iIndex              - an integer value. The Index number of the Pivot Table to retrieve the Object for. 0 Based.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iIndex not an Integer, less than 0 or greater than number of Pivot Tables contained in Sheet.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Pivot Table Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Pivot Table's Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotGetObjByIndex(ByRef $oSheet, $iIndex)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oPivotTable
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iIndex, 0, $oSheet.DataPilotTables.Count()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oPivotTable = $oSheet.DataPilotTables.getByIndex($iIndex)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oPivotTable)
+EndFunc   ;==>_LOCalc_RangePivotGetObjByIndex
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotGetObjByName
+; Description ...: Retrieve the object for a Pivot Table by name.
+; Syntax ........: _LOCalc_RangePivotGetObjByName(ByRef $oSheet, $sName)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The name of the Pivot Table to retrieve the Object for.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Sheet called in $oSheet does not contain a Pivot Table with name called in $sName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Pivot Table Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning requested Pivot Table's Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotGetObjByName(ByRef $oSheet, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oPivotTable
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If Not $oSheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oPivotTable = $oSheet.DataPilotTables.getByName($sName)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oPivotTable)
+EndFunc   ;==>_LOCalc_RangePivotGetObjByName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotInsert
+; Description ...: Insert a new Pivot Table.
+; Syntax ........: _LOCalc_RangePivotInsert(ByRef $oSourceRange, ByRef $oDestRange[, $sName = ""[, $sField = ""[, $iFieldType = $LOC_PIVOT_TBL_FIELD_TYPE_COLUMN[, $iFunc = $LOC_COMPUTE_FUNC_NONE]]]])
+; Parameters ....: $oSourceRange        - [in/out] an object. The Range containing the Data to use in the Pivot Table. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $oDestRange          - [in/out] an object. The Range to output the Pivot Table to. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $sName               - [optional] a string value. Default is "". The name of the new Pivot Table. If blank, an automatic name is generated.
+;                  $sField              - [optional] a string value. Default is "". The name of one of the available fields in the source range to use in the Table. See remarks.
+;                  $iFieldType          - [optional] an integer value (0-4). Default is $LOC_PIVOT_TBL_FIELD_TYPE_COLUMN. The type to set the field called in $sField to. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iFunc               - [optional] an integer value (0-12). Default is $LOC_COMPUTE_FUNC_NONE. The function to set for the Field. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSourceRange not an object.
+;                  @Error 1 @Extended 2 Return 0 = $oDestRange not an object.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sField not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iFieldType not an Integer, less than 0, or greater than 4. See Constants $LOC_PIVOT_TBL_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iFunc not an Integer, less than 0, or greater than 12. See Constants $LOC_COMPUTE_FUNC_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = Pivot Table name called in $sName or automatically generated name, already exists in Sheet.
+;                  @Error 1 @Extended 8 Return 0 = Range called in $oDestRange is within the source range.
+;                  @Error 1 @Extended 9 Return 0 = Field name called in $sField not found in available fields for Pivot Table.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create com.sun.star.table.CellAddress Struct.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a Data Pilot Descriptor Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Destination Address.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Address.
+;                  @Error 3 @Extended 3 Return 0 = Failed to insert Pivot Table.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning new Pivot Table's Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: If you do not call a field in $sField, the resulting Pivot Table will display "Empty", and will need a field set either manually or using one of the other functions before it will appear normal.
+;                  Any existing data within the Destination range will be overwritten.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotInsert(ByRef $oSourceRange, ByRef $oDestRange, $sName = "", $sField = "", $iFieldType = $LOC_PIVOT_TBL_FIELD_TYPE_COLUMN, $iFunc = $LOC_COMPUTE_FUNC_NONE)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oPivotDesc, $oPivotTable
+	Local $tCellAddr, $tSourceAddr, $tDestAddr
+	Local $iCount = 1
+
+	If Not IsObj($oSourceRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oDestRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsString($sField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not __LOCalc_IntIsBetween($iFieldType, $LOC_PIVOT_TBL_FIELD_TYPE_HIDDEN, $LOC_PIVOT_TBL_FIELD_TYPE_DATA) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LOCalc_IntIsBetween($iFunc, $LOC_COMPUTE_FUNC_NONE, $LOC_COMPUTE_FUNC_VARP) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	If ($sName = "") Then
+		While $oDestRange.Spreadsheet.DataPilotTables.hasByName("DataPilot" & $iCount)
+			$iCount += 1
+
+			Sleep((IsInt($iCount / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+		WEnd
+
+		$sName = "DataPilot" & $iCount
+	EndIf
+
+	If $oDestRange.Spreadsheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+
+	$tDestAddr = $oDestRange.RangeAddress()
+	If Not IsObj($tDestAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
+	If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	$tCellAddr.Sheet = $tDestAddr.Sheet()
+	$tCellAddr.Column = $tDestAddr.StartColumn()
+	$tCellAddr.Row = $tDestAddr.StartRow()
+
+	$tSourceAddr = $oSourceRange.RangeAddress()
+	If Not IsObj($tSourceAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If ($tSourceAddr.Sheet() = $tDestAddr.Sheet()) And _
+			__LOCalc_IntIsBetween($tDestAddr.StartColumn(), $tSourceAddr.StartColumn(), $tSourceAddr.EndColumn()) And _
+			__LOCalc_IntIsBetween($tDestAddr.StartRow(), $tSourceAddr.StartRow(), $tSourceAddr.EndRow()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+
+	$oPivotDesc = $oDestRange.Spreadsheet.DataPilotTables.createDataPilotDescriptor()
+	If Not IsObj($oPivotDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$oPivotDesc.SourceRange = $tSourceAddr
+
+	If ($sField <> "") Then
+		If Not $oPivotDesc.DataPilotFields.hasByName($sField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		$oPivotDesc.DataPilotFields.getByName($sField).Orientation = $iFieldType
+
+		If ($iFieldType = $LOC_PIVOT_TBL_FIELD_TYPE_DATA) And ($iFunc = $LOC_COMPUTE_FUNC_NONE) Then
+			$oPivotDesc.DataPilotFields.getByName($sField).Function = $LOC_COMPUTE_FUNC_SUM
+
+		Else
+			$oPivotDesc.DataPilotFields.getByName($sField).Function = $iFunc
+
+		EndIf
+
+	EndIf
+
+	$oPivotDesc.DrillDownOnDoubleClick = False ; These are set to True when creating the Descriptor, but are normally false on a new Pivot Table.
+	$oPivotDesc.ShowFilterButton = False ; These are set to True when creating the Descriptor, but are normally false on a new Pivot Table.
+
+	$oDestRange.Spreadsheet.DataPilotTables.insertNewByName($sName, $tCellAddr, $oPivotDesc)
+	If Not $oDestRange.Spreadsheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	$oPivotTable = $oDestRange.Spreadsheet.DataPilotTables.getByName($sName)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oPivotTable)
+EndFunc   ;==>_LOCalc_RangePivotInsert
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotName
+; Description ...: Set or Retrieve the Pivot Table Name.
+; Syntax ........: _LOCalc_RangePivotName(ByRef $oDoc, ByRef $oPivotTable[, $sName = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $sName               - [optional] a string value. Default is Null. The new name of the Pivot Table.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = Document called in $oDoc does not contain the Pivot Table called in $oPivotTable.
+;                  @Error 1 @Extended 5 Return 0 = Parent sheet of Pivot Table called in $oPivotTable already contains a Pivot Table with the name called in $sName.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Pivot Table Parent Sheet.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Name was successfully set.
+;                  @Error 0 @Extended 1 Return String = Success. All optional parameters were set to Null, returning Pivot Table's current Name as a string.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotName(ByRef $oDoc, ByRef $oPivotTable, $sName = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheet
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPivotTable.Name())
+
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+	$oSheet = $oDoc.Sheets.getByIndex($oPivotTable.OutputRange.Sheet())
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If Not $oSheet.DataPilotTables.hasByName($oPivotTable.Name()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	If $oSheet.DataPilotTables.hasByName($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+
+	$oPivotTable.Name = $sName
+
+	If Not ($oPivotTable.Name() = $sName) Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangePivotName
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotRefresh
+; Description ...: Refresh the Pivot Table.
+; Syntax ........: _LOCalc_RangePivotRefresh(ByRef $oPivotTable)
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Pivot Table was successfully refreshed.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Refreshing a table re-creates it from the present source data.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotRefresh(ByRef $oPivotTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oPivotTable.refresh()
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangePivotRefresh
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotSettings
+; Description ...: Set or Retrieve Pivot Table settings.
+; Syntax ........: _LOCalc_RangePivotSettings(ByRef $oPivotTable[, $bIgnoreEmpty = Null[, $bIdentifyCat = Null[, $bTotalCol = Null[, $bTotalRow = Null[, $bAddFilter = Null[, $bEnableDrill = Null]]]]]])
+; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $bIgnoreEmpty        - [optional] a boolean value. Default is Null. If True, empty fields in the source are ignored.
+;                  $bIdentifyCat        - [optional] a boolean value. Default is Null. If True, Rows without labels are automatically assigned a label.
+;                  $bTotalCol           - [optional] a boolean value. Default is Null. If True, a Total Column is present.
+;                  $bTotalRow           - [optional] a boolean value. Default is Null. If True, a Total Row is present.
+;                  $bAddFilter          - [optional] a boolean value. Default is Null. If True, a filter button is added based on spreadsheet data.
+;                  $bEnableDrill        - [optional] a boolean value. Default is Null. If True, double-clicking on a item label will show or hide details for the item.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bIgnoreEmpty not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bIdentifyCat not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bTotalCol not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bTotalRow not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bAddFilter not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bEnableDrill not a Boolean.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $bIgnoreEmpty
+;                  |                               2 = Error setting $bIdentifyCat
+;                  |                               4 = Error setting $bTotalCol
+;                  |                               8 = Error setting $bTotalRow
+;                  |                               16 = Error setting $bAddFilter
+;                  |                               32 = Error setting $bEnableDrill
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: I was unable to find a setting for "Show Expand/Collapse buttons", therefore it is not settable currently.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotSettings(ByRef $oPivotTable, $bIgnoreEmpty = Null, $bIdentifyCat = Null, $bTotalCol = Null, $bTotalRow = Null, $bAddFilter = Null, $bEnableDrill = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $abPivotSettings[6]
+	Local $iError = 0
+
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($bIgnoreEmpty, $bIdentifyCat, $bTotalCol, $bTotalRow, $bAddFilter, $bEnableDrill) Then
+		__LOCalc_ArrayFill($abPivotSettings, $oPivotTable.IgnoreEmptyRows(), $oPivotTable.RepeatIfEmpty(), $oPivotTable.ColumnGrand(), $oPivotTable.RowGrand(), _
+				$oPivotTable.ShowFilterButton(), $oPivotTable.DrillDownOnDoubleClick())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $abPivotSettings)
+	EndIf
+
+	If ($bIgnoreEmpty <> Null) Then
+		If Not IsBool($bIgnoreEmpty) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oPivotTable.IgnoreEmptyRows = $bIgnoreEmpty
+		$iError = ($oPivotTable.IgnoreEmptyRows() = $bIgnoreEmpty) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($bIdentifyCat <> Null) Then
+		If Not IsBool($bIdentifyCat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oPivotTable.RepeatIfEmpty = $bIdentifyCat
+		$iError = ($oPivotTable.RepeatIfEmpty() = $bIdentifyCat) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($bTotalCol <> Null) Then
+		If Not IsBool($bTotalCol) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oPivotTable.ColumnGrand = $bTotalCol
+		$iError = ($oPivotTable.ColumnGrand() = $bTotalCol) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bTotalRow <> Null) Then
+		If Not IsBool($bTotalRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oPivotTable.RowGrand = $bTotalRow
+		$iError = ($oPivotTable.RowGrand() = $bTotalRow) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bAddFilter <> Null) Then
+		If Not IsBool($bAddFilter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oPivotTable.ShowFilterButton = $bAddFilter
+		$iError = ($oPivotTable.ShowFilterButton() = $bAddFilter) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bEnableDrill <> Null) Then
+		If Not IsBool($bEnableDrill) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oPivotTable.DrillDownOnDoubleClick = $bEnableDrill
+		$iError = ($oPivotTable.DrillDownOnDoubleClick() = $bEnableDrill) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangePivotSettings
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotsGetCount
+; Description ...: Retrieve a count of Pivot tables contained in the Sheet.
+; Syntax ........: _LOCalc_RangePivotsGetCount(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: Integer
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Tables.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning a Count of Pivot tables contained in the Sheet.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotsGetCount(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iCount
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oSheet.DataPilotTables.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iCount)
+EndFunc   ;==>_LOCalc_RangePivotsGetCount
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotsGetList
+; Description ...: Retrieve an array of Pivot Tables contained in the Sheet.
+; Syntax ........: _LOCalc_RangePivotsGetList(ByRef $oSheet)
+; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSheet not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve a count of Pivot Tables.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Pivot Table Name.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning an array of Pivot Table Names contained in the Sheet. @Extended is set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotsGetList(ByRef $oSheet)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asNames[0]
+	Local $iCount
+
+	If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$iCount = $oSheet.DataPilotTables.Count()
+	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	ReDim $asNames[$iCount]
+
+	For $i = 0 To $iCount - 1
+		$asNames[$i] = $oSheet.DataPilotTables.getByIndex($i).Name()
+		If Not IsString($asNames[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
+EndFunc   ;==>_LOCalc_RangePivotsGetList
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangePivotSource
+; Description ...: Set or Retrieve the Pivot Table Source Range.
+; Syntax ........: _LOCalc_RangePivotSource(ByRef $oDoc, ByRef $oPivotTable[, $oSourceRange = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
+;                  $oSourceRange        - [optional] an object. Default is Null. The Range containing the Data to use in the Pivot Table. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+; Return values .: Success: 1 or Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oPivotTable not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $oSourceRange not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Source Range Parent Sheet.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Source Range Object.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $oSourceRange
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Source Range was successfully set.
+;                  @Error 0 @Extended 1 Return Object = Success. All optional parameters were set to Null, returning current source Range Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangePivotSource(ByRef $oDoc, ByRef $oPivotTable, $oSourceRange = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheet, $oRange
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsObj($oPivotTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($oSourceRange = Null) Then
+		$oSheet = $oDoc.Sheets.getByIndex($oPivotTable.SourceRange.Sheet())
+		If Not IsObj($oSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+		$oRange = $oSheet.getCellRangeByPosition($oPivotTable.SourceRange.StartColumn(), $oPivotTable.SourceRange.StartRow(), $oPivotTable.SourceRange.EndColumn(), _
+				$oPivotTable.SourceRange.EndRow())
+		If Not IsObj($oRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oRange)
+	EndIf
+
+	If Not IsObj($oSourceRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	$oPivotTable.SourceRange = $oSourceRange.RangeAddress()
+
+	$iError = (__LOCalc_RangeAddressIsSame($oPivotTable.SourceRange(), $oSourceRange.RangeAddress())) ? ($iError) : (BitOR($iError, 1))
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOCalc_RangePivotSource
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeQueryColumnDiff

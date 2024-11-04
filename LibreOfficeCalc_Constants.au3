@@ -601,6 +601,32 @@ Global Const _
 		$LOC_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
 		$LOC_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
+; Pivot Table Field Base Item Type
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldReferenceItemType
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED = 0, _             ; The reference item is given by a name.
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_PREV = 1, _              ; The reference item is the previous one.
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NEXT = 2                 ; The reference item is the next one.
+
+; Pivot Table Field Display Type
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldReferenceType
+		$LOC_PIVOT_TBL_FIELD_DISP_NONE = 0, _                   ; {Normal}. The results in the data fields are displayed like they are.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_DIFF = 1, _              ; {Difference From}. From each result, its reference value (Named, Previous or Next Item) is subtracted, and the difference is shown.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_PERCENT = 2, _           ; {% of}. Each result is divided by its reference value.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_PERCENT_DIFF = 3, _      ; {% Difference From}. From each result, its reference value is subtracted, and the difference divided by the reference value.
+		$LOC_PIVOT_TBL_FIELD_DISP_RUNNING_TOTAL = 4, _          ; Each result is added to the sum of the results for preceding items in the base field, in the base field's sort order, and the total sum is shown.
+		$LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT = 5, _            ; {% of Row}. Each result is divided by the total result for its row in the Data Pilot table.
+		$LOC_PIVOT_TBL_FIELD_DISP_COL_PERCENT = 6, _            ; {% of Column}. Same as $LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT, but the total for the result's column is used.
+		$LOC_PIVOT_TBL_FIELD_DISP_TOTAL_PERCENT = 7, _          ; {% of Total}. Same as $LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT, but the grand total for the result's data field is used.
+		$LOC_PIVOT_TBL_FIELD_DISP_INDEX = 8                     ; The row and column totals and the grand total, are used to calculate the following expression. ( original result * grand total ) / ( row total * column total )
+
+; Data Pivot Table Field Orientation
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldOrientation
+		$LOC_PIVOT_TBL_FIELD_TYPE_HIDDEN = 0, _                 ; The field is not used in the table.
+		$LOC_PIVOT_TBL_FIELD_TYPE_COLUMN = 1, _                 ; The field is used as a column field.
+		$LOC_PIVOT_TBL_FIELD_TYPE_ROW = 2, _                    ; The field is used as a row field.
+		$LOC_PIVOT_TBL_FIELD_TYPE_FILTER = 3, _                 ; The field is used as a filter field. Also called "Page" in the constants.
+		$LOC_PIVOT_TBL_FIELD_TYPE_DATA = 4                      ; The field is used as a data field.
+
 ; Posture/Italic
 Global Const _
 		$LOC_POSTURE_NONE = 0, _                                ; Specifies a font without slant.
