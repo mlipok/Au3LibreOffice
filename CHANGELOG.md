@@ -540,6 +540,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
 - Line numbers to Example Error messages.
 - Top-Most attribute to Example message boxes.
+- LibreOffice SDK/API Constant names to constants.
 
 ### Fixed
 

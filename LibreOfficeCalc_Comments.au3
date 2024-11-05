@@ -1842,8 +1842,8 @@ Func _LOCalc_CommentTextAnchor(ByRef $oComment, $iAnchor = Null, $bFullWidth = N
 	Local $oAnnotationShape
 	Local $iError = 0, $iCurrentAnchor
 	Local $avAnchor[2]
-	Local Const $__LOC_HORI_ALIGN_LEFT = 0, $__LOC_HORI_ALIGN_CENTER = 1, $__LOC_HORI_ALIGN_RIGHT = 2, $__LOC_HORI_ALIGN_BLOCK = 3
-	Local Const $__LOC_VERT_ALIGN_TOP = 0, $__LOC_VERT_ALIGN_CENTER = 1, $__LOC_VERT_ALIGN_BOTTOM = 2, $__LOC_VERT_ALIGN_BLOCK = 3
+	Local Const $__LOC_HORI_ALIGN_LEFT = 0, $__LOC_HORI_ALIGN_CENTER = 1, $__LOC_HORI_ALIGN_RIGHT = 2, $__LOC_HORI_ALIGN_BLOCK = 3; com.sun.star.drawing.TextHorizontalAdjust
+	Local Const $__LOC_VERT_ALIGN_TOP = 0, $__LOC_VERT_ALIGN_CENTER = 1, $__LOC_VERT_ALIGN_BOTTOM = 2, $__LOC_VERT_ALIGN_BLOCK = 3 ; com.sun.star.drawing.TextVerticalAdjust
 
 	If Not IsObj($oComment) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
