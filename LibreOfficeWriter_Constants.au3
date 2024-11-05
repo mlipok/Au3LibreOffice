@@ -22,7 +22,7 @@ Global Const $__LOWCONST_SLEEP_DIV = 0
 #Tidy_ILC_Pos=65
 
 ; Fill Style Type Constants
-Global Enum _
+Global Enum _                                                   ; com.sun.star.drawing.FillStyle
 		$LOW_AREA_FILL_STYLE_OFF, _                             ; 0 Fillstyle is off.
 		$LOW_AREA_FILL_STYLE_SOLID, _                           ; 1 Fillstyle is a solid color.
 		$LOW_AREA_FILL_STYLE_GRADIENT, _                        ; 2 Fillstyle is a gradient color.
@@ -30,19 +30,19 @@ Global Enum _
 		$LOW_AREA_FILL_STYLE_BITMAP                             ; 4 Fillstyle is a Bitmap.
 
 ; Horizontal Alignment
-Global Const _
+Global Const _                                                  ; com.sun.star.text.HorizontalAdjust
 		$LOW_ALIGN_HORI_LEFT = 0, _                             ; Horizontally align the object to the Left.
 		$LOW_ALIGN_HORI_CENTER = 1, _                           ; Horizontally align the object to the Center.
 		$LOW_ALIGN_HORI_RIGHT = 2                               ; Horizontally align the object to the Right.
 
 ; Vertical Alignment
-Global Const _
+Global Const _                                                  ; com.sun.star.style.VerticalAlignment
 		$LOW_ALIGN_VERT_TOP = 0, _                              ; Vertically Align the object to the Top.
 		$LOW_ALIGN_VERT_MIDDLE = 1, _                           ; Vertically Align the object to the Middle.
 		$LOW_ALIGN_VERT_BOTTOM = 2                              ; Vertically Align the object to the Bottom.
 
 ; Anchor Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.TextContentAnchorType
 		$LOW_ANCHOR_AT_PARAGRAPH = 0, _                         ; Anchors the object to the current paragraph.
 		$LOW_ANCHOR_AS_CHARACTER = 1, _                         ; Anchors the Object as character. The height of the current line is resized to match the height of the selection.
 		$LOW_ANCHOR_AT_PAGE = 2, _                              ; Anchors the Object to the current page.
@@ -50,7 +50,7 @@ Global Const _
 		$LOW_ANCHOR_AT_CHARACTER = 4                            ; Anchors the Object to a character.
 
 ; Break Type
-Global Const _
+Global Const _                                                  ; com.sun.star.style.BreakType
 		$LOW_BREAK_NONE = 0, _                                  ; No column or page break is applied.
 		$LOW_BREAK_COLUMN_BEFORE = 1, _                         ; A column break is applied before the current Paragraph. The current Paragraph, therefore, is the first in the column.
 		$LOW_BREAK_COLUMN_AFTER = 2, _                          ; A column break is applied after the current Paragraph. The current Paragraph, therefore, is the last in the column.
@@ -60,7 +60,7 @@ Global Const _
 		$LOW_BREAK_PAGE_BOTH = 6                                ; A page break is applied before and after the current Paragraph. The current Paragraph, therefore, is the only paragraph on the page.
 
 ; Border Style
-Global Const _
+Global Const _                                                  ; com.sun.star.table.BorderLineStyle
 		$LOW_BORDERSTYLE_NONE = 0x7FFF, _                       ; No border line.
 		$LOW_BORDERSTYLE_SOLID = 0, _                           ; Solid border line.
 		$LOW_BORDERSTYLE_DOTTED = 1, _                          ; Dotted border line.
@@ -91,7 +91,7 @@ Global Const _
 		$LOW_BORDERWIDTH_EXTRA_THICK = 159                      ; Extra Thick Border line width.
 
 ; Case Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.style.CaseMap
 		$LOW_CASEMAP_NONE = 0, _                                ; The case of the characters is unchanged.
 		$LOW_CASEMAP_UPPER = 1, _                               ; All characters are put in upper case.
 		$LOW_CASEMAP_LOWER = 2, _                               ; All characters are put in lower case.
@@ -99,7 +99,7 @@ Global Const _
 		$LOW_CASEMAP_SM_CAPS = 4                                ; All characters are put in upper case, but with a smaller font height.
 
 ; Cell Type
-Global Const _
+Global Const _                                                  ; com.sun.star.table.CellContentType
 		$LOW_CELL_TYPE_EMPTY = 0, _                             ; Cell is empty.
 		$LOW_CELL_TYPE_VALUE = 1, _                             ; Cell contains a value.
 		$LOW_CELL_TYPE_TEXT = 2, _                              ; Cell contains text.
@@ -128,14 +128,14 @@ Global Const _
 		$LOW_COLOR_BROWN = 9127187                              ; Brown color.
 
 ; Color Mode Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.ColorMode
 		$LOW_COLORMODE_STANDARD = 0, _                          ; The graphic is rendered in the default color style of the output device.
 		$LOW_COLORMODE_GRAYSCALE = 1, _                         ; The graphic is rendered in grayscale on the output device.
 		$LOW_COLORMODE_BLACK_WHITE = 2, _                       ; The graphic is rendered in black and white only.
 		$LOW_COLORMODE_WATERMARK = 3                            ; The graphic is rendered in a watermark like style.
 
 ; Control Character
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ControlCharacter
 		$LOW_CON_CHAR_PAR_BREAK = 0, _                          ; A new paragraph.
 		$LOW_CON_CHAR_LINE_BREAK = 1, _                         ; A new line in a paragraph.
 		$LOW_CON_CHAR_HARD_HYPHEN = 2, _                        ; A dash but prevents this position from being hyphenated.
@@ -175,7 +175,7 @@ Global Const _
 		$LOW_CURTYPE_TEXT_PORTION = 5                           ; Object is a Paragraph Text Portion Object.
 
 ; Printer Duplex Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.view.DuplexMode
 		$LOW_DUPLEX_UNKNOWN = 0, _                              ; Duplex mode setting is unknown.
 		$LOW_DUPLEX_OFF = 1, _                                  ; Duplex mode is off.
 		$LOW_DUPLEX_LONG = 2, _                                 ; Duplex mode is on, flip on Long edge.
@@ -195,7 +195,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_ADV_TYPE_USER                                ; A User Field, found in Fields dialog, Variables tab.
 
 ; Field Chapter Display Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ChapterFormat
 		$LOW_FIELD_CHAP_FRMT_NAME = 0, _                        ; The title of the chapter is displayed.
 		$LOW_FIELD_CHAP_FRMT_NUMBER = 1, _                      ; The number including prefix and suffix of the chapter is displayed.
 		$LOW_FIELD_CHAP_FRMT_NAME_NUMBER = 2, _                 ; The title and number, with prefix and suffix of the chapter are displayed.
@@ -230,7 +230,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_DOCINFO_TYPE_TITLE                           ; A Title Field, found in Fields dialog, DocInformation Tab.
 
 ; File Name Field Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.FilenameDisplayFormat
 		$LOW_FIELD_FILENAME_FULL_PATH = 0, _                    ; The content of the URL is completely displayed.
 		$LOW_FIELD_FILENAME_PATH = 1, _                         ; Only the path of the file is displayed.
 		$LOW_FIELD_FILENAME_NAME = 2, _                         ; Only the name of the file without the file extension is displayed.
@@ -239,7 +239,7 @@ Global Const _
 		$LOW_FIELD_FILENAME_TEMPLATE_NAME = 5                   ; The Template Name is displayed.
 
 ; Placeholder Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.PlaceholderType
 		$LOW_FIELD_PLACEHOLD_TYPE_TEXT = 0, _                   ; The field represents a piece of text.
 		$LOW_FIELD_PLACEHOLD_TYPE_TABLE = 1, _                  ; The field initiates the insertion of a text table.
 		$LOW_FIELD_PLACEHOLD_TYPE_FRAME = 2, _                  ; The field initiates the insertion of a text frame.
@@ -247,7 +247,7 @@ Global Const _
 		$LOW_FIELD_PLACEHOLD_TYPE_OBJECT = 4                    ; The field initiates the insertion of an embedded object.
 
 ; Reference Field Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ReferenceFieldSource
 		$LOW_FIELD_REF_TYPE_REF_MARK = 0, _                     ; The source is referencing a reference mark.
 		$LOW_FIELD_REF_TYPE_SEQ_FIELD = 1, _                    ; The source is referencing a number sequence field.
 		$LOW_FIELD_REF_TYPE_BOOKMARK = 2, _                     ; The source is referencing a bookmark.
@@ -255,7 +255,7 @@ Global Const _
 		$LOW_FIELD_REF_TYPE_ENDNOTE = 4                         ; The source is referencing an endnote.
 
 ; Type of Reference
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ReferenceFieldPart
 		$LOW_FIELD_REF_USING_PAGE_NUM_UNSTYLED = 0, _           ; The page number is displayed using Arabic numbers.
 		$LOW_FIELD_REF_USING_CHAPTER = 1, _                     ; The number of the chapter is displayed.
 		$LOW_FIELD_REF_USING_REF_TEXT = 2, _                    ; The reference text is displayed.
@@ -264,7 +264,7 @@ Global Const _
 		$LOW_FIELD_REF_USING_CAT_AND_NUM = 5, _                 ; Inserts the category (caption type) and the number of the reference target.
 		$LOW_FIELD_REF_USING_CAPTION = 6, _                     ; Inserts the caption label of the reference target.
 		$LOW_FIELD_REF_USING_NUMBERING = 7, _                   ; Inserts the caption number of the reference target.
-		$LOW_FIELD_REF_USING_NUMBER = 8, _                      ;  Inserts the number of the heading or numbered paragraph, including superior levels.
+		$LOW_FIELD_REF_USING_NUMBER = 8, _                      ; Inserts the number of the heading or numbered paragraph, including superior levels.
 		$LOW_FIELD_REF_USING_NUMBER_NO_CONT = 9, _              ; Inserts only the number of the heading or numbered paragraph.
 		$LOW_FIELD_REF_USING_NUMBER_CONT = 10                   ; Inserts the number of the heading or numbered paragraph, including all superior levels.
 
@@ -302,7 +302,7 @@ Global Enum Step *2 _
 		$LOW_FIELD_TYPE_WORD_COUNT                              ; A Word Count field, found in the Fields Dialog, Document tab, Statistics Type.
 
 ; User Data Field Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.UserDataPart
 		$LOW_FIELD_USER_DATA_COMPANY = 0, _                     ; The field shows the company name.
 		$LOW_FIELD_USER_DATA_FIRST_NAME = 1, _                  ; The field shows the first name.
 		$LOW_FIELD_USER_DATA_NAME = 2, _                        ; The field shows the name.
@@ -320,20 +320,20 @@ Global Const _
 		$LOW_FIELD_USER_DATA_STATE = 14                         ; The field shows the state.
 
 ; Follow By
-Global Const _
+Global Const _                                                  ; com.sun.star.text.LabelFollow
 		$LOW_FOLLOW_BY_TABSTOP = 0, _                           ; A Tab will follow the Numbering Style Number.
 		$LOW_FOLLOW_BY_SPACE = 1, _                             ; A Space will follow the Numbering Style Number.
 		$LOW_FOLLOW_BY_NOTHING = 2, _                           ; Nothing will follow the Numbering Style Number.
 		$LOW_FOLLOW_BY_NEWLINE = 3                              ; A Newline will follow the Numbering Style Number.
 
 ; Footnote Count type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.FootnoteNumbering
 		$LOW_FOOTNOTE_COUNT_PER_PAGE = 0, _                     ; Restarts the numbering of footnotes at the top of each page. This option is only available if End of Doc is set to False.
 		$LOW_FOOTNOTE_COUNT_PER_CHAP = 1, _                     ; Restarts the numbering of footnotes at the beginning of each chapter.
 		$LOW_FOOTNOTE_COUNT_PER_DOC = 2                         ; Numbers the footnotes in the document sequentially.
 
 ; Format Key Type
-Global Const _
+Global Const _                                                  ; com.sun.star.util.NumberFormat
 		$LOW_FORMAT_KEYS_ALL = 0, _                             ; Returns All number formats.
 		$LOW_FORMAT_KEYS_DEFINED = 1, _                         ; Returns Only user-defined number formats.
 		$LOW_FORMAT_KEYS_DATE = 2, _                            ; Returns Date formats.
@@ -380,7 +380,7 @@ Global Const _
 		$LOW_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset. L.O. 7.6+
 
 ; Gradient Type
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.GradientStyle
 		$LOW_GRAD_TYPE_OFF = -1, _                              ; Turn the Gradient off.
 		$LOW_GRAD_TYPE_LINEAR = 0, _                            ; Linear type Gradient
 		$LOW_GRAD_TYPE_AXIAL = 1, _                             ; Axial type Gradient
@@ -390,21 +390,21 @@ Global Const _
 		$LOW_GRAD_TYPE_RECT = 5                                 ; Rectangle type Gradient
 
 ; Line Spacing
-Global Const _
+Global Const _                                                  ; com.sun.star.style.LineSpacingMode
 		$LOW_LINE_SPC_MODE_PROP = 0, _                          ; Specifies the height value as a proportional value. Min 6% Max 65,535%. (without percentage sign)
-		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.]  Min 0, Max 10008 Micrometers (uM)
+		$LOW_LINE_SPC_MODE_MIN = 1, _                           ; Specifies the height as the minimum line height. [Minimum/At least in L.O. U.I.] Min 0, Max 10008 Micrometers (uM)
 		$LOW_LINE_SPC_MODE_LEADING = 2, _                       ; Specifies the height value as the distance to the previous line. Min 0, Max 10008 Micrometers (uM)
 		$LOW_LINE_SPC_MODE_FIX = 3                              ; Specifies the height value as a fixed line height. Min 51 Micrometers, Max 10008 Micrometers (uM)
 
 ; Line Style
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ColumnSeparatorStyle
 		$LOW_LINE_STYLE_NONE = 0, _                             ; No line.
 		$LOW_LINE_STYLE_SOLID = 1, _                            ; A solid line.
 		$LOW_LINE_STYLE_DOTTED = 2, _                           ; A dotted line.
 		$LOW_LINE_STYLE_DASHED = 3                              ; A Dashed line.
 
 ; Numbering Style Type
-Global Const _
+Global Const _                                                  ; com.sun.star.style.NumberingType
 		$LOW_NUM_STYLE_CHARS_UPPER_LETTER = 0, _                ; Numbering is put in upper case letters. ("A, B, C, D)
 		$LOW_NUM_STYLE_CHARS_LOWER_LETTER = 1, _                ; Numbering is in lower case letters. (a, b, c, d)
 		$LOW_NUM_STYLE_ROMAN_UPPER = 2, _                       ; Numbering is in Roman numbers with upper case letters. (I, II, III)
@@ -479,16 +479,16 @@ Global Const _
 		$LOW_NUM_STYLE_NUMBER_LEGAL_KO = 71                     ; Numbering is in Korean Legal Number, reserved "koreanLegal".
 
 ; Horizontal Orientation
-Global Const _
+Global Const _                                                  ; com.sun.star.text.HoriOrientation
 		$LOW_ORIENT_HORI_NONE = 0, _                            ; No hard alignment is applied. Equal to "From Left" in L.O. U.I.
 		$LOW_ORIENT_HORI_RIGHT = 1, _                           ; The object is aligned at the right side.
 		$LOW_ORIENT_HORI_CENTER = 2, _                          ; The object is aligned at the middle.
 		$LOW_ORIENT_HORI_LEFT = 3, _                            ; The object is aligned at the left side.
 		$LOW_ORIENT_HORI_FULL = 6, _                            ; The table uses the full space (for text tables only).
-		$LOW_ORIENT_HORI_LEFT_AND_WIDTH = 7                     ;  The left offset and the width of the table are defined.
+		$LOW_ORIENT_HORI_LEFT_AND_WIDTH = 7                     ; The left offset and the width of the table are defined.
 
 ; Vertical Orientation
-Global Const _
+Global Const _                                                  ; com.sun.star.text.VertOrientation
 		$LOW_ORIENT_VERT_NONE = 0, _                            ; No hard alignment. The same as "From Top"/From Bottom" in L.O. U.I., the only difference is the combination setting of Vertical Relation.
 		$LOW_ORIENT_VERT_TOP = 1, _                             ; Aligned at the top.
 		$LOW_ORIENT_VERT_CENTER = 2, _                          ; Aligned at the center.
@@ -515,20 +515,20 @@ Global Const _
 		$LOW_OUTLINE_LEVEL_10 = 10                              ; The paragraph belongs to the level 10 outline level.
 
 ; Page Layout
-Global Const _
+Global Const _                                                  ; com.sun.star.style.PageStyleLayout
 		$LOW_PAGE_LAYOUT_ALL = 0, _                             ; Page style shows both odd(Right) and even(Left) pages. With left and right margins.
 		$LOW_PAGE_LAYOUT_LEFT = 1, _                            ; Page style shows only even(Left) pages. Odd pages are shown as blank pages. With left and right margins.
 		$LOW_PAGE_LAYOUT_RIGHT = 2, _                           ; Page style shows only odd(Right) pages. Even pages are shown as blank pages. With left and right margins.
 		$LOW_PAGE_LAYOUT_MIRRORED = 3                           ; Page style shows both odd(Right) and even(Left) pages with inner and outer margins.
 
 ; Page Number Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.PageNumberType
 		$LOW_PAGE_NUM_TYPE_PREV = 0, _                          ; The Previous Page's page number.
 		$LOW_PAGE_NUM_TYPE_CURRENT = 1, _                       ; The current page number.
 		$LOW_PAGE_NUM_TYPE_NEXT = 2                             ; The Next Page's page number.
 
 ; Paper Size Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.view.PaperFormat
 		$LOW_PAPER_A3 = 0, _                                    ; A3 Paper size.
 		$LOW_PAPER_A4 = 1, _                                    ; A4 Paper size.
 		$LOW_PAPER_A5 = 2, _                                    ; A5 Paper size.
@@ -572,7 +572,7 @@ Global Const _
 		$LOW_PAPER_HEIGHT_JAP_POSTCARD = 14808                  ; Japanese Postcard paper height in Micrometers.
 
 ; Printer Paper Orientation Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.view.PaperOrientation
 		$LOW_PAPER_ORIENT_PORTRAIT = 0, _                       ; Portrait Paper Orientation.
 		$LOW_PAPER_ORIENT_LANDSCAPE = 1                         ; Landscape Paper Orientation.
 
@@ -609,7 +609,7 @@ Global Const _
 		$LOW_PAPER_WIDTH_JAP_POSTCARD = 10008                   ; Japanese Postcard paper width in Micrometers.
 
 ; Paragraph Horizontal Align
-Global Const _
+Global Const _                                                  ; com.sun.star.style.ParagraphAdjust
 		$LOW_PAR_ALIGN_HOR_LEFT = 0, _                          ; The Paragraph is left-aligned between the borders.
 		$LOW_PAR_ALIGN_HOR_RIGHT = 1, _                         ; The Paragraph is right-aligned between the borders.
 		$LOW_PAR_ALIGN_HOR_JUSTIFIED = 2, _                     ; The Paragraph is adjusted / stretched to both borders.
@@ -617,7 +617,7 @@ Global Const _
 		$LOW_PAR_ALIGN_HOR_STRETCH = 4                          ; HoriAlign 4 does nothing??
 
 ; Paragraph Vertical Align
-Global Const _
+Global Const _                                                  ; com.sun.star.text.ParagraphVertAlign
 		$LOW_PAR_ALIGN_VERT_AUTO = 0, _                         ; Automatic vertical alignment mode. In automatic mode, horizontal text is aligned to the baseline. The same applies to text that is rotated 90°. Text that is rotated 270 ° is aligned to the center.
 		$LOW_PAR_ALIGN_VERT_BASELINE = 1, _                     ; The text is aligned to the baseline.
 		$LOW_PAR_ALIGN_VERT_TOP = 2, _                          ; The text is aligned to the top.
@@ -637,7 +637,7 @@ Global Const _
 		$LOW_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
 ; Posture/Italic
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontSlant
 		$LOW_POSTURE_NONE = 0, _                                ; Specifies a font without slant.
 		$LOW_POSTURE_OBLIQUE = 1, _                             ; Specifies an oblique font (slant not designed into the font).
 		$LOW_POSTURE_ITALIC = 2, _                              ; Specifies an italic font (slant designed into the font).
@@ -646,14 +646,14 @@ Global Const _
 		$LOW_POSTURE_REV_ITALIC = 5                             ; Specifies a reverse italic font (slant designed into the font).
 
 ; LO Print Comments Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.text.NotePrintMode
 		$LOW_PRINT_NOTES_NONE = 0, _                            ; Document contents are printed, without printing any Comments.
 		$LOW_PRINT_NOTES_ONLY = 1, _                            ; Only Comments are printed, and NONE of the Document content.
 		$LOW_PRINT_NOTES_END = 2, _                             ; Document content is printed with comments appended to a blank page at the end of the document.
 		$LOW_PRINT_NOTES_NEXT_PAGE = 3                          ; Document content is printed and comments are appended to a blank page after the commented page.
 
 ; Relative to
-Global Const _
+Global Const _                                                  ; com.sun.star.text.RelOrientation
 		$LOW_RELATIVE_ROW = -1, _                               ; Position an object considering the row height.
 		$LOW_RELATIVE_PARAGRAPH = 0, _                          ; The Object is placed considering the available paragraph space, including indent spacing. [Also called "Margin" or "Baseline" in L.O. UI]
 		$LOW_RELATIVE_PARAGRAPH_TEXT = 1, _                     ; The Object is placed considering the available paragraph space, excluding indent spacing.
@@ -669,13 +669,13 @@ Global Const _
 		$LOW_RELATIVE_PAGE_PRINT_TOP = 11                       ; The Object is placed considering the space available in the page header(?)
 
 ; Relief
-Global Const _
+Global Const _                                                  ; com.sun.star.text.FontRelief
 		$LOW_RELIEF_NONE = 0, _                                 ; No relief is applied.
 		$LOW_RELIEF_EMBOSSED = 1, _                             ; The font relief is embossed.
 		$LOW_RELIEF_ENGRAVED = 2                                ; The font relief is engraved.
 
 ; Shadow Location
-Global Const _
+Global Const _                                                  ; com.sun.star.table.ShadowLocation
 		$LOW_SHADOW_NONE = 0, _                                 ; No shadow is applied.
 		$LOW_SHADOW_TOP_LEFT = 1, _                             ; Shadow is located along the upper and left sides.
 		$LOW_SHADOW_TOP_RIGHT = 2, _                            ; Shadow is located along the upper and right sides.
@@ -719,13 +719,13 @@ Global Enum _
 		$LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY                 ; 32 -- CF Zero Many Arrow head.
 
 ; Shape Line End Cap Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.LineCap
 		$LOW_SHAPE_LINE_CAP_FLAT = 0, _                         ; Also called Butt, the line will end without any additional shape.
 		$LOW_SHAPE_LINE_CAP_ROUND = 1, _                        ; The line will get a half circle as additional cap.
 		$LOW_SHAPE_LINE_CAP_SQUARE = 2                          ; The line uses a square for the line end.
 
 ; Shape Line Joint Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.LineJoint
 		$LOW_SHAPE_LINE_JOINT_NONE = 0, _                       ; The joint between lines will not be connected.
 		$LOW_SHAPE_LINE_JOINT_MIDDLE = 1, _                     ; The middle value between the joints is used. ## Note used?
 		$LOW_SHAPE_LINE_JOINT_BEVEL = 2, _                      ; The edges of the thick lines will be joined by lines.
@@ -768,7 +768,7 @@ Global Enum _
 		$LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS               ; 31 -- A Line with Fine Dots.
 
 ; Polygon Flags
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.PolygonFlags
 		$LOW_SHAPE_POINT_TYPE_NORMAL = 0, _                     ; the point is normal, from the curve discussion view.
 		$LOW_SHAPE_POINT_TYPE_SMOOTH = 1, _                     ; the point is smooth, the first derivation from the curve discussion view.
 		$LOW_SHAPE_POINT_TYPE_CONTROL = 2, _                    ; the point is a control point, to control the curve from the user interface.
@@ -901,7 +901,7 @@ Global Enum _
 		$LOW_SHAPE_TYPE_SYMBOL_PUZZLE                           ; 122 -- A Puzzle Piece Shape. ## Not implemented into Libre Office SDK as of 7.3.4.2 or higher.
 
 ; Strikeout
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontStrikeout
 		$LOW_STRIKEOUT_NONE = 0, _                              ; No strike out.
 		$LOW_STRIKEOUT_SINGLE = 1, _                            ; Strike out the characters with a single line.
 		$LOW_STRIKEOUT_DOUBLE = 2, _                            ; Strike out the characters with a double line.
@@ -911,7 +911,7 @@ Global Const _
 		$LOW_STRIKEOUT_X = 6                                    ; Strike out the characters with X's.
 
 ; Tab Alignment
-Global Const _
+Global Const _                                                  ; com.sun.star.style.TabAlign
 		$LOW_TAB_ALIGN_LEFT = 0, _                              ; Aligns the left edge of the text to the tab stop and extends the text to the right.
 		$LOW_TAB_ALIGN_CENTER = 1, _                            ; Aligns the center of the text to the tab stop.
 		$LOW_TAB_ALIGN_RIGHT = 2, _                             ; Aligns the right edge of the text to the tab stop and extends the text to the left of the tab stop.
@@ -949,14 +949,14 @@ Global Enum _
 		$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH                    ; Move to the start of the current paragraph.
 
 ; Text Adjust
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.TextVerticalAdjust
 		$LOW_TXT_ADJ_VERT_TOP = 0, _                            ; The top edge of the text is adjusted to the top edge of the object.
 		$LOW_TXT_ADJ_VERT_CENTER = 1, _                         ; The text is centered inside the object.
 		$LOW_TXT_ADJ_VERT_BOTTOM = 2, _                         ; The bottom edge of the text is adjusted to the bottom edge of the object.
 		$LOW_TXT_ADJ_VERT_BLOCK = 3                             ;
 
 ; Text Direction
-Global Const _
+Global Const _                                                  ; com.sun.star.text.WritingMode2
 		$LOW_TXT_DIR_LR_TB = 0, _                               ; Text within lines is written left-to-right. Lines and blocks are placed top-to-bottom. Typically, this is the writing mode for normal "alphabetic" text.
 		$LOW_TXT_DIR_RL_TB = 1, _                               ; Text within a line are written right-to-left. Lines and blocks are placed top-to-bottom. Typically, this writing mode is used in Arabic and Hebrew text.
 		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left. Typically, this writing mode is used in Chinese and Japanese text.
@@ -965,7 +965,7 @@ Global Const _
 		$LOW_TXT_DIR_BT_LR = 5                                  ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
 
 ; Underline/Overline
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontUnderline
 		$LOW_UNDERLINE_NONE = 0, _                              ; No Underline or Overline style.
 		$LOW_UNDERLINE_SINGLE = 1, _                            ; Single line Underline/Overline style.
 		$LOW_UNDERLINE_DOUBLE = 2, _                            ; Double line Underline/Overline style.
@@ -1007,7 +1007,7 @@ Global Enum _
 		$LOW_VIEWCUR_GOTO_END                                   ; Move the cursor to the end of the document or Table.
 
 ; Weight/Bold
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontWeight
 		$LOW_WEIGHT_DONT_KNOW = 0, _                            ; The font weight is not specified/unknown. For Read Only.
 		$LOW_WEIGHT_THIN = 50, _                                ; A 50% (Thin) font weight.
 		$LOW_WEIGHT_ULTRA_LIGHT = 60, _                         ; A 60% (Ultra Light) font weight.
@@ -1020,7 +1020,7 @@ Global Const _
 		$LOW_WEIGHT_BLACK = 200                                 ; A 200% (Black) font weight.
 
 ; Wrap Type
-Global Const _
+Global Const _                                                  ; com.sun.star.text.WrapTextMode
 		$LOW_WRAP_MODE_NONE = 0, _                              ; Places the Object on a separate line in the document.
 		$LOW_WRAP_MODE_THROUGH = 1, _                           ; Places the Object in front of the text.
 		$LOW_WRAP_MODE_PARALLEL = 2, _                          ; Wraps text on all four sides of the border frame of the Object. [Same as "Optimal"]

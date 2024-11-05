@@ -600,6 +600,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_ShapeAreaFillStyle
 - Line numbers to Example Error messages.
 - Top-Most attribute to Example message boxes.
+- LibreOffice SDK/API Constant names to constants.
 
 ### Changed
 
