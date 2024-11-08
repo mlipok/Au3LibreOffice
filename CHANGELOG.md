@@ -600,6 +600,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - _LOWriter_ShapeAreaFillStyle
 - Line numbers to Example Error messages.
 - Top-Most attribute to Example message boxes.
+- Selection set and get functions
+	- _LOWriter_DocSelectionGet
+	- _LOWriter_DocSelectionSet
 
 ### Changed
 
