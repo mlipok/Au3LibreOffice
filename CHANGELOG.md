@@ -603,6 +603,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Selection set and get functions
 	- _LOWriter_DocSelectionGet
 	- _LOWriter_DocSelectionSet
+- __LOWriter_NumRuleCreateMap for modifying Numbering Rules more efficiently.
 
 ### Changed
 
@@ -656,6 +657,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
 - __LOWriter_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
+- Improved the processing speed for modifying Numbering Rules by using Maps.
 
 ### Fixed
 
@@ -700,6 +702,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 ### Removed
 
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
+- __LOWriter_NumStyleRetrieve function as it is no longer needed.
 
 [To Top](#releases)
 
