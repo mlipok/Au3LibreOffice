@@ -109,23 +109,23 @@ Global Const _                                                  ; com.sun.star.t
 Global Const _
 		$LOW_COLOR_OFF = -1, _                                  ; Turn Color off, or to automatic mode.
 		$LOW_COLOR_BLACK = 0, _                                 ; Black color.
-		$LOW_COLOR_WHITE = 16777215, _                          ; White color.
-		$LOW_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
-		$LOW_COLOR_GRAY = 8421504, _                            ; Gray color.
-		$LOW_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
-		$LOW_COLOR_YELLOW = 16776960, _                         ; Yellow color.
-		$LOW_COLOR_GOLD = 16760576, _                           ; Gold color.
-		$LOW_COLOR_ORANGE = 16744448, _                         ; Orange color.
-		$LOW_COLOR_BRICK = 16728064, _                          ; Brick color.
-		$LOW_COLOR_RED = 16711680, _                            ; Red color.
-		$LOW_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
-		$LOW_COLOR_PURPLE = 8388736, _                          ; Purple color.
-		$LOW_COLOR_INDIGO = 5582989, _                          ; Indigo color.
-		$LOW_COLOR_BLUE = 2777241, _                            ; Blue color.
-		$LOW_COLOR_TEAL = 1410150, _                            ; Teal color.
 		$LOW_COLOR_GREEN = 43315, _                             ; Green color.
+		$LOW_COLOR_TEAL = 1410150, _                            ; Teal color.
+		$LOW_COLOR_BLUE = 2777241, _                            ; Blue color.
+		$LOW_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
+		$LOW_COLOR_INDIGO = 5582989, _                          ; Indigo color.
+		$LOW_COLOR_PURPLE = 8388736, _                          ; Purple color.
+		$LOW_COLOR_GRAY = 8421504, _                            ; Gray color.
 		$LOW_COLOR_LIME = 8508442, _                            ; Lime color.
-		$LOW_COLOR_BROWN = 9127187                              ; Brown color.
+		$LOW_COLOR_BROWN = 9127187, _                           ; Brown color.
+		$LOW_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
+		$LOW_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
+		$LOW_COLOR_RED = 16711680, _                            ; Red color.
+		$LOW_COLOR_BRICK = 16728064, _                          ; Brick color.
+		$LOW_COLOR_ORANGE = 16744448, _                         ; Orange color.
+		$LOW_COLOR_GOLD = 16760576, _                           ; Gold color.
+		$LOW_COLOR_YELLOW = 16776960, _                         ; Yellow color.
+		$LOW_COLOR_WHITE = 16777215                             ; White color.
 
 ; Color Mode Constants.
 Global Const _                                                  ; com.sun.star.drawing.ColorMode
