@@ -134,7 +134,7 @@ Global Const _
 		$LOC_COLOR_PURPLE = 8388736, _                          ; Purple color.
 		$LOC_COLOR_GRAY = 8421504, _                            ; Gray color.
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
-		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
+		$LOC_COLOR_BROWN = 9127187, _                           ; Brown color.
 		$LOC_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
 		$LOC_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
 		$LOC_COLOR_RED = 16711680, _                            ; Red color.
@@ -142,7 +142,7 @@ Global Const _
 		$LOC_COLOR_ORANGE = 16744448, _                         ; Orange color.
 		$LOC_COLOR_GOLD = 16760576, _                           ; Gold color.
 		$LOC_COLOR_YELLOW = 16776960, _                         ; Yellow color.
-		$LOC_COLOR_WHITE = 16777215, _                          ; White color.
+		$LOC_COLOR_WHITE = 16777215                             ; White color.
 
 ; Comment Text Anchor Position
 Global Enum _
