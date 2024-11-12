@@ -972,12 +972,20 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocDescription
 ; Description ...: Set or Retrieve Document Description properties.
-; Syntax ........: _LOWriter_DocDescription(ByRef $oDoc[, $sTitle = Null[, $sSubject = Null[, $asKeywords = Null[, $sComments = Null]]]])
+; Syntax ........: _LOWriter_DocDescription(ByRef $oDoc[, $sTitle = Null[, $sSubject = Null[, $asKeywords = Null[, $sComments = Null[, $asContributor = Null[, $sCoverage = Null[, $sIdentifier = Null[, $asPublisher = Null[, $asRelation = Null[, $sRights = Null[, $sSource = Null[, $sType = Null]]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
 ;                  $sTitle              - [optional] a string value. Default is Null. Set the Document's "Title" Property. See Remarks.
 ;                  $sSubject            - [optional] a string value. Default is Null. Set the Document's "Subject" Property.
 ;                  $asKeywords          - [optional] an array of strings. Default is Null. Set the Document's "Keywords" Property. Input must be a single dimension Array, which will overwrite any keywords previously set. Accepts numbers also. See Remarks.
 ;                  $sComments           - [optional] a string value. Default is Null. Set the Document's "Comments" Property.
+;                  $asContributor       - [optional] an array of strings. Default is Null. Set the Document's "Contributor" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $sCoverage           - [optional] a string value. Default is Null. Set the Document's "Coverage" Property. L.O. 24.2+
+;                  $sIdentifier         - [optional] a string value. Default is Null. Set the Document's "Identifier" Property. L.O. 24.2+
+;                  $asPublisher         - [optional] an array of strings. Default is Null. Set the Document's "Publisher" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $asRelation          - [optional] an array of strings. Default is Null. Set the Document's "Relation" Property. Input must be a single dimension Array, which will overwrite any values previously set. See Remarks. L.O. 24.2+
+;                  $sRights             - [optional] a string value. Default is Null. Set the Document's "Rights" Property. L.O. 24.2+
+;                  $sSource             - [optional] a string value. Default is Null. Set the Document's "Source" Property. L.O. 24.2+
+;                  $sType               - [optional] a string value. Default is Null. Set the Document's "Type" Property. L.O. 24.2+
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -986,6 +994,14 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ;                  @Error 1 @Extended 3 Return 0 = $sSubject not a String.
 ;                  @Error 1 @Extended 4 Return 0 = $asKeywords not an Array.
 ;                  @Error 1 @Extended 5 Return 0 = $sComments not a String.
+;                  @Error 1 @Extended 6 Return 0 = $asContributor not an Array.
+;                  @Error 1 @Extended 7 Return 0 = $sCoverage not a String.
+;                  @Error 1 @Extended 8 Return 0 = $sIdentifier not a String.
+;                  @Error 1 @Extended 9 Return 0 = $asPublisher not an Array.
+;                  @Error 1 @Extended 10 Return 0 = $asRelation not an Array.
+;                  @Error 1 @Extended 11 Return 0 = $sRights not a String.
+;                  @Error 1 @Extended 12 Return 0 = $sSource not a String.
+;                  @Error 1 @Extended 13 Return 0 = $sType not a String.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Document Properties Object.
 ;                  --Property Setting Errors--
@@ -994,20 +1010,30 @@ EndFunc   ;==>_LOWriter_DocCreateTextCursor
 ;                  |                               2 = Error setting $sSubject
 ;                  |                               4 = Error setting $asKeywords
 ;                  |                               8 = Error setting $sComments
+;                  |                               16 = Error setting $asContributor
+;                  |                               32 = Error setting $sCoverage
+;                  |                               64 = Error setting $sIdentifier
+;                  |                               128 = Error setting $asPublisher
+;                  |                               256 = Error setting $asRelation
+;                  |                               512 = Error setting $sRights
+;                  |                               1024 = Error setting $sSource
+;                  |                               2048 = Error setting $sType
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current LibreOffice version is less than 24.2.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters. "Keywords" value will be an Array, which could be empty if no keywords are presently set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array or a 12 Element array if current LibreOffice version 24.2 or greater. Returning array with values in order of function parameters. Any array values could be empty if no values are presently set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: "Title" is the Title as found in File>Properties, not the Document's Title as set when saving it.
-;                  "Keywords" error checking only checks to make sure the input array, and the set Array of Keywords is the same size, it does not check that each element is the same.
+;                  Any array error checking only checks to make sure the input array, and the set Array of values is the same size, it does not check that each element is the same.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $asKeywords = Null, $sComments = Null)
+Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $asKeywords = Null, $sComments = Null, $asContributor = Null, $sCoverage = Null, $sIdentifier = Null, $asPublisher = Null, $asRelation = Null, $sRights = Null, $sSource = Null, $sType = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1019,8 +1045,16 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 	$oDocProp = $oDoc.DocumentProperties()
 	If Not IsObj($oDocProp) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If __LOWriter_VarsAreNull($sTitle, $sSubject, $asKeywords, $sComments) Then
-		__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description())
+	If __LOWriter_VarsAreNull($sTitle, $sSubject, $asKeywords, $sComments, $asContributor, $sCoverage, $sIdentifier, $asPublisher, $asRelation, $sRights, $sSource, $sType) Then
+		If __LOWriter_VersionCheck(24.2) Then ; These properties are only available from L.O. 24.2+.
+			__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description(), $oDocProp.Contributor(), $oDocProp.Coverage(), _
+					$oDocProp.Identifier(), $oDocProp.Publisher(), $oDocProp.Relation(), $oDocProp.Rights(), $oDocProp.Source(), $oDocProp.Type())
+
+		Else
+			__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description())
+
+		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDescription)
 	EndIf
 
@@ -1046,6 +1080,62 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 		If Not IsString($sComments) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDocProp.Description = $sComments
 		$iError = ($oDocProp.Description() = $sComments) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($asContributor <> Null) Then
+		If Not IsArray($asContributor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Contributor = $asContributor
+		$iError = (UBound($oDocProp.Contributor()) = UBound($asContributor)) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($sCoverage <> Null) Then
+		If Not IsString($sCoverage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Coverage = $sCoverage
+		$iError = ($oDocProp.Coverage() = $sCoverage) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($sIdentifier <> Null) Then
+		If Not IsString($sIdentifier) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Identifier = $sIdentifier
+		$iError = ($oDocProp.Identifier() = $sIdentifier) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($asPublisher <> Null) Then
+		If Not IsArray($asPublisher) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Publisher = $asPublisher
+		$iError = (UBound($oDocProp.Publisher()) = UBound($asPublisher)) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($asRelation <> Null) Then
+		If Not IsArray($asRelation) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Relation = $asRelation
+		$iError = (UBound($oDocProp.Relation()) = UBound($asRelation)) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($sRights <> Null) Then
+		If Not IsString($sRights) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Rights = $sRights
+		$iError = ($oDocProp.Rights() = $sRights) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	If ($sSource <> Null) Then
+		If Not IsString($sSource) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Source = $sSource
+		$iError = ($oDocProp.Source() = $sSource) ? ($iError) : (BitOR($iError, 1024))
+	EndIf
+
+	If ($sType <> Null) Then
+		If Not IsString($sType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_VersionCheck(24.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+		$oDocProp.Type = $sType
+		$iError = ($oDocProp.Type() = $sType) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
