@@ -126,23 +126,23 @@ Global Const _                                                  ; com.sun.star.t
 Global Const _
 		$LOC_COLOR_OFF = -1, _                                  ; Turn Color off, or to automatic mode.
 		$LOC_COLOR_BLACK = 0, _                                 ; Black color.
-		$LOC_COLOR_WHITE = 16777215, _                          ; White color.
-		$LOC_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
-		$LOC_COLOR_GRAY = 8421504, _                            ; Gray color.
-		$LOC_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
-		$LOC_COLOR_YELLOW = 16776960, _                         ; Yellow color.
-		$LOC_COLOR_GOLD = 16760576, _                           ; Gold color.
-		$LOC_COLOR_ORANGE = 16744448, _                         ; Orange color.
-		$LOC_COLOR_BRICK = 16728064, _                          ; Brick color.
-		$LOC_COLOR_RED = 16711680, _                            ; Red color.
-		$LOC_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
-		$LOC_COLOR_PURPLE = 8388736, _                          ; Purple color.
-		$LOC_COLOR_INDIGO = 5582989, _                          ; Indigo color.
-		$LOC_COLOR_BLUE = 2777241, _                            ; Blue color.
-		$LOC_COLOR_TEAL = 1410150, _                            ; Teal color.
 		$LOC_COLOR_GREEN = 43315, _                             ; Green color.
+		$LOC_COLOR_TEAL = 1410150, _                            ; Teal color.
+		$LOC_COLOR_BLUE = 2777241, _                            ; Blue color.
+		$LOC_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
+		$LOC_COLOR_INDIGO = 5582989, _                          ; Indigo color.
+		$LOC_COLOR_PURPLE = 8388736, _                          ; Purple color.
+		$LOC_COLOR_GRAY = 8421504, _                            ; Gray color.
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
 		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
+		$LOC_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
+		$LOC_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
+		$LOC_COLOR_RED = 16711680, _                            ; Red color.
+		$LOC_COLOR_BRICK = 16728064, _                          ; Brick color.
+		$LOC_COLOR_ORANGE = 16744448, _                         ; Orange color.
+		$LOC_COLOR_GOLD = 16760576, _                           ; Gold color.
+		$LOC_COLOR_YELLOW = 16776960, _                         ; Yellow color.
+		$LOC_COLOR_WHITE = 16777215, _                          ; White color.
 
 ; Comment Text Anchor Position
 Global Enum _
