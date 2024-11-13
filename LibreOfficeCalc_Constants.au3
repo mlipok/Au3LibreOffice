@@ -7,6 +7,7 @@
 ; Description ...: Constants for various functions in the Libre Office UDF.
 ; Author(s) .....: donnyh13, mLipok
 ; Dll ...........:
+; Note ..........: Descriptions for some Constants are taken from the LibreOffice SDK API documentation.
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -21,7 +22,7 @@ Global Const $__LOCCONST_SLEEP_DIV = 0
 #Tidy_ILC_Pos=65
 
 ; Fill Style Type Constants
-Global Enum _
+Global Enum _                                                   ; com.sun.star.drawing.FillStyle
 		$LOC_AREA_FILL_STYLE_OFF, _                             ; 0 Fill Style is off.
 		$LOC_AREA_FILL_STYLE_SOLID, _                           ; 1 Fill Style is a solid color.
 		$LOC_AREA_FILL_STYLE_GRADIENT, _                        ; 2 Fill Style is a gradient color.
@@ -29,7 +30,7 @@ Global Enum _
 		$LOC_AREA_FILL_STYLE_BITMAP                             ; 4 Fill Style is a Bitmap.
 
 ; Border Style
-Global Const _
+Global Const _                                                  ; com.sun.star.table.BorderLineStyle
 		$LOC_BORDERSTYLE_NONE = 0x7FFF, _                       ; No border line.
 		$LOC_BORDERSTYLE_SOLID = 0, _                           ; Solid border line.
 		$LOC_BORDERSTYLE_DOTTED = 1, _                          ; Dotted border line.
@@ -60,7 +61,7 @@ Global Const _
 		$LOC_BORDERWIDTH_EXTRA_THICK = 159                      ; Extra Thick Border line width.
 
 ; Cell Content Horizontal Alignment
-Global Const _
+Global Const _                                                  ; com.sun.star.table.CellHoriJustify
 		$LOC_CELL_ALIGN_HORI_DEFAULT = 0, _                     ; The default alignment is used (left for numbers, right for text).
 		$LOC_CELL_ALIGN_HORI_LEFT = 1, _                        ; The contents are printed from left to right.
 		$LOC_CELL_ALIGN_HORI_CENTER = 2, _                      ; The contents are horizontally centered.
@@ -70,7 +71,7 @@ Global Const _
 		$LOC_CELL_ALIGN_HORI_DISTRIBUTED = 6                    ; The contents are evenly aligned across the whole cell. Unlike Justified, it justifies the very last line of text, too.
 
 ; Cell Content Vertical Alignment
-Global Const _
+Global Const _                                                  ; com.sun.star.table.CellVertJustify2
 		$LOC_CELL_ALIGN_VERT_DEFAULT = 0, _                     ; The default alignment is used.
 		$LOC_CELL_ALIGN_VERT_TOP = 1, _                         ; The contents are aligned with the upper edge of the cell.
 		$LOC_CELL_ALIGN_VERT_MIDDLE = 2, _                      ; The contents are aligned to the vertical middle of the cell.
@@ -79,7 +80,7 @@ Global Const _
 		$LOC_CELL_ALIGN_VERT_DISTRIBUTED = 5                    ; The same as Justified, unless the text orientation is vertical. Then it behaves similarly to the horizontal Distributed setting, i.e. the very last line is justified, too.
 
 ; Cell Delete Mode Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.CellDeleteMode
 		$LOC_CELL_DELETE_MODE_NONE = 0, _                       ; No cells are moved -- Nothing happens.
 		$LOC_CELL_DELETE_MODE_UP = 1, _                         ; The cells below the inserted Cells are moved up.
 		$LOC_CELL_DELETE_MODE_LEFT = 2, _                       ; The cells to the right of the inserted cells are moved left.
@@ -87,7 +88,7 @@ Global Const _
 		$LOC_CELL_DELETE_MODE_COLUMNS = 4                       ; Entire columns to the right of the inserted cells are moved left.
 
 ; Cell Content Type Flag Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.CellFlags
 		$LOC_CELL_FLAG_VALUE = 1, _                             ; Cell Contents that are numeric values but are not formatted as dates or times.
 		$LOC_CELL_FLAG_DATE_TIME = 2, _                         ; Cell Contents that are numeric values that have a date or time number format.
 		$LOC_CELL_FLAG_STRING = 4, _                            ; Cell Contents that are Strings.
@@ -101,7 +102,7 @@ Global Const _
 		$LOC_CELL_FLAG_ALL = 1023                               ; All flags listed above.
 
 ; Cell Insert Mode Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.CellInsertMode
 		$LOC_CELL_INSERT_MODE_NONE = 0, _                       ; No cells are moved -- Nothing happens.
 		$LOC_CELL_INSERT_MODE_DOWN = 1, _                       ; The cells below the inserted Cells are moved down.
 		$LOC_CELL_INSERT_MODE_RIGHT = 2, _                      ; The cells to the right of the inserted cells are moved right.
@@ -109,13 +110,13 @@ Global Const _
 		$LOC_CELL_INSERT_MODE_COLUMNS = 4                       ; Entire columns to the right of the inserted cells are moved right.
 
 ; Cell Content Rotation Reference
-Global Const _
+Global Const _                                                  ; com.sun.star.table.CellVertJustify2
 		$LOC_CELL_ROTATE_REF_LOWER_CELL_BORDER = 0, _           ; Writes the rotated text from the bottom cell edge outwards.
 		$LOC_CELL_ROTATE_REF_UPPER_CELL_BORDER = 1, _           ; Writes the rotated text from the top cell edge outwards.
 		$LOC_CELL_ROTATE_REF_INSIDE_CELLS = 3                   ; Writes the rotated text only within the cell.
 
 ; Cell Type
-Global Const _
+Global Const _                                                  ; com.sun.star.table.CellContentType
 		$LOC_CELL_TYPE_EMPTY = 0, _                             ; Cell is empty.
 		$LOC_CELL_TYPE_VALUE = 1, _                             ; Cell contains a value.
 		$LOC_CELL_TYPE_TEXT = 2, _                              ; Cell contains text.
@@ -125,23 +126,23 @@ Global Const _
 Global Const _
 		$LOC_COLOR_OFF = -1, _                                  ; Turn Color off, or to automatic mode.
 		$LOC_COLOR_BLACK = 0, _                                 ; Black color.
-		$LOC_COLOR_WHITE = 16777215, _                          ; White color.
-		$LOC_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
-		$LOC_COLOR_GRAY = 8421504, _                            ; Gray color.
-		$LOC_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
-		$LOC_COLOR_YELLOW = 16776960, _                         ; Yellow color.
-		$LOC_COLOR_GOLD = 16760576, _                           ; Gold color.
-		$LOC_COLOR_ORANGE = 16744448, _                         ; Orange color.
-		$LOC_COLOR_BRICK = 16728064, _                          ; Brick color.
-		$LOC_COLOR_RED = 16711680, _                            ; Red color.
-		$LOC_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
-		$LOC_COLOR_PURPLE = 8388736, _                          ; Purple color.
-		$LOC_COLOR_INDIGO = 5582989, _                          ; Indigo color.
-		$LOC_COLOR_BLUE = 2777241, _                            ; Blue color.
-		$LOC_COLOR_TEAL = 1410150, _                            ; Teal color.
 		$LOC_COLOR_GREEN = 43315, _                             ; Green color.
+		$LOC_COLOR_TEAL = 1410150, _                            ; Teal color.
+		$LOC_COLOR_BLUE = 2777241, _                            ; Blue color.
+		$LOC_COLOR_DKGRAY = 3355443, _                          ; Dark Gray color.
+		$LOC_COLOR_INDIGO = 5582989, _                          ; Indigo color.
+		$LOC_COLOR_PURPLE = 8388736, _                          ; Purple color.
+		$LOC_COLOR_GRAY = 8421504, _                            ; Gray color.
 		$LOC_COLOR_LIME = 8508442, _                            ; Lime color.
-		$LOC_COLOR_BROWN = 9127187                              ; Brown color.
+		$LOC_COLOR_BROWN = 9127187, _                           ; Brown color.
+		$LOC_COLOR_LGRAY = 11711154, _                          ; Light Gray color.
+		$LOC_COLOR_MAGENTA = 12517441, _                        ; Magenta color.
+		$LOC_COLOR_RED = 16711680, _                            ; Red color.
+		$LOC_COLOR_BRICK = 16728064, _                          ; Brick color.
+		$LOC_COLOR_ORANGE = 16744448, _                         ; Orange color.
+		$LOC_COLOR_GOLD = 16760576, _                           ; Gold color.
+		$LOC_COLOR_YELLOW = 16776960, _                         ; Yellow color.
+		$LOC_COLOR_WHITE = 16777215                             ; White color.
 
 ; Comment Text Anchor Position
 Global Enum _
@@ -156,14 +157,14 @@ Global Enum _
 		$LOC_COMMENT_ANCHOR_BOTTOM_RIGHT                        ; The comment text is anchored in the Lower-Right of the comment box.
 
 ; Comment Animation Direction
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.TextAnimationDirection
 		$LOC_COMMENT_ANIMATION_DIR_LEFT = 0, _                  ; The Text moves towards the Left.
 		$LOC_COMMENT_ANIMATION_DIR_RIGHT = 1, _                 ; The Text moves towards the Right.
 		$LOC_COMMENT_ANIMATION_DIR_UP = 2, _                    ; The Text moves towards the Top.
 		$LOC_COMMENT_ANIMATION_DIR_DOWN = 3                     ; The Text moves towards the Bottom.
 
 ; Comment Animation Kind
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.TextAnimationKind
 		$LOC_COMMENT_ANIMATION_KIND_NONE = 0, _                 ; The Comment Text is not animated.
 		$LOC_COMMENT_ANIMATION_KIND_BLINK = 1, _                ; The Comment Text has a blinking animation.
 		$LOC_COMMENT_ANIMATION_KIND_SCROLL_THROUGH = 2, _       ; The Comment Text has a Scrolling animation.
@@ -183,7 +184,7 @@ Global Const _
 		$LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_RIGHT = 10000       ; Align the Connector line to the Right of the Comment's top or bottom side, when Connector position is set to Vertical.
 
 ; Comment Connector Line Position
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.CaptionEscapeDirection
 		$LOC_COMMENT_CALLOUT_EXT_HORI = 0, _                    ; The Connector line extends Horizontally from the Comment.
 		$LOC_COMMENT_CALLOUT_EXT_VERT = 1, _                    ; The Connector line extends Vertically from the Comment.
 		$LOC_COMMENT_CALLOUT_EXT_OPTIMAL = 2, _                 ; The Connector line extends from the optimal position of the Comment.
@@ -191,7 +192,7 @@ Global Const _
 		$LOC_COMMENT_CALLOUT_EXT_FROM_TOP = 4                   ; The Connector line extends from the top of the Comment.
 
 ; Comment Connector Line Style
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.CaptionType
 		$LOC_COMMENT_CALLOUT_STYLE_STRAIGHT = 0, _              ; The connecting line from the comment to the cell is straight.
 		$LOC_COMMENT_CALLOUT_STYLE_ANGLED = 1, _                ; The connecting line from the comment to the cell is angled.
 		$LOC_COMMENT_CALLOUT_STYLE_ANGLED_CONNECTOR = 2         ; The connecting line from the comment to the cell is angled and connected.
@@ -233,13 +234,13 @@ Global Enum _
 		$LOC_COMMENT_LINE_ARROW_TYPE_CF_ZERO_MANY               ; 32 -- CF Zero Many Arrow head.
 
 ; Shape Line End Cap Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.LineCap
 		$LOC_COMMENT_LINE_CAP_FLAT = 0, _                       ; Also called Butt, the line will end without any additional shape.
 		$LOC_COMMENT_LINE_CAP_ROUND = 1, _                      ; The line will get a half circle as additional cap.
 		$LOC_COMMENT_LINE_CAP_SQUARE = 2                        ; The line uses a square for the line end.
 
 ; Shape Line Joint Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.drawing.LineJoint
 		$LOC_COMMENT_LINE_JOINT_NONE = 0, _                     ; The joint between lines will not be connected.
 		$LOC_COMMENT_LINE_JOINT_MIDDLE = 1, _                   ; The middle value between the joints is used. ## Note used?
 		$LOC_COMMENT_LINE_JOINT_BEVEL = 2, _                    ; The edges of the thick lines will be joined by lines.
@@ -293,21 +294,21 @@ Global Enum _
 		$LOC_COMMENT_SHADOW_BOTTOM_CENTER, _                    ; The comment Shadow is positioned in the Lower-Center of the comment box.
 		$LOC_COMMENT_SHADOW_BOTTOM_RIGHT                        ; The comment Shadow is positioned in the Lower-Right corner of the comment box.
 
-; Compute Functions
-Global Const _
-		$LOC_COMPUTE_NONE = 0, _                                ; Nothing is calculated.
-		$LOC_COMPUTE_AUTO = 1, _                                ; Uses SUM if all values in the range are numbers, else uses COUNT.
-		$LOC_COMPUTE_SUM = 2, _                                 ; Adds all numerical values in the Range.
-		$LOC_COMPUTE_COUNT = 3, _                               ; Count all cells containing a string or value.
-		$LOC_COMPUTE_AVERAGE = 4, _                             ; Average all numerical values in a range.
-		$LOC_COMPUTE_MAX = 5, _                                 ; Find the maximum numerical value in the range.
-		$LOC_COMPUTE_MIN = 6, _                                 ; Find the minimum numerical value in the range.
-		$LOC_COMPUTE_PRODUCT = 7, _                             ; The result of multiplying of all numbers in the range.
-		$LOC_COMPUTE_COUNTNUMS = 8, _                           ; Count the number of cells containing numerical values in the range.
-		$LOC_COMPUTE_STDEV = 9, _                               ; Standard deviation based on a sample.
-		$LOC_COMPUTE_STDEVP = 10, _                             ; Standard deviation based on the entire population.
-		$LOC_COMPUTE_VAR = 11, _                                ; Variance based on a sample.
-		$LOC_COMPUTE_VARP = 12                                  ; Variance based on the entire population.
+; General Computation Functions
+Global Const _                                                  ; com.sun.star.sheet.GeneralFunction
+		$LOC_COMPUTE_FUNC_NONE = 0, _                           ; Nothing is calculated.
+		$LOC_COMPUTE_FUNC_AUTO = 1, _                           ; Uses SUM if all values in the range are numbers, else uses COUNT.
+		$LOC_COMPUTE_FUNC_SUM = 2, _                            ; Adds all numerical values in the Range.
+		$LOC_COMPUTE_FUNC_COUNT = 3, _                          ; Count all cells containing a string or value.
+		$LOC_COMPUTE_FUNC_AVERAGE = 4, _                        ; Average all numerical values in a range.
+		$LOC_COMPUTE_FUNC_MAX = 5, _                            ; Find the maximum numerical value in the range.
+		$LOC_COMPUTE_FUNC_MIN = 6, _                            ; Find the minimum numerical value in the range.
+		$LOC_COMPUTE_FUNC_PRODUCT = 7, _                        ; The result of multiplying of all numbers in the range.
+		$LOC_COMPUTE_FUNC_COUNTNUMS = 8, _                      ; Count the number of cells containing numerical values in the range.
+		$LOC_COMPUTE_FUNC_STDEV = 9, _                          ; Standard deviation based on a sample.
+		$LOC_COMPUTE_FUNC_STDEVP = 10, _                        ; Standard deviation based on the entire population.
+		$LOC_COMPUTE_FUNC_VAR = 11, _                           ; Variance based on a sample.
+		$LOC_COMPUTE_FUNC_VARP = 12                             ; Variance based on the entire population.
 
 ; Cursor Type Related Constants
 Global Const _
@@ -317,7 +318,7 @@ Global Const _
 		$LOC_CURTYPE_TEXT_PORTION = 4                           ; Object is a Paragraph Text Portion Object.
 
 ; Printer Duplex Constants.
-Global Const _
+Global Const _                                                  ; com.sun.star.view.DuplexMode
 		$LOC_DUPLEX_UNKNOWN = 0, _                              ; Duplex mode setting is unknown.
 		$LOC_DUPLEX_OFF = 1, _                                  ; Duplex mode is off.
 		$LOC_DUPLEX_LONG = 2, _                                 ; Duplex mode is on, flip on Long edge.
@@ -335,21 +336,21 @@ Global Enum Step *2 _
 		$LOC_FIELD_TYPE_URL                                     ; A Hyperlink/URL field. {Cell.}
 
 ; Fill Date Mode
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FillDateMode
 		$LOC_FILL_DATE_MODE_DAY = 0, _                          ; For each Cell a single day is added.
 		$LOC_FILL_DATE_MODE_WEEKDAY = 1, _                      ; For each Cell a single day is added, skipping weekends.
 		$LOC_FILL_DATE_MODE_MONTH = 2, _                        ; For each Cell one month is added without modifying the day.
 		$LOC_FILL_DATE_MODE_YEAR = 3                            ; For each Cell a year is added without modifying the day or month.
 
 ; Fill Direction
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FillDirection
 		$LOC_FILL_DIR_DOWN = 0, _                               ; Rows are filled from top to bottom.
 		$LOC_FILL_DIR_RIGHT = 1, _                              ; Columns are filled from left to right.
 		$LOC_FILL_DIR_TOP = 2, _                                ; Rows are filled from bottom to top.
 		$LOC_FILL_DIR_LEFT = 3                                  ; Columns are filled from right to left.
 
 ; Fill Series Mode
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FillMode
 		$LOC_FILL_MODE_SIMPLE = 0, _                            ; All cells are filled with the same value.
 		$LOC_FILL_MODE_LINEAR = 1, _                            ; The initial value is increased by a specified value, per each cell processed.
 		$LOC_FILL_MODE_GROWTH = 2, _                            ; The initial value is multiplied by a specified value, per each cell processed.
@@ -357,7 +358,7 @@ Global Const _
 		$LOC_FILL_MODE_AUTO = 4                                 ; The cells are filled using a user-defined series.
 
 ; Filter Conditions
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FilterOperator2
 		$LOC_FILTER_CONDITION_EMPTY = 0, _                      ; Show only Empty cells.
 		$LOC_FILTER_CONDITION_NOT_EMPTY = 1, _                  ; Show only non-empty cells.
 		$LOC_FILTER_CONDITION_EQUAL = 2, _                      ; Show only cells equal to the value set.
@@ -378,12 +379,12 @@ Global Const _
 		$LOC_FILTER_CONDITION_DOES_NOT_END_WITH = 17            ; Show only cells not ending with the specified entry.
 
 ; Filter Operators
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FilterConnection
 		$LOC_FILTER_OPERATOR_AND = 0, _                         ; Both conditions have to be fulfilled.
 		$LOC_FILTER_OPERATOR_OR = 1                             ; At least one of the conditions has to be fulfilled.
 
 ; Format Key Type
-Global Const _
+Global Const _                                                  ; com.sun.star.util.NumberFormat
 		$LOC_FORMAT_KEYS_ALL = 0, _                             ; Returns All number formats.
 		$LOC_FORMAT_KEYS_DEFINED = 1, _                         ; Returns Only user-defined number formats.
 		$LOC_FORMAT_KEYS_DATE = 2, _                            ; Returns Date formats.
@@ -401,7 +402,7 @@ Global Const _
 		$LOC_FORMAT_KEYS_DURATION = 8196                        ; Returns Duration number formats.
 
 ; Formula Result Type Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.FormulaResult
 		$LOC_FORMULA_RESULT_TYPE_VALUE = 1, _                   ; The formula's result is a number.
 		$LOC_FORMULA_RESULT_TYPE_STRING = 2, _                  ; The formula's result is a string.
 		$LOC_FORMULA_RESULT_TYPE_ERROR = 4, _                   ; The formula has an error of some form.
@@ -426,7 +427,7 @@ Global Const _
 		$LOC_GRAD_NAME_SUNDOWN = "Sundown"                      ; The "Sundown" Gradient Preset. L.O. 7.6+
 
 ; Gradient Type
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.GradientStyle
 		$LOC_GRAD_TYPE_OFF = -1, _                              ; Turn the Gradient off.
 		$LOC_GRAD_TYPE_LINEAR = 0, _                            ; Linear type Gradient
 		$LOC_GRAD_TYPE_AXIAL = 1, _                             ; Axial type Gradient
@@ -436,12 +437,12 @@ Global Const _
 		$LOC_GRAD_TYPE_RECT = 5                                 ; Rectangle type Gradient
 
 ; Group Orientation
-Global Const _
+Global Const _                                                  ; com.sun.star.table.TableOrientation
 		$LOC_GROUP_ORIENT_COLUMNS = 0, _                        ; Group using Columns.
 		$LOC_GROUP_ORIENT_ROWS = 1                              ; Group using Rows.
 
 ; Named Range Options
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.NamedRangeFlag
 		$LOC_NAMED_RANGE_OPT_NONE = 0, _                        ; Normally used for a common Named Range.
 		$LOC_NAMED_RANGE_OPT_FILTER = 1, _                      ; The range contains filter criteria.
 		$LOC_NAMED_RANGE_OPT_PRINT = 2, _                       ; The range can be used as a print range.
@@ -449,7 +450,7 @@ Global Const _
 		$LOC_NAMED_RANGE_OPT_ROW = 8                            ; The range can be used as row headers for printing.
 
 ; Numbering Style Type
-Global Const _
+Global Const _                                                  ; com.sun.star.style.NumberingType
 		$LOC_NUM_STYLE_CHARS_UPPER_LETTER = 0, _                ; Numbering is put in upper case letters. ("A, B, C, D)
 		$LOC_NUM_STYLE_CHARS_LOWER_LETTER = 1, _                ; Numbering is in lower case letters. (a, b, c, d)
 		$LOC_NUM_STYLE_ROMAN_UPPER = 2, _                       ; Numbering is in Roman numbers with upper case letters. (I, II, III)
@@ -524,7 +525,7 @@ Global Const _
 		$LOC_NUM_STYLE_NUMBER_LEGAL_KO = 71                     ; Numbering is in Korean Legal Number, reserved "koreanLegal".
 
 ; Page Layout
-Global Const _
+Global Const _                                                  ; com.sun.star.style.PageStyleLayout
 		$LOC_PAGE_LAYOUT_ALL = 0, _                             ; Page style shows both odd(Right) and even(Left) pages. With left and right margins.
 		$LOC_PAGE_LAYOUT_LEFT = 1, _                            ; Page style shows only even(Left) pages. Odd pages are shown as blank pages. With left and right margins.
 		$LOC_PAGE_LAYOUT_RIGHT = 2, _                           ; Page style shows only odd(Right) pages. Even pages are shown as blank pages. With left and right margins.
@@ -600,8 +601,34 @@ Global Const _
 		$LOC_PATHCONV_OFFICE_RETURN = 1, _                      ; Returns L.O. Office URL, even if the input is already in that format.
 		$LOC_PATHCONV_PCPATH_RETURN = 2                         ; Returns Windows File Path, even if the input is already in that format.
 
+; Pivot Table Field Base Item Type
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldReferenceItemType
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NAMED = 0, _             ; The reference item is given by a name.
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_PREV = 1, _              ; The reference item is the previous one.
+		$LOC_PIVOT_TBL_FIELD_BASE_ITEM_NEXT = 2                 ; The reference item is the next one.
+
+; Pivot Table Field Display Type
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldReferenceType
+		$LOC_PIVOT_TBL_FIELD_DISP_NONE = 0, _                   ; {Normal}. The results in the data fields are displayed like they are.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_DIFF = 1, _              ; {Difference From}. From each result, its reference value (Named, Previous or Next Item) is subtracted, and the difference is shown.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_PERCENT = 2, _           ; {% of}. Each result is divided by its reference value.
+		$LOC_PIVOT_TBL_FIELD_DISP_ITEM_PERCENT_DIFF = 3, _      ; {% Difference From}. From each result, its reference value is subtracted, and the difference divided by the reference value.
+		$LOC_PIVOT_TBL_FIELD_DISP_RUNNING_TOTAL = 4, _          ; Each result is added to the sum of the results for preceding items in the base field, in the base field's sort order, and the total sum is shown.
+		$LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT = 5, _            ; {% of Row}. Each result is divided by the total result for its row in the Data Pilot table.
+		$LOC_PIVOT_TBL_FIELD_DISP_COL_PERCENT = 6, _            ; {% of Column}. Same as $LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT, but the total for the result's column is used.
+		$LOC_PIVOT_TBL_FIELD_DISP_TOTAL_PERCENT = 7, _          ; {% of Total}. Same as $LOC_PIVOT_TBL_FIELD_DISP_ROW_PERCENT, but the grand total for the result's data field is used.
+		$LOC_PIVOT_TBL_FIELD_DISP_INDEX = 8                     ; The row and column totals and the grand total, are used to calculate the following expression. ( original result * grand total ) / ( row total * column total )
+
+; Data Pivot Table Field Orientation
+Global Const _                                                  ; com.sun.star.sheet.DataPilotFieldOrientation
+		$LOC_PIVOT_TBL_FIELD_TYPE_HIDDEN = 0, _                 ; The field is not used in the table.
+		$LOC_PIVOT_TBL_FIELD_TYPE_COLUMN = 1, _                 ; The field is used as a column field.
+		$LOC_PIVOT_TBL_FIELD_TYPE_ROW = 2, _                    ; The field is used as a row field.
+		$LOC_PIVOT_TBL_FIELD_TYPE_FILTER = 3, _                 ; The field is used as a filter field. Also called "Page" in the constants.
+		$LOC_PIVOT_TBL_FIELD_TYPE_DATA = 4                      ; The field is used as a data field.
+
 ; Posture/Italic
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontSlant
 		$LOC_POSTURE_NONE = 0, _                                ; Specifies a font without slant.
 		$LOC_POSTURE_OBLIQUE = 1, _                             ; Specifies an oblique font (slant not designed into the font).
 		$LOC_POSTURE_ITALIC = 2, _                              ; Specifies an italic font (slant designed into the font).
@@ -610,7 +637,7 @@ Global Const _
 		$LOC_POSTURE_REV_ITALIC = 5                             ; Specifies a reverse italic font (slant designed into the font).
 
 ; Relief
-Global Const _
+Global Const _                                                  ; com.sun.star.text.FontRelief
 		$LOC_RELIEF_NONE = 0, _                                 ; No relief is applied.
 		$LOC_RELIEF_EMBOSSED = 1, _                             ; The font relief is embossed.
 		$LOC_RELIEF_ENGRAVED = 2                                ; The font relief is engraved.
@@ -628,7 +655,7 @@ Global Const _
 		$LOC_SEARCH_IN_COMMENTS = 2                             ; Searches for the search string in comments that are attached to the cells.
 
 ; Shadow Location
-Global Const _
+Global Const _                                                  ; com.sun.star.table.ShadowLocation
 		$LOC_SHADOW_NONE = 0, _                                 ; No shadow is applied.
 		$LOC_SHADOW_TOP_LEFT = 1, _                             ; Shadow is located along the upper and left sides.
 		$LOC_SHADOW_TOP_RIGHT = 2, _                            ; Shadow is located along the upper and right sides.
@@ -636,7 +663,7 @@ Global Const _
 		$LOC_SHADOW_BOTTOM_RIGHT = 4                            ; Shadow is located along the lower and right sides.
 
 ; Sheet Link Mode
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.SheetLinkMode
 		$LOC_SHEET_LINK_MODE_NONE = 0, _                        ; The Sheet is not linked.
 		$LOC_SHEET_LINK_MODE_NORMAL = 1, _                      ; All the Sheet's contents are copied, both values and formulas.
 		$LOC_SHEET_LINK_MODE_VALUE = 2                          ; Only the Sheet's values and formula results are copied.
@@ -658,13 +685,13 @@ Global Enum _
 		$LOC_SHEETCUR_GOTO_USED_AREA_END                        ; Set the cursor to the end of the used area.
 
 ; Sort Data Type
-Global Const _
+Global Const _                                                  ; com.sun.star.table.TableSortFieldType
 		$LOC_SORT_DATA_TYPE_AUTO = 0, _                         ; Automatically determine Sort Data type.
 		$LOC_SORT_DATA_TYPE_NUMERIC = 1, _                      ; Sort Data type is Numerical.
 		$LOC_SORT_DATA_TYPE_ALPHANUMERIC = 2                    ; Sort Data type is Text.
 
 ; Strikeout
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontStrikeout
 		$LOC_STRIKEOUT_NONE = 0, _                              ; No strike out.
 		$LOC_STRIKEOUT_SINGLE = 1, _                            ; Strike out the characters with a single line.
 		$LOC_STRIKEOUT_DOUBLE = 2, _                            ; Strike out the characters with a double line.
@@ -683,13 +710,13 @@ Global Enum _
 		$LOC_TEXTCUR_GOTO_END                                   ; Move the cursor to the end of the text.
 
 ; Text Direction
-Global Const _
+Global Const _                                                  ; com.sun.star.text.WritingMode2
 		$LOC_TXT_DIR_LR = 0, _                                  ; Text within lines is written left-to-right. Typically, this is the writing mode for normal "alphabetic" text.
 		$LOC_TXT_DIR_RL = 1, _                                  ; Text within a line are written right-to-left. Typically, this writing mode is used in Arabic and Hebrew text.
 		$LOC_TXT_DIR_CONTEXT = 4                                ; Obtain actual writing mode from the context of the object.
 
 ; Underline/Overline
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontUnderline
 		$LOC_UNDERLINE_NONE = 0, _                              ; No Underline or Overline style.
 		$LOC_UNDERLINE_SINGLE = 1, _                            ; Single line Underline/Overline style.
 		$LOC_UNDERLINE_DOUBLE = 2, _                            ; Double line Underline/Overline style.
@@ -711,7 +738,7 @@ Global Const _
 		$LOC_UNDERLINE_BOLD_WAVE = 18                           ; Bold Wave line Underline/Overline style.
 
 ; Validation Conditions.
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.ConditionOperator
 		$LOC_VALIDATION_COND_NONE = 0, _                        ; No condition is specified.
 		$LOC_VALIDATION_COND_EQUAL = 1, _                       ; The cell value is equal to the specified value.
 		$LOC_VALIDATION_COND_NOT_EQUAL = 2, _                   ; The cell value must not be equal to the specified value.
@@ -724,20 +751,20 @@ Global Const _
 		$LOC_VALIDATION_COND_FORMULA = 9                        ; The specified formula has to give a non-zero result.
 
 ; Validation On Error Alert Types.
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.ValidationAlertStyle
 		$LOC_VALIDATION_ERROR_ALERT_STOP = 0, _                 ; Error message is shown and the change is rejected.
 		$LOC_VALIDATION_ERROR_ALERT_WARNING = 1, _              ; Warning message is shown and the user is asked whether the change will be accepted (defaulted to "No").
 		$LOC_VALIDATION_ERROR_ALERT_INFO = 2, _                 ; Information message is shown and the user is asked whether the change will be accepted (defaulted to "Yes").
 		$LOC_VALIDATION_ERROR_ALERT_MACRO = 3                   ; A macro is executed.
 
 ; Validation List Visibility.
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.TableValidationVisibility
 		$LOC_VALIDATION_LIST_INVISIBLE = 0, _                   ; The List is not shown.
 		$LOC_VALIDATION_LIST_UNSORTED = 1, _                    ; The List is shown unsorted.
 		$LOC_VALIDATION_LIST_SORT_ASCENDING = 2                 ; The List is shown sorted ascending.
 
 ; Validation Types.
-Global Const _
+Global Const _                                                  ; com.sun.star.sheet.ValidationType
 		$LOC_VALIDATION_TYPE_ANY = 0, _                         ; Any cell content is valid; no conditions are used.
 		$LOC_VALIDATION_TYPE_WHOLE = 1, _                       ; Any whole number matching the specified condition is valid.
 		$LOC_VALIDATION_TYPE_DECIMAL = 2, _                     ; Any number matching the specified condition is valid.
@@ -748,7 +775,7 @@ Global Const _
 		$LOC_VALIDATION_TYPE_CUSTOM = 7                         ; The specified formula determines which contents are valid.
 
 ; Weight/Bold
-Global Const _
+Global Const _                                                  ; com.sun.star.awt.FontWeight
 		$LOC_WEIGHT_DONT_KNOW = 0, _                            ; The font weight is not specified/unknown. For Read Only.
 		$LOC_WEIGHT_THIN = 50, _                                ; A 50% (Thin) font weight.
 		$LOC_WEIGHT_ULTRA_LIGHT = 60, _                         ; A 60% (Ultra Light) font weight.
@@ -761,7 +788,7 @@ Global Const _
 		$LOC_WEIGHT_BLACK = 200                                 ; A 200% (Black) font weight.
 
 ; Zoom Type Constants
-Global Const _
+Global Const _                                                  ; com.sun.star.view.DocumentZoomType
 		$LOC_ZOOMTYPE_OPTIMAL = 0, _                            ; The page content width (excluding margins) at the current selection is fit into the view.
 		$LOC_ZOOMTYPE_PAGE_WIDTH = 1, _                         ; The page width at the current selection is fit into the view.
 		$LOC_ZOOMTYPE_ENTIRE_PAGE = 2, _                        ; A complete page of the document is fit into the view.

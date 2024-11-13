@@ -11,7 +11,7 @@ This [AutoIt](https://www.autoitscript.com/) UDF for [LibreOffice API/SDK](https
 Au3LibreOffice UDF currently provides support for the following LibreOffice components:
 
 - **Writer**
-- **Calc** **Development Nearing Completion**
+- **Calc**
 - **Base** **In Development**
 - ~~Impress~~ ***Development Pending***
 
