@@ -802,7 +802,7 @@ EndFunc   ;==>_LOCalc_FilterDescriptorModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_FilterFieldCreate($iColumn, $bIsNumeric = False, $nValue = 0, $sString = "", $iCondition = $LOC_FILTER_Condition_EMPTY, $iOperator = $LOC_FILTER_OPERATOR_AND)
+Func _LOCalc_FilterFieldCreate($iColumn, $bIsNumeric = False, $nValue = 0, $sString = "", $iCondition = $LOC_FILTER_CONDITION_EMPTY, $iOperator = $LOC_FILTER_OPERATOR_AND)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
