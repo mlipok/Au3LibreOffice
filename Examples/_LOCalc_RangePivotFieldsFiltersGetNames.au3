@@ -43,8 +43,8 @@ Func Example()
 	$oField = _LOCalc_RangePivotFieldGetObjByName($oPivot, "Province")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Pivot Table Field object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the Field/Column "Province" as a Data Field.
-	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_DATA, $LOC_COMPUTE_FUNC_MAX)
+	; Set the Field/Column "Province" as a Filter Field.
+	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_FILTER)
 	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the Object for Field "2014".
@@ -55,15 +55,15 @@ Func Example()
 	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_DATA, $LOC_COMPUTE_FUNC_AVERAGE)
 	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve a list of Fields set as Data fields.
-	$asFields = _LOCalc_RangePivotFieldsDataGetList($oPivot)
+	; Retrieve a list of Fields set as Filter fields.
+	$asFields = _LOCalc_RangePivotFieldsFiltersGetNames($oPivot)
 	If @error Then _ERROR($oDoc, "Failed to retrieve list of Pivot field names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1
 		$sFields &= $asFields[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table contains the following Data Fields: " & @CRLF & $sFields)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table contains the following Filter Fields: " & @CRLF & $sFields)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

@@ -1620,7 +1620,7 @@ EndFunc   ;==>_LOWriter_ImageReplace
 ; Description ...: Retrieve an array of image names contained in a document.
 ; Syntax ........: _LOWriter_ImagesGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array of Strings.
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1628,7 +1628,6 @@ EndFunc   ;==>_LOWriter_ImageReplace
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve GraphicObjects object.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Image Names. @Extended set to number of Names returned.
-;                  @Error 0 @Extended 0 Return 1 = Success. Document contains no images.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1646,17 +1645,14 @@ Func _LOWriter_ImagesGetNames(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oImages = $oDoc.GraphicObjects()
 	If Not IsObj($oImages) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oImages.hasElements() Then
-		ReDim $asImages[$oImages.getCount()]
-		For $i = 0 To $oImages.getCount() - 1
-			$asImages[$i] = ($oImages.getByIndex($i).Name)
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0))) ;Sleep every x cycles.
-		Next
 
-		Return SetError($__LO_STATUS_SUCCESS, UBound($asImages), $asImages)
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No images.
-	EndIf
+	ReDim $asImages[$oImages.getCount()]
+	For $i = 0 To $oImages.getCount() - 1
+		$asImages[$i] = ($oImages.getByIndex($i).Name)
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ;Sleep every x cycles.
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asImages), $asImages)
 EndFunc   ;==>_LOWriter_ImagesGetNames
 
 ; #FUNCTION# ====================================================================================================================

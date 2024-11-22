@@ -48,7 +48,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve a list of unused Fields.
-	$asFields = _LOCalc_RangePivotFieldsUnusedGetList($oPivot)
+	$asFields = _LOCalc_RangePivotFieldsUnusedGetNames($oPivot)
 	If @error Then _ERROR($oDoc, "Failed to retrieve list of Pivot field names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1

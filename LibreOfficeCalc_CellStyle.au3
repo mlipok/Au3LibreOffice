@@ -565,7 +565,7 @@ EndFunc   ;==>_LOCalc_CellStyleExists
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
 ;                  Libre Calc accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOCalc_FontsList, _LOCalc_CellFont
+; Related .......: _LOCalc_FontsGetNames, _LOCalc_CellFont
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -937,7 +937,7 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Cell Styles are returned. See remarks.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Cell Styles are returned. See remarks.
-; Return values .: Success: Integer or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -946,7 +946,6 @@ EndFunc   ;==>_LOCalc_CellStyleSet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. No Cell Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Cell Styles matching the input parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -997,7 +996,7 @@ Func _LOCalc_CellStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly =
 	Next
 	ReDim $asStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $asStyles))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asStyles)
 EndFunc   ;==>_LOCalc_CellStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

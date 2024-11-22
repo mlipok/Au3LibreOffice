@@ -75,14 +75,14 @@
 ; _LOCalc_RangePivotDest
 ; _LOCalc_RangePivotExists
 ; _LOCalc_RangePivotFieldGetObjByName
-; _LOCalc_RangePivotFieldItemsGetList
-; _LOCalc_RangePivotFieldsColumnsGetList
-; _LOCalc_RangePivotFieldsDataGetList
+; _LOCalc_RangePivotFieldItemsGetNames
+; _LOCalc_RangePivotFieldsColumnsGetNames
+; _LOCalc_RangePivotFieldsDataGetNames
 ; _LOCalc_RangePivotFieldSettings
-; _LOCalc_RangePivotFieldsFiltersGetList
-; _LOCalc_RangePivotFieldsGetList
-; _LOCalc_RangePivotFieldsRowsGetList
-; _LOCalc_RangePivotFieldsUnusedGetList
+; _LOCalc_RangePivotFieldsFiltersGetNames
+; _LOCalc_RangePivotFieldsGetNames
+; _LOCalc_RangePivotFieldsRowsGetNames
+; _LOCalc_RangePivotFieldsUnusedGetNames
 ; _LOCalc_RangePivotFilter
 ; _LOCalc_RangePivotFilterClear
 ; _LOCalc_RangePivotGetObjByIndex
@@ -92,7 +92,7 @@
 ; _LOCalc_RangePivotRefresh
 ; _LOCalc_RangePivotSettings
 ; _LOCalc_RangePivotsGetCount
-; _LOCalc_RangePivotsGetList
+; _LOCalc_RangePivotsGetNames
 ; _LOCalc_RangePivotSource
 ; _LOCalc_RangeQueryColumnDiff
 ; _LOCalc_RangeQueryContents
@@ -3082,9 +3082,9 @@ Func _LOCalc_RangePivotFieldGetObjByName(ByRef $oPivotTable, $sName)
 EndFunc   ;==>_LOCalc_RangePivotFieldGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldItemsGetList
+; Name ..........: _LOCalc_RangePivotFieldItemsGetNames
 ; Description ...: Retrieve an array of Item names contained in a Field.
-; Syntax ........: _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+; Syntax ........: _LOCalc_RangePivotFieldItemsGetNames(ByRef $oPivotField)
 ; Parameters ....: $oPivotField         - [in/out] an object. A Pivot Table Field object returned by a previous _LOCalc_RangePivotFieldGetObjByName function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3101,7 +3101,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldGetObjByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+Func _LOCalc_RangePivotFieldItemsGetNames(ByRef $oPivotField)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3113,12 +3113,12 @@ Func _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
 	If Not IsArray($asPivotFieldItems) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asPivotFieldItems), $asPivotFieldItems)
-EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsColumnsGetList
+; Name ..........: _LOCalc_RangePivotFieldsColumnsGetNames
 ; Description ...: Retrieve an array of Field Names set as Column Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsColumnsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3136,7 +3136,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsColumnsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3158,12 +3158,12 @@ Func _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsDataGetList
+; Name ..........: _LOCalc_RangePivotFieldsDataGetNames
 ; Description ...: Retrieve an array of Field Names set as Data Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsDataGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3181,7 +3181,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsDataGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3203,7 +3203,7 @@ Func _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotFieldSettings
@@ -3347,9 +3347,9 @@ Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iF
 EndFunc   ;==>_LOCalc_RangePivotFieldSettings
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsFiltersGetList
+; Name ..........: _LOCalc_RangePivotFieldsFiltersGetNames
 ; Description ...: Retrieve an array of Field Names set as Filter Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsFiltersGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3367,7 +3367,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsFiltersGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3389,12 +3389,12 @@ Func _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsGetList
+; Name ..........: _LOCalc_RangePivotFieldsGetNames
 ; Description ...: Retrieve an array of Fields available in the Pivot Table Source.
-; Syntax ........: _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3412,7 +3412,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3434,12 +3434,12 @@ Func _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsRowsGetList
+; Name ..........: _LOCalc_RangePivotFieldsRowsGetNames
 ; Description ...: Retrieve an array of Field Names set as Row Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsRowsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3457,7 +3457,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsRowsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3479,12 +3479,12 @@ Func _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsUnusedGetList
+; Name ..........: _LOCalc_RangePivotFieldsUnusedGetNames
 ; Description ...: Retrieve an array of Field Names not current used in any of the Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsUnusedGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3502,7 +3502,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsUnusedGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3524,7 +3524,7 @@ Func _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotFilter
@@ -4052,9 +4052,9 @@ Func _LOCalc_RangePivotsGetCount(ByRef $oSheet)
 EndFunc   ;==>_LOCalc_RangePivotsGetCount
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotsGetList
+; Name ..........: _LOCalc_RangePivotsGetNames
 ; Description ...: Retrieve an array of Pivot Tables contained in the Sheet.
-; Syntax ........: _LOCalc_RangePivotsGetList(ByRef $oSheet)
+; Syntax ........: _LOCalc_RangePivotsGetNames(ByRef $oSheet)
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4072,7 +4072,7 @@ EndFunc   ;==>_LOCalc_RangePivotsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotsGetList(ByRef $oSheet)
+Func _LOCalc_RangePivotsGetNames(ByRef $oSheet)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4094,7 +4094,7 @@ Func _LOCalc_RangePivotsGetList(ByRef $oSheet)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotsGetList
+EndFunc   ;==>_LOCalc_RangePivotsGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotSource

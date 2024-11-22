@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -990,7 +991,7 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
 ;                  Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_FontsList
+; Related .......: _LOWriter_ParStyleCreate, _LOWriter_ParStyleGetObj, _LOWriter_FontsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1611,12 +1612,12 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStylesGetNames
-; Description ...: Retrieve a list of all Paragraph Style names available for a document.
+; Description ...: Retrieve an array of all Paragraph Style names available for a document.
 ; Syntax ........: _LOWriter_ParStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Paragraph Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Paragraph Styles are returned.
-; Return values .: Success: Integer or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -1625,7 +1626,6 @@ EndFunc   ;==>_LOWriter_ParStyleSet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Paragraph Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No Paragraph Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Paragraph Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -1676,7 +1676,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
 EndFunc   ;==>_LOWriter_ParStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

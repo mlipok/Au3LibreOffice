@@ -700,12 +700,12 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_NumStylesGetNames
-; Description ...: Retrieve a list of all Numbering Style names available for a document.
+; Description ...: Retrieve an array of all Numbering Style names available for a document.
 ; Syntax ........: _LOWriter_NumStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Numbering Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Numbering Styles are returned.
-; Return values .: Success: Integer or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -714,7 +714,6 @@ EndFunc   ;==>_LOWriter_NumStyleSetLevel
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Numbering Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No Numbering Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Numbering Styles matching the input parameters. See remarks. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -762,5 +761,5 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
 EndFunc   ;==>_LOWriter_NumStylesGetNames

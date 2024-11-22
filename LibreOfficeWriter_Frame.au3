@@ -1481,7 +1481,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FramesGetNames
-; Description ...: List the names of all frames contained in a document.
+; Description ...: Retrieve an array of names of all frames contained in a document.
 ; Syntax ........: _LOWriter_FramesGetNames(ByRef $oDoc[, $bSearchShapes = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSearchShapes       - [optional] a boolean value. Default is False. If True, function searches and adds any Frames listed as "Shapes" in the document to the array of Frame names. See remarks.
@@ -2964,12 +2964,12 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStylesGetNames
-; Description ...: Retrieve a list of all Frame Style names available for a document.
+; Description ...: Retrieve an array of all Frame Style names available for a document.
 ; Syntax ........: _LOWriter_FrameStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Frame Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Frame Styles are returned.
-; Return values .: Success: Integer or Array.
+; Return values .: Success: Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2978,7 +2978,6 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Frame Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No Frame Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Frame Styles matching the called parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -3028,7 +3027,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 
 	ReDim $aStyles[$iCount]
 
-	Return (UBound($aStyles) = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 0)) : (SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles))
+	Return SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles)
 EndFunc   ;==>_LOWriter_FrameStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

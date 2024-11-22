@@ -511,7 +511,7 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
 ;                  Libre Writer accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_FontsList
+; Related .......: _LOWriter_CharStyleGetObj, _LOWriter_CharStyleCreate, _LOWriter_FontsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -898,12 +898,12 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CharStylesGetNames
-; Description ...: Retrieve a list of all Character Style names available for a document.
+; Description ...: Retrieve an array of all Character Style names available for a document.
 ; Syntax ........: _LOWriter_CharStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Character Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Character Styles are returned.
-; Return values .: Success: Integer or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -912,7 +912,6 @@ EndFunc   ;==>_LOWriter_CharStyleSet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Character Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. No Character Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Character Styles matching the input parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -967,7 +966,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 	Next
 	ReDim $aStyles[$iCount]
 
-	Return ($iCount = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aStyles)
 EndFunc   ;==>_LOWriter_CharStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================

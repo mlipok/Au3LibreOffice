@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -28,8 +29,8 @@
 ; _LOWriter_DocBookmarkGetObj
 ; _LOWriter_DocBookmarkInsert
 ; _LOWriter_DocBookmarkModify
+; _LOWriter_DocBookmarksGetNames
 ; _LOWriter_DocBookmarksHasName
-; _LOWriter_DocBookmarksList
 ; _LOWriter_DocClose
 ; _LOWriter_DocConnect
 ; _LOWriter_DocConvertTableToText
@@ -37,8 +38,6 @@
 ; _LOWriter_DocCreate
 ; _LOWriter_DocCreateTextCursor
 ; _LOWriter_DocDescription
-; _LOWriter_DocEnumPrinters
-; _LOWriter_DocEnumPrintersAlt
 ; _LOWriter_DocExecuteDispatch
 ; _LOWriter_DocExport
 ; _LOWriter_DocFindAll
@@ -72,6 +71,8 @@
 ; _LOWriter_DocOpen
 ; _LOWriter_DocPosAndSize
 ; _LOWriter_DocPrint
+; _LOWriter_DocPrintersAltGetNames
+; _LOWriter_DocPrintersGetNames
 ; _LOWriter_DocPrintIncludedSettings
 ; _LOWriter_DocPrintMiscSettings
 ; _LOWriter_DocPrintPageSettings
@@ -117,7 +118,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarksList
+; Related .......: _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -190,7 +191,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocBookmarksList, _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
+; Related .......: _LOWriter_DocBookmarksGetNames, _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -315,6 +316,40 @@ Func _LOWriter_DocBookmarkModify(ByRef $oBookmark, $sBookmarkName = Null)
 EndFunc   ;==>_LOWriter_DocBookmarkModify
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocBookmarksGetNames
+; Description ...: Retrieve an Array of Bookmark names.
+; Syntax ........: _LOWriter_DocBookmarksGetNames(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Bookmark Names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Bookmarks, returning Array of Bookmark names, @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_DocBookmarkGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocBookmarksGetNames(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asBookmarkNames[0]
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$asBookmarkNames = $oDoc.Bookmarks.getElementNames()
+	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)
+EndFunc   ;==>_LOWriter_DocBookmarksGetNames
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarksHasName
 ; Description ...: Check if a document contains a Bookmark by name.
 ; Syntax ........: _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
@@ -350,41 +385,6 @@ Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
 EndFunc   ;==>_LOWriter_DocBookmarksHasName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocBookmarksList
-; Description ...: Retrieve an Array of Bookmark names.
-; Syntax ........: _LOWriter_DocBookmarksList(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Bookmark Names.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Bookmarks, no results found.
-;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Bookmarks, returning Array of Bookmark names, @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_DocBookmarkGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocBookmarksList(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $asBookmarkNames[0]
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$asBookmarkNames = $oDoc.Bookmarks.getElementNames()
-	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	Return (UBound($asBookmarkNames) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_DocBookmarksList
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocClose
@@ -544,7 +544,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
-			If $oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent()) Then; If Parent is an Object, then Writer doc is a DataBase Form
+			If $oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent()) Then ; If Parent is an Object, then Writer doc is a DataBase Form
 
 				ReDim $aoConnectAll[$iCount + 1][3]
 				$aoConnectAll[$iCount][0] = $oDoc
@@ -1048,125 +1048,6 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocDescription
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocEnumPrinters
-; Description ...: Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocEnumPrinters([$bDefaultOnly = False])
-; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
-; Return values .: Success: An array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
-;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
-;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: This function works for LibreOffice 4.1 and Up.
-; Related .......: _LOWriter_DocEnumPrintersAlt
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocEnumPrinters($bDefaultOnly = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oServiceManager, $oPrintServer
-	Local $sDefault
-	Local $asPrinters[0]
-
-	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
-	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
-	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	If $bDefaultOnly Then
-		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
-		$sDefault = $oPrintServer.getDefaultPrinterName()
-		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	EndIf
-
-	$asPrinters = $oPrintServer.getPrinterNames()
-	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-EndFunc   ;==>_LOWriter_DocEnumPrinters
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocEnumPrintersAlt
-; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocEnumPrintersAlt([$sPrinterName = ""[, $bReturnDefault = False]])
-; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
-;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
-; Return values .: Success: Array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
-;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = No default printer found.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
-;                  @Error 0 @Extended 2 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
-; Author ........: jguinch (_PrintMgr_EnumPrinter)
-; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
-; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
-;                  If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
-;                  When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
-; Related .......: _LOWriter_DocEnumPrinters
-; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
-; UDF title......: Printmgr.au3
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocEnumPrintersAlt($sPrinterName = "", $bReturnDefault = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $asPrinterNames[10]
-	Local $sFilter
-	Local $iCount = 0
-	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
-	Local $oWMIService, $oPrinters
-
-	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
-	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
-	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
-	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	For $oPrinter In $oPrinters
-		Switch $bReturnDefault
-			Case False
-				If $iCount >= (UBound($asPrinterNames) - 1) Then ReDim $asPrinterNames[UBound($asPrinterNames) * 2]
-				$asPrinterNames[$iCount] = $oPrinter.Name
-				$iCount += 1
-
-			Case True
-				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 2, $oPrinter.Name)
-		EndSwitch
-	Next
-	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
-	ReDim $asPrinterNames[$iCount]
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
-EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocExecuteDispatch
@@ -2962,7 +2843,7 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	EndIf
 
 	If $bConnectIfOpen Then $oDoc = _LOWriter_DocConnect($sFilePath)
-    If IsObj($oDoc) Then Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
+	If IsObj($oDoc) Then Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
 
 	$oDoc = $oDesktop.loadComponentFromURL($sFileURL, "_default", $iURLFrameCreate, $aoProperties)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -3101,7 +2982,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
 ;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
-; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
+; Related .......:_LOWriter_DocPrintersAltGetNames, _LOWriter_DocPrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3156,6 +3037,125 @@ Func _LOWriter_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "
 	$oDoc.print($avPrintOpt)
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocPrint
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocPrintersAltGetNames
+; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
+; Syntax ........: _LOWriter_DocPrintersAltGetNames([$sPrinterName = ""[, $bReturnDefault = False]])
+; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
+;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
+; Return values .: Success: Array or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
+;                  @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
+;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
+;                  --Printer Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = No default printer found.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
+;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
+; Author ........: jguinch (_PrintMgr_EnumPrinter)
+; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
+; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
+;                  If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
+;                  When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
+; Related .......: _LOWriter_DocPrintersGetNames
+; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
+; UDF title......: Printmgr.au3
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocPrintersAltGetNames($sPrinterName = "", $bReturnDefault = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asPrinterNames[10]
+	Local $sFilter
+	Local $iCount = 0
+	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
+	Local $oWMIService, $oPrinters
+
+	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
+	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
+	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
+	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	For $oPrinter In $oPrinters
+		Switch $bReturnDefault
+			Case False
+				If $iCount >= (UBound($asPrinterNames) - 1) Then ReDim $asPrinterNames[UBound($asPrinterNames) * 2]
+				$asPrinterNames[$iCount] = $oPrinter.Name
+				$iCount += 1
+
+			Case True
+				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPrinter.Name)
+		EndSwitch
+	Next
+	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+	ReDim $asPrinterNames[$iCount]
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
+EndFunc   ;==>_LOWriter_DocPrintersAltGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocPrintersGetNames
+; Description ...: Enumerates all installed printers, or current default printer.
+; Syntax ........: _LOWriter_DocPrintersGetNames([$bDefaultOnly = False])
+; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
+; Return values .: Success: An array or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
+;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function works for LibreOffice 4.1 and Up.
+; Related .......: _LOWriter_DocPrintersAltGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocPrintersGetNames($bDefaultOnly = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oServiceManager, $oPrintServer
+	Local $sDefault
+	Local $asPrinters[0]
+
+	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
+	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	If $bDefaultOnly Then
+		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
+		$sDefault = $oPrintServer.getDefaultPrinterName()
+		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+
+	$asPrinters = $oPrintServer.getPrinterNames()
+	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+EndFunc   ;==>_LOWriter_DocPrintersGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocPrintIncludedSettings
@@ -3663,9 +3663,10 @@ EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve an array of Redo action titles.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = No Redo Actions currently available. Returning empty array.
-;                  @Error 0 @Extended 1 Return Array = Returns all available redo action Titles in an array of Strings.
+;                  @Error 0 @Extended ? Return Array = Returning all available redo action Titles in an array of Strings. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3677,13 +3678,14 @@ Func _LOWriter_DocRedoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $asTitles[0]
+
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isRedoPossible()) Then
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllRedoActionTitles())
-	EndIf
+	$asTitles = $oDoc.UndoManager.getAllRedoActionTitles()
+	If Not IsArray($asTitles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asTitles), $asTitles)
 EndFunc   ;==>_LOWriter_DocRedoGetAllActionTitles
 
 ; #FUNCTION# ====================================================================================================================
@@ -4227,9 +4229,10 @@ EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve an array of Undo action titles.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = No Undo Actions currently available. Returning empty array.
-;                  @Error 0 @Extended 1 Return Array = Returns all available undo action Titles in an array of Strings.
+;                  @Error 0 @Extended ? Return Array = Returning all available undo action Titles in an array of Strings. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4241,13 +4244,14 @@ Func _LOWriter_DocUndoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $asTitles[0]
+
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isUndoPossible()) Then
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllUndoActionTitles())
-	EndIf
+	$asTitles = $oDoc.UndoManager.getAllUndoActionTitles()
+	If Not IsArray($asTitles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asTitles), $asTitles)
 EndFunc   ;==>_LOWriter_DocUndoGetAllActionTitles
 
 ; #FUNCTION# ====================================================================================================================

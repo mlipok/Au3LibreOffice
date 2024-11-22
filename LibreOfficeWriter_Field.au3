@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -97,9 +98,9 @@
 ; _LOWriter_FieldSetVarMasterCreate
 ; _LOWriter_FieldSetVarMasterDelete
 ; _LOWriter_FieldSetVarMasterExists
+; _LOWriter_FieldSetVarMasterFieldsGetList
 ; _LOWriter_FieldSetVarMasterGetObj
-; _LOWriter_FieldSetVarMasterList
-; _LOWriter_FieldSetVarMasterListFields
+; _LOWriter_FieldSetVarMastersGetNames
 ; _LOWriter_FieldSetVarModify
 ; _LOWriter_FieldsGetList
 ; _LOWriter_FieldShowVarInsert
@@ -676,7 +677,7 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 	EndIf
 
 	If ($bRefresh = True) Then _
-		$oDoc.Text.createTextCursorByRange($oCommentField.Anchor()).Text.insertTextContent($oCommentField.Anchor(), $oCommentField, True)
+			$oDoc.Text.createTextCursorByRange($oCommentField.Anchor()).Text.insertTextContent($oCommentField.Anchor(), $oCommentField, True)
 
 	$oCommentField.Update()
 
@@ -3597,7 +3598,7 @@ EndFunc   ;==>_LOWriter_FieldPageNumberModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
+; Related .......: _LOWriter_FieldRefBookMarkModify, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksGetNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3660,7 +3661,7 @@ EndFunc   ;==>_LOWriter_FieldRefBookMarkInsert
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksList, _LOWriter_FieldsGetList
+; Related .......: _LOWriter_FieldRefBookMarkInsert, _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarksGetNames, _LOWriter_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4164,7 +4165,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
 ; Description ...: Retrieve an Array of Reference Mark names.
 ; Syntax ........: _LOWriter_FieldRefMarkList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -4172,7 +4173,6 @@ EndFunc   ;==>_LOWriter_FieldRefMarkGetAnchor
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Reference Marks Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of Reference Mark Names.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. No Reference Marks found in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Reference Marks, returning Array of Reference Mark Names, with @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -4196,7 +4196,7 @@ Func _LOWriter_FieldRefMarkList(ByRef $oDoc)
 	$asRefMarks = $oRefMarks.getElementNames()
 	If Not IsArray($asRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	Return (UBound($asRefMarks) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asRefMarks), $asRefMarks)
 EndFunc   ;==>_LOWriter_FieldRefMarkList
 
 ; #FUNCTION# ====================================================================================================================
@@ -4606,7 +4606,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSetVarModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterList
+; Related .......: _LOWriter_FieldSetVarModify, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor, _LOWriter_CellCreateTextCursor, _LOWriter_FrameCreateTextCursor, _LOWriter_DocHeaderGetTextCursor, _LOWriter_DocFooterGetTextCursor, _LOWriter_EndnoteGetTextCursor, _LOWriter_FootnoteGetTextCursor, _LOWriter_FormatKeyCreate _LOWriter_FormatKeyList, _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMastersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4714,7 +4714,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterCreate
 ; Description ...: Delete a Set Variable Master Field.
 ; Syntax ........: _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $vMasterField        - a variant value. The Set Variable Master Field name or object from _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterGetObj, or _LOWriter_FieldSetVarMasterList to delete.
+;                  $vMasterField        - a variant value. The Set Variable Master Field name or object from _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterGetObj, or _LOWriter_FieldSetVarMastersGetNames to delete.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -4730,7 +4730,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterGetObj, _LOWriter_FieldSetVarMasterList
+; Related .......: _LOWriter_FieldSetVarMasterCreate, _LOWriter_FieldSetVarMasterGetObj, _LOWriter_FieldSetVarMastersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4805,6 +4805,40 @@ Func _LOWriter_FieldSetVarMasterExists(ByRef $oDoc, $sMasterFieldName)
 EndFunc   ;==>_LOWriter_FieldSetVarMasterExists
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FieldSetVarMasterFieldsGetList
+; Description ...: Return an Array of Objects of dependent fields for a specific Master Field.
+; Syntax ........: _LOWriter_FieldSetVarMasterFieldsGetList(ByRef $oMasterfield)
+; Parameters ....: $oMasterfield        - [in/out] an object. The Set Variable Master Field Object returned from a previous _LOWriter_FieldSetVarMasterCreate, or _LOWriter_FieldSetVarMasterGetObj function.
+; Return values .: Success: Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oMasterfield not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve dependent fields Array.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for dependent fields, returning Array of dependent SetVariable Fields, with @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Dependent Fields are SetVariable Fields that are referencing the Master field.
+; Related .......: _LOWriter_FieldSetVarMasterGetObj
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FieldSetVarMasterFieldsGetList(ByRef $oMasterfield)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aoDependFields[0]
+
+	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$aoDependFields = $oMasterfield.DependentTextFields()
+	If Not IsArray($aoDependFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($aoDependFields), $aoDependFields)
+EndFunc   ;==>_LOWriter_FieldSetVarMasterFieldsGetList
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMasterGetObj
 ; Description ...: Retrieve a Set Variable Master Field Object.
 ; Syntax ........: _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
@@ -4824,7 +4858,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterExists
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_FieldSetVarMasterList
+; Related .......: _LOWriter_FieldSetVarMastersGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -4850,9 +4884,9 @@ Func _LOWriter_FieldSetVarMasterGetObj(ByRef $oDoc, $sMasterFieldName)
 EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FieldSetVarMasterList
+; Name ..........: _LOWriter_FieldSetVarMastersGetNames
 ; Description ...: Retrieve a List of current Set Variable Master Fields in a document.
-; Syntax ........: _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
+; Syntax ........: _LOWriter_FieldSetVarMastersGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4870,7 +4904,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
+Func _LOWriter_FieldSetVarMastersGetNames(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4901,42 +4935,7 @@ Func _LOWriter_FieldSetVarMasterList(ByRef $oDoc)
 	ReDim $asSetVarMasters[$iCount]
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asSetVarMasters)
-EndFunc   ;==>_LOWriter_FieldSetVarMasterList
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FieldSetVarMasterListFields
-; Description ...: Return an Array of Objects of dependent fields for a specific Master Field.
-; Syntax ........: _LOWriter_FieldSetVarMasterListFields(ByRef $oMasterfield)
-; Parameters ....: $oMasterfield        - [in/out] an object. The Set Variable Master Field Object returned from a previous _LOWriter_FieldSetVarMasterCreate, or _LOWriter_FieldSetVarMasterGetObj function.
-; Return values .: Success: 1 or Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oMasterfield not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve dependent fields Array.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for dependent fields, but MasterField has none.
-;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for dependent fields, returning Array of dependent SetVariable Fields, with @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Dependent Fields are SetVariable Fields that are referencing the Master field.
-; Related .......: _LOWriter_FieldSetVarMasterGetObj
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FieldSetVarMasterListFields(ByRef $oMasterfield)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $aoDependFields[0]
-
-	If Not IsObj($oMasterfield) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$aoDependFields = $oMasterfield.DependentTextFields()
-	If Not IsArray($aoDependFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	Return (UBound($aoDependFields) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoDependFields), $aoDependFields)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_FieldSetVarMasterListFields
+EndFunc   ;==>_LOWriter_FieldSetVarMastersGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarModify

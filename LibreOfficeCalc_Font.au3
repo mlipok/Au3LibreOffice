@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -21,7 +22,7 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOCalc_FontExists
-; _LOCalc_FontsList
+; _LOCalc_FontsGetNames
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -42,7 +43,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_FontsList
+; Related .......: _LOCalc_FontsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -64,9 +65,9 @@ Func _LOCalc_FontExists(ByRef $oDoc, $sFontName)
 EndFunc   ;==>_LOCalc_FontExists
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_FontsList
-; Description ...: Retrieve an array of currently available fonts.
-; Syntax ........: _LOCalc_FontsList(ByRef $oDoc)
+; Name ..........: _LOCalc_FontsGetNames
+; Description ...: Retrieve an array of currently available font names.
+; Syntax ........: _LOCalc_FontsGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -89,7 +90,7 @@ EndFunc   ;==>_LOCalc_FontExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_FontsList(ByRef $oDoc)
+Func _LOCalc_FontsGetNames(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -111,4 +112,4 @@ Func _LOCalc_FontsList(ByRef $oDoc)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($atFonts), $asFonts)
-EndFunc   ;==>_LOCalc_FontsList
+EndFunc   ;==>_LOCalc_FontsGetNames
