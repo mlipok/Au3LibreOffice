@@ -84,7 +84,7 @@ Func Example()
 	If @error Then Return _ERROR($oDoc, "Failed to add index to the Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve a count of Indexes.
-	$iCount = _LOBase_TableIndexesCount($oTable)
+	$iCount = _LOBase_TableIndexesGetCount($oTable)
 	If @error Then Return _ERROR($oDoc, "Failed to retrieve an array of indexes for this Table. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The table contains " & $iCount & " indexes.")

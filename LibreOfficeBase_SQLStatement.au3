@@ -171,7 +171,6 @@ EndFunc   ;==>_LOBase_SQLResultColumnsGetCount
 ;                  @Error 1 @Extended 2 Return 0 = $oResult not a Result Set Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Column Names.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Column Count.
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Array = Success. Returning Array of Column Names contained in the Result Set. @Extended is set to the number of Elements contained in the Array.
 ; Author ........: donnyh13
@@ -186,7 +185,6 @@ Func _LOBase_SQLResultColumnsGetNames(ByRef $oResult)
 	#forceref $oCOM_ErrorHandler
 
 	Local $asReturn[0]
-	Local $iCount
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oResult.supportsService("com.sun.star.sdb.ResultSet") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -194,10 +192,7 @@ Func _LOBase_SQLResultColumnsGetNames(ByRef $oResult)
 	$asReturn = $oResult.Columns.ElementNames()
 	If Not IsArray($asReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	$iCount = $oResult.Columns.Count()
-	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asReturn)
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asReturn), $asReturn)
 EndFunc   ;==>_LOBase_SQLResultColumnsGetNames
 
 ; #FUNCTION# ====================================================================================================================

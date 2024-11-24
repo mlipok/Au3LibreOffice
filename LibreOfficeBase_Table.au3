@@ -34,7 +34,7 @@
 ; _LOBase_TableGetObjByName
 ; _LOBase_TableIndexAdd
 ; _LOBase_TableIndexDelete
-; _LOBase_TableIndexesCount
+; _LOBase_TableIndexesGetCount
 ; _LOBase_TableIndexesGetNames
 ; _LOBase_TableIndexModify
 ; _LOBase_TableName
@@ -345,11 +345,11 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 
 	If __LOBase_VarsAreNull($sName, $iType, $sTypeName, $sDescription) Then
 		If $oColumn.supportsService("com.sun.star.sdbcx.KeyColumn") Then ; Key Column
-		__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName())
+			__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName())
 
 		Else
-		__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName(), $oColumn.HelpText())
-	EndIf
+			__LOBase_ArrayFill($asSettings, $oColumn.Name(), $oColumn.Type(), $oColumn.TypeName(), $oColumn.HelpText())
+		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asSettings)
 	EndIf
@@ -1037,9 +1037,9 @@ Func _LOBase_TableIndexDelete(ByRef $oTable, $sName)
 EndFunc   ;==>_LOBase_TableIndexDelete
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOBase_TableIndexesCount
+; Name ..........: _LOBase_TableIndexesGetCount
 ; Description ...: Retrieve a count of Indexes for a Table.
-; Syntax ........: _LOBase_TableIndexesCount(ByRef $oTable)
+; Syntax ........: _LOBase_TableIndexesGetCount(ByRef $oTable)
 ; Parameters ....: $oTable              - [in/out] an object. A Table object returned by a previous _LOBase_TableGetObjByIndex or _LOBase_TableGetObjByName function.
 ; Return values .: Success: Integer
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -1056,7 +1056,7 @@ EndFunc   ;==>_LOBase_TableIndexDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOBase_TableIndexesCount(ByRef $oTable)
+Func _LOBase_TableIndexesGetCount(ByRef $oTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOBase_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -1068,7 +1068,7 @@ Func _LOBase_TableIndexesCount(ByRef $oTable)
 	If Not IsInt($iCount) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iCount)
-EndFunc   ;==>_LOBase_TableIndexesCount
+EndFunc   ;==>_LOBase_TableIndexesGetCount
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOBase_TableIndexesGetNames
