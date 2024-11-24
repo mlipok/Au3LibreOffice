@@ -38,9 +38,9 @@
 ; _LOCalc_RangeData
 ; _LOCalc_RangeDatabaseAdd
 ; _LOCalc_RangeDatabaseDelete
+; _LOCalc_RangeDatabaseExists
 ; _LOCalc_RangeDatabaseGetNames
 ; _LOCalc_RangeDatabaseGetObjByName
-; _LOCalc_RangeDatabaseHasByName
 ; _LOCalc_RangeDatabaseModify
 ; _LOCalc_RangeDelete
 ; _LOCalc_RangeDetail
@@ -64,9 +64,9 @@
 ; _LOCalc_RangeNamedAdd
 ; _LOCalc_RangeNamedChangeScope
 ; _LOCalc_RangeNamedDelete
+; _LOCalc_RangeNamedExists
 ; _LOCalc_RangeNamedGetNames
 ; _LOCalc_RangeNamedGetObjByName
-; _LOCalc_RangeNamedHasByName
 ; _LOCalc_RangeNamedModify
 ; _LOCalc_RangeNumbers
 ; _LOCalc_RangeOutlineClearAll
@@ -874,7 +874,7 @@ EndFunc   ;==>_LOCalc_RangeData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseDelete
+; Related .......: _LOCalc_RangeDatabaseExists, _LOCalc_RangeDatabaseDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -964,6 +964,48 @@ Func _LOCalc_RangeDatabaseDelete(ByRef $oDoc, $oDatabaseRange)
 EndFunc   ;==>_LOCalc_RangeDatabaseDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseExists
+; Description ...: Check if a Database Range exists in a document.
+; Syntax ........: _LOCalc_RangeDatabaseExists(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object.
+;                  $sName               - a string value.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseExists(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges
+	Local $bExists
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$bExists = $oDatabaseRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeDatabaseExists
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDatabaseGetNames
 ; Description ...: Retrieve an array of Database Range names for the document.
 ; Syntax ........: _LOCalc_RangeDatabaseGetNames(ByRef $oDoc)
@@ -1026,7 +1068,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseGetNames
+; Related .......: _LOCalc_RangeDatabaseExists, _LOCalc_RangeDatabaseGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1049,48 +1091,6 @@ Func _LOCalc_RangeDatabaseGetObjByName(ByRef $oDoc, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDatabaseRange)
 EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangeDatabaseHasByName
-; Description ...: Check if a Database Range exists in a document.
-; Syntax ........: _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
-; Parameters ....: $oDoc                - [in/out] an object.
-;                  $sName               - a string value.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oDatabaseRanges
-	Local $bExists
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$bExists = $oDatabaseRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
-EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDatabaseModify
@@ -2144,7 +2144,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
-; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2239,7 +2239,7 @@ EndFunc   ;==>_LOCalc_RangeNamedAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeNamedModify, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedModify, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2315,7 +2315,7 @@ EndFunc   ;==>_LOCalc_RangeNamedChangeScope
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
-; Related .......: _LOCalc_RangeNamedAdd, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedAdd, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2350,6 +2350,48 @@ Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeNamedDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedExists
+; Description ...: Check if a Named Range exists in a particular scope.
+; Syntax ........: _LOCalc_RangeNamedExists(ByRef $oObj, $sName)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The Named Range name to look for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedExists(ByRef $oObj, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges
+	Local $bExists
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$bExists = $oNamedRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeNamedExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNamedGetNames
@@ -2414,7 +2456,7 @@ EndFunc   ;==>_LOCalc_RangeNamedGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
-; Related .......: _LOCalc_RangeNamedGetNames, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedGetNames, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2437,48 +2479,6 @@ Func _LOCalc_RangeNamedGetObjByName(ByRef $oObj, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
 EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangeNamedHasByName
-; Description ...: Check if a Named Range exists in a particular scope.
-; Syntax ........: _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
-; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $sName               - a string value. The Named Range name to look for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oNamedRanges
-	Local $bExists
-
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$bExists = $oNamedRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
-EndFunc   ;==>_LOCalc_RangeNamedHasByName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNamedModify

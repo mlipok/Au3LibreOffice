@@ -38,6 +38,7 @@
 ; _LOWriter_TableCreateCursor
 ; _LOWriter_TableCursor
 ; _LOWriter_TableDelete
+; _LOWriter_TableExists
 ; _LOWriter_TableGetCellObjByCursor
 ; _LOWriter_TableGetCellObjByName
 ; _LOWriter_TableGetCellObjByPosition
@@ -863,6 +864,45 @@ Func _LOWriter_TableDelete(ByRef $oDoc, ByRef $oTable)
 EndFunc   ;==>_LOWriter_TableDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_TableExists
+; Description ...: Check if a Document contains a Table with the specified name.
+; Syntax ........: _LOWriter_TableExists(ByRef $oDoc, $sTableName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
+;                  $sTableName          - a string value. The Table name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no tables found matching $sTableName.
+;                  @Error 0 @Extended 1 Return True = Success. Search was successful, table found matching $sTableName.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_TableGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_TableExists(ByRef $oDoc, $sTableName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oTables
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	$oTables = $oDoc.TextTables()
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
+EndFunc   ;==>_LOWriter_TableExists
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetCellObjByCursor
 ; Description ...: Retrieve a single Cell Object or a Cell Range by Cursor.
 ; Syntax ........: _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCursor)
@@ -1190,7 +1230,7 @@ Func _LOWriter_TableGetObjByName(ByRef $oDoc, $sTableName)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_DocHasTableName($oDoc, $sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not _LOWriter_TableExists($oDoc, $sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.TextTables.getByName($sTableName))
 EndFunc   ;==>_LOWriter_TableGetObjByName

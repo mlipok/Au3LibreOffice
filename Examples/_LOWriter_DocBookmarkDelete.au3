@@ -23,14 +23,14 @@ Func Example()
 	$oBookmark = _LOWriter_DocBookmarkInsert($oDoc, $oViewCursor, False, "New Bookmark")
 	If @error Then _ERROR($oDoc, "Failed to insert a Bookmark. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarksHasName($oDoc, "New Bookmark") & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarkExists($oDoc, "New Bookmark") & _
 			@CRLF & @CRLF & "Press Ok to delete the Bookmark.")
 
 	; Delete the Bookmark.
 	_LOWriter_DocBookmarkDelete($oDoc, $oBookmark)
 	If @error Then _ERROR($oDoc, "Failed to delete a Bookmark. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarksHasName($oDoc, "New Bookmark"))
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now does the document contain a Bookmark named ""New Bookmark""? True/False: " & _LOWriter_DocBookmarkExists($oDoc, "New Bookmark"))
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

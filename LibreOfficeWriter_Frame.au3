@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -12,6 +13,7 @@
 
 ; Other includes for Writer
 #include "LibreOfficeWriter_Doc.au3"
+
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -36,6 +38,7 @@
 ; _LOWriter_FrameCreate
 ; _LOWriter_FrameCreateTextCursor
 ; _LOWriter_FrameDelete
+; _LOWriter_FrameExists
 ; _LOWriter_FrameGetAnchor
 ; _LOWriter_FrameGetObjByCursor
 ; _LOWriter_FrameGetObjByName
@@ -1002,7 +1005,7 @@ Func _LOWriter_FrameCreate(ByRef $oDoc, ByRef $oCursor, $sFrameName = Null, $iWi
 
 	If ($sFrameName <> Null) Then
 		If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If _LOWriter_FrameExists($oDoc, $sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oFrame.Name = $sFrameName
 	EndIf
@@ -1087,6 +1090,63 @@ Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Frame named the same.
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FrameDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameExists
+; Description ...: Check if a Document contains a Frame with the specified name.
+; Syntax ........: _LOWriter_FrameExists(ByRef $oDoc, $sFrameName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sFrameName          - a string value. The Frame name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Frames found matching $sFrameName.
+;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Frame found matching $sFrameName.
+;                  @Error 0 @Extended 2 Return True = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Some document types, such as docx, list frames as Shapes instead of TextFrames, so this function searches both.
+; Related .......: _LOWriter_FrameDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameExists(ByRef $oDoc, $sFrameName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFrames, $oShapes
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	$oFrames = $oDoc.TextFrames()
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
+
+	; If No results, then search Shapes.
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If $oShapes.hasElements() Then
+		For $i = 0 To $oShapes.getCount() - 1
+			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
+				If ($oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text")) And _
+						($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
+						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LO_STATUS_SUCCESS, 2, True)
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
+EndFunc   ;==>_LOWriter_FrameExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameGetAnchor
@@ -1451,7 +1511,7 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_FrameExists($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.Name = $sName
 		$iError = ($oFrame.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1464,14 +1524,14 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 
 	If ($sPrevLink <> Null) Then
 		If Not IsString($sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If ($sPrevLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If ($sPrevLink <> "") And Not _LOWriter_FrameExists($oDoc, $sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.ChainPrevName = $sPrevLink
 		$iError = ($oFrame.ChainPrevName() = $sPrevLink) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sNextLink <> Null) Then
 		If Not IsString($sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		If ($sNextLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If ($sNextLink <> "") And Not _LOWriter_FrameExists($oDoc, $sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrame.ChainNextName = $sNextLink
 		$iError = ($oFrame.ChainNextName() = $sNextLink) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -4702,4 +4762,3 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameWrapOptions
-

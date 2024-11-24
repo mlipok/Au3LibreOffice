@@ -33,22 +33,22 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to add Cell Range to list of Named Ranges. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the document contains a Named Range with the name of "A_Local_Named_Range".
-	$bReturn = _LOCalc_RangeNamedHasByName($oDoc, "A_Local_Named_Range")
+	$bReturn = _LOCalc_RangeNamedExists($oDoc, "A_Local_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the document contains a Named Range with the name of "My_Global_Named_Range".
-	$bReturn2 = _LOCalc_RangeNamedHasByName($oDoc, "My_Global_Named_Range")
+	$bReturn2 = _LOCalc_RangeNamedExists($oDoc, "My_Global_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _
 			"Does the document contain a Named Range with the name of ""My_Global_Named_Range""? True/False: " & $bReturn2)
 
 	; Check if the Sheet contains a Named Range with the name of "A_Local_Named_Range".
-	$bReturn = _LOCalc_RangeNamedHasByName($oSheet, "A_Local_Named_Range")
+	$bReturn = _LOCalc_RangeNamedExists($oSheet, "A_Local_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the Sheet contains a Named Range with the name of "My_Global_Named_Range".
-	$bReturn2 = _LOCalc_RangeNamedHasByName($oSheet, "My_Global_Named_Range")
+	$bReturn2 = _LOCalc_RangeNamedExists($oSheet, "My_Global_Named_Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Named Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the Sheet contain a Named Range with the name of ""A_Local_Named_Range""? True/False: " & $bReturn & @CRLF & @CRLF & _

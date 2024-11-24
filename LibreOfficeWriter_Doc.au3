@@ -25,12 +25,12 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_DocBookmarkDelete
+; _LOWriter_DocBookmarkExists
 ; _LOWriter_DocBookmarkGetAnchor
 ; _LOWriter_DocBookmarkGetObj
 ; _LOWriter_DocBookmarkInsert
 ; _LOWriter_DocBookmarkModify
 ; _LOWriter_DocBookmarksGetNames
-; _LOWriter_DocBookmarksHasName
 ; _LOWriter_DocClose
 ; _LOWriter_DocConnect
 ; _LOWriter_DocConvertTableToText
@@ -54,11 +54,8 @@
 ; _LOWriter_DocGetPath
 ; _LOWriter_DocGetString
 ; _LOWriter_DocGetViewCursor
-; _LOWriter_DocHasFrameName
 ; _LOWriter_DocHasImageName
 ; _LOWriter_DocHasPath
-; _LOWriter_DocHasShapeName
-; _LOWriter_DocHasTableName
 ; _LOWriter_DocHeaderGetTextCursor
 ; _LOWriter_DocHyperlinkInsert
 ; _LOWriter_DocInsertControlChar
@@ -135,8 +132,45 @@ Func _LOWriter_DocBookmarkDelete(ByRef $oDoc, ByRef $oBookmark)
 
 	$oBookmark.dispose()
 
-	Return (_LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return (_LOWriter_DocBookmarkExists($oDoc, $sBookmarkName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarkDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocBookmarkExists
+; Description ...: Check if a document contains a Bookmark by name.
+; Syntax ........: _LOWriter_DocBookmarkExists(ByRef $oDoc, $sBookmarkName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sBookmarkName       - a string value. The Bookmark name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocBookmarkExists(ByRef $oDoc, $sBookmarkName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oBookmarks
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oBookmarks = $oDoc.getBookmarks()
+	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
+EndFunc   ;==>_LOWriter_DocBookmarkExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkGetAnchor
@@ -204,7 +238,7 @@ Func _LOWriter_DocBookmarkGetObj(ByRef $oDoc, $sBookmarkName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If Not _LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not _LOWriter_DocBookmarkExists($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oBookmark = $oDoc.Bookmarks.getByName($sBookmarkName)
 	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -348,43 +382,6 @@ Func _LOWriter_DocBookmarksGetNames(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)
 EndFunc   ;==>_LOWriter_DocBookmarksGetNames
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocBookmarksHasName
-; Description ...: Check if a document contains a Bookmark by name.
-; Syntax ........: _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sBookmarkName       - a string value. The Bookmark name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oBookmarks
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oBookmarks = $oDoc.getBookmarks()
-	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
-EndFunc   ;==>_LOWriter_DocBookmarksHasName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocClose
@@ -2140,63 +2137,6 @@ Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 EndFunc   ;==>_LOWriter_DocGetViewCursor
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasFrameName
-; Description ...: Check if a Document contains a Frame with the specified name.
-; Syntax ........: _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFrameName          - a string value. The Frame name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Frames found matching $sFrameName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Frame found matching $sFrameName.
-;                  @Error 0 @Extended 2 Return True = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Some document types, such as docx, list frames as Shapes instead of TextFrames, so this function searches both.
-; Related .......: _LOWriter_FrameDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oFrames, $oShapes
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
-
-	; If No results, then search Shapes.
-	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	If $oShapes.hasElements() Then
-		For $i = 0 To $oShapes.getCount() - 1
-			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
-				If ($oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text")) And _
-						($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
-						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LO_STATUS_SUCCESS, 2, True)
-			EndIf
-
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
-EndFunc   ;==>_LOWriter_DocHasFrameName
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHasImageName
 ; Description ...: Check if a Document contains a Image with the specified name.
 ; Syntax ........: _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
@@ -2255,91 +2195,6 @@ Func _LOWriter_DocHasPath(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.hasLocation())
 EndFunc   ;==>_LOWriter_DocHasPath
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasShapeName
-; Description ...: Check if a Document contains a Shape with the specified name.
-; Syntax ........: _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sShapeName          - a string value. The Shape name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Draw Page Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Shapes found matching $sShapeName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Shape found matching $sShapeName.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ShapeGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
-	Local $oShapes
-
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If $oShapes.hasElements() Then
-		For $i = 0 To $oShapes.getCount() - 1
-			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
-
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
-EndFunc   ;==>_LOWriter_DocHasShapeName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasTableName
-; Description ...: Check if a Document contains a Table with the specified name.
-; Syntax ........: _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-;                  $sTableName          - a string value. The Table name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no tables found matching $sTableName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, table found matching $sTableName.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_TableGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oTables
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
-EndFunc   ;==>_LOWriter_DocHasTableName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHeaderGetTextCursor

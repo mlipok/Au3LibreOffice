@@ -573,6 +573,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangePivotFieldsRowsGetList-->_LOCalc_RangePivotFieldsRowsGetNames
 	- _LOCalc_RangePivotFieldsUnusedGetList-->_LOCalc_RangePivotFieldsUnusedGetNames
 	- _LOCalc_RangePivotsGetList-->_LOCalc_RangePivotsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOCalc_DocHasSheetName-->_LOCalc_SheetExists
+	- _LOCalc_RangeDatabaseHasByName-->_LOCalc_RangeDatabaseExists
+	- _LOCalc_RangeNamedHasByName-->_LOCalc_RangeNamedExists
 - Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
 	- _LOCalc_CellStylesGetNames
 	- _LOCalc_PageStylesGetNames
@@ -709,6 +713,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FieldSetVarMasterListFields-->_LOWriter_FieldSetVarMasterFieldsGetList
 	- _LOWriter_FontsList-->_LOWriter_FontsGetNames
 	- _LOWriter_TableGetCellNames-->_LOWriter_TableCellsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOWriter_DocBookmarksHasName-->_LOWriter_DocBookmarkExists
+	- _LOWriter_DocHasShapeName-->_LOWriter_ShapeExists
+	- _LOWriter_DocHasTableName-->_LOWriter_TableExists
+	- _LOWriter_DocHasFrameName-->_LOWriter_FrameExists
 - Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
 	- _LOWriter_CharStylesGetNames
 	- _LOWriter_DocBookmarksGetNames
@@ -760,7 +769,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
 - Incorrect usage of ObjEvent.
 - _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
-- _LOWriter_DocCreate and _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
+- _LOWriter_DocCreate could potentially return a Base Form document, as they have identical Service names.
+- _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
 - __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
 - LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
 - _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.

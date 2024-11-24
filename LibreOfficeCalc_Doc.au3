@@ -30,7 +30,6 @@
 ; _LOCalc_DocGetName
 ; _LOCalc_DocGetPath
 ; _LOCalc_DocHasPath
-; _LOCalc_DocHasSheetName
 ; _LOCalc_DocIsActive
 ; _LOCalc_DocIsModified
 ; _LOCalc_DocIsReadOnly
@@ -643,45 +642,6 @@ Func _LOCalc_DocHasPath(ByRef $oDoc)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.hasLocation())
 EndFunc   ;==>_LOCalc_DocHasPath
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_DocHasSheetName
-; Description ...: Check whether a Calc document has a Sheet with a specific name.
-; Syntax ........: _LOCalc_DocHasSheetName(ByRef $oDoc, $sName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
-;                  $sName               - a string value. The sheet name to check for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Sheet matching $sName, True is returned. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_DocHasSheetName(ByRef $oDoc, $sName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oSheets
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oSheets = $oDoc.Sheets()
-	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_Success, 0, True)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False)
-EndFunc   ;==>_LOCalc_DocHasSheetName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocIsActive
