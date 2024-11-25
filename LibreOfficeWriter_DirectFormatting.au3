@@ -2112,7 +2112,7 @@ EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DirFrmtParTabStopList
-; Description ...: Retrieve a List of TabStops available in a Paragraph from Direct Formatting.
+; Description ...: Retrieve an array of TabStops available in a Paragraph from Direct Formatting.
 ; Syntax ........: _LOWriter_DirFrmtParTabStopList(ByRef $oSelection)
 ; Parameters ....: $oSelection          - [in/out] an object. A Cursor Object returned from any Cursor Object creation or retrieval functions, Or A Paragraph Object/Object Section returned from _LOWriter_ParObjCreateList or _LOWriter_ParObjSectionsGet function.
 ; Return values .: Success: Array

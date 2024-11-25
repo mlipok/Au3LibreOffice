@@ -147,7 +147,7 @@ EndFunc   ;==>_LOCalc_FieldDateTimeInsert
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully deleted the field.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To Delete a field in a Header/Footer, retrieve a new Object for the Header/Footer, retrieve a list of fields from the Header/Footer Object, delete the Field using this function, then re-insert the Header/Footer object into the Page Style.
+; Remarks .......: To Delete a field in a Header/Footer, retrieve a new Object for the Header/Footer, retrieve an array of fields from the Header/Footer Object, delete the Field using this function, then re-insert the Header/Footer object into the Page Style.
 ; Related .......: _LOCalc_FieldsGetList
 ; Link ..........:
 ; Example .......: Yes

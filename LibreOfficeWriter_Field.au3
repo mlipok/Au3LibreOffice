@@ -4885,7 +4885,7 @@ EndFunc   ;==>_LOWriter_FieldSetVarMasterGetObj
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FieldSetVarMastersGetNames
-; Description ...: Retrieve a List of current Set Variable Master Fields in a document.
+; Description ...: Retrieve an array of current Set Variable Master Fields in a document.
 ; Syntax ........: _LOWriter_FieldSetVarMastersGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array

@@ -2001,7 +2001,7 @@ EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleTabStopList
-; Description ...: Retrieve a List of TabStops available in a Paragraph Style.
+; Description ...: Retrieve an array of TabStops available in a Paragraph Style.
 ; Syntax ........: _LOWriter_ParStyleTabStopList(ByRef $oParStyle)
 ; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ; Return values .: Success: Array

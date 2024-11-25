@@ -2291,7 +2291,7 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapesGetNames
-; Description ...: Return a list of Shape names contained in a document.
+; Description ...: Retrieve an array of Shape names contained in a document.
 ; Syntax ........: _LOWriter_ShapesGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: 2D Array
@@ -2301,7 +2301,7 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
+;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
