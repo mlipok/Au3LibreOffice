@@ -520,8 +520,8 @@ EndFunc   ;==>_LOWriter_TableColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested column higher than number of columns contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1: Full amount of columns deleted. @Extended set to total columns deleted.
-;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 1 = Full amount of columns deleted. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 2 = $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts columns and Rows starting at 0. So to delete the first column in a Table you would set $iColumn to 0.
@@ -562,7 +562,7 @@ EndFunc   ;==>_LOWriter_TableColumnDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column count.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer. Returning Column Count as an Integer.
+;                  @Error 0 @Extended 0 Return Integer = Returning Column Count as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -601,7 +601,7 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert columns.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Successfully inserted the number of desired columns.
+;                  @Error 0 @Extended 0 Return 1 = Successfully inserted the number of desired columns.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If you do not set $iColumn, the new columns will be placed at the end of the Table.
@@ -650,7 +650,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Creating Object com.sun.star.text.TextTable.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. Successfully created a Table Object. The Object is returned for later insertion into the document.
+;                  @Error 0 @Extended 0 Return Object = Successfully created a Table Object. The Object is returned for later insertion into the document.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function only creates a Table Object. You must insert it into the document using _LOWriter_TableInsert. You can preset some properties using _LOWriter_TableProperties, before inserting, or set them after inserting.
@@ -840,7 +840,7 @@ EndFunc   ;==>_LOWriter_TableCursor
 ;                  @Error 3 @Extended 1 Return 0 = Table called in $oTable not already inserted in the document.
 ;                  @Error 3 @Extended 2 Return 0 = Table by same name still contained in the document after deletion attempt.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Table was successfully deleted.
+;                  @Error 0 @Extended 0 Return 1 = Table was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -877,8 +877,7 @@ EndFunc   ;==>_LOWriter_TableDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no tables found matching $sTableName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, table found matching $sTableName.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If a table was found matching $sTableName, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -921,7 +920,7 @@ EndFunc   ;==>_LOWriter_TableExists
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Retrieving Cell Object
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. A Cell object or a Cell Range.
+;                  @Error 0 @Extended 0 Return Object = A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will accept a Table Cursor, a ViewCursor, or a Text Cursor.
@@ -992,7 +991,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByCursor
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. A Cell object or a Cell Range Object.
+;                  @Error 0 @Extended 0 Return Object = Success. A Cell object or a Cell Range Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Cell names are Case Sensitive. LibreOffice first goes from A to Z, and then a to z and then AA to ZZ etc.
@@ -1052,7 +1051,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. A Cell object or a Cell Range.
+;                  @Error 0 @Extended 0 Return Object = Success. A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split or joined.
@@ -1111,10 +1110,10 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Table data.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Array or Arrays. Array of Table data.
-;                  @Error 0 @Extended 2 Return Array. Returning a specific row of data.
-;                  @Error 0 @Extended 3 Return Array. Returning a specific column of data.
-;                  @Error 0 @Extended 4 Return String. Returning the data of a specific cell.
+;                  @Error 0 @Extended 1 Return Array of Arrays = Array of Table data.
+;                  @Error 0 @Extended 2 Return Array = Returning a specific row of data.
+;                  @Error 0 @Extended 3 Return Array = Returning a specific column of data.
+;                  @Error 0 @Extended 4 Return String = Returning the data of a specific cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If only a Table object is called, an Array of Arrays is returned, The main array will have the same number of elements as there are rows. Each internal array will have the same number of elements as there are columns.
@@ -1261,7 +1260,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 ;                  @Error 4 @Extended 1 Return 0 = Error setting First Table Row to "Table Heading" Paragraph style.
 ;                  @Error 4 @Extended 2 Return 0 = Error setting First Table Row to "Table Contents" Paragraph style.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Table was successfully inserted, returning Table Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Table was successfully inserted, returning Table Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function inserts a Table previously created by _LOWriter_TableCreate, into a document.
@@ -1612,8 +1611,8 @@ EndFunc   ;==>_LOWriter_TableRowColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested row higher than number of rows contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1: Full amount of Rows deleted. @Extended set to total rows deleted.
-;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 1 = Full amount of Rows deleted. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 2 = $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts Rows starting at 0. So to delete the first Row in a Table you would set $iRow to 0.
@@ -1654,7 +1653,7 @@ EndFunc   ;==>_LOWriter_TableRowDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Row count.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer. Returning Row count.
+;                  @Error 0 @Extended 0 Return Integer = Returning Row count.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1693,7 +1692,7 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert Rows.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Successfully inserted requested number of rows.
+;                  @Error 0 @Extended 0 Return 1 = Successfully inserted requested number of rows.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If you do not set $iRow, the new Rows will be placed at the Bottom of the Table.
@@ -1817,7 +1816,7 @@ EndFunc   ;==>_LOWriter_TableRowProperty
 ;                  @Error 1 @Extended 4 Return 0 = $avData Array does not contain the same number of elements as Rows in the Table.
 ;                  @Error 1 @Extended 5 Return ? = $avData sub arrays do not contain enough elements to match columns contained in Table. Return set to element # in main array containing faulty array.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Table data was successfully set.
+;                  @Error 0 @Extended 0 Return 1 = Table data was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The array must be an array of Arrays.
@@ -1860,7 +1859,7 @@ EndFunc   ;==>_LOWriter_TableSetData
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure retrieving Table objects.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Returning Array of Table Names. @Extended set to number of results.
+;                  @Error 0 @Extended ? Return Array = Returning Array of Table Names. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

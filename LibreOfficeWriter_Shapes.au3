@@ -407,8 +407,7 @@ EndFunc   ;==>_LOWriter_ShapeDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Draw Page Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Shapes found matching $sShapeName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Shape found matching $sShapeName.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If a Shape was found matching $sShapeName, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
