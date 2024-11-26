@@ -342,7 +342,7 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 	While FileExists($sPath & $iCount & ".odt")
 		$iCount += 1
-		Sleep(10)
+		Sleep((IsInt($iCount / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 	WEnd
 
 	ReDim $aArgs[0]
