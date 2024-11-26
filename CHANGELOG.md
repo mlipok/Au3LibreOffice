@@ -715,9 +715,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_TableGetCellNames-->_LOWriter_TableCellsGetNames
 - Renamed Functions to be consistent when testing if a thing exists:
 	- _LOWriter_DocBookmarksHasName-->_LOWriter_DocBookmarkExists
+	- _LOWriter_DocHasFrameName-->_LOWriter_FrameExists
+	- _LOWriter_DocHasImageName-->_LOWriter_ImageExists
 	- _LOWriter_DocHasShapeName-->_LOWriter_ShapeExists
 	- _LOWriter_DocHasTableName-->_LOWriter_TableExists
-	- _LOWriter_DocHasFrameName-->_LOWriter_FrameExists
 - Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
 	- _LOWriter_CharStylesGetNames
 	- _LOWriter_DocBookmarksGetNames

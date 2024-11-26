@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -25,6 +26,7 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_ImageAreaColor
+; _LOWriter_ImageAreaFillStyle
 ; _LOWriter_ImageAreaGradient
 ; _LOWriter_ImageAreaTransparency
 ; _LOWriter_ImageAreaTransparencyGradient
@@ -35,6 +37,7 @@
 ; _LOWriter_ImageColorAdjust
 ; _LOWriter_ImageCrop
 ; _LOWriter_ImageDelete
+; _LOWriter_ImageExists
 ; _LOWriter_ImageGetAnchor
 ; _LOWriter_ImageGetObjByName
 ; _LOWriter_ImageHyperlink
@@ -155,7 +158,7 @@ EndFunc   ;==>_LOWriter_ImageAreaFillStyle
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageAreaGradient
 ; Description ...: Modify or retrieve the settings for an Image Background color Gradient.
-; Syntax ........: _LOWriter_ImageGradient(ByRef $oDoc, ByRef $oImage[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
+; Syntax ........: _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage[, $sGradientName = Null[, $iType = Null[, $iIncrement = Null[, $iXCenter = Null[, $iYCenter = Null[, $iAngle = Null[, $iTransitionStart = Null[, $iFromColor = Null[, $iToColor = Null[, $iFromIntense = Null[, $iToIntense = Null]]]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $sGradientName       - [optional] a string value. Default is Null. A Preset Gradient Name. See Constants, $LOW_GRAD_NAME_* as defined in LibreOfficeWriter_Constants.au3. See remarks.
@@ -1094,6 +1097,39 @@ Func _LOWriter_ImageDelete(ByRef $oDoc, ByRef $oImage)
 EndFunc   ;==>_LOWriter_ImageDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ImageExists
+; Description ...: Check if a Document contains an Image with the specified name.
+; Syntax ........: _LOWriter_ImageExists(ByRef $oDoc, $sImageName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sImageName          - a string value. The Image name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sImageName not a String.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Images found matching $sImageName.
+;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Image found matching $sImageName.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ImageDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ImageExists(ByRef $oDoc, $sImageName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sImageName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
+EndFunc   ;==>_LOWriter_ImageExists
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ImageGetAnchor
 ; Description ...: Create a Text Cursor at the Image Anchor position.
 ; Syntax ........: _LOWriter_ImageGetAnchor(ByRef $oImage)
@@ -1556,7 +1592,7 @@ Func _LOWriter_ImageOptionsName(ByRef $oDoc, ByRef $oImage, $sName = Null, $sAlt
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		If _LOWriter_DocHasImageName($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_ImageExists($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oImage.Name = $sName
 		$iError = ($oImage.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1903,9 +1939,9 @@ Func _LOWriter_ImageTransparency(ByRef $oImage, $iTransparency = Null)
 EndFunc   ;==>_LOWriter_ImageTransparency
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ImagePosition
+; Name ..........: _LOWriter_ImageTypePosition
 ; Description ...: Set or Retrieve Image Position Settings.
-; Syntax ........: _LOWriter_ImagePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_ImageTypePosition(ByRef $oImage[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oImage              - [in/out] an object. A Image object returned by a previous _LOWriter_ImageInsert, or _LOWriter_ImageGetObjByName function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Image. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Image. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
