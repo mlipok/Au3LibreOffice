@@ -3408,9 +3408,9 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStylePosition
+; Name ..........: _LOWriter_FrameStyleTypePosition
 ; Description ...: Set or Retrieve Frame Style Position Settings.
-; Syntax ........: _LOWriter_FrameStylePosition(ByRef $oFrameStyle[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Frame. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Frame. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
@@ -3653,7 +3653,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStyleSize
+; Name ..........: _LOWriter_FrameStyleTypeSize
 ; Description ...: Set or Retrieve Frame Style Size related settings.
 ; Syntax ........: _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $bAutoWidth = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bAutoHeight = Null[, $bKeepRatio = Null]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.

@@ -377,9 +377,9 @@ Func _LOWriter_NumStyleExists(ByRef $oDoc, $sNumStyle)
 EndFunc   ;==>_LOWriter_NumStyleExists
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_NumStyleStyleGetObj
+; Name ..........: _LOWriter_NumStyleGetObj
 ; Description ...: Retrieve a Numbering Style Style Object for use with other Numbering Style Style functions.
-; Syntax ........: _LOWriter_NumStyleStyleGetObj(ByRef $oDoc, $sNumStyle)
+; Syntax ........: _LOWriter_NumStyleGetObj(ByRef $oDoc, $sNumStyle)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sNumStyle           - a string value. The Numbering Style Style name to retrieve the Object for.
 ; Return values .: Success: Object

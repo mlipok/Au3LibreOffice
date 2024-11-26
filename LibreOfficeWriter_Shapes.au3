@@ -1667,7 +1667,7 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapePointsModify
 ; Description ...: Modify an existing Position Point or Point Type in a shape.
-; Syntax ........: _LOWriter_ShapePointsModify2(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
+; Syntax ........: _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
 ;                  $iPoint              - an integer value. The Point to modify, starting at 1.
 ;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Micrometers.

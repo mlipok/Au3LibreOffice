@@ -1581,7 +1581,7 @@ EndFunc   ;==>_LOCalc_DocSelectionGet
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The data will be pasted into the document, beginning at the currently selected cell.
-; Related .......: _LOCalc_ParObjCopy, _LOCalc_DocSelectionSet
+; Related .......: _LOCalc_DocSelectionCopy, _LOCalc_DocSelectionSet
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================

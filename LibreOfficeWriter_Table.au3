@@ -764,7 +764,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ; Name ..........: _LOWriter_TableCursor
 ; Description ...: Commands related to a Table Cursor.
 ; Syntax ........: _LOWriter_TableCursor(ByRef $oCursor[, $sGoToCellByName = Null[, $bSelect = False[, $bMergeRange = Null[, $iSplitRangeInto = Null[, $bSplitRangeHori = False]]]]])
-; Parameters ....: $oCursor             - [in/out] an object. A Table Cursor Object returned from _LOWriter_TableInsertCursor function.
+; Parameters ....: $oCursor             - [in/out] an object. A Table Cursor Object returned from a _LOWriter_TableCreateCursor function.
 ;                  $sGoToCellByName     - [optional] a string value. Default is Null. Move the cursor to the cell with the specified name, Case Sensitive; See also $bSelect.
 ;                  $bSelect             - [optional] a boolean value. Default is False. If True, selection is expanded when moving to a specific cell with $sGoToCellByName.
 ;                  $bMergeRange         - [optional] a boolean value. Default is Null. Merge the selected range of cells.
