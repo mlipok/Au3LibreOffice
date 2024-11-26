@@ -6,7 +6,7 @@ Example()
 
 Func Example()
 	Local $oDoc, $oViewCursor
-	Local $asImages
+	Local $bReturn
 	Local $sImage = @ScriptDir & "\Extras\Plain.png"
 
 	; Create a New, visible, Blank Libre Office Document.
