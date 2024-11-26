@@ -151,7 +151,7 @@ EndFunc   ;==>_LOBase_DocClose
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Base documents is returned. See remarks.
+;                  @Error 0 @Extended 2 Return Array = Success, An Array of all open LibreOffice Base documents is returned. See remarks.
 ;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
 ;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
 ;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
