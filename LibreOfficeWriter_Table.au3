@@ -427,7 +427,7 @@ EndFunc   ;==>_LOWriter_TableBreak
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Cell Names.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Array of Cell names. @Extended set to number of names returned in the array.
+;                  @Error 0 @Extended ? Return Array = Array of Cell names. @Extended set to number of names returned in the array.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
