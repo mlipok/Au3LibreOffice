@@ -139,7 +139,7 @@
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Author" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Author field, returning Author Field Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Author field, returning Author Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -276,7 +276,7 @@ EndFunc   ;==>_LOWriter_FieldAuthorModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.Chapter" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Chapter field, returning Chapter Field Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Chapter field, returning Chapter Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -394,7 +394,7 @@ EndFunc   ;==>_LOWriter_FieldChapterModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.CombinedCharacters" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Combined Character field, returning Combined Character Field Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Combined Character field, returning Combined Character Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -506,7 +506,7 @@ EndFunc   ;==>_LOWriter_FieldCombCharModify
 ;                  --Version Related Errors--
 ;                  @Error 7 @Extended 1 Return 0 = Current Libre Office Version lower than 4.0.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted comment field, returning Comment Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted comment field, returning Comment Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -707,7 +707,7 @@ EndFunc   ;==>_LOWriter_FieldCommentModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.ConditionalText" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted a Conditional Text field, returning the Conditional Text Field Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted a Conditional Text field, returning the Conditional Text Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -885,7 +885,7 @@ EndFunc   ;==>_LOWriter_FieldCurrentDisplayGet
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.DateTime" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Date/Time field, returning Date/Time Field Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Date/Time field, returning Date/Time Field Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -2643,7 +2643,7 @@ EndFunc   ;==>_LOWriter_FieldDocInfoTitleModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.FileName" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted File Name field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted File Name field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Until at least L.O. Version 7.3.4.2, there is a bug where the wrong Path Format type is displayed when the content is set to Fixed = True.
@@ -3276,7 +3276,7 @@ EndFunc   ;==>_LOWriter_FieldGetAnchor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.DropDown" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Input List field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Input List field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3413,7 +3413,7 @@ EndFunc   ;==>_LOWriter_FieldInputListModify
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.PageNumber" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Page Number field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Page Number field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4221,7 +4221,7 @@ EndFunc   ;==>_LOWriter_FieldRefMarkList
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Reference Marks Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. = Success. Successfully created a Reference Mark.
+;                  @Error 0 @Extended 0 Return 1 = Success. Successfully created a Reference Mark.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4459,7 +4459,7 @@ EndFunc   ;==>_LOWriter_FieldsDocInfoGetList
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.ExtendedUser" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Sender field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Sender field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4602,7 +4602,7 @@ EndFunc   ;==>_LOWriter_FieldSenderModify
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.SetExpression" Object.
 ;                  @Error 2 @Extended 2 Return 0 = Error creating Master Field Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Set Variable field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Set Variable field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5096,7 +5096,7 @@ EndFunc   ;==>_LOWriter_FieldsGetList
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.text.TextField.GetExpression" Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully inserted Show Variable field, returning its Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully inserted Show Variable field, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function checks if there is a Set Variable matching the name called in $sSetVarName.

@@ -249,7 +249,7 @@ EndFunc   ;==>_LOCalc_DocColumnsRowsFreeze
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Calc documents is returned. See remarks.
+;                  @Error 0 @Extended 2 Return Array = Success, An Array of all open LibreOffice Calc documents is returned. See remarks.
 ;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
 ;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
 ;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
@@ -1479,7 +1479,7 @@ EndFunc   ;==>_LOCalc_DocSaveAs
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to Copy Selected Data, make sure Data is selected.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object  = Success. Data was successfully copied, returning an Object for use in _LOCalc_DocSelectionPaste.
+;                  @Error 0 @Extended 0 Return Object = Success. Data was successfully copied, returning an Object for use in _LOCalc_DocSelectionPaste.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Data you desire to be copied must be selected first, see _LOCalc_DocSelectionSet, _LOCalc_DocSelectionSetMulti.
@@ -1577,7 +1577,7 @@ EndFunc   ;==>_LOCalc_DocSelectionGet
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oData not an Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1  = Success. Data was successfully inserted at the currently selected cell.
+;                  @Error 0 @Extended 0 Return 1 = Success. Data was successfully inserted at the currently selected cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The data will be pasted into the document, beginning at the currently selected cell.

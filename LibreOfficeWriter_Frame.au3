@@ -1106,9 +1106,8 @@ EndFunc   ;==>_LOWriter_FrameDelete
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Frames found matching $sFrameName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Frame found matching $sFrameName.
-;                  @Error 0 @Extended 2 Return True = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Search was successful, If Frame was found matching $sFrameName True is Returned, else False
+;                  @Error 0 @Extended 1 Return Boolean = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Some document types, such as docx, list frames as Shapes instead of TextFrames, so this function searches both.
@@ -1229,7 +1228,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByCursor
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No matches found.
+;                  @Error 0 @Extended 0 Return 1 = Success. No matches found.
 ;                  @Error 0 @Extended 1 Return Object = Success. Successfully found requested Frame by name, returning Frame Object.
 ;                  @Error 0 @Extended 2 Return Object = Success. Successfully found requested Frame by name in Shapes list, returning Frame Object.
 ; Author ........: donnyh13
@@ -1266,7 +1265,7 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 		Next
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 0) ; No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No matches
 EndFunc   ;==>_LOWriter_FrameGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1554,7 +1553,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;                  @Error 3 @Extended 1 Return 0 = Failure retrieving Frame objects.
 ;                  @Error 3 @Extended 2 Return 0 = Failure retrieving Shape objects.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Returning Array of Frame names. @Extended set to number of Frame Names returned.
+;                  @Error 0 @Extended ? Return Array = Returning Array of Frame names. @Extended set to number of Frame Names returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this function returns no results, or not the ones you expect, try setting $bSearchShapes to true.

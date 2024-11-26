@@ -4635,8 +4635,8 @@ EndFunc   ;==>_LOCalc_RangeQueryVisible
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Found a result, but failed to replace it.
 ;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Search and replace was successful, no results found.
 ;                  @Error 0 @Extended 1 Return Object = Success. Search and Replace was successful, returning Object for Cell that the find and replace was performed upon.
-;                  @Error 0 @Extended 0 Return 0 = Success. Search and replace was successful, no results found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office does not offer a Function to call to replace only one result within a Range, consequently I have had to create my own, which means this may not work exactly as expected.
@@ -4661,7 +4661,7 @@ Func _LOCalc_RangeReplace(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $
 	$oSrchDescript.ReplaceString = $sReplaceString
 
 	$oResult = $oRange.findFirst($oSrchDescript)
-	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_SUCCESS, 1, 0) ; No Results
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No Results
 
 	$iReplacements = $oResult.replaceAll($oSrchDescript)
 
@@ -4687,8 +4687,8 @@ EndFunc   ;==>_LOCalc_RangeReplace
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Results were found, but failed to perform the replacement.
 ;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Search was successful, no results found.
 ;                  @Error 0 @Extended ? Return Array = Success. Search and Replace was successful, @Extended set to number of replacements made, returning array Cell/CellRange Objects of all Cells modified.
-;                  @Error 0 @Extended 0 Return 0 = Success. Search was successful, no results found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only the Sheet that contains the Range is searched, to search all Sheets you will have to cycle through and perform a search for each.
@@ -4715,7 +4715,7 @@ Func _LOCalc_RangeReplaceAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString
 	$oSrchDescript.ReplaceString = $sReplaceString
 
 	$oResults = $oRange.findAll($oSrchDescript)
-	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_SUCCESS, 0, 0)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 	If ($oResults.getCount() > 0) Then
 		ReDim $aoResults[$oResults.getCount]

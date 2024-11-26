@@ -1108,8 +1108,7 @@ EndFunc   ;==>_LOWriter_ImageDelete
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $sImageName not a String.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Images found matching $sImageName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Image found matching $sImageName.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Search was successful, If an Image was found matching $sImageName, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1321,7 +1320,7 @@ EndFunc   ;==>_LOWriter_ImageHyperlink
 ;                  @Error 3 @Extended 5 Return 0 = Error retrieving Page Style Object.
 ;                  @Error 3 @Extended 6 Return 0 = Error calculating suggested image size.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Image was successfully inserted, returning image Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Image was successfully inserted, returning image Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Unfortunately, I am unable to find a way to insert an image "linked", images can only be inserted as embedded.
@@ -1914,7 +1913,7 @@ EndFunc   ;==>_LOWriter_ImageSize
 ;                  |                               1 = Error setting $iTransparency
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return ? = Success. $iTransparency set to Null, returning the current Transparency setting as an integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. $iTransparency set to Null, returning the current Transparency setting as an integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.

@@ -490,7 +490,7 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
+;                  @Error 0 @Extended 2 Return Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
 ;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
 ;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
 ;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
@@ -1535,7 +1535,8 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;                  @Error 1 @Extended 5 Return 0 = $bRightPage not a Boolean value.
 ;                  @Error 1 @Extended 6 Return 0 = No parameters set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
+;                  @Error 0 @Extended 0 Return Array = Success. See Remarks.
+;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
@@ -1577,7 +1578,7 @@ Func _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle, $bFooter = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
+	Return (IsArray($vReturn)) ? (SetError($__LO_STATUS_SUCCESS, 0, $vReturn)) : (SetError($__LO_STATUS_SUCCESS, 1, $vReturn))
 EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2116,7 +2117,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve ViewCursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return $oViewCursor Object = Success. The Object for the Document's View Cursor is returned for use in other Cursor related functions.
+;                  @Error 0 @Extended 0 Return Object = Success. The Object for the Document's View Cursor is returned for use in other Cursor related functions.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -2181,7 +2182,8 @@ EndFunc   ;==>_LOWriter_DocHasPath
 ;                  @Error 1 @Extended 5 Return 0 = $bRightPage not a Boolean value.
 ;                  @Error 1 @Extended 6 Return 0 = No parameters set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
+;                  @Error 0 @Extended 0 Return Array = Success. See Remarks.
+;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
@@ -2223,7 +2225,7 @@ Func _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle, $bHeader = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
+	Return (IsArray($vReturn)) ? (SetError($__LO_STATUS_SUCCESS, 0, $vReturn)) : (SetError($__LO_STATUS_SUCCESS, 1, $vReturn))
 EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================

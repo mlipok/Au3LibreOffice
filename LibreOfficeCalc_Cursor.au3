@@ -571,7 +571,7 @@ EndFunc   ;==>_LOCalc_TextCursorInsertString
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cursor Type.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean. = Success. Successfully queried whether cursor's selection is collapsed. Returning Boolean result, True = Cursor has no data selected, False = cursor has data selected.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Successfully queried whether cursor's selection is collapsed. Returning Boolean result, True = Cursor has no data selected, False = cursor has data selected.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

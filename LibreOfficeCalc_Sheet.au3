@@ -1176,8 +1176,6 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
 ;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Print range(s) was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.

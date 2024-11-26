@@ -115,7 +115,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Cursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully retrieved the Endnote Cursor Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the Endnote Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -535,7 +535,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Cursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully retrieved the footnote Cursor Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the footnote Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
