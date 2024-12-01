@@ -6,8 +6,8 @@ Example()
 
 Func Example()
 	Local $oDoc, $oSheet, $oCellRange, $oDestination, $oPivot, $oField
-	Local $asFields[0]
-	Local $sFields = ""
+	Local $asItems[0]
+	Local $sItems = ""
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -39,31 +39,15 @@ Func Example()
 	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_ROW)
 	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the Object for Field "Province".
-	$oField = _LOCalc_RangePivotFieldGetObjByName($oPivot, "Province")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Pivot Table Field object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Set the Field/Column "Province" as a Row Field.
-	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_ROW)
-	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Retrieve the Object for Field "2014".
-	$oField = _LOCalc_RangePivotFieldGetObjByName($oPivot, "2014")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Pivot Table Field object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Set the Field/Column "2014" as a Data Field, set the function to Average.
-	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_DATA, $LOC_COMPUTE_FUNC_AVERAGE)
-	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Retrieve a list of Fields set as Data fields.
-	$asFields = _LOCalc_RangePivotFieldsRowsGetList($oPivot)
-	If @error Then _ERROR($oDoc, "Failed to retrieve list of Pivot field names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
+	; Retrieve a list of Items for the "Agent" Field.
+	$asItems = _LOCalc_RangePivotFieldItemsGetNames($oField)
+	If @error Then _ERROR($oDoc, "Failed to retrieve list of Pivot field Item names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1
-		$sFields &= $asFields[$i] & @CRLF
+		$sItems &= $asItems[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table contains the following Row Fields: " & @CRLF & $sFields)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table field ""Agent"" contains the following Items: " & @CRLF & $sItems)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

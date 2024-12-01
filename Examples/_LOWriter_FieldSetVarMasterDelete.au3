@@ -21,7 +21,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Set Variable Master. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of Set Variable Master Field names.
-	$asMasters = _LOWriter_FieldSetVarMasterList($oDoc)
+	$asMasters = _LOWriter_FieldSetVarMastersGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of Set Variable Masters. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 	$iResults = @extended
 

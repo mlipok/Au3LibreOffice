@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -21,7 +22,7 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_FontExists
-; _LOWriter_FontsList
+; _LOWriter_FontsGetNames
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -65,9 +66,9 @@ Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
 EndFunc   ;==>_LOWriter_FontExists
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FontsList
-; Description ...: Retrieve a list of currently available fonts.
-; Syntax ........: _LOWriter_FontsList(ByRef $oDoc)
+; Name ..........: _LOWriter_FontsGetNames
+; Description ...: Retrieve an array of currently available fonts.
+; Syntax ........: _LOWriter_FontsGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -91,7 +92,7 @@ EndFunc   ;==>_LOWriter_FontExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FontsList(ByRef $oDoc)
+Func _LOWriter_FontsGetNames(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -113,4 +114,4 @@ Func _LOWriter_FontsList(ByRef $oDoc)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($atFonts), $asFonts)
-EndFunc   ;==>_LOWriter_FontsList
+EndFunc   ;==>_LOWriter_FontsGetNames

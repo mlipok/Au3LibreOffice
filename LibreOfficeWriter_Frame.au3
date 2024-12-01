@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -12,6 +13,7 @@
 
 ; Other includes for Writer
 #include "LibreOfficeWriter_Doc.au3"
+
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: LibreOffice UDF
@@ -36,6 +38,7 @@
 ; _LOWriter_FrameCreate
 ; _LOWriter_FrameCreateTextCursor
 ; _LOWriter_FrameDelete
+; _LOWriter_FrameExists
 ; _LOWriter_FrameGetAnchor
 ; _LOWriter_FrameGetObjByCursor
 ; _LOWriter_FrameGetObjByName
@@ -1002,7 +1005,7 @@ Func _LOWriter_FrameCreate(ByRef $oDoc, ByRef $oCursor, $sFrameName = Null, $iWi
 
 	If ($sFrameName <> Null) Then
 		If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If _LOWriter_FrameExists($oDoc, $sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 		$oFrame.Name = $sFrameName
 	EndIf
@@ -1089,6 +1092,62 @@ Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 EndFunc   ;==>_LOWriter_FrameDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FrameExists
+; Description ...: Check if a Document contains a Frame with the specified name.
+; Syntax ........: _LOWriter_FrameExists(ByRef $oDoc, $sFrameName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sFrameName          - a string value. The Frame name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Search was successful, If Frame was found matching $sFrameName True is Returned, else False
+;                  @Error 0 @Extended 1 Return Boolean = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Some document types, such as docx, list frames as Shapes instead of TextFrames, so this function searches both.
+; Related .......: _LOWriter_FrameDelete
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FrameExists(ByRef $oDoc, $sFrameName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oFrames, $oShapes
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	$oFrames = $oDoc.TextFrames()
+	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
+
+	; If No results, then search Shapes.
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If $oShapes.hasElements() Then
+		For $i = 0 To $oShapes.getCount() - 1
+			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
+				If ($oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text")) And _
+						($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
+						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LO_STATUS_SUCCESS, 2, True)
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
+EndFunc   ;==>_LOWriter_FrameExists
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameGetAnchor
 ; Description ...: Create a Text Cursor at the Frame Anchor position.
 ; Syntax ........: _LOWriter_FrameGetAnchor(ByRef $oFrame)
@@ -1169,7 +1228,7 @@ EndFunc   ;==>_LOWriter_FrameGetObjByCursor
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No matches found.
+;                  @Error 0 @Extended 0 Return 1 = Success. No matches found.
 ;                  @Error 0 @Extended 1 Return Object = Success. Successfully found requested Frame by name, returning Frame Object.
 ;                  @Error 0 @Extended 2 Return Object = Success. Successfully found requested Frame by name in Shapes list, returning Frame Object.
 ; Author ........: donnyh13
@@ -1206,7 +1265,7 @@ Func _LOWriter_FrameGetObjByName(ByRef $oDoc, $sFrameName)
 		Next
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, 0) ; No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No matches
 EndFunc   ;==>_LOWriter_FrameGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1451,7 +1510,7 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 
 	If ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		If _LOWriter_DocHasFrameName($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If _LOWriter_FrameExists($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFrame.Name = $sName
 		$iError = ($oFrame.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1464,14 +1523,14 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 
 	If ($sPrevLink <> Null) Then
 		If Not IsString($sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		If ($sPrevLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If ($sPrevLink <> "") And Not _LOWriter_FrameExists($oDoc, $sPrevLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFrame.ChainPrevName = $sPrevLink
 		$iError = ($oFrame.ChainPrevName() = $sPrevLink) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($sNextLink <> Null) Then
 		If Not IsString($sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		If ($sNextLink <> "") And Not _LOWriter_DocHasFrameName($oDoc, $sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If ($sNextLink <> "") And Not _LOWriter_FrameExists($oDoc, $sNextLink) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFrame.ChainNextName = $sNextLink
 		$iError = ($oFrame.ChainNextName() = $sNextLink) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -1481,7 +1540,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FramesGetNames
-; Description ...: List the names of all frames contained in a document.
+; Description ...: Retrieve an array of names of all frames contained in a document.
 ; Syntax ........: _LOWriter_FramesGetNames(ByRef $oDoc[, $bSearchShapes = False])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bSearchShapes       - [optional] a boolean value. Default is False. If True, function searches and adds any Frames listed as "Shapes" in the document to the array of Frame names. See remarks.
@@ -1494,7 +1553,7 @@ EndFunc   ;==>_LOWriter_FrameOptionsName
 ;                  @Error 3 @Extended 1 Return 0 = Failure retrieving Frame objects.
 ;                  @Error 3 @Extended 2 Return 0 = Failure retrieving Shape objects.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Returning Array of Frame names. @Extended set to number of Frame Names returned.
+;                  @Error 0 @Extended ? Return Array = Returning Array of Frame names. @Extended set to number of Frame Names returned.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: In Docx (and possibly other formats) Frames seem to be saved as "Shapes" instead of "Frames", if this function returns no results, or not the ones you expect, try setting $bSearchShapes to true.
@@ -2964,12 +3023,12 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FrameStylesGetNames
-; Description ...: Retrieve a list of all Frame Style names available for a document.
+; Description ...: Retrieve an array of all Frame Style names available for a document.
 ; Syntax ........: _LOWriter_FrameStylesGetNames(ByRef $oDoc[, $bUserOnly = False[, $bAppliedOnly = False]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True only User-Created Frame Styles are returned.
 ;                  $bAppliedOnly        - [optional] a boolean value. Default is False. If True only Applied Frame Styles are returned.
-; Return values .: Success: Integer or Array.
+; Return values .: Success: Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
@@ -2978,7 +3037,6 @@ EndFunc   ;==>_LOWriter_FrameStyleSet
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Frame Styles Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 0 = Success. No Frame Styles found according to parameters.
 ;                  @Error 0 @Extended ? Return Array = Success. An Array containing all Frame Styles matching the called parameters. @Extended contains the count of results returned.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -3028,7 +3086,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 
 	ReDim $aStyles[$iCount]
 
-	Return (UBound($aStyles) = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 0)) : (SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles))
+	Return SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles)
 EndFunc   ;==>_LOWriter_FrameStylesGetNames
 
 ; #FUNCTION# ====================================================================================================================
@@ -3349,9 +3407,9 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 EndFunc   ;==>_LOWriter_FrameStyleTransparencyGradient
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStylePosition
+; Name ..........: _LOWriter_FrameStyleTypePosition
 ; Description ...: Set or Retrieve Frame Style Position Settings.
-; Syntax ........: _LOWriter_FrameStylePosition(ByRef $oFrameStyle[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
+; Syntax ........: _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle[, $iHorAlign = Null[, $iHorPos = Null[, $iHorRelation = Null[, $bMirror = Null[, $iVertAlign = Null[, $iVertPos = Null[, $iVertRelation = Null[, $bKeepInside = Null[, $iAnchorPos = Null]]]]]]]]])
 ; Parameters ....: $oFrameStyle         - [in/out] an object. A Frame Style object returned by a previous _LOWriter_FrameStyleCreate, or _LOWriter_FrameStyleGetObj function.
 ;                  $iHorAlign           - [optional] an integer value (0-3). Default is Null. The horizontal orientation of the Frame. See Constants, $LOW_ORIENT_HORI_* as defined in LibreOfficeWriter_Constants.au3. Can't be set if Anchor position is set to "As Character".
 ;                  $iHorPos             - [optional] an integer value. Default is Null. The horizontal position of the Frame. set in Micrometer(uM). Only valid if $iHorAlign is set to $LOW_ORIENT_HORI_NONE().
@@ -3594,7 +3652,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 EndFunc   ;==>_LOWriter_FrameStyleTypePosition
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FrameStyleSize
+; Name ..........: _LOWriter_FrameStyleTypeSize
 ; Description ...: Set or Retrieve Frame Style Size related settings.
 ; Syntax ........: _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle[, $iWidth = Null[, $iRelativeWidth = Null[, $iWidthRelativeTo = Null[, $bAutoWidth = Null[, $iHeight = Null[, $iRelativeHeight = Null[, $iHeightRelativeTo = Null[, $bAutoHeight = Null[, $bKeepRatio = Null]]]]]]]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
@@ -4703,4 +4761,3 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameWrapOptions
-

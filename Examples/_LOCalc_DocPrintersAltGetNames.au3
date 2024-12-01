@@ -11,7 +11,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers")
 
-	$asPrinters = _LOCalc_DocEnumPrintersAlt()
+	$asPrinters = _LOCalc_DocPrintersAltGetNames()
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were " & @extended & " results.")
@@ -20,7 +20,7 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently default printer next.")
 
-	$sDefault = _LOCalc_DocEnumPrintersAlt("", True)
+	$sDefault = _LOCalc_DocPrintersAltGetNames("", True)
 	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then
@@ -36,7 +36,7 @@ Func Example()
 		$sSearch = "*PDF*"
 	EndIf
 
-	$asPrinters = _LOCalc_DocEnumPrintersAlt($sSearch)
+	$asPrinters = _LOCalc_DocPrintersAltGetNames($sSearch)
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "There were: " & @extended & " results")

@@ -25,13 +25,13 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to add Cell Range to list of Database Ranges. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the document contains a Database Range with the name of "My AutoIt Range".
-	$bReturn = _LOCalc_RangeDatabaseHasByName($oDoc, "My AutoIt Range")
+	$bReturn = _LOCalc_RangeDatabaseExists($oDoc, "My AutoIt Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Database Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Database Range with the name of ""My AutoIt Range""? " & $bReturn)
 
 	; Check if the document contains a Database Range with the name of "Fake Range".
-	$bReturn = _LOCalc_RangeDatabaseHasByName($oDoc, "Fake Range")
+	$bReturn = _LOCalc_RangeDatabaseExists($oDoc, "Fake Range")
 	If @error Then _ERROR($oDoc, "Failed to query document for Database Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does the document contain a Database Range with the name of ""Fake Range""? " & $bReturn)

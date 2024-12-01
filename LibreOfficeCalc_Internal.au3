@@ -1658,7 +1658,7 @@ EndFunc   ;==>__LOCalc_CharSpacing
 ;                  |                               2 = Error setting $iDistance
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the settings.
-;                  @Error 0 @Extended ? Return ? = Success. $iLocation and $iDistance set to Null, returning current Values. Return will be current distance, and @Extended will be the current Location.
+;                  @Error 0 @Extended ? Return Integer = Success. $iLocation and $iDistance set to Null, returning current Values. Return will be current distance, and @Extended will be the current Location.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:

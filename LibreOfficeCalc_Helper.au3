@@ -131,10 +131,10 @@ EndFunc   ;==>_LOCalc_ComError_UserFunction
 ;                  @Error 1 @Extended 1 Return 0 = No parameters set.
 ;                  @Error 1 @Extended 2 Return 0 = No parameters set to an integer.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return String. Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
-;                  @Error 0 @Extended 2 Return Array. Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
-;                  @Error 0 @Extended 3 Return Array. Array containing Long integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
-;                  @Error 0 @Extended 4 Return Array. Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
+;                  @Error 0 @Extended 1 Return String = Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
+;                  @Error 0 @Extended 2 Return Array = Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
+;                  @Error 0 @Extended 3 Return Array = Array containing Long integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
+;                  @Error 0 @Extended 4 Return Array = Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To retrieve a Hexadecimal color value, call the Long Color code in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the Long color code into $iRGB, etc. for the other color types.
@@ -276,10 +276,10 @@ EndFunc   ;==>_LOCalc_ConvertColorFromLong
 ;                  @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
 ;                  @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Integer. Long Int. Color code converted from Hexadecimal.
-;                  @Error 0 @Extended 2 Return Integer. Long Int. Color code converted from Red, Green, Blue, (RGB).
-;                  @Error 0 @Extended 3 Return Integer. Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
-;                  @Error 0 @Extended 4 Return Integer. Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
+;                  @Error 0 @Extended 1 Return Integer = Long Int. Color code converted from Hexadecimal.
+;                  @Error 0 @Extended 2 Return Integer = Long Int. Color code converted from Red, Green, Blue, (RGB).
+;                  @Error 0 @Extended 3 Return Integer = Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
+;                  @Error 0 @Extended 4 Return Integer = Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To Convert a Hex(adecimal) color code, call the Hex code in $vVal1 in String Format.
@@ -429,10 +429,10 @@ EndFunc   ;==>_LOCalc_ConvertColorToLong
 ;                  @Error 3 @Extended 3 Return 0 = Error converting from Micrometers to Millimeter.
 ;                  @Error 3 @Extended 4 Return 0 = Error converting from Micrometers to Printer's Points.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Number. Converted from Micrometers to Inch.
-;                  @Error 0 @Extended 2 Return Number. Converted from Micrometers to Centimeter.
-;                  @Error 0 @Extended 3 Return Number. Converted from Micrometers to Millimeter.
-;                  @Error 0 @Extended 4 Return Number. Converted from Micrometers to Printer's Points.
+;                  @Error 0 @Extended 1 Return Number = Converted from Micrometers to Inch.
+;                  @Error 0 @Extended 2 Return Number = Converted from Micrometers to Centimeter.
+;                  @Error 0 @Extended 3 Return Number = Converted from Micrometers to Millimeter.
+;                  @Error 0 @Extended 4 Return Number = Converted from Micrometers to Printer's Points.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To skip a parameter, set it to Null.
@@ -498,10 +498,10 @@ EndFunc   ;==>_LOCalc_ConvertFromMicrometer
 ;                  @Error 3 @Extended 3 Return 0 = Error converting from Millimeters to Micrometers.
 ;                  @Error 3 @Extended 4 Return 0 = Error converting from Printer's Points to Micrometers.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Integer. Converted Inches to Micrometers.
-;                  @Error 0 @Extended 2 Return Integer. Converted Centimeters to Micrometers.
-;                  @Error 0 @Extended 3 Return Integer. Converted Millimeters to Micrometers.
-;                  @Error 0 @Extended 4 Return Integer. Converted Printer's Points to Micrometers.
+;                  @Error 0 @Extended 1 Return Integer = Converted Inches to Micrometers.
+;                  @Error 0 @Extended 2 Return Integer = Converted Centimeters to Micrometers.
+;                  @Error 0 @Extended 3 Return Integer = Converted Millimeters to Micrometers.
+;                  @Error 0 @Extended 4 Return Integer = Converted Printer's Points to Micrometers.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To skip a parameter, set it to Null.
@@ -1020,8 +1020,7 @@ EndFunc   ;==>_LOCalc_FormatKeyDelete
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
 ;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return True = Success. Format Key exists in document.
-;                  @Error 0 @Extended 1 Return False = Success. Format Key does not exist in document.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Format Key exists in document, True is returned, else false.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1052,7 +1051,7 @@ Func _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOC_FORMA
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	Return SetError($__LO_STATUS_SUCCESS, 1, False) ; Doc does not contain format Key
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; Doc does not contain format Key
 EndFunc   ;==>_LOCalc_FormatKeyExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -1147,7 +1146,7 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
-;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to retrieve a list for. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to retrieve an array of. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

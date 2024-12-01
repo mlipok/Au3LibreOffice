@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -28,6 +29,7 @@
 ; _LOWriter_TableBorderStyle
 ; _LOWriter_TableBorderWidth
 ; _LOWriter_TableBreak
+; _LOWriter_TableCellsGetNames
 ; _LOWriter_TableColor
 ; _LOWriter_TableColumnDelete
 ; _LOWriter_TableColumnGetCount
@@ -36,7 +38,7 @@
 ; _LOWriter_TableCreateCursor
 ; _LOWriter_TableCursor
 ; _LOWriter_TableDelete
-; _LOWriter_TableGetCellNames
+; _LOWriter_TableExists
 ; _LOWriter_TableGetCellObjByCursor
 ; _LOWriter_TableGetCellObjByName
 ; _LOWriter_TableGetCellObjByPosition
@@ -414,6 +416,38 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 EndFunc   ;==>_LOWriter_TableBreak
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_TableCellsGetNames
+; Description ...: Retrieve an array of all Cell names from a Table.
+; Syntax ........: _LOWriter_TableCellsGetNames(ByRef $oTable)
+; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
+; Return values .: Success: Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Cell Names.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Array of Cell names. @Extended set to number of names returned in the array.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_TableCellsGetNames(ByRef $oTable)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asCellNames
+
+	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
+	$asCellNames = $oTable.getCellNames()
+	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; failed to get array of names.
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asCellNames), $asCellNames)
+EndFunc   ;==>_LOWriter_TableCellsGetNames
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableColor
 ; Description ...: Set and retrieve the Background color settings of a Table.
 ; Syntax ........: _LOWriter_TableColor(ByRef $oTable[, $iBackColor = Null[, $bBackTransparent = Null]])
@@ -486,8 +520,8 @@ EndFunc   ;==>_LOWriter_TableColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested column higher than number of columns contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1: Full amount of columns deleted. @Extended set to total columns deleted.
-;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 1 = Full amount of columns deleted. @Extended set to total columns deleted.
+;                  @Error 0 @Extended ? Return 2 = $iCount higher than amount of columns contained in Table; deleted all columns from $iColumn over. @Extended set to total columns deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts columns and Rows starting at 0. So to delete the first column in a Table you would set $iColumn to 0.
@@ -528,7 +562,7 @@ EndFunc   ;==>_LOWriter_TableColumnDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Column count.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer. Returning Column Count as an Integer.
+;                  @Error 0 @Extended 0 Return Integer = Returning Column Count as an Integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -567,7 +601,7 @@ EndFunc   ;==>_LOWriter_TableColumnGetCount
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert columns.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Successfully inserted the number of desired columns.
+;                  @Error 0 @Extended 0 Return 1 = Successfully inserted the number of desired columns.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If you do not set $iColumn, the new columns will be placed at the end of the Table.
@@ -616,7 +650,7 @@ EndFunc   ;==>_LOWriter_TableColumnInsert
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Creating Object com.sun.star.text.TextTable.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. Successfully created a Table Object. The Object is returned for later insertion into the document.
+;                  @Error 0 @Extended 0 Return Object = Successfully created a Table Object. The Object is returned for later insertion into the document.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function only creates a Table Object. You must insert it into the document using _LOWriter_TableInsert. You can preset some properties using _LOWriter_TableProperties, before inserting, or set them after inserting.
@@ -688,7 +722,7 @@ EndFunc   ;==>_LOWriter_TableCreate
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: $oTable can be either set to a Table object, or Null Keyword with $oCursor set to a Cursor object, $oCursor can be either set to a cursor object currently located in a Table (such as a ViewCursor)/ or a TextCursor located in a table. $sCellName can be left blank, which will place the TextTableCursor at the first cell (Typically "A1") if $oTable is called with an Object, else if $oCursor is used, the cell the cursor is currently located in is used.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableGetCellNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableCellsGetNames, _LOWriter_DocGetViewCursor, _LOWriter_DocCreateTextCursor
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -730,7 +764,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ; Name ..........: _LOWriter_TableCursor
 ; Description ...: Commands related to a Table Cursor.
 ; Syntax ........: _LOWriter_TableCursor(ByRef $oCursor[, $sGoToCellByName = Null[, $bSelect = False[, $bMergeRange = Null[, $iSplitRangeInto = Null[, $bSplitRangeHori = False]]]]])
-; Parameters ....: $oCursor             - [in/out] an object. A Table Cursor Object returned from _LOWriter_TableInsertCursor function.
+; Parameters ....: $oCursor             - [in/out] an object. A Table Cursor Object returned from a _LOWriter_TableCreateCursor function.
 ;                  $sGoToCellByName     - [optional] a string value. Default is Null. Move the cursor to the cell with the specified name, Case Sensitive; See also $bSelect.
 ;                  $bSelect             - [optional] a boolean value. Default is False. If True, selection is expanded when moving to a specific cell with $sGoToCellByName.
 ;                  $bMergeRange         - [optional] a boolean value. Default is Null. Merge the selected range of cells.
@@ -755,7 +789,7 @@ EndFunc   ;==>_LOWriter_TableCreateCursor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_TableCreateCursor, _LOWriter_CursorMove, _LOWriter_TableGetCellNames
+; Related .......: _LOWriter_TableCreateCursor, _LOWriter_CursorMove, _LOWriter_TableCellsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -806,7 +840,7 @@ EndFunc   ;==>_LOWriter_TableCursor
 ;                  @Error 3 @Extended 1 Return 0 = Table called in $oTable not already inserted in the document.
 ;                  @Error 3 @Extended 2 Return 0 = Table by same name still contained in the document after deletion attempt.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Table was successfully deleted.
+;                  @Error 0 @Extended 0 Return 1 = Table was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -830,36 +864,42 @@ Func _LOWriter_TableDelete(ByRef $oDoc, ByRef $oTable)
 EndFunc   ;==>_LOWriter_TableDelete
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_TableGetCellNames
-; Description ...: Retrieve an array list of Cell names from a Table.
-; Syntax ........: _LOWriter_TableGetCellNames(ByRef $oTable)
-; Parameters ....: $oTable              - [in/out] an object. A Table Object returned by a previous _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, or _LOWriter_TableGetObjByName function.
-; Return values .: Success: Array.
+; Name ..........: _LOWriter_TableExists
+; Description ...: Check if a Document contains a Table with the specified name.
+; Syntax ........: _LOWriter_TableExists(ByRef $oDoc, $sTableName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
+;                  $sTableName          - a string value. The Table name to search for.
+; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Cell Names.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Array of Cell names. @Extended set to number of names returned in the array.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If a table was found matching $sTableName, True is returned, else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName
+; Related .......: _LOWriter_TableGetObjByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_TableGetCellNames(ByRef $oTable)
+Func _LOWriter_TableExists(ByRef $oDoc, $sTableName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $asCellNames
+	Local $oTables
 
-	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
-	$asCellNames = $oTable.getCellNames()
-	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; failed to get array of names.
-	Return SetError($__LO_STATUS_SUCCESS, UBound($asCellNames), $asCellNames)
-EndFunc   ;==>_LOWriter_TableGetCellNames
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	$oTables = $oDoc.TextTables()
+	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
+EndFunc   ;==>_LOWriter_TableExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TableGetCellObjByCursor
@@ -880,7 +920,7 @@ EndFunc   ;==>_LOWriter_TableGetCellNames
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure Retrieving Cell Object
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. A Cell object or a Cell Range.
+;                  @Error 0 @Extended 0 Return Object = A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function will accept a Table Cursor, a ViewCursor, or a Text Cursor.
@@ -951,13 +991,13 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByCursor
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. A Cell object or a Cell Range Object.
+;                  @Error 0 @Extended 0 Return Object = Success. A Cell object or a Cell Range Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Cell names are Case Sensitive. LibreOffice first goes from A to Z, and then a to z and then AA to ZZ etc.
 ;                  $sCellName can contain a Cell name that is located after $sToCellName in the Table.
 ;                  If $sToCellName is left blank, a cell object is returned instead of a Cell Range.
-; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableGetCellNames
+; Related .......: _LOWriter_TableInsert, _LOWriter_TableGetObjByCursor, _LOWriter_TableGetObjByName, _LOWriter_TableCellsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1011,7 +1051,7 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByName
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. A Cell object or a Cell Range.
+;                  @Error 0 @Extended 0 Return Object = Success. A Cell object or a Cell Range.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function can fail with complex Tables. Complex tables are tables that contain cells that have been split or joined.
@@ -1070,10 +1110,10 @@ EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Table data.
 ;                  --Success--
-;                  @Error 0 @Extended 1 Return Array or Arrays. Array of Table data.
-;                  @Error 0 @Extended 2 Return Array. Returning a specific row of data.
-;                  @Error 0 @Extended 3 Return Array. Returning a specific column of data.
-;                  @Error 0 @Extended 4 Return String. Returning the data of a specific cell.
+;                  @Error 0 @Extended 1 Return Array of Arrays = Array of Table data.
+;                  @Error 0 @Extended 2 Return Array = Returning a specific row of data.
+;                  @Error 0 @Extended 3 Return Array = Returning a specific column of data.
+;                  @Error 0 @Extended 4 Return String = Returning the data of a specific cell.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If only a Table object is called, an Array of Arrays is returned, The main array will have the same number of elements as there are rows. Each internal array will have the same number of elements as there are columns.
@@ -1189,7 +1229,7 @@ Func _LOWriter_TableGetObjByName(ByRef $oDoc, $sTableName)
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_DocHasTableName($oDoc, $sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not _LOWriter_TableExists($oDoc, $sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.TextTables.getByName($sTableName))
 EndFunc   ;==>_LOWriter_TableGetObjByName
@@ -1220,7 +1260,7 @@ EndFunc   ;==>_LOWriter_TableGetObjByName
 ;                  @Error 4 @Extended 1 Return 0 = Error setting First Table Row to "Table Heading" Paragraph style.
 ;                  @Error 4 @Extended 2 Return 0 = Error setting First Table Row to "Table Contents" Paragraph style.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Table was successfully inserted, returning Table Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Table was successfully inserted, returning Table Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function inserts a Table previously created by _LOWriter_TableCreate, into a document.
@@ -1571,8 +1611,8 @@ EndFunc   ;==>_LOWriter_TableRowColor
 ;                  @Error 1 @Extended 4 Return 0 = $iCount not an Integer, or set to less than 1.
 ;                  @Error 1 @Extended 5 Return 0 = Requested row higher than number of rows contained in table.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return 1: Full amount of Rows deleted. @Extended set to total rows deleted.
-;                  @Error 0 @Extended ? Return 2: $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 1 = Full amount of Rows deleted. @Extended set to total rows deleted.
+;                  @Error 0 @Extended ? Return 2 = $iCount higher than amount of rows contained in Table; deleted all rows from $iRow over. @Extended set to total rows deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: LibreOffice counts Rows starting at 0. So to delete the first Row in a Table you would set $iRow to 0.
@@ -1613,7 +1653,7 @@ EndFunc   ;==>_LOWriter_TableRowDelete
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Row count.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Integer. Returning Row count.
+;                  @Error 0 @Extended 0 Return Integer = Returning Row count.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1652,7 +1692,7 @@ EndFunc   ;==>_LOWriter_TableRowGetCount
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to insert Rows.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Successfully inserted requested number of rows.
+;                  @Error 0 @Extended 0 Return 1 = Successfully inserted requested number of rows.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If you do not set $iRow, the new Rows will be placed at the Bottom of the Table.
@@ -1776,7 +1816,7 @@ EndFunc   ;==>_LOWriter_TableRowProperty
 ;                  @Error 1 @Extended 4 Return 0 = $avData Array does not contain the same number of elements as Rows in the Table.
 ;                  @Error 1 @Extended 5 Return ? = $avData sub arrays do not contain enough elements to match columns contained in Table. Return set to element # in main array containing faulty array.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1. Table data was successfully set.
+;                  @Error 0 @Extended 0 Return 1 = Table data was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The array must be an array of Arrays.
@@ -1809,18 +1849,17 @@ EndFunc   ;==>_LOWriter_TableSetData
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_TablesGetNames
-; Description ...: List the names of all tables contained in a document.
+; Description ...: Retrieve an array of names for all tables contained in a document.
 ; Syntax ........: _LOWriter_TablesGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array of Strings.
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failure retrieving Table objects.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array. Returning Array of Table Names. @Extended set to number of Names returned.
-;                  @Error 0 @Extended 0 Return 1. Document contains no tables.
+;                  @Error 0 @Extended ? Return Array = Returning Array of Table Names. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1838,18 +1877,15 @@ Func _LOWriter_TablesGetNames(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	$oTables = $oDoc.TextTables()
 	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	If $oTables.hasElements() Then
-		ReDim $asTableNames[$oTables.getCount()]
-		For $i = 0 To $oTables.getCount() - 1
-			$oTable = $oTables.getByIndex($i)
-			$asTableNames[$i] = $oTable.Name
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0))) ; Sleep every x cycles.
-		Next
-		Return SetError($__LO_STATUS_SUCCESS, UBound($asTableNames), $asTableNames)
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No tables.
-	EndIf
 
+	ReDim $asTableNames[$oTables.getCount()]
+	For $i = 0 To $oTables.getCount() - 1
+		$oTable = $oTables.getByIndex($i)
+		$asTableNames[$i] = $oTable.Name
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ; Sleep every x cycles.
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asTableNames), $asTableNames)
 EndFunc   ;==>_LOWriter_TablesGetNames
 
 ; #FUNCTION# ====================================================================================================================

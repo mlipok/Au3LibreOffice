@@ -43,27 +43,19 @@ Func Example()
 	$oField = _LOCalc_RangePivotFieldGetObjByName($oPivot, "Province")
 	If @error Then _ERROR($oDoc, "Failed to retrieve Pivot Table Field object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Set the Field/Column "Province" as a Column Field.
-	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_COLUMN)
+	; Set the Field/Column "Province" as a Row Field.
+	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_ROW)
 	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	; Retrieve the Object for Field "2014".
-	$oField = _LOCalc_RangePivotFieldGetObjByName($oPivot, "2014")
-	If @error Then _ERROR($oDoc, "Failed to retrieve Pivot Table Field object. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Set the Field/Column "2014" as a Data Field, set the function to Average.
-	_LOCalc_RangePivotFieldSettings($oField, $LOC_PIVOT_TBL_FIELD_TYPE_DATA, $LOC_COMPUTE_FUNC_AVERAGE)
-	If @error Then _ERROR($oDoc, "Failed to set Pivot Table Field settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
-
-	; Retrieve a list of Fields set as Column fields.
-	$asFields = _LOCalc_RangePivotFieldsColumnsGetList($oPivot)
+	; Retrieve a list of all Fields.
+	$asFields = _LOCalc_RangePivotFieldsGetNames($oPivot)
 	If @error Then _ERROR($oDoc, "Failed to retrieve list of Pivot field names. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To @extended - 1
 		$sFields &= $asFields[$i] & @CRLF
 	Next
 
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table contains the following Column Fields: " & @CRLF & $sFields)
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Pivot table contains the following Fields: " & @CRLF & $sFields)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 

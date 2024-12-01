@@ -21,7 +21,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to create a Shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check if the document has a Shape by the name of "Shape 1"
-	$bReturn = _LOWriter_DocHasShapeName($oDoc, "Shape 1")
+	$bReturn = _LOWriter_ShapeExists($oDoc, "Shape 1")
 	If @error Then _ERROR($oDoc, "Failed to look for Shape name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document contain a Shape named ""Shape 1""? True/ False. " & $bReturn)
@@ -31,7 +31,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to delete Shape. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Check again, if the document has a Shape by the name of "Shape 1"
-	$bReturn = _LOWriter_DocHasShapeName($oDoc, "Shape 1")
+	$bReturn = _LOWriter_ShapeExists($oDoc, "Shape 1")
 	If @error Then _ERROR($oDoc, "Failed to look for Shape name. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Now does this document contain a Shape named ""Shape 1""? True/ False. " & $bReturn)

@@ -1569,8 +1569,7 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ;                  @Error 1 @Extended 1 Return False = $tDateStruct1 not an Object.
 ;                  @Error 1 @Extended 2 Return False = $tDateStruct2 not an Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Dates/Times in $tDateStruct1 and $tDateStruct2 are not the same.
-;                  @Error 0 @Extended 1 Return True = Success. Dates/Times in $tDateStruct1 and $tDateStruct2 are the same.
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Dates/Times in $tDateStruct1 and $tDateStruct2 are the same, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1596,7 +1595,7 @@ Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
 		If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 1, True)
+	Return SetError($__LO_STATUS_SUCCESS, 0, True)
 EndFunc   ;==>__LOWriter_DateStructCompare
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3197,7 +3196,7 @@ EndFunc   ;==>__LOWriter_HeaderBorder
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error calculating Width and Height.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Structure. = Successfully calculated suggested Width and Height, returning size Structure.
+;                  @Error 0 @Extended 0 Return Structure = Successfully calculated suggested Width and Height, returning size Structure.
 ; Author ........: Andrew Pitonyak ("Useful Macro Information For OpenOffice.org", Page 62, listing 5.28)
 ; Modified ......: donnyh13, converted code from L.O. Basic to AutoIt. Added a max W/H based on current page size.
 ; Remarks .......:
@@ -3528,7 +3527,7 @@ EndFunc   ;==>__LOWriter_IntIsBetween
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean: If the cell object is a Cell Range, True is returned. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = If the cell object is a Cell Range, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3742,7 +3741,7 @@ EndFunc   ;==>__LOWriter_NumStyleDeleteScript
 ;                  |                               2 = Error setting MacroExecutionMode
 ;                  |                               4 = Error setting ReadOnly
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Doc Object. = Success. The Numbering Style Modification Document was successfully created.
+;                  @Error 0 @Extended 0 Return Object = Success. The Numbering Style Modification Document was successfully created.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -5175,7 +5174,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 	Else
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
-		$aiTabList = __LOWriter_ParTabStopList($oObj) ; Get a list of existing tabstops to compare with
+		$aiTabList = __LOWriter_ParTabStopList($oObj) ; Get an array of existing tabstops to compare with
 		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
@@ -5272,7 +5271,7 @@ EndFunc   ;==>__LOWriter_ParTabStopDelete
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ParTabStopList
-; Description ...: Retrieve a List of TabStops available in a Paragraph.
+; Description ...: Retrieve an array of TabStops available in a Paragraph.
 ; Syntax ........: __LOWriter_ParTabStopList(ByRef $oObj)
 ; Parameters ....: $oObj                - [in/out] an object. Paragraph Style Object or a Cursor or Paragraph Object.
 ; Return values .: Success: Array.
@@ -8197,7 +8196,7 @@ EndFunc   ;==>__LOWriter_TableCursorMove
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Names.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean: If the table contains the requested Cell Name, True is returned. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = If the table contains the requested Cell Name, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -8237,7 +8236,7 @@ EndFunc   ;==>__LOWriter_TableHasCellName
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested Column. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = If True, the table contains the requested Column. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -8267,7 +8266,7 @@ EndFunc   ;==>__LOWriter_TableHasColumnRange
 ;                  @Error 1 @Extended 1 Return 0 = $oTable not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iRow not an Integer.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean: If True, the table contains the requested row. Else False.
+;                  @Error 0 @Extended 0 Return Boolean = If True, the table contains the requested row. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
