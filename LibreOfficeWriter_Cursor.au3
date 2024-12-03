@@ -82,7 +82,7 @@ EndFunc   ;==>_LOWriter_CursorGetDataType
 ;                  @Error 3 @Extended 3 Return 0 = Error retrieving Status for Table Cursor.
 ;                  @Error 3 @Extended 4 Return 0 = Error retrieving Status for View Cursor.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Variable. = Success. The requested status was successfully returned. See called flag for expected return type.
+;                  @Error 0 @Extended 0 Return Variable = Success. The requested status was successfully returned. See called flag for expected return type.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only certain flags work for certain types of cursors:

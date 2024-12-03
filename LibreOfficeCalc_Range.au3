@@ -38,9 +38,9 @@
 ; _LOCalc_RangeData
 ; _LOCalc_RangeDatabaseAdd
 ; _LOCalc_RangeDatabaseDelete
+; _LOCalc_RangeDatabaseExists
 ; _LOCalc_RangeDatabaseGetNames
 ; _LOCalc_RangeDatabaseGetObjByName
-; _LOCalc_RangeDatabaseHasByName
 ; _LOCalc_RangeDatabaseModify
 ; _LOCalc_RangeDelete
 ; _LOCalc_RangeDetail
@@ -64,9 +64,9 @@
 ; _LOCalc_RangeNamedAdd
 ; _LOCalc_RangeNamedChangeScope
 ; _LOCalc_RangeNamedDelete
+; _LOCalc_RangeNamedExists
 ; _LOCalc_RangeNamedGetNames
 ; _LOCalc_RangeNamedGetObjByName
-; _LOCalc_RangeNamedHasByName
 ; _LOCalc_RangeNamedModify
 ; _LOCalc_RangeNumbers
 ; _LOCalc_RangeOutlineClearAll
@@ -75,14 +75,14 @@
 ; _LOCalc_RangePivotDest
 ; _LOCalc_RangePivotExists
 ; _LOCalc_RangePivotFieldGetObjByName
-; _LOCalc_RangePivotFieldItemsGetList
-; _LOCalc_RangePivotFieldsColumnsGetList
-; _LOCalc_RangePivotFieldsDataGetList
+; _LOCalc_RangePivotFieldItemsGetNames
+; _LOCalc_RangePivotFieldsColumnsGetNames
+; _LOCalc_RangePivotFieldsDataGetNames
 ; _LOCalc_RangePivotFieldSettings
-; _LOCalc_RangePivotFieldsFiltersGetList
-; _LOCalc_RangePivotFieldsGetList
-; _LOCalc_RangePivotFieldsRowsGetList
-; _LOCalc_RangePivotFieldsUnusedGetList
+; _LOCalc_RangePivotFieldsFiltersGetNames
+; _LOCalc_RangePivotFieldsGetNames
+; _LOCalc_RangePivotFieldsRowsGetNames
+; _LOCalc_RangePivotFieldsUnusedGetNames
 ; _LOCalc_RangePivotFilter
 ; _LOCalc_RangePivotFilterClear
 ; _LOCalc_RangePivotGetObjByIndex
@@ -92,7 +92,7 @@
 ; _LOCalc_RangePivotRefresh
 ; _LOCalc_RangePivotSettings
 ; _LOCalc_RangePivotsGetCount
-; _LOCalc_RangePivotsGetList
+; _LOCalc_RangePivotsGetNames
 ; _LOCalc_RangePivotSource
 ; _LOCalc_RangeQueryColumnDiff
 ; _LOCalc_RangeQueryContents
@@ -874,7 +874,7 @@ EndFunc   ;==>_LOCalc_RangeData
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseDelete
+; Related .......: _LOCalc_RangeDatabaseExists, _LOCalc_RangeDatabaseDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -964,6 +964,48 @@ Func _LOCalc_RangeDatabaseDelete(ByRef $oDoc, $oDatabaseRange)
 EndFunc   ;==>_LOCalc_RangeDatabaseDelete
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeDatabaseExists
+; Description ...: Check if a Database Range exists in a document.
+; Syntax ........: _LOCalc_RangeDatabaseExists(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object.
+;                  $sName               - a string value.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeDatabaseExists(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oDatabaseRanges
+	Local $bExists
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDatabaseRanges = $oDoc.DatabaseRanges()
+	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$bExists = $oDatabaseRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeDatabaseExists
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDatabaseGetNames
 ; Description ...: Retrieve an array of Database Range names for the document.
 ; Syntax ........: _LOCalc_RangeDatabaseGetNames(ByRef $oDoc)
@@ -1026,7 +1068,7 @@ EndFunc   ;==>_LOCalc_RangeDatabaseGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeDatabaseHasByName, _LOCalc_RangeDatabaseGetNames
+; Related .......: _LOCalc_RangeDatabaseExists, _LOCalc_RangeDatabaseGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1049,48 +1091,6 @@ Func _LOCalc_RangeDatabaseGetObjByName(ByRef $oDoc, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDatabaseRange)
 EndFunc   ;==>_LOCalc_RangeDatabaseGetObjByName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangeDatabaseHasByName
-; Description ...: Check if a Database Range exists in a document.
-; Syntax ........: _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
-; Parameters ....: $oDoc                - [in/out] an object.
-;                  $sName               - a string value.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Database Ranges Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to query whether document contains the called name.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the document contains a Database Range by the called name. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_RangeDatabaseHasByName(ByRef $oDoc, $sName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oDatabaseRanges
-	Local $bExists
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oDatabaseRanges = $oDoc.DatabaseRanges()
-	If Not IsObj($oDatabaseRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$bExists = $oDatabaseRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
-EndFunc   ;==>_LOCalc_RangeDatabaseHasByName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeDatabaseModify
@@ -2144,7 +2144,7 @@ EndFunc   ;==>_LOCalc_RangeMerge
 ;                  $oRefCell "acts as the base address for cells referenced in a relative way. If the cell range is not specified as an absolute address, the referenced range will be different based on where in the spreadsheet the range is used."
 ;                  Or in the case of a formula, an example would if we created a "named range 'AddLeft', which refers to the equation A3+B3 with C3 as the reference cell. The cells A3 and B3 are the two cells directly to the left of C3, so, the equation =AddLeft calculates the sum of the two cells directly to the left of the cell that contains the equation. Changing the reference cell to C4, which is below A3 and B3, causes the AddLeft equation to calculate the sum of the two cells that are to the left on the previous row."
 ;                  [Both quotations above are adapted from Andrew Pitonyak's book OOME 4.1, pdf Page 523, book page 519]
-; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedDelete, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2239,7 +2239,7 @@ EndFunc   ;==>_LOCalc_RangeNamedAdd
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOCalc_RangeNamedModify, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedModify, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2315,7 +2315,7 @@ EndFunc   ;==>_LOCalc_RangeNamedChangeScope
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
-; Related .......: _LOCalc_RangeNamedAdd, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedAdd, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2350,6 +2350,48 @@ Func _LOCalc_RangeNamedDelete(ByRef $oObj, $vNamedRange)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeNamedDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeNamedExists
+; Description ...: Check if a Named Range exists in a particular scope.
+; Syntax ........: _LOCalc_RangeNamedExists(ByRef $oObj, $sName)
+; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
+;                  $sName               - a string value. The Named Range name to look for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_RangeNamedExists(ByRef $oObj, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oNamedRanges
+	Local $bExists
+
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oNamedRanges = $oObj.NamedRanges()
+	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$bExists = $oNamedRanges.hasByName($sName)
+	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
+EndFunc   ;==>_LOCalc_RangeNamedExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNamedGetNames
@@ -2414,7 +2456,7 @@ EndFunc   ;==>_LOCalc_RangeNamedGetNames
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: The Object called in $oObj must be the scope the Named Range is present in, either Globally (Document Object), or locally (Sheet Object).
-; Related .......: _LOCalc_RangeNamedGetNames, _LOCalc_RangeNamedHasByName
+; Related .......: _LOCalc_RangeNamedGetNames, _LOCalc_RangeNamedExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -2437,48 +2479,6 @@ Func _LOCalc_RangeNamedGetObjByName(ByRef $oObj, $sName)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oNamedRange)
 EndFunc   ;==>_LOCalc_RangeNamedGetObjByName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangeNamedHasByName
-; Description ...: Check if a Named Range exists in a particular scope.
-; Syntax ........: _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
-; Parameters ....: $oObj                - [in/out] an object. See remarks. A Document or Sheet object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, _LOCalc_DocCreate, _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
-;                  $sName               - a string value. The Named Range name to look for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oObj not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Named Ranges Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to query whether Scope contains the called name.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. Returns True if the Scope contains a Named Range by the called name. Else False.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: The Object called in $oObj determines the scope you are searching in for the Named Range specified, either Globally (Document Object), or locally (Sheet Object).
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOCalc_RangeNamedHasByName(ByRef $oObj, $sName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oNamedRanges
-	Local $bExists
-
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oNamedRanges = $oObj.NamedRanges()
-	If Not IsObj($oNamedRanges) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	$bExists = $oNamedRanges.hasByName($sName)
-	If Not IsBool($bExists) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $bExists)
-EndFunc   ;==>_LOCalc_RangeNamedHasByName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeNamedModify
@@ -3082,9 +3082,9 @@ Func _LOCalc_RangePivotFieldGetObjByName(ByRef $oPivotTable, $sName)
 EndFunc   ;==>_LOCalc_RangePivotFieldGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldItemsGetList
+; Name ..........: _LOCalc_RangePivotFieldItemsGetNames
 ; Description ...: Retrieve an array of Item names contained in a Field.
-; Syntax ........: _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+; Syntax ........: _LOCalc_RangePivotFieldItemsGetNames(ByRef $oPivotField)
 ; Parameters ....: $oPivotField         - [in/out] an object. A Pivot Table Field object returned by a previous _LOCalc_RangePivotFieldGetObjByName function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3101,7 +3101,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldGetObjByName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
+Func _LOCalc_RangePivotFieldItemsGetNames(ByRef $oPivotField)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3113,12 +3113,12 @@ Func _LOCalc_RangePivotFieldItemsGetList(ByRef $oPivotField)
 	If Not IsArray($asPivotFieldItems) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asPivotFieldItems), $asPivotFieldItems)
-EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsColumnsGetList
+; Name ..........: _LOCalc_RangePivotFieldsColumnsGetNames
 ; Description ...: Retrieve an array of Field Names set as Column Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsColumnsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3136,7 +3136,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldItemsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsColumnsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3158,12 +3158,12 @@ Func _LOCalc_RangePivotFieldsColumnsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsDataGetList
+; Name ..........: _LOCalc_RangePivotFieldsDataGetNames
 ; Description ...: Retrieve an array of Field Names set as Data Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsDataGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3181,7 +3181,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsColumnsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsDataGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3203,7 +3203,7 @@ Func _LOCalc_RangePivotFieldsDataGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsDataGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotFieldSettings
@@ -3347,9 +3347,9 @@ Func _LOCalc_RangePivotFieldSettings(ByRef $oPivotField, $iFieldType = Null, $iF
 EndFunc   ;==>_LOCalc_RangePivotFieldSettings
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsFiltersGetList
+; Name ..........: _LOCalc_RangePivotFieldsFiltersGetNames
 ; Description ...: Retrieve an array of Field Names set as Filter Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsFiltersGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3367,7 +3367,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsFiltersGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3389,12 +3389,12 @@ Func _LOCalc_RangePivotFieldsFiltersGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsGetList
+; Name ..........: _LOCalc_RangePivotFieldsGetNames
 ; Description ...: Retrieve an array of Fields available in the Pivot Table Source.
-; Syntax ........: _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3412,7 +3412,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsFiltersGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3434,12 +3434,12 @@ Func _LOCalc_RangePivotFieldsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsRowsGetList
+; Name ..........: _LOCalc_RangePivotFieldsRowsGetNames
 ; Description ...: Retrieve an array of Field Names set as Row Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsRowsGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3457,7 +3457,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsRowsGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3479,12 +3479,12 @@ Func _LOCalc_RangePivotFieldsRowsGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetNames
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotFieldsUnusedGetList
+; Name ..........: _LOCalc_RangePivotFieldsUnusedGetNames
 ; Description ...: Retrieve an array of Field Names not current used in any of the Fields.
-; Syntax ........: _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+; Syntax ........: _LOCalc_RangePivotFieldsUnusedGetNames(ByRef $oPivotTable)
 ; Parameters ....: $oPivotTable         - [in/out] an object. A Pivot Table object returned by a previous _LOCalc_RangePivotInsert, _LOCalc_RangePivotGetObjByName or _LOCalc_RangePivotGetObjByIndex function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -3502,7 +3502,7 @@ EndFunc   ;==>_LOCalc_RangePivotFieldsRowsGetList
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
+Func _LOCalc_RangePivotFieldsUnusedGetNames(ByRef $oPivotTable)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -3524,7 +3524,7 @@ Func _LOCalc_RangePivotFieldsUnusedGetList(ByRef $oPivotTable)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetList
+EndFunc   ;==>_LOCalc_RangePivotFieldsUnusedGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotFilter
@@ -4052,9 +4052,9 @@ Func _LOCalc_RangePivotsGetCount(ByRef $oSheet)
 EndFunc   ;==>_LOCalc_RangePivotsGetCount
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOCalc_RangePivotsGetList
+; Name ..........: _LOCalc_RangePivotsGetNames
 ; Description ...: Retrieve an array of Pivot Tables contained in the Sheet.
-; Syntax ........: _LOCalc_RangePivotsGetList(ByRef $oSheet)
+; Syntax ........: _LOCalc_RangePivotsGetNames(ByRef $oSheet)
 ; Parameters ....: $oSheet              - [in/out] an object. A Sheet object returned by a previous _LOCalc_SheetAdd, _LOCalc_SheetGetActive, _LOCalc_SheetCopy, or _LOCalc_SheetGetObjByName function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
@@ -4072,7 +4072,7 @@ EndFunc   ;==>_LOCalc_RangePivotsGetCount
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_RangePivotsGetList(ByRef $oSheet)
+Func _LOCalc_RangePivotsGetNames(ByRef $oSheet)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -4094,7 +4094,7 @@ Func _LOCalc_RangePivotsGetList(ByRef $oSheet)
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asNames)
-EndFunc   ;==>_LOCalc_RangePivotsGetList
+EndFunc   ;==>_LOCalc_RangePivotsGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangePivotSource
@@ -4635,8 +4635,8 @@ EndFunc   ;==>_LOCalc_RangeQueryVisible
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Found a result, but failed to replace it.
 ;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Search and replace was successful, no results found.
 ;                  @Error 0 @Extended 1 Return Object = Success. Search and Replace was successful, returning Object for Cell that the find and replace was performed upon.
-;                  @Error 0 @Extended 0 Return 0 = Success. Search and replace was successful, no results found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Libre Office does not offer a Function to call to replace only one result within a Range, consequently I have had to create my own, which means this may not work exactly as expected.
@@ -4661,7 +4661,7 @@ Func _LOCalc_RangeReplace(ByRef $oRange, ByRef $oSrchDescript, $sSearchString, $
 	$oSrchDescript.ReplaceString = $sReplaceString
 
 	$oResult = $oRange.findFirst($oSrchDescript)
-	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_SUCCESS, 1, 0) ; No Results
+	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_SUCCESS, 0, 1) ; No Results
 
 	$iReplacements = $oResult.replaceAll($oSrchDescript)
 
@@ -4687,8 +4687,8 @@ EndFunc   ;==>_LOCalc_RangeReplace
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Results were found, but failed to perform the replacement.
 ;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Search was successful, no results found.
 ;                  @Error 0 @Extended ? Return Array = Success. Search and Replace was successful, @Extended set to number of replacements made, returning array Cell/CellRange Objects of all Cells modified.
-;                  @Error 0 @Extended 0 Return 0 = Success. Search was successful, no results found.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Only the Sheet that contains the Range is searched, to search all Sheets you will have to cycle through and perform a search for each.
@@ -4715,7 +4715,7 @@ Func _LOCalc_RangeReplaceAll(ByRef $oRange, ByRef $oSrchDescript, $sSearchString
 	$oSrchDescript.ReplaceString = $sReplaceString
 
 	$oResults = $oRange.findAll($oSrchDescript)
-	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_SUCCESS, 0, 0)
+	If Not IsObj($oResults) Then Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 	If ($oResults.getCount() > 0) Then
 		ReDim $aoResults[$oResults.getCount]

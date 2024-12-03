@@ -5,10 +5,9 @@
 Example()
 
 Func Example()
-	Local $oDoc, $oSheet, $oCellRange, $oFilterRange, $oFilterDesc, $oCell
+	Local $oDoc, $oSheet, $oCellRange, $oFilterRange, $oCell
 	Local $aavData[6]
 	Local $avRowData[4]
-	Local $atFilterFields[2]
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOCalc_DocCreate(True, False)
@@ -112,7 +111,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press Ok to perform the Filtering Operation.")
 
 	; Filter the Range with my Filter Criteria range.
-	$oFilterDesc = _LOCalc_RangeFilterAdvanced($oCellRange, $oFilterRange)
+	_LOCalc_RangeFilterAdvanced($oCellRange, $oFilterRange)
 	If @error Then _ERROR($oDoc, "Failed to Filter Range. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

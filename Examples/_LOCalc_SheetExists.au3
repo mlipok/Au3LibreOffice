@@ -13,13 +13,13 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to Create a new Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Test if the document contains a Sheet called "Sheet1"
-	$bResult = _LOCalc_DocHasSheetName($oDoc, "Sheet1")
+	$bResult = _LOCalc_SheetExists($oDoc, "Sheet1")
 	If @error Then _ERROR($oDoc, "Failed to check if a Sheet existed in a Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document contain a Sheet named ""Sheet1"" ? True/False: " & $bResult)
 
 	; Test if the document contains a Sheet called "FakeSheet"
-	$bResult = _LOCalc_DocHasSheetName($oDoc, "FakeSheet")
+	$bResult = _LOCalc_SheetExists($oDoc, "FakeSheet")
 	If @error Then _ERROR($oDoc, "Failed to check if a Sheet existed in a Calc Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Does this document contain a Sheet named ""FakeSheet"" ? True/False: " & $bResult)

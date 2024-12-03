@@ -115,7 +115,7 @@ EndFunc   ;==>_LOWriter_EndnoteGetAnchor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Cursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully retrieved the Endnote Cursor Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the Endnote Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -417,14 +417,13 @@ EndFunc   ;==>_LOWriter_EndnoteSettingsStyles
 ; Description ...: Retrieve an array of Endnote Objects contained in a Document.
 ; Syntax ........: _LOWriter_EndnotesGetList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Endnotes Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Endnotes, none contained in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Endnotes, Returning Array of Endnote Objects. @Extended set to number found.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -458,7 +457,7 @@ Func _LOWriter_EndnotesGetList(ByRef $oDoc)
 		Next
 	EndIf
 
-	Return ($iCount > 0) ? (SetError($__LO_STATUS_SUCCESS, $iCount, $aoEndnotes)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoEndnotes)
 EndFunc   ;==>_LOWriter_EndnotesGetList
 
 ; #FUNCTION# ====================================================================================================================
@@ -536,7 +535,7 @@ EndFunc   ;==>_LOWriter_FootnoteGetAnchor
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Error retrieving Cursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object. = Success. Successfully retrieved the footnote Cursor Object.
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully retrieved the footnote Cursor Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -915,14 +914,13 @@ EndFunc   ;==>_LOWriter_FootnoteSettingsStyles
 ; Description ...: Retrieve an array of Footnote Objects contained in a Document.
 ; Syntax ........: _LOWriter_FootnotesGetList(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Footnotes Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Footnotes, none contained in document.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Footnotes, Returning Array of Footnote Objects. @Extended set to number found.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -955,5 +953,5 @@ Func _LOWriter_FootnotesGetList(ByRef $oDoc)
 		Next
 	EndIf
 
-	Return ($iCount > 0) ? (SetError($__LO_STATUS_SUCCESS, $iCount, $aoFootnotes)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoFootnotes)
 EndFunc   ;==>_LOWriter_FootnotesGetList

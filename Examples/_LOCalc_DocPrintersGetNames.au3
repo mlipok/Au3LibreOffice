@@ -16,7 +16,7 @@ Func Example()
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will list your currently available printers.")
 
 	; Retrieve Array of available printers.
-	$asPrinters = _LOCalc_DocEnumPrinters()
+	$asPrinters = _LOCalc_DocPrintersGetNames()
 	$iCount = @extended
 	If @error Then _ERROR("Error retrieving array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
@@ -35,7 +35,7 @@ Func Example()
 	EndIf
 
 	; Return default printer.
-	$sDefault = _LOCalc_DocEnumPrinters(True)
+	$sDefault = _LOCalc_DocPrintersGetNames(True)
 	If @error Then _ERROR("Error retrieving Default Printer. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If ($sDefault = "") Then

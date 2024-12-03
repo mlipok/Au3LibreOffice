@@ -214,7 +214,7 @@ Global Enum _
 
 ; Document Information Field Types
 Global Enum Step *2 _
-		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _                      ; Returns a list of all field types listed below.
+		$LOW_FIELD_DOCINFO_TYPE_ALL = 1, _                      ; Returns an array of all field types listed below.
 		$LOW_FIELD_DOCINFO_TYPE_MOD_AUTH, _                     ; A Modified By Author Field, found in Fields dialog, DocInformation Tab, Modified Type.
 		$LOW_FIELD_DOCINFO_TYPE_MOD_DATE_TIME, _                ; A Modified Date/Time Field, found in Fields dialog, DocInformation Tab, Modified Type.
 		$LOW_FIELD_DOCINFO_TYPE_CREATE_AUTH, _                  ; A Created By Author Field, found in Fields dialog, DocInformation Tab, Created Type.
@@ -270,7 +270,7 @@ Global Const _                                                  ; com.sun.star.t
 
 ; Regular Field Types
 Global Enum Step *2 _
-		$LOW_FIELD_TYPE_ALL = 1, _                              ; Returns a list of all field types listed below.
+		$LOW_FIELD_TYPE_ALL = 1, _                              ; Returns an array of all field types listed below.
 		$LOW_FIELD_TYPE_COMMENT, _                              ; A Comment Field. As Found at Insert > Comment
 		$LOW_FIELD_TYPE_AUTHOR, _                               ; A Author field, found in the Fields Dialog, Document tab.
 		$LOW_FIELD_TYPE_CHAPTER, _                              ; A Chapter field, found in the Fields Dialog, Document tab.

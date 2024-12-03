@@ -22,7 +22,7 @@ Func Example()
 			"I will now modify the setting and show the result.")
 
 	; Retrieve Array of Printers
-	$aPrinters = _LOWriter_DocEnumPrintersAlt()
+	$aPrinters = _LOWriter_DocPrintersAltGetNames()
 	If (@error > 0) Then _ERROR($oDoc, "Error retrieving Array of Printers. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	If (@extended <= 1) Then _ERROR($oDoc, "one or no Printers found. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)

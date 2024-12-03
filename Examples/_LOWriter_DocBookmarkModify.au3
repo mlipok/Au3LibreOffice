@@ -33,7 +33,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert text. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve an array of all Bookmarks.
-	$asBookmarks = _LOWriter_DocBookmarksList($oDoc)
+	$asBookmarks = _LOWriter_DocBookmarksGetNames($oDoc)
 	If @error Then _ERROR($oDoc, "Failed to retrieve an array of Bookmarks. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	For $i = 0 To UBound($asBookmarks) - 1
