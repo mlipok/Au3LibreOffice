@@ -344,7 +344,7 @@ EndFunc   ;==>_LOCalc_TextCursorEffect
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  Not every font accepts Bold and Italic settings, and not all settings for bold and Italic are accepted, such as oblique, ultra Bold etc.
 ;                  Libre Calc accepts only the predefined weight values, any other values are changed automatically to an acceptable value, which could trigger a settings error.
-; Related .......: _LOCalc_FontsList
+; Related .......: _LOCalc_FontsGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -571,7 +571,7 @@ EndFunc   ;==>_LOCalc_TextCursorInsertString
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cursor Type.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean. = Success. Successfully queried whether cursor's selection is collapsed. Returning Boolean result, True = Cursor has no data selected, False = cursor has data selected.
+;                  @Error 0 @Extended 0 Return Boolean = Success. Successfully queried whether cursor's selection is collapsed. Returning Boolean result, True = Cursor has no data selected, False = cursor has data selected.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -778,7 +778,7 @@ EndFunc   ;==>_LOCalc_TextCursorParObjCreateList
 ; Name ..........: _LOCalc_TextCursorParObjSectionsGet
 ; Description ...: Break a Paragraph Object into individual Sections for Formatting etc. See Remarks.
 ; Syntax ........: _LOCalc_TextCursorParObjSectionsGet(ByRef $oParObj)
-; Parameters ....: $oParObj             - [in/out] an object. A Paragraph Object returned from _LOCalc_ParObjCreateList function.
+; Parameters ....: $oParObj             - [in/out] an object. A Paragraph Object returned from _LOCalc_TextCursorParObjCreateList function.
 ; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--

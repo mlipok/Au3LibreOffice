@@ -329,14 +329,14 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_RangePivotDest
 	- _LOCalc_RangePivotExists
 	- _LOCalc_RangePivotFieldGetObjByName
-	- _LOCalc_RangePivotFieldItemsGetList
-	- _LOCalc_RangePivotFieldsColumnsGetList
-	- _LOCalc_RangePivotFieldsDataGetList
+	- _LOCalc_RangePivotFieldItemsGetNames
+	- _LOCalc_RangePivotFieldsColumnsGetNames
+	- _LOCalc_RangePivotFieldsDataGetNames
 	- _LOCalc_RangePivotFieldSettings
-	- _LOCalc_RangePivotFieldsFiltersGetList
-	- _LOCalc_RangePivotFieldsGetList
-	- _LOCalc_RangePivotFieldsRowsGetList
-	- _LOCalc_RangePivotFieldsUnusedGetList
+	- _LOCalc_RangePivotFieldsFiltersGetNames
+	- _LOCalc_RangePivotFieldsGetNames
+	- _LOCalc_RangePivotFieldsRowsGetNames
+	- _LOCalc_RangePivotFieldsUnusedGetNames
 	- _LOCalc_RangePivotFilter
 	- _LOCalc_RangePivotFilterClear
 	- _LOCalc_RangePivotGetObjByIndex
@@ -346,7 +346,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_RangePivotRefresh
 	- _LOCalc_RangePivotSettings
 	- _LOCalc_RangePivotsGetCount
-	- _LOCalc_RangePivotsGetList
+	- _LOCalc_RangePivotsGetNames
 	- _LOCalc_RangePivotSource
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
@@ -446,8 +446,6 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_DocColumnsRowsFreeze
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
-	- _LOCalc_DocEnumPrinters
-	- _LOCalc_DocEnumPrintersAlt
 	- _LOCalc_DocExport
 	- _LOCalc_DocGetName
 	- _LOCalc_DocGetPath
@@ -461,6 +459,8 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
 	- _LOCalc_DocPrint
+	- _LOCalc_DocPrintersGetNames
+	- _LOCalc_DocPrintersAltGetNames
 	- _LOCalc_DocRedo
 	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
@@ -506,7 +506,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOCalc_FieldTitleInsert
 - Font Query Functions
 	- _LOCalc_FontExists
-	- _LOCalc_FontsList
+	- _LOCalc_FontsGetNames
 - Helper Functions
 	- _LOCalc_ComError_UserFunction
 	- _LOCalc_ConvertColorFromLong
@@ -737,6 +737,28 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 - __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
 - Renamed Constant $LOC_COMPUTE_* to $LOC_COMPUTE_FUNC_*
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOCalc_DocEnumPrinters-->_LOCalc_DocPrintersGetNames
+	- _LOCalc_DocEnumPrintersAlt-->_LOCalc_DocPrintersAltGetNames
+	- _LOCalc_FontsList-->_LOCalc_FontsGetNames
+	- _LOCalc_RangePivotFieldItemsGetList-->_LOCalc_RangePivotFieldItemsGetNames
+	- _LOCalc_RangePivotFieldsColumnsGetList-->_LOCalc_RangePivotFieldsColumnsGetNames
+	- _LOCalc_RangePivotFieldsDataGetList-->_LOCalc_RangePivotFieldsDataGetNames
+	- _LOCalc_RangePivotFieldsFiltersGetList-->_LOCalc_RangePivotFieldsFiltersGetNames
+	- _LOCalc_RangePivotFieldsGetList-->_LOCalc_RangePivotFieldsGetNames
+	- _LOCalc_RangePivotFieldsRowsGetList-->_LOCalc_RangePivotFieldsRowsGetNames
+	- _LOCalc_RangePivotFieldsUnusedGetList-->_LOCalc_RangePivotFieldsUnusedGetNames
+	- _LOCalc_RangePivotsGetList-->_LOCalc_RangePivotsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOCalc_DocHasSheetName-->_LOCalc_SheetExists
+	- _LOCalc_RangeDatabaseHasByName-->_LOCalc_RangeDatabaseExists
+	- _LOCalc_RangeNamedHasByName-->_LOCalc_RangeNamedExists
+- Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
+	- _LOCalc_CellStylesGetNames
+	- _LOCalc_PageStylesGetNames
+- Modified _LOCalc_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
+- _LOCalc_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
+- _LOCalc_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
 
 ### Removed
 
@@ -859,6 +881,36 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 - Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
 - __LOWriter_IntIsBetween to accept only a minimum value. Also optimized it.
 	- Modified function usage to match changes.
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOWriter_DocBookmarksList-->_LOWriter_DocBookmarksGetNames
+	- _LOWriter_DocEnumPrinters-->_LOWriter_DocPrintersGetNames
+	- _LOWriter_DocEnumPrintersAlt-->_LOWriter_DocPrintersAltGetNames
+	- _LOWriter_FieldSetVarMasterList-->_LOWriter_FieldSetVarMastersGetNames
+	- _LOWriter_FieldSetVarMasterListFields-->_LOWriter_FieldSetVarMasterFieldsGetList
+	- _LOWriter_FontsList-->_LOWriter_FontsGetNames
+	- _LOWriter_TableGetCellNames-->_LOWriter_TableCellsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOWriter_DocBookmarksHasName-->_LOWriter_DocBookmarkExists
+	- _LOWriter_DocHasFrameName-->_LOWriter_FrameExists
+	- _LOWriter_DocHasImageName-->_LOWriter_ImageExists
+	- _LOWriter_DocHasShapeName-->_LOWriter_ShapeExists
+	- _LOWriter_DocHasTableName-->_LOWriter_TableExists
+- Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
+	- _LOWriter_CharStylesGetNames
+	- _LOWriter_DocBookmarksGetNames
+	- _LOWriter_EndnotesGetList
+	- _LOWriter_FieldRefMarkList
+	- _LOWriter_FieldSetVarMasterFieldsGetList
+	- _LOWriter_FootnotesGetList
+	- _LOWriter_FrameStylesGetNames
+	- _LOWriter_ImagesGetNames
+	- _LOWriter_NumStylesGetNames
+	- _LOWriter_PageStylesGetNames
+	- _LOWriter_ParStylesGetNames
+	- _LOWriter_TablesGetNames
+- Modified _LOWriter_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
+- _LOWriter_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
+- _LOWriter_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
 
 ### Fixed
 
@@ -882,7 +934,7 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 	- _LOWriter_DocBookmarkModify -- removed $oDoc parameter.
 	- _LOWriter_FieldDelete -- removed $oDoc parameter.
 	- _LOWriter_FieldDocInfoEditTimeModify -- removed $oDoc parameter.
-	- _LOWriter_FieldSetVarMasterListFields -- removed $oDoc parameter.
+	- _LOWriter_FieldSetVarMasterFieldsGetList -- removed $oDoc parameter.
 	- _LOWriter_DateFormatKeyDelete -- removed internal variable.
 	- _LOWriter_FormatKeyDelete -- removed internal variable.
 	- _LOWriter_ImageInsert -- removed internal variable, now uses ViewCursor directly to insert an Image.
@@ -894,11 +946,13 @@ Renamed _LOBase_TableIndexesCount-->_LOBase_TableIndexesGetCount
 - When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
 - Incorrect usage of ObjEvent.
 - _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
-- _LOWriter_DocCreate and _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
+- _LOWriter_DocCreate could potentially return a Base Form document, as they have identical Service names.
+- _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
 - __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
 - LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
 - _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
 - __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
+- Added missing example. _LOWriter_ImageExists
 
 ### Removed
 

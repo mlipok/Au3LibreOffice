@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -24,12 +25,12 @@
 
 ; #CURRENT# =====================================================================================================================
 ; _LOWriter_DocBookmarkDelete
+; _LOWriter_DocBookmarkExists
 ; _LOWriter_DocBookmarkGetAnchor
 ; _LOWriter_DocBookmarkGetObj
 ; _LOWriter_DocBookmarkInsert
 ; _LOWriter_DocBookmarkModify
-; _LOWriter_DocBookmarksHasName
-; _LOWriter_DocBookmarksList
+; _LOWriter_DocBookmarksGetNames
 ; _LOWriter_DocClose
 ; _LOWriter_DocConnect
 ; _LOWriter_DocConvertTableToText
@@ -37,8 +38,6 @@
 ; _LOWriter_DocCreate
 ; _LOWriter_DocCreateTextCursor
 ; _LOWriter_DocDescription
-; _LOWriter_DocEnumPrinters
-; _LOWriter_DocEnumPrintersAlt
 ; _LOWriter_DocExecuteDispatch
 ; _LOWriter_DocExport
 ; _LOWriter_DocFindAll
@@ -55,11 +54,7 @@
 ; _LOWriter_DocGetPath
 ; _LOWriter_DocGetString
 ; _LOWriter_DocGetViewCursor
-; _LOWriter_DocHasFrameName
-; _LOWriter_DocHasImageName
 ; _LOWriter_DocHasPath
-; _LOWriter_DocHasShapeName
-; _LOWriter_DocHasTableName
 ; _LOWriter_DocHeaderGetTextCursor
 ; _LOWriter_DocHyperlinkInsert
 ; _LOWriter_DocInsertControlChar
@@ -72,6 +67,8 @@
 ; _LOWriter_DocOpen
 ; _LOWriter_DocPosAndSize
 ; _LOWriter_DocPrint
+; _LOWriter_DocPrintersAltGetNames
+; _LOWriter_DocPrintersGetNames
 ; _LOWriter_DocPrintIncludedSettings
 ; _LOWriter_DocPrintMiscSettings
 ; _LOWriter_DocPrintPageSettings
@@ -117,7 +114,7 @@
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarksList
+; Related .......: _LOWriter_DocBookmarkInsert, _LOWriter_DocBookmarkGetObj, _LOWriter_DocBookmarksGetNames
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -134,8 +131,45 @@ Func _LOWriter_DocBookmarkDelete(ByRef $oDoc, ByRef $oBookmark)
 
 	$oBookmark.dispose()
 
-	Return (_LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return (_LOWriter_DocBookmarkExists($oDoc, $sBookmarkName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_DocBookmarkDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocBookmarkExists
+; Description ...: Check if a document contains a Bookmark by name.
+; Syntax ........: _LOWriter_DocBookmarkExists(ByRef $oDoc, $sBookmarkName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sBookmarkName       - a string value. The Bookmark name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocBookmarkExists(ByRef $oDoc, $sBookmarkName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oBookmarks
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oBookmarks = $oDoc.getBookmarks()
+	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
+EndFunc   ;==>_LOWriter_DocBookmarkExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocBookmarkGetAnchor
@@ -190,7 +224,7 @@ EndFunc   ;==>_LOWriter_DocBookmarkGetAnchor
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
-; Related .......: _LOWriter_DocBookmarksList, _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
+; Related .......: _LOWriter_DocBookmarksGetNames, _LOWriter_DocBookmarkModify, _LOWriter_DocBookmarkDelete
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -203,7 +237,7 @@ Func _LOWriter_DocBookmarkGetObj(ByRef $oDoc, $sBookmarkName)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If Not _LOWriter_DocBookmarksHasName($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not _LOWriter_DocBookmarkExists($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$oBookmark = $oDoc.Bookmarks.getByName($sBookmarkName)
 	If Not IsObj($oBookmark) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -315,55 +349,17 @@ Func _LOWriter_DocBookmarkModify(ByRef $oBookmark, $sBookmarkName = Null)
 EndFunc   ;==>_LOWriter_DocBookmarkModify
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocBookmarksHasName
-; Description ...: Check if a document contains a Bookmark by name.
-; Syntax ........: _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sBookmarkName       - a string value. The Bookmark name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sBookmarkName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Bookmarks Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Bookmark by the called name, then True is returned, Else false.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocBookmarksHasName(ByRef $oDoc, $sBookmarkName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oBookmarks
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oBookmarks = $oDoc.getBookmarks()
-	If Not IsObj($oBookmarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, $oBookmarks.hasByName($sBookmarkName))
-EndFunc   ;==>_LOWriter_DocBookmarksHasName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocBookmarksList
+; Name ..........: _LOWriter_DocBookmarksGetNames
 ; Description ...: Retrieve an Array of Bookmark names.
-; Syntax ........: _LOWriter_DocBookmarksList(ByRef $oDoc)
+; Syntax ........: _LOWriter_DocBookmarksGetNames(ByRef $oDoc)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 1 or Array
+; Return values .: Success: Array
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Array of Bookmark Names.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Successfully searched for Bookmarks, no results found.
 ;                  @Error 0 @Extended ? Return Array = Success. Successfully searched for Bookmarks, returning Array of Bookmark names, @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
@@ -372,7 +368,7 @@ EndFunc   ;==>_LOWriter_DocBookmarksHasName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_DocBookmarksList(ByRef $oDoc)
+Func _LOWriter_DocBookmarksGetNames(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -383,8 +379,8 @@ Func _LOWriter_DocBookmarksList(ByRef $oDoc)
 	$asBookmarkNames = $oDoc.Bookmarks.getElementNames()
 	If Not IsArray($asBookmarkNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return (UBound($asBookmarkNames) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_DocBookmarksList
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asBookmarkNames), $asBookmarkNames)
+EndFunc   ;==>_LOWriter_DocBookmarksGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocClose
@@ -494,7 +490,7 @@ EndFunc   ;==>_LOWriter_DocClose
 ;                  @Error 5 @Extended 3 Return 0 = No open Libre Office documents found.
 ;                  --Success--
 ;                  @Error 0 @Extended 1 Return Object = Success, The Object for the current, or last active document is returned.
-;                  @Error 0 @Extended 2 Returns Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
+;                  @Error 0 @Extended 2 Return Array = Success, An Array of all open LibreOffice Writer Text documents is returned. See remarks.
 ;                  @Error 0 @Extended 3 Return Object = Success, The Object for the document with matching URL is returned.
 ;                  @Error 0 @Extended 4 Return Object = Success, The Object for the document with matching Title is returned.
 ;                  @Error 0 @Extended 5 Return Object = Success, A partial Title or Path search found only one match, returning the Object for the found document.
@@ -544,7 +540,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
-			If $oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent()) Then; If Parent is an Object, then Writer doc is a DataBase Form
+			If $oDoc.supportsService($sServiceName) And Not IsObj($oDoc.Parent()) Then ; If Parent is an Object, then Writer doc is a DataBase Form
 
 				ReDim $aoConnectAll[$iCount + 1][3]
 				$aoConnectAll[$iCount][0] = $oDoc
@@ -1050,125 +1046,6 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 EndFunc   ;==>_LOWriter_DocDescription
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocEnumPrinters
-; Description ...: Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocEnumPrinters([$bDefaultOnly = False])
-; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
-; Return values .: Success: An array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
-;                  --Version Related Errors--
-;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
-;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
-;                  --Success--
-;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: This function works for LibreOffice 4.1 and Up.
-; Related .......: _LOWriter_DocEnumPrintersAlt
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocEnumPrinters($bDefaultOnly = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oServiceManager, $oPrintServer
-	Local $sDefault
-	Local $asPrinters[0]
-
-	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
-	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
-	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
-	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	If $bDefaultOnly Then
-		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
-		$sDefault = $oPrintServer.getDefaultPrinterName()
-		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
-		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	EndIf
-
-	$asPrinters = $oPrintServer.getPrinterNames()
-	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-EndFunc   ;==>_LOWriter_DocEnumPrinters
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocEnumPrintersAlt
-; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
-; Syntax ........: _LOWriter_DocEnumPrintersAlt([$sPrinterName = ""[, $bReturnDefault = False]])
-; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
-;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
-; Return values .: Success: Array or String.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
-;                  @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
-;                  --Initialization Errors--
-;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
-;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
-;                  --Printer Related Errors--
-;                  @Error 6 @Extended 1 Return 0 = No default printer found.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
-;                  @Error 0 @Extended 2 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
-; Author ........: jguinch (_PrintMgr_EnumPrinter)
-; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
-; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
-;                  If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
-;                  When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
-; Related .......: _LOWriter_DocEnumPrinters
-; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
-; UDF title......: Printmgr.au3
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocEnumPrintersAlt($sPrinterName = "", $bReturnDefault = False)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $asPrinterNames[10]
-	Local $sFilter
-	Local $iCount = 0
-	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
-	Local $oWMIService, $oPrinters
-
-	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
-	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
-	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
-	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
-	For $oPrinter In $oPrinters
-		Switch $bReturnDefault
-			Case False
-				If $iCount >= (UBound($asPrinterNames) - 1) Then ReDim $asPrinterNames[UBound($asPrinterNames) * 2]
-				$asPrinterNames[$iCount] = $oPrinter.Name
-				$iCount += 1
-
-			Case True
-				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 2, $oPrinter.Name)
-		EndSwitch
-	Next
-	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
-	ReDim $asPrinterNames[$iCount]
-	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
-EndFunc   ;==>_LOWriter_DocEnumPrintersAlt
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocExecuteDispatch
 ; Description ...: Executes a command for a document.
 ; Syntax ........: _LOWriter_DocExecuteDispatch(ByRef $oDoc, $sDispatch)
@@ -1658,7 +1535,8 @@ EndFunc   ;==>_LOWriter_DocFindNext
 ;                  @Error 1 @Extended 5 Return 0 = $bRightPage not a Boolean value.
 ;                  @Error 1 @Extended 6 Return 0 = No parameters set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
+;                  @Error 0 @Extended 0 Return Array = Success. See Remarks.
+;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
@@ -1700,7 +1578,7 @@ Func _LOWriter_DocFooterGetTextCursor(ByRef $oPageStyle, $bFooter = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
+	Return (IsArray($vReturn)) ? (SetError($__LO_STATUS_SUCCESS, 0, $vReturn)) : (SetError($__LO_STATUS_SUCCESS, 1, $vReturn))
 EndFunc   ;==>_LOWriter_DocFooterGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2239,7 +2117,7 @@ EndFunc   ;==>_LOWriter_DocGetString
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve ViewCursor Object.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return $oViewCursor Object = Success. The Object for the Document's View Cursor is returned for use in other Cursor related functions.
+;                  @Error 0 @Extended 0 Return Object = Success. The Object for the Document's View Cursor is returned for use in other Cursor related functions.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -2257,96 +2135,6 @@ Func _LOWriter_DocGetViewCursor(ByRef $oDoc)
 	$oViewCursor = $oDoc.CurrentController.getViewCursor()
 	Return (IsObj($oViewCursor)) ? (SetError($__LO_STATUS_SUCCESS, 0, $oViewCursor)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)) ; Failed to Retrieve ViewCursor
 EndFunc   ;==>_LOWriter_DocGetViewCursor
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasFrameName
-; Description ...: Check if a Document contains a Frame with the specified name.
-; Syntax ........: _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFrameName          - a string value. The Frame name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFrameName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Frames Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving Shapes Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Frames found matching $sFrameName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Frame found matching $sFrameName.
-;                  @Error 0 @Extended 2 Return True = Success. Search was successful, Frame found matching $sFrameName listed as a shape.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: Some document types, such as docx, list frames as Shapes instead of TextFrames, so this function searches both.
-; Related .......: _LOWriter_FrameDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasFrameName(ByRef $oDoc, $sFrameName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oFrames, $oShapes
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFrameName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oFrames = $oDoc.TextFrames()
-	If Not IsObj($oFrames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If ($oFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
-
-	; If No results, then search Shapes.
-	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
-	If $oShapes.hasElements() Then
-		For $i = 0 To $oShapes.getCount() - 1
-			If ($oShapes.getByIndex($i).Name() = $sFrameName) Then
-				If ($oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text")) And _
-						($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
-						$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then Return SetError($__LO_STATUS_SUCCESS, 2, True)
-			EndIf
-
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
-EndFunc   ;==>_LOWriter_DocHasFrameName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasImageName
-; Description ...: Check if a Document contains a Image with the specified name.
-; Syntax ........: _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sImageName          - a string value. The Image name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sImageName not a String.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Images found matching $sImageName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Image found matching $sImageName.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ImageDelete
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasImageName(ByRef $oDoc, $sImageName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sImageName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
-EndFunc   ;==>_LOWriter_DocHasImageName
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHasPath
@@ -2376,91 +2164,6 @@ Func _LOWriter_DocHasPath(ByRef $oDoc)
 EndFunc   ;==>_LOWriter_DocHasPath
 
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasShapeName
-; Description ...: Check if a Document contains a Shape with the specified name.
-; Syntax ........: _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sShapeName          - a string value. The Shape name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Draw Page Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no Shapes found matching $sShapeName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, Shape found matching $sShapeName.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ShapeGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasShapeName(ByRef $oDoc, $sShapeName)
-	Local $oShapes
-
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
-	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If $oShapes.hasElements() Then
-		For $i = 0 To $oShapes.getCount() - 1
-			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
-
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
-EndFunc   ;==>_LOWriter_DocHasShapeName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_DocHasTableName
-; Description ...: Check if a Document contains a Table with the specified name.
-; Syntax ........: _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or_LOWriter_DocCreate function.
-;                  $sTableName          - a string value. The Table name to search for.
-; Return values .: Success: Boolean
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sTableName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Text Tables Object.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return False = Success. Search was successful, no tables found matching $sTableName.
-;                  @Error 0 @Extended 1 Return True = Success. Search was successful, table found matching $sTableName.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_TableGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_DocHasTableName(ByRef $oDoc, $sTableName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oTables
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oTables = $oDoc.TextTables()
-	If Not IsObj($oTables) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If ($oTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
-EndFunc   ;==>_LOWriter_DocHasTableName
-
-; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocHeaderGetTextCursor
 ; Description ...: Create a Text cursor in a Page Style header for text related functions.
 ; Syntax ........: _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle[, $bHeader = False[, $bFirstPage = False[, $bLeftPage = False[, $bRightPage = False]]]])
@@ -2479,7 +2182,8 @@ EndFunc   ;==>_LOWriter_DocHasTableName
 ;                  @Error 1 @Extended 5 Return 0 = $bRightPage not a Boolean value.
 ;                  @Error 1 @Extended 6 Return 0 = No parameters set to True.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Object or Array = Success. See Remarks.
+;                  @Error 0 @Extended 0 Return Array = Success. See Remarks.
+;                  @Error 0 @Extended 1 Return Object = Success. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: If more than one parameter is set to true, an array is returned with the requested objects in the order that the True parameters are listed. Else the requested object is returned.
@@ -2521,7 +2225,7 @@ Func _LOWriter_DocHeaderGetTextCursor(ByRef $oPageStyle, $bHeader = False, $bFir
 
 	$vReturn = (UBound($aoReturn) = 1) ? ($aoReturn[0]) : ($aoReturn) ; If Array contains only one element, return it only outside of the array.
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
+	Return (IsArray($vReturn)) ? (SetError($__LO_STATUS_SUCCESS, 0, $vReturn)) : (SetError($__LO_STATUS_SUCCESS, 1, $vReturn))
 EndFunc   ;==>_LOWriter_DocHeaderGetTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -2962,7 +2666,7 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	EndIf
 
 	If $bConnectIfOpen Then $oDoc = _LOWriter_DocConnect($sFilePath)
-    If IsObj($oDoc) Then Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
+	If IsObj($oDoc) Then Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
 
 	$oDoc = $oDesktop.loadComponentFromURL($sFileURL, "_default", $iURLFrameCreate, $aoProperties)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
@@ -3101,7 +2805,7 @@ EndFunc   ;==>_LOWriter_DocPosAndSize
 ; Remarks .......: Based on OOoCalc UDF Print function by GMK.
 ;                  $vPages range can be called as entered in the user interface, as follows: "1-4,10" to print the pages 1 to 4 and 10. Default is "ALL". Must be in String format to accept more than just a single page number. e.g. This will work: "1-6,12,27" This will not 1-6,12,27. This will work: "7", This will also: 7.
 ;                  Setting $bWait to True is highly recommended. Otherwise following actions (as e.g. closing the Document) can fail.
-; Related .......:_LOWriter_DocEnumPrintersAlt, _LOWriter_DocEnumPrinters, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
+; Related .......:_LOWriter_DocPrintersAltGetNames, _LOWriter_DocPrintersGetNames, _LOWriter_DocPrintSizeSettings, _LOWriter_DocPrintPageSettings, _LOWriter_DocPrintMiscSettings, _LOWriter_DocPrintIncludedSettings
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3156,6 +2860,125 @@ Func _LOWriter_DocPrint(ByRef $oDoc, $iCopies = 1, $bCollate = True, $vPages = "
 	$oDoc.print($avPrintOpt)
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_DocPrint
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocPrintersAltGetNames
+; Description ...: Alternate function; Enumerates all installed printers, or current default printer.
+; Syntax ........: _LOWriter_DocPrintersAltGetNames([$sPrinterName = ""[, $bReturnDefault = False]])
+; Parameters ....: $sPrinterName        - [optional] a string value. Default is "". Name of the printer to list. Default "" returns the list of all printers. See Remarks.
+;                  $bReturnDefault      - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer.
+; Return values .: Success: Array or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $sPrinterName not a String.
+;                  @Error 1 @Extended 2 Return 0 = $bReturnDefault not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failure Creating Object.
+;                  @Error 2 @Extended 2 Return 0 = Failure retrieving printer list Object.
+;                  --Printer Related Errors--
+;                  @Error 6 @Extended 1 Return 0 = No default printer found.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Returning the default printer name. See remarks. @Extended is set to the number of results.
+;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. See remarks. Number of results returned in @Extended.
+; Author ........: jguinch (_PrintMgr_EnumPrinter)
+; Modified ......: donnyh13 - Added input error checking. Added a return default printer only option.
+; Remarks .......: When $bReturnDefault is False, The function returns all installed printers for the user running the script in an array.
+;                  If $sPrinterName is set, the name must be exact, or no results will be found, unless you use an asterisk (*) for partial name searches, either prefixed (*Canon), suffixed (Canon*), or both (*Canon*).
+;                  When $bReturnDefault is True, The function returns only the default printer's name or sets an error if no default printer is found.
+; Related .......: _LOWriter_DocPrintersGetNames
+; Link ..........: https://www.autoitscript.com/forum/topic/155485-printers-management-udf/
+; UDF title......: Printmgr.au3
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocPrintersAltGetNames($sPrinterName = "", $bReturnDefault = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asPrinterNames[10]
+	Local $sFilter
+	Local $iCount = 0
+	Local Const $wbemFlagReturnImmediately = 0x10, $wbemFlagForwardOnly = 0x20
+	Local $oWMIService, $oPrinters
+
+	If Not IsString($sPrinterName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsBool($bReturnDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If $sPrinterName <> "" Then $sFilter = StringReplace(" Where Name like '" & StringReplace($sPrinterName, "\", "\\") & "'", "*", "%")
+	$oWMIService = ObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\cimv2")
+	If Not IsObj($oWMIService) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oPrinters = $oWMIService.ExecQuery("Select * from Win32_Printer" & $sFilter, "WQL", $wbemFlagReturnImmediately + $wbemFlagForwardOnly)
+	If Not IsObj($oPrinters) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	For $oPrinter In $oPrinters
+		Switch $bReturnDefault
+			Case False
+				If $iCount >= (UBound($asPrinterNames) - 1) Then ReDim $asPrinterNames[UBound($asPrinterNames) * 2]
+				$asPrinterNames[$iCount] = $oPrinter.Name
+				$iCount += 1
+
+			Case True
+				If $oPrinter.Default Then Return SetError($__LO_STATUS_SUCCESS, 1, $oPrinter.Name)
+		EndSwitch
+	Next
+	If $bReturnDefault Then Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
+	ReDim $asPrinterNames[$iCount]
+	Return SetError($__LO_STATUS_SUCCESS, $iCount, $asPrinterNames)
+EndFunc   ;==>_LOWriter_DocPrintersAltGetNames
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_DocPrintersGetNames
+; Description ...: Enumerates all installed printers, or current default printer.
+; Syntax ........: _LOWriter_DocPrintersGetNames([$bDefaultOnly = False])
+; Parameters ....: $bDefaultOnly        - [optional] a boolean value. Default is False. If True, returns only the name of the current default printer. Libre 6.3 and up only.
+; Return values .: Success: An array or String.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $bDefaultOnly not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failure Creating "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failure creating "com.sun.star.awt.PrinterServer" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Default printer name.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Array of printer names.
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version lower than 4.1.
+;                  @Error 7 @Extended 2 Return 0 = Current Libre Office version lower than 6.3.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Returning the default printer name.
+;                  @Error 0 @Extended ? Return Array = Returning an array of strings containing all installed printers. @Extended set to number of results.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function works for LibreOffice 4.1 and Up.
+; Related .......: _LOWriter_DocPrintersAltGetNames
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_DocPrintersGetNames($bDefaultOnly = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oServiceManager, $oPrintServer
+	Local $sDefault
+	Local $asPrinters[0]
+
+	If Not __LOWriter_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+	If Not IsBool($bDefaultOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oPrintServer = $oServiceManager.createInstance("com.sun.star.awt.PrinterServer")
+	If Not IsObj($oPrintServer) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	If $bDefaultOnly Then
+		If Not __LOWriter_VersionCheck(6.3) Then Return SetError($__LO_STATUS_VER_ERROR, 2, 0)
+		$sDefault = $oPrintServer.getDefaultPrinterName()
+		If IsString($sDefault) Then Return SetError($__LO_STATUS_SUCCESS, 1, $sDefault)
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	EndIf
+
+	$asPrinters = $oPrintServer.getPrinterNames()
+	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+EndFunc   ;==>_LOWriter_DocPrintersGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_DocPrintIncludedSettings
@@ -3663,9 +3486,10 @@ EndFunc   ;==>_LOWriter_DocRedoCurActionTitle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve an array of Redo action titles.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = No Redo Actions currently available. Returning empty array.
-;                  @Error 0 @Extended 1 Return Array = Returns all available redo action Titles in an array of Strings.
+;                  @Error 0 @Extended ? Return Array = Returning all available redo action Titles in an array of Strings. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3677,13 +3501,14 @@ Func _LOWriter_DocRedoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $asTitles[0]
+
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isRedoPossible()) Then
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllRedoActionTitles())
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllRedoActionTitles())
-	EndIf
+	$asTitles = $oDoc.UndoManager.getAllRedoActionTitles()
+	If Not IsArray($asTitles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asTitles), $asTitles)
 EndFunc   ;==>_LOWriter_DocRedoGetAllActionTitles
 
 ; #FUNCTION# ====================================================================================================================
@@ -4227,9 +4052,10 @@ EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve an array of Undo action titles.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return Array = No Undo Actions currently available. Returning empty array.
-;                  @Error 0 @Extended 1 Return Array = Returns all available undo action Titles in an array of Strings.
+;                  @Error 0 @Extended ? Return Array = Returning all available undo action Titles in an array of Strings. @Extended set to number of results.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -4241,13 +4067,14 @@ Func _LOWriter_DocUndoGetAllActionTitles(ByRef $oDoc)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
+	Local $asTitles[0]
+
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	If ($oDoc.UndoManager.isUndoPossible()) Then
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getAllUndoActionTitles())
-	Else
-		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getAllUndoActionTitles())
-	EndIf
+	$asTitles = $oDoc.UndoManager.getAllUndoActionTitles()
+	If Not IsArray($asTitles) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asTitles), $asTitles)
 EndFunc   ;==>_LOWriter_DocUndoGetAllActionTitles
 
 ; #FUNCTION# ====================================================================================================================

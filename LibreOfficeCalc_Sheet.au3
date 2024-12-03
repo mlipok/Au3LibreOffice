@@ -31,6 +31,7 @@
 ; _LOCalc_SheetDetectiveInvalidData
 ; _LOCalc_SheetDetectivePrecedent
 ; _LOCalc_SheetDetectiveTraceError
+; _LOCalc_SheetExists
 ; _LOCalc_SheetGetActive
 ; _LOCalc_SheetGetObjByName
 ; _LOCalc_SheetGetObjByPosition
@@ -109,7 +110,7 @@ EndFunc   ;==>_LOCalc_SheetActivate
 ; Remarks .......: If $sName is left as Null, the sheet will be automatically named "Sheet?" where "?" is a digit.
 ;                  If $iPosition is left as Null, the sheet will be inserted at the end of the list of Sheets.
 ;                  Calling $iPosition with the number of Sheets in the Document will place the added sheet at the end of the sheet list.
-; Related .......: _LOCalc_SheetRemove, _LOCalc_DocHasSheetName
+; Related .......: _LOCalc_SheetRemove, _LOCalc_SheetExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -180,7 +181,7 @@ EndFunc   ;==>_LOCalc_SheetAdd
 ; Remarks .......: If $sNewName is left as Null, the original Sheet's name is used, with "_" and a digit appended.
 ;                  If $iPosition is left as Null, the copied sheet will be placed at the end of the list.
 ;                  Calling $iPosition with the number of Sheets in the Document will place the copied sheet at the end of the sheet list.
-; Related .......: _LOCalc_DocHasSheetName, _LOCalc_SheetMove
+; Related .......: _LOCalc_SheetExists, _LOCalc_SheetMove
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -470,6 +471,45 @@ Func _LOCalc_SheetDetectiveTraceError(ByRef $oCell)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
 EndFunc   ;==>_LOCalc_SheetDetectiveTraceError
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SheetExists
+; Description ...: Check whether a Calc document has a Sheet with a specific name.
+; Syntax ........: _LOCalc_SheetExists(ByRef $oDoc, $sName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $sName               - a string value. The sheet name to check for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Sheets Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the document contains a Sheet matching $sName, True is returned. Else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SheetExists(ByRef $oDoc, $sName)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oSheets
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oSheets = $oDoc.Sheets()
+	If Not IsObj($oSheets) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $oSheets.hasByName($sName) Then Return SetError($__LO_STATUS_Success, 0, True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
+EndFunc   ;==>_LOCalc_SheetExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_SheetGetActive
@@ -989,7 +1029,7 @@ EndFunc   ;==>_LOCalc_SheetMove
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-; Related .......: _LOCalc_DocHasSheetName
+; Related .......: _LOCalc_SheetExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1136,8 +1176,6 @@ EndFunc   ;==>_LOCalc_SheetPrintColumnsRepeat
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Print Range was successfully set.
 ;                  @Error 0 @Extended ? Return Array = Success. All optional parameters were set to Null, returning Array of Range Objects set to be printed. @extended set to number of Ranges. See remarks.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Print range(s) was successfully set.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call $aoRange with an empty Array (local $aArray[0]) to set the whole sheet to be printed (default), instead of a specific range.

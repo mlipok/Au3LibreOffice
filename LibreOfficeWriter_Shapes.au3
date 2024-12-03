@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf
 #include-once
 
 ; Main LibreOffice Includes
@@ -23,6 +24,7 @@
 ; _LOWriter_ShapeAreaFillStyle
 ; _LOWriter_ShapeAreaGradient
 ; _LOWriter_ShapeDelete
+; _LOWriter_ShapeExists
 ; _LOWriter_ShapeGetAnchor
 ; _LOWriter_ShapeGetObjByName
 ; _LOWriter_ShapeGetType
@@ -30,13 +32,13 @@
 ; _LOWriter_ShapeLineArrowStyles
 ; _LOWriter_ShapeLineProperties
 ; _LOWriter_ShapeName
-; _LOWriter_ShapePosition
-; _LOWriter_ShapeRotateSlant
-; _LOWriter_ShapesGetNames
 ; _LOWriter_ShapePointsAdd
 ; _LOWriter_ShapePointsGetCount
 ; _LOWriter_ShapePointsModify
 ; _LOWriter_ShapePointsRemove
+; _LOWriter_ShapePosition
+; _LOWriter_ShapeRotateSlant
+; _LOWriter_ShapesGetNames
 ; _LOWriter_ShapeTextBox
 ; _LOWriter_ShapeTransparency
 ; _LOWriter_ShapeTransparencyGradient
@@ -388,8 +390,53 @@ Func _LOWriter_ShapeDelete(ByRef $oDoc, $oShape)
 
 	$oDoc.getDrawPage().remove($oShape)
 
-	Return (_LOWriter_DocHasShapeName($oDoc, $sShapeName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+	Return (_LOWriter_ShapeExists($oDoc, $sShapeName)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeDelete
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapeExists
+; Description ...: Check if a Document contains a Shape with the specified name.
+; Syntax ........: _LOWriter_ShapeExists(ByRef $oDoc, $sShapeName)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+;                  $sShapeName          - a string value. The Shape name to search for.
+; Return values .: Success: Boolean
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sShapeName not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Draw Page Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If a Shape was found matching $sShapeName, True is returned, else False.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ShapeGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapeExists(ByRef $oDoc, $sShapeName)
+	Local $oShapes
+
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not IsString($sShapeName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $oShapes.hasElements() Then
+		For $i = 0 To $oShapes.getCount() - 1
+			If ($oShapes.getByIndex($i).Name() = $sShapeName) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
+EndFunc   ;==>_LOWriter_ShapeExists
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeGetAnchor
@@ -1074,201 +1121,12 @@ Func _LOWriter_ShapeName(ByRef $oDoc, ByRef $oShape, $sName = Null)
 	If ($sName = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oShape.Name())
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If _LOWriter_DocHasShapeName($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If _LOWriter_ShapeExists($oDoc, $sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	$oShape.Name = $sName
 	$iError = ($oShape.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ShapeName
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapePosition
-; Description ...: Set or Retrieve the Shape's position settings.
-; Syntax ........: _LOWriter_ShapePosition(ByRef $oShape[, $iX = Null[, $iY = Null[, $bProtectPos = Null]]])
-; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
-;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
-;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
-; Return values .: Success: 1 or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
-;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
-;                  @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $iX
-;                  |                               2 = Error setting $iY
-;                  |                               4 = Error setting $bProtectPos
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $iError = 0
-	Local $avPosition[3]
-	Local $tPos
-
-	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	$tPos = $oShape.Position()
-	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($iX, $iY, $bProtectPos) Then
-		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oShape.MoveProtect())
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
-	EndIf
-
-	If ($iX <> Null) Or ($iY <> Null) Then
-
-		If ($iX <> Null) Then
-			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-			$tPos.X = $iX
-		EndIf
-
-		If ($iY <> Null) Then
-			If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-			$tPos.Y = $iY
-		EndIf
-
-		$oShape.Position = $tPos
-
-		$iError = ($iX = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oShape.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
-		$iError = ($iY = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oShape.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
-	EndIf
-
-	If ($bProtectPos <> Null) Then
-		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		$oShape.MoveProtect = $bProtectPos
-		$iError = ($oShape.MoveProtect() = $bProtectPos) ? ($iError) : (BitOR($iError, 4))
-	EndIf
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_ShapePosition
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapeRotateSlant
-; Description ...: Set or retrieve Rotation and Slant settings for a Shape.
-; Syntax ........: _LOWriter_ShapeRotateSlant(ByRef $oShape[, $nRotate = Null[, $nSlant = Null]])
-; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
-;                  $nRotate             - [optional] a general number value (0-359.99). Default is Null. The Degrees to rotate the shape. See remarks.
-;                  $nSlant              - [optional] a general number value (-89-89.00). Default is Null. The Degrees to slant the shape. See remarks.
-; Return values .: Success: 1 or Array.
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0, or greater than 359.99.
-;                  @Error 1 @Extended 3 Return 0 = $nSlant not a Number, less than -89, or greater than 89.00.
-;                  --Property Setting Errors--
-;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
-;                  |                               1 = Error setting $nRotate
-;                  |                               2 = Error setting $nSlant
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
-;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: If you attempt to apply rotation to an already slanted Shape, or vice versa, a property setting error will occur, and the values will be very inaccurately applied.
-;                  This function uses the deprecated Libre Office methods RotateAngle, and ShearAngle, and may stop working in future Libre Office versions, after 7.3.4.2.
-;                  At the present time Control Point settings are not included as they are too complex to manipulate.
-;                  At the present time Corner Radius setting is not included, as I was unable to identify a shape that utilized this setting.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapeRotateSlant(ByRef $oShape, $nRotate = Null, $nSlant = Null)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $aiShape[2]
-	Local $iError = 0
-
-	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-
-	If __LOWriter_VarsAreNull($nRotate, $nSlant) Then
-		__LOWriter_ArrayFill($aiShape, ($oShape.RotateAngle()) / 100, ($oShape.ShearAngle()) / 100) ; Divide by 100 to match L.O. values.
-		Return SetError($__LO_STATUS_SUCCESS, 1, $aiShape)
-	EndIf
-
-	If ($nRotate <> Null) Then
-		If Not __LOWriter_NumIsBetween($nRotate, 0, 359.99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-		$oShape.RotateAngle = ($nRotate * 100) ; * 100 to match L.O. Values.
-		$iError = (($oShape.RotateAngle() / 100) = $nRotate) ? ($iError) : (BitOR($iError, 1))
-	EndIf
-
-	If ($nSlant <> Null) Then
-		If Not __LOWriter_NumIsBetween($nSlant, -89, 89) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		$oShape.ShearAngle = ($nSlant * 100) ; * 100 to match L.O. Values.
-		$iError = (($oShape.ShearAngle() / 100) = $nSlant) ? ($iError) : (BitOR($iError, 2))
-	EndIf
-
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-EndFunc   ;==>_LOWriter_ShapeRotateSlant
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_ShapesGetNames
-; Description ...: Return a list of Shape names contained in a document.
-; Syntax ........: _LOWriter_ShapesGetNames(ByRef $oDoc)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-; Return values .: Success: 2D Array
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shapes Object.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array containing a list of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
-;                  I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
-;                  Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_ShapesGetNames(ByRef $oDoc)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $asShapeNames[0][2]
-	Local $oShapes
-
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	$oShapes = $oDoc.DrawPage()
-	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If $oShapes.hasElements() Then
-		ReDim $asShapeNames[$oShapes.getCount()][2]
-		For $i = 0 To $oShapes.getCount() - 1
-			$asShapeNames[$i][0] = $oShapes.getByIndex($i).Name()
-			If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then
-				; If Supports Text Method, then get that impl. name, else just the regular impl. name.
-				$asShapeNames[$i][1] = $oShapes.getByIndex($i).Text.ImplementationName()
-			Else
-				$asShapeNames[$i][1] = $oShapes.getByIndex($i).ImplementationName()
-			EndIf
-
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-	EndIf
-
-	Return SetError($__LO_STATUS_SUCCESS, UBound($asShapeNames), $asShapeNames)
-EndFunc   ;==>_LOWriter_ShapesGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapePointsAdd
@@ -1808,7 +1666,7 @@ EndFunc   ;==>_LOWriter_ShapePointsGetCount
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapePointsModify
 ; Description ...: Modify an existing Position Point or Point Type in a shape.
-; Syntax ........: _LOWriter_ShapePointsModify2(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
+; Syntax ........: _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint[, $iX = Null[, $iY = Null[, $iPointType = Null[, $bIsCurve = Null]]]])
 ; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function. See remarks.
 ;                  $iPoint              - an integer value. The Point to modify, starting at 1.
 ;                  $iX                  - [optional] an integer value. Default is Null. The X coordinate value, set in Micrometers.
@@ -2291,6 +2149,195 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ShapePointsRemove
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapePosition
+; Description ...: Set or Retrieve the Shape's position settings.
+; Syntax ........: _LOWriter_ShapePosition(ByRef $oShape[, $iX = Null[, $iY = Null[, $bProtectPos = Null]]])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+;                  $iX                  - [optional] an integer value. Default is Null. The X position from the insertion point, in Micrometers.
+;                  $iY                  - [optional] an integer value. Default is Null. The Y position from the insertion point, in Micrometers.
+;                  $bProtectPos         - [optional] a boolean value. Default is Null. If True, the Shape's position is locked.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iX not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iY not an Integer.
+;                  @Error 1 @Extended 4 Return 0 = $bProtectPos not a Boolean.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Shape's Position Structure.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iX
+;                  |                               2 = Error setting $iY
+;                  |                               4 = Error setting $bProtectPos
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 3 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avPosition[3]
+	Local $tPos
+
+	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$tPos = $oShape.Position()
+	If Not IsObj($tPos) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($iX, $iY, $bProtectPos) Then
+		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oShape.MoveProtect())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
+	EndIf
+
+	If ($iX <> Null) Or ($iY <> Null) Then
+
+		If ($iX <> Null) Then
+			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+			$tPos.X = $iX
+		EndIf
+
+		If ($iY <> Null) Then
+			If Not IsInt($iY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+			$tPos.Y = $iY
+		EndIf
+
+		$oShape.Position = $tPos
+
+		$iError = ($iX = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oShape.Position.X(), $iX - 1, $iX + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iY = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oShape.Position.Y(), $iY - 1, $iY + 1)) ? ($iError) : (BitOR($iError, 2)))
+	EndIf
+
+	If ($bProtectPos <> Null) Then
+		If Not IsBool($bProtectPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oShape.MoveProtect = $bProtectPos
+		$iError = ($oShape.MoveProtect() = $bProtectPos) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_ShapePosition
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapeRotateSlant
+; Description ...: Set or retrieve Rotation and Slant settings for a Shape.
+; Syntax ........: _LOWriter_ShapeRotateSlant(ByRef $oShape[, $nRotate = Null[, $nSlant = Null]])
+; Parameters ....: $oShape              - [in/out] an object. A Shape object returned by a previous _LOWriter_ShapeInsert, or _LOWriter_ShapeGetObjByName function.
+;                  $nRotate             - [optional] a general number value (0-359.99). Default is Null. The Degrees to rotate the shape. See remarks.
+;                  $nSlant              - [optional] a general number value (-89-89.00). Default is Null. The Degrees to slant the shape. See remarks.
+; Return values .: Success: 1 or Array.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $nRotate not a Number, less than 0, or greater than 359.99.
+;                  @Error 1 @Extended 3 Return 0 = $nSlant not a Number, less than -89, or greater than 89.00.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $nRotate
+;                  |                               2 = Error setting $nSlant
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 2 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: If you attempt to apply rotation to an already slanted Shape, or vice versa, a property setting error will occur, and the values will be very inaccurately applied.
+;                  This function uses the deprecated Libre Office methods RotateAngle, and ShearAngle, and may stop working in future Libre Office versions, after 7.3.4.2.
+;                  At the present time Control Point settings are not included as they are too complex to manipulate.
+;                  At the present time Corner Radius setting is not included, as I was unable to identify a shape that utilized this setting.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapeRotateSlant(ByRef $oShape, $nRotate = Null, $nSlant = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $aiShape[2]
+	Local $iError = 0
+
+	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($nRotate, $nSlant) Then
+		__LOWriter_ArrayFill($aiShape, ($oShape.RotateAngle()) / 100, ($oShape.ShearAngle()) / 100) ; Divide by 100 to match L.O. values.
+		Return SetError($__LO_STATUS_SUCCESS, 1, $aiShape)
+	EndIf
+
+	If ($nRotate <> Null) Then
+		If Not __LOWriter_NumIsBetween($nRotate, 0, 359.99) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$oShape.RotateAngle = ($nRotate * 100) ; * 100 to match L.O. Values.
+		$iError = (($oShape.RotateAngle() / 100) = $nRotate) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($nSlant <> Null) Then
+		If Not __LOWriter_NumIsBetween($nSlant, -89, 89) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oShape.ShearAngle = ($nSlant * 100) ; * 100 to match L.O. Values.
+		$iError = (($oShape.ShearAngle() / 100) = $nSlant) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_ShapeRotateSlant
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_ShapesGetNames
+; Description ...: Retrieve an array of Shape names contained in a document.
+; Syntax ........: _LOWriter_ShapesGetNames(ByRef $oDoc)
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
+; Return values .: Success: 2D Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shapes Object.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
+;                  I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
+;                  Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_ShapesGetNames(ByRef $oDoc)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $asShapeNames[0][2]
+	Local $oShapes
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	$oShapes = $oDoc.DrawPage()
+	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $oShapes.hasElements() Then
+		ReDim $asShapeNames[$oShapes.getCount()][2]
+		For $i = 0 To $oShapes.getCount() - 1
+			$asShapeNames[$i][0] = $oShapes.getByIndex($i).Name()
+			If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then
+				; If Supports Text Method, then get that impl. name, else just the regular impl. name.
+				$asShapeNames[$i][1] = $oShapes.getByIndex($i).Text.ImplementationName()
+			Else
+				$asShapeNames[$i][1] = $oShapes.getByIndex($i).ImplementationName()
+			EndIf
+
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, UBound($asShapeNames), $asShapeNames)
+EndFunc   ;==>_LOWriter_ShapesGetNames
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ShapeTextBox
