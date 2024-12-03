@@ -40,6 +40,8 @@
 ; _LOCalc_SearchDescriptorCreate
 ; _LOCalc_SearchDescriptorModify
 ; _LOCalc_SearchDescriptorSimilarityModify
+; _LOCalc_SortFieldCreate
+; _LOCalc_SortFieldModify
 ; _LOCalc_VersionGet
 ; ===============================================================================================================================
 
@@ -54,32 +56,31 @@
 ;                  $vParam4             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ;                  $vParam5             - [optional] a variant value. Default is Null. Any optional parameter to be called with the user function.
 ; Return values .: Success: 1 or UserFunction.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $vUserFunction Not a Function, or Default keyword, or Null Keyword.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Successfully set the UserFunction.
-;				   @Error 0 @Extended 0 Return 2 = Successfully cleared the set UserFunction.
-;				   @Error 0 @Extended 0 Return Function = Returning the set UserFunction.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $vUserFunction Not a Function, or Default keyword, or Null Keyword.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Successfully set the UserFunction.
+;                  @Error 0 @Extended 0 Return 2 = Successfully cleared the set UserFunction.
+;                  @Error 0 @Extended 0 Return Function = Returning the set UserFunction.
 ; Author ........: mLipok
 ; Modified ......: donnyh13 - Added a clear UserFunction without error option. Also added parameters option.
 ; Remarks .......: The first parameter passed to the User function will always be the COM Error object. See below.
-;						Every COM Error will be passed to that function. The user can then read the following properties. (As
-;							Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the
-;							UserFunction. For Example MyFunc($oMyError)
-;							$oMyError.number The Windows HRESULT value from a COM call
-;							$oMyError.windescription The FormatWinError() text derived from .number
-;							$oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
-;							$oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
-;							$oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
-;							$oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
-;							$oMyError.lastdllerror The number returned from GetLastError()
-;							$oMyError.scriptline The script line on which the error was generated
-;				    		NOTE: Not all properties will necessarily contain data, some will be blank.
-;				   If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
-;				   If called with Default keyword, the current UserFunction, if set, will be returned.
-;				   If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
-;				   The stored UserFunction (besides MsgBox and ConsoleWrite) will be called as follows: UserFunc($oComError,$vParam1,$vParam2,$vParam3,$vParam4,$vParam5)
+;                  Every COM Error will be passed to that function. The user can then read the following properties. (As Found in the COM Reference section in Autoit HelpFile.) Using the first parameter in the UserFunction.
+;                  For Example MyFunc($oMyError)
+;                    $oMyError.number The Windows HRESULT value from a COM call
+;                    $oMyError.windescription The FormatWinError() text derived from .number
+;                    $oMyError.source Name of the Object generating the error (contents from ExcepInfo.source)
+;                    $oMyError.description Source Object's description of the error (contents from ExcepInfo.description)
+;                    $oMyError.helpfile Source Object's help file for the error (contents from ExcepInfo.helpfile)
+;                    $oMyError.helpcontext Source Object's help file context id number (contents from ExcepInfo.helpcontext)
+;                    $oMyError.lastdllerror The number returned from GetLastError()
+;                    $oMyError.scriptline The script line on which the error was generated
+;                    NOTE: Not all properties will necessarily contain data, some will be blank.
+;                  If MsgBox or ConsoleWrite functions are passed to this function, the error details will be displayed using that function automatically.
+;                  If called with Default keyword, the current UserFunction, if set, will be returned.
+;                  If called with Null keyword, the currently set UserFunction is cleared and only the internal ComErrorHandler will be called for COM Errors.
+;                  The stored UserFunction (besides MsgBox and ConsoleWrite) will be called as follows: UserFunc($oComError,$vParam1,$vParam2,$vParam3,$vParam4,$vParam5)
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -125,20 +126,20 @@ EndFunc   ;==>_LOCalc_ComError_UserFunction
 ;                  $iHSB                - [optional] an integer value. Default is Null. Convert Long Color Integer to H.S.B.
 ;                  $iCMYK               - [optional] an integer value. Default is Null. Convert Long Color Integer to C.M.Y.K.
 ; Return values .: Success: String or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = No parameters set.
-;				   @Error 1 @Extended 2 Return 0 = No parameters set to an integer.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return String. Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
-;				   @Error 0 @Extended 2 Return Array. Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R,  $Array[1] = G, etc.
-;				   @Error 0 @Extended 3 Return Array. Array containing Long integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
-;				   @Error 0 @Extended 4 Return Array. Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = No parameters set.
+;                  @Error 1 @Extended 2 Return 0 = No parameters set to an integer.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Long integer converted To Hexadecimal (as a String). (Without the "0x" prefix)
+;                  @Error 0 @Extended 2 Return Array = Array containing Long integer converted To Red, Green, Blue,(RGB). $Array[0] = R, $Array[1] = G, etc.
+;                  @Error 0 @Extended 3 Return Array = Array containing Long integer converted To Hue, Saturation, Brightness, (HSB). $Array[0] = H, $Array[1] = S, etc.
+;                  @Error 0 @Extended 4 Return Array = Array containing Long integer converted To Cyan, Magenta, Yellow, Black, (CMYK). $Array[0] = C, $Array[1] = M, etc.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To retrieve a Hexadecimal color value, call the Long Color code in $iHex, To retrieve a R(ed)G(reen)B(lue) color value, call Null in $iHex, and call the Long color code into $iRGB, etc. for the other color types.
-;				   Hex returns as a string variable, all others (RGB, HSB, CMYK) return an array.
-;				   Note: The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;                  Hex returns as a string variable, all others (RGB, HSB, CMYK) return an array.
+;                  The Hexadecimal figure returned doesn't contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOCalc_ConvertColorToLong
 ; Link ..........:
 ; Example .......: Yes
@@ -150,25 +151,26 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Select
-		Case IsInt($iHex) ; Long TO Hex
-			$nRed = Int(Mod(($iHex / 65536), 256))
-			$nGreen = Int(Mod(($iHex / 256), 256))
-			$nBlue = Int(Mod($iHex, 256))
+		Case IsInt($iHex) ; Long to Hex
+			$nRed = BitAND(BitShift($iHex, 16), 0xff)
+			$nGreen = BitAND(BitShift($iHex, 8), 0xff)
+			$nBlue = BitAND($iHex, 0xff)
 
 			$dHex = Hex($nRed, 2) & Hex($nGreen, 2) & Hex($nBlue, 2)
 			Return SetError($__LO_STATUS_SUCCESS, 1, $dHex)
 
 		Case IsInt($iRGB) ; Long to RGB
-			$nRed = Int(Mod(($iRGB / 65536), 256))
-			$nGreen = Int(Mod(($iRGB / 256), 256))
-			$nBlue = Int(Mod($iRGB, 256))
+			$nRed = BitAND(BitShift($iRGB, 16), 0xff)
+			$nGreen = BitAND(BitShift($iRGB, 8), 0xff)
+			$nBlue = BitAND($iRGB, 0xff)
+
 			ReDim $aiReturn[3]
 			$aiReturn[0] = $nRed
 			$aiReturn[1] = $nGreen
 			$aiReturn[2] = $nBlue
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiReturn)
-		Case IsInt($iHSB) ; Long TO HSB
 
+		Case IsInt($iHSB) ; Long to HSB
 			$nRed = (Mod(($iHSB / 65536), 256)) / 255
 			$nGreen = (Mod(($iHSB / 256), 256)) / 255
 			$nBlue = (Mod($iHSB, 256)) / 255
@@ -214,6 +216,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			$aiReturn[2] = $nBrightness
 
 			Return SetError($__LO_STATUS_SUCCESS, 3, $aiReturn)
+
 		Case IsInt($iCMYK) ; Long to CMYK
 
 			$nRed = (Mod(($iCMYK / 65536), 256))
@@ -244,6 +247,7 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			$aiReturn[2] = $nYellow
 			$aiReturn[3] = $nBlack
 			Return SetError($__LO_STATUS_SUCCESS, 4, $aiReturn)
+
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
@@ -259,30 +263,30 @@ EndFunc   ;==>_LOCalc_ConvertColorFromLong
 ;                  $vVal3               - [optional] a variant value. Default is Null. See remarks.
 ;                  $vVal4               - [optional] a variant value. Default is Null. See remarks.
 ; Return values .: Success: Integer.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = No parameters set.
-;				   @Error 1 @Extended 2 Return 0 = One parameter called, but not in String format(Hex).
-;				   @Error 1 @Extended 3 Return 0 = Hex parameter contains non Hex characters.
-;				   @Error 1 @Extended 4 Return 0 = Hex parameter not 6 characters long.
-;				   @Error 1 @Extended 5 Return 0 = Hue parameter contains more than just digits.
-;				   @Error 1 @Extended 6 Return 0 = Saturation parameter contains more than just digits.
-;				   @Error 1 @Extended 7 Return 0 = Brightness parameter contains more than just digits.
-;				   @Error 1 @Extended 8 Return 0 = Three parameters called but not all Integers (RGB) and not all Strings (HSB).
-;				   @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
-;				   @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return Integer. Long Int. Color code converted from Hexadecimal.
-;				   @Error 0 @Extended 2 Return Integer. Long Int. Color code converted from Red, Green, Blue, (RGB).
-;				   @Error 0 @Extended 3 Return Integer. Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
-;				   @Error 0 @Extended 4 Return Integer. Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = No parameters set.
+;                  @Error 1 @Extended 2 Return 0 = One parameter called, but not in String format(Hex).
+;                  @Error 1 @Extended 3 Return 0 = Hex parameter contains non Hex characters.
+;                  @Error 1 @Extended 4 Return 0 = Hex parameter not 6 characters long.
+;                  @Error 1 @Extended 5 Return 0 = Hue parameter contains more than just digits.
+;                  @Error 1 @Extended 6 Return 0 = Saturation parameter contains more than just digits.
+;                  @Error 1 @Extended 7 Return 0 = Brightness parameter contains more than just digits.
+;                  @Error 1 @Extended 8 Return 0 = Three parameters called but not all Integers (RGB) and not all Strings (HSB).
+;                  @Error 1 @Extended 9 Return 0 = Four parameters called but not all Integers(CMYK).
+;                  @Error 1 @Extended 10 Return 0 = Too many or too few parameters called.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Integer = Long Int. Color code converted from Hexadecimal.
+;                  @Error 0 @Extended 2 Return Integer = Long Int. Color code converted from Red, Green, Blue, (RGB).
+;                  @Error 0 @Extended 3 Return Integer = Long Int. Color code converted from (H)ue, (S)aturation, (B)rightness,
+;                  @Error 0 @Extended 4 Return Integer = Long Int. Color code converted from (C)yan, (M)agenta, (Y)ellow, Blac(k)
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To Convert a Hex(adecimal) color code, call the Hex code in $vVal1 in String Format.
-;				   To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
-;				   To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
-;				   To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
-;				   Note: The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
+;                  To convert a R(ed) G(reen) B(lue color, call R value in $vVal1 as an Integer, G in $vVal2 as an Integer, and B in $vVal3 as an Integer.
+;                  To convert a H(ue) S(aturation) B(rightness) color, call H in $vVal1 as a String, S in $vVal2 as a String, and B in $vVal3 as a string.
+;                  To convert C(yan) M(agenta) Y(ellow) Blac(k) call C in $vVal1 as an Integer, M in $vVal2 as an Integer, Y in $vVal3 as an Integer, and K in $vVal4 as an Integer format.
+;                  The Hexadecimal figure entered cannot contain the usual "0x", as LibeOffice does not implement it in its numbering system.
 ; Related .......: _LOCalc_ConvertColorFromLong
 ; Link ..........:
 ; Example .......: Yes
@@ -412,30 +416,28 @@ EndFunc   ;==>_LOCalc_ConvertColorToLong
 ;                  $nMillimeterOut      - [optional] a general number value. Default is Null. The Micrometers to convert to Millimeters. See remarks.
 ;                  $nPointsOut          - [optional] a general number value. Default is Null. The Micrometers to convert to Printer's Points. See remarks.
 ; Return values .: Success: Number
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $nInchOut not a number.
-;				   @Error 1 @Extended 2 Return 0 = $nCentimeterOut not a number.
-;				   @Error 1 @Extended 3 Return 0 = $nMillimeterOut not a number.
-;				   @Error 1 @Extended 4 Return 0 = $nPointsOut not a number.
-;				   @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error converting from Micrometers to Inch.
-;				   @Error 3 @Extended 2 Return 0 = Error converting from Micrometers to Centimeter.
-;				   @Error 3 @Extended 3 Return 0 = Error converting from Micrometers to Millimeter.
-;				   @Error 3 @Extended 4 Return 0 = Error converting from Micrometers to Printer's Points.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return Number. Converted from Micrometers to Inch.
-;				   @Error 0 @Extended 2 Return Number. Converted from Micrometers to Centimeter.
-;				   @Error 0 @Extended 3 Return Number. Converted from Micrometers to Millimeter.
-;				   @Error 0 @Extended 4 Return Number. Converted from Micrometers to Printer's Points.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $nInchOut not a number.
+;                  @Error 1 @Extended 2 Return 0 = $nCentimeterOut not a number.
+;                  @Error 1 @Extended 3 Return 0 = $nMillimeterOut not a number.
+;                  @Error 1 @Extended 4 Return 0 = $nPointsOut not a number.
+;                  @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting from Micrometers to Inch.
+;                  @Error 3 @Extended 2 Return 0 = Error converting from Micrometers to Centimeter.
+;                  @Error 3 @Extended 3 Return 0 = Error converting from Micrometers to Millimeter.
+;                  @Error 3 @Extended 4 Return 0 = Error converting from Micrometers to Printer's Points.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Number = Converted from Micrometers to Inch.
+;                  @Error 0 @Extended 2 Return Number = Converted from Micrometers to Centimeter.
+;                  @Error 0 @Extended 3 Return Number = Converted from Micrometers to Millimeter.
+;                  @Error 0 @Extended 4 Return Number = Converted from Micrometers to Printer's Points.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: To skip a parameter, set it to Null.
-;				   If you are converting to Inches, place the Micrometers in $nInchOut, if
-;					converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.  A
-;					Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a
-;					measurement parameter.
+;                  If you are converting to Inches, place the Micrometers in $nInchOut, if converting to Millimeters, $nInchOut and $nCentimeter are set to Null, and $nMillimetersOut is set.
+;                  A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOCalc_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -483,28 +485,28 @@ EndFunc   ;==>_LOCalc_ConvertFromMicrometer
 ;                  $nMillimeterIn       - [optional] a general number value. Default is Null. The Millimeters to convert to Micrometers. See remarks.
 ;                  $nPointsIn           - [optional] a general number value. Default is Null. The Printer's Points to convert to Micrometers. See remarks.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $nInchIn not a number.
-;				   @Error 1 @Extended 2 Return 0 = $nCentimeterIn not a number.
-;				   @Error 1 @Extended 3 Return 0 = $nMillimeterIn not a number.
-;				   @Error 1 @Extended 4 Return 0 = $nPointsIn not a number.
-;				   @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error converting from Inches to Micrometers.
-;				   @Error 3 @Extended 2 Return 0 = Error converting from Centimeters to Micrometers.
-;				   @Error 3 @Extended 3 Return 0 = Error converting from Millimeters to Micrometers.
-;				   @Error 3 @Extended 4 Return 0 = Error converting from Printer's Points to Micrometers.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return Integer. Converted Inches to Micrometers.
-;				   @Error 0 @Extended 2 Return Integer. Converted Centimeters to Micrometers.
-;				   @Error 0 @Extended 3 Return Integer. Converted Millimeters to Micrometers.
-;				   @Error 0 @Extended 4 Return Integer. Converted Printer's Points to Micrometers.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $nInchIn not a number.
+;                  @Error 1 @Extended 2 Return 0 = $nCentimeterIn not a number.
+;                  @Error 1 @Extended 3 Return 0 = $nMillimeterIn not a number.
+;                  @Error 1 @Extended 4 Return 0 = $nPointsIn not a number.
+;                  @Error 1 @Extended 5 Return 0 = No parameters set to other than Null.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error converting from Inches to Micrometers.
+;                  @Error 3 @Extended 2 Return 0 = Error converting from Centimeters to Micrometers.
+;                  @Error 3 @Extended 3 Return 0 = Error converting from Millimeters to Micrometers.
+;                  @Error 3 @Extended 4 Return 0 = Error converting from Printer's Points to Micrometers.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return Integer = Converted Inches to Micrometers.
+;                  @Error 0 @Extended 2 Return Integer = Converted Centimeters to Micrometers.
+;                  @Error 0 @Extended 3 Return Integer = Converted Millimeters to Micrometers.
+;                  @Error 0 @Extended 4 Return Integer = Converted Printer's Points to Micrometers.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: To skip a parameter, set it to Null. If you are converting from Inches, call inches in $nInchIn, if
-;					converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set. A Micrometer is 1000th of a
-;					centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
+; Remarks .......: To skip a parameter, set it to Null.
+;                  If you are converting from Inches, call inches in $nInchIn, if converting from Centimeters, $nInchIn is called with Null, and $nCentimeters is set.
+;                  A Micrometer is 1000th of a centimeter, and is used in almost all Libre Office functions that contain a measurement parameter.
 ; Related .......: _LOCalc_ConvertFromMicrometer
 ; Link ..........:
 ; Example .......: Yes
@@ -558,25 +560,26 @@ EndFunc   ;==>_LOCalc_ConvertToMicrometer
 ;                  $oCopyOutput         - [optional] an object. Default is Null. The location to copy filter data to. If a range is input, the first cell is used. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $bSaveCriteria       - [optional] a boolean value. Default is True. If True, the output range remains linked to the source range, allowing for future re-application of the same filter to the range. Source Range must be previously defined as a Database range.
 ; Return values .: Success: Object
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
-;				   @Error 1 @Extended 3 Return 0 = $bCaseSensitive not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bSkipDupl not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $bUseRegExp not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $bHeaders not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
-;				   @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object and not set to Null.
-;				   @Error 1 @Extended 9 Return 0 = $bSaveCriteria not a Boolean.
-;				   @Error 1 @Extended 10 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
-;				   @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
-;				   @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Successfully created a Filter descriptor Object, returning its Object.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
+;                  @Error 1 @Extended 3 Return 0 = $bCaseSensitive not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bSkipDupl not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bUseRegExp not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bHeaders not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bCopyOutput not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $oCopyOutput not an Object and not set to Null.
+;                  @Error 1 @Extended 9 Return 0 = $bSaveCriteria not a Boolean.
+;                  @Error 1 @Extended 10 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
+;                  @Error 1 @Extended 11 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Filter Descriptor Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Successfully created a Filter descriptor Object, returning its Object.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -613,10 +616,10 @@ Func _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField, $bCaseSensiti
 		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tCellInputAddr = $oCopyOutput.RangeAddress()
-		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
@@ -659,33 +662,33 @@ EndFunc   ;==>_LOCalc_FilterDescriptorCreate
 ;                  $oCopyOutput         - [optional] an object. Default is Null. The location to copy filter data to. If a range is input, the first cell is used. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
 ;                  $bSaveCriteria       - [optional] a boolean value. Default is Null. If True, the output range remains linked to the source range, allowing for future re-application of the same filter to the range. Source Range must be previously defined as a Database range.
 ; Return values .: Success: 1 or Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oFilterDesc not an Object.
-;				   @Error 1 @Extended 3 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
-;				   @Error 1 @Extended 4 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
-;				   @Error 1 @Extended 5 Return 0 = $bCaseSensitive not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $bSkipDupl not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $bUseRegExp not a Boolean.
-;				   @Error 1 @Extended 8 Return 0 = $bHeaders not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $bCopyOutput not a Boolean.
-;				   @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
-;				   @Error 1 @Extended 11 Return 0 = $oCopyOutput not an Object.
-;				   @Error 1 @Extended 12 Return 0 = $bSaveCriteria not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve Cell Object for Cell referenced in $oCopyOutput.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
-;				   @Error 2 @Extended 3 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
-;				   --Success--
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Filter Descriptor was successfully modified.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oFilterDesc not an Object.
+;                  @Error 1 @Extended 3 Return 0 = $atFilterField not an Array, or Array contains more than 8 elements.
+;                  @Error 1 @Extended 4 Return ? = $atFilterField contains an element that is not an Object. Returning the element number containing the error.
+;                  @Error 1 @Extended 5 Return 0 = $bCaseSensitive not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $bSkipDupl not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bUseRegExp not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bHeaders not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bCopyOutput not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $bCopyOutput set to True, but $oCopyOutput not an Object.
+;                  @Error 1 @Extended 11 Return 0 = $oCopyOutput not an Object.
+;                  @Error 1 @Extended 12 Return 0 = $bSaveCriteria not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.table.CellAddress" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Cell Object for Cell referenced in $oCopyOutput.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Cell Address for Cell or Cell Range called in $oCopyOutput.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Filter Descriptor was successfully modified.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: When retrieving the current settings for a filter descriptor, the Return value for $oCopyOutput is a single Cell Object.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_FilterDescriptorCreate, _LOCalc_FilterFieldCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -703,7 +706,7 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 
 	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp, $bHeaders, $bCopyOutput, $oCopyOutput, $bSaveCriteria) Then
 		$oCell = $oRange.Spreadsheet.getCellByPosition($oFilterDesc.OutputPosition.Column(), $oFilterDesc.OutputPosition.Row())
-		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avFilter, $oFilterDesc.getFilterFields2(), $oFilterDesc.IsCaseSensitive(), $oFilterDesc.SkipDuplicates(), $oFilterDesc.UseRegularExpressions(), _
 				$oFilterDesc.ContainsHeader(), $oFilterDesc.CopyOutputData(), $oCell, $oFilterDesc.SaveOutputPosition())
@@ -749,10 +752,10 @@ Func _LOCalc_FilterDescriptorModify(ByRef $oRange, ByRef $oFilterDesc, $atFilter
 		If Not IsObj($oCopyOutput) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 		$tCellInputAddr = $oCopyOutput.RangeAddress()
-		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+		If Not IsObj($tCellInputAddr) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		$tCellAddr = __LOCalc_CreateStruct("com.sun.star.table.CellAddress")
-		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+		If Not IsObj($tCellAddr) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
@@ -780,18 +783,18 @@ EndFunc   ;==>_LOCalc_FilterDescriptorModify
 ;                  $iCondition          - [optional] an integer value (0-17). Default is $LOC_FILTER_CONDITION_EMPTY. The comparative condition to test each cell and value by. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  $iOperator           - [optional] an integer value (0,1). Default is $LOC_FILTER_OPERATOR_AND. The connection this filter field has with the previous filter field. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Struct
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $iColumn not an Integer.
-;				   @Error 1 @Extended 2 Return 0 = $bIsNumeric not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $nValue not a number.
-;				   @Error 1 @Extended 4 Return 0 = $sString not a String.
-;				   @Error 1 @Extended 5 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
-;				   @Error 1 @Extended 6 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.sheet.TableFilterField2" Struct.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Struct = Success. Successfully created and returned the Filter Field Structure.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iColumn not an Integer.
+;                  @Error 1 @Extended 2 Return 0 = $bIsNumeric not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $nValue not a number.
+;                  @Error 1 @Extended 4 Return 0 = $sString not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.sheet.TableFilterField2" Struct.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Struct = Success. Successfully created and returned the Filter Field Structure.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Filter Descriptor can contain up to 8 of these Filter Fields. Once you create the Filter Field Structure, place it in an array before using it to create a Filter descriptor. Place each Filter Field Structure in a separate element of the Array.
@@ -799,7 +802,7 @@ EndFunc   ;==>_LOCalc_FilterDescriptorModify
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOCalc_FilterFieldCreate($iColumn, $bIsNumeric = False, $nValue = 0, $sString = "", $iCondition = $LOC_FILTER_Condition_EMPTY, $iOperator = $LOC_FILTER_OPERATOR_AND)
+Func _LOCalc_FilterFieldCreate($iColumn, $bIsNumeric = False, $nValue = 0, $sString = "", $iCondition = $LOC_FILTER_CONDITION_EMPTY, $iOperator = $LOC_FILTER_OPERATOR_AND)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -839,23 +842,23 @@ EndFunc   ;==>_LOCalc_FilterFieldCreate
 ;                  $iCondition          - [optional] an integer value (0-17). Default is Null. The comparative condition to test each cell and value by.
 ;                  $iOperator           - [optional] an integer value (0,1). Default is Null. The connection this filter field has with the previous filter field.
 ; Return values .: Success: Struct
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $tFilterField not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $bIsNumeric not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $nValue not a number.
-;				   @Error 1 @Extended 5 Return 0 = $sString not a String.
-;				   @Error 1 @Extended 6 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
-;				   @Error 1 @Extended 7 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Filter Field Structure was successfully modified.
-;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $tFilterField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iColumn not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $bIsNumeric not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $nValue not a number.
+;                  @Error 1 @Extended 5 Return 0 = $sString not a String.
+;                  @Error 1 @Extended 6 Return 0 = $iCondition not an Integer, less than 0 or greater than 17. See Constants $LOC_FILTER_CONDITION_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $iOperator not an Integer, less than 0 or greater than 1. See Constants $LOC_FILTER_OPERATOR_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Filter Field Structure was successfully modified.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 6 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: A Filter Descriptor can contain up to 8 of these Filter Fields. Once you create the Filter Field Structure, place it in an array before using it to create a Filter descriptor. Place each Filter Field Structure in a separate element of the Array.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_FilterFieldCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -913,18 +916,18 @@ EndFunc   ;==>_LOCalc_FilterFieldModify
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $sFormat             - a string value. The format key String to create.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $sFormat not a String.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Attempted to Create or Retrieve the Format key, but failed.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
-;				   @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $sFormat not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to Create or Retrieve the Format key.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Format Key was successfully created, returning Format Key integer.
+;                  @Error 0 @Extended 1 Return Integer = Success. Format Key already existed, returning Format Key integer.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -945,13 +948,13 @@ Func _LOCalc_FormatKeyCreate(ByRef $oDoc, $sFormat)
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$iFormatKey = $oFormats.queryKey($sFormat, $tLocale, False)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 1, $iFormatKey) ; Format already existed
 	$iFormatKey = $oFormats.addNew($sFormat, $tLocale)
 	If ($iFormatKey > -1) Then Return SetError($__LO_STATUS_SUCCESS, 0, $iFormatKey) ; Format created
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to create or retrieve Format
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Failed to create or retrieve Format
 EndFunc   ;==>_LOCalc_FormatKeyCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -961,19 +964,17 @@ EndFunc   ;==>_LOCalc_FormatKeyCreate
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKey          - an integer value. The User-Created format Key to delete.
 ; Return values .: Success: 1
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
-;				   @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to delete key.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Format Key was successfully deleted.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = Format Key called in $iFormatKey not found in Document.
+;                  @Error 1 @Extended 4 Return 0 = Format Key called in $iFormatKey not User-Created.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to delete key.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Format Key was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -985,43 +986,41 @@ Func _LOCalc_FormatKeyDelete(ByRef $oDoc, $iFormatKey)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $tLocale
 	Local $oFormats
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Key not found.
-	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
-	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	If ($oFormats.getbykey($iFormatKey).UserDefined() = False) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Key not User Created.
 
 	$oFormats.removeByKey($iFormatKey)
 
-	Return (_LOCalc_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
+	Return (_LOCalc_FormatKeyExists($oDoc, $iFormatKey) = False) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 EndFunc   ;==>_LOCalc_FormatKeyDelete
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyExists
 ; Description ...: Check if a Document contains a certain Format Key.
-; Syntax ........: _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, Const $iFormatType)
+; Syntax ........: _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey[, $iFormatType = $LOC_FORMAT_KEYS_ALL])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to look for.
 ;                  $iFormatType         - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to search in. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Boolean
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iFormatType not an Integer.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;				   @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Date/Time Formats.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return True = Success. Format Key exists in document.
-;				   @Error 0 @Extended 1 Return False = Success. Format Key does not exist in document.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iFormatType not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to Create "com.sun.star.lang.Locale" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Date/Time Formats.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Boolean = Success. If the Format Key exists in document, True is returned, else false.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1043,16 +1042,16 @@ Func _LOCalc_FormatKeyExists(ByRef $oDoc, $iFormatKey, $iFormatType = $LOC_FORMA
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
 		If ($aiFormatKeys[$i] = $iFormatKey) Then Return SetError($__LO_STATUS_SUCCESS, 0, True) ; Doc does contain format Key
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 	Next
 
-	Return SetError($__LO_STATUS_SUCCESS, 1, False) ; Doc does not contain format Key
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; Doc does not contain format Key
 EndFunc   ;==>_LOCalc_FormatKeyExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -1062,17 +1061,17 @@ EndFunc   ;==>_LOCalc_FormatKeyExists
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKeyType      - an integer value (1-8196). The Format Key type to retrieve the standard Format for. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Integer
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve Number Formats Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Integer = Success. Returning the Standard Format for the requested Format Key Type.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iFormatKeyType not an Integer, less than 1 or greater than 8196. See Constants $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.lang.Locale" Struct.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Number Formats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve the Standard Format for the requested Format Key Type.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning the Standard Format for the requested Format Key Type.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1094,10 +1093,10 @@ Func _LOCalc_FormatKeyGetStandard(ByRef $oDoc, $iFormatKeyType)
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	$iStandard = $oFormats.getStandardFormat($iFormatKeyType, $tLocale)
-	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	If Not IsInt($iStandard) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iStandard)
 EndFunc   ;==>_LOCalc_FormatKeyGetStandard
@@ -1108,16 +1107,16 @@ EndFunc   ;==>_LOCalc_FormatKeyGetStandard
 ; Syntax ........: _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $iFormatKey          - an integer value. The Format Key to retrieve the string for.
-; Return values .:Success: String
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
-;				   @Error 1 @Extended 3 Return 0 = $iFormatKey not found in Document.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
+; Return values .: Success: String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iFormatKey not an Integer.
+;                  @Error 1 @Extended 3 Return 0 = $iFormatKey not found in Document.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve requested Format Key Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Returning Format Key's Format String.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -1135,7 +1134,7 @@ Func _LOCalc_FormatKeyGetString(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not _LOCalc_FormatKeyExists($oDoc, $iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	$oFormatKey = $oDoc.getNumberFormats().getByKey($iFormatKey)
-	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0) ; Key not found.
+	If Not IsObj($oFormatKey) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Key not found.
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormatKey.FormatString())
 EndFunc   ;==>_LOCalc_FormatKeyGetString
@@ -1143,31 +1142,30 @@ EndFunc   ;==>_LOCalc_FormatKeyGetString
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_FormatKeyList
 ; Description ...: Retrieve an Array of Date/Time Format Keys.
-; Syntax ........: _LOCalc_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = Null]]])
+; Syntax ........: _LOCalc_FormatKeyList(ByRef $oDoc[, $bIsUser = False[, $bUserOnly = False[, $iFormatKeyType = $LOC_FORMAT_KEYS_ALL]]])
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
 ;                  $bIsUser             - [optional] a boolean value. Default is False. If True, Adds a third column to the return Array with a boolean, whether each Key is user-created or not.
 ;                  $bUserOnly           - [optional] a boolean value. Default is False. If True, only user-created Format Keys are returned.
-;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to retrieve a list for. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
+;                  $iFormatKeyType      - [optional] an integer value (0-15881). Default is $LOC_FORMAT_KEYS_ALL. The Format Key type to retrieve an array of. Values can be BitOr'd together. See Constants, $LOC_FORMAT_KEYS_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: Array
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bIsUser not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $bUserOnly not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $iFormatKeyType not an Integer.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
-;				   @Error 2 @Extended 2 Return 0 = Failed to retrieve NumberFormats Object.
-;				   @Error 2 @Extended 3 Return 0 = Failed to obtain Array of Format Keys.
-;				   --Success--
-;				   @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting.
-;				   +						Column One (Array[0][0]) will contain the Format Key integer,
-;				   +						Column two (Array[0][1]) will contain the Format Key String,
-;				   +						If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else false.
-;				   +						@Extended is set to the number of Keys returned.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bIsUser not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bUserOnly not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $iFormatKeyType not an Integer.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create "com.sun.star.lang.Locale" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve NumberFormats Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to obtain Array of Format Keys.
+;                  --Success--
+;                  @Error 0 @Extended ? Return Array = Success. Returning a 2 or 3 column Array, depending on current $bIsUser setting. See remarks. @Extended is set to the number of Keys returned.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: Column One (Array[0][0]) will contain the Format Key integer,
+;                  Column two (Array[0][1]) will contain the Format Key String,
+;                  If $bIsUser is set to True, Column Three (Array[0][2]) will contain a Boolean, True if the Format Key is User-created, else false.
 ; Related .......: _LOCalc_FormatKeyDelete, _LOCalc_FormatKeyGetString, _LOCalc_FormatKeyGetStandard
 ; Link ..........:
 ; Example .......: Yes
@@ -1192,9 +1190,9 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 	$tLocale = __LOCalc_CreateStruct("com.sun.star.lang.Locale")
 	If Not IsObj($tLocale) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 	$oFormats = $oDoc.getNumberFormats()
-	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If Not IsObj($oFormats) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$aiFormatKeys = $oFormats.queryKeys($iFormatKeyType, $tLocale, False)
-	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+	If Not IsArray($aiFormatKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 
@@ -1227,21 +1225,17 @@ EndFunc   ;==>_LOCalc_FormatKeyList
 ; Parameters ....: $sFilePath           - a string value. Full path to convert in String format.
 ;                  $iReturnMode         - [optional] an integer value (0-2). Default is $__g_iAutoReturn. The type of path format to return. See Constants, $LOC_PATHCONV_* as defined in LibreOfficeCalc_Constants.au3.
 ; Return values .: Success: String.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $sFilePath is not a string
-;				   @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0, or greater than 2, see constants, $LOC_PATHCONV_* as defined in LibreOfficeCalc_Constants.au3.
-;				   --Success--
-;				   @Error 0 @Extended 1 Return String = Returning converted File Path from Libre Office URL.
-;				   @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $sFilePath is not a string
+;                  @Error 1 @Extended 2 Return 0 = $iReturnMode not a Integer, less than 0, or greater than 2, see constants, $LOC_PATHCONV_* as defined in LibreOfficeCalc_Constants.au3.
+;                  --Success--
+;                  @Error 0 @Extended 1 Return String = Returning converted File Path from Libre Office URL.
+;                  @Error 0 @Extended 2 Return String = Returning converted path from File Path to Libre Office URL.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: LibeOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are
-;					allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found
-;					in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering,
-;					Basic Programmer's Guide; Page 74
-;					The user generally should not even need this function, as I have endeavored to convert any URLs to the
-;						appropriate computer path format and any input computer paths to a Libre Office URL.
+; Remarks .......: LibreOffice URL notation is based on the Internet Standard RFC 1738, which means only [0-9],[a-zA-Z] are allowed in paths, most other characters need to be converted into ISO 8859-1 (ISO Latin) such as is found in internet URL's (spaces become %20). See: StarOfficeTM 6.0 Office SuiteA SunTM ONE Software Offering, Basic Programmer's Guide; Page 74
+;                  The user generally should not even need this function, as I have endeavored to convert any URLs to the appropriate computer path format and any input computer paths to a Libre Office URL.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -1312,25 +1306,25 @@ EndFunc   ;==>_LOCalc_PathConvert
 ;                  $bWildcards          - [optional] a boolean value. Default is False. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
 ;                  $bStyles             - [optional] a boolean value. Default is False. If True, the search string is considered a Cell Style name, and the search will return any Cell utilizing the specified name.
 ; Return values .: Success: Object.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oRange not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $bBackwards not a Boolean.
-;				   @Error 1 @Extended 3 Return 0 = $bSearchRows not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bMatchCase not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
-;				   @Error 1 @Extended 6 Return 0 = $bEntireCell not a Boolean.
-;				   @Error 1 @Extended 7 Return 0 = $bRegExp not a Boolean.
-;				   @Error 1 @Extended 8 Return 0 = $bWildcards not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $bStyles not a Boolean.
-;				   @Error 1 @Extended 10 Return 0 = Both $bRegExp and $bWildcards are set to True, only one can be True at one time.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $bBackwards not a Boolean.
+;                  @Error 1 @Extended 3 Return 0 = $bSearchRows not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bMatchCase not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bEntireCell not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bRegExp not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bWildcards not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bStyles not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = Both $bRegExp and $bWildcards are set to True, only one can be True at one time.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create Search Descriptor.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returns a Search Descriptor Object for setting Search options.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: Note: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
+; Remarks .......: The returned Search Descriptor is only good for the Document that contained the Range it was created by, it WILL NOT work for other Documents.
 ; Related .......: _LOCalc_SearchDescriptorModify, _LOCalc_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes
@@ -1385,26 +1379,26 @@ EndFunc   ;==>_LOCalc_SearchDescriptorCreate
 ;                  $bWildcards          - [optional] a boolean value. Default is Null. If True, the search string is considered to contain wildcards (* ?). A Backslash can be used to escape a wildcard.
 ;                  $bStyles             - [optional] a boolean value. Default is Null. If True, the search string is considered a Cell Style name, and the search will return any Cell utilizing the specified name.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
-;				   @Error 1 @Extended 3 Return 0 = $bBackwards not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bSearchRows not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $bMatchCase not a Boolean.
-;				   @Error 1 @Extended 6 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
-;				   @Error 1 @Extended 7 Return 0 = $bEntireCell not a Boolean.
-;				   @Error 1 @Extended 8 Return 0 = $bRegExp not a Boolean.
-;				   @Error 1 @Extended 9 Return 0 = $bWildcards not a Boolean.
-;				   @Error 1 @Extended 10 Return 0 = $bStyles not a Boolean.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
+;                  @Error 1 @Extended 3 Return 0 = $bBackwards not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bSearchRows not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bMatchCase not a Boolean.
+;                  @Error 1 @Extended 6 Return 0 = $iSearchIn not an Integer, less than 0 or greater than 2. See Constants $LOC_SEARCH_IN_* as defined in LibreOfficeCalc_Constants.au3.
+;                  @Error 1 @Extended 7 Return 0 = $bEntireCell not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bRegExp not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $bWildcards not a Boolean.
+;                  @Error 1 @Extended 10 Return 0 = $bStyles not a Boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 8 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: When setting $bRegExp or $bWildcards to True, if any of following three are set to True, they will be set to False: $bSimilarity(From the Similarity function), $bRegExp or $bWildcards.
-;				   Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOCalc_SearchDescriptorCreate, _LOCalc_SearchDescriptorSimilarityModify
 ; Link ..........:
 ; Example .......: Yes
@@ -1483,24 +1477,24 @@ EndFunc   ;==>_LOCalc_SearchDescriptorModify
 ;                  $iAdd                - [optional] an integer value. Default is Null. Specifies the number of characters that must be added to match the search pattern.
 ;                  $iExchange           - [optional] an integer value. Default is Null. Specifies the number of characters that must be replaced to match the search pattern.
 ; Return values .: Success: 1 or Array.
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
-;				   @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
-;				   @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
-;				   @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
-;				   @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
-;				   @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
-;				   @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
-;				   @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
-; ;				   @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oSrchDescript not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oSrchDescript Object not a Search Descriptor Object.
+;                  @Error 1 @Extended 3 Return 0 = $bSimilarity not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bCombine not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $iRemove, $iAdd, or $iExchange set to a value, but $bSimilarity not set to True.
+;                  @Error 1 @Extended 6 Return 0 = $iRemove not an Integer.
+;                  @Error 1 @Extended 7 Return 0 = $iAdd not an Integer.
+;                  @Error 1 @Extended 8 Return 0 = $iExchange not an Integer.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Returns 1 after directly modifying Search Descriptor Object.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
-;				   Call any optional parameter with Null keyword to skip it.
-;				   If $bSimilarity is set to True while Regular Expression, or Wildcards setting is set to True, those settings will be set to False.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  If $bSimilarity is set to True while Regular Expression, or Wildcards setting is set to True, those settings will be set to False.
 ; Related .......: _LOCalc_SearchDescriptorCreate
 ; Link ..........:
 ; Example .......: Yes
@@ -1554,27 +1548,141 @@ Func _LOCalc_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilarity
 EndFunc   ;==>_LOCalc_SearchDescriptorSimilarityModify
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SortFieldCreate
+; Description ...: Create a Sort Field for sorting a Range of data with.
+; Syntax ........: _LOCalc_SortFieldCreate($iIndex[, $iDataType = $LOC_SORT_DATA_TYPE_AUTO[, $bAscending = True[, $bCaseSensitive = False]]])
+; Parameters ....: $iIndex              - an integer value. The Column or Row to perform the sort upon. 0 Based. 0 is the first Column/Row in the Cell Range.
+;                  $iDataType           - [optional] an integer value (0-2). Default is $LOC_SORT_DATA_TYPE_AUTO. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $bAscending          - [optional] a boolean value. Default is True. If True, data will be sorted into ascending order.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is False. If True, sort will be case sensitive.
+; Return values .: Success: Struct
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $iIndex not an Integer, or less than 0.
+;                  @Error 1 @Extended 2 Return 0 = $iDataType not an Integer, less than 0 or greater than 2. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 3 Return 0 = $bAscending not a Boolean.
+;                  @Error 1 @Extended 4 Return 0 = $bCaseSensitive not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.table.TableSortField" Struct.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Struct = Success. Successfully created and returned a Sort Field Struct.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SortFieldCreate($iIndex, $iDataType = $LOC_SORT_DATA_TYPE_AUTO, $bAscending = True, $bCaseSensitive = False)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $tSortField
+
+	If Not __LOCalc_IntIsBetween($iIndex, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+
+	$tSortField = __LOCalc_CreateStruct("com.sun.star.table.TableSortField")
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	With $tSortField
+		.Field = $iIndex
+		.FieldType = $iDataType
+		.IsAscending = $bAscending
+		.IsCaseSensitive = $bCaseSensitive
+	EndWith
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $tSortField)
+EndFunc   ;==>_LOCalc_SortFieldCreate
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_SortFieldModify
+; Description ...: Modify or retrieve the settings for a Sort Field previously created by _LOCalc_SortFieldCreate.
+; Syntax ........: _LOCalc_SortFieldModify(ByRef $tSortField[, $iIndex = Null[, $iDataType = Null[, $bAscending = Null[, $bCaseSensitive = Null]]]])
+; Parameters ....: $tSortField          - [in/out] a dll struct value. A Sort Field Struct created by a previous _LOCalc_SortFieldCreate function.
+;                  $iIndex              - [optional] an integer value. Default is Null. The Column or Row to perform the sort upon. 0 Based. 0 is the first Column/Row in the Cell Range.
+;                  $iDataType           - [optional] an integer value. Default is Null. The type of data that will be sorted. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  $bAscending          - [optional] a boolean value. Default is Null. If True, data will be sorted into ascending order.
+;                  $bCaseSensitive      - [optional] a boolean value. Default is Null. If True, sort will be case sensitive.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $tSortField not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iIndex not an Integer, or less than 0.
+;                  @Error 1 @Extended 3 Return 0 = $iDataType not an Integer, less than 0 or greater than 2. See Constants $LOC_SORT_DATA_TYPE_* as defined in LibreOfficeCalc_Constants.au3
+;                  @Error 1 @Extended 4 Return 0 = $bAscending not a Boolean.
+;                  @Error 1 @Extended 5 Return 0 = $bCaseSensitive not a Boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 4 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_SortFieldModify(ByRef $tSortField, $iIndex = Null, $iDataType = Null, $bAscending = Null, $bCaseSensitive = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avSort[4]
+
+	If Not IsObj($tSortField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iIndex, $iDataType, $bAscending, $bCaseSensitive) Then
+		__LOCalc_ArrayFill($avSort, $tSortField.Field(), $tSortField.FieldType(), $tSortField.IsAscending(), $tSortField.IsCaseSensitive())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avSort)
+	EndIf
+
+	If ($iIndex <> Null) Then
+		If Not __LOCalc_IntIsBetween($iIndex, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		$tSortField.Field = $iIndex
+	EndIf
+
+	If ($iDataType <> Null) Then
+		If Not __LOCalc_IntIsBetween($iDataType, $LOC_SORT_DATA_TYPE_AUTO, $LOC_SORT_DATA_TYPE_ALPHANUMERIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$tSortField.FieldType = $iDataType
+	EndIf
+
+	If ($bAscending <> Null) Then
+		If Not IsBool($bAscending) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$tSortField.IsAscending = $bAscending
+	EndIf
+
+	If ($bCaseSensitive <> Null) Then
+		If Not IsBool($bCaseSensitive) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$tSortField.IsCaseSensitive = $bCaseSensitive
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_SortFieldModify
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_VersionGet
 ; Description ...: Retrieve the current Office version.
 ; Syntax ........: _LOCalc_VersionGet([$bSimpleVersion = False[, $bReturnName = False]])
 ; Parameters ....: $bSimpleVersion      - [optional] a boolean value. Default is False. If True, returns a two digit version number, such as "7.3", else returns the complex version number, such as "7.3.2.4".
 ;                  $bReturnName         - [optional] a boolean value. Default is True. If True returns the Program Name, such as "LibreOffice", appended by the version, i.e. "LibreOffice 7.3".
 ; Return values .: Success: String
-;				   Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;				   --Input Errors--
-;				   @Error 1 @Extended 1 Return 0 = $bSimpleVersion not a Boolean.
-;				   @Error 1 @Extended 2 Return 0 = $bReturnName not a Boolean.
-;				   --Initialization Errors--
-;				   @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
-;				   @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.configuration.ConfigurationProvider" Object.
-;				   --Processing Errors--
-;				   @Error 3 @Extended 1 Return 0 = Error setting property value.
-;				   --Success--
-;				   @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $bSimpleVersion not a Boolean.
+;                  @Error 1 @Extended 2 Return 0 = $bReturnName not a Boolean.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Error creating "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Error creating "com.sun.star.configuration.ConfigurationProvider" Object.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Error setting property value.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return String = Success. Returns the Office version in String format.
 ; Author ........: Laurent Godard as found in Andrew Pitonyak's book; Zizi64 as found on OpenOffice forum.
 ; Modified ......: donnyh13, modified for AutoIt compatibility and error checking.
 ; Remarks .......: From Macro code by Zizi64 found at: https://forum.openoffice.org/en/forum/viewtopic.php?t=91542&sid=7f452d65e58ac1cd3cc6063350b5ada0
-;				   And Andrew Pitonyak in "Useful Macro Information For OpenOffice.org" Pages 49, 50.
+;                  And Andrew Pitonyak in "Useful Macro Information For OpenOffice.org" Pages 49, 50.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes

@@ -9,16 +9,16 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 ## Releases
 
-|    Version       |    Changes                   |    Download                            |     Released   |    Compare on GitHub       |
-|:-----------------|:----------------------------:|:--------------------------------------:|:--------------:|:---------------------------|
-|    **v0.10.0**   | [Change Log](##[0.10.0])     | [v0.10.0][v0.10.0]                     | _Unreleased_   | [Compare][v0.10.0-Compare] |
-|    **v0.9.1**    | [Change Log](##[0.9.1])      | [v0.9.1][v0.9.1]                       | 2023-10-28     | [Compare][v0.9.1-Compare]  |
-|    **v0.9.0**    | [Change Log](##[0.9.0])      | [v0.9.0][v0.9.0]                       | 2023-10-28     | [Compare][v0.9.0-Compare]  |
-|    **v0.0.0.3**  | [Change Log](##[0.0.0.3])    | [v0.0.0.3][v0.0.0.3]                   | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
-|    **v0.0.0.2**  | [Change Log](##[0.0.0.2])    | [v0.0.0.2][v0.0.0.2]                   | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
-|    **v0.0.0.1**  | [Change Log](##[0.0.0.1])    | [v0.0.0.1][v0.0.0.1]                   | 2023-07-02     |                            |
+|    Version       |    Changes                         |    Download                 |     Released   |    Compare on GitHub       |
+|:-----------------|:----------------------------------:|:---------------------------:|:--------------:|:---------------------------|
+|    **v0.10.0**   | [Change Log](#0100---2024-04-)     | [v0.10.0][v0.10.0]          | _Unreleased_   | [Compare][v0.10.0-Compare] |
+|    **v0.9.1**    | [Change Log](#091---2023-10-28)    | [v0.9.1][v0.9.1]            | 2023-10-28     | [Compare][v0.9.1-Compare]  |
+|    **v0.9.0**    | [Change Log](#090---2023-10-28)    | [v0.9.0][v0.9.0]            | 2023-10-28     | [Compare][v0.9.0-Compare]  |
+|    **v0.0.0.3**  | [Change Log](#0003---2023-08-10)   | [v0.0.0.3][v0.0.0.3]        | 2023-08-10     | [Compare][v0.0.0.3-Compare]|
+|    **v0.0.0.2**  | [Change Log](#0002---2023-07-16)   | [v0.0.0.2][v0.0.0.2]        | 2023-07-16     | [Compare][v0.0.0.2-Compare]|
+|    **v0.0.0.1**  | [Change Log](#0001---2023-07-02)   | [v0.0.0.1][v0.0.0.1]        | 2023-07-02     |                            |
 
-## [0.10.0] - 2024-
+## [0.10.0] - 2024-04-
 
 ### Project
 
@@ -39,6 +39,20 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 ### Changed
 
 - All Internal Error Constants from $__LOW_STATUS_ or $__LOC_STATUS_ To $__LO_STATUS_
+- Attempted to standardize $__LO_STATUS_INIT_ERROR and $__LO_STATUS_PROCESSING_ERROR usage throughout functions.
+- Removed Error returns listed in Function Headers that no longer existed.
+- Added missing error values and corrected wrong error values listed in the headers.
+
+### Fixed
+
+- Align Parameters, Error/Return values, Remarks, and Related, to the same position.
+
+### Removed
+
+- "Note" from Remarks section in Header. (@mLipok)
+- Double spaces from Headers.
+- Tabs from headers, replaced with spaces.
+- Manual line breaks from headers.
 
 > [!NOTE]
 > **LibreOfficeCalc**
@@ -50,12 +64,15 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Individual Calc Element Files
 	- LibreOfficeCalc_Cell.au3
 	- LibreOfficeCalc_CellStyle.au3
+	- LibreOfficeCalc_Comments.au3
 	- LibreOfficeCalc_Constants.au3
 	- LibreOfficeCalc_Cursor.au3
 	- LibreOfficeCalc_Doc.au3
+	- LibreOfficeCalc_Field.au3
 	- LibreOfficeCalc_Font.au3
 	- LibreOfficeCalc_Helper.au3
 	- LibreOfficeCalc_Internal.au3
+	- LibreOfficeCalc_Page.au3
 	- LibreOfficeCalc_Range.au3
 	- LibreOfficeCalc_Sheet.au3
 - Cell/Cell Range Formatting Functions and Examples
@@ -82,6 +99,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellUnderline
 	- _LOCalc_CellValue
 - Cell/Cell Range Functions and Examples
+	- _LOCalc_RangeAutoOutline
 	- _LOCalc_RangeClearContents
 	- _LOCalc_RangeColumnDelete
 	- _LOCalc_RangeColumnGetName
@@ -96,10 +114,18 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeCopyMove
 	- _LOCalc_RangeCreateCursor
 	- _LOCalc_RangeData
+	- _LOCalc_RangeDatabaseAdd
+	- _LOCalc_RangeDatabaseDelete
+	- _LOCalc_RangeDatabaseGetNames
+	- _LOCalc_RangeDatabaseGetObjByName
+	- _LOCalc_RangeDatabaseHasByName
+	- _LOCalc_RangeDatabaseModify
 	- _LOCalc_RangeDelete
+	- _LOCalc_RangeDetail
 	- _LOCalc_RangeFill
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
+	- _LOCalc_RangeFilterAdvanced
 	- _LOCalc_RangeFilterClear
 	- _LOCalc_RangeFindAll
 	- _LOCalc_RangeFindNext
@@ -109,8 +135,43 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeGetCellByName
 	- _LOCalc_RangeGetCellByPosition
 	- _LOCalc_RangeGetSheet
+	- _LOCalc_RangeGroup
 	- _LOCalc_RangeInsert
+	- _LOCalc_RangeIsMerged
+	- _LOCalc_RangeMerge
+	- _LOCalc_RangeNamedAdd
+	- _LOCalc_RangeNamedChangeScope
+	- _LOCalc_RangeNamedDelete
+	- _LOCalc_RangeNamedGetNames
+	- _LOCalc_RangeNamedGetObjByName
+	- _LOCalc_RangeNamedHasByName
+	- _LOCalc_RangeNamedModify
 	- _LOCalc_RangeNumbers
+	- _LOCalc_RangeOutlineClearAll
+	- _LOCalc_RangeOutlineShow
+	- _LOCalc_RangePivotDelete
+	- _LOCalc_RangePivotDest
+	- _LOCalc_RangePivotExists
+	- _LOCalc_RangePivotFieldGetObjByName
+	- _LOCalc_RangePivotFieldItemsGetNames
+	- _LOCalc_RangePivotFieldsColumnsGetNames
+	- _LOCalc_RangePivotFieldsDataGetNames
+	- _LOCalc_RangePivotFieldSettings
+	- _LOCalc_RangePivotFieldsFiltersGetNames
+	- _LOCalc_RangePivotFieldsGetNames
+	- _LOCalc_RangePivotFieldsRowsGetNames
+	- _LOCalc_RangePivotFieldsUnusedGetNames
+	- _LOCalc_RangePivotFilter
+	- _LOCalc_RangePivotFilterClear
+	- _LOCalc_RangePivotGetObjByIndex
+	- _LOCalc_RangePivotGetObjByName
+	- _LOCalc_RangePivotInsert
+	- _LOCalc_RangePivotName
+	- _LOCalc_RangePivotRefresh
+	- _LOCalc_RangePivotSettings
+	- _LOCalc_RangePivotsGetCount
+	- _LOCalc_RangePivotsGetNames
+	- _LOCalc_RangePivotSource
 	- _LOCalc_RangeQueryColumnDiff
 	- _LOCalc_RangeQueryContents
 	- _LOCalc_RangeQueryDependents
@@ -129,6 +190,10 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeRowPageBreak
 	- _LOCalc_RangeRowsGetCount
 	- _LOCalc_RangeRowVisible
+	- _LOCalc_RangeSort
+	- _LOCalc_RangeSortAlt
+	- _LOCalc_RangeValidation
+	- _LOCalc_RangeValidationSettings
 - Cell Style Formatting Functions and Examples
 	- _LOCalc_CellStyleBackColor
 	- _LOCalc_CellStyleBorderColor
@@ -154,6 +219,34 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_CellStyleTextOrient
 	- _LOCalc_CellStyleTextProperties
 	- _LOCalc_CellStyleUnderline
+- Comment Functions and Examples.
+	- _LOCalc_CommentAdd
+	- _LOCalc_CommentAreaColor
+	- _LOCalc_CommentAreaFillStyle
+	- _LOCalc_CommentAreaGradient
+	- _LOCalc_CommentAreaShadow
+	- _LOCalc_CommentAreaTransparency
+	- _LOCalc_CommentAreaTransparencyGradient
+	- _LOCalc_CommentCallout
+	- _LOCalc_CommentCreateTextCursor
+	- _LOCalc_CommentDelete
+	- _LOCalc_CommentGetCell
+	- _LOCalc_CommentGetLastEdit
+	- _LOCalc_CommentGetObjByCell
+	- _LOCalc_CommentGetObjByIndex
+	- _LOCalc_CommentLineArrowStyles
+	- _LOCalc_CommentLineProperties
+	- _LOCalc_CommentPosition
+	- _LOCalc_CommentRotate
+	- _LOCalc_CommentsGetCount
+	- _LOCalc_CommentsGetList
+	- _LOCalc_CommentSize
+	- _LOCalc_CommentText
+	- _LOCalc_CommentTextAnchor
+	- _LOCalc_CommentTextAnimation
+	- _LOCalc_CommentTextColumns
+	- _LOCalc_CommentTextSettings
+	- _LOCalc_CommentVisible
 - Cursor Functions and Examples
 	- _LOCalc_SheetCursorMove
 	- _LOCalc_TextCursorCharPosition
@@ -173,6 +266,8 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_TextCursorUnderline
 - Document Functions and Examples
 	- _LOCalc_DocClose
+	- _LOCalc_DocColumnsRowsAreFrozen
+	- _LOCalc_DocColumnsRowsFreeze
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
 	- _LOCalc_DocExport
@@ -187,6 +282,9 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocMinimize
 	- _LOCalc_DocOpen
 	- _LOCalc_DocPosAndSize
+	- _LOCalc_DocPrint
+	- _LOCalc_DocPrintersGetNames
+	- _LOCalc_DocPrintersAltGetNames
 	- _LOCalc_DocRedo
 	- _LOCalc_DocRedoClear
 	- _LOCalc_DocRedoCurActionTitle
@@ -194,6 +292,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocRedoIsPossible
 	- _LOCalc_DocSave
 	- _LOCalc_DocSaveAs
+	- _LOCalc_DocSelectionCopy
+	- _LOCalc_DocSelectionGet
+	- _LOCalc_DocSelectionPaste
+	- _LOCalc_DocSelectionSet
+	- _LOCalc_DocSelectionSetMulti
 	- _LOCalc_DocToFront
 	- _LOCalc_DocUndo
 	- _LOCalc_DocUndoActionBegin
@@ -203,11 +306,31 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocUndoGetAllActionTitles
 	- _LOCalc_DocUndoIsPossible
 	- _LOCalc_DocUndoReset
+	- _LOCalc_DocViewDisplaySettings
+	- _LOCalc_DocViewWindowSettings
 	- _LOCalc_DocVisible
+	- _LOCalc_DocWindowFirstColumn
+	- _LOCalc_DocWindowFirstRow
+	- _LOCalc_DocWindowIsSplit
+	- _LOCalc_DocWindowSplit
+	- _LOCalc_DocWindowVisibleRange
 	- _LOCalc_DocZoom
+- Field Functions
+	- _LOCalc_FieldCurrentDisplayGet
+	- _LOCalc_FieldDateTimeInsert
+	- _LOCalc_FieldDelete
+	- _LOCalc_FieldFileNameInsert
+	- _LOCalc_FieldGetAnchor
+	- _LOCalc_FieldHyperlinkInsert
+	- _LOCalc_FieldHyperlinkModify
+	- _LOCalc_FieldPageCountInsert
+	- _LOCalc_FieldPageNumberInsert
+	- _LOCalc_FieldsGetList
+	- _LOCalc_FieldSheetNameInsert
+	- _LOCalc_FieldTitleInsert
 - Font Query Functions
 	- _LOCalc_FontExists
-	- _LOCalc_FontsList
+	- _LOCalc_FontsGetNames
 - Helper Functions
 	- _LOCalc_ComError_UserFunction
 	- _LOCalc_ConvertColorFromLong
@@ -228,10 +351,13 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SearchDescriptorCreate
 	- _LOCalc_SearchDescriptorModify
 	- _LOCalc_SearchDescriptorSimilarityModify
+	- _LOCalc_SortFieldCreate
+	- _LOCalc_SortFieldModify
 	- _LOCalc_VersionGet
 - Internal Functions
 	- __LOCalc_AddTo1DArray
 	- __LOCalc_ArrayFill
+	- __LOCalc_CellAddressIsSame
 	- __LOCalc_CellBackColor
 	- __LOCalc_CellBorder
 	- __LOCalc_CellBorderPadding
@@ -250,20 +376,31 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOCalc_CellUnderLine
 	- __LOCalc_CharPosition
 	- __LOCalc_CharSpacing
+	- __LOCalc_CommentAreaShadowModify
+	- __LOCalc_CommentArrowStyleName
+	- __LOCalc_CommentGetObjByCell
+	- __LOCalc_CommentLineStyleName
 	- __LOCalc_CreateStruct
+	- __LOCalc_FieldGetObj
+	- __LOCalc_FieldTypeServices
 	- __LOCalc_FilterNameGet
+	- __LOCalc_GradientNameInsert
+	- __LOCalc_GradientPresets
 	- __LOCalc_Internal_CursorGetType
 	- __LOCalc_InternalComErrorHandler
 	- __LOCalc_IntIsBetween
+	- __LOCalc_NamedRangeGetScopeObj
 	- __LOCalc_NumIsBetween
 	- __LOCalc_PageStyleBorder
 	- __LOCalc_PageStyleFooterBorder
 	- __LOCalc_PageStyleHeaderBorder
+	- __LOCalc_RangeAddressIsSame
 	- __LOCalc_SetPropertyValue
 	- __LOCalc_SheetCursorMove
 	- __LOCalc_TextCursorMove
+	- __LOCalc_TransparencyGradientConvert
+	- __LOCalc_TransparencyGradientNameInsert
 	- __LOCalc_UnitConvert
-	- __LOCalc_VarsAreDefault
 	- __LOCalc_VarsAreNull
 	- __LOCalc_VersionCheck
 - Page Style Functions and Examples
@@ -309,6 +446,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetAdd
 	- _LOCalc_SheetCopy
 	- _LOCalc_SheetCreateCursor
+	- _LOCalc_SheetDetectiveClear
+	- _LOCalc_SheetDetectiveDependent
+	- _LOCalc_SheetDetectiveInvalidData
+	- _LOCalc_SheetDetectivePrecedent
+	- _LOCalc_SheetDetectiveTraceError
 	- _LOCalc_SheetGetActive
 	- _LOCalc_SheetGetObjByName
 	- _LOCalc_SheetGetObjByPosition
@@ -316,8 +458,12 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetIsActive
 	- _LOCalc_SheetIsProtected
 	- _LOCalc_SheetLink
+	- _LOCalc_SheetLinkModify
 	- _LOCalc_SheetMove
 	- _LOCalc_SheetName
+	- _LOCalc_SheetPrintColumnsRepeat
+	- _LOCalc_SheetPrintRangeModify
+	- _LOCalc_SheetPrintRowsRepeat
 	- _LOCalc_SheetProtect
 	- _LOCalc_SheetRemove
 	- _LOCalc_SheetsGetCount
@@ -326,6 +472,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_SheetUnprotect
 	- _LOCalc_SheetVisible
 - Calc Constants
+	- $__LOCCONST_FILL_STYLE_*
 	- $LOC_BORDERSTYLE_*
 	- $LOC_BORDERWIDTH_*
 	- $LOC_CELL_ALIGN_HORI_*
@@ -336,21 +483,41 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_CELL_ROTATE_REF_*
 	- $LOC_CELL_TYPE_*
 	- $LOC_COLOR_*
-	- $LOC_COMPUTE_*
+	- $LOC_COMMENT_ANCHOR_*
+	- $LOC_COMMENT_ANIMATION_DIR_*
+	- $LOC_COMMENT_ANIMATION_KIND_*
+	- $LOC_COMMENT_CALLOUT_EXT_ALIGN_HORI_*
+	- $LOC_COMMENT_CALLOUT_EXT_ALIGN_VERT_*
+	- $LOC_COMMENT_CALLOUT_EXT_*
+	- $LOC_COMMENT_CALLOUT_STYLE_*
+	- $LOC_COMMENT_LINE_ARROW_TYPE_*
+	- $LOC_COMMENT_LINE_CAP_*
+	- $LOC_COMMENT_LINE_JOINT_*
+	- $LOC_COMMENT_LINE_STYLE_*
+	- $LOC_COMMENT_SHADOW_*
+	- $LOC_COMPUTE_FUNC_*
 	- $LOC_CURTYPE_*
+	- $LOC_DUPLEX_*
+	- $LOC_FIELD_TYPE_*
 	- $LOC_FILL_DATE_MODE_*
 	- $LOC_FILL_DIR_*
 	- $LOC_FILL_MODE_*
-	- $LOC_FILTER_CONNECTION_*
+	- $LOC_FILTER_CONDITION_*
 	- $LOC_FILTER_OPERATOR_*
-	- $LOC_FILTER_ORIENTATION_*
 	- $LOC_FORMAT_KEYS_*
 	- $LOC_FORMULA_RESULT_TYPE_*
+	- $LOC_GRAD_NAME_*
+	- $LOC_GRAD_TYPE_*
+	- $LOC_GROUP_ORIENT_*
+	- $LOC_NAMED_RANGE_OPT_*
 	- $LOC_NUM_STYLE_*
 	- $LOC_PAGE_LAYOUT_*
 	- $LOC_PAPER_HEIGHT_*
 	- $LOC_PAPER_WIDTH_*
 	- $LOC_PATHCONV_*
+	- $LOC_PIVOT_TBL_FIELD_BASE_*
+	- $LOC_PIVOT_TBL_FIELD_DISP_*
+	- $LOC_PIVOT_TBL_FIELD_TYPE_*
 	- $LOC_POSTURE_*
 	- $LOC_RELIEF_*
 	- $LOC_SCALE_*
@@ -358,13 +525,68 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- $LOC_SHADOW_*
 	- $LOC_SHEET_LINK_MODE_*
 	- $LOC_SHEETCUR_*
+	- $LOC_SORT_DATA_TYPE_*
 	- $LOC_STRIKEOUT_*
 	- $LOC_TEXTCUR_*
 	- $LOC_TXT_DIR_*
 	- $LOC_UNDERLINE_*
+	- $LOC_VALIDATION_COND_*
+	- $LOC_VALIDATION_ERROR_*
+	- $LOC_VALIDATION_LIST_*
+	- $LOC_VALIDATION_TYPE_*
 	- $LOC_WEIGHT_*
 	- $LOC_ZOOMTYPE_*
-- Autosize option to Range Data, Formulas, and Numbers.
+- Auto size option to Range Data, Formulas, and Numbers fill functions.
+- Retrieve Linked Sheet names only to _LOCalc_SheetsGetNames.
+- Line numbers to Example Error messages.
+- Top-Most attribute to Example message boxes.
+- LibreOffice SDK/API Constant names to constants.
+
+### Fixed
+
+- Removed unused variables and parameters in some functions. Affected functions are as follows:
+	- _LOCalc_FormatKeyDelete -- removed internal variable.
+- NamedRange names incorrectly reported as invalid in certain functions when the name began with an underscore.
+	- _LOCalc_RangeNamedModify
+	- _LOCalc_RangeNamedAdd
+- _LOCalc_DocOpen now uses a different method for connecting to an already open document, as the previous method was causing errors.
+- _LOCalc_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- LibreOfficeCalc_Cell.au3 was missing an Include file.
+- Several Cell or Cell range functions that should support Column/Rows would not work with them.
+- LibreOfficeCalc_Sheet.au3 was missing an Include file.
+
+### Changed
+
+- Constant $__LOCCONST_FILL_STYLE_* to $LOC_AREA_FILL_STYLE_*
+- __LOCalc_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
+- Renamed Constant $LOC_COMPUTE_* to $LOC_COMPUTE_FUNC_*
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOCalc_DocEnumPrinters-->_LOCalc_DocPrintersGetNames
+	- _LOCalc_DocEnumPrintersAlt-->_LOCalc_DocPrintersAltGetNames
+	- _LOCalc_FontsList-->_LOCalc_FontsGetNames
+	- _LOCalc_RangePivotFieldItemsGetList-->_LOCalc_RangePivotFieldItemsGetNames
+	- _LOCalc_RangePivotFieldsColumnsGetList-->_LOCalc_RangePivotFieldsColumnsGetNames
+	- _LOCalc_RangePivotFieldsDataGetList-->_LOCalc_RangePivotFieldsDataGetNames
+	- _LOCalc_RangePivotFieldsFiltersGetList-->_LOCalc_RangePivotFieldsFiltersGetNames
+	- _LOCalc_RangePivotFieldsGetList-->_LOCalc_RangePivotFieldsGetNames
+	- _LOCalc_RangePivotFieldsRowsGetList-->_LOCalc_RangePivotFieldsRowsGetNames
+	- _LOCalc_RangePivotFieldsUnusedGetList-->_LOCalc_RangePivotFieldsUnusedGetNames
+	- _LOCalc_RangePivotsGetList-->_LOCalc_RangePivotsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOCalc_DocHasSheetName-->_LOCalc_SheetExists
+	- _LOCalc_RangeDatabaseHasByName-->_LOCalc_RangeDatabaseExists
+	- _LOCalc_RangeNamedHasByName-->_LOCalc_RangeNamedExists
+- Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
+	- _LOCalc_CellStylesGetNames
+	- _LOCalc_PageStylesGetNames
+- Modified _LOCalc_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
+- _LOCalc_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
+- _LOCalc_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
+
+### Removed
+
+- __LOCalc_VarsAreDefault
 
 > [!NOTE]
 > **LibreOfficeWriter**
@@ -419,6 +641,17 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- __LOWriter_ShapePointModify
 - Shape Point Constants in LibreOfficeWriter_Constants. $LOW_SHAPE_POINT_TYPE_*
 - Standard Format Key retrieval function _LOWriter_FormatKeyGetStandard
+- Alpha Removal function __LOWriter_ColorRemoveAlpha.
+- _LOWriter_FrameAreaFillStyle.
+- _LOWriter_FrameStyleAreaFillStyle
+- _LOWriter_ImageAreaFillStyle
+- _LOWriter_PageStyleAreaFillStyle
+- _LOWriter_PageStyleFooterAreaFillStyle
+- _LOWriter_PageStyleHeaderAreaFillStyle
+- _LOWriter_ShapeAreaFillStyle
+- Line numbers to Example Error messages.
+- Top-Most attribute to Example message boxes.
+- LibreOffice SDK/API Constant names to constants.
 
 ### Changed
 
@@ -453,6 +686,55 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Sorted Constants in LibreOfficeWriter_Constants alphabetically.
 - Renamed $LOW_FIELDADV_TYPE_* Constants to $LOW_FIELD_ADV_TYPE_* to match formatting of other Field Type Constants.
 - Renamed $LibreOfficeWriter_DirectFormating.au3 to LibreOfficeWriter_DirectFormatting.au3 (misspelling correction)
+- Renamed Parameter $iBorder for Gradient Functions to $iTransitionStart for clarity of which setting it corresponds to in the L.O. UI.
+	- _LOWriter_FrameAreaGradient
+	- _LOWriter_FrameTransparencyGradient
+	- _LOWriter_FrameStyleAreaGradient
+	- _LOWriter_FrameStyleTransparencyGradient
+	- _LOWriter_ImageAreaGradient
+	- _LOWriter_ImageAreaTransparencyGradient
+	- _LOWriter_PageStyleAreaGradient
+	- _LOWriter_PageStyleFooterAreaGradient
+	- _LOWriter_PageStyleFooterTransparencyGradient
+	- _LOWriter_PageStyleHeaderAreaGradient
+	- _LOWriter_PageStyleHeaderTransparencyGradient
+	- _LOWriter_PageStyleTransparencyGradient
+	- _LOWriter_ShapeAreaGradient
+	- _LOWriter_ShapeTransparencyGradient
+- _LOWriter_DocOpen now uses a different method for connecting to an already open document, as the previous method could potentially cause errors.
+- Renamed $__LOWCONST_FILL_STYLE_* Constant to $LOW_AREA_FILL_STYLE_*.
+- __LOWriter_IntIsBetween to accept only a minimum value. Also optimized it.
+	- Modified function usage to match changes.
+- Renamed Functions to be consistent when retrieving arrays of names or objects:
+	- _LOWriter_DocBookmarksList-->_LOWriter_DocBookmarksGetNames
+	- _LOWriter_DocEnumPrinters-->_LOWriter_DocPrintersGetNames
+	- _LOWriter_DocEnumPrintersAlt-->_LOWriter_DocPrintersAltGetNames
+	- _LOWriter_FieldSetVarMasterList-->_LOWriter_FieldSetVarMastersGetNames
+	- _LOWriter_FieldSetVarMasterListFields-->_LOWriter_FieldSetVarMasterFieldsGetList
+	- _LOWriter_FontsList-->_LOWriter_FontsGetNames
+	- _LOWriter_TableGetCellNames-->_LOWriter_TableCellsGetNames
+- Renamed Functions to be consistent when testing if a thing exists:
+	- _LOWriter_DocBookmarksHasName-->_LOWriter_DocBookmarkExists
+	- _LOWriter_DocHasFrameName-->_LOWriter_FrameExists
+	- _LOWriter_DocHasImageName-->_LOWriter_ImageExists
+	- _LOWriter_DocHasShapeName-->_LOWriter_ShapeExists
+	- _LOWriter_DocHasTableName-->_LOWriter_TableExists
+- Some functions would return an integer instead of an empty Array when no results were present when retrieving array of names or objects, this has been changed to return an empty array:
+	- _LOWriter_CharStylesGetNames
+	- _LOWriter_DocBookmarksGetNames
+	- _LOWriter_EndnotesGetList
+	- _LOWriter_FieldRefMarkList
+	- _LOWriter_FieldSetVarMasterFieldsGetList
+	- _LOWriter_FootnotesGetList
+	- _LOWriter_FrameStylesGetNames
+	- _LOWriter_ImagesGetNames
+	- _LOWriter_NumStylesGetNames
+	- _LOWriter_PageStylesGetNames
+	- _LOWriter_ParStylesGetNames
+	- _LOWriter_TablesGetNames
+- Modified _LOWriter_DocPrintersAltGetNames @Extended value when retrieving the default printer name, @Extended is now 1, instead of 2.
+- _LOWriter_DocRedoGetAllActionTitles now returns the number of results in @Extended value.
+- _LOWriter_DocUndoGetAllActionTitles now returns the number of results in @Extended value.
 
 ### Fixed
 
@@ -469,12 +751,38 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 - Examples on Error now close any documents opened by the example.
 - Missing parameters in Null keyword check for __LOWriter_TableBorder, causing errors in setting Table Horizontal and Vertical borders singly.
 - Wrong error value in _LOWriter_CursorGetStatus for error while determining cursor type.
+- Missing Parameters in some headers or Syntax header.
+- Missing parameter type checks in some functions.
+- Missing ExitLoop in __LOWriter_FieldsGetList causing unnecessary looping.
+- Removed unused variables and parameters in some functions. Affected functions are as follows:
+	- _LOWriter_DocBookmarkModify -- removed $oDoc parameter.
+	- _LOWriter_FieldDelete -- removed $oDoc parameter.
+	- _LOWriter_FieldDocInfoEditTimeModify -- removed $oDoc parameter.
+	- _LOWriter_FieldSetVarMasterFieldsGetList -- removed $oDoc parameter.
+	- _LOWriter_DateFormatKeyDelete -- removed internal variable.
+	- _LOWriter_FormatKeyDelete -- removed internal variable.
+	- _LOWriter_ImageInsert -- removed internal variable, now uses ViewCursor directly to insert an Image.
+	- _LOWriter_NumStyleSetLevel -- removed $oDoc parameter.
+- _LOWriter_DocHyperlinkInsert -- $bOverwrite parameter was not used in function.
+- Transparency causing Color values to be returned that including the Alpha value, causing potentially unexpected results.
+- Missing Data Type in _LOWriter_CursorGetDataType example.
+- _LOWriter_DocCreateTextCursor would throw an error when creating a Text Cursor at the ViewCursor position.
+- When any FieldsGetList functions were supposed to return a single dimension array, a two dimensional array was being returned.
+- Incorrect usage of ObjEvent.
+- _LOWriter_DocCreate would return if there was an error creating a property, instead of increasing the error count.
+- _LOWriter_DocCreate could potentially return a Base Form document, as they have identical Service names.
+- _LOWriter_DocConnect could potentially return a Base Form document, as they have identical Service names.
+- __LOWriter_TransparencyGradientConvert would return a wrong Transparency value for certain percentages.
+- LibreOffice version 7.6 introduced a new setting for gradients, which broke all gradient functions I had made. Implemented a fix to work with both the new version and the old.
+- _LOWriter_DocPrintMiscSettings #2 example no longer worked after a change to how one of the functions worked.
+- __LOWriter_GetShapeName had an error where a COM Error would be triggered each time it was called.
+- Added missing example. _LOWriter_ImageExists
 
 ### Removed
 
 - $LOW_FIELD_TYPE_URL Constant. -- "com.sun.star.text.TextField.URL" is a Calc-only Field type.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.1] - 2023-10-28
 
@@ -485,7 +793,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 - Minor documentation adjustments.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.9.0] - 2023-10-28
 
@@ -573,7 +881,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 
 Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on adequate documents from <https://github.com/Danp2/au3WebDriver>.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.3] - 2023-08-10
 
@@ -626,7 +934,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 	- _DocInsertControlChar,
 	- _DocInsertString.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.2] - 2023-07-16
 
@@ -657,7 +965,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Updated function documentation to reflect the changes.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ## [0.0.0.1] - 2023-07-02
 
@@ -668,7 +976,7 @@ Thanks @danp2 and @Sven-Seyfert. All above mentioned MD documents was based on a
 
 - Initial UDF Release.
 
-[To Top](##Releases)
+[To Top](#releases)
 
 ---
 

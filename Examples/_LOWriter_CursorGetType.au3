@@ -10,18 +10,17 @@ Func Example()
 
 	; Create a New, visible, Blank Libre Office Document.
 	$oDoc = _LOWriter_DocCreate(True, False)
-
-	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to Create a new Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the document view cursor to insert text with.
 	$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
-	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve the View Cursor Object for the Writer Document. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Get the type of Cursor.
 	$iCursorType = _LOWriter_CursorGetType($oViewCursor)
-	If @error Then _ERROR($oDoc, "Failed to retrieve Cursor Object type. Error:" & @error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to retrieve Cursor Object type. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
-	MsgBox($MB_OK, "", "The possible cursor type values are: " & @CRLF & _
+	MsgBox($MB_OK + $MB_TOPMOST, Default, "The possible cursor type values are: " & @CRLF & _
 			"$LOW_CURTYPE_TEXT_CURSOR (1)" & @CRLF & _
 			"$LOW_CURTYPE_TABLE_CURSOR (2)" & @CRLF & _
 			"$LOW_CURTYPE_VIEW_CURSOR (3)")
@@ -30,25 +29,23 @@ Func Example()
 	Switch $iCursorType
 
 		Case $LOW_CURTYPE_TEXT_CURSOR
-			MsgBox($MB_OK, "", "The Cursor Type is a Text Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TEXT_CURSOR")
+			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a Text Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TEXT_CURSOR")
 		Case $LOW_CURTYPE_TABLE_CURSOR
-			MsgBox($MB_OK, "", "The Cursor Type is a Table Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TABLE_CURSOR")
+			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a Table Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_TABLE_CURSOR")
 		Case $LOW_CURTYPE_VIEW_CURSOR
-			MsgBox($MB_OK, "", "The Cursor Type is a View Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_VIEW_CURSOR")
+			MsgBox($MB_OK + $MB_TOPMOST, Default, "The Cursor Type is a View Cursor, with an integer value of : " & $iCursorType & " — Or $LOW_CURTYPE_VIEW_CURSOR")
 		Case Else
-			MsgBox($MB_OK, "", "Something went wrong.")
+			MsgBox($MB_OK + $MB_TOPMOST, Default, "Something went wrong.")
 	EndSwitch
 
 	; Close the document.
 	_LOWriter_DocClose($oDoc, False)
-
-	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & _
-			@error & " Extended:" & @extended)
+	If @error Then _ERROR($oDoc, "Failed to close opened L.O. Document. Following Error codes returned: Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 EndFunc
 
 Func _ERROR($oDoc, $sErrorText)
-	MsgBox($MB_OK, "Error", $sErrorText)
+	MsgBox($MB_OK + $MB_ICONERROR + $MB_TOPMOST, "Error", $sErrorText)
 	If IsObj($oDoc) Then _LOWriter_DocClose($oDoc, False)
 	Exit
 EndFunc
