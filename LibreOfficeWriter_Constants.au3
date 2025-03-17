@@ -796,7 +796,7 @@ Global Const _                                                  ; com.sun.star.a
 		$LOW_POSTURE_NONE = 0, _                                ; Specifies a font without slant.
 		$LOW_POSTURE_OBLIQUE = 1, _                             ; Specifies an oblique font (slant not designed into the font).
 		$LOW_POSTURE_ITALIC = 2, _                              ; Specifies an italic font (slant designed into the font).
-		$LOW_POSTURE_DontKnow = 3, _                            ; Specifies a font with an unknown slant. For Read Only.
+		$LOW_POSTURE_DONTKNOW = 3, _                            ; Specifies a font with an unknown slant. For Read Only.
 		$LOW_POSTURE_REV_OBLIQUE = 4, _                         ; Specifies a reverse oblique font (slant not designed into the font).
 		$LOW_POSTURE_REV_ITALIC = 5                             ; Specifies a reverse italic font (slant designed into the font).
 
@@ -1117,7 +1117,7 @@ Global Const _                                                  ; com.sun.star.t
 		$LOW_TXT_DIR_TB_RL = 2, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed right-to-left. Typically, this writing mode is used in Chinese and Japanese text.
 		$LOW_TXT_DIR_TB_LR = 3, _                               ; Text within a line is written top-to-bottom. Lines and blocks are placed left-to-right. Typically, this writing mode is used in Mongolian text.
 		$LOW_TXT_DIR_CONTEXT = 4, _                             ; Obtain actual writing mode from the context of the object.
-		$LOW_TXT_DIR_BT_LR = 5                                  ; text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
+		$LOW_TXT_DIR_BT_LR = 5                                  ; Text within a line is written bottom-to-top. Lines and blocks are placed left-to-right. (LibreOffice 6.3).
 
 ; Underline/Overline
 Global Const _                                                  ; com.sun.star.awt.FontUnderline
