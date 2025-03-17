@@ -2300,11 +2300,16 @@ EndFunc   ;==>_LOWriter_ShapeRotateSlant
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving Shapes Object.
 ;                  --Success--
-;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Implementation name. See Remarks.
+;                  @Error 0 @Extended ? Return Array = Success. Returning 2D Array of Shape names contained in a document, the first column ($aArray[0][0] contains the shape name, the second column ($aArray[0][1] contains the shape's Type. See Remarks.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......: The Implementation name identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
-;                  I have found the three Implementation names being returned, SwXTextFrame, indicating the shape is actually a Text Frame, SwXShape, is a regular shape such as a line, circle etc. And "SwXTextGraphicObject", which is an image / picture. There may be other return types I haven't found yet.
+; Remarks .......: The Shape type identifies what type of shape object it is, as there can be multiple things counted as "Shapes", such as Text Frames etc.
+;                  I have found the following types being returned,
+;                  - For real shapes (Smileys, lines etc): "com.sun.star.drawing.CustomShape", "com.sun.star.drawing.EllipseShape", "com.sun.star.drawing.OpenBezierShape", "com.sun.star.drawing.ClosedBezierShape", "com.sun.star.drawing.LineShape", "com.sun.star.drawing.PolyPolygonShape".
+;                  - Images, Charts and Text Frames: FrameShape.
+;                  - Text Box: com.sun.star.drawing.TextShape.
+;                  - Form Controls: com.sun.star.drawing.ControlShape.
+;                  There may be other return types I haven't found yet.
 ;                  Images inserted into the document are also listed as TextFrames in the shapes category. There isn't an easy way to differentiate between them yet, see _LOWriter_FramesGetNames, to search for Frames in the shapes category.
 ; Related .......:
 ; Link ..........:
@@ -2325,12 +2330,7 @@ Func _LOWriter_ShapesGetNames(ByRef $oDoc)
 		ReDim $asShapeNames[$oShapes.getCount()][2]
 		For $i = 0 To $oShapes.getCount() - 1
 			$asShapeNames[$i][0] = $oShapes.getByIndex($i).Name()
-			If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then
-				; If Supports Text Method, then get that impl. name, else just the regular impl. name.
-				$asShapeNames[$i][1] = $oShapes.getByIndex($i).Text.ImplementationName()
-			Else
-				$asShapeNames[$i][1] = $oShapes.getByIndex($i).ImplementationName()
-			EndIf
+			$asShapeNames[$i][1] = $oShapes.getByIndex($i).ShapeType()
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
