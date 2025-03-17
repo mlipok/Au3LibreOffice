@@ -656,6 +656,88 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_DocSelectionSet
 - __LOWriter_NumRuleCreateMap for modifying Numbering Rules more efficiently.
 - LibreOffice SDK/API Constant names to constants.
+- Form/Form Control Constants
+	- $LOW_FORM_CONTROL_BORDER_*
+	- $LOW_FORM_CONTROL_CHKBX_STATE_*
+	- $LOW_FORM_CONTROL_DATE_FRMT_*
+	- $LOW_FORM_CONTROL_IMG_ALIGN_*
+	- $LOW_FORM_CONTROL_IMG_BTN_SCALE_*
+	- $LOW_FORM_CONTROL_MOUSE_SCROLL_*
+	- $LOW_FORM_CONTROL_PUSH_CMD_*
+	- $LOW_FORM_CONTROL_SCROLL_*
+	- $LOW_FORM_CONTROL_SOURCE_TYPE_*
+	- $LOW_FORM_CONTROL_TIME_FRMT_*
+	- $LOW_FORM_CONTROL_TXT_TYPE_*
+	- $LOW_FORM_CONTROL_TYPE_*
+	- $LOW_FORM_CONTENT_TYPE_*
+	- $LOW_FORM_CYCLE_MODE_*
+	- $LOW_FORM_NAV_BAR_MODE_*
+	- $LOW_FORM_SUBMIT_ENCODING_*
+	- $LOW_FORM_SUBMIT_METHOD_*
+- Internal Form Functions
+	- __LOWriter_FormControlIdentify
+	- __LOWriter_ControlSetGetFontDesc
+	- __LOWriter_FormControlGetObj
+- Form functions
+	- _LOWriter_DocFormSettings
+	- _LOWriter_FontDescCreate
+	- _LOWriter_FontDescEdit
+	- _LOWriter_FormAdd
+	- _LOWriter_FormControlCheckBoxData
+	- _LOWriter_FormControlCheckBoxGeneral
+	- _LOWriter_FormControlCheckBoxState
+	- _LOWriter_FormControlComboBoxData
+	- _LOWriter_FormControlComboBoxGeneral
+	- _LOWriter_FormControlComboBoxValue
+	- _LOWriter_FormControlCurrencyFieldData
+	- _LOWriter_FormControlCurrencyFieldGeneral
+	- _LOWriter_FormControlCurrencyFieldValue
+	- _LOWriter_FormControlDateFieldData
+	- _LOWriter_FormControlDateFieldGeneral
+	- _LOWriter_FormControlDateFieldValue
+	- _LOWriter_FormControlDelete
+	- _LOWriter_FormControlFileSelFieldGeneral
+	- _LOWriter_FormControlFileSelFieldValue
+	- _LOWriter_FormControlFormattedFieldData
+	- _LOWriter_FormControlFormattedFieldGeneral
+	- _LOWriter_FormControlFormattedFieldValue
+	- _LOWriter_FormControlImageButtonGeneral
+	- _LOWriter_FormControlImageControlData
+	- _LOWriter_FormControlImageControlGeneral
+	- _LOWriter_FormControlInsert
+	- _LOWriter_FormControlLabelGeneral
+	- _LOWriter_FormControlListBoxData
+	- _LOWriter_FormControlListBoxGeneral
+	- _LOWriter_FormControlListBoxGetCount
+	- _LOWriter_FormControlListBoxSelection
+	- _LOWriter_FormControlNavBarGeneral
+	- _LOWriter_FormControlNumericFieldData
+	- _LOWriter_FormControlNumericFieldGeneral
+	- _LOWriter_FormControlNumericFieldValue
+	- _LOWriter_FormControlOptionButtonData
+	- _LOWriter_FormControlOptionButtonGeneral
+	- _LOWriter_FormControlOptionButtonState
+	- _LOWriter_FormControlPatternFieldData
+	- _LOWriter_FormControlPatternFieldGeneral
+	- _LOWriter_FormControlPatternFieldValue
+	- _LOWriter_FormControlPosition
+	- _LOWriter_FormControlPushButtonGeneral
+	- _LOWriter_FormControlPushButtonState
+	- _LOWriter_FormControlsGetList
+	- _LOWriter_FormControlSize
+	- _LOWriter_FormControlTableConGeneral
+	- _LOWriter_FormControlTextBoxData
+	- _LOWriter_FormControlTextBoxGeneral
+	- _LOWriter_FormControlTimeFieldData
+	- _LOWriter_FormControlTimeFieldGeneral
+	- _LOWriter_FormControlTimeFieldValue
+	- _LOWriter_FormDelete
+	- _LOWriter_FormGetObjByIndex
+	- _LOWriter_FormPropertiesData
+	- _LOWriter_FormPropertiesGeneral
+	- _LOWriter_FormsGetCount
+	- _LOWriter_FormsGetList
+	- _LOWriter_FormSubMove
 
 ### Changed
 

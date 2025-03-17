@@ -42,6 +42,7 @@
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
 ; __LOWriter_ColorRemoveAlpha
+; __LOWriter_ControlSetGetFontDesc
 ; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
@@ -55,6 +56,8 @@
 ; __LOWriter_FindFormatDeleteSetting
 ; __LOWriter_FindFormatRetrieveSetting
 ; __LOWriter_FooterBorder
+; __LOWriter_FormControlGetObj
+; __LOWriter_FormControlIdentify
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GetShapeName
 ; __LOWriter_GradientNameInsert
@@ -242,7 +245,7 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ArrayFill
 ; Description ...: Fill an Array with data.
-; Syntax ........: __LOWriter_ArrayFill(ByRef $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null]]]]]]]]]]]]]]]]]])
+; Syntax ........: __LOWriter_ArrayFill(ByRef $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null[, $vVar19 = Null[, $vVar20 = Null[, $vVar21 = Null[, $vVar22 = Null[, $vVar23 = Null[, $vVar24 = Null[, $vVar25 = Null[, $vVar26 = Null[, $vVar27 = Null[, $vVar28 = Null[, $vVar29 = Null[, $vVar30 = Null[, $vVar31 = Null[, $vVar32 = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
 ; Parameters ....: $aArrayToFill        - [in/out] an array of unknowns. The Array to Fill. Array will be directly modified.
 ;                  $vVar1               - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar2               - [optional] a variant value. Default is Null. The Data to add to the Array.
@@ -262,6 +265,20 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ;                  $vVar16              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar17              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar18              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar19              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar20              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar21              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar22              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar23              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar24              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar25              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar26              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar27              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar28              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar29              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar30              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar31              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar32              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ; Return values .: None
 ; Author ........: donnyh13
 ; Modified ......:
@@ -270,8 +287,8 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null)
-	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18
+Func __LOWriter_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null, $vVar19 = Null, $vVar20 = Null, $vVar21 = Null, $vVar22 = Null, $vVar23 = Null, $vVar24 = Null, $vVar25 = Null, $vVar26 = Null, $vVar27 = Null, $vVar28 = Null, $vVar29 = Null, $vVar30 = Null, $vVar31 = Null, $vVar32 = Null)
+	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18, $vVar19, $vVar20, $vVar21, $vVar22, $vVar23, $vVar24, $vVar25, $vVar26, $vVar27, $vVar28, $vVar29, $vVar30, $vVar31, $vVar32
 
 	If UBound($aArrayToFill) < (@NumParams - 1) Then ReDim $aArrayToFill[@NumParams - 1]
 	For $i = 0 To @NumParams - 2
@@ -738,9 +755,9 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Description ...: Set or retrieve the font color, transparency and highlighting values.
 ; Syntax ........: __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
+;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1429,6 +1446,97 @@ Func __LOWriter_ColorRemoveAlpha($iColor)
 EndFunc   ;==>__LOWriter_ColorRemoveAlpha
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ControlSetGetFontDesc
+; Description ...: Set or Retrieve a Control's Font values.
+; Syntax ........: __LOWriter_ControlSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
+; Return values .: Success: 1 or Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $mFontDesc not a Map.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting Font Name.
+;                  |                               2 = Error setting Font Weight.
+;                  |                               4 = Error setting Font Posture.
+;                  |                               8 = Error setting Font Size.
+;                  |                               16 = Error setting Font Color.
+;                  |                               32 = Error setting Font Underline Style.
+;                  |                               64 = Error setting Font Underline Color.
+;                  |                               128 = Error setting Font Strikeout Style.
+;                  |                               256 = Error setting Individual Word mode.
+;                  |                               512 = Error setting Font Relief.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Map = Success. All optional parameters were set to Null, returning current settings as a Map.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ControlSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $mControlFontDesc[]
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($mFontDesc) Then
+		$mControlFontDesc.CharFontName = $oControl.CharFontName()
+		$mControlFontDesc.CharWeight = $oControl.CharWeight()
+		$mControlFontDesc.CharPosture = $oControl.CharPosture()
+		$mControlFontDesc.CharHeight = $oControl.CharHeight()
+		$mControlFontDesc.CharColor = $oControl.CharColor()
+		$mControlFontDesc.CharUnderline = $oControl.CharUnderline()
+		$mControlFontDesc.CharUnderlineColor = $oControl.CharUnderlineColor()
+		$mControlFontDesc.CharStrikeout = $oControl.CharStrikeout()
+		$mControlFontDesc.CharWordMode = $oControl.CharWordMode()
+		$mControlFontDesc.CharRelief = $oControl.CharRelief()
+		Return SetError($__LO_STATUS_SUCCESS, 1, $mControlFontDesc)
+	EndIf
+
+	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oControl.CharFontName() = $mFontDesc.CharFontName
+	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
+
+	$oControl.CharWeight() = $mFontDesc.CharWeight
+	$iError = (__LOWriter_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
+
+	$oControl.CharPosture() = $mFontDesc.CharPosture
+	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
+
+	$oControl.CharHeight() = $mFontDesc.CharHeight
+	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
+
+	$oControl.CharColor() = $mFontDesc.CharColor
+	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
+
+	$oControl.CharUnderline() = $mFontDesc.CharUnderline
+	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
+
+	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
+	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
+
+	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
+	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
+
+	$oControl.CharWordMode() = $mFontDesc.CharWordMode
+	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
+
+	$oControl.CharRelief() = $mFontDesc.CharRelief
+	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOWriter_ControlSetGetFontDesc
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreatePoint
 ; Description ...: Creates a Position structure.
 ; Syntax ........: __LOWriter_CreatePoint($iX, $iY)
@@ -1561,9 +1669,11 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_DateStructCompare
 ; Description ...: Compare two date Structures to see if they are the same Date, Time, etc.
-; Syntax ........: __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
+; Syntax ........: __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2[, $bIsDate = False[, $bIsTime = False]])
 ; Parameters ....: $tDateStruct1        - a dll struct value. The First Date Structure.
 ;                  $tDateStruct2        - a dll struct value. The Second Date Structure.
+;                  $bIsDate             - [optional] a boolean value. Default is False. If True, the comparison is two Date Structures.
+;                  $bIsTime             - [optional] a boolean value. Default is False. If True, the comparison is two Time Structures.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1573,27 +1683,45 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the Dates/Times in $tDateStruct1 and $tDateStruct2 are the same, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If both $bIsDate and $bIsTime are False, the comparison is two Date and Time Structures
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
+Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2, $bIsDate = False, $bIsTime = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($tDateStruct1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 	If Not IsObj($tDateStruct2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, False)
+	If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, False)
+	If Not IsBool($bIsTime) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, False)
 
-	If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If __LOWriter_VersionCheck(4.1) Then
-		If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+	If $bIsDate Then
+		If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+
+	ElseIf $bIsTime Then
+		If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If __LOWriter_VersionCheck(4.1) Then
+			If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		EndIf
+
+	Else
+		If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If __LOWriter_VersionCheck(4.1) Then
+			If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		EndIf
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, True)
@@ -2201,6 +2329,153 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_FooterBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_FormControlGetObj
+; Description ...: Returns the Shape Object for a Control.
+; Syntax ........: __LOWriter_FormControlGetObj($oControl, $iControlType)
+; Parameters ....: $oControl            - an object. A Control Object rather than the Shape Object.
+;                  $iControlType        - an integer value. The Shape type being called and looked for. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iControlType not an Integer, less than 0 or greater than 18. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Parent of Control.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify parent Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Document Draw Page.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve shape object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to identify control type.
+;                  @Error 3 @Extended 6 Return 0 = Failed to identify control's parent Form.
+;                  @Error 3 @Extended 7 Return 0 = Failed to identify control's shape container.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning Shape container for called Control.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: In This UDF I have provided Shape Objects for the Controls as some properties are found only in the Shape container, rather than the Control Object. In Some cases I need to Identify the Shape container from a Control Object.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_FormControlGetObj($oControl, $iControlType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oParent, $oShapes, $oShape, $oDoc
+	Local $aoControls[0][2]
+	Local $iCount = 0
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oParent = $oControl.Parent()
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $oParent.supportsService("com.sun.star.form.component.Form") Then ; Get only controls in the form.
+
+		$oDoc = $oParent ; Identify the parent document.
+		Do
+			$oDoc = $oDoc.getParent()
+			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Until $oDoc.supportsService("com.sun.star.text.TextDocument")
+
+		$oShapes = $oDoc.DrawPage()
+		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		ReDim $aoControls[$oShapes.Count()][2]
+
+		For $i = 0 To $oShapes.Count() - 1
+			$oShape = $oShapes.getByIndex($i)
+			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+			If $oShape.supportsService("com.sun.star.drawing.ControlShape") And ($oShape.Control.Parent() = $oParent) Then ; If shape is a single control, and is contained in the form.
+
+				$aoControls[$iCount][0] = $oShape
+				$aoControls[$iCount][1] = __LOWriter_FormControlIdentify($oShape)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+				$iCount += 1
+
+			ElseIf $oShape.supportsService("com.sun.star.drawing.GroupShape") And ($oShape.getByIndex(0).Control.Parent() = $oParent) Then ; If shape is a group control, and the first control contained in it is contained in the form.
+				$aoControls[$iCount][0] = $oShape
+				$aoControls[$iCount][1] = $LOW_FORM_CONTROL_TYPE_GROUP_BOX
+
+				$iCount += 1
+			EndIf
+			Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
+		Next
+	Else
+
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	EndIf
+
+	ReDim $aoControls[$iCount][2]
+
+	For $i = 0 To UBound($aoControls) - 1
+		If ($aoControls[$i][1] = $iControlType) And ($aoControls[$i][0].Control() = $oControl) Then Return SetError($__LO_STATUS_SUCCESS, 0, $aoControls[$i][0])
+		Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
+	Next
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+EndFunc   ;==>__LOWriter_FormControlGetObj
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_FormControlIdentify
+; Description ...: Identify the type of Control being called, or return the Service name of a control type.
+; Syntax ........: __LOWriter_FormControlIdentify($oShape[, $iControlType = Null])
+; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+; Return values .: Success: Integer or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning Constant value for Control type.
+;                  @Error 0 @Extended 1 Return String = Success. Returning requested Control type's service name.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avControls[20][2] = [["com.sun.star.form.component.CheckBox", $LOW_FORM_CONTROL_TYPE_CHECK_BOX], ["com.sun.star.form.component.ComboBox", $LOW_FORM_CONTROL_TYPE_COMBO_BOX], _
+			["com.sun.star.form.component.CurrencyField", $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD], ["com.sun.star.form.component.DateField", $LOW_FORM_CONTROL_TYPE_DATE_FIELD], _
+			["com.sun.star.form.component.FileControl", $LOW_FORM_CONTROL_TYPE_FILE_SELECTION], ["com.sun.star.form.component.FormattedField", $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD], _
+			["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUP_BOX], ["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL], _ ; This will never match as the previous group box will be tested first. This is added here for completeness of the constants and for creating a grouped control. com.sun.star.drawing.GroupShape
+			["com.sun.star.form.component.ImageButton", $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON], ["com.sun.star.form.component.DatabaseImageControl", $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL], _ ; This seems to be used instead of this--> "com.sun.star.form.control.ImageControl"
+			["com.sun.star.form.component.FixedText", $LOW_FORM_CONTROL_TYPE_LABEL], ["com.sun.star.form.component.ListBox", $LOW_FORM_CONTROL_TYPE_LIST_BOX], _
+			["com.sun.star.form.component.NavigationToolBar", $LOW_FORM_CONTROL_TYPE_NAV_BAR], ["com.sun.star.form.component.NumericField", $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD], _
+			["com.sun.star.form.component.RadioButton", $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON], ["com.sun.star.form.component.PatternField", $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD], _
+			["com.sun.star.form.component.CommandButton", $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON], ["com.sun.star.form.component.GridControl", $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL], _
+			["com.sun.star.form.component.TextField", $LOW_FORM_CONTROL_TYPE_TEXT_BOX], ["com.sun.star.form.component.TimeField", $LOW_FORM_CONTROL_TYPE_TIME_FIELD]]
+
+	If Not IsObj($oShape) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If IsObj($oShape) Then
+		If $oShape.supportsService("com.sun.star.drawing.GroupShape") Then Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL) ; If a Group shape, it is a Grouped control.
+
+		For $i = 0 To UBound($avControls) - 1
+			If $oShape.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
+
+		Next
+
+	ElseIf IsInt($iControlType) Then
+		For $i = 0 To UBound($avControls) - 1
+			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][0])
+
+		Next
+
+	EndIf
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+EndFunc   ;==>__LOWriter_FormControlIdentify
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting
@@ -8627,7 +8902,7 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_VarsAreNull
 ; Description ...: Tests whether all input parameters are equal to Null keyword.
-; Syntax ........: __LOWriter_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null]]]]]]]]]]])
+; Syntax ........: __LOWriter_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null[, $vVar19 = Null[, $vVar20 = Null[, $vVar21 = Null[, $vVar22 = Null[, $vVar23 = Null[, $vVar24 = Null[, $vVar25 = Null[, $vVar26 = Null[, $vVar27 = Null[, $vVar28 = Null[, $vVar29 = Null[, $vVar30 = Null[, $vVar31 = Null[, $vVar32 = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
 ; Parameters ....: $vVar1               - a variant value.
 ;                  $vVar2               - [optional] a variant value. Default is Null.
 ;                  $vVar3               - [optional] a variant value. Default is Null.
@@ -8640,6 +8915,26 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ;                  $vVar10              - [optional] a variant value. Default is Null.
 ;                  $vVar11              - [optional] a variant value. Default is Null.
 ;                  $vVar12              - [optional] a variant value. Default is Null.
+;                  $vVar13              - [optional] a variant value. Default is Null.
+;                  $vVar14              - [optional] a variant value. Default is Null.
+;                  $vVar15              - [optional] a variant value. Default is Null.
+;                  $vVar16              - [optional] a variant value. Default is Null.
+;                  $vVar17              - [optional] a variant value. Default is Null.
+;                  $vVar18              - [optional] a variant value. Default is Null.
+;                  $vVar19              - [optional] a variant value. Default is Null.
+;                  $vVar20              - [optional] a variant value. Default is Null.
+;                  $vVar21              - [optional] a variant value. Default is Null.
+;                  $vVar22              - [optional] a variant value. Default is Null.
+;                  $vVar23              - [optional] a variant value. Default is Null.
+;                  $vVar24              - [optional] a variant value. Default is Null.
+;                  $vVar25              - [optional] a variant value. Default is Null.
+;                  $vVar26              - [optional] a variant value. Default is Null.
+;                  $vVar27              - [optional] a variant value. Default is Null.
+;                  $vVar28              - [optional] a variant value. Default is Null.
+;                  $vVar29              - [optional] a variant value. Default is Null.
+;                  $vVar30              - [optional] a variant value. Default is Null.
+;                  $vVar31              - [optional] a variant value. Default is Null.
+;                  $vVar32              - [optional] a variant value. Default is Null.
 ; Return values .: Success: Boolean
 ;                  Failure: False
 ;                  --Success--
@@ -8651,14 +8946,24 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
-	Local $bAllNull1, $bAllNull2, $bAllNull3
+Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null, $vVar19 = Null, $vVar20 = Null, $vVar21 = Null, $vVar22 = Null, $vVar23 = Null, $vVar24 = Null, $vVar25 = Null, $vVar26 = Null, $vVar27 = Null, $vVar28 = Null, $vVar29 = Null, $vVar30 = Null, $vVar31 = Null, $vVar32 = Null)
+	Local $bAllNull1, $bAllNull2, $bAllNull3, $bAllNull4, $bAllNull5, $bAllNull6, $bAllNull7, $bAllNull8
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
 	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
 	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? (True) : (False)
+	If (@NumParams <= 8) Then Return (($bAllNull1) And ($bAllNull2)) ? (True) : (False)
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False)
+	If (@NumParams <= 12) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3)) ? (True) : (False)
+	$bAllNull4 = (($vVar13 = Null) And ($vVar14 = Null) And ($vVar15 = Null) And ($vVar16 = Null)) ? (True) : (False)
+	If (@NumParams <= 16) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4)) ? (True) : (False)
+	$bAllNull5 = (($vVar17 = Null) And ($vVar18 = Null) And ($vVar19 = Null) And ($vVar20 = Null)) ? (True) : (False)
+	If (@NumParams <= 20) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5)) ? (True) : (False)
+	$bAllNull6 = (($vVar21 = Null) And ($vVar22 = Null) And ($vVar23 = Null) And ($vVar24 = Null)) ? (True) : (False)
+	If (@NumParams <= 24) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6)) ? (True) : (False)
+	$bAllNull7 = (($vVar25 = Null) And ($vVar26 = Null) And ($vVar27 = Null) And ($vVar28 = Null)) ? (True) : (False)
+	If (@NumParams <= 28) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7)) ? (True) : (False)
+	$bAllNull8 = (($vVar29 = Null) And ($vVar30 = Null) And ($vVar31 = Null) And ($vVar32 = Null)) ? (True) : (False)
+	Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7) And ($bAllNull8)) ? (True) : (False)
 EndFunc   ;==>__LOWriter_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
