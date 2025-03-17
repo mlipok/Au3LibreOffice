@@ -2884,7 +2884,7 @@ EndFunc   ;==>_LOWriter_ShapeTypePosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  I have skipped "Keep Ratio, as currently it seems unable to be set for shapes.
+;                  I have skipped "Keep Ratio", as currently it seems unable to be set for shapes.
 ; Related .......: _LOWriter_ShapeInsert, _LOWriter_ShapeGetObjByName, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
 ; Example .......: Yes
