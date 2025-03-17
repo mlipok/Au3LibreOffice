@@ -35,7 +35,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Word Hi to Font = "Arial", 16 point font, Italic and Bold
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, "Arial", 16, $LOC_POSTURE_ITALIC, $LOC_WEIGHT_BOLD)
+	_LOCalc_TextCursorFont($oTextCursor, "Arial", 16, $LOC_POSTURE_ITALIC, $LOC_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set text font. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "I will now set the font to Stencil, no Bold or Italic and font size 14, and then insert some text.")
@@ -45,7 +45,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Set the Font to = "Stencil", 14 point font, No Italic or Bold
-	_LOCalc_TextCursorFont($oDoc, $oTextCursor, "Stencil", 14, $LOC_POSTURE_NONE, $LOC_WEIGHT_NORMAL)
+	_LOCalc_TextCursorFont($oTextCursor, "Stencil", 14, $LOC_POSTURE_NONE, $LOC_WEIGHT_NORMAL)
 	If @error Then _ERROR($oDoc, "Failed to set text font. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Insert a Word
@@ -53,7 +53,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to insert String. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current font settings. Return will be an array in order of function parameters.
-	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
+	$avSettings = _LOCalc_TextCursorFont($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
@@ -68,7 +68,7 @@ Func Example()
 	If @error Then _ERROR($oDoc, "Failed to move Text Cursor. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current font settings. Return will be an array in order of function parameters.
-	$avSettings = _LOCalc_TextCursorFont($oDoc, $oTextCursor)
+	$avSettings = _LOCalc_TextCursorFont($oTextCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve current format settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Font settings at the Cursor's current position are as follows: " & @CRLF & _
