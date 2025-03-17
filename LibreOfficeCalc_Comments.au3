@@ -1701,7 +1701,7 @@ EndFunc   ;==>_LOCalc_CommentsGetList
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-;                  I have skipped "Keep Ratio", as there is no built in setting for it for Comments, so I would have to formulate a custom function for this purpose.
+;                  I have skipped "Keep Ratio, as there is no built in setting for it for Comments, so I would have to formulate a custom function for this purpose.
 ; Related .......: _LOCalc_ConvertFromMicrometer, _LOCalc_ConvertToMicrometer, _LOCalc_CommentPosition
 ; Link ..........:
 ; Example .......: Yes
