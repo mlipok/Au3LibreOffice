@@ -957,9 +957,8 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Paragraph Style.
-; Syntax ........: _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Syntax ........: _LOWriter_ParStyleFont(ByRef $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. The Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
@@ -967,15 +966,14 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oParStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not available in current document.
-;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
+;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
+;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not available in current document.
+;                  @Error 1 @Extended 4 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sFontName
@@ -995,17 +993,16 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
+Func _LOWriter_ParStyleFont(ByRef $oParStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOWriter_CharFont($oParStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
 	Return SetError(@error, @extended, $vReturn)

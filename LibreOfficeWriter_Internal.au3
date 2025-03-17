@@ -685,11 +685,11 @@ EndFunc   ;==>__LOWriter_CharEffect
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sFontName
@@ -716,7 +716,7 @@ Func __LOWriter_CharFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeigh
 	Local $iError = 0
 	Local $avFont[4]
 
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If __LOWriter_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then
 		__LOWriter_ArrayFill($avFont, $oObj.CharFontName(), $oObj.CharHeight(), $oObj.CharPosture(), $oObj.CharWeight())
@@ -724,25 +724,25 @@ Func __LOWriter_CharFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeigh
 	EndIf
 
 	If ($sFontName <> Null) Then
-		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharFontName = $sFontName
 		$iError = ($oObj.CharFontName() = $sFontName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nFontSize <> Null) Then
-		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharHeight = $nFontSize
 		$iError = ($oObj.CharHeight() = $nFontSize) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPosture <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharPosture = $iPosture
 		$iError = ($oObj.CharPosture() = $iPosture) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iWeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharWeight = $iWeight
 		$iError = ($oObj.CharWeight() = $iWeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf

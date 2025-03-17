@@ -30,9 +30,8 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontDescCreate
 ; Description ...: Create a Font Descriptor Map.
-; Syntax ........: _LOWriter_FontDescCreate(ByRef $oDoc[, $sFontName = ""[, $iWeight = $LOW_WEIGHT_DONT_KNOW[, $iSlant = $LOW_POSTURE_DONTKNOW[, $nSize = 0[, $iColor = $LOW_COLOR_OFF[, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW[, $iUnderlineColor = $LOW_COLOR_OFF[, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW[, $bIndividualWords = False[, $iRelief = $LOW_RELIEF_NONE]]]]]]]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFontName           - [optional] a string value. Default is "". The Font name.
+; Syntax ........: _LOWriter_FontDescCreate([$sFontName = ""[, $iWeight = $LOW_WEIGHT_DONT_KNOW[, $iSlant = $LOW_POSTURE_DONTKNOW[, $nSize = 0[, $iColor = $LOW_COLOR_OFF[, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW[, $iUnderlineColor = $LOW_COLOR_OFF[, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW[, $bIndividualWords = False[, $iRelief = $LOW_RELIEF_NONE]]]]]]]]]])
+; Parameters ....: $sFontName           - [optional] a string value. Default is "". The Font name.
 ;                  $iWeight             - [optional] an integer value (0-200). Default is $LOW_WEIGHT_DONT_KNOW. The Font weight. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is $LOW_POSTURE_DONTKNOW. The Font italic setting. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $nSize               - [optional] a general number value. Default is 0. The Font size.
@@ -45,18 +44,17 @@
 ; Return values .: Success: Map
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not found.
-;                  @Error 1 @Extended 4 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 5 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $nSize not a number.
-;                  @Error 1 @Extended 7 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 8 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 10 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 11 Return 0 = $bIndividualWords not a Boolean.
-;                  @Error 1 @Extended 12 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 2 Return 0 = Font called in $sFontName not found.
+;                  @Error 1 @Extended 3 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $nSize not a number.
+;                  @Error 1 @Extended 6 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 7 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 9 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 10 Return 0 = $bIndividualWords not a Boolean.
+;                  @Error 1 @Extended 11 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Map = Success. Returning the created Map Font Descriptor.
 ; Author ........: donnyh13
@@ -66,24 +64,23 @@
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FontDescCreate(ByRef $oDoc, $sFontName = "", $iWeight = $LOW_WEIGHT_DONT_KNOW, $iSlant = $LOW_POSTURE_DONTKNOW, $nSize = 0, $iColor = $LOW_COLOR_OFF, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW, $iUnderlineColor = $LOW_COLOR_OFF, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW, $bIndividualWords = False, $iRelief = $LOW_RELIEF_NONE)
+Func _LOWriter_FontDescCreate($sFontName = "", $iWeight = $LOW_WEIGHT_DONT_KNOW, $iSlant = $LOW_POSTURE_DONTKNOW, $nSize = 0, $iColor = $LOW_COLOR_OFF, $iUnderlineStyle = $LOW_UNDERLINE_DONT_KNOW, $iUnderlineColor = $LOW_COLOR_OFF, $iStrikelineStyle = $LOW_STRIKEOUT_DONT_KNOW, $bIndividualWords = False, $iRelief = $LOW_RELIEF_NONE)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $mFontDesc[]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If Not __LOWriter_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-	If Not __LOWriter_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-	If Not __LOWriter_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-	If Not __LOWriter_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-	If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
-	If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOWriter_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+	If Not __LOWriter_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+	If Not __LOWriter_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+	If Not __LOWriter_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+	If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+	If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 
 	$mFontDesc.CharFontName = $sFontName
 	$mFontDesc.CharWeight = $iWeight
@@ -102,9 +99,8 @@ EndFunc   ;==>_LOWriter_FontDescCreate
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontDescEdit
 ; Description ...: Set or Retrieve Font Descriptor settings.
-; Syntax ........: _LOWriter_FontDescEdit(ByRef $mFontDesc, ByRef $oDoc[, $sFontName = Null[, $iWeight = Null[, $iSlant = Null[, $nSize = Null[, $iColor = Null[, $iUnderlineStyle = Null[, $iUnderlineColor = Null[, $iStrikelineStyle = Null[, $bIndividualWords = Null[, $iRelief = Null]]]]]]]]]])
+; Syntax ........: _LOWriter_FontDescEdit(ByRef $mFontDesc[, $sFontName = Null[, $iWeight = Null[, $iSlant = Null[, $nSize = Null[, $iColor = Null[, $iUnderlineStyle = Null[, $iUnderlineColor = Null[, $iStrikelineStyle = Null[, $bIndividualWords = Null[, $iRelief = Null]]]]]]]]]])
 ; Parameters ....: $mFontDesc           - [in/out] a map. A Font descriptor Map as returned from a _LOWriter_FontDescCreate, or control property return function.
-;                  $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font name.
 ;                  $iWeight             - [optional] an integer value (0-200). Default is Null. The Font weight. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  $iSlant              - [optional] an integer value (0-5). Default is Null. The Font italic setting. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
@@ -119,18 +115,17 @@ EndFunc   ;==>_LOWriter_FontDescCreate
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $mFontDesc not a Map.
-;                  @Error 1 @Extended 2 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not found.
-;                  @Error 1 @Extended 5 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 6 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 7 Return 0 = $nSize not a number.
-;                  @Error 1 @Extended 8 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 9 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 10 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
-;                  @Error 1 @Extended 11 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 12 Return 0 = $bIndividualWords not a Boolean.
-;                  @Error 1 @Extended 13 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not found.
+;                  @Error 1 @Extended 4 Return 0 = $iWeight not an Integer, less than 0 or greater than 200. See Constants $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 5 Return 0 = $iSlant not an Integer, less than 0 or greater than 5. See Constants $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $nSize not a number.
+;                  @Error 1 @Extended 7 Return 0 = $iColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 8 Return 0 = $iUnderlineStyle not an Integer, less than 0 or greater than 18. See Constants $LOW_UNDERLINE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 9 Return 0 = $iUnderlineColor not an Integer, less than -1 or greater than 16777215.
+;                  @Error 1 @Extended 10 Return 0 = $iStrikelineStyle not an Integer, less than 0 or greater than 6. See Constants $LOW_STRIKEOUT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 11 Return 0 = $bIndividualWords not a Boolean.
+;                  @Error 1 @Extended 12 Return 0 = $iRelief not an Integer, less than 0 or greater than 2. See Constants $LOW_RELIEF_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 10 Element Array with values in order of function parameters.
@@ -142,14 +137,13 @@ EndFunc   ;==>_LOWriter_FontDescCreate
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FontDescEdit(ByRef $mFontDesc, ByRef $oDoc, $sFontName = Null, $iWeight = Null, $iSlant = Null, $nSize = Null, $iColor = Null, $iUnderlineStyle = Null, $iUnderlineColor = Null, $iStrikelineStyle = Null, $bIndividualWords = Null, $iRelief = Null)
+Func _LOWriter_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null, $iSlant = Null, $nSize = Null, $iColor = Null, $iUnderlineStyle = Null, $iUnderlineColor = Null, $iStrikelineStyle = Null, $bIndividualWords = Null, $iRelief = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $avFont[10]
 
 	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOWriter_VarsAreNull($sFontName, $iWeight, $iSlant, $nSize, $iColor, $iUnderlineStyle, $iUnderlineColor, $iStrikelineStyle, $bIndividualWords, $iRelief) Then
 		__LOWriter_ArrayFill($avFont, $mFontDesc.CharFontName, $mFontDesc.CharWeight, $mFontDesc.CharPosture, $mFontDesc.CharHeight, $mFontDesc.CharColor, $mFontDesc.CharUnderline, _
@@ -158,53 +152,53 @@ Func _LOWriter_FontDescEdit(ByRef $mFontDesc, ByRef $oDoc, $sFontName = Null, $i
 	EndIf
 
 	If ($sFontName <> Null) Then
-		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-		If Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+		If Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$mFontDesc.CharFontName = $sFontName
 	EndIf
 
 	If ($iWeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_DONT_KNOW, $LOW_WEIGHT_BLACK) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$mFontDesc.CharWeight = $iWeight
 	EndIf
 
 	If ($iSlant <> Null) Then
-		If Not __LOWriter_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not __LOWriter_IntIsBetween($iSlant, $LOW_POSTURE_NONE, $LOW_POSTURE_REV_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$mFontDesc.CharPosture = $iSlant
 	EndIf
 
 	If ($nSize <> Null) Then
-		If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsNumber($nSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$mFontDesc.CharHeight = $nSize
 	EndIf
 
 	If ($iColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$mFontDesc.CharColor = $iColor
 	EndIf
 
 	If ($iUnderlineStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iUnderlineStyle, $LOW_UNDERLINE_NONE, $LOW_UNDERLINE_BOLD_WAVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$mFontDesc.CharUnderline = $iUnderlineStyle
 	EndIf
 
 	If ($iUnderlineColor <> Null) Then
-		If Not __LOWriter_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		If Not __LOWriter_IntIsBetween($iUnderlineColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$mFontDesc.CharUnderlineColor = $iUnderlineColor
 	EndIf
 
 	If ($iStrikelineStyle <> Null) Then
-		If Not __LOWriter_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		If Not __LOWriter_IntIsBetween($iStrikelineStyle, $LOW_STRIKEOUT_NONE, $LOW_STRIKEOUT_X) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$mFontDesc.CharStrikeout = $iStrikelineStyle
 	EndIf
 
 	If ($bIndividualWords <> Null) Then
-		If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		If Not IsBool($bIndividualWords) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$mFontDesc.CharWordMode = $bIndividualWords
 	EndIf
 
 	If ($iRelief <> Null) Then
-		If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+		If Not __LOWriter_IntIsBetween($iRelief, $LOW_RELIEF_NONE, $LOW_RELIEF_ENGRAVED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$mFontDesc.CharRelief = $iRelief
 	EndIf
 
@@ -214,14 +208,17 @@ EndFunc   ;==>_LOWriter_FontDescEdit
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FontExists
 ; Description ...: Tests whether a Document has a specific font available by name.
-; Syntax ........: _LOWriter_FontExists(ByRef $oDoc, $sFontName)
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $sFontName           - a string value. The Font name to search for.
+; Syntax ........: _LOWriter_FontExists($sFontName)
+; Parameters ....: $sFontName           - a string value. The Font name to search for.
 ; Return values .: Success: Boolean.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 1 Return 0 = $sFontName not a String.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a "com.sun.star.ServiceManager" Object.
+;                  @Error 2 @Extended 2 Return 0 = Failed to create a "com.sun.star.frame.Desktop" Object.
+;                  @Error 2 @Extended 3 Return 0 = Failed to create a Property Struct.
+;                  @Error 2 @Extended 4 Return 0 = Failed to create a new Document.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Font list.
 ;                  --Success--
@@ -233,22 +230,42 @@ EndFunc   ;==>_LOWriter_FontDescEdit
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_FontExists(ByRef $oDoc, $sFontName)
+Func _LOWriter_FontExists($sFontName)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $atFonts
+	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local $oServiceManager, $oDesktop, $oDoc
+	Local $atProperties[1]
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
+	If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+	$oDesktop = $oServiceManager.createInstance("com.sun.star.frame.Desktop")
+	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+	$atProperties[0] = __LOWriter_SetPropertyValue("Hidden", True)
+	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
+
+	$oDoc = $oDesktop.loadComponentFromURL("private:factory/swriter", "_blank", $iURLFrameCreate, $atProperties)
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
+
 	$atFonts = $oDoc.getCurrentController().getFrame().getContainerWindow().getFontDescriptors()
 	If Not IsArray($atFonts) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	For $i = 0 To UBound($atFonts) - 1
-		If $atFonts[$i].Name = $sFontName Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
+		If $atFonts[$i].Name() = $sFontName Then
+		$oDoc.Close(True)
+			Return SetError($__LO_STATUS_SUCCESS, 0, True)
+	EndIf
+
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
-	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
+		$oDoc.Close(True)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>_LOWriter_FontExists
 
 ; #FUNCTION# ====================================================================================================================

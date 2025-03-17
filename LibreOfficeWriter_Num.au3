@@ -275,7 +275,7 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 		If ($sBulletFont <> Null) Then
 			If Not IsString($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
-			If Not _LOWriter_FontExists($oDoc, $sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+			If Not _LOWriter_FontExists($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 			If Not MapExists($mNumLevel, "BulletFontName") Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 			$atNumLevel[$mNumLevel["BulletFontName"]].Value = $sBulletFont
 		EndIf
