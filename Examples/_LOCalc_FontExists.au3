@@ -17,8 +17,6 @@ Func Example()
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Is the font called ""Times New Roman"" available? True/False: " & $bResult1 & @CRLF & @CRLF & _
 			"Is the font called ""Fake Font"" available? True/False: " & $bResult2)
-
-	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")
 EndFunc
 
 Func _ERROR($sErrorText)
