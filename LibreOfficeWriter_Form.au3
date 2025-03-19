@@ -310,6 +310,8 @@ EndFunc   ;==>_LOWriter_FormControlCheckBoxData
 ; Remarks .......: If $sGraphics is set to an invalid Graphic URL, graphic is set to Null. The Return for $sGraphics is an Image Object.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlCheckBoxState, _LOWriter_FormControlCheckBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -335,134 +337,202 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oCheckBox.Control.Name = $sName
 		$iError = ($oCheckBox.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($sLabel <> Null) Then
+	If ($sLabel = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
 		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oCheckBox.Control.Label = $sLabel
 		$iError = ($oCheckBox.Control.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oCheckBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCheckBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oCheckBox.Control.WritingMode = $iTxtDir
 		$iError = ($oCheckBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oCheckBox.Control.Enabled = $bEnabled
 		$iError = ($oCheckBox.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oCheckBox.Control.EnableVisible = $bVisible
 		$iError = ($oCheckBox.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oCheckBox.Control.Printable = $bPrintable
 		$iError = ($oCheckBox.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oCheckBox.Control.Tabstop = $bTabStop
 		$iError = ($oCheckBox.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 256)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oCheckBox.Control.TabIndex = $iTabOrder
 		$iError = ($oCheckBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iDefaultState <> Null) Then
+	If ($iDefaultState = Default) Then
+		$iError = BitOR($iError, 512)    ; Can't Default DefaultState.
+
+	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oCheckBox.Control.DefaultState = $iDefaultState
 		$iError = ($oCheckBox.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		__LOWriter_ControlSetGetFontDesc($oCheckBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($iStyle <> Null) Then
+	If ($iStyle = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("VisualEffect")
+
+	ElseIf ($iStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CONTROL_BORDER_3D, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oCheckBox.Control.VisualEffect = $iStyle
 		$iError = ($oCheckBox.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oCheckBox.Control.Align = $iAlign
 		$iError = ($oCheckBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
+
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oCheckBox.Control.VerticalAlign = $iVertAlign
 		$iError = ($oCheckBox.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oCheckBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oCheckBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($bWordBreak <> Null) Then
+	If ($bWordBreak = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bWordBreak <> Null) Then
 		If Not IsBool($bWordBreak) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oCheckBox.Control.MultiLine = $bWordBreak
 		$iError = ($oCheckBox.Control.MultiLine() = $bWordBreak) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($sGraphics <> Null) Then
+	If ($sGraphics = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("ImageURL")
+		$oCheckBox.Control.setPropertyToDefault("Graphic")
+
+	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oCheckBox.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
 		$iError = ($oCheckBox.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iGraphicAlign <> Null) Then
+	If ($iGraphicAlign = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("ImagePosition")
+
+	ElseIf ($iGraphicAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oCheckBox.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oCheckBox.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($bTriState <> Null) Then
+	If ($bTriState = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("TriState")
+
+	ElseIf ($bTriState <> Null) Then
 		If Not IsBool($bTriState) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oCheckBox.Control.TriState = $bTriState
 		$iError = ($oCheckBox.Control.TriState = $bTriState) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 524288)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oCheckBox.Control.Tag = $sAddInfo
 		$iError = ($oCheckBox.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oCheckBox.Control.HelpText = $sHelpText
 		$iError = ($oCheckBox.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oCheckBox.Control.HelpURL = $sHelpURL
 		$iError = ($oCheckBox.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 2097152))
@@ -495,6 +565,7 @@ EndFunc   ;==>_LOWriter_FormControlCheckBoxGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current check box state.
+;                  Call $iState with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlCheckBoxGeneral, _LOWriter_FormControlCheckBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -517,9 +588,14 @@ Func _LOWriter_FormControlCheckBoxState(ByRef $oCheckBox, $iState = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iCurState)
 	EndIf
 
-	If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oCheckBox.Control.State = $iState
-	$iError = ($oCheckBox.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	If ($iState = Default) Then
+		$oCheckBox.Control.setPropertyToDefault("State")
+
+	Else
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oCheckBox.Control.State = $iState
+		$iError = ($oCheckBox.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlCheckBoxState
@@ -714,6 +790,8 @@ EndFunc   ;==>_LOWriter_FormControlComboBoxData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $asList, $sDefaultTxt, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlComboBoxValue, _LOWriter_FormControlComboBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -740,74 +818,111 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oComboBox.Control.Name = $sName
 		$iError = ($oComboBox.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oComboBox.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oComboBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oComboBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oComboBox.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oComboBox.Control.WritingMode = $iTxtDir
 		$iError = ($oComboBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iMaxLen <> Null) Then
+	If ($iMaxLen = Default) Then
+		$oComboBox.Control.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oComboBox.Control.MaxTextLen = $iMaxLen
 		$iError = ($oComboBox.Control.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oComboBox.Control.Enabled = $bEnabled
 		$iError = ($oComboBox.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oComboBox.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oComboBox.Control.EnableVisible = $bVisible
 		$iError = ($oComboBox.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oComboBox.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oComboBox.Control.ReadOnly = $bReadOnly
 		$iError = ($oComboBox.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oComboBox.Control.Printable = $bPrintable
 		$iError = ($oComboBox.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oComboBox.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oComboBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oComboBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oComboBox.Control.Tabstop = $bTabStop
 		$iError = ($oComboBox.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oComboBox.Control.TabIndex = $iTabOrder
 		$iError = ($oComboBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($asList <> Null) Then
+	If ($asList = Default) Then
+		$iError = BitOR($iError, 2048)    ; Can't Default StringItemList.
+
+	ElseIf ($asList <> Null) Then
 		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		For $i = 0 To UBound($asList) - 1
 			If Not IsString($asList[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, $i)
@@ -817,79 +932,118 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 		$iError = (UBound($oComboBox.Control.StringItemList()) = UBound($asList)) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($sDefaultTxt <> Null) Then
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 4096)    ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oComboBox.Control.DefaultText = $sDefaultTxt
 		$iError = ($oComboBox.Control.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 8192)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		__LOWriter_ControlSetGetFontDesc($oComboBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oComboBox.Control.Align = $iAlign
 		$iError = ($oComboBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oComboBox.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oComboBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oComboBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oComboBox.Control.Border = $iBorder
 		$iError = ($oComboBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oComboBox.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oComboBox.Control.BorderColor = $iBorderColor
 		$iError = ($oComboBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($bDropdown <> Null) Then
+	If ($bDropdown = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Dropdown")
+
+	ElseIf ($bDropdown <> Null) Then
 		If Not IsBool($bDropdown) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oComboBox.Control.Dropdown = $bDropdown
 		$iError = ($oComboBox.Control.Dropdown() = $bDropdown) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iLines <> Null) Then
+	If ($iLines = Default) Then
+		$oComboBox.Control.setPropertyToDefault("LineCount")
+
+	ElseIf ($iLines <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oComboBox.Control.LineCount = $iLines
 		$iError = ($oComboBox.Control.LineCount = $iLines) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($bAutoFill <> Null) Then
+	If ($bAutoFill = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Autocomplete")
+
+	ElseIf ($bAutoFill <> Null) Then
 		If Not IsBool($bAutoFill) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oComboBox.Control.Autocomplete = $bAutoFill
 		$iError = ($oComboBox.Control.Autocomplete() = $bAutoFill) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oComboBox.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oComboBox.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oComboBox.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oComboBox.Control.Tag = $sAddInfo
 		$iError = ($oComboBox.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oComboBox.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oComboBox.Control.HelpText = $sHelpText
 		$iError = ($oComboBox.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oComboBox.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oComboBox.Control.HelpURL = $sHelpURL
 		$iError = ($oComboBox.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 16777216))
@@ -922,6 +1076,7 @@ EndFunc   ;==>_LOWriter_FormControlComboBoxGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the currently selected value.
+;                  Call $sValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlComboBoxGeneral, _LOWriter_FormControlComboBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -944,9 +1099,14 @@ Func _LOWriter_FormControlComboBoxValue(ByRef $oComboBox, $sValue = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
-	If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oComboBox.Control.Text = $sValue
-	$iError = ($oComboBox.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	If ($sValue = Default) Then
+		$oComboBox.Control.setPropertyToDefault("Text")
+
+	Else
+		If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oComboBox.Control.Text = $sValue
+		$iError = ($oComboBox.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlComboBoxValue
@@ -1134,6 +1294,8 @@ EndFunc   ;==>_LOWriter_FormControlCurrencyFieldData
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  If there is an error setting $sHelpURL, the @Extended value for Property setting error will be either -1, or if there are other errors present, a negative value of the error value.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlCurrencyFieldValue, _LOWriter_FormControlCurrencyFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -1163,194 +1325,291 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oCurrencyField.Control.Name = $sName
 		$iError = ($oCurrencyField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oCurrencyField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oCurrencyField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oCurrencyField.Control.WritingMode = $iTxtDir
 		$iError = ($oCurrencyField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bStrict <> Null) Then
+	If ($bStrict = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
 		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oCurrencyField.Control.StrictFormat = $bStrict
 		$iError = ($oCurrencyField.Control.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oCurrencyField.Control.Enabled = $bEnabled
 		$iError = ($oCurrencyField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oCurrencyField.Control.EnableVisible = $bVisible
 		$iError = ($oCurrencyField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oCurrencyField.Control.ReadOnly = $bReadOnly
 		$iError = ($oCurrencyField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oCurrencyField.Control.Printable = $bPrintable
 		$iError = ($oCurrencyField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oCurrencyField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oCurrencyField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oCurrencyField.Control.Tabstop = $bTabStop
 		$iError = ($oCurrencyField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oCurrencyField.Control.TabIndex = $iTabOrder
 		$iError = ($oCurrencyField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMin <> Null) Then
+	If ($nMax = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("ValueMin")
+
+	ElseIf ($nMin <> Null) Then
 		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oCurrencyField.Control.ValueMin = $nMin
 		$iError = ($oCurrencyField.Control.ValueMin() = $nMin) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($nMax <> Null) Then
+	If ($nMax = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("ValueMax")
+
+	ElseIf ($nMax <> Null) Then
 		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oCurrencyField.Control.ValueMax = $nMax
 		$iError = ($oCurrencyField.Control.ValueMax() = $nMax) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iIncr <> Null) Then
+	If ($iIncr = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("ValueStep")
+
+	ElseIf ($iIncr <> Null) Then
 		If Not IsInt($iIncr) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oCurrencyField.Control.ValueStep = $iIncr
 		$iError = ($oCurrencyField.Control.ValueStep() = $iIncr) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($nDefault <> Null) Then
+	If ($nDefault = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("DefaultValue")
+
+	ElseIf ($nDefault <> Null) Then
 		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oCurrencyField.Control.DefaultValue = $nDefault
 		$iError = ($oCurrencyField.Control.DefaultValue() = $nDefault) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iDecimal <> Null) Then
+	If ($iDecimal = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("DecimalAccuracy")
+
+	ElseIf ($iDecimal <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oCurrencyField.Control.DecimalAccuracy = $iDecimal
 		$iError = ($oCurrencyField.Control.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bThousandsSep <> Null) Then
+	If ($bThousandsSep = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("ShowThousandsSeparator")
+
+	ElseIf ($bThousandsSep <> Null) Then
 		If Not IsBool($bThousandsSep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oCurrencyField.Control.ShowThousandsSeparator = $bThousandsSep
 		$iError = ($oCurrencyField.Control.ShowThousandsSeparator() = $bThousandsSep) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($sCurrSymbol <> Null) Then
+	If ($sCurrSymbol = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("CurrencySymbol")
+
+	ElseIf ($sCurrSymbol <> Null) Then
 		If Not IsString($sCurrSymbol) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oCurrencyField.Control.CurrencySymbol = $sCurrSymbol
 		$iError = ($oCurrencyField.Control.CurrencySymbol() = $sCurrSymbol) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($bPrefix <> Null) Then
+	If ($bPrefix = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("PrependCurrencySymbol")
+
+	ElseIf ($bPrefix <> Null) Then
 		If Not IsBool($bPrefix) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oCurrencyField.Control.PrependCurrencySymbol = $bPrefix
 		$iError = ($oCurrencyField.Control.PrependCurrencySymbol() = $bPrefix) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($bSpin <> Null) Then
+	If ($bSpin = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
 		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oCurrencyField.Control.Spin = $bSpin
 		$iError = ($oCurrencyField.Control.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oCurrencyField.Control.Repeat = $bRepeat
 		$iError = ($oCurrencyField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oCurrencyField.Control.RepeatDelay = $iDelay
 		$iError = ($oCurrencyField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 4194304)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		__LOWriter_ControlSetGetFontDesc($oCurrencyField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oCurrencyField.Control.Align = $iAlign
 		$iError = ($oCurrencyField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oCurrencyField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oCurrencyField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oCurrencyField.Control.BackgroundColor = $iBackColor
 		$iError = ($oCurrencyField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oCurrencyField.Control.Border = $iBorder
 		$iError = ($oCurrencyField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 		$oCurrencyField.Control.BorderColor = $iBorderColor
 		$iError = ($oCurrencyField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 134217728))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 32, 0)
 		$oCurrencyField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oCurrencyField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 268435456))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 536870912)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 33, 0)
 		$oCurrencyField.Control.Tag = $sAddInfo
 		$iError = ($oCurrencyField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 536870912))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 34, 0)
 		$oCurrencyField.Control.HelpText = $sHelpText
 		$iError = ($oCurrencyField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 1073741824))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 35, 0)
 		$oCurrencyField.Control.HelpURL = $sHelpURL
 		$iError = ($oCurrencyField.Control.HelpURL() = $sHelpURL) ? ($iError) : (($iError > 0) ? ($iError * -1) : (BitOR($iError, -1)))
@@ -1382,6 +1641,7 @@ EndFunc   ;==>_LOWriter_FormControlCurrencyFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value. Return will be Null if a value hasn't been set.
+;                  Call $nValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlCurrencyFieldGeneral, _LOWriter_FormControlCurrencyFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -1404,10 +1664,15 @@ Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Nu
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
 
-	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($nValue = Default) Then
+		$oCurrencyField.Control.setPropertyToDefault("Value")
 
-	$oCurrencyField.Control.Value = $nValue
-	$iError = ($oCurrencyField.Control.Value() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	Else
+		If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oCurrencyField.Control.Value = $nValue
+		$iError = ($oCurrencyField.Control.Value() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlCurrencyFieldValue
@@ -1590,7 +1855,9 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
-; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormControlDateFieldValue, _LOWriter_FormControlDateFieldData
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
+; Related .......: _LOWriter_FormControlDateFieldValue, _LOWriter_FormControlDateFieldData
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -1650,74 +1917,111 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oDateField.Control.Name = $sName
 		$iError = ($oDateField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oDateField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oDateField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oDateField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oDateField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oDateField.Control.WritingMode = $iTxtDir
 		$iError = ($oDateField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bStrict <> Null) Then
+	If ($bStrict = Default) Then
+		$oDateField.Control.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
 		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oDateField.Control.StrictFormat = $bStrict
 		$iError = ($oDateField.Control.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oDateField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oDateField.Control.Enabled = $bEnabled
 		$iError = ($oDateField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oDateField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oDateField.Control.EnableVisible = $bVisible
 		$iError = ($oDateField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oDateField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oDateField.Control.ReadOnly = $bReadOnly
 		$iError = ($oDateField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oDateField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oDateField.Control.Printable = $bPrintable
 		$iError = ($oDateField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oDateField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oDateField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oDateField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oDateField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oDateField.Control.Tabstop = $bTabStop
 		$iError = ($oDateField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oDateField.Control.TabIndex = $iTabOrder
 		$iError = ($oDateField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($tDateMin <> Null) Then
+	If ($tDateMin = Default) Then
+		$oDateField.Control.setPropertyToDefault("DateMin")
+
+	ElseIf ($tDateMin <> Null) Then
 		If Not IsObj($tDateMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
@@ -1731,7 +2035,10 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oDateField.Control.DateMin(), $tDate, True)) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($tDateMax <> Null) Then
+	If ($tDateMax = Default) Then
+		$oDateField.Control.setPropertyToDefault("DateMax")
+
+	ElseIf ($tDateMax <> Null) Then
 		If Not IsObj($tDateMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
@@ -1745,13 +2052,19 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oDateField.Control.DateMax(), $tDate, True)) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iFormat <> Null) Then
+	If ($iFormat = Default) Then
+		$oDateField.Control.setPropertyToDefault("DateFormat")
+
+	ElseIf ($iFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CONTROL_DATE_FRMT_SYSTEM_SHORT, $LOW_FORM_CONTROL_DATE_FRMT_SHORT_YYYY_MM_DD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oDateField.Control.DateFormat = $iFormat
 		$iError = ($oDateField.Control.DateFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($tDateDefault <> Null) Then
+	If ($tDateDefault = Default) Then
+		$oDateField.Control.setPropertyToDefault("DefaultDate")
+
+	ElseIf ($tDateDefault <> Null) Then
 		If Not IsObj($tDateDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
@@ -1765,85 +2078,127 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oDateField.Control.DefaultDate(), $tDate, True)) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($bSpin <> Null) Then
+	If ($bSpin = Default) Then
+		$oDateField.Control.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
 		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oDateField.Control.Spin = $bSpin
 		$iError = ($oDateField.Control.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oDateField.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oDateField.Control.Repeat = $bRepeat
 		$iError = ($oDateField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oDateField.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oDateField.Control.RepeatDelay = $iDelay
 		$iError = ($oDateField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		__LOWriter_ControlSetGetFontDesc($oDateField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oDateField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oDateField.Control.Align = $iAlign
 		$iError = ($oDateField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oDateField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oDateField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oDateField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oDateField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oDateField.Control.BackgroundColor = $iBackColor
 		$iError = ($oDateField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oDateField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oDateField.Control.Border = $iBorder
 		$iError = ($oDateField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oDateField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oDateField.Control.BorderColor = $iBorderColor
 		$iError = ($oDateField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($bDropdown <> Null) Then
+	If ($bDropdown = Default) Then
+		$oDateField.Control.setPropertyToDefault("Dropdown")
+
+	ElseIf ($bDropdown <> Null) Then
 		If Not IsBool($bDropdown) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oDateField.Control.Dropdown = $bDropdown
 		$iError = ($oDateField.Control.Dropdown() = $bDropdown) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oDateField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oDateField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oDateField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 67108864)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oDateField.Control.Tag = $sAddInfo
 		$iError = ($oDateField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oDateField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 		$oDateField.Control.HelpText = $sHelpText
 		$iError = ($oDateField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 134217728))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oDateField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 32, 0)
 		$oDateField.Control.HelpURL = $sHelpURL
 		$iError = ($oDateField.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 268435456))
@@ -1878,6 +2233,7 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Date value. Return will be Null if the Date hasn't been set.
+;                  Call $tDateValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlDateFieldGeneral, _LOWriter_FormControlDateFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -1912,17 +2268,23 @@ Func _LOWriter_FormControlDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $tCurDate)
 	EndIf
 
-	If Not IsObj($tDateValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
-	If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	If ($tDateValue = Default) Then
+		$oDateField.Control.setPropertyToDefault("Date")
 
-	$tDate.Year = $tDateValue.Year()
-	$tDate.Month = $tDateValue.Month()
-	$tDate.Day = $tDateValue.Day()
+	Else
+		If Not IsObj($tDateValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$oDateField.Control.Date = $tDate
-	$iError = (__LOWriter_DateStructCompare($oDateField.Control.Date(), $tDate, True)) ? ($iError) : (BitOR($iError, 1))
+		$tDate = __LOWriter_CreateStruct("com.sun.star.util.Date")
+		If Not IsObj($tDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
+		$tDate.Year = $tDateValue.Year()
+		$tDate.Month = $tDateValue.Month()
+		$tDate.Day = $tDateValue.Day()
+
+		$oDateField.Control.Date = $tDate
+		$iError = (__LOWriter_DateStructCompare($oDateField.Control.Date(), $tDate, True)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlDateFieldValue
@@ -2047,6 +2409,8 @@ EndFunc   ;==>_LOWriter_FormControlDelete
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlFileSelFieldValue
 ; Link ..........:
 ; Example .......: Yes
@@ -2071,115 +2435,173 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFileSel.Control.Name = $sName
 		$iError = ($oFileSel.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oFileSel.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFileSel.Control.WritingMode = $iTxtDir
 		$iError = ($oFileSel.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFileSel.Control.Enabled = $bEnabled
 		$iError = ($oFileSel.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oFileSel.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFileSel.Control.EnableVisible = $bVisible
 		$iError = ($oFileSel.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oFileSel.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFileSel.Control.ReadOnly = $bReadOnly
 		$iError = ($oFileSel.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFileSel.Control.Printable = $bPrintable
 		$iError = ($oFileSel.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFileSel.Control.Tabstop = $bTabStop
 		$iError = ($oFileSel.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 128)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oFileSel.Control.TabIndex = $iTabOrder
 		$iError = ($oFileSel.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($sDefaultTxt <> Null) Then
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 256)    ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oFileSel.Control.DefaultText = $sDefaultTxt
 		$iError = ($oFileSel.Control.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 512)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		__LOWriter_ControlSetGetFontDesc($oFileSel, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oFileSel.Control.Align = $iAlign
 		$iError = ($oFileSel.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oFileSel.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oFileSel.Control.VerticalAlign = $iVertAlign
 		$iError = ($oFileSel.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oFileSel.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oFileSel.Control.BackgroundColor = $iBackColor
 		$iError = ($oFileSel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oFileSel.Control.Border = $iBorder
 		$iError = ($oFileSel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oFileSel.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oFileSel.Control.BorderColor = $iBorderColor
 		$iError = ($oFileSel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oFileSel.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oFileSel.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oFileSel.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 65536)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oFileSel.Control.Tag = $sAddInfo
 		$iError = ($oFileSel.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oFileSel.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oFileSel.Control.HelpText = $sHelpText
 		$iError = ($oFileSel.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oFileSel.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oFileSel.Control.HelpURL = $sHelpURL
 		$iError = ($oFileSel.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 262144))
@@ -2212,6 +2634,7 @@ EndFunc   ;==>_LOWriter_FormControlFileSelFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
+;                  Call $sValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlFileSelFieldGeneral
 ; Link ..........:
 ; Example .......: Yes
@@ -2235,10 +2658,15 @@ Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
-	If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sValue = Default) Then
+		$oFileSel.Control.setPropertyToDefault("Text")
 
-	$oFileSel.Control.Text = $sValue
-	$iError = ($oFileSel.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	Else
+		If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oFileSel.Control.Text = $sValue
+		$iError = ($oFileSel.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlFileSelFieldValue
@@ -2433,6 +2861,8 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormControlFormattedFieldValue, _LOWriter_FormControlFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -2461,92 +2891,137 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oFormatField.Control.Name = $sName
 		$iError = ($oFormatField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oFormatField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oFormatField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oFormatField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oFormatField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oFormatField.Control.WritingMode = $iTxtDir
 		$iError = ($oFormatField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iMaxLen <> Null) Then
+	If ($iMaxLen = Default) Then
+		$oFormatField.Control.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oFormatField.Control.MaxTextLen = $iMaxLen
 		$iError = ($oFormatField.Control.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oFormatField.Control.Enabled = $bEnabled
 		$iError = ($oFormatField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oFormatField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oFormatField.Control.EnableVisible = $bVisible
 		$iError = ($oFormatField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oFormatField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oFormatField.Control.ReadOnly = $bReadOnly
 		$iError = ($oFormatField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oFormatField.Control.Printable = $bPrintable
 		$iError = ($oFormatField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oFormatField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oFormatField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oFormatField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oFormatField.Control.Tabstop = $bTabStop
 		$iError = ($oFormatField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oFormatField.Control.TabIndex = $iTabOrder
 		$iError = ($oFormatField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMin <> Null) Then
+	If ($nMax = Default) Then
+		$oFormatField.Control.setPropertyToDefault("EffectiveMin")
+
+	ElseIf ($nMin <> Null) Then
 		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oFormatField.Control.EffectiveMin = $nMin
 		$iError = ($oFormatField.Control.EffectiveMin() = $nMin) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($nMax <> Null) Then
+	If ($nMax = Default) Then
+		$oFormatField.Control.setPropertyToDefault("EffectiveMax")
+
+	ElseIf ($nMax <> Null) Then
 		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oFormatField.Control.EffectiveMax = $nMax
 		$iError = ($oFormatField.Control.EffectiveMax() = $nMax) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($nDefault <> Null) Then
+	If ($nDefault = Default) Then
+		$oFormatField.Control.setPropertyToDefault("EffectiveDefault")
+
+	ElseIf ($nDefault <> Null) Then
 		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oFormatField.Control.EffectiveDefault = $nDefault
 		$iError = ($oFormatField.Control.EffectiveDefault() = $nDefault) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iFormat <> Null) Then
+	If ($iFormat = Default) Then
+		$oFormatField.Control.setPropertyToDefault("FormatKey")
+
+	ElseIf ($iFormat <> Null) Then
 		If Not IsInt($iFormat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oDoc = $oFormatField.Control.Parent() ; Identify the parent document.
 		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -2559,79 +3034,118 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 		$iError = ($oFormatField.Control.FormatKey() = $iFormat) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($bSpin <> Null) Then
+	If ($bSpin = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
 		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oFormatField.Control.Spin = $bSpin
 		$iError = ($oFormatField.Control.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oFormatField.Control.Repeat = $bRepeat
 		$iError = ($oFormatField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 54436))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oFormatField.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oFormatField.Control.RepeatDelay = $iDelay
 		$iError = ($oFormatField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		__LOWriter_ControlSetGetFontDesc($oFormatField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oFormatField.Control.Align = $iAlign
 		$iError = ($oFormatField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oFormatField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oFormatField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oFormatField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oFormatField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oFormatField.Control.BackgroundColor = $iBackColor
 		$iError = ($oFormatField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oFormatField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oFormatField.Control.Border = $iBorder
 		$iError = ($oFormatField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oFormatField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oFormatField.Control.BorderColor = $iBorderColor
 		$iError = ($oFormatField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oFormatField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oFormatField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oFormatField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 33554432)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oFormatField.Control.Tag = $sAddInfo
 		$iError = ($oFormatField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oFormatField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 		$oFormatField.Control.HelpText = $sHelpText
 		$iError = ($oFormatField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oFormatField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 32, 0)
 		$oFormatField.Control.HelpURL = $sHelpURL
 		$iError = ($oFormatField.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 134217728))
@@ -2664,6 +3178,7 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
+;                  Call $nValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlFormattedFieldGeneral, _LOWriter_FormControlFormattedFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -2686,9 +3201,14 @@ Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Nul
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iCurValue)
 	EndIf
 
-	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oFormatField.Control.EffectiveValue = $nValue
-	$iError = ($oFormatField.Control.EffectiveValue() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	If ($nValue = Default) Then
+		$oFormatField.Control.setPropertyToDefault("EffectiveValue")
+
+	Else
+		If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oFormatField.Control.EffectiveValue = $nValue
+		$iError = ($oFormatField.Control.EffectiveValue() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
@@ -2769,6 +3289,8 @@ EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sAddInfo.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -2856,67 +3378,114 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oImageButton.Control.Name = $sName
 		$iError = ($oImageButton.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oImageButton.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oImageButton.Control.WritingMode = $iTxtDir
 		$iError = ($oImageButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oImageButton.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oImageButton.Control.Enabled = $bEnabled
 		$iError = ($oImageButton.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oImageButton.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oImageButton.Control.EnableVisible = $bVisible
 		$iError = ($oImageButton.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oImageButton.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oImageButton.Control.Printable = $bPrintable
 		$iError = ($oImageButton.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oImageButton.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oImageButton.Control.Tabstop = $bTabStop
 		$iError = ($oImageButton.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 64)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oImageButton.Control.TabIndex = $iTabOrder
 		$iError = ($oImageButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oImageButton.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oImageButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oImageButton.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oImageButton.Control.Border = $iBorder
 		$iError = ($oImageButton.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oImageButton.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oImageButton.Control.BorderColor = $iBorderColor
 		$iError = ($oImageButton.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iAction <> Null) Then
+	If ($iAction = Default) Then
+		$oImageButton.Control.setPropertyToDefault("ButtonType")
+
+		Switch $iBtnAction
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+				$oImageButton.Control.setPropertyToDefault("TargetURL")
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+				$oImageButton.Control.setPropertyToDefault("TargetURL")
+		EndSwitch
+
+	ElseIf ($iAction <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		Switch $iAction
@@ -2950,13 +3519,19 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 		EndSwitch
 	EndIf
 
-	If ($sURL <> Null) Then
+	If ($sURL = Default) Then
+		$oImageButton.Control.setPropertyToDefault("TargetURL")
+
+	ElseIf ($sURL <> Null) Then
 		If Not IsString($sURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oImageButton.Control.TargetURL = $sURL
 		$iError = ($oImageButton.Control.TargetURL() = $sURL) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($sFrame <> Null) Then
+	If ($sFrame = Default) Then
+		$oImageButton.Control.setPropertyToDefault("TargetFrame")
+
+	ElseIf ($sFrame <> Null) Then
 		If Not IsString($sFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		If ($sFrame <> $LOW_FRAME_TARGET_TOP) And _
 				($sFrame <> $LOW_FRAME_TARGET_PARENT) And _
@@ -2966,31 +3541,47 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 		$iError = ($oImageButton.Control.TargetFrame() = $sFrame) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($sGraphics <> Null) Then
+	If ($sGraphics = Default) Then
+		$oImageButton.Control.setPropertyToDefault("ImageURL")
+		$oImageButton.Control.setPropertyToDefault("Graphic")
+
+	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oImageButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
 		$iError = ($oImageButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iScale <> Null) Then
+	If ($iScale = Default) Then
+		$oImageButton.Control.setPropertyToDefault("ScaleMode")
+
+	ElseIf ($iScale <> Null) Then
 		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CONTROL_IMG_BTN_SCALE_NONE, $LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oImageButton.Control.ScaleMode = $iScale
 		$iError = ($oImageButton.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 32768)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oImageButton.Control.Tag = $sAddInfo
 		$iError = ($oImageButton.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oImageButton.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oImageButton.Control.HelpText = $sHelpText
 		$iError = ($oImageButton.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oImageButton.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oImageButton.Control.HelpURL = $sHelpURL
 		$iError = ($oImageButton.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 131072))
@@ -3136,6 +3727,8 @@ EndFunc   ;==>_LOWriter_FormControlImageControlData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sAddInfo.
 ; Related .......: _LOWriter_FormControlImageControlData
 ; Link ..........:
 ; Example .......: Yes
@@ -3160,104 +3753,157 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oImageControl.Control.Name = $sName
 		$iError = ($oImageControl.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oImageControl.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oImageControl.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oImageControl.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oImageControl.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oImageControl.Control.WritingMode = $iTxtDir
 		$iError = ($oImageControl.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oImageControl.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oImageControl.Control.Enabled = $bEnabled
 		$iError = ($oImageControl.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oImageControl.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oImageControl.Control.EnableVisible = $bVisible
 		$iError = ($oImageControl.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oImageControl.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oImageControl.Control.ReadOnly = $bReadOnly
 		$iError = ($oImageControl.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oImageControl.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oImageControl.Control.Printable = $bPrintable
 		$iError = ($oImageControl.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oImageControl.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oImageControl.Control.Tabstop = $bTabStop
 		$iError = ($oImageControl.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 256)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oImageControl.Control.TabIndex = $iTabOrder
 		$iError = ($oImageControl.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oImageControl.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oImageControl.Control.BackgroundColor = $iBackColor
 		$iError = ($oImageControl.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oImageControl.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oImageControl.Control.Border = $iBorder
 		$iError = ($oImageControl.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oImageControl.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oImageControl.Control.BorderColor = $iBorderColor
 		$iError = ($oImageControl.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($sGraphics <> Null) Then
+	If ($sGraphics = Default) Then
+		$oImageControl.Control.setPropertyToDefault("ImageURL")
+		$oImageControl.Control.setPropertyToDefault("Graphic")
+
+	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oImageControl.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
 		$iError = ($oImageControl.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iScale <> Null) Then
+	If ($iScale = Default) Then
+		$oImageControl.Control.setPropertyToDefault("ScaleMode")
+
+	ElseIf ($iScale <> Null) Then
 		If Not __LOWriter_IntIsBetween($iScale, $LOW_FORM_CONTROL_IMG_BTN_SCALE_NONE, $LOW_FORM_CONTROL_IMG_BTN_SCALE_FIT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oImageControl.Control.ScaleMode = $iScale
 		$iError = ($oImageControl.Control.ScaleMode() = $iScale) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 16384)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oImageControl.Control.Tag = $sAddInfo
 		$iError = ($oImageControl.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oImageControl.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oImageControl.Control.HelpText = $sHelpText
 		$iError = ($oImageControl.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oImageControl.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oImageControl.Control.HelpURL = $sHelpURL
 		$iError = ($oImageControl.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 65536))
@@ -3510,6 +4156,8 @@ EndFunc   ;==>_LOWriter_FormControlInsert
 ; Remarks .......:
 ; Related .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $mFont, $sAddInfo.
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -3532,97 +4180,146 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oLabel.Control.Name = $sName
 		$iError = ($oLabel.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($sLabel <> Null) Then
+	If ($sLabel = Default) Then
+		$oLabel.Control.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
 		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oLabel.Control.Label = $sLabel
 		$iError = ($oLabel.Control.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oLabel.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oLabel.Control.WritingMode = $iTxtDir
 		$iError = ($oLabel.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oLabel.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oLabel.Control.Enabled = $bEnabled
 		$iError = ($oLabel.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oLabel.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oLabel.Control.EnableVisible = $bVisible
 		$iError = ($oLabel.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oLabel.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oLabel.Control.Printable = $bPrintable
 		$iError = ($oLabel.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 64)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		__LOWriter_ControlSetGetFontDesc($oLabel, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oLabel.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oLabel.Control.Align = $iAlign
 		$iError = ($oLabel.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oLabel.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oLabel.Control.VerticalAlign = $iVertAlign
 		$iError = ($oLabel.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oLabel.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oLabel.Control.BackgroundColor = $iBackColor
 		$iError = ($oLabel.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oLabel.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oLabel.Control.Border = $iBorder
 		$iError = ($oLabel.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oLabel.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oLabel.Control.BorderColor = $iBorderColor
 		$iError = ($oLabel.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($bWordBreak <> Null) Then
+	If ($bWordBreak = Default) Then
+		$oLabel.Control.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bWordBreak <> Null) Then
 		If Not IsBool($bWordBreak) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oLabel.Control.MultiLine = $bWordBreak
 		$iError = ($oLabel.Control.MultiLine() = $bWordBreak) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 8192)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oLabel.Control.Tag = $sAddInfo
 		$iError = ($oLabel.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oLabel.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oLabel.Control.HelpText = $sHelpText
 		$iError = ($oLabel.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oLabel.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oLabel.Control.HelpURL = $sHelpURL
 		$iError = ($oLabel.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 32768))
@@ -3824,6 +4521,8 @@ EndFunc   ;==>_LOWriter_FormControlListBoxData
 ;                  The array called for $aiDefaultSel should be a single dimension array, with one integer value, corresponding to the position in the $asList array, per array element, to indicate which value(s) is/are default.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $asList, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlListBoxSelection, _LOWriter_FormControlListBoxGetCount, _LOWriter_FormControlListBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -3849,68 +4548,102 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oListBox.Control.Name = $sName
 		$iError = ($oListBox.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oListBox.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oListBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oListBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oListBox.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oListBox.Control.WritingMode = $iTxtDir
 		$iError = ($oListBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oListBox.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oListBox.Control.Enabled = $bEnabled
 		$iError = ($oListBox.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oListBox.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oListBox.Control.EnableVisible = $bVisible
 		$iError = ($oListBox.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oListBox.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oListBox.Control.ReadOnly = $bReadOnly
 		$iError = ($oListBox.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oListBox.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oListBox.Control.Printable = $bPrintable
 		$iError = ($oListBox.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oListBox.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oListBox.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oListBox.Control.MouseWheelBehavior = $iMouseScroll) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oListBox.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oListBox.Control.Tabstop = $bTabStop
 		$iError = ($oListBox.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oListBox.Control.TabIndex = $iTabOrder
 		$iError = ($oListBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($asList <> Null) Then
+	If ($asList = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default StringItemList.
+
+	ElseIf ($asList <> Null) Then
 		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		For $i = 0 To UBound($asList) - 1
 			If Not IsString($asList[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, $i)
@@ -3920,55 +4653,82 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 		$iError = (UBound($oListBox.Control.StringItemList()) = UBound($asList)) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		__LOWriter_ControlSetGetFontDesc($oListBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oListBox.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oListBox.Control.Align = $iAlign
 		$iError = ($oListBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oListBox.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oListBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oListBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oListBox.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oListBox.Control.Border = $iBorder
 		$iError = ($oListBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oListBox.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oListBox.Control.BorderColor = $iBorderColor
 		$iError = ($oListBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bDropdown <> Null) Then
+	If ($bDropdown = Default) Then
+		$oListBox.Control.setPropertyToDefault("Dropdown")
+
+	ElseIf ($bDropdown <> Null) Then
 		If Not IsBool($bDropdown) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oListBox.Control.Dropdown = $bDropdown
 		$iError = ($oListBox.Control.Dropdown() = $bDropdown) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iLines <> Null) Then
+	If ($iLines = Default) Then
+		$oListBox.Control.setPropertyToDefault("LineCount")
+
+	ElseIf ($iLines <> Null) Then
 		If Not __LOWriter_IntIsBetween($iLines, -2147483648, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oListBox.Control.LineCount = $iLines
 		$iError = ($oListBox.Control.LineCount = $iLines) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($bMultiSel <> Null) Then
+	If ($bMultiSel = Default) Then
+		$oListBox.Control.setPropertyToDefault("MultiSelection")
+
+	ElseIf ($bMultiSel <> Null) Then
 		If Not IsBool($bMultiSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oListBox.Control.MultiSelection = $bMultiSel
 		$iError = ($oListBox.Control.MultiSelection() = $bMultiSel) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($aiDefaultSel <> Null) Then
+	If ($aiDefaultSel = Default) Then
+		$iError = BitOR($iError, 524288)    ; Can't Default Name.
+
+	ElseIf ($aiDefaultSel <> Null) Then
 		If Not IsArray($aiDefaultSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		For $i = 0 To UBound($aiDefaultSel) - 1
 			If Not IsInt($aiDefaultSel[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, $i)
@@ -3979,19 +4739,28 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 		$iError = (UBound($oListBox.Control.DefaultSelection()) = UBound($aiDefaultSel)) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 1048576)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oListBox.Control.Tag = $sAddInfo
 		$iError = ($oListBox.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oListBox.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oListBox.Control.HelpText = $sHelpText
 		$iError = ($oListBox.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oListBox.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oListBox.Control.HelpURL = $sHelpURL
 		$iError = ($oListBox.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 4194304))
@@ -4068,6 +4837,7 @@ EndFunc   ;==>_LOWriter_FormControlListBoxGetCount
 ; Modified ......:
 ; Remarks .......: The array called for $aiSelection should be a single dimension array, with one integer value, corresponding to the position in the List box value array, per array element, to indicate which value(s) is/are selected.
 ;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Selection(s) of the List Box. If $bReturnValue is false, the return will be a single dimension array with each element containing an integer indicating which List Box value is selected, else if $bReturnValue is True, a single dimension array will be returned, with each element containing a selected value.
+;                  Call $aiSelection with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlListBoxGeneral, _LOWriter_FormControlListBoxData, _LOWriter_FormControlListBoxGetCount
 ; Link ..........:
 ; Example .......: Yes
@@ -4101,15 +4871,20 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 
 	EndIf
 
-	If Not IsArray($aiSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	For $i = 0 To UBound($aiSelection) - 1
-		If Not IsInt($aiSelection[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
-		If Not __LOWriter_IntIsBetween($aiSelection[$i], 0, $oListBox.Control.ItemCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
-	Next
+	If ($aiSelection = Default) Then
+		$oListBox.Control.setPropertyToDefault("SelectedItems")
 
-	$oListBox.Control.SelectedItems = $aiSelection
-	$iError = (UBound($oListBox.Control.SelectedItems()) = UBound($aiSelection)) ? ($iError) : (BitOR($iError, 1))
+	Else
+		If Not IsArray($aiSelection) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		For $i = 0 To UBound($aiSelection) - 1
+			If Not IsInt($aiSelection[$i]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, $i)
+			If Not __LOWriter_IntIsBetween($aiSelection[$i], 0, $oListBox.Control.ItemCount()) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, $i)
+			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
+		Next
+
+		$oListBox.Control.SelectedItems = $aiSelection
+		$iError = (UBound($oListBox.Control.SelectedItems()) = UBound($aiSelection)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlListBoxSelection
@@ -4189,6 +4964,8 @@ EndFunc   ;==>_LOWriter_FormControlListBoxSelection
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -4215,109 +4992,164 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oNavBar.Control.Name = $sName
 		$iError = ($oNavBar.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oNavBar.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oNavBar.Control.WritingMode = $iTxtDir
 		$iError = ($oNavBar.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oNavBar.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oNavBar.Control.Enabled = $bEnabled
 		$iError = ($oNavBar.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oNavBar.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oNavBar.Control.EnableVisible = $bVisible
 		$iError = ($oNavBar.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oNavBar.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oNavBar.Control.Tabstop = $bTabStop
 		$iError = ($oNavBar.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 32)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oNavBar.Control.TabIndex = $iTabOrder
 		$iError = ($oNavBar.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oNavBar.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oNavBar.Control.RepeatDelay = $iDelay
 		$iError = ($oNavBar.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 128)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		__LOWriter_ControlSetGetFontDesc($oNavBar, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oNavBar.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oNavBar.Control.BackgroundColor = $iBackColor
 		$iError = ($oNavBar.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oNavBar.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oNavBar.Control.Border = $iBorder
 		$iError = ($oNavBar.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($bSmallIcon <> Null) Then
+	If ($bSmallIcon = Default) Then
+		$oNavBar.Control.setPropertyToDefault("IconSize")
+
+	ElseIf ($bSmallIcon <> Null) Then
 		If Not IsBool($bSmallIcon) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oNavBar.Control.IconSize = (($bSmallIcon) ? ($__LOW_FORM_CONTROL_ICON_SMALL) : ($__LOW_FORM_CONTROL_ICON_LARGE))
 		$iError = ($oNavBar.Control.IconSize() = (($bSmallIcon) ? ($__LOW_FORM_CONTROL_ICON_SMALL) : ($__LOW_FORM_CONTROL_ICON_LARGE))) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($bShowPos <> Null) Then
+	If ($bShowPos = Default) Then
+		$oNavBar.Control.setPropertyToDefault("ShowPosition")
+
+	ElseIf ($bShowPos <> Null) Then
 		If Not IsBool($bShowPos) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oNavBar.Control.ShowPosition = $bShowPos
 		$iError = ($oNavBar.Control.ShowPosition() = $bShowPos) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($bShowNav <> Null) Then
+	If ($bShowNav = Default) Then
+		$oNavBar.Control.setPropertyToDefault("ShowNavigation")
+
+	ElseIf ($bShowNav <> Null) Then
 		If Not IsBool($bShowNav) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oNavBar.Control.ShowNavigation = $bShowNav
 		$iError = ($oNavBar.Control.ShowNavigation() = $bShowNav) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($bShowActing <> Null) Then
+	If ($bShowActing = Default) Then
+		$oNavBar.Control.setPropertyToDefault("ShowRecordActions")
+
+	ElseIf ($bShowActing <> Null) Then
 		If Not IsBool($bShowActing) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oNavBar.Control.ShowRecordActions = $bShowActing
 		$iError = ($oNavBar.Control.ShowRecordActions() = $bShowActing) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($bShowFiltering <> Null) Then
+	If ($bShowFiltering = Default) Then
+		$oNavBar.Control.setPropertyToDefault("ShowFilterSort")
+
+	ElseIf ($bShowFiltering <> Null) Then
 		If Not IsBool($bShowFiltering) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oNavBar.Control.ShowFilterSort = $bShowFiltering
 		$iError = ($oNavBar.Control.ShowFilterSort() = $bShowFiltering) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 32768)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oNavBar.Control.Tag = $sAddInfo
 		$iError = ($oNavBar.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oNavBar.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oNavBar.Control.HelpText = $sHelpText
 		$iError = ($oNavBar.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oNavBar.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oNavBar.Control.HelpURL = $sHelpURL
 		$iError = ($oNavBar.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 131072))
@@ -4508,6 +5340,8 @@ EndFunc   ;==>_LOWriter_FormControlNumericFieldData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlNumericFieldValue, _LOWriter_FormControlNumericFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -4536,182 +5370,273 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oNumericField.Control.Name = $sName
 		$iError = ($oNumericField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oNumericField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oNumericField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oNumericField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oNumericField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oNumericField.Control.WritingMode = $iTxtDir
 		$iError = ($oNumericField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bStrict <> Null) Then
+	If ($bStrict = Default) Then
+		$oNumericField.Control.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
 		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oNumericField.Control.StrictFormat = $bStrict
 		$iError = ($oNumericField.Control.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oNumericField.Control.Enabled = $bEnabled
 		$iError = ($oNumericField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oNumericField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oNumericField.Control.EnableVisible = $bVisible
 		$iError = ($oNumericField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oNumericField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oNumericField.Control.ReadOnly = $bReadOnly
 		$iError = ($oNumericField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oNumericField.Control.Printable = $bPrintable
 		$iError = ($oNumericField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oNumericField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oNumericField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oNumericField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oNumericField.Control.Tabstop = $bTabStop
 		$iError = ($oNumericField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oNumericField.Control.TabIndex = $iTabOrder
 		$iError = ($oNumericField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($nMin <> Null) Then
+	If ($nMax = Default) Then
+		$oNumericField.Control.setPropertyToDefault("ValueMin")
+
+	ElseIf ($nMin <> Null) Then
 		If Not IsNumber($nMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oNumericField.Control.ValueMin = $nMin
 		$iError = ($oNumericField.Control.ValueMin() = $nMin) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($nMax <> Null) Then
+	If ($nMax = Default) Then
+		$oNumericField.Control.setPropertyToDefault("ValueMax")
+
+	ElseIf ($nMax <> Null) Then
 		If Not IsNumber($nMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oNumericField.Control.ValueMax = $nMax
 		$iError = ($oNumericField.Control.ValueMax() = $nMax) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iIncr <> Null) Then
+	If ($iIncr = Default) Then
+		$oNumericField.Control.setPropertyToDefault("ValueStep")
+
+	ElseIf ($iIncr <> Null) Then
 		If Not IsInt($iIncr) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oNumericField.Control.ValueStep = $iIncr
 		$iError = ($oNumericField.Control.ValueStep() = $iIncr) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($nDefault <> Null) Then
+	If ($nDefault = Default) Then
+		$oNumericField.Control.setPropertyToDefault("DefaultValue")
+
+	ElseIf ($nDefault <> Null) Then
 		If Not IsNumber($nDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oNumericField.Control.DefaultValue = $nDefault
 		$iError = ($oNumericField.Control.DefaultValue() = $nDefault) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iDecimal <> Null) Then
+	If ($iDecimal = Default) Then
+		$oNumericField.Control.setPropertyToDefault("DecimalAccuracy")
+
+	ElseIf ($iDecimal <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDecimal, 0, 20) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oNumericField.Control.DecimalAccuracy = $iDecimal
 		$iError = ($oNumericField.Control.DecimalAccuracy() = $iDecimal) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bThousandsSep <> Null) Then
+	If ($bThousandsSep = Default) Then
+		$oNumericField.Control.setPropertyToDefault("ShowThousandsSeparator")
+
+	ElseIf ($bThousandsSep <> Null) Then
 		If Not IsBool($bThousandsSep) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oNumericField.Control.ShowThousandsSeparator = $bThousandsSep
 		$iError = ($oNumericField.Control.ShowThousandsSeparator() = $bThousandsSep) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($bSpin <> Null) Then
+	If ($bSpin = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
 		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oNumericField.Control.Spin = $bSpin
 		$iError = ($oNumericField.Control.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oNumericField.Control.Repeat = $bRepeat
 		$iError = ($oNumericField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oNumericField.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oNumericField.Control.RepeatDelay = $iDelay
 		$iError = ($oNumericField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 1048576)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		__LOWriter_ControlSetGetFontDesc($oNumericField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oNumericField.Control.Align = $iAlign
 		$iError = ($oNumericField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oNumericField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oNumericField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oNumericField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oNumericField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oNumericField.Control.BackgroundColor = $iBackColor
 		$iError = ($oNumericField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oNumericField.Control.Border = $iBorder
 		$iError = ($oNumericField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oNumericField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oNumericField.Control.BorderColor = $iBorderColor
 		$iError = ($oNumericField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oNumericField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oNumericField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oNumericField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 134217728)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 		$oNumericField.Control.Tag = $sAddInfo
 		$iError = ($oNumericField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 134217728))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oNumericField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 32, 0)
 		$oNumericField.Control.HelpText = $sHelpText
 		$iError = ($oNumericField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 268435456))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oNumericField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 33, 0)
 		$oNumericField.Control.HelpURL = $sHelpURL
 		$iError = ($oNumericField.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 536870912))
@@ -4743,6 +5668,7 @@ EndFunc   ;==>_LOWriter_FormControlNumericFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value. Return will be Null if a value hasn't been set.
+;                  Call $nValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlNumericFieldGeneral, _LOWriter_FormControlNumericFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -4765,10 +5691,15 @@ Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
 
-	If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($nValue = Default) Then
+		$oNumericField.Control.setPropertyToDefault("Value")
 
-	$oNumericField.Control.Value = $nValue
-	$iError = ($oNumericField.Control.Value() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	Else
+		If Not IsNumber($nValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oNumericField.Control.Value = $nValue
+		$iError = ($oNumericField.Control.Value() = $nValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlNumericFieldValue
@@ -4926,6 +5857,8 @@ EndFunc   ;==>_LOWriter_FormControlOptionButtonData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlOptionButtonState, _LOWriter_FormControlOptionButtonData
 ; Link ..........:
 ; Example .......: Yes
@@ -4952,134 +5885,202 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oOptionButton.Control.Name = $sName
 		$iError = ($oOptionButton.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($sLabel <> Null) Then
+	If ($sLabel = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
 		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oOptionButton.Control.Label = $sLabel
 		$iError = ($oOptionButton.Control.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oOptionButton.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oOptionButton.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oOptionButton.Control.WritingMode = $iTxtDir
 		$iError = ($oOptionButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($sGroupName <> Null) Then
+	If ($sGroupName = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("GroupName")
+
+	ElseIf ($sGroupName <> Null) Then
 		If Not IsString($sGroupName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oOptionButton.Control.GroupName = $sGroupName
 		$iError = ($oOptionButton.Control.GroupName() = $sGroupName) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oOptionButton.Control.Enabled = $bEnabled
 		$iError = ($oOptionButton.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oOptionButton.Control.EnableVisible = $bVisible
 		$iError = ($oOptionButton.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oOptionButton.Control.Printable = $bPrintable
 		$iError = ($oOptionButton.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oOptionButton.Control.Tabstop = $bTabStop
 		$iError = ($oOptionButton.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oOptionButton.Control.TabIndex = $iTabOrder
 		$iError = ($oOptionButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iDefaultState <> Null) Then
+	If ($iDefaultState = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default DefaultState.
+
+	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oOptionButton.Control.DefaultState = $iDefaultState
 		$iError = ($oOptionButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		__LOWriter_ControlSetGetFontDesc($oOptionButton, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iStyle <> Null) Then
+	If ($iStyle = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("VisualEffect")
+
+	ElseIf ($iStyle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iStyle, $LOW_FORM_CONTROL_BORDER_3D, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oOptionButton.Control.VisualEffect = $iStyle
 		$iError = ($oOptionButton.Control.VisualEffect() = $iStyle) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oOptionButton.Control.Align = $iAlign
 		$iError = ($oOptionButton.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oOptionButton.Control.VerticalAlign = $iVertAlign
 		$iError = ($oOptionButton.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oOptionButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oOptionButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bWordBreak <> Null) Then
+	If ($bWordBreak = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bWordBreak <> Null) Then
 		If Not IsBool($bWordBreak) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oOptionButton.Control.MultiLine = $bWordBreak
 		$iError = ($oOptionButton.Control.MultiLine() = $bWordBreak) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($sGraphics <> Null) Then
+	If ($sGraphics = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("ImageURL")
+		$oOptionButton.Control.setPropertyToDefault("Graphic")
+
+	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oOptionButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
 		$iError = ($oOptionButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($iGraphicAlign <> Null) Then
+	If ($iGraphicAlign = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("ImagePosition")
+
+	ElseIf ($iGraphicAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oOptionButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oOptionButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 524288)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oOptionButton.Control.Tag = $sAddInfo
 		$iError = ($oOptionButton.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oOptionButton.Control.HelpText = $sHelpText
 		$iError = ($oOptionButton.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oOptionButton.Control.HelpURL = $sHelpURL
 		$iError = ($oOptionButton.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 2097152))
@@ -5111,7 +6112,8 @@ EndFunc   ;==>_LOWriter_FormControlOptionButtonGeneral
 ;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Option Button State as an integer, matching one of the constants $LOW_FORM_CONTROL_CHKBX_STATE_* as defined in LibreOfficeWriter_Constants.au3.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Option Button state.
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Option Button state.
+;                  Call $iState with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlOptionButtonGeneral, _LOWriter_FormControlOptionButtonData
 ; Link ..........:
 ; Example .......: Yes
@@ -5134,9 +6136,14 @@ Func _LOWriter_FormControlOptionButtonState(ByRef $oOptionButton, $iState = Null
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iCurState)
 	EndIf
 
-	If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oOptionButton.Control.State = $iState
-	$iError = ($oOptionButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	If ($iState = Default) Then
+		$oOptionButton.Control.setPropertyToDefault("State")
+
+	Else
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oOptionButton.Control.State = $iState
+		$iError = ($oOptionButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlOptionButtonState
@@ -5321,6 +6328,8 @@ EndFunc   ;==>_LOWriter_FormControlPatternFieldData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlPatternFieldValue, _LOWriter_FormControlPatternFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -5348,152 +6357,228 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oPatternField.Control.Name = $sName
 		$iError = ($oPatternField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oPatternField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPatternField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oPatternField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oPatternField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oPatternField.Control.WritingMode = $iTxtDir
 		$iError = ($oPatternField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iMaxLen <> Null) Then
+	If ($iMaxLen = Default) Then
+		$oPatternField.Control.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oPatternField.Control.MaxTextLen = $iMaxLen
 		$iError = ($oPatternField.Control.MaxTextLen = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($sEditMask <> Null) Then
+	If ($sEditMask = Default) Then
+		$oPatternField.Control.setPropertyToDefault("EditMask")
+
+	ElseIf ($sEditMask <> Null) Then
 		If Not IsString($sEditMask) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oPatternField.Control.EditMask = $sEditMask
 		$iError = ($oPatternField.Control.EditMask() = $sEditMask) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($sLiteralMask <> Null) Then
+	If ($sLiteralMask = Default) Then
+		$oPatternField.Control.setPropertyToDefault("LiteralMask")
+
+	ElseIf ($sLiteralMask <> Null) Then
 		If Not IsString($sLiteralMask) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oPatternField.Control.LiteralMask = $sLiteralMask
 		$iError = ($oPatternField.Control.LiteralMask() = $sLiteralMask) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bStrict <> Null) Then
+	If ($bStrict = Default) Then
+		$oPatternField.Control.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
 		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oPatternField.Control.StrictFormat = $bStrict
 		$iError = ($oPatternField.Control.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oPatternField.Control.Enabled = $bEnabled
 		$iError = ($oPatternField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oPatternField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oPatternField.Control.EnableVisible = $bVisible
 		$iError = ($oPatternField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oPatternField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oPatternField.Control.ReadOnly = $bReadOnly
 		$iError = ($oPatternField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oPatternField.Control.Printable = $bPrintable
 		$iError = ($oPatternField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oPatternField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oPatternField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oPatternField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oPatternField.Control.Tabstop = $bTabStop
 		$iError = ($oPatternField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 8192)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oPatternField.Control.TabIndex = $iTabOrder
 		$iError = ($oPatternField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($sDefaultTxt <> Null) Then
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 16384)    ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oPatternField.Control.DefaultText = $sDefaultTxt
 		$iError = ($oPatternField.Control.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 32768)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		__LOWriter_ControlSetGetFontDesc($oPatternField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oPatternField.Control.Align = $iAlign
 		$iError = ($oPatternField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oPatternField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oPatternField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oPatternField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oPatternField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oPatternField.Control.BackgroundColor = $iBackColor
 		$iError = ($oPatternField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oPatternField.Control.Border = $iBorder
 		$iError = ($oPatternField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oPatternField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oPatternField.Control.BorderColor = $iBorderColor
 		$iError = ($oPatternField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oPatternField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oPatternField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oPatternField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oPatternField.Control.Tag = $sAddInfo
 		$iError = ($oPatternField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oPatternField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oPatternField.Control.HelpText = $sHelpText
 		$iError = ($oPatternField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oPatternField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oPatternField.Control.HelpURL = $sHelpURL
 		$iError = ($oPatternField.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 16777216))
@@ -5526,6 +6611,7 @@ EndFunc   ;==>_LOWriter_FormControlPatternFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current value.
+;                  Call $sValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlPatternFieldGeneral, _LOWriter_FormControlPatternFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -5549,10 +6635,15 @@ Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
-	If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($sValue = Default) Then
+		$oPatternField.Control.setPropertyToDefault("Text")
 
-	$oPatternField.Control.Text = $sValue
-	$iError = ($oPatternField.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	Else
+		If Not IsString($sValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
+		$oPatternField.Control.Text = $sValue
+		$iError = ($oPatternField.Control.Text() = $sValue) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlPatternFieldValue
@@ -5747,6 +6838,8 @@ EndFunc   ;==>_LOWriter_FormControlPosition
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $iDefaultState, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlPushButtonState
 ; Link ..........:
 ; Example .......: Yes
@@ -5837,115 +6930,186 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oPushButton.Control.Name = $sName
 		$iError = ($oPushButton.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($sLabel <> Null) Then
+	If ($sLabel = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
 		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oPushButton.Control.Label = $sLabel
 		$iError = ($oPushButton.Control.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oPushButton.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPushButton.Control.WritingMode = $iTxtDir
 		$iError = ($oPushButton.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oPushButton.Control.Enabled = $bEnabled
 		$iError = ($oPushButton.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oPushButton.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oPushButton.Control.EnableVisible = $bVisible
 		$iError = ($oPushButton.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oPushButton.Control.Printable = $bPrintable
 		$iError = ($oPushButton.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oPushButton.Control.Tabstop = $bTabStop
 		$iError = ($oPushButton.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 128)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oPushButton.Control.TabIndex = $iTabOrder
 		$iError = ($oPushButton.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oPushButton.Control.Repeat = $bRepeat
 		$iError = ($oPushButton.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oPushButton.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oPushButton.Control.RepeatDelay = $iDelay
 		$iError = ($oPushButton.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($bTakeFocus <> Null) Then
+	If ($bTakeFocus = Default) Then
+		$oPushButton.Control.setPropertyToDefault("FocusOnClick")
+
+	ElseIf ($bTakeFocus <> Null) Then
 		If Not IsBool($bTakeFocus) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oPushButton.Control.FocusOnClick = $bTakeFocus
 		$iError = ($oPushButton.Control.FocusOnClick() = $bTakeFocus) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($bToggle <> Null) Then
+	If ($bToggle = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Toggle")
+
+	ElseIf ($bToggle <> Null) Then
 		If Not IsBool($bToggle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oPushButton.Control.Toggle = $bToggle
 		$iError = ($oPushButton.Control.Toggle() = $bToggle) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iDefaultState <> Null) Then
+	If ($iDefaultState = Default) Then
+		$iError = BitOR($iError, 4096)    ; Can't Default DefaultState.
+
+	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oPushButton.Control.DefaultState = $iDefaultState
 		$iError = ($oPushButton.Control.DefaultState() = $iDefaultState) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 8192)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		__LOWriter_ControlSetGetFontDesc($oPushButton, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oPushButton.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oPushButton.Control.Align = $iAlign
 		$iError = ($oPushButton.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oPushButton.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oPushButton.Control.VerticalAlign = $iVertAlign
 		$iError = ($oPushButton.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oPushButton.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oPushButton.Control.BackgroundColor = $iBackColor
 		$iError = ($oPushButton.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($bWordBreak <> Null) Then
+	If ($bWordBreak = Default) Then
+		$oPushButton.Control.setPropertyToDefault("MultiLine")
+
+	ElseIf ($bWordBreak <> Null) Then
 		If Not IsBool($bWordBreak) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oPushButton.Control.MultiLine = $bWordBreak
 		$iError = ($oPushButton.Control.MultiLine() = $bWordBreak) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($iAction <> Null) Then
+	If ($iAction = Default) Then
+		$oPushButton.Control.setPropertyToDefault("ButtonType")
+
+		Switch $iBtnAction
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
+				$oPushButton.Control.setPropertyToDefault("TargetURL")
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_OPEN
+
+			Case $LOW_FORM_CONTROL_PUSH_CMD_FIRST_REC, $LOW_FORM_CONTROL_PUSH_CMD_LAST_REC, $LOW_FORM_CONTROL_PUSH_CMD_NEXT_REC, $LOW_FORM_CONTROL_PUSH_CMD_PREV_REC, _
+					$LOW_FORM_CONTROL_PUSH_CMD_SAVE_REC, $LOW_FORM_CONTROL_PUSH_CMD_UNDO, $LOW_FORM_CONTROL_PUSH_CMD_NEW_REC, $LOW_FORM_CONTROL_PUSH_CMD_DELETE_REC, _
+					$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
+				$oPushButton.Control.setPropertyToDefault("TargetURL")
+		EndSwitch
+
+	ElseIf ($iAction <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iAction
@@ -5980,13 +7144,19 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 
 	EndIf
 
-	If ($sURL <> Null) Then
+	If ($sURL = Default) Then
+		$oPushButton.Control.setPropertyToDefault("TargetURL")
+
+	ElseIf ($sURL <> Null) Then
 		If Not IsString($sURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		$oPushButton.Control.TargetURL = $sURL
 		$iError = ($oPushButton.Control.TargetURL() = $sURL) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($sFrame <> Null) Then
+	If ($sFrame = Default) Then
+		$oPushButton.Control.setPropertyToDefault("TargetFrame")
+
+	ElseIf ($sFrame <> Null) Then
 		If Not IsString($sFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		If ($sFrame <> $LOW_FRAME_TARGET_TOP) And _
 				($sFrame <> $LOW_FRAME_TARGET_PARENT) And _
@@ -5996,37 +7166,56 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 		$iError = ($oPushButton.Control.TargetFrame() = $sFrame) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($bDefault <> Null) Then
+	If ($bDefault = Default) Then
+		$oPushButton.Control.setPropertyToDefault("DefaultButton")
+
+	ElseIf ($bDefault <> Null) Then
 		If Not IsBool($bDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oPushButton.Control.DefaultButton = $bDefault
 		$iError = ($oPushButton.Control.DefaultButton() = $bDefault) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($sGraphics <> Null) Then
+	If ($sGraphics = Default) Then
+		$oPushButton.Control.setPropertyToDefault("ImageURL")
+		$oPushButton.Control.setPropertyToDefault("Graphic")
+
+	ElseIf ($sGraphics <> Null) Then
 		If Not IsString($sGraphics) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oPushButton.Control.ImageURL = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)
 		$iError = ($oPushButton.Control.ImageURL() = _LOWriter_PathConvert($sGraphics, $LOW_PATHCONV_OFFICE_RETURN)) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($iGraphicAlign <> Null) Then
+	If ($iGraphicAlign = Default) Then
+		$oPushButton.Control.setPropertyToDefault("ImagePosition")
+
+	ElseIf ($iGraphicAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iGraphicAlign, $LOW_FORM_CONTROL_IMG_ALIGN_LEFT_TOP, $LOW_FORM_CONTROL_IMG_ALIGN_CENTERED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oPushButton.Control.ImagePosition = $iGraphicAlign
 		$iError = ($oPushButton.Control.ImagePosition() = $iGraphicAlign) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 16777216)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oPushButton.Control.Tag = $sAddInfo
 		$iError = ($oPushButton.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oPushButton.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oPushButton.Control.HelpText = $sHelpText
 		$iError = ($oPushButton.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oPushButton.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oPushButton.Control.HelpURL = $sHelpURL
 		$iError = ($oPushButton.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 67108864))
@@ -6061,6 +7250,7 @@ EndFunc   ;==>_LOWriter_FormControlPushButtonGeneral
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Push Button state.
 ;                  Setting the state to selected DOES NOT simulate clicking the button.
 ;                  The Push button State is only valid when Toggle is active.
+;                  Call $iState with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlPushButtonGeneral
 ; Link ..........:
 ; Example .......: Yes
@@ -6083,9 +7273,14 @@ Func _LOWriter_FormControlPushButtonState(ByRef $oPushButton, $iState = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iCurState)
 	EndIf
 
-	If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oPushButton.Control.State = $iState
-	$iError = ($oPushButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	If ($iState = Default) Then
+		$oPushButton.Control.setPropertyToDefault("State")
+
+	Else
+		If Not __LOWriter_IntIsBetween($iState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oPushButton.Control.State = $iState
+		$iError = ($oPushButton.Control.State() = $iState) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlPushButtonState
@@ -6373,6 +7568,8 @@ EndFunc   ;==>_LOWriter_FormControlSize
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  While the option is available, I am unable to set border color. Attempts result in a COM Error.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......:
 ; Link ..........:
 ; Example .......: Yes
@@ -6397,97 +7594,146 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oTableCon.Control.Name = $sName
 		$iError = ($oTableCon.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oTableCon.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oTableCon.Control.WritingMode = $iTxtDir
 		$iError = ($oTableCon.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oTableCon.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTableCon.Control.Enabled = $bEnabled
 		$iError = ($oTableCon.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oTableCon.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTableCon.Control.EnableVisible = $bVisible
 		$iError = ($oTableCon.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oTableCon.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oTableCon.Control.Printable = $bPrintable
 		$iError = ($oTableCon.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oTableCon.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oTableCon.Control.Tabstop = $bTabStop
 		$iError = ($oTableCon.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 64)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oTableCon.Control.TabIndex = $iTabOrder
 		$iError = ($oTableCon.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 128)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		__LOWriter_ControlSetGetFontDesc($oTableCon, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($nRowHeight <> Null) Then
+	If ($nRowHeight = Default) Then
+		$oTableCon.Control.setPropertyToDefault("RowHeight")
+
+	ElseIf ($nRowHeight <> Null) Then
 		If Not __LOWriter_NumIsBetween($nRowHeight, -21474836.48, 21474836.48) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oTableCon.Control.RowHeight = $nRowHeight
 		$iError = (__LOWriter_NumIsBetween($oTableCon.Control.RowHeight(), $nRowHeight - 1, $nRowHeight + 1)) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oTableCon.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oTableCon.Control.BackgroundColor = $iBackColor
 		$iError = ($oTableCon.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oTableCon.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oTableCon.Control.Border = $iBorder
 		$iError = ($oTableCon.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($bNavBar <> Null) Then
+	If ($bNavBar = Default) Then
+		$oTableCon.Control.setPropertyToDefault("HasNavigationBar")
+
+	ElseIf ($bNavBar <> Null) Then
 		If Not IsBool($bNavBar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oTableCon.Control.HasNavigationBar = $bNavBar
 		$iError = ($oTableCon.Control.HasNavigationBar() = $bNavBar) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($bRecordMarker <> Null) Then
+	If ($bRecordMarker = Default) Then
+		$oTableCon.Control.setPropertyToDefault("HasRecordMarker")
+
+	ElseIf ($bRecordMarker <> Null) Then
 		If Not IsBool($bRecordMarker) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		$oTableCon.Control.HasRecordMarker = $bRecordMarker
 		$iError = ($oTableCon.Control.HasRecordMarker() = $bRecordMarker) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 8192)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oTableCon.Control.Tag = $sAddInfo
 		$iError = ($oTableCon.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oTableCon.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oTableCon.Control.HelpText = $sHelpText
 		$iError = ($oTableCon.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oTableCon.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oTableCon.Control.HelpURL = $sHelpURL
 		$iError = ($oTableCon.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 32768))
@@ -6676,6 +7922,8 @@ EndFunc   ;==>_LOWriter_FormControlTextBoxData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $sDefaultTxt, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormControlTextBoxData
 ; Link ..........:
 ; Example .......: Yes
@@ -6708,110 +7956,166 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oTextBox.Control.Name = $sName
 		$iError = ($oTextBox.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oTextBox.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTextBox.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTextBox.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oTextBox.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTextBox.Control.WritingMode = $iTxtDir
 		$iError = ($oTextBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($iMaxLen <> Null) Then
+	If ($iMaxLen = Default) Then
+		$oTextBox.Control.setPropertyToDefault("MaxTextLen")
+
+	ElseIf ($iMaxLen <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMaxLen, -1, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oTextBox.Control.MaxTextLen = $iMaxLen
 		$iError = ($oTextBox.Control.MaxTextLen() = $iMaxLen) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oTextBox.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oTextBox.Control.Enabled = $bEnabled
 		$iError = ($oTextBox.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oTextBox.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oTextBox.Control.EnableVisible = $bVisible
 		$iError = ($oTextBox.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oTextBox.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oTextBox.Control.ReadOnly = $bReadOnly
 		$iError = ($oTextBox.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oTextBox.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oTextBox.Control.Printable = $bPrintable
 		$iError = ($oTextBox.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oTextBox.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oTextBox.Control.Tabstop = $bTabStop
 		$iError = ($oTextBox.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oTextBox.Control.TabIndex = $iTabOrder
 		$iError = ($oTextBox.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($sDefaultTxt <> Null) Then
+	If ($sDefaultTxt = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default DefaultText.
+
+	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oTextBox.Control.DefaultText = $sDefaultTxt
 		$iError = ($oTextBox.Control.DefaultText() = $sDefaultTxt) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 		__LOWriter_ControlSetGetFontDesc($oTextBox, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oTextBox.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 		$oTextBox.Control.Align = $iAlign
 		$iError = ($oTextBox.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oTextBox.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oTextBox.Control.VerticalAlign = $iVertAlign
 		$iError = ($oTextBox.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oTextBox.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 		$oTextBox.Control.BackgroundColor = $iBackColor
 		$iError = ($oTextBox.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oTextBox.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oTextBox.Control.Border = $iBorder
 		$iError = ($oTextBox.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oTextBox.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oTextBox.Control.BorderColor = $iBorderColor
 		$iError = ($oTextBox.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iTextType <> Null) Then
+	If ($iTextType = Default) Then
+		$oTextBox.Control.setPropertyToDefault("MultiLine")
+		$oTextBox.Control.setPropertyToDefault("RichText")
+
+	ElseIf ($iTextType <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTextType, $LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iTextType
@@ -6836,7 +8140,10 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		EndSwitch
 	EndIf
 
-	If ($bEndWithLF <> Null) Then
+	If ($bEndWithLF = Default) Then
+		$oTextBox.Control.setPropertyToDefault("LineEndFormat")
+
+	ElseIf ($bEndWithLF <> Null) Then
 		If Not IsBool($bEndWithLF) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 
 		If $bEndWithLF Then
@@ -6850,7 +8157,11 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		EndIf
 	EndIf
 
-	If ($iScrollbars <> Null) Then
+	If ($iScrollbars = Default) Then
+		$oTextBox.Control.setPropertyToDefault("HScroll")
+		$oTextBox.Control.setPropertyToDefault("VScroll")
+
+	ElseIf ($iScrollbars <> Null) Then
 		If Not __LOWriter_IntIsBetween($iScrollbars, $LOW_FORM_CONTROL_SCROLL_NONE, $LOW_FORM_CONTROL_SCROLL_BOTH) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 
 		Switch $iScrollbars
@@ -6877,31 +8188,46 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		EndSwitch
 	EndIf
 
-	If ($iPassChar <> Null) Then
+	If ($iPassChar = Default) Then
+		$oTextBox.Control.setPropertyToDefault("EchoChar")
+
+	ElseIf ($iPassChar <> Null) Then
 		If Not IsInt($iPassChar) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oTextBox.Control.EchoChar = $iPassChar
 		$iError = ($oTextBox.Control.EchoChar() = $iPassChar) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oTextBox.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oTextBox.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oTextBox.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oTextBox.Control.Tag = $sAddInfo
 		$iError = ($oTextBox.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oTextBox.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oTextBox.Control.HelpText = $sHelpText
 		$iError = ($oTextBox.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oTextBox.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oTextBox.Control.HelpURL = $sHelpURL
 		$iError = ($oTextBox.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 16777216))
@@ -7085,6 +8411,8 @@ EndFunc   ;==>_LOWriter_FormControlTimeFieldData
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
 ;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $iTabOrder, $mFont, $sAddInfo.
 ; Related .......: _LOWriter_FormatKeyCreate, _LOWriter_FormatKeyList, _LOWriter_FormControlTimeFieldValue, _LOWriter_FormControlTimeFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -7152,74 +8480,111 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
-	If ($sName <> Null) Then
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1)    ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oTimeField.Control.Name = $sName
 		$iError = ($oTimeField.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
-	If ($oLabelField <> Null) Then
+	If ($oLabelField = Default) Then
+		$oTimeField.Control.setPropertyToDefault("LabelControl")
+
+	ElseIf ($oLabelField <> Null) Then
 		If Not IsObj($oLabelField) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		If (__LOWriter_FormControlIdentify($oLabelField) <> $LOW_FORM_CONTROL_TYPE_LABEL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oTimeField.Control.LabelControl = $oLabelField.Control()
 		$iError = ($oTimeField.Control.LabelControl() = $oLabelField.Control()) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
-	If ($iTxtDir <> Null) Then
+	If ($iTxtDir = Default) Then
+		$oTimeField.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oTimeField.Control.WritingMode = $iTxtDir
 		$iError = ($oTimeField.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
-	If ($bStrict <> Null) Then
+	If ($bStrict = Default) Then
+		$oTimeField.Control.setPropertyToDefault("StrictFormat")
+
+	ElseIf ($bStrict <> Null) Then
 		If Not IsBool($bStrict) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oTimeField.Control.StrictFormat = $bStrict
 		$iError = ($oTimeField.Control.StrictFormat() = $bStrict) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	If ($bEnabled <> Null) Then
+	If ($bEnabled = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
 		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oTimeField.Control.Enabled = $bEnabled
 		$iError = ($oTimeField.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 16))
 	EndIf
 
-	If ($bVisible <> Null) Then
+	If ($bVisible = Default) Then
+		$oTimeField.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
 		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		$oTimeField.Control.EnableVisible = $bVisible
 		$iError = ($oTimeField.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 32))
 	EndIf
 
-	If ($bReadOnly <> Null) Then
+	If ($bReadOnly = Default) Then
+		$oTimeField.Control.setPropertyToDefault("ReadOnly")
+
+	ElseIf ($bReadOnly <> Null) Then
 		If Not IsBool($bReadOnly) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		$oTimeField.Control.ReadOnly = $bReadOnly
 		$iError = ($oTimeField.Control.ReadOnly() = $bReadOnly) ? ($iError) : (BitOR($iError, 64))
 	EndIf
 
-	If ($bPrintable <> Null) Then
+	If ($bPrintable = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
 		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
 		$oTimeField.Control.Printable = $bPrintable
 		$iError = ($oTimeField.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 128))
 	EndIf
 
-	If ($iMouseScroll <> Null) Then
+	If ($iMouseScroll = Default) Then
+		$oTimeField.Control.setPropertyToDefault("MouseWheelBehavior")
+
+	ElseIf ($iMouseScroll <> Null) Then
 		If Not __LOWriter_IntIsBetween($iMouseScroll, $LOW_FORM_CONTROL_MOUSE_SCROLL_DISABLED, $LOW_FORM_CONTROL_MOUSE_SCROLL_ALWAYS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
 		$oTimeField.Control.MouseWheelBehavior = $iMouseScroll
 		$iError = ($oTimeField.Control.MouseWheelBehavior() = $iMouseScroll) ? ($iError) : (BitOR($iError, 256))
 	EndIf
 
-	If ($bTabStop <> Null) Then
+	If ($bTabStop = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Tabstop")
+
+	ElseIf ($bTabStop <> Null) Then
 		If Not IsBool($bTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 		$oTimeField.Control.Tabstop = $bTabStop
 		$iError = ($oTimeField.Control.Tabstop() = $bTabStop) ? ($iError) : (BitOR($iError, 512))
 	EndIf
 
-	If ($iTabOrder <> Null) Then
+	If ($iTabOrder = Default) Then
+		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+
+	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
 		$oTimeField.Control.TabIndex = $iTabOrder
 		$iError = ($oTimeField.Control.TabIndex() = $iTabOrder) ? ($iError) : (BitOR($iError, 1024))
 	EndIf
 
-	If ($tTimeMin <> Null) Then
+	If ($tTimeMin = Default) Then
+		$oTimeField.Control.setPropertyToDefault("TimeMin")
+
+	ElseIf ($tTimeMin <> Null) Then
 		If Not IsObj($tTimeMin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
 
 		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
@@ -7235,7 +8600,10 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.TimeMin(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 2048))
 	EndIf
 
-	If ($tTimeMax <> Null) Then
+	If ($tTimeMax = Default) Then
+		$oTimeField.Control.setPropertyToDefault("TimeMax")
+
+	ElseIf ($tTimeMax <> Null) Then
 		If Not IsObj($tTimeMax) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
 
 		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
@@ -7251,13 +8619,19 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.TimeMax(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 4096))
 	EndIf
 
-	If ($iFormat <> Null) Then
+	If ($iFormat = Default) Then
+		$oTimeField.Control.setPropertyToDefault("TimeFormat")
+
+	ElseIf ($iFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iFormat, $LOW_FORM_CONTROL_TIME_FRMT_24_SHORT, $LOW_FORM_CONTROL_TIME_FRMT_DURATION_LONG) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
 		$oTimeField.Control.TimeFormat = $iFormat
 		$iError = ($oTimeField.Control.TimeFormat() = $iFormat) ? ($iError) : (BitOR($iError, 8192))
 	EndIf
 
-	If ($tTimeDefault <> Null) Then
+	If ($tTimeDefault = Default) Then
+		$oTimeField.Control.setPropertyToDefault("DefaultTime")
+
+	ElseIf ($tTimeDefault <> Null) Then
 		If Not IsObj($tTimeDefault) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
 
 		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
@@ -7273,79 +8647,118 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.DefaultTime(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 16384))
 	EndIf
 
-	If ($bSpin <> Null) Then
+	If ($bSpin = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Spin")
+
+	ElseIf ($bSpin <> Null) Then
 		If Not IsBool($bSpin) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
 		$oTimeField.Control.Spin = $bSpin
 		$iError = ($oTimeField.Control.Spin() = $bSpin) ? ($iError) : (BitOR($iError, 32768))
 	EndIf
 
-	If ($bRepeat <> Null) Then
+	If ($bRepeat = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Repeat")
+
+	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 20, 0)
 		$oTimeField.Control.Repeat = $bRepeat
 		$iError = ($oTimeField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
-	If ($iDelay <> Null) Then
+	If ($iDelay = Default) Then
+		$oTimeField.Control.setPropertyToDefault("RepeatDelay")
+
+	ElseIf ($iDelay <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDelay, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oTimeField.Control.RepeatDelay = $iDelay
 		$iError = ($oTimeField.Control.RepeatDelay() = $iDelay) ? ($iError) : (BitOR($iError, 131072))
 	EndIf
 
-	If ($mFont <> Null) Then
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
 		__LOWriter_ControlSetGetFontDesc($oTimeField, $mFont)
 		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 262144))
 	EndIf
 
-	If ($iAlign <> Null) Then
+	If ($iAlign = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Align")
+
+	ElseIf ($iAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAlign, $LOW_ALIGN_HORI_LEFT, $LOW_ALIGN_HORI_RIGHT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
 		$oTimeField.Control.Align = $iAlign
 		$iError = ($oTimeField.Control.Align() = $iAlign) ? ($iError) : (BitOR($iError, 524288))
 	EndIf
 
-	If ($iVertAlign <> Null) Then
+	If ($iVertAlign = Default) Then
+		$oTimeField.Control.setPropertyToDefault("VerticalAlign")
+
+	ElseIf ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ALIGN_VERT_TOP, $LOW_ALIGN_VERT_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
 		$oTimeField.Control.VerticalAlign = $iVertAlign
 		$iError = ($oTimeField.Control.VerticalAlign() = $iVertAlign) ? ($iError) : (BitOR($iError, 1048576))
 	EndIf
 
-	If ($iBackColor <> Null) Then
+	If ($iBackColor = Default) Then
+		$oTimeField.Control.setPropertyToDefault("BackgroundColor")
+
+	ElseIf ($iBackColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBackColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 25, 0)
 		$oTimeField.Control.BackgroundColor = $iBackColor
 		$iError = ($oTimeField.Control.BackgroundColor() = $iBackColor) ? ($iError) : (BitOR($iError, 2097152))
 	EndIf
 
-	If ($iBorder <> Null) Then
+	If ($iBorder = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Border")
+
+	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oTimeField.Control.Border = $iBorder
 		$iError = ($oTimeField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4191304))
 	EndIf
 
-	If ($iBorderColor <> Null) Then
+	If ($iBorderColor = Default) Then
+		$oTimeField.Control.setPropertyToDefault("BorderColor")
+
+	ElseIf ($iBorderColor <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorderColor, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
 		$oTimeField.Control.BorderColor = $iBorderColor
 		$iError = ($oTimeField.Control.BorderColor() = $iBorderColor) ? ($iError) : (BitOR($iError, 8388608))
 	EndIf
 
-	If ($bHideSel <> Null) Then
+	If ($bHideSel = Default) Then
+		$oTimeField.Control.setPropertyToDefault("HideInactiveSelection")
+
+	ElseIf ($bHideSel <> Null) Then
 		If Not IsBool($bHideSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
 		$oTimeField.Control.HideInactiveSelection = $bHideSel
 		$iError = ($oTimeField.Control.HideInactiveSelection() = $bHideSel) ? ($iError) : (BitOR($iError, 16777216))
 	EndIf
 
-	If ($sAddInfo <> Null) Then
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 33554432)    ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
 		$oTimeField.Control.Tag = $sAddInfo
 		$iError = ($oTimeField.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 33554432))
 	EndIf
 
-	If ($sHelpText <> Null) Then
+	If ($sHelpText = Default) Then
+		$oTimeField.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
 		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
 		$oTimeField.Control.HelpText = $sHelpText
 		$iError = ($oTimeField.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 67108864))
 	EndIf
 
-	If ($sHelpURL <> Null) Then
+	If ($sHelpURL = Default) Then
+		$oTimeField.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
 		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
 		$oTimeField.Control.HelpURL = $sHelpURL
 		$iError = ($oTimeField.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 134217728))
@@ -7380,6 +8793,7 @@ EndFunc   ;==>_LOWriter_FormControlTimeFieldGeneral
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current Time value. Return will be Null if the Time hasn't been set.
+;                  Call $tTimeValue with Default keyword to reset the value to default.
 ; Related .......: _LOWriter_FormControlTimeFieldGeneral, _LOWriter_FormControlTimeFieldData
 ; Link ..........:
 ; Example .......: Yes
@@ -7417,19 +8831,24 @@ Func _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $tCurTime)
 	EndIf
 
-	If Not IsObj($tTimeValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If ($tTime = Default) Then
+		$oTimeField.Control.setPropertyToDefault("Time")
 
-	$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
-	If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+	Else
+		If Not IsObj($tTimeValue) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$tTime.Hours = $tTimeValue.Hours()
-	$tTime.Minutes = $tTimeValue.Minutes()
-	$tTime.Seconds = $tTimeValue.Seconds()
-	$tTime.NanoSeconds = $tTimeValue.NanoSeconds()
-	If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeValue.IsUTC()
+		$tTime = __LOWriter_CreateStruct("com.sun.star.util.Time")
+		If Not IsObj($tTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
-	$oTimeField.Control.Time = $tTime
-	$iError = (__LOWriter_DateStructCompare($oTimeField.Control.Time(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 1))
+		$tTime.Hours = $tTimeValue.Hours()
+		$tTime.Minutes = $tTimeValue.Minutes()
+		$tTime.Seconds = $tTimeValue.Seconds()
+		$tTime.NanoSeconds = $tTimeValue.NanoSeconds()
+		If __LOWriter_VersionCheck(4.1) Then $tTime.IsUTC = $tTimeValue.IsUTC()
+
+		$oTimeField.Control.Time = $tTime
+		$iError = (__LOWriter_DateStructCompare($oTimeField.Control.Time(), $tTime, False, True)) ? ($iError) : (BitOR($iError, 1))
+	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlTimeFieldValue
