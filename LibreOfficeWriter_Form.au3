@@ -3049,7 +3049,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	ElseIf ($bRepeat <> Null) Then
 		If Not IsBool($bRepeat) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 		$oFormatField.Control.Repeat = $bRepeat
-		$iError = ($oFormatField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 54436))
+		$iError = ($oFormatField.Control.Repeat() = $bRepeat) ? ($iError) : (BitOR($iError, 65536))
 	EndIf
 
 	If ($iDelay = Default) Then
@@ -8716,7 +8716,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	ElseIf ($iBorder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBorder, $LOW_FORM_CONTROL_BORDER_WITHOUT, $LOW_FORM_CONTROL_BORDER_FLAT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
 		$oTimeField.Control.Border = $iBorder
-		$iError = ($oTimeField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4191304))
+		$iError = ($oTimeField.Control.Border() = $iBorder) ? ($iError) : (BitOR($iError, 4194304))
 	EndIf
 
 	If ($iBorderColor = Default) Then
