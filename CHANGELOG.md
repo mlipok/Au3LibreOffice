@@ -701,6 +701,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormControlFormattedFieldData
 	- _LOWriter_FormControlFormattedFieldGeneral
 	- _LOWriter_FormControlFormattedFieldValue
+	- _LOWriter_FormControlGroupBoxGeneral
 	- _LOWriter_FormControlImageButtonGeneral
 	- _LOWriter_FormControlImageControlData
 	- _LOWriter_FormControlImageControlGeneral

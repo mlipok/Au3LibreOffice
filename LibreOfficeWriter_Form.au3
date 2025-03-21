@@ -42,6 +42,7 @@
 ; _LOWriter_FormControlFormattedFieldData
 ; _LOWriter_FormControlFormattedFieldGeneral
 ; _LOWriter_FormControlFormattedFieldValue
+; _LOWriter_FormControlGroupBoxGeneral
 ; _LOWriter_FormControlImageButtonGeneral
 ; _LOWriter_FormControlImageControlData
 ; _LOWriter_FormControlImageControlGeneral
@@ -338,7 +339,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -411,7 +412,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 256)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 256) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
@@ -420,7 +421,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	If ($iDefaultState = Default) Then
-		$iError = BitOR($iError, 512)    ; Can't Default DefaultState.
+		$iError = BitOR($iError, 512) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_DEFINED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
@@ -429,7 +430,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 1024) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -512,7 +513,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 524288)    ; Can't Default Tag.
+		$iError = BitOR($iError, 524288) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
@@ -819,7 +820,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -911,7 +912,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -920,7 +921,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($asList = Default) Then
-		$iError = BitOR($iError, 2048)    ; Can't Default StringItemList.
+		$iError = BitOR($iError, 2048) ; Can't Default StringItemList.
 
 	ElseIf ($asList <> Null) Then
 		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
@@ -933,7 +934,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($sDefaultTxt = Default) Then
-		$iError = BitOR($iError, 4096)    ; Can't Default DefaultText.
+		$iError = BitOR($iError, 4096) ; Can't Default DefaultText.
 
 	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
@@ -942,7 +943,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 8192)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 8192) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
@@ -1023,7 +1024,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+		$iError = BitOR($iError, 4194304) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
@@ -1326,7 +1327,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -1418,7 +1419,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -1526,7 +1527,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 4194304)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 4194304) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
@@ -1589,7 +1590,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 536870912)    ; Can't Default Tag.
+		$iError = BitOR($iError, 536870912) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 33, 0)
@@ -1918,7 +1919,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -2010,7 +2011,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -2106,7 +2107,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 262144) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
@@ -2178,7 +2179,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 67108864)    ; Can't Default Tag.
+		$iError = BitOR($iError, 67108864) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
@@ -2436,7 +2437,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -2500,7 +2501,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 128)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 128) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
@@ -2509,7 +2510,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	If ($sDefaultTxt = Default) Then
-		$iError = BitOR($iError, 256)    ; Can't Default DefaultText.
+		$iError = BitOR($iError, 256) ; Can't Default DefaultText.
 
 	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
@@ -2518,7 +2519,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 512)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 512) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
@@ -2581,7 +2582,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 65536)    ; Can't Default Tag.
+		$iError = BitOR($iError, 65536) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
@@ -2892,7 +2893,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -2983,7 +2984,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -3062,7 +3063,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 262144) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
@@ -3125,7 +3126,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 33554432)    ; Can't Default Tag.
+		$iError = BitOR($iError, 33554432) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 30, 0)
@@ -3212,6 +3213,175 @@ Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Nul
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormControlGroupBoxGeneral
+; Description ...: Set or Retrieve general GroupBox control properties.
+; Syntax ........: _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox[, $sName = Null[, $sLabel = Null[, $iTxtDir = Null[, $bEnabled = Null[, $bVisible = Null[, $bPrintable = Null[, $mFont = Null[, $sAddInfo = Null[, $sHelpText = Null[, $sHelpURL = Null]]]]]]]]]])
+; Parameters ....: $oGroupBox           - [in/out] an object. A Groupbox Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $sName               - [optional] a string value. Default is Null. The control name.
+;                  $sLabel              - [optional] a string value. Default is Null. The control's label to display.
+;                  $iTxtDir             - [optional] an integer value (0-5). Default is Null. The Text direction. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  $bEnabled            - [optional] a boolean value. Default is Null. If True, the control is enabled.
+;                  $bVisible            - [optional] a boolean value. Default is Null. If True, the control is visible.
+;                  $bPrintable          - [optional] a boolean value. Default is Null. If True, the control will be displayed when printed.
+;                  $mFont               - [optional] a map. Default is Null. The Font descriptor to use. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
+;                  $sAddInfo            - [optional] a string value. Default is Null. Additional information text.
+;                  $sHelpText           - [optional] a string value. Default is Null. The Help text.
+;                  $sHelpURL            - [optional] a string value. Default is Null. The Help URL.
+; Return values .: Success: 1 or Array
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oGroupBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oGroupBox not a GroupBox Control.
+;                  @Error 1 @Extended 3 Return 0 = $sName not a String.
+;                  @Error 1 @Extended 4 Return 0 = $sLabel not a String.
+;                  @Error 1 @Extended 5 Return 0 = $iTxtDir not an Integer, less than 0 or greater than 5. See Constants $LOW_TXT_DIR_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 6 Return 0 = $bEnabled not a Boolean.
+;                  @Error 1 @Extended 7 Return 0 = $bVisible not a Boolean.
+;                  @Error 1 @Extended 8 Return 0 = $bPrintable not a Boolean.
+;                  @Error 1 @Extended 9 Return 0 = $mFont not a Map.
+;                  @Error 1 @Extended 10 Return 0 = $sAddInfo not a String.
+;                  @Error 1 @Extended 11 Return 0 = $sHelpText not a String.
+;                  @Error 1 @Extended 12 Return 0 = $sHelpURL not a String.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control type.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $sName
+;                  |                               2 = Error setting $sLabel
+;                  |                               4 = Error setting $iTxtDir
+;                  |                               8 = Error setting $bEnabled
+;                  |                               16 = Error setting $bVisible
+;                  |                               32 = Error setting $bPrintable
+;                  |                               64 = Error setting $mFont
+;                  |                               128 = Error setting $sAddInfo
+;                  |                               256 = Error setting $sHelpText
+;                  |                               512 = Error setting $sHelpURL
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 10 Element Array with values in order of function parameters.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+;                  Call any optional parameter with Null keyword to skip it.
+;                  Call any optional parameter with Default keyword to reset the value to default. This can include a default of "Null", or "Default", etc., that is otherwise impossible to set.
+;                  Some parameters cannot be returned to default using the Default keyword, namely: $sName, $mFont, $sAddInfo.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLabel = Null, $iTxtDir = Null, $bEnabled = Null, $bVisible = Null, $bPrintable = Null, $mFont = Null, $sAddInfo = Null, $sHelpText = Null, $sHelpURL = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $avControl[10]
+
+	If Not IsObj($oGroupBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormControlIdentify($oGroupBox) <> $LOW_FORM_CONTROL_TYPE_GROUP_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($sName, $sLabel, $iTxtDir, $bEnabled, $bVisible, $bPrintable, $mFont, $sAddInfo, $sHelpText, $sHelpURL) Then
+		__LOWriter_ArrayFill($avControl, $oGroupBox.Control.Name(), $oGroupBox.Control.Label(), $oGroupBox.Control.WritingMode(), $oGroupBox.Control.Enabled(), _
+				$oGroupBox.Control.EnableVisible(), $oGroupBox.Control.Printable(), __LOWriter_ControlSetGetFontDesc($oGroupBox), $oGroupBox.Control.Tag(), _
+				$oGroupBox.Control.HelpText(), $oGroupBox.Control.HelpURL())
+		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
+	EndIf
+
+	If ($sName = Default) Then
+		$iError = BitOR($iError, 1) ; Can't Default Name.
+
+	ElseIf ($sName <> Null) Then
+		If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+		$oGroupBox.Control.Name = $sName
+		$iError = ($oGroupBox.Control.Name() = $sName) ? ($iError) : (BitOR($iError, 1))
+	EndIf
+
+	If ($sLabel = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("Label")
+
+	ElseIf ($sLabel <> Null) Then
+		If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+		$oGroupBox.Control.Label = $sLabel
+		$iError = ($oGroupBox.Control.Label() = $sLabel) ? ($iError) : (BitOR($iError, 2))
+	EndIf
+
+	If ($iTxtDir = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("WritingMode")
+
+	ElseIf ($iTxtDir <> Null) Then
+		If Not __LOWriter_IntIsBetween($iTxtDir, $LOW_TXT_DIR_LR_TB, $LOW_TXT_DIR_BT_LR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+		$oGroupBox.Control.WritingMode = $iTxtDir
+		$iError = ($oGroupBox.Control.WritingMode() = $iTxtDir) ? ($iError) : (BitOR($iError, 4))
+	EndIf
+
+	If ($bEnabled = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("Enabled")
+
+	ElseIf ($bEnabled <> Null) Then
+		If Not IsBool($bEnabled) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		$oGroupBox.Control.Enabled = $bEnabled
+		$iError = ($oGroupBox.Control.Enabled() = $bEnabled) ? ($iError) : (BitOR($iError, 8))
+	EndIf
+
+	If ($bVisible = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("EnableVisible")
+
+	ElseIf ($bVisible <> Null) Then
+		If Not IsBool($bVisible) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		$oGroupBox.Control.EnableVisible = $bVisible
+		$iError = ($oGroupBox.Control.EnableVisible() = $bVisible) ? ($iError) : (BitOR($iError, 16))
+	EndIf
+
+	If ($bPrintable = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("Printable")
+
+	ElseIf ($bPrintable <> Null) Then
+		If Not IsBool($bPrintable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		$oGroupBox.Control.Printable = $bPrintable
+		$iError = ($oGroupBox.Control.Printable() = $bPrintable) ? ($iError) : (BitOR($iError, 32))
+	EndIf
+
+	If ($mFont = Default) Then
+		$iError = BitOR($iError, 64) ; Can't Default Font (Works, but doesn't change the font).
+
+	ElseIf ($mFont <> Null) Then
+		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		__LOWriter_ControlSetGetFontDesc($oGroupBox, $mFont)
+		$iError = (@error = 0) ? ($iError) : (BitOR($iError, 64))
+	EndIf
+
+	If ($sAddInfo = Default) Then
+		$iError = BitOR($iError, 128) ; Can't Default Tag.
+
+	ElseIf ($sAddInfo <> Null) Then
+		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+		$oGroupBox.Control.Tag = $sAddInfo
+		$iError = ($oGroupBox.Control.Tag() = $sAddInfo) ? ($iError) : (BitOR($iError, 128))
+	EndIf
+
+	If ($sHelpText = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("HelpText")
+
+	ElseIf ($sHelpText <> Null) Then
+		If Not IsString($sHelpText) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0)
+		$oGroupBox.Control.HelpText = $sHelpText
+		$iError = ($oGroupBox.Control.HelpText() = $sHelpText) ? ($iError) : (BitOR($iError, 256))
+	EndIf
+
+	If ($sHelpURL = Default) Then
+		$oGroupBox.Control.setPropertyToDefault("HelpURL")
+
+	ElseIf ($sHelpURL <> Null) Then
+		If Not IsString($sHelpURL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+		$oGroupBox.Control.HelpURL = $sHelpURL
+		$iError = ($oGroupBox.Control.HelpURL() = $sHelpURL) ? ($iError) : (BitOR($iError, 512))
+	EndIf
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>_LOWriter_FormControlGroupBoxGeneral
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormControlImageButtonGeneral
@@ -3379,7 +3549,7 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -3434,7 +3604,7 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 64)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 64) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
@@ -3561,7 +3731,7 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 32768)    ; Can't Default Tag.
+		$iError = BitOR($iError, 32768) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
@@ -3754,7 +3924,7 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -3828,7 +3998,7 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 256)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 256) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
@@ -3883,7 +4053,7 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 16384)    ; Can't Default Tag.
+		$iError = BitOR($iError, 16384) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
@@ -4181,7 +4351,7 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -4236,7 +4406,7 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 64)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 64) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
@@ -4299,7 +4469,7 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 8192)    ; Can't Default Tag.
+		$iError = BitOR($iError, 8192) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
@@ -4549,7 +4719,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -4632,7 +4802,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
@@ -4641,7 +4811,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($asList = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default StringItemList.
+		$iError = BitOR($iError, 1024) ; Can't Default StringItemList.
 
 	ElseIf ($asList <> Null) Then
 		If Not IsArray($asList) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -4654,7 +4824,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 2048) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
@@ -4726,7 +4896,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($aiDefaultSel = Default) Then
-		$iError = BitOR($iError, 524288)    ; Can't Default Name.
+		$iError = BitOR($iError, 524288) ; Can't Default Name.
 
 	ElseIf ($aiDefaultSel <> Null) Then
 		If Not IsArray($aiDefaultSel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
@@ -4740,7 +4910,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 1048576)    ; Can't Default Tag.
+		$iError = BitOR($iError, 1048576) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 27, 0)
@@ -4993,7 +5163,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -5039,7 +5209,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 32)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 32) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
@@ -5057,7 +5227,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 128)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 128) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
@@ -5129,7 +5299,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 32768)    ; Can't Default Tag.
+		$iError = BitOR($iError, 32768) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
@@ -5371,7 +5541,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -5463,7 +5633,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -5553,7 +5723,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 1048576)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 1048576) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 24, 0)
@@ -5616,7 +5786,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 134217728)    ; Can't Default Tag.
+		$iError = BitOR($iError, 134217728) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 31, 0)
@@ -5886,7 +6056,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -5969,7 +6139,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
@@ -5978,7 +6148,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	If ($iDefaultState = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default DefaultState.
+		$iError = BitOR($iError, 1024) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -5987,7 +6157,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 2048) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
@@ -6060,7 +6230,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 524288)    ; Can't Default Tag.
+		$iError = BitOR($iError, 524288) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 23, 0)
@@ -6358,7 +6528,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -6477,7 +6647,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 8192)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 8192) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
@@ -6486,7 +6656,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	If ($sDefaultTxt = Default) Then
-		$iError = BitOR($iError, 16384)    ; Can't Default DefaultText.
+		$iError = BitOR($iError, 16384) ; Can't Default DefaultText.
 
 	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
@@ -6495,7 +6665,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 32768)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 32768) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
@@ -6558,7 +6728,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+		$iError = BitOR($iError, 4194304) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
@@ -6931,7 +7101,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -6995,7 +7165,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 128)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 128) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
@@ -7040,7 +7210,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	If ($iDefaultState = Default) Then
-		$iError = BitOR($iError, 4096)    ; Can't Default DefaultState.
+		$iError = BitOR($iError, 4096) ; Can't Default DefaultState.
 
 	ElseIf ($iDefaultState <> Null) Then
 		If Not __LOWriter_IntIsBetween($iDefaultState, $LOW_FORM_CONTROL_CHKBX_STATE_NOT_SELECTED, $LOW_FORM_CONTROL_CHKBX_STATE_SELECTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
@@ -7049,7 +7219,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 8192)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 8192) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
@@ -7195,7 +7365,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 16777216)    ; Can't Default Tag.
+		$iError = BitOR($iError, 16777216) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 28, 0)
@@ -7595,7 +7765,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -7650,7 +7820,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 64)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 64) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
@@ -7659,7 +7829,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 128)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 128) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
@@ -7713,7 +7883,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 8192)    ; Can't Default Tag.
+		$iError = BitOR($iError, 8192) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
@@ -7957,7 +8127,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -8040,7 +8210,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 512)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 512) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
@@ -8049,7 +8219,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($sDefaultTxt = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default DefaultText.
+		$iError = BitOR($iError, 1024) ; Can't Default DefaultText.
 
 	ElseIf ($sDefaultTxt <> Null) Then
 		If Not IsString($sDefaultTxt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -8058,7 +8228,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 2048)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 2048) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
@@ -8207,7 +8377,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 4194304)    ; Can't Default Tag.
+		$iError = BitOR($iError, 4194304) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 26, 0)
@@ -8481,7 +8651,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	EndIf
 
 	If ($sName = Default) Then
-		$iError = BitOR($iError, 1)    ; Can't Default Name.
+		$iError = BitOR($iError, 1) ; Can't Default Name.
 
 	ElseIf ($sName <> Null) Then
 
@@ -8573,7 +8743,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	EndIf
 
 	If ($iTabOrder = Default) Then
-		$iError = BitOR($iError, 1024)    ; Can't Default TabIndex.
+		$iError = BitOR($iError, 1024) ; Can't Default TabIndex.
 
 	ElseIf ($iTabOrder <> Null) Then
 		If Not __LOWriter_IntIsBetween($iTabOrder, 0, 2147483647) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
@@ -8675,7 +8845,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	EndIf
 
 	If ($mFont = Default) Then
-		$iError = BitOR($iError, 262144)    ; Can't Default Font (Works, but doesn't change the font).
+		$iError = BitOR($iError, 262144) ; Can't Default Font (Works, but doesn't change the font).
 
 	ElseIf ($mFont <> Null) Then
 		If Not IsMap($mFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 22, 0)
@@ -8738,7 +8908,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 	EndIf
 
 	If ($sAddInfo = Default) Then
-		$iError = BitOR($iError, 33554432)    ; Can't Default Tag.
+		$iError = BitOR($iError, 33554432) ; Can't Default Tag.
 
 	ElseIf ($sAddInfo <> Null) Then
 		If Not IsString($sAddInfo) Then Return SetError($__LO_STATUS_INPUT_ERROR, 29, 0)
