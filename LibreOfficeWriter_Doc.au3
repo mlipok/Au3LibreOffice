@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -1843,7 +1843,7 @@ Func _LOWriter_DocFormSettings(ByRef $oDoc, $bFormDesignMode = Null, $bOpenInDes
 
 		$abStatus = $oScript.Invoke($aDummyArray, $aDummyArray, $aDummyArray)
 
-		If ($abStatus[1] <> $bUseControlWizards) Then _LOWriter_DocExecuteDispatch($oDoc, $sControlWiz); If the value doesn't currently match, toggle the setting.
+		If ($abStatus[1] <> $bUseControlWizards) Then _LOWriter_DocExecuteDispatch($oDoc, $sControlWiz) ; If the value doesn't currently match, toggle the setting.
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		$abStatus = $oScript.Invoke($aDummyArray, $aDummyArray, $aDummyArray)

@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -1269,12 +1269,10 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$avArray[0] = $tPoint ; Place the new point at the beginning of the array.
 			$avArray2[0] = $iPointType ; Place the new point's Type at the beginning of the array.
 
-
 			For $i = 1 To UBound($avArray) - 1
 
 				$avArray[$i] = $atPoints[$i - 1] ; Add the rest of the points to the array.
 				$avArray2[$i] = $aiFlags[$i - 1] ; Add the rest of the point's types to the array.
-
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
@@ -1296,13 +1294,11 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$avArray[$i] = $atPoints[$i] ; Add the rest of the points to the array.
 			$avArray2[$i] = $aiFlags[$i] ; Add the rest of the point's types to the array.
 
-
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
 
 		$avArray[$i] = $tPoint ; Place the new point at the end of the array.
 		$avArray2[$i] = $iPointType ; Place the new point's Type at the end of the array.
-
 
 		$atPoints = $avArray
 		$aiFlags = $avArray2

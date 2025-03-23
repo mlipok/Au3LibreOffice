@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -4231,8 +4231,6 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 	Local $iPageWidth, $iPageHeight, $iObjWidth, $iObjHeight
 	Local $oPageStyle
 
-
-
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bRelativeWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -7343,7 +7341,6 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 	ElseIf ($sArrowStyle <> Null) Then
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asArrowStyles) - 1
 
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
@@ -7426,7 +7423,6 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 
 	ElseIf ($sLineStyle <> Null) Then
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 
 		For $i = 0 To UBound($asLineStyles) - 1
 
@@ -7863,7 +7859,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$avArray[$i + $iForOffset] = $atPoints[$iArrayElement]
 						$avArray2[$i + $iForOffset] = $iPointType
 
-
 						If IsObj($tControlPoint3) Then
 							$iForOffset += 1
 							$iOffset += 1
@@ -7978,7 +7973,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					$iForOffset -= 1 ; Minus 1 from ForOffset as I am skipping one For cycle.
 				EndIf
 
-
 				If ($i = $iArrayElement) Then ; Insert the new or modified control points.
 
 					If IsObj($tControlPoint3) Then
@@ -8041,7 +8035,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 				EndIf
 
-
 				$iOffset = 0
 				$iForOffset = 0
 				$iReDimCount = 4
@@ -8068,7 +8061,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 					If ($i = $iPreviousArrayElement) Then
 
-
 						If IsObj($tControlPoint1) Then
 							$iForOffset += 1
 							$iOffset += 1
@@ -8091,7 +8083,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
-
 
 					ElseIf ($i = $iArrayElement) Then ; Insert or skip Control Points as necessary.
 						$avArray[$i] = $atPoints[$iArrayElement]
