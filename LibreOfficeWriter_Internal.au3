@@ -3538,9 +3538,9 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving TextCell Object.
-;                  @Error 3 @Extended 3 Return 0 = Unable to identify Foot/EndNote.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Footnotes Object for document.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Endnotes Object for document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Footnotes Object for document.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Endnotes Object for document.
+;                  @Error 3 @Extended 5 Return 0 = Unable to identify Foot/EndNote.
 ;                  @Error 3 @Extended 6 Return 0 = Cursor in unknown DataType
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3556,10 +3556,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oEndNotes, $oFootNotes, $oFootEndNote, $oReturnObject
-	Local $iLWFootEndNote = 0
-	Local $bFound = False
-	Local $sNoteRefID
+	Local $oEndNotes, $oFootNotes, $oReturnObject
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -3586,53 +3583,26 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 		Case "SwXFootnote"
 			$oFootNotes = $oDoc.getFootnotes()
 			If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-			$sNoteRefID = $oCursor.Text.ReferenceId()
 
-			If $oFootNotes.hasElements() Then
-				For $i = 0 To $oFootNotes.getCount() - 1
-					$oFootEndNote = $oFootNotes.getByIndex($i)
+			For $i = 0 To $oFootNotes.getCount() - 1
+				If ($oFootNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
+						($oFootNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_FOOTNOTE, $oFootNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_FOOTNOTE))
 
-					If ($oFootEndNote.ReferenceId() = $sNoteRefID) Then
+			Next
 
-						If ($oFootEndNote.Anchor.String() = $oCursor.Text.Anchor.String()) And _
-								(($oDoc.Text.compareRegionEnds($oCursor.Text.Anchor, $oFootEndNote.Text.Anchor)) = 0) Then
-							$bFound = True
-							$iLWFootEndNote = $LOW_CURDATA_FOOTNOTE
-							ExitLoop
-						EndIf
-					EndIf
-				Next
-			EndIf
+			$oEndNotes = $oDoc.getEndnotes()     ; Not found in Footnotes, check Endnotes.
+			If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-			If ($bFound = False) Then
-				$oEndNotes = $oDoc.getEndnotes()
-				If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+			For $i = 0 To $oEndNotes.getCount() - 1
+				If ($oEndNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
+						($oEndNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_ENDNOTE, $oEndNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_ENDNOTE))
 
-				If $oEndNotes.hasElements() Then
-					For $i = 0 To $oEndNotes.getCount() - 1
-						$oFootEndNote = $oEndNotes.getByIndex($i)
+			Next
 
-						If ($oFootEndNote.ReferenceId() = $sNoteRefID) Then
-
-							If ($oFootEndNote.Anchor.String() = $oCursor.Text.Anchor.String()) And _
-									(($oDoc.Text.compareRegionEnds($oCursor.Text.Anchor, $oFootEndNote.Text.Anchor)) = 0) Then
-								$bFound = True
-								$iLWFootEndNote = $LOW_CURDATA_ENDNOTE
-								ExitLoop
-							EndIf
-						EndIf
-					Next
-				EndIf
-			EndIf
-
-			If ($bFound = True) And ($iLWFootEndNote <> 0) Then
-				$oReturnObject = $oFootEndNote
-				Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $iLWFootEndNote, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $iLWFootEndNote))
-			EndIf
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; no matches
-		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; unknown data type.
 	EndSwitch
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)         ; unknown data type.
 EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
