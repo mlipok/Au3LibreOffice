@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -691,7 +692,7 @@ EndFunc   ;==>_LOCalc_CellStyleGetObj
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_CellStyleNumberFormat(ByRef $oDoc, ByRef $oCellStyle, $iFormatKey = Null)
-Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
@@ -702,7 +703,7 @@ Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHan
 
 	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCellStyle, $iFormatKey)
 	Return SetError(@error, @extended, $vReturn)
-EndFunc
+EndFunc   ;==>_LOCalc_CellStyleNumberFormat
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_CellStyleOrganizer

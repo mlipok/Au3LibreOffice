@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -1849,7 +1849,6 @@ Func __LOCalc_CommentArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 	ElseIf ($sArrowStyle <> Null) Then
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asArrowStyles) - 1
 
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
@@ -1990,7 +1989,6 @@ Func __LOCalc_CommentLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 	ElseIf ($sLineStyle <> Null) Then
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asLineStyles) - 1
 
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
@@ -2045,13 +2043,13 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOCalc_FieldGetObj
 ; Description ...: Retrieve the Field's Object after insertion.
-; Syntax ........: __LOCalc_FieldGetObj(ByRef $oTextcursor[, $iType = $LOC_FIELD_TYPE_ALL])
-; Parameters ....: $oTextcursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
+; Syntax ........: __LOCalc_FieldGetObj(ByRef $oTextCursor[, $iType = $LOC_FIELD_TYPE_ALL])
+; Parameters ....: $oTextCursor         - [in/out] an object. A Text Cursor Object returned by a previous _LOCalc_PageStyleFooterCreateTextCursor, _LOCalc_PageStyleHeaderCreateTextCursor, or _LOCalc_CellCreateTextCursor function.
 ;                  $iType               - [optional] an integer value. Default is $LOC_FIELD_TYPE_ALL. The Type of field to search for.
 ; Return values .: Success: Map
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oTextcursor not an Object.
+;                  @Error 1 @Extended 1 Return 0 = $oTextCursor not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iType not an Integer, less than 1, or greater than 255. (The total of all Constants added together.) See Constants, $LOC_FIELD_TYPE_* as defined in LibreOfficeCalc_Constants.au3.
 ;                  --Initialization Errors--
 ;                  @Error 2 @Extended 1 Return 0 = Failed to create enumeration of paragraphs in Cell.
@@ -2073,7 +2071,7 @@ EndFunc   ;==>__LOCalc_CreateStruct
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
+Func __LOCalc_FieldGetObj(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
@@ -2088,7 +2086,7 @@ Func __LOCalc_FieldGetObj(ByRef $oTextcursor, $iType = $LOC_FIELD_TYPE_ALL)
 	; When a Text Cursor has been used to insert Strings previous to inserting or looking for a Field, the fields sometimes are not able to be identified.
 	; The workaround I figured out was to create the Text Cursor again before enumerating the fields. I only create the text cursor again if the Text Cursor is in a Cell, not a header.
 	If ($oTextCursor.Text.SupportsService("com.sun.star.sheet.SheetCell")) Then
-		$oInternalCursor = $oTextCursor.Text.Spreadsheet.getCellByPosition($oTextCursor.Text.RangeAddress.StartColumn(), $oTextCursor.Text.RangeAddress.StartRow()).Text.createTextCursorByRange($oTextcursor)
+		$oInternalCursor = $oTextCursor.Text.Spreadsheet.getCellByPosition($oTextCursor.Text.RangeAddress.StartColumn(), $oTextCursor.Text.RangeAddress.StartRow()).Text.createTextCursorByRange($oTextCursor)
 	EndIf
 
 	$avFieldTypes = __LOCalc_FieldTypeServices($iType)
