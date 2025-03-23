@@ -679,8 +679,8 @@ Func _LOWriter_NumStyleSet(ByRef $oDoc, ByRef $oObj, $sNumStyle)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$oObj.NumberingStyleName = $sNumStyle
-	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 
+	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_NumStyleSet
 
 ; #FUNCTION# ====================================================================================================================

@@ -137,7 +137,6 @@ Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackT
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_PageStyleAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -3818,8 +3817,8 @@ Func _LOWriter_PageStyleSet(ByRef $oDoc, ByRef $oObj, $sPageStyle)
 	If Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$sPageStyle = __LOWriter_PageStyleNameToggle($sPageStyle)
 	$oObj.PageDescName = $sPageStyle
-	Return ($oObj.PageStyleName() = $sPageStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 
+	Return ($oObj.PageStyleName() = $sPageStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_PageStyleSet
 
 ; #FUNCTION# ====================================================================================================================

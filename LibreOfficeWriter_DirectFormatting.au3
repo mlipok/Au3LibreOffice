@@ -1046,8 +1046,8 @@ Func _LOWriter_DirFrmtOverLine(ByRef $oSelection, $bWordOnly = Null, $iOverLineS
 	EndIf
 
 	$vReturn = __LOWriter_CharOverLine($oSelection, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtOverLine
 
 ; #FUNCTION# ====================================================================================================================
@@ -2436,6 +2436,6 @@ Func _LOWriter_DirFrmtUnderLine(ByRef $oSelection, $bWordOnly = Null, $iUnderLin
 	EndIf
 
 	$vReturn = __LOWriter_CharUnderLine($oSelection, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtUnderLine

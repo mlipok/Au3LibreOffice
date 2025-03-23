@@ -919,8 +919,8 @@ Func _LOWriter_ParStyleEffect(ByRef $oParStyle, $iRelief = Null, $iCase = Null, 
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharEffect($oParStyle, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleEffect
 
 ; #FUNCTION# ====================================================================================================================

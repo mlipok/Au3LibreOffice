@@ -463,8 +463,8 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 
 	If $oDoc.hasLocation() Then $sDocPath = _LOWriter_PathConvert($oDoc.getURL(), $LOW_PATHCONV_PCPATH_RETURN)
 	$oDoc.Close($bDeliverOwnership)
-	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 
+	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 EndFunc   ;==>_LOWriter_DocClose
 
 ; #FUNCTION# ====================================================================================================================
@@ -694,7 +694,6 @@ Func _LOWriter_DocConvertTableToText(ByRef $oDoc, ByRef $oTable, $sDelimiter = @
 	$oViewCursor.gotoRange($oViewCursorBackup, False)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-
 EndFunc   ;==>_LOWriter_DocConvertTableToText
 
 ; #FUNCTION# ====================================================================================================================
@@ -886,8 +885,8 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	If Not IsObj($aArgs[0]) Then $iError = BitOR($iError, 1)
 	$oDoc = $oDesktop.loadComponentFromURL("private:factory/swriter", "_blank", $iURLFrameCreate, $aArgs)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
-	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 2, $oDoc))
 
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 2, $oDoc))
 EndFunc   ;==>_LOWriter_DocCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -1211,7 +1210,6 @@ Func _LOWriter_DocExecuteDispatch(ByRef $oDoc, $sDispatch)
 	$oDispatcher.executeDispatch($oDoc.CurrentController(), "." & $sDispatch, "", 0, $aArray)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-
 EndFunc   ;==>_LOWriter_DocExecuteDispatch
 
 ; #FUNCTION# ====================================================================================================================
@@ -1474,7 +1472,6 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 	EndIf
 
 	Return (UBound($aoResults) > 0) ? (SetError($__LO_STATUS_SUCCESS, UBound($aoResults), $aoResults)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_DocFindAllInRange
 
 ; #FUNCTION# ====================================================================================================================
@@ -3252,8 +3249,8 @@ Func _LOWriter_DocPrintersGetNames($bDefaultOnly = False)
 
 	$asPrinters = $oPrintServer.getPrinterNames()
 	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 EndFunc   ;==>_LOWriter_DocPrintersGetNames
 
 ; #FUNCTION# ====================================================================================================================
@@ -3344,7 +3341,6 @@ Func _LOWriter_DocPrintIncludedSettings(ByRef $oDoc, $bGraphics = Null, $bContro
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_DocPrintIncludedSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -3554,7 +3550,6 @@ Func _LOWriter_DocPrintPageSettings(ByRef $oDoc, $bBlackOnly = Null, $bLeftOnly 
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_DocPrintPageSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -3655,7 +3650,6 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_DocPrintSizeSettings
 
 ; #FUNCTION# ====================================================================================================================
@@ -3871,7 +3865,6 @@ Func _LOWriter_DocReplaceAll(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, 
 	$iReplacements = $oDoc.replaceAll($oSrchDescript)
 
 	Return SetError($__LO_STATUS_SUCCESS, $iReplacements, 1)
-
 EndFunc   ;==>_LOWriter_DocReplaceAll
 
 ; #FUNCTION# ====================================================================================================================
@@ -4571,7 +4564,6 @@ Func _LOWriter_DocViewCursorGetPosition(ByRef $oCursor)
 	If ($iCursorType <> $LOW_CURTYPE_VIEW_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, $oCursor.getPosition().X(), $oCursor.getPosition().Y())
-
 EndFunc   ;==>_LOWriter_DocViewCursorGetPosition
 
 ; #FUNCTION# ====================================================================================================================

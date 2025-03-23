@@ -122,8 +122,8 @@ Func _LOWriter_TableBorderColor(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Table not in document.
 
 	$vReturn = __LOWriter_TableBorder($oTable, False, False, True, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_TableBorderColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -544,7 +544,7 @@ Func _LOWriter_TableColumnDelete(ByRef $oTable, $iColumn, $iCount = 1)
 	$iColumnCount = $oTable.getColumns.getCount()
 	If ($iColumnCount <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested column out of bounds.
 	$iCount = ($iCount > ($iColumnCount - $iColumn)) ? ($iColumnCount - $iColumn) : ($iCount)
-	$iReturn = ($iCount > ($iColumnCount - $iColumn)) ? (2) : (1) ;Return 1 if full amount deleted else 2 if only partial.
+	$iReturn = ($iCount > ($iColumnCount - $iColumn)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getColumns.removeByIndex($iColumn, $iCount)
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $iReturn)
 EndFunc   ;==>_LOWriter_TableColumnDelete
@@ -580,7 +580,7 @@ Func _LOWriter_TableColumnGetCount(ByRef $oTable)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
 	$iColumnSize = $oTable.getColumns.getCount()
 	If ($iColumnSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve column count.
-	Return $iColumnSize
+	Return SetError($__LO_STATUS_SUCCESS, 0, $iColumnSize)
 EndFunc   ;==>_LOWriter_TableColumnGetCount
 
 ; #FUNCTION# ====================================================================================================================
@@ -693,7 +693,6 @@ Func _LOWriter_TableCreate(ByRef $oDoc, $iRows = 3, $iColumns = 2, $bSplit = Nul
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oTable)
-
 EndFunc   ;==>_LOWriter_TableCreate
 
 ; #FUNCTION# ====================================================================================================================
@@ -968,8 +967,8 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 	EndSwitch
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	Return $oCell
 
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 EndFunc   ;==>_LOWriter_TableGetCellObjByCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1021,7 +1020,7 @@ Func _LOWriter_TableGetCellObjByName(ByRef $oTable, $sCellName, $sToCellName = $
 
 	$oCell = ($sCellName = $sToCellName) ? ($oTable.getCellByName($sCellName)) : ($oTable.getCellRangeByName($sCellName & ":" & $sToCellName))
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	Return $oCell
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 EndFunc   ;==>_LOWriter_TableGetCellObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1087,8 +1086,8 @@ Func _LOWriter_TableGetCellObjByPosition(ByRef $oTable, $iColumn, $iRow, $iToCol
 
 	$oCell = (($iColumn = $iToColumn) And ($iRow = $iToRow)) ? ($oTable.getCellByPosition($iColumn, $iRow)) : ($oTable.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow))
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-	Return $oCell
 
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 EndFunc   ;==>_LOWriter_TableGetCellObjByPosition
 
 ; #FUNCTION# ====================================================================================================================
@@ -1635,7 +1634,7 @@ Func _LOWriter_TableRowDelete(ByRef $oTable, $iRow, $iCount = 1)
 	$iRowCount = $oTable.getRows.getCount()
 	If ($iRowCount <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row out of bounds.
 	$iCount = ($iCount > ($iRowCount - $iRow)) ? ($iRowCount - $iRow) : ($iCount)
-	$iReturn = ($iCount > ($iRowCount - $iRow)) ? (2) : (1) ;Return 1 if full amount deleted else 2 if only partial.
+	$iReturn = ($iCount > ($iRowCount - $iRow)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getRows.removeByIndex($iRow, $iCount)
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $iReturn)
 EndFunc   ;==>_LOWriter_TableRowDelete
@@ -1798,7 +1797,6 @@ Func _LOWriter_TableRowProperty(ByRef $oTable, $iRow, $iHeight = Null, $bIsAutoH
 	EndIf
 
 	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
-
 EndFunc   ;==>_LOWriter_TableRowProperty
 
 ; #FUNCTION# ====================================================================================================================
@@ -2039,5 +2037,4 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_TableWidth

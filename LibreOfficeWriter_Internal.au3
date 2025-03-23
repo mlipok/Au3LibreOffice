@@ -3518,7 +3518,7 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 		$oSize.Height = $iMaxH
 	EndIf
 
-	Return $oSize
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSize)
 EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3712,7 +3712,9 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
 ;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
-;                  Failure: False
+;                  Failure: False and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return Boolean = $iTest not an Integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
 ; Author ........: donnyh13
@@ -3723,43 +3725,42 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
-	If Not IsInt($iTest) Then Return False
+	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
 
 		Case 2
-			Return ($iTest < $iMin) ? (False) : (True)
+			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
 		Case 3
-			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
+			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
 
 			If IsString($vNot) Then
-				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			ElseIf IsInt($vNot) Then
-				If ($iTest = $vNot) Then Return False
+				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			EndIf
 
-			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			If @NumParams = 5 Then ContinueCase
 
-			Return False
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 		Case Else
 			If IsString($vIncl) Then
-				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
 
-				If ($iTest = $vIncl) Then Return True
+				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
-			Return False
-
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 	EndSwitch
 EndFunc   ;==>__LOWriter_IntIsBetween
 
@@ -3819,7 +3820,7 @@ Func __LOWriter_IsTableInDoc(ByRef $oTable)
 	$aTableNames = $oTable.getCellNames()
 	If Not IsArray($aTableNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return (UBound($aTableNames)) ? (True) : (False) ; If 0 elements = False = not in doc.
+	Return SetError($__LO_STATUS_SUCCESS, 0, (UBound($aTableNames)) ? (True) : (False)) ; If 0 elements = False = not in doc.
 EndFunc   ;==>__LOWriter_IsTableInDoc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8409,7 +8410,7 @@ Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False))
 EndFunc   ;==>__LOWriter_TableHasColumnRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8439,7 +8440,7 @@ Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False))
 EndFunc   ;==>__LOWriter_TableHasRowRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8855,9 +8856,11 @@ EndFunc   ;==>__LOWriter_UnitConvert
 ; ===============================================================================================================================
 Func __LOWriter_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
 	Local $bAllDefault1, $bAllDefault2
+
 	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? (True) : (False)
 	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? (True) : (False)
-	Return ($bAllDefault1 And $bAllDefault2) ? (True) : (False)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllDefault1 And $bAllDefault2) ? (True) : (False))
 EndFunc   ;==>__LOWriter_VarsAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8910,21 +8913,29 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null, $vVar19 = Null, $vVar20 = Null, $vVar21 = Null, $vVar22 = Null, $vVar23 = Null, $vVar24 = Null, $vVar25 = Null, $vVar26 = Null, $vVar27 = Null, $vVar28 = Null, $vVar29 = Null, $vVar30 = Null, $vVar31 = Null, $vVar32 = Null)
 	Local $bAllNull1, $bAllNull2, $bAllNull3, $bAllNull4, $bAllNull5, $bAllNull6, $bAllNull7, $bAllNull8
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
+	If (@NumParams <= 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1) ? (True) : (False))
+
 	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
-	If (@NumParams <= 8) Then Return (($bAllNull1) And ($bAllNull2)) ? (True) : (False)
+	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2)) ? (True) : (False))
+
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
-	If (@NumParams <= 12) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3)) ? (True) : (False)
+	If (@NumParams <= 12) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3)) ? (True) : (False))
+
 	$bAllNull4 = (($vVar13 = Null) And ($vVar14 = Null) And ($vVar15 = Null) And ($vVar16 = Null)) ? (True) : (False)
-	If (@NumParams <= 16) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4)) ? (True) : (False)
+	If (@NumParams <= 16) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4)) ? (True) : (False))
+
 	$bAllNull5 = (($vVar17 = Null) And ($vVar18 = Null) And ($vVar19 = Null) And ($vVar20 = Null)) ? (True) : (False)
-	If (@NumParams <= 20) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5)) ? (True) : (False)
+	If (@NumParams <= 20) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5)) ? (True) : (False))
+
 	$bAllNull6 = (($vVar21 = Null) And ($vVar22 = Null) And ($vVar23 = Null) And ($vVar24 = Null)) ? (True) : (False)
-	If (@NumParams <= 24) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6)) ? (True) : (False)
+	If (@NumParams <= 24) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6)) ? (True) : (False))
+
 	$bAllNull7 = (($vVar25 = Null) And ($vVar26 = Null) And ($vVar27 = Null) And ($vVar28 = Null)) ? (True) : (False)
-	If (@NumParams <= 28) Then Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7)) ? (True) : (False)
+	If (@NumParams <= 28) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7)) ? (True) : (False))
+
 	$bAllNull8 = (($vVar29 = Null) And ($vVar30 = Null) And ($vVar31 = Null) And ($vVar32 = Null)) ? (True) : (False)
-	Return (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7) And ($bAllNull8)) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7) And ($bAllNull8)) ? (True) : (False))
+
 EndFunc   ;==>__LOWriter_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

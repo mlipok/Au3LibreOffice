@@ -1051,7 +1051,6 @@ Func _LOWriter_FrameCreateTextCursor(ByRef $oFrame)
 	If Not IsObj($oFrame) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFrame.Text.createTextCursor())
-
 EndFunc   ;==>_LOWriter_FrameCreateTextCursor
 
 ; #FUNCTION# ====================================================================================================================
@@ -1613,7 +1612,6 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asFrameNames), $asFrameNames)
-
 EndFunc   ;==>_LOWriter_FramesGetNames
 
 ; #FUNCTION# ====================================================================================================================

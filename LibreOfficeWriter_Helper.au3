@@ -557,7 +557,6 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 	EndIf
 
 	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
-
 EndFunc   ;==>_LOWriter_ConvertToMicrometer
 
 ; #FUNCTION# ====================================================================================================================

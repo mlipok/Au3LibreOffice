@@ -147,8 +147,8 @@ Func _LOWriter_CellBorderColor(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLe
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oCell, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CellBorderColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -457,7 +457,6 @@ Func _LOWriter_CellGetError(ByRef $oCell)
 	If __LOWriter_IsCellRange($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Can only get Error for individual cells.
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell.getError())
-
 EndFunc   ;==>_LOWriter_CellGetError
 
 ; #FUNCTION# ====================================================================================================================
