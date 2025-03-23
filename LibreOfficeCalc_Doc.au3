@@ -150,8 +150,8 @@ Func _LOCalc_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 
 	If $oDoc.hasLocation() Then $sDocPath = _LOCalc_PathConvert($oDoc.getURL(), $LOC_PATHCONV_PCPATH_RETURN)
 	$oDoc.Close($bDeliverOwnership)
-	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 
+	Return SetError($__LO_STATUS_SUCCESS, 3, $sDocPath)
 EndFunc   ;==>_LOCalc_DocClose
 
 ; #FUNCTION# ====================================================================================================================
@@ -1205,8 +1205,8 @@ Func _LOCalc_DocPrintersGetNames($bDefaultOnly = False)
 
 	$asPrinters = $oPrintServer.getPrinterNames()
 	If IsArray($asPrinters) Then Return SetError($__LO_STATUS_SUCCESS, UBound($asPrinters), $asPrinters)
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 EndFunc   ;==>_LOCalc_DocPrintersGetNames
 
 ; #FUNCTION# ====================================================================================================================

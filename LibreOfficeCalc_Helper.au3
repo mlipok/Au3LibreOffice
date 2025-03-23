@@ -94,7 +94,7 @@ Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
-		Return $vUserFunction_Static
+		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
@@ -544,7 +544,6 @@ Func _LOCalc_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMilli
 	EndIf
 
 	Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; NO Unit set.
-
 EndFunc   ;==>_LOCalc_ConvertToMicrometer
 
 ; #FUNCTION# ====================================================================================================================

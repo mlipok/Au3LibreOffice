@@ -2396,7 +2396,9 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
 ;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
-;                  Failure: False
+;                  Failure: False and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return Boolean = $iTest not an Integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
 ; Author ........: donnyh13
@@ -2407,43 +2409,42 @@ EndFunc   ;==>__LOCalc_InternalComErrorHandler
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOCalc_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
-	If Not IsInt($iTest) Then Return False
+	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
 
 		Case 2
-			Return ($iTest < $iMin) ? (False) : (True)
+			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
 		Case 3
-			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
+			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
 
 			If IsString($vNot) Then
-				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			ElseIf IsInt($vNot) Then
-				If ($iTest = $vNot) Then Return False
+				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			EndIf
 
-			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			If @NumParams = 5 Then ContinueCase
 
-			Return False
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 		Case Else
 			If IsString($vIncl) Then
-				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
 
-				If ($iTest = $vIncl) Then Return True
+				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
-			Return False
-
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 	EndSwitch
 EndFunc   ;==>__LOCalc_IntIsBetween
 
@@ -3358,11 +3359,13 @@ EndFunc   ;==>__LOCalc_UnitConvert
 Func __LOCalc_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
 	Local $bAllNull1, $bAllNull2, $bAllNull3
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
+	If (@NumParams <= 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1) ? (True) : (False))
+
 	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? (True) : (False)
+	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2) ? (True) : (False))
+
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False))
 EndFunc   ;==>__LOCalc_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
