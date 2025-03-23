@@ -701,6 +701,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormControlFormattedFieldData
 	- _LOWriter_FormControlFormattedFieldGeneral
 	- _LOWriter_FormControlFormattedFieldValue
+	- _LOWriter_FormControlGetParent
 	- _LOWriter_FormControlGroupBoxGeneral
 	- _LOWriter_FormControlImageButtonGeneral
 	- _LOWriter_FormControlImageControlData
@@ -727,6 +728,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormControlsGetList
 	- _LOWriter_FormControlSize
 	- _LOWriter_FormControlTableConGeneral
+	- _LOWriter_FormControlTextBoxCreateTextCursor
 	- _LOWriter_FormControlTextBoxData
 	- _LOWriter_FormControlTextBoxGeneral
 	- _LOWriter_FormControlTimeFieldData
@@ -734,11 +736,11 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOWriter_FormControlTimeFieldValue
 	- _LOWriter_FormDelete
 	- _LOWriter_FormGetObjByIndex
+	- _LOWriter_FormParent
 	- _LOWriter_FormPropertiesData
 	- _LOWriter_FormPropertiesGeneral
 	- _LOWriter_FormsGetCount
 	- _LOWriter_FormsGetList
-	- _LOWriter_FormSubMove
 
 ### Changed
 

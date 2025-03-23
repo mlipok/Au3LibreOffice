@@ -3666,7 +3666,7 @@ Func __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_VIEW_CURSOR)
 		Case "SwXTextTableCursor"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TABLE_CURSOR)
-		Case "SwXTextCursor"
+		Case "SwXTextCursor", "SvxUnoTextCursor" ; SvxUnoTextCursor is a Text Cursor created in a TextBox Form Control.
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_CURSOR)
 		Case "SwXParagraph"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_PARAGRAPH)

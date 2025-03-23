@@ -42,6 +42,7 @@
 ; _LOWriter_FormControlFormattedFieldData
 ; _LOWriter_FormControlFormattedFieldGeneral
 ; _LOWriter_FormControlFormattedFieldValue
+; _LOWriter_FormControlGetParent
 ; _LOWriter_FormControlGroupBoxGeneral
 ; _LOWriter_FormControlImageButtonGeneral
 ; _LOWriter_FormControlImageControlData
@@ -68,6 +69,7 @@
 ; _LOWriter_FormControlsGetList
 ; _LOWriter_FormControlSize
 ; _LOWriter_FormControlTableConGeneral
+; _LOWriter_FormControlTextBoxCreateTextCursor
 ; _LOWriter_FormControlTextBoxData
 ; _LOWriter_FormControlTextBoxGeneral
 ; _LOWriter_FormControlTimeFieldData
@@ -75,11 +77,11 @@
 ; _LOWriter_FormControlTimeFieldValue
 ; _LOWriter_FormDelete
 ; _LOWriter_FormGetObjByIndex
+; _LOWriter_FormParent
 ; _LOWriter_FormPropertiesData
 ; _LOWriter_FormPropertiesGeneral
 ; _LOWriter_FormsGetCount
 ; _LOWriter_FormsGetList
-; _LOWriter_FormSubMove
 ; ===============================================================================================================================
 
 ; #FUNCTION# ====================================================================================================================
@@ -3213,6 +3215,57 @@ Func _LOWriter_FormControlFormattedFieldValue(ByRef $oFormatField, $nValue = Nul
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FormControlFormattedFieldValue
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormControlGetParent
+; Description ...: Retrieve the Parent Form of the called Control.
+; Syntax ........: _LOWriter_FormControlGetParent(ByRef $oControl)
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oControl not an Control Object and not a Grouped Control.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve parent form Object.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning the Form Object that contains the Control.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Unfortunately I am unable to successfully set the parent for controls. It sets, but doesn't literally "move" the control to the new form, and also causes the control to no-longer work.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormControlGetParent(ByRef $oControl)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oOldParent
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If $oControl.supportsService("com.sun.star.drawing.ControlShape") Then
+		$oOldParent = $oControl.Control.Parent()
+
+	ElseIf $oControl.supportsService("com.sun.star.drawing.GroupShape") Then     ; If shape is a grouped control
+		For $i = 0 To $oControl.Count() - 1
+			If $oControl.getByIndex($i).supportsService("com.sun.star.drawing.ControlShape") Then ; Retrieve the controls contained in the grouped control, to find the parent form.
+				$oOldParent = $oControl.getByIndex($i).Control.Parent()
+				If IsObj($oOldParent) Then ExitLoop
+			EndIf
+
+		Next
+
+		If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	Else
+		Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oOldParent)
+EndFunc   ;==>_LOWriter_FormControlGetParent
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormControlGroupBoxGeneral
@@ -7913,6 +7966,46 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 EndFunc   ;==>_LOWriter_FormControlTableConGeneral
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormControlTextBoxCreateTextCursor
+; Description ...: Create a Text Cursor in a Text Box to add text etc.
+; Syntax ........: _LOWriter_FormControlTextBoxCreateTextCursor(ByRef $oTextBox)
+; Parameters ....: $oTextBox            - [in/out] an object. A Text Box Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oTextBox not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oTextBox not a Text Box Control.
+;                  --Initialization Errors--
+;                  @Error 2 @Extended 1 Return 0 = Failed to create a Text Cursor.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify control.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning the Text Cursor object created in the Text Box.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: I am unable to format text in a Text Box (even manually), even though it is supposed to be possible. Thus formatting may or may not work.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormControlTextBoxCreateTextCursor(ByRef $oTextBox)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oCursor
+
+	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If (__LOWriter_FormControlIdentify($oTextBox) <> $LOW_FORM_CONTROL_TYPE_TEXT_BOX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	$oCursor = $oTextBox.Control.createTextCursor()
+	If Not IsObj($oTextBox) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oCursor)
+EndFunc   ;==>_LOWriter_FormControlTextBoxCreateTextCursor
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormControlTextBoxData
 ; Description ...: Set or Retrieve Text Box Data Properties.
 ; Syntax ........: _LOWriter_FormControlTextBoxData(ByRef $oTextBox[, $sDataField = Null[, $bEmptyIsNull = Null[, $bInputRequired = Null[, $bFilter = Null]]]])
@@ -9145,6 +9238,115 @@ Func _LOWriter_FormGetObjByIndex(ByRef $oObj, $iForm)
 EndFunc   ;==>_LOWriter_FormGetObjByIndex
 
 ; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOWriter_FormParent
+; Description ...: Set or Retrieve a Form's parent, i.e. set a form as Sub-Form, or a Sub-Form as a top-level form.
+; Syntax ........:  _LOWriter_FormParent(ByRef $oForm[, $oParent = Null])
+; Parameters ....: $oForm               - [in/out] an object. A Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
+;                  $oParent             - [optional] an object. Default is Null. A Document or Form object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
+; Return values .: Success: 1 or Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oForm not an Object.
+;                  @Error 1 @Extended 2 Return 0 = Object called in $oForm not a Form Object.
+;                  @Error 1 @Extended 3 Return 0 = $oParent not an Object.
+;                  @Error 1 @Extended 4 Return 0 = Object called in $oParent not an Form and not a Document.
+;                  @Error 1 @Extended 5 Return 0 = Destination called in $oParent is the same as form's current parent.
+;                  @Error 1 @Extended 6 Return 0 = Destination called in $oParent is the same as form called in $oForm.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form's parent Object.
+;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Document's Forms Object.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Parent Object.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form's name.
+;                  @Error 3 @Extended 5 Return 0 = Failed to rename Form.
+;                  @Error 3 @Extended 6 Return 0 = Failed to clone the form Object.
+;                  @Error 3 @Extended 7 Return 0 = Failed to insert cloned form into destination.
+;                  @Error 3 @Extended 8 Return 0 = Failed to delete original form.
+;                  @Error 3 @Extended 9 Return 0 = Failed to retrieve new form's Object.
+;                  @Error 3 @Extended 10 Return 0 = Failed to set form's name back to original name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully moved, Object called in $oForm has been updated to new Object.
+;                  @Error 0 @Extended 1 Return Object = Success. Returning Form's parent Object, which is a Document Object.
+;                  @Error 0 @Extended 2 Return Object = Success. Returning Form's parent Object, which is a Form Object.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function allows you to change a sub-form into being a top-level form, change a top-level form into being a sub-form, or move a sub-form to be a sub-form of another form.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the Form's parent Object.
+;                  If the parent Object is a Document, that means the Form is a top-level form. Otherwise it is a Sub-Form.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOWriter_FormParent(ByRef $oForm, $oParent = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oOldParent, $oDestParent = $oParent, $oNewForm, $oFormCopy
+	Local $sTempName = "AutoIt_FORM_", $sOldName
+	Local $iCount = 1
+
+	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oOldParent = $oForm.getParent()
+	If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($oParent) Then
+		If $oOldParent.supportsService("com.sun.star.text.TextDocument") Then ; Parent is a Document.
+			Return SetError($__LO_STATUS_SUCCESS, 1, $oOldParent)
+
+		Else ; Parent is a Form.
+			Return SetError($__LO_STATUS_SUCCESS, 2, $oOldParent)
+
+		EndIf
+	EndIf
+
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not $oParent.supportsService("com.sun.star.form.component.Form") And Not $oParent.supportsService("com.sun.star.text.TextDocument") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($oForm.Parent() = $oParent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If ($oForm = $oParent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	If $oOldParent.supportsService("com.sun.star.text.TextDocument") Then $oOldParent = $oOldParent.DrawPage.Forms()
+	If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+	If Not $oDestParent.supportsService("com.sun.star.form.component.Form") Then $oDestParent = $oParent.DrawPage.Forms() ; Destination is a document.
+	If Not IsObj($oDestParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+	; Create a Unique name.
+	While ($oOldParent.hasByName($sTempName & $iCount) And $oDestParent.hasByName($sTempName & $iCount))
+		$iCount += 1
+	WEnd
+
+	$sTempName = $sTempName & $iCount
+
+	; Retrieve the Form's original name.
+	$sOldName = $oForm.Name()
+	If Not IsString($sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+	; Rename the form.
+	$oForm.Name = $sTempName
+	If ($oForm.Name() <> ($sTempName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+
+	$oFormCopy = $oForm.CreateClone()
+	If Not IsObj($oFormCopy) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+
+	$oDestParent.insertByName($sTempName, $oFormCopy)
+	If Not $oDestParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+
+	$oOldParent.removeByName($sTempName)
+	If $oOldParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
+
+	$oNewForm = $oDestParent.getByName($sTempName)
+	If Not IsObj($oNewForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
+
+	$oForm = $oNewForm
+
+	$oForm.Name = $sOldName
+	If ($oForm.Name() <> $sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 10, 0)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOWriter_FormParent
+
+; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormPropertiesData
 ; Description ...: Set or Retrieve Form Data properties.
 ; Syntax ........: _LOWriter_FormPropertiesData(ByRef $oForm[, $sSource = Null[, $iContentType = Null[, $sContent = Null[, $bAnalyzeSQL = Null[, $sFilter = Null[, $sSort = Null[, $aLinkMaster = Null[, $aLinkSlave = Null[, $bAdditions = Null[, $bModifications = Null[, $bDeletions = Null[, $bAddOnly = Null[, $iNavBar = Null[, $iCycle = Null]]]]]]]]]]]]]])
@@ -9537,99 +9739,3 @@ Func _LOWriter_FormsGetList(ByRef $oObj)
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($aoForms), $aoForms)
 EndFunc   ;==>_LOWriter_FormsGetList
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: _LOWriter_FormSubMove
-; Description ...: Move a Form or Sub-Form to or from being a top-level form.
-; Syntax ........: _LOWriter_FormSubMove(ByRef $oForm, ByRef $oDest)
-; Parameters ....: $oForm               - [in/out] an object. A Form Object returned from a previous _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
-;                  $oDest               - [in/out] an object. A Document or Form object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, or _LOWriter_FormsGetList, or _LOWriter_FormAdd function.
-; Return values .: Success: 1
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oForm not an Object.
-;                  @Error 1 @Extended 2 Return 0 = Object called in $oForm not a Form Object.
-;                  @Error 1 @Extended 3 Return 0 = $oDest not an Object.
-;                  @Error 1 @Extended 4 Return 0 = Object called in $oDest not an Form and not a Document.
-;                  @Error 1 @Extended 5 Return 0 = Destination called in $oDest is the same as form's current parent.
-;                  @Error 1 @Extended 6 Return 0 = Destination called in $oDest is the same as form called in $oForm.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Form's parent Object.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve Document's Forms Object.
-;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Destination Parent Object.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Form's name.
-;                  @Error 3 @Extended 5 Return 0 = Failed to rename Form.
-;                  @Error 3 @Extended 6 Return 0 = Failed to clone the form Object.
-;                  @Error 3 @Extended 7 Return 0 = Failed to insert cloned form into destination.
-;                  @Error 3 @Extended 8 Return 0 = Failed to delete original form.
-;                  @Error 3 @Extended 9 Return 0 = Failed to retrieve new form's Object.
-;                  @Error 3 @Extended 10 Return 0 = Failed to set form's name back to original name.
-;                  --Success--
-;                  @Error 0 @Extended 0 Return 1 = Success. Form was successfully moved, Object called in $oForm has been updated to new Object.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......: This function allows you to change a sub-form into being a top-level form, change a top-level form into being a sub-form, or move a sub-form to be a sub-form of another form.
-; Related .......:
-; Link ..........:
-; Example .......: Yes
-; ===============================================================================================================================
-Func _LOWriter_FormSubMove(ByRef $oForm, ByRef $oDest)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $oParent, $oDestParent = $oDest, $oNewForm, $oFormCopy
-	Local $sTempName = "AutoIt_FORM_", $sOldName
-	Local $iCount = 1
-
-	If Not IsObj($oForm) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not $oForm.supportsService("com.sun.star.form.component.Form") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsObj($oDest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not $oDest.supportsService("com.sun.star.form.component.Form") And Not $oDest.supportsService("com.sun.star.text.TextDocument") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-	If ($oForm.Parent() = $oDest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-	If ($oForm = $oDest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-
-	$oParent = $oForm.getParent()
-	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	If $oParent.supportsService("com.sun.star.text.TextDocument") Then
-		$oParent = $oParent.DrawPage.Forms()
-		If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	EndIf
-
-	If Not $oDest.supportsService("com.sun.star.form.component.Form") Then $oDestParent = $oDest.DrawPage.Forms() ; Destination is a document.
-	If Not IsObj($oDestParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-	; Create a Unique name.
-	While ($oParent.hasByName($sTempName & $iCount) And $oDestParent.hasByName($sTempName & $iCount))
-		$iCount += 1
-	WEnd
-
-	$sTempName = $sTempName & $iCount
-
-	; Retrieve the Form's original name.
-	$sOldName = $oForm.Name()
-	If Not IsString($sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-	; Rename the form.
-	$oForm.Name = $sTempName
-	If ($oForm.Name() <> ($sTempName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
-
-	$oFormCopy = $oForm.CreateClone()
-	If Not IsObj($oFormCopy) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
-
-	$oDestParent.insertByName($sTempName, $oFormCopy)
-	If Not $oDestParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
-
-	$oParent.removeByName($sTempName)
-	If $oParent.hasByName($sTempName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 8, 0)
-
-	$oNewForm = $oDestParent.getByName($sTempName)
-	If Not IsObj($oNewForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 9, 0)
-
-	$oForm = $oNewForm
-
-	$oForm.Name = $sOldName
-	If ($oForm.Name() <> $sOldName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 10, 0)
-
-	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
-EndFunc   ;==>_LOWriter_FormSubMove
