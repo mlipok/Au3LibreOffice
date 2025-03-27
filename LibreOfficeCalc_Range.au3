@@ -681,10 +681,12 @@ Func _LOCalc_RangeCopyMove(ByRef $oSheet, ByRef $oRangeSrc, ByRef $oRangeDest, $
 
 	If $bMove Then
 		$oSheet.MoveRange($tCellDestAddr, $tCellSrcAddr)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 
 	Else
 		$oSheet.CopyRange($tCellDestAddr, $tCellSrcAddr)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndIf
 EndFunc   ;==>_LOCalc_RangeCopyMove
@@ -778,6 +780,7 @@ Func _LOCalc_RangeData(ByRef $oRange, $aavData = Null, $bStrictSize = False)
 	If ($aavData = Null) Then
 		$aavData = $oRange.getDataArray()
 		If Not IsArray($aavData) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aavData)
 	EndIf
 
@@ -1157,6 +1160,7 @@ Func _LOCalc_RangeDatabaseModify(ByRef $oDoc, ByRef $oDatabaseRange, $oRange = N
 
 		__LOCalc_ArrayFill($avDatabaseRange, $oRange, $oDatabaseRange.Name(), $oDatabaseRange.ContainsHeader(), $oDatabaseRange.TotalsRow(), $oDatabaseRange.MoveCells(), _
 				$oDatabaseRange.KeepFormats(), $oDatabaseRange.StripData(), $oDatabaseRange.AutoFilter())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDatabaseRange)
 	EndIf
 
@@ -1672,6 +1676,7 @@ Func _LOCalc_RangeFormula(ByRef $oRange, $aasFormulas = Null, $bStrictSize = Fal
 	If ($aasFormulas = Null) Then
 		$aasFormulas = $oRange.getFormulaArray()
 		If Not IsArray($aasFormulas) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aasFormulas)
 	EndIf
 
@@ -1898,11 +1903,13 @@ Func _LOCalc_RangeGetCellByPosition(ByRef $oRange, $iColumn, $iRow, $iToColumn =
 	If ($iToColumn = Null) And ($iToRow = Null) Then
 		$oCell = $oRange.getCellByPosition($iColumn, $iRow)
 		If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 
 	Else
 		$oCellRange = $oRange.getCellRangeByPosition($iColumn, $iRow, $iToColumn, $iToRow)
 		If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oCellRange)
 	EndIf
 EndFunc   ;==>_LOCalc_RangeGetCellByPosition
@@ -2530,6 +2537,7 @@ Func _LOCalc_RangeNamedModify(ByRef $oDoc, ByRef $oNamedRange, $vRange = Null, $
 		If Not IsObj($oRefCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		__LOCalc_ArrayFill($avNamedRange, $oNamedRange.Content(), $oNamedRange.Name(), $oNamedRange.Type(), $oRefCell)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avNamedRange)
 	EndIf
 
@@ -2641,6 +2649,7 @@ Func _LOCalc_RangeNumbers(ByRef $oRange, $aanNumbers = Null, $bStrictSize = Fals
 	If ($aanNumbers = Null) Then
 		$aanNumbers = $oRange.getData()
 		If Not IsArray($aanNumbers) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aanNumbers)
 	EndIf
 
@@ -3550,6 +3559,7 @@ Func _LOCalc_RangePivotFilter(ByRef $oPivotTable, $atFilterField = Null, $bCaseS
 	If __LOCalc_VarsAreNull($atFilterField, $bCaseSensitive, $bSkipDupl, $bUseRegExp) Then
 		__LOCalc_ArrayFill($avFilter, $oPivotTable.FilterDescriptor.getFilterFields2(), $oPivotTable.FilterDescriptor.IsCaseSensitive(), _
 				$oPivotTable.FilterDescriptor.SkipDuplicates(), $oPivotTable.FilterDescriptor.UseRegularExpressions())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFilter)
 	EndIf
 
@@ -3950,6 +3960,7 @@ Func _LOCalc_RangePivotSettings(ByRef $oPivotTable, $bIgnoreEmpty = Null, $bIden
 	If __LOCalc_VarsAreNull($bIgnoreEmpty, $bIdentifyCat, $bTotalCol, $bTotalRow, $bAddFilter, $bEnableDrill) Then
 		__LOCalc_ArrayFill($abPivotSettings, $oPivotTable.IgnoreEmptyRows(), $oPivotTable.RepeatIfEmpty(), $oPivotTable.ColumnGrand(), $oPivotTable.RowGrand(), _
 				$oPivotTable.ShowFilterButton(), $oPivotTable.DrillDownOnDoubleClick())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abPivotSettings)
 	EndIf
 
@@ -4125,6 +4136,7 @@ Func _LOCalc_RangePivotSource(ByRef $oDoc, ByRef $oPivotTable, $oSourceRange = N
 	$oPivotTable.SourceRange = $oSourceRange.RangeAddress()
 
 	$iError = (__LOCalc_RangeAddressIsSame($oPivotTable.SourceRange(), $oSourceRange.RangeAddress())) ? ($iError) : (BitOR($iError, 1))
+
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOCalc_RangePivotSource
 
@@ -5467,6 +5479,7 @@ Func _LOCalc_RangeValidation(ByRef $oRange, $iType = Null, $iCondition = Null, $
 
 		__LOCalc_ArrayFill($avValid, $oValidation.Type(), $oValidation.getOperator(), $oValidation.getFormula1(), $oValidation.getFormula2(), $oCell, _
 				$oValidation.IgnoreBlankCells(), $oValidation.ShowList())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
 	EndIf
 
@@ -5584,6 +5597,7 @@ Func _LOCalc_RangeValidationSettings(ByRef $oRange, $bInputMsg = Null, $sInputTi
 	If __LOCalc_VarsAreNull($bInputMsg, $sInputTitle, $sInputMsg, $bErrorMsg, $iErrorStyle, $sErrorTitle, $sErrorMsg) Then
 		__LOCalc_ArrayFill($avValid, $oValidation.ShowInputMessage(), $oValidation.InputTitle(), $oValidation.InputMessage(), $oValidation.ShowErrorMessage(), _
 				$oValidation.ErrorAlertStyle(), $oValidation.ErrorTitle(), $oValidation.ErrorMessage())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avValid)
 	EndIf
 

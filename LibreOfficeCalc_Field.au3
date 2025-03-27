@@ -365,6 +365,7 @@ Func _LOCalc_FieldHyperlinkModify(ByRef $mHyperlinkField, $sURL = Null, $sText =
 
 	If __LOCalc_VarsAreNull($sURL, $sText, $sTargetFrame) Then
 		__LOCalc_ArrayFill($asField, $mHyperlinkField["FieldObj"].URL(), $mHyperlinkField["FieldObj"].Representation(), $mHyperlinkField["FieldObj"].TargetFrame())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asField)
 	EndIf
 

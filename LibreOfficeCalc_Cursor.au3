@@ -102,9 +102,11 @@ Func _LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns = 0, $iRows = 0, 
 	Switch $iCursorType
 		Case $LOC_CURTYPE_SHEET_CURSOR
 			$bMoved = __LOCalc_SheetCursorMove($oCursor, $iMove, $iColumns, $iRows, $iCount, $bSelect)
+
 			Return SetError(@error, @extended, $bMoved)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown or wrong cursor type.
 	EndSwitch
 EndFunc   ;==>_LOCalc_SheetCursorMove
@@ -237,6 +239,7 @@ Func _LOCalc_TextCursorCharSpacing(ByRef $oTextCursor, $bAutoKerning = Null, $nK
 	EndSwitch
 
 	$vReturn = __LOCalc_CharSpacing($oCursor, $bAutoKerning, $nKerning)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorCharSpacing
 
@@ -298,6 +301,7 @@ Func _LOCalc_TextCursorEffect(ByRef $oTextCursor, $iRelief = Null, $bOutline = N
 	EndSwitch
 
 	$vReturn = __LOCalc_CellEffect($oCursor, $iRelief, $bOutline, $bShadow)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorEffect
 
@@ -365,6 +369,7 @@ Func _LOCalc_TextCursorFont(ByRef $oTextCursor, $sFontName = Null, $nFontSize = 
 	EndSwitch
 
 	$vReturn = __LOCalc_CellFont($oCursor, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorFont
 
@@ -420,6 +425,7 @@ Func _LOCalc_TextCursorFontColor(ByRef $oTextCursor, $iFontColor = Null)
 	EndSwitch
 
 	$vReturn = __LOCalc_CellFontColor($oCursor, $iFontColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorFontColor
 
@@ -543,6 +549,7 @@ Func _LOCalc_TextCursorInsertString(ByRef $oCursor, $sString, $bOverwrite = Fals
 	If ($iCursorType <> $LOC_CURTYPE_TEXT_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oCursor.Text.insertString($oCursor, $sString, $bOverwrite)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_TextCursorInsertString
 
@@ -582,9 +589,11 @@ Func _LOCalc_TextCursorIsCollapsed(ByRef $oCursor)
 	Switch $iCursorType
 		Case $LOC_CURTYPE_TEXT_CURSOR
 			$bReturn = $oCursor.isCollapsed()
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $bReturn)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; unknown or wrong cursor data type.
 	EndSwitch
 EndFunc   ;==>_LOCalc_TextCursorIsCollapsed
@@ -640,9 +649,11 @@ Func _LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = Fals
 	Switch $iCursorType
 		Case $LOC_CURTYPE_TEXT_CURSOR
 			$bMoved = __LOCalc_TextCursorMove($oCursor, $iMove, $iCount, $bSelect)
+
 			Return SetError(@error, @extended, $bMoved)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown or wrong cursor type.
 	EndSwitch
 EndFunc   ;==>_LOCalc_TextCursorMove
@@ -709,6 +720,7 @@ Func _LOCalc_TextCursorOverline(ByRef $oTextCursor, $bWordOnly = Null, $iOverLin
 	EndSwitch
 
 	$vReturn = __LOCalc_CellOverLine($oCursor, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorOverline
 
@@ -821,6 +833,7 @@ Func _LOCalc_TextCursorParObjSectionsGet(ByRef $oParObj)
 		Sleep((IsInt($iCount / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 	WEnd
 	ReDim $aoSections[$iCount][2]
+
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSections)
 EndFunc   ;==>_LOCalc_TextCursorParObjSectionsGet
 
@@ -882,6 +895,7 @@ Func _LOCalc_TextCursorStrikeOut(ByRef $oTextCursor, $bWordOnly = Null, $bStrike
 	EndSwitch
 
 	$vReturn = __LOCalc_CellStrikeOut($oCursor, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorStrikeOut
 
@@ -946,5 +960,6 @@ Func _LOCalc_TextCursorUnderline(ByRef $oTextCursor, $bWordOnly = Null, $iUnderL
 	EndSwitch
 
 	$vReturn = __LOCalc_CellUnderLine($oCursor, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_TextCursorUnderline

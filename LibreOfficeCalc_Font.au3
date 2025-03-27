@@ -78,6 +78,7 @@ Func _LOCalc_FontExists($sFontName)
 	For $i = 0 To UBound($atFonts) - 1
 		If $atFonts[$i].Name = $sFontName Then
 			$oDoc.Close(True)
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, True)
 		EndIf
 		Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))

@@ -887,6 +887,7 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 
 	If __LOCalc_VarsAreNull($oNewDoc, $sSheetName, $iLinkMode) Then
 		__LOCalc_ArrayFill($avSheet, _LOCalc_PathConvert($oSheet.LinkUrl(), $LOC_PATHCONV_PCPATH_RETURN), $oSheet.LinkSheetName(), $oSheet.LinkMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSheet)
 	EndIf
 
@@ -1189,6 +1190,7 @@ Func _LOCalc_SheetPrintRangeModify(ByRef $oSheet, $aoRange = Null)
 			$aoRange[$i] = $oSheet.getCellRangeByPosition($aoRange[$i].StartColumn(), $aoRange[$i].StartRow(), $aoRange[$i].EndColumn(), $aoRange[$i].EndRow())
 			If Not IsObj($aoRange[$i]) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, UBound($aoRange), $aoRange)
 	EndIf
 

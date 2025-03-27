@@ -88,6 +88,7 @@ Func _LOCalc_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent =
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellBackColor($oCell, $iBackColor, $bBackTransparent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBackColor
 
@@ -166,6 +167,7 @@ Func _LOCalc_CellBorderColor(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, $LOC_COLOR_BLACK, $LOC_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 	$vReturn = __LOCalc_CellBorder($oCell, False, False, True, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBorderColor
 
@@ -220,6 +222,7 @@ Func _LOCalc_CellBorderPadding(ByRef $oCell, $iAll = Null, $iTop = Null, $iBotto
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellBorderPadding($oCell, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBorderPadding
 
@@ -298,6 +301,7 @@ Func _LOCalc_CellBorderStyle(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, $LOC_BORDERSTYLE_SOLID, $LOC_BORDERSTYLE_DASH_DOT_DOT, "", $LOC_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 	$vReturn = __LOCalc_CellBorder($oCell, False, True, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBorderStyle
 
@@ -368,6 +372,7 @@ Func _LOCalc_CellBorderWidth(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLeft
 	If ($iBLTRDiag <> Null) And Not __LOCalc_IntIsBetween($iBLTRDiag, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
 	$vReturn = __LOCalc_CellBorder($oCell, True, False, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori, $iTLBRDiag, $iBLTRDiag)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellBorderWidth
 
@@ -462,6 +467,7 @@ Func _LOCalc_CellEffect(ByRef $oCell, $iRelief = Null, $bOutline = Null, $bShado
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellEffect($oCell, $iRelief, $bOutline, $bShadow)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellEffect
 
@@ -518,6 +524,7 @@ Func _LOCalc_CellFont(ByRef $oCell, $sFontName = Null, $nFontSize = Null, $iPost
 	If ($sFontName <> Null) And Not _LOCalc_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOCalc_CellFont($oCell, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellFont
 
@@ -560,6 +567,7 @@ Func _LOCalc_CellFontColor(ByRef $oCell, $iFontColor = Null)
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellFontColor($oCell, $iFontColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellFontColor
 
@@ -685,6 +693,7 @@ Func _LOCalc_CellNumberFormat(ByRef $oDoc, ByRef $oCell, $iFormatKey = Null)
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellNumberFormat($oDoc, $oCell, $iFormatKey)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellNumberFormat
 
@@ -737,6 +746,7 @@ Func _LOCalc_CellOverline(ByRef $oCell, $bWordOnly = Null, $iOverLineStyle = Nul
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellOverLine($oCell, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellOverline
 
@@ -791,6 +801,7 @@ Func _LOCalc_CellProtection(ByRef $oCell, $bHideAll = Null, $bProtected = Null, 
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellProtection($oCell, $bHideAll, $bProtected, $bHideFormula, $bHideWhenPrint)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellProtection
 
@@ -845,6 +856,7 @@ Func _LOCalc_CellShadow(ByRef $oCell, $iWidth = Null, $iColor = Null, $bTranspar
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellShadow($oCell, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellShadow
 
@@ -893,6 +905,7 @@ Func _LOCalc_CellStrikeOut(ByRef $oCell, $bWordOnly = Null, $bStrikeOut = Null, 
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellStrikeOut($oCell, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellStrikeOut
 
@@ -984,6 +997,7 @@ Func _LOCalc_CellTextAlign(ByRef $oCell, $iHoriAlign = Null, $iVertAlign = Null,
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextAlign($oCell, $iHoriAlign, $iVertAlign, $iIndent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellTextAlign
 
@@ -1035,6 +1049,7 @@ Func _LOCalc_CellTextOrient(ByRef $oCell, $iRotate = Null, $iReference = Null, $
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextOrient($oCell, $iRotate, $iReference, $bVerticalStack, $bAsianLayout)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellTextOrient
 
@@ -1086,6 +1101,7 @@ Func _LOCalc_CellTextProperties(ByRef $oCell, $bAutoWrapText = Null, $bHyphen = 
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellTextProperties($oCell, $bAutoWrapText, $bHyphen, $bShrinkToFit, $iTextDirection)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellTextProperties
 
@@ -1137,6 +1153,7 @@ Func _LOCalc_CellUnderline(ByRef $oCell, $bWordOnly = Null, $iUnderLineStyle = N
 			And Not $oCell.supportsService("com.sun.star.table.TableRow") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Row Obj
 
 	$vReturn = __LOCalc_CellUnderLine($oCell, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOCalc_CellUnderline
 
