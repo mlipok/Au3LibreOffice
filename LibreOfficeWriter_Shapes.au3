@@ -593,7 +593,6 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 			For $i = 0 To UBound($atCusShapeGeo) - 1
-
 				If ($atCusShapeGeo[$i].Name() = "Type") Then
 					$sType = $atCusShapeGeo[$i].Value()
 					If Not IsString($sType) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -641,7 +640,6 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; Unknown shape type.
 	EndSwitch
-
 EndFunc   ;==>_LOWriter_ShapeGetType
 
 ; #FUNCTION# ====================================================================================================================
@@ -1201,7 +1199,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 		; Identify the Array element to add the point after.
 		For $i = 0 To UBound($aiFlags) - 1
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
 
 			If ($iCount = $iPoint) Then
@@ -1239,7 +1236,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$avArray2[2] = $LOW_SHAPE_POINT_TYPE_CONTROL
 
 			For $i = 3 To UBound($avArray) - 1
-
 				$avArray[$i] = $atPoints[$i - 3] ; Add the rest of the points to the array.
 				$avArray2[$i] = $aiFlags[$i - 3] ; Add the rest of the point's types to the array.
 
@@ -1258,7 +1254,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$avArray2[0] = $iPointType ; Place the new point's Type at the beginning of the array.
 
 			For $i = 1 To UBound($avArray) - 1
-
 				$avArray[$i] = $atPoints[$i - 1] ; Add the rest of the points to the array.
 				$avArray2[$i] = $aiFlags[$i - 1] ; Add the rest of the point's types to the array.
 
@@ -1277,7 +1272,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 		ReDim $avArray2[UBound($aiFlags) + 1]
 
 		For $i = 0 To UBound($atPoints) - 1
-
 			$avArray[$i] = $atPoints[$i] ; Add the rest of the points to the array.
 			$avArray2[$i] = $aiFlags[$i] ; Add the rest of the point's types to the array.
 
@@ -1293,7 +1287,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 	Else ; Insertion is in the middle.
 
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iNextArrayElement = $i
 				ExitLoop
@@ -1353,7 +1346,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			$iReDimCount = 0
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($iOffset = 0) Then
 					$avArray[$i + $iForOffset] = $atPoints[$i + $iOffset] ; Add the rest of the points to the array.
 					$avArray2[$i + $iForOffset] = $aiFlags[$i + $iOffset] ; Add the rest of the point's types to the array.
@@ -1457,7 +1449,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the point's types to the array.
@@ -1530,7 +1521,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 					$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the point's types to the array.
 
@@ -1620,7 +1610,6 @@ Func _LOWriter_ShapePointsGetCount(ByRef $oShape)
 	If Not IsArray($aiFlags) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To UBound($aiFlags) - 1
-
 		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
 
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1697,7 +1686,6 @@ Func _LOWriter_ShapePointsModify(ByRef $oShape, $iPoint, $iX = Null, $iY = Null,
 
 	; Identify the Array element to modify the point.
 	For $i = 0 To UBound($aiFlags) - 1
-
 		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
 
 		If ($iCount = $iPoint) Then
@@ -1815,7 +1803,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 	; Identify the Array element to remove the point.
 	For $i = 0 To UBound($aiFlags) - 1
-
 		If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then $iCount += 1 ; Skip any points that are Control Points, as they aren't actual points used for drawing the shape.
 
 		If ($iCount = $iPoint) Then
@@ -1831,7 +1818,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 	If ($iArrayElement <> UBound($atPoints) - 1) Then ; If The requested point to be deleted is not at the end of the Array of points, find the next regular point.
 
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iNextArrayElement = $i
 				ExitLoop
@@ -1849,7 +1835,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 	If ($iPoint > 1) Then ; If Point requested is not the first point, find the previous Point's position.
 
 		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iPreviousArrayElement = $i
 				ExitLoop
@@ -1873,7 +1858,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		ReDim $avArray2[UBound($aiFlags) - $iNextArrayElement]
 
 		For $i = 0 To (UBound($atPoints) - 1)
-
 			If ($i >= $iNextArrayElement) Then
 				$avArray[$i - $iSkip] = $atPoints[$i]
 				$avArray2[$i - $iSkip] = $aiFlags[$i]
@@ -1896,7 +1880,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		ReDim $avArray2[UBound($aiFlags) - (UBound($aiFlags) - $iPreviousArrayElement - 1)]
 
 		For $i = 0 To $iPreviousArrayElement + 1
-
 			$avArray[$i] = $atPoints[$i]
 			$avArray2[$i] = $aiFlags[$i]
 
@@ -1955,7 +1938,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			ReDim $avArray2[UBound($aiFlags) - $iReDimCount]
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($i = $iArrayElement) Then
 					$iOffset -= 1
 
@@ -2021,7 +2003,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			ReDim $avArray2[UBound($aiFlags) - $iReDimCount]
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($i = $iArrayElement) Then
 					$iOffset -= 1
 
@@ -2063,7 +2044,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			ReDim $avArray2[UBound($aiFlags) - 1]
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($i = $iArrayElement) Then
 					$iOffset -= 1
 

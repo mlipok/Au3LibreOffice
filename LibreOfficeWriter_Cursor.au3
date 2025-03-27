@@ -150,7 +150,6 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
-
 EndFunc   ;==>_LOWriter_CursorGetStatus
 
 ; #FUNCTION# ====================================================================================================================

@@ -279,7 +279,6 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
-
 EndFunc   ;==>_LOWriter_ConvertColorFromLong
 
 ; #FUNCTION# ====================================================================================================================
@@ -811,7 +810,6 @@ Func _LOWriter_DateFormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = Fal
 	ReDim $avDTFormats[UBound($aiFormatKeys)][$iColumns]
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
-
 		If ($bUserOnly = True) Then
 			If ($oFormats.getbykey($aiFormatKeys[$i]).UserDefined() = True) Then
 				$avDTFormats[$iCount][0] = $aiFormatKeys[$i]
@@ -2500,7 +2498,6 @@ Func _LOWriter_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, 
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
-
 		If ($bUserOnly = True) Then
 			If ($oFormats.getbykey($aiFormatKeys[$i]).UserDefined() = True) Then
 				$avFormats[$iCount][0] = $aiFormatKeys[$i]
@@ -2594,7 +2591,6 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 			Next
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
 	EndSwitch
-
 EndFunc   ;==>_LOWriter_PathConvert
 
 ; #FUNCTION# ====================================================================================================================

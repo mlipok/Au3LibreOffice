@@ -3251,7 +3251,6 @@ Func _LOWriter_FormControlGetParent(ByRef $oControl)
 				$oOldParent = $oControl.getByIndex($i).Control.Parent()
 				If IsObj($oOldParent) Then ExitLoop
 			EndIf
-
 		Next
 
 		If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -9186,7 +9185,6 @@ Func _LOWriter_FormGetObjByIndex(ByRef $oObj, $iForm)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then
 		For $i = 0 To $oObj.Count() - 1
-
 			If $oObj.getByIndex($i).supportsService("com.sun.star.form.component.Form") Then $iCount += 1
 			If ($iCount = $iForm) Then
 				$oForm = $oObj.getByIndex($i)
@@ -9634,9 +9632,7 @@ Func _LOWriter_FormsGetCount(ByRef $oObj)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then
 		For $i = 0 To $oObj.Count() - 1
-
 			If $oObj.getByIndex($i).supportsService("com.sun.star.form.component.Form") Then $iCount += 1
-
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then
@@ -9684,13 +9680,11 @@ Func _LOWriter_FormsGetList(ByRef $oObj)
 
 	If $oObj.supportsService("com.sun.star.form.component.Form") Then
 		For $i = 0 To $oObj.Count() - 1
-
 			If $oObj.getByIndex($i).supportsService("com.sun.star.form.component.Form") Then
 				ReDim $aoForms[$iCount + 1]
 				$aoForms[$iCount] = $oObj.getByIndex($i)
 				$iCount += 1
 			EndIf
-
 		Next
 
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then

@@ -1586,7 +1586,6 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 		If $oShapes.hasElements() Then
 			ReDim $asShapes[$oShapes.getCount()]
 			For $i = 0 To $oShapes.getCount() - 1
-
 				If $oShapes.getByIndex($i).supportsService("com.sun.star.drawing.Text") Then ; Determine if the Shape is an actual Frame or not.
 					If ($oShapes.getByIndex($i).Text.ImplementationName() = "SwXTextFrame") And Not _
 							$oShapes.getByIndex($i).getPropertySetInfo().hasPropertyByName("ActualSize") Then

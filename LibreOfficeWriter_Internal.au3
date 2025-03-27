@@ -1882,7 +1882,6 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 		$oTextField = $oTextFields.nextElement()
 
 		For $i = 0 To UBound($avFieldTypes) - 1
-
 			If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 				If ($iColumns = 1) Then
 					$avTextFields[$iCount] = $oTextField
@@ -1906,7 +1905,6 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 			EndIf
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-
 	WEnd
 
 	If ($iColumns = 1) Then
@@ -2476,13 +2474,11 @@ Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
 
 		For $i = 0 To UBound($avControls) - 1
 			If $oShape.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
-
 		Next
 
 	ElseIf IsInt($iControlType) Then
 		For $i = 0 To UBound($avControls) - 1
 			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][0])
-
 		Next
 	EndIf
 
@@ -2563,7 +2559,6 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 
 	If $oShapes.hasElements() Then
 		For $i = 1 To $oShapes.getCount() - 1
-
 			For $j = 0 To $oShapes.getCount() - 1
 				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
 
@@ -3602,7 +3597,6 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 			For $i = 0 To $oFootNotes.getCount() - 1
 				If ($oFootNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
 						($oFootNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_FOOTNOTE, $oFootNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_FOOTNOTE))
-
 			Next
 
 			$oEndNotes = $oDoc.getEndnotes()     ; Not found in Footnotes, check Endnotes.
@@ -3611,7 +3605,6 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 			For $i = 0 To $oEndNotes.getCount() - 1
 				If ($oEndNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
 						($oEndNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_ENDNOTE, $oEndNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_ENDNOTE))
-
 			Next
 
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; no matches
@@ -7290,7 +7283,6 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case Else
 			Return SetError($__LO_STATUS_SUCCESS, 0, -1)
 	EndSwitch
-
 EndFunc   ;==>__LOWriter_Shape_GetCustomType
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7362,7 +7354,6 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To UBound($asArrowStyles) - 1
-
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7444,7 +7435,6 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To UBound($asLineStyles) - 1
-
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7592,7 +7582,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 	If ($iArrayElement <> UBound($atPoints) - 1) Then ; If The requested point to be modified is not at the end of the Array of points, find the next regular point.
 
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iNextArrayElement = $i
 				ExitLoop
@@ -7610,7 +7599,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 	If ($iArrayElement > 0) Then ; If Point requested is not the first point, find the previous Point's position.
 
 		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
 				$iPreviousArrayElement = $i
 				ExitLoop
@@ -7722,7 +7710,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
@@ -7815,7 +7802,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i + $iOffset] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i + $iOffset] ; Add the rest of the points to the array.
@@ -7949,7 +7935,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			$iReDimCount = 0
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($iOffset = 0) Then
 					$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 					$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
@@ -8031,7 +8016,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
@@ -8465,7 +8449,6 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		If Not IsBool($bSplitRowTest) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		For $i = 1 To $iRows - 1
-
 			If $bSplitRowTest <> ($oTable.getRows.getByIndex($i).IsSplitAllowed()) Then Return SetError($__LO_STATUS_SUCCESS, 0, 0) ; Table Rows have mixed settings, return 0.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
@@ -8480,7 +8463,6 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		Next
 		Return SetError($__LO_STATUS_SUCCESS, 2, 1)
 	EndIf
-
 EndFunc   ;==>__LOWriter_TableRowSplitToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8635,7 +8617,6 @@ Func __LOWriter_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPerc
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
 	EndIf
-
 EndFunc   ;==>__LOWriter_TransparencyGradientConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8915,7 +8896,6 @@ Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null,
 
 	$bAllNull8 = (($vVar29 = Null) And ($vVar30 = Null) And ($vVar31 = Null) And ($vVar32 = Null)) ? (True) : (False)
 	Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7) And ($bAllNull8)) ? (True) : (False))
-
 EndFunc   ;==>__LOWriter_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

@@ -598,7 +598,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 					$iCount += 1
 				EndIf
 			EndIf
-
 		WEnd
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then
@@ -612,7 +611,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 	EndIf
-
 EndFunc   ;==>_LOWriter_DocConnect
 
 ; #FUNCTION# ====================================================================================================================
@@ -804,7 +802,6 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	; Obtain the newly created table object by comparing the original table names to the new list of tables.
 	; If none match, then it is the new one. Return that Table's Object.
 	For $i = 0 To $oTables.getCount() - 1
-
 		For $j = 0 To UBound($asTables) - 1
 			If ($asTables[$j] = $oTables.getByIndex($i).Name()) Then ExitLoop
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0))) ; Sleep every x cycles.
@@ -1556,7 +1553,6 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 	$oResult = $oDoc.findNext($oFindRange, $oSrchDescript)
 
 	While IsObj($oResult)
-
 		If IsObj($oResult) Then ;  If there is a result, test to see if the result is past the selected area.
 
 			$oRangeRegion = $oRange
@@ -1608,7 +1604,6 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 		EndIf
 
 		$oResult = $oDoc.findNext($oFindRange, $oSrchDescript)
-
 	WEnd
 
 	Return (IsObj($oResult)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oResult)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
@@ -4449,7 +4444,6 @@ Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf
-
 EndFunc   ;==>_LOWriter_DocUndoCurActionTitle
 
 ; #FUNCTION# ====================================================================================================================
