@@ -45,6 +45,7 @@
 ; _LOCalc_RangeDelete
 ; _LOCalc_RangeDetail
 ; _LOCalc_RangeFill
+; _LOCalc_RangeFillRandom
 ; _LOCalc_RangeFillSeries
 ; _LOCalc_RangeFilter
 ; _LOCalc_RangeFilterAdvanced
@@ -1343,6 +1344,68 @@ Func _LOCalc_RangeFill(ByRef $oRange, $iDirection, $iCount = 1)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOCalc_RangeFill
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_RangeFillRandom
+; Description ...: Fill a range with random numbers.
+; Syntax ........: _LOCalc_RangeFillRandom(ByRef $oRange[, $nMin = 0.0000[, $nMax = 1.0000[, $iDecPlc = 15[, $nSeed = Null[, $bFillByRows = True]]]]])
+; Parameters ....: $oRange              - [in/out] an object. A Cell Range or Cell object returned by a previous _LOCalc_RangeGetCellByName, _LOCalc_RangeGetCellByPosition, _LOCalc_RangeColumnGetObjByPosition, _LOCalc_RangeColumnGetObjByName, _LOcalc_RangeRowGetObjByPosition, _LOCalc_SheetGetObjByName, or _LOCalc_SheetGetActive function.
+;                  $nMin                - [optional] a general number value (-2^31-2^31). Default is 0.0000. The minimum number value. Max is -2^31-2^31.
+;                  $nMax                - [optional] a general number value (-2^31-2^31). Default is 1.0000. The maximum number value. Max is -2^31-2^31.
+;                  $iDecPlc             - [optional] an integer value (0-255). Default is 15. The decimal place to round the value to. Set to 0 to fill with integer only.
+;                  $nSeed               - [optional] a general number value. Default is Null. A seed to use for generating the Random number. Null means no seed is used.
+;                  $bFillByRows         - [optional] a boolean value. Default is True. If True, the range is filled top to bottom, left to right. If False, the range is filled left to right, top to bottom.
+; Return values .: Success: 1
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oRange not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $nMin not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 3 Return 0 = $nMax not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 4 Return 0 = $iDecPlc not an integer, less than 0, or greater than 255.
+;                  @Error 1 @Extended 5 Return 0 = $nSeed not a number, less than -2^31 or greater then 2^31.
+;                  @Error 1 @Extended 6 Return 0 = $bFillByRows not a boolean.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Range successfully filled with random values.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: This function is a homemade version of Calc's Fill Random, as there is no built in method for calling Libre Office's built-in one. The results of this function may not be similar to the results of Libre Office's random number generator.
+;                  Any values in the range will be overwritten.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func _LOCalc_RangeFillRandom(ByRef $oRange, $nMin = 0.0000, $nMax = 1.0000, $iDecPlc = 15, $nSeed = Null, $bFillByRows = True)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	If Not IsObj($oRange) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_NumIsBetween($nMin, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If Not __LOCalc_NumIsBetween($nMax, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not __LOCalc_NumIsBetween($iDecPlc, 0, 255) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($nSeed <> Null) And Not __LOCalc_NumIsBetween($nSeed, -2 ^ 31, 2 ^ 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsBool($bFillByRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+
+	If ($nSeed <> Null) Then SRandom($nSeed)
+
+	If $bFillByRows Then ; Fill all rows first per column.
+		For $iC = $oRange.RangeAddress.StartColumn() To $oRange.RangeAddress.EndColumn()
+			For $iR = $oRange.RangeAddress.StartRow() To $oRange.RangeAddress.EndRow()
+				$oRange.Spreadsheet.getCellByPosition($iC, $iR).Value = Round(Random($nMin, $nMax), $iDecPlc)
+				Sleep((IsInt($iR / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Next
+		Next
+
+	Else ; Fill all columns first per row.
+		For $iR = $oRange.RangeAddress.StartRow() To $oRange.RangeAddress.EndRow()
+			For $iC = $oRange.RangeAddress.StartColumn() To $oRange.RangeAddress.EndColumn()
+				$oRange.Spreadsheet.getCellByPosition($iC, $iR).Value = Round(Random($nMin, $nMax), $iDecPlc)
+				Sleep((IsInt($iR / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
+			Next
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+EndFunc   ;==>_LOCalc_RangeFillRandom
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_RangeFillSeries

@@ -123,6 +123,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_RangeDelete
 	- _LOCalc_RangeDetail
 	- _LOCalc_RangeFill
+	- _LOCalc_RangeFillRandom
 	- _LOCalc_RangeFillSeries
 	- _LOCalc_RangeFilter
 	- _LOCalc_RangeFilterAdvanced
