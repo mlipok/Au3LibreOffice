@@ -399,7 +399,6 @@ Func __LOCalc_CellBorder(ByRef $oRange, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 		$tBL2.Color = ($bCol) ? ($iBLTRDiag) : ($oRange.DiagonalBLTR2.Color()) ; copy Color over to new size structure
 		$oRange.DiagonalBLTR2 = $tBL2
 	EndIf
-
 EndFunc   ;==>__LOCalc_CellBorder
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3050,7 +3049,6 @@ Func __LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns, $iRows, $iCount
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
-
 EndFunc   ;==>__LOCalc_SheetCursorMove
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3168,7 +3166,6 @@ Func __LOCalc_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPercen
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
 	EndIf
-
 EndFunc   ;==>__LOCalc_TransparencyGradientConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

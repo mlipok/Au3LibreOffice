@@ -262,7 +262,6 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
-
 EndFunc   ;==>_LOCalc_ConvertColorFromLong
 
 ; #FUNCTION# ====================================================================================================================
@@ -1306,7 +1305,6 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 			Next
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
 	EndSwitch
-
 EndFunc   ;==>_LOCalc_PathConvert
 
 ; #FUNCTION# ====================================================================================================================

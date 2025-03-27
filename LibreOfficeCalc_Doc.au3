@@ -367,7 +367,6 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 	EndIf
-
 EndFunc   ;==>_LOCalc_DocConnect
 
 ; #FUNCTION# ====================================================================================================================
@@ -1874,7 +1873,6 @@ Func _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf
-
 EndFunc   ;==>_LOCalc_DocUndoCurActionTitle
 
 ; #FUNCTION# ====================================================================================================================
