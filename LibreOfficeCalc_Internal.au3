@@ -3272,52 +3272,52 @@ Func __LOCalc_UnitConvert($nValue, $iReturnType)
 	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
-		Case $__LOCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
+		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			; 1 Inch = 2.54 CM
 			$iCM = Round(Round($iInch * 2.54, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
 
-		Case $__LOCONST_CONVERT_TWIPS_INCH ;TWIPS to Inch
+		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $__LOCONST_CONVERT_MM_UM ;Millimeter to Micrometer
+		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
 			$iUM = ($nValue * 100)
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
 
-		Case $__LOCONST_CONVERT_UM_MM ;Micrometer to Millimeter
+		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $__LOCONST_CONVERT_CM_UM ;Centimeter to Micrometer
+		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
 			$iUM = ($nValue * 1000)
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_CM ;Micrometer to Centimeter
+		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $__LOCONST_CONVERT_INCH_UM ;Inch to Micrometer
+		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iUM = ($nValue * 2.54) * 1000 ; + .0055
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_INCH ;Micrometer to Inch
+		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54 ; + .0055
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to Micrometer
+		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to Micrometer
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)

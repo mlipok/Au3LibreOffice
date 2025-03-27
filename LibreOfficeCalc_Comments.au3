@@ -566,7 +566,7 @@ Func _LOCalc_CommentAreaTransparency(ByRef $oComment, $iTransparency = Null)
 	If __LOCalc_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oAnnotationShape.FillTransparence())
 
 	If Not __LOCalc_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oAnnotationShape.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
+	$oAnnotationShape.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
 	$oAnnotationShape.FillTransparence = $iTransparency
 	$iError = ($oAnnotationShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 

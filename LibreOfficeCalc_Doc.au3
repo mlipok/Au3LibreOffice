@@ -401,7 +401,7 @@ Func _LOCalc_DocCreate($bForceNew = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $aArgs[1]
 	Local $iError = 0
 	Local $oServiceManager, $oDesktop, $oDoc, $oEnumDoc
@@ -834,7 +834,7 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $iError = 0
 	Local $oDoc, $oServiceManager, $oDesktop
 	Local $aoProperties[0]

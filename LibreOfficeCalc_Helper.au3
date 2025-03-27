@@ -309,7 +309,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Switch @NumParams
-		Case 1 ;Hex
+		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
@@ -329,7 +329,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
 			EndIf
 
-		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
+		Case 3 ; RGB and HSB; HSB is all strings, RGB all Integers.
 			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
 				$iRed = $vVal1
 				$iGreen = $vVal2
@@ -404,7 +404,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
 
-		Case 4 ;CMYK
+		Case 4 ; CMYK
 			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
 
 			; CMYK to RGB
