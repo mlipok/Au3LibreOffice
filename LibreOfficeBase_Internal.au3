@@ -72,6 +72,7 @@ Func __LOBase_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 	ReDim $aArray[UBound($aArray) + 1]
 	$aArray[UBound($aArray) - 1] = $vData
 	If $bCountInFirst Then $aArray[0] += 1
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOBase_AddTo1DArray
 
@@ -300,6 +301,7 @@ Func __LOBase_ColTypeName($iType)
 			$sType = "TIMESTAMP_WITH_TIMEZONE"
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	EndSwitch
 
@@ -602,9 +604,11 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 
 	Switch @NumParams
 		Case 2
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
 		Case 3
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
@@ -707,6 +711,7 @@ Func __LOBase_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $
 	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2) ? (True) : (False))
 
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False))
 EndFunc   ;==>__LOBase_VarsAreNull
 

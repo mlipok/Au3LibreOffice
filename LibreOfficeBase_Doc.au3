@@ -96,6 +96,7 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 			$oDoc.store()
 			$sDocPath = _LOBase_PathConvert($oDoc.getURL(), $LOB_PATHCONV_PCPATH_RETURN)
 			$oDoc.Close($bDeliverOwnership)
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
 
 		Else
@@ -117,11 +118,13 @@ Func _LOBase_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, _LOBase_PathConvert($sSavePath, $LOB_PATHCONV_PCPATH_RETURN))
 		EndIf
 	EndIf
 
 	$oDoc.Close($bDeliverOwnership)
+
 	Return SetError($__LO_STATUS_SUCCESS, 3, 1)
 EndFunc   ;==>_LOBase_DocClose
 
@@ -192,6 +195,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 
 	If $bConnectCurrent Then
 		$oDoc = $oDesktop.currentComponent()
+
 		Return ($oDoc.supportsService($sServiceName)) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_DOC_ERROR, 2, 0))
 	EndIf
 
@@ -209,6 +213,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 			EndIf
 			Sleep(10)
 		WEnd
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
 	EndIf
 
@@ -223,6 +228,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 
 			If ($oDoc.getURL() == $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 3, $oDoc) ; Match
 		WEnd
+
 		Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 
 	Else
@@ -231,6 +237,7 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 				$oDoc = $oEnumDoc.nextElement()
 				If StringInStr($oDoc.Title, $sFile) Then Return SetError($__LO_STATUS_SUCCESS, 4, $oDoc) ; Match
 			WEnd
+
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 
@@ -260,13 +267,16 @@ Func _LOBase_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 		WEnd
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then
+
 				Return SetError($__LO_STATUS_SUCCESS, 5, $aoPartNameSearch[0][0]) ; matches
 
 			Else
+
 				Return SetError($__LO_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
 			EndIf
 
 		Else
+
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
 	EndIf
@@ -337,6 +347,7 @@ Func _LOBase_DocCreate($bForceNew = True, $bHidden = False, $bWizard = False)
 					And Not ($oDoc.hasLocation() And $oDoc.isReadOnly()) And ($oDoc.WordCount() = 0) Then
 				$oDoc.CurrentController.Frame.ContainerWindow.Visible = ($bHidden) ? (False) : (True) ; opposite value of $bHidden.
 				$iError = ($oDoc.CurrentController.Frame.isHidden() = $bHidden) ? ($iError) : (BitOR($iError, 1))
+
 				Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, $oDoc)) : (SetError($__LO_STATUS_SUCCESS, 1, $oDoc))
 			EndIf
 		WEnd
@@ -399,6 +410,7 @@ Func _LOBase_DocDatabaseType(ByRef $oDoc, $sType = Default, $bOverwrite = False)
 	If Not IsString($sDataType) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If ($sType = Null) Then
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sDataType)
 
 	ElseIf ($sType = Default) Then
@@ -547,6 +559,7 @@ Func _LOBase_DocIsActive(ByRef $oDoc)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.CurrentController.Frame.isActive())
 EndFunc   ;==>_LOBase_DocIsActive
 
@@ -573,6 +586,7 @@ Func _LOBase_DocIsModified(ByRef $oDoc)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.isModified())
 EndFunc   ;==>_LOBase_DocIsModified
 
@@ -608,6 +622,7 @@ Func _LOBase_DocMaximize(ByRef $oDoc, $bMaximize = Null)
 	If Not IsBool($bMaximize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.IsMaximized = $bMaximize
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_DocMaximize
 
@@ -643,6 +658,7 @@ Func _LOBase_DocMinimize(ByRef $oDoc, $bMinimize = Null)
 	If Not IsBool($bMinimize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$oDoc.CurrentController.Frame.ContainerWindow.IsMinimized = $bMinimize
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_DocMinimize
 
@@ -772,6 +788,7 @@ Func _LOBase_DocSave(ByRef $oDoc)
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not $oDoc.hasLocation Or $oDoc.isReadOnly Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	$oDoc.store()
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOBase_DocSave
 

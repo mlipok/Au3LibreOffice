@@ -216,6 +216,7 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 
 	If $bConnectCurrent Then
 		$oDoc = $oDesktop.currentComponent()
+
 		Return (($oDoc.supportsService($sServiceName) And IsObj($oDoc.Parent()))) ? (SetError($__LO_STATUS_SUCCESS, 1, $oDoc)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0))
 
 	Else
@@ -233,6 +234,7 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 			EndIf
 			Sleep(10)
 		WEnd
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
 	EndIf
 EndFunc   ;==>_LOBase_FormConnect
@@ -1085,6 +1087,7 @@ Func _LOBase_FormIsModified(ByRef $oFormDoc)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oFormDoc.isModified())
 EndFunc   ;==>_LOBase_FormIsModified
 

@@ -428,6 +428,7 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 			$oResult.updateBytes($iColumn, $vValue)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndSwitch
 
@@ -691,11 +692,13 @@ Func _LOBase_SQLStatementCreate(ByRef $oConnection, $sSQL = Null)
 	If IsString($sSQL) Then
 		$oStatement = $oConnection.prepareStatement($sSQL)
 		If Not IsObj($oStatement) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oStatement)
 
 	Else
 		$oStatement = $oConnection.createStatement()
 		If Not IsObj($oStatement) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oStatement)
 	EndIf
 EndFunc   ;==>_LOBase_SQLStatementCreate
@@ -859,6 +862,7 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 
 	If __LOBase_VarsAreNull($iCommand, $iSetType, $vValue) Then
 		$oStatement.clearParameters()
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, 1)
 	EndIf
 

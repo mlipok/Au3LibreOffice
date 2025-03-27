@@ -593,6 +593,7 @@ Func _LOBase_TableColProperties(ByRef $oTable, ByRef $oColumn, $iLength = Null, 
 		__LOBase_ArrayFill($asSettings, $oColumn.Precision(), $oColumn.ControlDefault(), _
 				($oColumn.IsNullable() = $__LOB_IS_REQUIRED_YES) ? (True) : (False), _
 				$oColumn.Scale(), $oColumn.IsAutoIncrement())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asSettings)
 	EndIf
 
@@ -1176,6 +1177,7 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 
 	If __LOBase_VarsAreNull($avColumns, $bIsUnique) Then
 		__LOBase_ArrayFill($avSettings, $avCurrentColumns, $oIndex.IsUnique())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSettings)
 	EndIf
 

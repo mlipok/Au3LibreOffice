@@ -508,6 +508,7 @@ Func _LOBase_QueryFieldModify(ByRef $oField, $sAlias = Null, $bVisible = Null, $
 
 	If __LOBase_VarsAreNull($sAlias, $bVisible, $sRealName) Then
 		__LOBase_ArrayFill($avSettings, $oField.Name(), $oField.Hidden(), $oField.RealName())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSettings)
 	EndIf
 

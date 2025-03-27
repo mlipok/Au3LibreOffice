@@ -77,6 +77,7 @@ Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
 
 	ElseIf IsFunc($vUserFunction) Then
@@ -92,15 +93,18 @@ Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 		Else
 			$vUserFunction_Static = $vUserFunction
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 	ElseIf $vUserFunction = Null Then
 		; Clear User Function.
 		$vUserFunction_Static = Default
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 
 	Else
 		; return error as an incorrect parameter was passed to this function
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOBase_ComError_UserFunction
@@ -402,6 +406,7 @@ Func _LOBase_PathConvert($sFilePath, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][0], $asURLReplace[$i][1])
 				Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 
 		Case $LOB_PATHCONV_PCPATH_RETURN
@@ -412,6 +417,7 @@ Func _LOBase_PathConvert($sFilePath, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][1], $asURLReplace[$i][0])
 				Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
 	EndSwitch
 EndFunc   ;==>_LOBase_PathConvert
