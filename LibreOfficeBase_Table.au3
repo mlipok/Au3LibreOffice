@@ -132,7 +132,6 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 	EndWith
 
 	Switch $iColType
-
 		Case $LOB_DATA_TYPE_BOOLEAN
 			$oColumn.Precision = 1
 
@@ -159,7 +158,6 @@ Func _LOBase_TableAdd(ByRef $oConnection, $sName, $sColName, $iColType = $LOB_DA
 			$oColumn.Precision = 646456993
 
 			;~ 		Case $LOB_DATA_TYPE_DATE, $LOB_DATA_TYPE_TIME, $LOB_DATA_TYPE_TIMESTAMP; No value needed.
-
 	EndSwitch
 
 	$oColumns.appendByDescriptor($oColumn)
@@ -246,7 +244,6 @@ Func _LOBase_TableColAdd(ByRef $oTable, $sName, $iType, $sTypeName = "", $sDescr
 	$oColumn.HelpText = $sDescription
 
 	Switch $iType
-
 		Case $LOB_DATA_TYPE_BOOLEAN
 			$oColumn.Precision = 1
 
@@ -271,7 +268,6 @@ Func _LOBase_TableColAdd(ByRef $oTable, $sName, $iType, $sTypeName = "", $sDescr
 
 		Case $LOB_DATA_TYPE_NUMERIC, $LOB_DATA_TYPE_DECIMAL
 			$oColumn.Precision = 646456993
-
 	EndSwitch
 
 	$oColumns.appendByDescriptor($oColumn)
@@ -364,7 +360,6 @@ Func _LOBase_TableColDefinition(ByRef $oTable, ByRef $oColumn, $sName = Null, $i
 	EndIf
 
 	If Not __LOBase_VarsAreNull($iType, $sTypeName, $sDescription) Then
-
 		$oNewCol = $oTable.Columns.createDataDescriptor()
 		If Not IsObj($oNewCol) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -1193,7 +1188,6 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 			If Not IsBool($avColumns[$i][1]) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, $i)
 
 			If $oIndex.Columns.hasByName($avColumns[$i][0]) Then
-
 				$oColumn = $oIndex.Columns.getByName($avColumns[$i][0])
 				If Not IsObj($oColumn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1213,7 +1207,6 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 				$oColumnDesc.setName($avColumns[$i][0])
 				$oColumnDesc.IsAscending = $avColumns[$i][1]
 				$oIndex.Columns.appendByDescriptor($oColumnDesc)
-
 			EndIf
 
 			Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1223,13 +1216,11 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 		If Not IsArray($asIndexColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 		For $i = 0 To UBound($asIndexColumns) - 1
-
 			For $k = 0 To UBound($avColumns) - 1
 				If (StringStripWS($avColumns[$k][0], ($__STR_STRIPLEADING + $__STR_STRIPTRAILING)) = $asIndexColumns[$i]) Then
 					$bDelete = False
 					ExitLoop
 				EndIf
-
 			Next
 			If $bDelete Then $oIndex.Columns.dropByName($asIndexColumns[$i])
 			$bDelete = True
@@ -1242,7 +1233,6 @@ Func _LOBase_TableIndexModify(ByRef $oTable, $sName, $avColumns = Null, $bIsUniq
 		If Not IsBool($bIsUnique) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
 		If ($oIndex.IsUnique() <> $bIsUnique) Then
-
 			$oIndexDesc = $oTable.Indexes.createDataDescriptor()
 			If Not IsObj($oIndexDesc) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
@@ -1354,9 +1344,7 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 	If Not IsObj($oKeys) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	For $i = 0 To $oKeys.Count() - 1
-
 		If ($oKeys.getByIndex($i).Type() = $__LOB_KEY_TYPE_PRIMARY) Then
-
 			$oPrimary = $oKeys.getByIndex($i)
 			If Not IsObj($oPrimary) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 			ExitLoop
@@ -1365,7 +1353,6 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 	Next
 
 	If ($aoPrimary = Null) Then
-
 		If IsObj($oPrimary) Then
 			$oKeysColumns = $oPrimary.Columns()
 			If Not IsObj($oKeysColumns) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1374,7 +1361,6 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 
 			For $k = 0 To $oKeysColumns.Count() - 1
 				$aoPrimaryKeys[$k] = $oKeysColumns.getByIndex($k)
-
 			Next
 		EndIf
 
@@ -1384,17 +1370,14 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 	If Not IsArray($aoPrimary) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If IsObj($oPrimary) Then
-
 		For $i = 0 To $oPrimary.Columns.Count() - 1
 			$oPrimary.Columns.dropByIndex(0)
-
 		Next
 
 		For $k = 0 To UBound($aoPrimary) - 1
 			If Not $aoPrimary[$k].supportsService("com.sun.star.sdbcx.Column") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i) ; Not a Column Obj
 
 			$oPrimary.Columns().appendByDescriptor($aoPrimary[$k])
-
 		Next
 
 	Else
@@ -1406,7 +1389,6 @@ Func _LOBase_TablePrimaryKey(ByRef $oTable, $aoPrimary = Null)
 			If Not $aoPrimary[$i].supportsService("com.sun.star.sdbcx.Column") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, $i) ; Not a Column Obj
 
 			$oKeyDesc.Columns().appendByDescriptor($aoPrimary[$i])
-
 		Next
 
 		$oKeyDesc.Type = $__LOB_KEY_TYPE_PRIMARY

@@ -115,7 +115,6 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 	Else
 
 		For $i = 0 To UBound($asNames) - 1
-
 			$oObj = $oSource.getByName($asNames[$i])
 			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
 
@@ -123,11 +122,9 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 				ReDim $avFolders[1][2]
 				$avFolders[0][$iName] = $asNames[$i]
 				$avFolders[0][$iObj] = $oObj
-
 			EndIf
 
 			While ($iCount < UBound($avFolders))
-
 				If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
 						($avFolders[$iCount][$iObj].getByName($sTitle).PersistentName() = $sUniqueString) Then
 					$oForm = $avFolders[$iCount][$iObj].getByName($sTitle)
@@ -147,9 +144,7 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -158,7 +153,6 @@ Func _LOBase_FormClose(ByRef $oFormDoc, $bForceClose = False)
 			If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
 			$iCount = 0
 			$iFolders = 1
-
 		Next
 	EndIf
 
@@ -240,9 +234,7 @@ Func _LOBase_FormConnect($bConnectCurrent = True)
 			Sleep(10)
 		WEnd
 		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
-
 	EndIf
-
 EndFunc   ;==>_LOBase_FormConnect
 
 ; #FUNCTION# ====================================================================================================================
@@ -367,7 +359,6 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 	If Not $oSource.hasByName($sForm) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
 	If $bOpen Then
-
 		If Not $oDoc.CurrentController.isConnected() Then $oDoc.CurrentController.connect()
 
 		If $bDesign Then
@@ -375,7 +366,6 @@ Func _LOBase_FormCreate(ByRef $oDoc, ByRef $oConnection, $sForm, $bOpen = False,
 
 		Else
 			$oFormDoc = $oSource.getByName($sForm).open()
-
 		EndIf
 
 		If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -516,7 +506,6 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 	EndIf
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -524,12 +513,10 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 			ReDim $avFolders[1][2]
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -548,9 +535,7 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -560,7 +545,6 @@ Func _LOBase_FormExists(ByRef $oDoc, $sName, $bExhaustive = True)
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iForms, $bReturn)
@@ -754,7 +738,6 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 	EndIf
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -762,12 +745,10 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 			ReDim $avFolders[1][2]
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -786,9 +767,7 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -798,7 +777,6 @@ Func _LOBase_FormFolderExists(ByRef $oDoc, $sName, $bExhaustive = True)
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, $iResults, $bReturn)
@@ -930,7 +908,6 @@ Func _LOBase_FormFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -939,12 +916,10 @@ Func _LOBase_FormFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 			ReDim $avFolders[1][2]
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -959,9 +934,7 @@ Func _LOBase_FormFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -971,7 +944,6 @@ Func _LOBase_FormFoldersGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iResults)
@@ -1043,7 +1015,6 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -1055,12 +1026,10 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
 			$avFolders[0][$iPrefix] = $asNames[$i] & "/"
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1078,9 +1047,7 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 						$avFolders[$iFolders][$iPrefix] = $avFolders[$iCount][$iPrefix] & $asFolderList[$k] & "/"
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -1090,7 +1057,6 @@ Func _LOBase_FormFoldersGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = ""
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asFolders), $asFolders)
@@ -1201,7 +1167,6 @@ Func _LOBase_FormOpen(ByRef $oDoc, ByRef $oConnection, $sName, $bDesign = True, 
 
 	Else
 		$oFormDoc = $oObj.open()
-
 	EndIf
 
 	If Not IsObj($oFormDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
@@ -1344,7 +1309,6 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 	Else
 
 		For $i = 0 To UBound($asNames) - 1
-
 			$oObj = $oSource.getByName($asNames[$i])
 			If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1352,11 +1316,9 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 				ReDim $avFolders[1][2]
 				$avFolders[0][$iName] = $asNames[$i]
 				$avFolders[0][$iObj] = $oObj
-
 			EndIf
 
 			While ($iCount < UBound($avFolders))
-
 				If $avFolders[$iCount][$iObj].hasByName($sTitle) And $avFolders[$iCount][$iObj].getByName($sTitle).supportsService("com.sun.star.ucb.Content") And _
 						($avFolders[$iCount][$iObj].getByName($sTitle).PersistentName() = $sUniqueString) Then
 					$oForm = $avFolders[$iCount][$iObj].getByName($sTitle)
@@ -1376,9 +1338,7 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -1387,7 +1347,6 @@ Func _LOBase_FormSave(ByRef $oFormDoc)
 			If (UBound($avFolders) > 0) Then ReDim $avFolders[0][2]
 			$iCount = 0
 			$iFolders = 1
-
 		Next
 	EndIf
 
@@ -1460,7 +1419,6 @@ Func _LOBase_FormsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -1471,12 +1429,10 @@ Func _LOBase_FormsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 			ReDim $avFolders[1][2]
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1493,9 +1449,7 @@ Func _LOBase_FormsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 						$avFolders[$iFolders][$iObj] = $oObj
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -1505,7 +1459,6 @@ Func _LOBase_FormsGetCount(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iForms)
@@ -1577,7 +1530,6 @@ Func _LOBase_FormsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 	If Not IsArray($asNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
 	For $i = 0 To UBound($asNames) - 1
-
 		$oObj = $oSource.getByName($asNames[$i])
 		If Not IsObj($oObj) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -1591,12 +1543,10 @@ Func _LOBase_FormsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 			$avFolders[0][$iName] = $asNames[$i]
 			$avFolders[0][$iObj] = $oObj
 			$avFolders[0][$iPrefix] = $asNames[$i] & "/"
-
 		EndIf
 
 		If $bExhaustive Then
 			While ($iCount < UBound($avFolders))
-
 				$asFolderList = $avFolders[$iCount][$iObj].getElementNames()
 				If Not IsArray($asFolderList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1616,9 +1566,7 @@ Func _LOBase_FormsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 						$avFolders[$iFolders][$iPrefix] = $avFolders[$iCount][$iPrefix] & $asFolderList[$k] & "/"
 
 						$iFolders += 1
-
 					EndIf
-
 				Next
 
 				$iCount += 1
@@ -1628,7 +1576,6 @@ Func _LOBase_FormsGetNames(ByRef $oDoc, $bExhaustive = True, $sFolder = "")
 			$iCount = 0
 			$iFolders = 1
 		EndIf
-
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asForms), $asForms)

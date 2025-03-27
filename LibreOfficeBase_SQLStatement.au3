@@ -102,7 +102,6 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iQuery
-
 		Case $LOB_RESULT_METADATA_QUERY_GET_CATALOG_NAME, $LOB_RESULT_METADATA_QUERY_GET_SCHEMA_NAME, $LOB_RESULT_METADATA_QUERY_GET_TABLE_NAME, $LOB_RESULT_METADATA_QUERY_GET_LABEL, _
 				$LOB_RESULT_METADATA_QUERY_GET_NAME, $LOB_RESULT_METADATA_QUERY_GET_TYPE_NAME
 			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
@@ -117,7 +116,6 @@ Func _LOBase_SQLResultColumnMetaDataQuery(ByRef $oResult, $iColumn, $iQuery)
 				$LOB_RESULT_METADATA_QUERY_IS_SEARCHABLE, $LOB_RESULT_METADATA_QUERY_IS_SIGNED, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE, $LOB_RESULT_METADATA_QUERY_IS_WRITABLE_DEFINITE
 			$vReturn = Execute("$oResult.MetaData" & $asCommands[$iQuery] & "(" & $iColumn & ")")
 			If @error Or Not IsBool($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
@@ -241,7 +239,6 @@ Func _LOBase_SQLResultCursorMove(ByRef $oResult, $iMove, $iNumber = Null)
 	If Not __LOBase_IntIsBetween($iMove, $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST, $LOB_RESULT_CURSOR_MOVE_RELATIVE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch $iMove
-
 		Case $LOB_RESULT_CURSOR_MOVE_BEFORE_FIRST, $LOB_RESULT_CURSOR_MOVE_AFTER_LAST
 			Execute("$oResult." & $asMoves[$iMove] & "()")
 
@@ -251,7 +248,6 @@ Func _LOBase_SQLResultCursorMove(ByRef $oResult, $iMove, $iNumber = Null)
 		Case $LOB_RESULT_CURSOR_MOVE_ABSOLUTE, $LOB_RESULT_CURSOR_MOVE_RELATIVE
 			If Not IsInt($iNumber) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$bReturn = Execute("$oResult." & $asMoves[$iMove] & "(" & $iNumber & ")")
-
 	EndSwitch
 
 	If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -301,7 +297,6 @@ Func _LOBase_SQLResultCursorQuery(ByRef $oResult, $iQuery)
 	If Not __LOBase_IntIsBetween($iQuery, $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST, $LOB_RESULT_CURSOR_QUERY_GET_ROW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch $iQuery
-
 		Case $LOB_RESULT_CURSOR_QUERY_IS_BEFORE_FIRST, $LOB_RESULT_CURSOR_QUERY_IS_FIRST, $LOB_RESULT_CURSOR_QUERY_IS_LAST, $LOB_RESULT_CURSOR_QUERY_IS_AFTER_LAST
 			$bReturn = Execute("$oResult." & $asQuery[$iQuery] & "()")
 			If Not IsBool($bReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -313,9 +308,7 @@ Func _LOBase_SQLResultCursorQuery(ByRef $oResult, $iQuery)
 			If Not IsInt($iReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
-
 	EndSwitch
-
 EndFunc   ;==>_LOBase_SQLResultCursorQuery
 
 ; #FUNCTION# ====================================================================================================================
@@ -365,7 +358,6 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 	If Not __LOBase_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iModify
-
 		Case $LOB_RESULT_ROW_MOD_NULL
 			$oResult.updateNull($iColumn)
 
@@ -437,7 +429,6 @@ Func _LOBase_SQLResultRowModify(ByRef $oResult, $iModify, $iColumn, $vValue)
 
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -543,7 +534,6 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 	If Not __LOBase_IntIsBetween($iColumn, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iRead
-
 		Case $LOB_RESULT_ROW_READ_WAS_NULL
 			$vReturn = Execute("$oResult." & $asRead[$iRead] & "()")
 
@@ -578,7 +568,6 @@ Func _LOBase_SQLResultRowRead(ByRef $oResult, $iRead, $iColumn)
 
 		Case Else
 			$vReturn = Execute("$oResult." & $asRead[$iRead] & "(" & $iColumn & ")")
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)
@@ -708,7 +697,6 @@ Func _LOBase_SQLStatementCreate(ByRef $oConnection, $sSQL = Null)
 		$oStatement = $oConnection.createStatement()
 		If Not IsObj($oStatement) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oStatement)
-
 	EndIf
 EndFunc   ;==>_LOBase_SQLStatementCreate
 
@@ -754,7 +742,6 @@ Func _LOBase_SQLStatementExecuteQuery(ByRef $oStatement, $sSQL = Null, $bWritabl
 
 	If $oStatement.supportsService("com.sun.star.sdbc.Statement") Then
 		If $bWritable Then
-
 			$oServiceManager = ObjCreate("com.sun.star.ServiceManager")
 			If Not IsObj($oServiceManager) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -769,12 +756,10 @@ Func _LOBase_SQLStatementExecuteQuery(ByRef $oStatement, $sSQL = Null, $bWritabl
 
 		Else
 			$oResult = $oStatement.ExecuteQuery($sSQL)
-
 		EndIf
 
 	Else
 		$oResult = $oStatement.ExecuteQuery()
-
 	EndIf
 
 	If Not IsObj($oResult) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -820,7 +805,6 @@ Func _LOBase_SQLStatementExecuteUpdate(ByRef $oStatement, $sSQL = Null)
 
 	Else
 		$iResult = $oStatement.ExecuteUpdate()
-
 	EndIf
 
 	If Not IsInt($iResult) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -882,7 +866,6 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 	If Not __LOBase_IntIsBetween($iSetType, $LOB_DATA_SET_TYPE_NULL, $LOB_DATA_SET_TYPE_OBJECT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch $iSetType
-
 		Case $LOB_DATA_SET_TYPE_NULL
 			$oStatement.setNull($iCommand, $LOB_DATA_TYPE_SQLNULL)
 
@@ -962,7 +945,6 @@ Func _LOBase_SQLStatementPreparedSetData(ByRef $oStatement, $iCommand = Null, $i
 
 		Case $LOB_DATA_SET_TYPE_OBJECT
 			$oStatement.setObject($iCommand, $vValue)
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)

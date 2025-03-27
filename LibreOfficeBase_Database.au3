@@ -201,7 +201,6 @@ Func _LOBase_DatabaseConnectionGet(ByRef $oDBase, $sUser = "", $sPass = "", $bPr
 
 	Else
 		$oDBConnection = $oDBase.getConnection($sUser, $sPass)
-
 	EndIf
 
 	If Not IsObj($oDBConnection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -634,7 +633,6 @@ Func _LOBase_DatabaseMetaDataQuery(ByRef $oConnection, $iQuery, $vParam1 = Null,
 
 			$vReturn = Execute("$oConnection.MetaData" & $sCall & "(" & $vParam1 & ", " & $vParam2 & ", " & $vParam3 & ", " & $vParam4 & ", " & $vParam5 & ", " & $vParam6 & ")")
 			If Not IsObj($vReturn) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $vReturn)

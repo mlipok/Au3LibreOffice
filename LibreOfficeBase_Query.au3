@@ -182,7 +182,6 @@ Func _LOBase_QueryAddByName(ByRef $oConnection, $sQueryName, $sSourceName, $sFie
 	ElseIf $oConnection.Tables.hasByName($sSourceName) Then
 		$oSource = $oConnection.Tables.getByName($sSourceName)
 		If Not IsObj($oSource) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	EndIf
 
 	$sQuote = $oConnection.MetaData.getIdentifierQuoteString()
@@ -200,7 +199,6 @@ Func _LOBase_QueryAddByName(ByRef $oConnection, $sQueryName, $sSourceName, $sFie
 
 	Else
 		$oQueryDesc.Command = "SELECT " & $sFieldName & " FROM " & $sQuote & $sSourceName & $sQuote
-
 	EndIf
 
 	$oQueries.appendByDescriptor($oQueryDesc)

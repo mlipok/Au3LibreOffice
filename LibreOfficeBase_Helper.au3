@@ -78,6 +78,7 @@ Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
 		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
+
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
@@ -87,14 +88,17 @@ Func _LOBase_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 				; set static variable
 			Next
 			$vUserFunction_Static = $avUserFuncWParams
+
 		Else
 			$vUserFunction_Static = $vUserFunction
 		EndIf
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+
 	ElseIf $vUserFunction = Null Then
 		; Clear User Function.
 		$vUserFunction_Static = Default
 		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+
 	Else
 		; return error as an incorrect parameter was passed to this function
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -151,6 +155,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 		If Not IsInt($iYear) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		If Not (StringLen($iYear) = 4) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$tDateStruct.Year = $iYear
+
 	Else
 		$tDateStruct.Year = @YEAR
 	EndIf
@@ -158,6 +163,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iMonth <> Null) Then
 		If Not __LOBase_IntIsBetween($iMonth, 0, 12) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$tDateStruct.Month = $iMonth
+
 	Else
 		$tDateStruct.Month = @MON
 	EndIf
@@ -165,6 +171,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iDay <> Null) Then
 		If Not __LOBase_IntIsBetween($iDay, 0, 31) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$tDateStruct.Day = $iDay
+
 	Else
 		$tDateStruct.Day = @MDAY
 	EndIf
@@ -172,6 +179,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iHours <> Null) Then
 		If Not __LOBase_IntIsBetween($iHours, 0, 23) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$tDateStruct.Hours = $iHours
+
 	Else
 		$tDateStruct.Hours = @HOUR
 	EndIf
@@ -179,6 +187,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iMinutes <> Null) Then
 		If Not __LOBase_IntIsBetween($iMinutes, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$tDateStruct.Minutes = $iMinutes
+
 	Else
 		$tDateStruct.Minutes = @MIN
 	EndIf
@@ -186,6 +195,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iSeconds, 0, 59) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$tDateStruct.Seconds = $iSeconds
+
 	Else
 		$tDateStruct.Seconds = @SEC
 	EndIf
@@ -193,6 +203,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 	If ($iNanoSeconds <> Null) Then
 		If Not __LOBase_IntIsBetween($iNanoSeconds, 0, 999999999) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$tDateStruct.NanoSeconds = $iNanoSeconds
+
 	Else
 		$tDateStruct.NanoSeconds = 0
 	EndIf
@@ -201,6 +212,7 @@ Func _LOBase_DateStructCreate($iYear = Null, $iMonth = Null, $iDay = Null, $iHou
 		If Not IsBool($bIsUTC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOBase_VersionCheck(4.1) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 		$tDateStruct.IsUTC = $bIsUTC
+
 	Else
 		If __LOBase_VersionCheck(4.1) Then $tDateStruct.IsUTC = False
 	EndIf
@@ -270,6 +282,7 @@ Func _LOBase_DateStructModify(ByRef $tDateStruct, $iYear = Null, $iMonth = Null,
 		If __LOBase_VersionCheck(4.1) Then
 			__LOBase_ArrayFill($avMod, $tDateStruct.Year(), $tDateStruct.Month(), $tDateStruct.Day(), $tDateStruct.Hours(), _
 					$tDateStruct.Minutes(), $tDateStruct.Seconds(), $tDateStruct.NanoSeconds(), $tDateStruct.IsUTC())
+
 		Else
 			__LOBase_ArrayFill($avMod, $tDateStruct.Year(), $tDateStruct.Month(), $tDateStruct.Day(), $tDateStruct.Hours(), _
 					$tDateStruct.Minutes(), $tDateStruct.Seconds(), $tDateStruct.NanoSeconds())
@@ -369,18 +382,18 @@ Func _LOBase_PathConvert($sFilePath, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN)
 	$iPartialFilePath = StringInStr($sFilePath, "/") ; Search For a Partial Libre path containing forward slash
 
 	If ($iReturnMode = $LOB_PATHCONV_AUTO_RETURN) Then
-
 		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ;  if file path contains partial or full PC path, set to convert to Libre URL.
 			$iReturnMode = $LOB_PATHCONV_OFFICE_RETURN
+
 		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ;  if file path contains partial or full Libre URL, set to convert to PC Path.
 			$iReturnMode = $LOB_PATHCONV_PCPATH_RETURN
+
 		Else ; If file path contains neither above. convert to Libre URL
 			$iReturnMode = $LOB_PATHCONV_OFFICE_RETURN
 		EndIf
 	EndIf
 
 	Switch $iReturnMode
-
 		Case $LOB_PATHCONV_OFFICE_RETURN
 			If $iFileSearch > 0 Then Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 			If ($iPathSearch > 0) Then $sFilePath = "file:///" & $sFilePath
@@ -400,9 +413,7 @@ Func _LOBase_PathConvert($sFilePath, $iReturnMode = $LOB_PATHCONV_AUTO_RETURN)
 				Sleep((IsInt($i / $__LOBCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
-
 	EndSwitch
-
 EndFunc   ;==>_LOBase_PathConvert
 
 ; #FUNCTION# ====================================================================================================================

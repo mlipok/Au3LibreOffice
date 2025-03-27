@@ -182,7 +182,6 @@ Func __LOBase_ColTypeName($iType)
 	If Not __LOBase_IntIsBetween($iType, $LOB_DATA_TYPE_LONGNVARCHAR, $LOB_DATA_TYPE_TIMESTAMP_WITH_TIMEZONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	Switch $iType
-
 		Case $LOB_DATA_TYPE_LONGNVARCHAR
 			$sType = "LONGNVARCHAR"
 
@@ -302,7 +301,6 @@ Func __LOBase_ColTypeName($iType)
 
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	EndSwitch
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sType)
@@ -543,6 +541,7 @@ Func __LOBase_InternalComErrorHandler(ByRef $oComError)
 		For $i = 1 To UBound($avUserFunction) - 1
 			$avUserParams[$i + 1] = $avUserFunction[$i]
 		Next
+
 	Else
 		$vUserFunction = $avUserFunction
 	EndIf
@@ -559,6 +558,7 @@ Func __LOBase_InternalComErrorHandler(ByRef $oComError)
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline & @CRLF & _
 						"!--COM-Error-End--" & @CRLF)
+
 			Case MsgBox
 				MsgBox(0, "COM Error", "Number: 0x" & Hex($oComError.number, 8) & @CRLF & _
 						"WinDescription: " & $oComError.windescription & @CRLF & _
@@ -568,6 +568,7 @@ Func __LOBase_InternalComErrorHandler(ByRef $oComError)
 						"HelpContext: " & $oComError.helpcontext & @CRLF & _
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline)
+
 			Case Else
 				Call($vUserFunction, $avUserParams)
 		EndSwitch
@@ -600,7 +601,6 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
-
 		Case 2
 			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
@@ -614,7 +614,6 @@ Func __LOBase_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 
 			ElseIf IsInt($vNot) Then
 				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-
 			EndIf
 
 			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
