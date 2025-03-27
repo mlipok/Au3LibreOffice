@@ -95,6 +95,7 @@ Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
 		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
+
 	ElseIf IsFunc($vUserFunction) Then
 		; If User called Parameters, then add to array.
 		If @NumParams > 1 Then
@@ -104,14 +105,17 @@ Func _LOCalc_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, $v
 				; set static variable
 			Next
 			$vUserFunction_Static = $avUserFuncWParams
+
 		Else
 			$vUserFunction_Static = $vUserFunction
 		EndIf
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+
 	ElseIf $vUserFunction = Null Then
 		; Clear User Function.
 		$vUserFunction_Static = Default
 		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
+
 	Else
 		; return error as an incorrect parameter was passed to this function
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
@@ -190,16 +194,22 @@ Func _LOCalc_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $iCM
 			Select
 				Case $nRed = $nGreen = $nBlue ; Red, Green, and Blue are equal.
 					$nHue = 0
+
 				Case ($nRed >= $nGreen) And ($nGreen >= $nBlue) ; Red Highest, Blue Lowest
 					$nHue = (60 * (($nGreen - $nBlue) / ($nRed - $nBlue)))
+
 				Case ($nRed >= $nBlue) And ($nBlue >= $nGreen) ; Red Highest, Green Lowest
 					$nHue = (60 * (6 - (($nBlue - $nGreen) / ($nRed - $nGreen))))
+
 				Case ($nGreen >= $nRed) And ($nRed >= $nBlue) ; Green Highest, Blue Lowest
 					$nHue = (60 * (2 - (($nRed - $nBlue) / ($nGreen - $nBlue))))
+
 				Case ($nGreen >= $nBlue) And ($nBlue >= $nRed) ; Green Highest, Red Lowest
 					$nHue = (60 * (2 + (($nBlue - $nRed) / ($nGreen - $nRed))))
+
 				Case ($nBlue >= $nGreen) And ($nGreen >= $nRed) ; Blue Highest, Red Lowest
 					$nHue = (60 * (4 - (($nGreen - $nRed) / ($nBlue - $nRed))))
+
 				Case ($nBlue >= $nRed) And ($nRed >= $nGreen) ; Blue Highest, Green Lowest
 					$nHue = (60 * (4 + (($nRed - $nGreen) / ($nBlue - $nGreen))))
 			EndSelect
@@ -355,24 +365,29 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 						If $nHuePre < 0 Then
 							$iGreen = $nMinRGB
 							$iBlue = ($iGreen - $nHuePre * $nChroma)
+
 						Else
 							$iBlue = $nMinRGB
 							$iGreen = ($iBlue + $nHuePre * $nChroma)
 						EndIf
+
 					Case 1.1 To 3.0
 						$iGreen = $nMaxRGB
 						If (($nHuePre - 2) < 0) Then
 							$iBlue = $nMinRGB
 							$iRed = ($iBlue - ($nHuePre - 2) * $nChroma)
+
 						Else
 							$iRed = $nMinRGB
 							$iBlue = ($iRed + ($nHuePre - 2) * $nChroma)
 						EndIf
+
 					Case 3.1 To 5
 						$iBlue = $nMaxRGB
 						If (($nHuePre - 4) < 0) Then
 							$iRed = $nMinRGB
 							$iGreen = ($iRed - ($nHuePre - 4) * $nChroma)
+
 						Else
 							$iGreen = $nMinRGB
 							$iRed = ($iGreen + ($nHuePre - 4) * $nChroma)
@@ -385,9 +400,11 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
 				Return SetError($__LO_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
+
 			Else
 				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
+
 		Case 4 ;CMYK
 			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
 
@@ -403,6 +420,7 @@ Func _LOCalc_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $vV
 
 			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
 			Return SetError($__LO_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
+
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
 	EndSwitch
@@ -624,7 +642,6 @@ Func _LOCalc_FilterDescriptorCreate(ByRef $oRange, $atFilterField, $bCaseSensiti
 		$tCellAddr.Sheet = $tCellInputAddr.Sheet()
 		$tCellAddr.Column = $tCellInputAddr.StartColumn()
 		$tCellAddr.Row = $tCellInputAddr.StartRow()
-
 	EndIf
 
 	; Orientation is only set to Rows. I tried setting it to columns, but it doesn't work. Seemingly Filtering Columns isn't implemented yet, which is confirmed by a
@@ -1205,6 +1222,7 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 				If ($bIsUser = True) Then $avFormats[$iCount][2] = $oFormats.getbykey($aiFormatKeys[$i]).UserDefined()
 				$iCount += 1
 			EndIf
+
 		Else
 			$avFormats[$i][0] = $aiFormatKeys[$i]
 			$avFormats[$i][1] = $oFormats.getbykey($aiFormatKeys[$i]).FormatString()
@@ -1256,18 +1274,18 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 	$iPartialFilePath = StringInStr($sFilePath, "/") ; Search For a Partial Libre path containing forward slash
 
 	If ($iReturnMode = $LOC_PATHCONV_AUTO_RETURN) Then
-
 		If ($iPathSearch > 0) Or ($iPartialPCPath > 0) Then ;  if file path contains partial or full PC path, set to convert to Libre URL.
 			$iReturnMode = $LOC_PATHCONV_OFFICE_RETURN
+
 		ElseIf ($iFileSearch > 0) Or ($iPartialFilePath > 0) Then ;  if file path contains partial or full Libre URL, set to convert to PC Path.
 			$iReturnMode = $LOC_PATHCONV_PCPATH_RETURN
+
 		Else ; If file path contains neither above. convert to Libre URL
 			$iReturnMode = $LOC_PATHCONV_OFFICE_RETURN
 		EndIf
 	EndIf
 
 	Switch $iReturnMode
-
 		Case $LOC_PATHCONV_OFFICE_RETURN
 			If $iFileSearch > 0 Then Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 			If ($iPathSearch > 0) Then $sFilePath = "file:///" & $sFilePath
@@ -1287,7 +1305,6 @@ Func _LOCalc_PathConvert($sFilePath, $iReturnMode = $LOC_PATHCONV_AUTO_RETURN)
 				Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
-
 	EndSwitch
 
 EndFunc   ;==>_LOCalc_PathConvert

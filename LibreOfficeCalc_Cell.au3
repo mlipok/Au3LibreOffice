@@ -409,6 +409,7 @@ Func _LOCalc_CellCreateTextCursor(ByRef $oCell, $bAtEnd = False)
 
 	If $bAtEnd Then
 		$oTextCursor.gotoEnd(False)
+
 	Else
 		$oTextCursor.gotoStart(False)
 	EndIf

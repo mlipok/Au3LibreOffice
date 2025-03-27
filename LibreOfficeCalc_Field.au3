@@ -607,6 +607,7 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 
 	If $bFieldTypeNum Then
 		ReDim $avTextFields[$iCount][2]
+
 	Else
 		ReDim $avTextFields[$iCount]
 	EndIf

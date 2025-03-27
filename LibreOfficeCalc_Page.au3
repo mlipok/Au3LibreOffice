@@ -578,6 +578,7 @@ Func _LOCalc_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftRig
 		If __LOCalc_VersionCheck(4.0) Then
 			__LOCalc_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FirstPageFooterIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterHeight(), $oPageStyle.FooterIsDynamicHeight())
+
 		Else
 			__LOCalc_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterHeight(), $oPageStyle.FooterIsDynamicHeight())
@@ -1017,13 +1018,13 @@ Func _LOCalc_PageStyleFooterCreateTextCursor(ByRef $oFooter, $bAtEnd = False, $b
 
 	ElseIf $bRightArea Then
 		$oTextCursor = $oFooter.RightText.createTextCursor()
-
 	EndIf
 
 	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $bAtEnd Then
 		$oTextCursor.gotoEnd(False)
+
 	Else
 		$oTextCursor.gotoStart(False)
 	EndIf
@@ -1087,7 +1088,6 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oPageStyle.FirstPageFooterContent = $oFirstPage
-
 	EndIf
 
 	If ($oRightPage = Default) Then
@@ -1099,7 +1099,6 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oRightPage) Then
 		If Not ($oRightPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oPageStyle.RightPageFooterContent = $oRightPage
-
 	EndIf
 
 	If ($oLeftPage = Default) Then
@@ -1111,7 +1110,6 @@ Func _LOCalc_PageStyleFooterObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oLeftPage) Then
 		If Not ($oLeftPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oPageStyle.LeftPageFooterContent = $oLeftPage
-
 	EndIf
 
 	Return IsObj($oFooter) ? (SetError($__LO_STATUS_SUCCESS, 0, $oFooter)) : SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -1311,6 +1309,7 @@ Func _LOCalc_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftRig
 		If __LOCalc_VersionCheck(4.0) Then
 			__LOCalc_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.FirstPageHeaderIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderHeight(), $oPageStyle.HeaderIsDynamicHeight())
+
 		Else
 			__LOCalc_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderHeight(), $oPageStyle.HeaderIsDynamicHeight())
@@ -1749,13 +1748,13 @@ Func _LOCalc_PageStyleHeaderCreateTextCursor(ByRef $oHeader, $bAtEnd = False, $b
 
 	ElseIf $bRightArea Then
 		$oTextCursor = $oHeader.RightText.createTextCursor()
-
 	EndIf
 
 	If Not IsObj($oTextCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 	If $bAtEnd Then
 		$oTextCursor.gotoEnd(False)
+
 	Else
 		$oTextCursor.gotoStart(False)
 	EndIf
@@ -1819,7 +1818,6 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oFirstPage) Then
 		If Not ($oFirstPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oPageStyle.FirstPageHeaderContent = $oFirstPage
-
 	EndIf
 
 	If ($oRightPage = Default) Then
@@ -1831,7 +1829,6 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oRightPage) Then
 		If Not ($oRightPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oPageStyle.RightPageHeaderContent = $oRightPage
-
 	EndIf
 
 	If ($oLeftPage = Default) Then
@@ -1843,7 +1840,6 @@ Func _LOCalc_PageStyleHeaderObj(ByRef $oPageStyle, $oFirstPage = Null, $oRightPa
 	ElseIf IsObj($oLeftPage) Then
 		If Not ($oLeftPage.supportsService("com.sun.star.sheet.HeaderFooterContent")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oPageStyle.LeftPageHeaderContent = $oLeftPage
-
 	EndIf
 
 	Return IsObj($oHeader) ? (SetError($__LO_STATUS_SUCCESS, 0, $oHeader)) : SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -2157,6 +2153,7 @@ Func _LOCalc_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyleNa
 	If __LOCalc_VarsAreNull($sNewPageStyleName, $bHidden) Then
 		If __LOCalc_VersionCheck(4.0) Then
 			__LOCalc_ArrayFill($avOrganizer, $oPageStyle.Name(), $oPageStyle.Hidden())
+
 		Else
 			__LOCalc_ArrayFill($avOrganizer, $oPageStyle.Name())
 		EndIf
@@ -2244,6 +2241,7 @@ Func _LOCalc_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight = 
 
 		If ($oPageStyle.IsLandscape() = $bLandscape) Then
 			; If $bLandscape called setting is the same as the current setting, do nothing.
+
 		Else
 			; Retrieve current settings.
 			$iHeight = $oPageStyle.Height()
@@ -2698,7 +2696,6 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 	If Not $oPageStyle.supportsService("com.sun.star.style.PageStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	If __LOCalc_VarsAreNull($iMode, $iVariable1, $iVariable2) Then
-
 		If ($oPageStyle.ScaleToPagesX() > 0) Or ($oPageStyle.ScaleToPagesY() > 0) Then ; Determine which Scale mode is active
 			__LOCalc_ArrayFill($abSheetScale, $LOC_SCALE_FIT_WIDTH_HEIGHT, $oPageStyle.ScaleToPagesX(), $oPageStyle.ScaleToPagesY)
 
@@ -2710,7 +2707,6 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 
 		Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to determine Scale Mode
-
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abSheetScale)
@@ -2720,7 +2716,6 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 		If Not __LOCalc_IntIsBetween($iMode, $LOC_SCALE_REDUCE_ENLARGE, $LOC_SCALE_FIT_PAGES) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 		Switch $iMode
-
 			Case $LOC_SCALE_REDUCE_ENLARGE
 				If ($oPageStyle.PageScale() = 0) Then ; Only change settings if the mode isn't already set to this mode.
 					$oPageStyle.ScaleToPages = 0 ; There is no Mode setting, Either one setting or another is set to higher than 0, so set all others to 0.
@@ -2736,7 +2731,6 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 					$oPageStyle.ScaleToPages = 0
 					$oPageStyle.ScaleToPagesX = 1
 					$oPageStyle.ScaleToPagesY = 1
-
 				EndIf
 				$iError = (($oPageStyle.ScaleToPagesX() = 1) And ($oPageStyle.ScaleToPagesY = 1)) ? ($iError) : (BitOR($iError, 1))
 
@@ -2748,13 +2742,10 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 					$oPageStyle.ScaleToPages = 1
 				EndIf
 				$iError = ($oPageStyle.ScaleToPages = 1) ? ($iError) : (BitOR($iError, 1))
-
 		EndSwitch
-
 	EndIf
 
 	If ($iVariable1 <> Null) Or ($iVariable2 <> Null) Then
-
 		If ($oPageStyle.ScaleToPagesX() > 0) Or ($oPageStyle.ScaleToPagesY() > 0) Then ; Determine which Scale mode is active
 			If ($iVariable1 <> Null) Then
 				If Not __LOCalc_IntIsBetween($iVariable1, 1, 1000) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
@@ -2777,9 +2768,7 @@ Func _LOCalc_PageStyleSheetScale(ByRef $oPageStyle, $iMode = Null, $iVariable1 =
 			If Not __LOCalc_IntIsBetween($iVariable1, 10, 400) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$oPageStyle.PageScale = $iVariable1
 			$iError = ($oPageStyle.PageScale = $iVariable1) ? ($iError) : (BitOR($iError, 2))
-
 		EndIf
-
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))

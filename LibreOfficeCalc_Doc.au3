@@ -130,22 +130,20 @@ Func _LOCalc_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDeli
 
 		$aArgs[0] = __LOCalc_SetPropertyValue("FilterName", $sFilterName)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	EndIf
 
 	If ($bSaveChanges = True) Then
-
 		If $oDoc.hasLocation() Then
 			$oDoc.store()
 			$sDocPath = _LOCalc_PathConvert($oDoc.getURL(), $LOC_PATHCONV_PCPATH_RETURN)
 			$oDoc.Close($bDeliverOwnership)
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
+
 		Else
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
 			Return SetError($__LO_STATUS_SUCCESS, 1, _LOCalc_PathConvert($sSavePath, $LOC_PATHCONV_PCPATH_RETURN))
 		EndIf
-
 	EndIf
 
 	If $oDoc.hasLocation() Then $sDocPath = _LOCalc_PathConvert($oDoc.getURL(), $LOC_PATHCONV_PCPATH_RETURN)
@@ -294,13 +292,11 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 	EndIf
 
 	If $bConnectAll Then
-
 		ReDim $aoConnectAll[1][3]
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
 			$oDoc = $oEnumDoc.nextElement()
 			If $oDoc.supportsService($sServiceName) Then
-
 				ReDim $aoConnectAll[$iCount + 1][3]
 				$aoConnectAll[$iCount][0] = $oDoc
 				$aoConnectAll[$iCount][1] = $oDoc.Title()
@@ -310,7 +306,6 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 			Sleep(10)
 		WEnd
 		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
-
 	EndIf
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
@@ -348,6 +343,7 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 					$aoPartNameSearch[$iCount][2] = _LOCalc_PathConvert($oDoc.getURL, $LOC_PATHCONV_PCPATH_RETURN)
 					$iCount += 1
 				EndIf
+
 			Else
 				If StringInStr($oDoc.Title, $sFile) Then
 					ReDim $aoPartNameSearch[$iCount + 1][3]
@@ -362,6 +358,7 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then
 				Return SetError($__LO_STATUS_SUCCESS, 5, $aoPartNameSearch[0][0]) ; matches
+
 			Else
 				Return SetError($__LO_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
 			EndIf
@@ -369,7 +366,6 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 		Else
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
-
 	EndIf
 
 EndFunc   ;==>_LOCalc_DocConnect
@@ -500,6 +496,7 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 			If StringInStr($sFilePath, "\") Then $sFilePath = _LOCalc_PathConvert($sFilePath, $LOC_PATHCONV_OFFICE_RETURN) ; Convert to L.O. URL
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 			$sFilePath = $sOriginalPath & $sFilePath ; combine the path with the new name.
+
 		Else
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
 		EndIf
@@ -607,6 +604,7 @@ Func _LOCalc_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 
 	If ($bReturnLibreURL = True) Then
 		$sPath = $oDoc.URL()
+
 	Else
 		$sPath = $oDoc.URL()
 		$sPath = _LOCalc_PathConvert($sPath, $LOC_PATHCONV_PCPATH_RETURN)
@@ -855,7 +853,6 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If Not __LOCalc_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate, $sFilterName) Then
-
 		If ($bHidden <> Null) Then
 			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vProperty = __LOCalc_SetPropertyValue("Hidden", $bHidden)
@@ -890,7 +887,6 @@ Func _LOCalc_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRead
 			If @error Then $iError = BitOR($iError, 16)
 			If Not BitAND($iError, 16) Then __LOCalc_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
-
 	EndIf
 
 	If $bConnectIfOpen Then $oDoc = _LOCalc_DocConnect($sFilePath)
@@ -1238,6 +1234,7 @@ Func _LOCalc_DocRedo(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		$oDoc.UndoManager.Redo()
 		Return SetError($__LO_STATUS_SUCCESS, 1, 0)
+
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
@@ -1299,6 +1296,7 @@ Func _LOCalc_DocRedoCurActionTitle(ByRef $oDoc)
 
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
+
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	EndIf
@@ -1542,7 +1540,6 @@ Func _LOCalc_DocSelectionGet(ByRef $oDoc)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Select
-
 		Case $oSelection.supportsService("com.sun.star.sheet.SheetCell") ; Single Cell is selected.
 			Return SetError($__LO_STATUS_SUCCESS, 0, $oSelection)
 
@@ -1748,6 +1745,7 @@ Func _LOCalc_DocUndo(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		$oDoc.UndoManager.Undo()
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
@@ -1872,6 +1870,7 @@ Func _LOCalc_DocUndoCurActionTitle(ByRef $oDoc)
 
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
+
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf
@@ -2411,11 +2410,11 @@ Func _LOCalc_DocWindowSplit(ByRef $oDoc, $iX = Null, $iY = Null, $bReturnPixels 
 		If $bReturnPixels Then
 			__LOCalc_ArrayFill($aiWindow, $oDoc.CurrentController.getSplitHorizontal(), $oDoc.CurrentController.getSplitVertical())
 			Return SetError($__LO_STATUS_SUCCESS, 1, $aiWindow)
+
 		Else
 			__LOCalc_ArrayFill($aiWindow, $oDoc.CurrentController.getSplitColumn(), $oDoc.CurrentController.getSplitRow())
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiWindow)
 		EndIf
-
 	EndIf
 
 	If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)

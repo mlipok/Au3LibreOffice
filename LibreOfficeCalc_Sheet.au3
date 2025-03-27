@@ -135,9 +135,7 @@ Func _LOCalc_SheetAdd(ByRef $oDoc, $sName = Null, $iPosition = Null)
 				$sName = "Sheet" & $iCount
 
 			WEnd
-
 		EndIf
-
 	EndIf
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -211,9 +209,7 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 				$sNewName = $sName & "_" & $iCount
 
 			WEnd
-
 		EndIf
-
 	EndIf
 
 	If Not IsString($sNewName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -817,12 +813,10 @@ Func _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $iLinkMo
 				$sName = $sSheetName & "_" & $iCount
 
 			WEnd
-
 		EndIf
 
 	Else
 		$sName = $sSheetName
-
 	EndIf
 
 	If Not IsString($sName) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -925,7 +919,6 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 
 		$oSheet.LinkSheetName = $sSheetName
 		$iError = ($oSheet.LinkSheetName() = $sSheetName) ? ($iError) : (BitOR($iError, 2))
-
 	EndIf
 
 	If ($iLinkMode <> Null) Then
@@ -940,6 +933,7 @@ Func _LOCalc_SheetLinkModify(ByRef $oSheet, $oNewDoc = Null, $sSheetName = Null,
 			$iError = ($oSheet.LinkUrl() = "") ? ($iError) : (BitOR($iError, 1))
 			$iError = ($oSheet.LinkSheetName() = "") ? ($iError) : (BitOR($iError, 2))
 			$iError = ($oSheet.LinkMode() = $iLinkMode) ? ($iError) : (BitOR($iError, 4))
+
 		Else
 
 			If ($oSheet.LinkUrl() = "") Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1112,6 +1106,7 @@ Func _LOCalc_SheetPrintColumnsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatColu
 			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintColumn, $oCell, $oSheet.PrintTitleColumns())
+
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
 			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -1268,6 +1263,7 @@ Func _LOCalc_SheetPrintRowsRepeat(ByRef $oSheet, $oRange = Null, $bRepeatRows = 
 			If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 			__LOCalc_ArrayFill($avPrintRow, $oCell, $oSheet.PrintTitleRows())
+
 		Else
 			$oCellRange = $oSheet.getCellRangeByPosition($tRangeAddr.StartColumn(), $tRangeAddr.StartRow(), $tRangeAddr.EndColumn(), $tRangeAddr.EndRow())
 			If Not IsObj($oCellRange) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)

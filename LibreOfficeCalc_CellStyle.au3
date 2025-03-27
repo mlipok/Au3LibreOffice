@@ -756,6 +756,7 @@ Func _LOCalc_CellStyleOrganizer(ByRef $oDoc, ByRef $oCellStyle, $sNewCellStyleNa
 	If __LOCalc_VarsAreNull($sNewCellStyleName, $sParentStyle, $bHidden) Then
 		If __LOCalc_VersionCheck(4.0) Then
 			__LOCalc_ArrayFill($avOrganizer, $oCellStyle.Name(), $oCellStyle.ParentStyle(), $oCellStyle.Hidden())
+
 		Else
 			__LOCalc_ArrayFill($avOrganizer, $oCellStyle.Name(), $oCellStyle.ParentStyle())
 		EndIf

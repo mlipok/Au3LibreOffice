@@ -103,6 +103,7 @@ Func _LOCalc_SheetCursorMove(ByRef $oCursor, $iMove, $iColumns = 0, $iRows = 0, 
 		Case $LOC_CURTYPE_SHEET_CURSOR
 			$bMoved = __LOCalc_SheetCursorMove($oCursor, $iMove, $iColumns, $iRows, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown or wrong cursor type.
 	EndSwitch
@@ -163,7 +164,6 @@ Func _LOCalc_TextCursorCharPosition(ByRef $oTextCursor, $bAutoSuper = Null, $iSu
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -172,7 +172,6 @@ Func _LOCalc_TextCursorCharPosition(ByRef $oTextCursor, $bAutoSuper = Null, $iSu
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CharPosition($oCursor, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
@@ -227,7 +226,6 @@ Func _LOCalc_TextCursorCharSpacing(ByRef $oTextCursor, $bAutoKerning = Null, $nK
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -236,7 +234,6 @@ Func _LOCalc_TextCursorCharSpacing(ByRef $oTextCursor, $bAutoKerning = Null, $nK
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CharSpacing($oCursor, $bAutoKerning, $nKerning)
@@ -290,7 +287,6 @@ Func _LOCalc_TextCursorEffect(ByRef $oTextCursor, $iRelief = Null, $bOutline = N
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -299,7 +295,6 @@ Func _LOCalc_TextCursorEffect(ByRef $oTextCursor, $iRelief = Null, $bOutline = N
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellEffect($oCursor, $iRelief, $bOutline, $bShadow)
@@ -359,7 +354,6 @@ Func _LOCalc_TextCursorFont(ByRef $oTextCursor, $sFontName = Null, $nFontSize = 
 	If ($sFontName <> Null) And Not _LOCalc_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -368,7 +362,6 @@ Func _LOCalc_TextCursorFont(ByRef $oTextCursor, $sFontName = Null, $nFontSize = 
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellFont($oCursor, $sFontName, $nFontSize, $iPosture, $iWeight)
@@ -416,7 +409,6 @@ Func _LOCalc_TextCursorFontColor(ByRef $oTextCursor, $iFontColor = Null)
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -425,7 +417,6 @@ Func _LOCalc_TextCursorFontColor(ByRef $oTextCursor, $iFontColor = Null)
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellFontColor($oCursor, $iFontColor)
@@ -650,6 +641,7 @@ Func _LOCalc_TextCursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = Fals
 		Case $LOC_CURTYPE_TEXT_CURSOR
 			$bMoved = __LOCalc_TextCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown or wrong cursor type.
 	EndSwitch
@@ -706,7 +698,6 @@ Func _LOCalc_TextCursorOverline(ByRef $oTextCursor, $bWordOnly = Null, $iOverLin
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -715,7 +706,6 @@ Func _LOCalc_TextCursorOverline(ByRef $oTextCursor, $bWordOnly = Null, $iOverLin
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellOverLine($oCursor, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
@@ -881,7 +871,6 @@ Func _LOCalc_TextCursorStrikeOut(ByRef $oTextCursor, $bWordOnly = Null, $bStrike
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -890,7 +879,6 @@ Func _LOCalc_TextCursorStrikeOut(ByRef $oTextCursor, $bWordOnly = Null, $bStrike
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellStrikeOut($oCursor, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
@@ -947,7 +935,6 @@ Func _LOCalc_TextCursorUnderline(ByRef $oTextCursor, $bWordOnly = Null, $iUnderL
 	If Not $oTextCursor.supportsService("com.sun.star.style.CharacterProperties") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch __LOCalc_Internal_CursorGetType($oTextCursor)
-
 		Case $LOC_CURTYPE_PARAGRAPH
 			; Paragraph Objects normally should behave the same as Text Cursors, like they do in Writer, but they don't in Calc. So I create a Text Cursor temporarily
 			; to use in this function that has the Paragraph selected.
@@ -956,7 +943,6 @@ Func _LOCalc_TextCursorUnderline(ByRef $oTextCursor, $bWordOnly = Null, $iUnderL
 
 		Case Else
 			$oCursor = $oTextCursor
-
 	EndSwitch
 
 	$vReturn = __LOCalc_CellUnderLine($oCursor, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
