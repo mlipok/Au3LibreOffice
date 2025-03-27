@@ -98,6 +98,7 @@ Func _LOWriter_ImageAreaColor(ByRef $oImage, $iBackColor = Null, $bBackTranspare
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oImage.BackColor()), $oImage.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -240,6 +241,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 				$oImage.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -255,6 +257,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oImage.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oImage.FillGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -485,12 +488,14 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oImage.FillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -645,6 +650,7 @@ Func _LOWriter_ImageBorderColor(ByRef $oImage, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oImage, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ImageBorderColor
 
@@ -697,6 +703,7 @@ Func _LOWriter_ImageBorderPadding(ByRef $oImage, $iAll = Null, $iTop = Null, $iB
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oImage.BorderDistance(), $oImage.TopBorderDistance(), _
 				$oImage.BottomBorderDistance(), $oImage.LeftBorderDistance(), $oImage.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -787,6 +794,7 @@ Func _LOWriter_ImageBorderStyle(ByRef $oImage, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oImage, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ImageBorderStyle
 
@@ -839,6 +847,7 @@ Func _LOWriter_ImageBorderWidth(ByRef $oImage, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oImage, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ImageBorderWidth
 
@@ -901,6 +910,7 @@ Func _LOWriter_ImageColorAdjust(ByRef $oImage, $iRed = Null, $iGreen = Null, $iB
 	If __LOWriter_VarsAreNull($iRed, $iGreen, $iBlue, $iBrightness, $iContrast, $nGamma, $iColorMode, $bInvert) Then
 		__LOWriter_ArrayFill($avImage, $oImage.AdjustRed(), $oImage.AdjustGreen(), $oImage.AdjustBlue(), $oImage.AdjustLuminance(), _
 				$oImage.AdjustContrast(), $oImage.Gamma(), $oImage.GraphicColorMode(), $oImage.GraphicIsInverted())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
@@ -1019,6 +1029,7 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 
 	If __LOWriter_VarsAreNull($iLeft, $iRight, $iTop, $iBottom, $bKeepScale) Then
 		__LOWriter_ArrayFill($avImage, $tCrop.Left(), $tCrop.Right(), $tCrop.Top(), $tCrop.Bottom(), $bKeepScaleInternal)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
@@ -1092,6 +1103,7 @@ Func _LOWriter_ImageDelete(ByRef $oDoc, ByRef $oImage)
 	$sImageName = $oImage.getName()
 	$oImage.dispose()
 	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Image named the same.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ImageDelete
 
@@ -1251,6 +1263,7 @@ Func _LOWriter_ImageHyperlink(ByRef $oImage, $sURL = Null, $sName = Null, $sFram
 
 	If __LOWriter_VarsAreNull($sURL, $sName, $sFrameTarget, $bServerSideMap) Then
 		__LOWriter_ArrayFill($avHyperlink, $oImage.HyperLinkURL(), $oImage.HyperLinkName(), $oImage.HyperLinkTarget(), $oImage.ServerMap())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avHyperlink)
 	EndIf
 
@@ -1433,6 +1446,7 @@ Func _LOWriter_ImageModify(ByRef $oImage, $bFlipVert = Null, $bFlipHoriOnRight =
 	If __LOWriter_VarsAreNull($bFlipVert, $bFlipHoriOnRight, $bFlipHoriOnLeft, $nAngle) Then
 		__LOWriter_ArrayFill($avImage, $oImage.VertMirrored(), $oImage.HoriMirroredOnEvenPages(), $oImage.HoriMirroredOnOddPages(), _
 				($oImage.GraphicRotation()) / 10) ;/10 to match L.O. values.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
@@ -1508,6 +1522,7 @@ Func _LOWriter_ImageOptions(ByRef $oImage, $bProtectContent = Null, $bProtectPos
 
 	If __LOWriter_VarsAreNull($bProtectContent, $bProtectPos, $bProtectSize, $bPrint) Then
 		__LOWriter_ArrayFill($abOptions, $oImage.ContentProtected(), $oImage.PositionProtected(), $oImage.SizeProtected(), $oImage.Print())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abOptions)
 	EndIf
 
@@ -1585,6 +1600,7 @@ Func _LOWriter_ImageOptionsName(ByRef $oDoc, ByRef $oImage, $sName = Null, $sAlt
 
 	If __LOWriter_VarsAreNull($sName, $sAltText, $sDesc) Then
 		__LOWriter_ArrayFill($asName, $oImage.Name(), $oImage.Title(), $oImage.Description())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asName)
 	EndIf
 
@@ -1741,6 +1757,7 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTran
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -1839,6 +1856,7 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		__LOWriter_ArrayFill($avImage, Round(($tSize.Width() / $tOrigSize.Width()) * 100), _
 				Round(($tSize.Height() / $tOrigSize.Height()) * 100), $tSize.Width(), $tSize.Height(), _
 				((($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? (True) : (False))) ; If image is set to its original size, return true.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
@@ -2041,6 +2059,7 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 		__LOWriter_ArrayFill($avPosition, $oImage.HoriOrient(), $oImage.HoriOrientPosition(), $oImage.HoriOrientRelation(), _
 				$oImage.PageToggle(), $oImage.VertOrient(), $oImage.VertOrientPosition(), $oImage.VertOrientRelation(), _
 				$oImage.IsFollowingTextFlow(), $oImage.AnchorType())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
@@ -2233,6 +2252,7 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 			__LOWriter_ArrayFill($avSize, $oImage.Width(), $oImage.RelativeWidth(), $oImage.Height(), $oImage.RelativeHeight(), _
 					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
@@ -2441,6 +2461,7 @@ Func _LOWriter_ImageWrapOptions(ByRef $oImage, $bFirstPar = Null, $bContour = Nu
 	If __LOWriter_VarsAreNull($bFirstPar, $bContour, $bOutsideOnly, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oImage.SurroundAnchorOnly(), $oImage.SurroundContour(), $oImage.ContourOutside(), _
 				(($oImage.Opaque()) ? (False) : (True)), $oImage.AllowOverlap()) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 

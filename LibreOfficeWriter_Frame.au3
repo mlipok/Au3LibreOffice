@@ -120,6 +120,7 @@ Func _LOWriter_FrameAreaColor(ByRef $oFrame, $iBackColor = Null, $bBackTranspare
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrame.BackColor()), $oFrame.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -263,6 +264,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 				$oFrame.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -278,6 +280,7 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oFrame.FillGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -448,6 +451,7 @@ Func _LOWriter_FrameBorderColor(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameBorderColor
 
@@ -500,6 +504,7 @@ Func _LOWriter_FrameBorderPadding(ByRef $oFrame, $iAll = Null, $iTop = Null, $iB
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oFrame.BorderDistance(), $oFrame.TopBorderDistance(), $oFrame.BottomBorderDistance(), _
 				$oFrame.LeftBorderDistance(), $oFrame.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -590,6 +595,7 @@ Func _LOWriter_FrameBorderStyle(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameBorderStyle
 
@@ -642,6 +648,7 @@ Func _LOWriter_FrameBorderWidth(ByRef $oFrame, $iTop = Null, $iBottom = Null, $i
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oFrame, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameBorderWidth
 
@@ -702,6 +709,7 @@ Func _LOWriter_FrameColumnSeparator(ByRef $oFrame, $bSeparatorOn = Null, $iStyle
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
 	EndIf
 
@@ -1085,6 +1093,7 @@ Func _LOWriter_FrameDelete(ByRef $oDoc, ByRef $oFrame)
 	$sFrameName = $oFrame.getName()
 	$oFrame.dispose()
 	If ($oDoc.TextFrames.hasByName($sFrameName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Frame named the same.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FrameDelete
 
@@ -1311,6 +1320,7 @@ Func _LOWriter_FrameHyperlink(ByRef $oFrame, $sURL = Null, $sName = Null, $sFram
 
 	If __LOWriter_VarsAreNull($sURL, $sName, $sFrameTarget, $bServerSideMap) Then
 		__LOWriter_ArrayFill($avHyperlink, $oFrame.HyperLinkURL(), $oFrame.HyperLinkName(), $oFrame.HyperLinkTarget(), $oFrame.ServerMap())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avHyperlink)
 	EndIf
 
@@ -1403,6 +1413,7 @@ Func _LOWriter_FrameOptions(ByRef $oFrame, $bProtectContent = Null, $bProtectPos
 	If __LOWriter_VarsAreNull($bProtectContent, $bProtectPos, $bProtectSize, $iVertAlign, $bEditInRead, $bPrint, $iTxtDirection) Then
 		__LOWriter_ArrayFill($avOptions, $oFrame.ContentProtected(), $oFrame.PositionProtected(), $oFrame.SizeProtected(), _
 				$oFrame.TextVerticalAdjust(), $oFrame.EditInReadOnly(), $oFrame.Print(), $oFrame.WritingMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOptions)
 	EndIf
 
@@ -1502,6 +1513,7 @@ Func _LOWriter_FrameOptionsName(ByRef $oDoc, ByRef $oFrame, $sName = Null, $sDes
 
 	If __LOWriter_VarsAreNull($sName, $sDesc, $sPrevLink, $sNextLink) Then
 		__LOWriter_ArrayFill($asName, $oFrame.Name(), $oFrame.Description(), $oFrame.ChainPrevName(), $oFrame.ChainNextName())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asName)
 	EndIf
 
@@ -1662,6 +1674,7 @@ Func _LOWriter_FrameShadow(ByRef $oFrame, $iWidth = Null, $iColor = Null, $bTran
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -1741,6 +1754,7 @@ Func _LOWriter_FrameStyleAreaColor(ByRef $oFrameStyle, $iBackColor = Null, $bBac
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oFrameStyle.BackColor()), $oFrameStyle.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -1886,6 +1900,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 				$oFrameStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -1901,6 +1916,7 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oFrameStyle.FillGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -2073,6 +2089,7 @@ Func _LOWriter_FrameStyleBorderColor(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameStyleBorderColor
 
@@ -2127,6 +2144,7 @@ Func _LOWriter_FrameStyleBorderPadding(ByRef $oFrameStyle, $iAll = Null, $iTop =
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oFrameStyle.BorderDistance(), $oFrameStyle.TopBorderDistance(), _
 				$oFrameStyle.BottomBorderDistance(), $oFrameStyle.LeftBorderDistance(), $oFrameStyle.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -2219,6 +2237,7 @@ Func _LOWriter_FrameStyleBorderStyle(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameStyleBorderStyle
 
@@ -2273,6 +2292,7 @@ Func _LOWriter_FrameStyleBorderWidth(ByRef $oFrameStyle, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oFrameStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_FrameStyleBorderWidth
 
@@ -2335,6 +2355,7 @@ Func _LOWriter_FrameStyleColumnSeparator(ByRef $oFrameStyle, $bSeparatorOn = Nul
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
 	EndIf
 
@@ -2700,6 +2721,7 @@ Func _LOWriter_FrameStyleDelete(ByRef $oDoc, $oFrameStyle, $bForceDelete = False
 	; If Parent style is blank set it to "Frame" style, Or if not but User has called a specific style set it to that.
 
 	$oFrameStyles.removeByName($sFrameStyle)
+
 	Return ($oFrameStyles.hasByName($sFrameStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_FrameStyleDelete
 
@@ -2829,6 +2851,7 @@ Func _LOWriter_FrameStyleOptions(ByRef $oFrameStyle, $bProtectContent = Null, $b
 	If __LOWriter_VarsAreNull($bProtectContent, $bProtectPos, $bProtectSize, $iVertAlign, $bEditInRead, $bPrint, $iTxtDirection) Then
 		__LOWriter_ArrayFill($avOptions, $oFrameStyle.ContentProtected(), $oFrameStyle.PositionProtected(), $oFrameStyle.SizeProtected(), _
 				$oFrameStyle.TextVerticalAdjust(), $oFrameStyle.EditInReadOnly(), $oFrameStyle.Print(), $oFrameStyle.WritingMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOptions)
 	EndIf
 
@@ -2938,6 +2961,7 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 			__LOWriter_ArrayFill($avOrganizer, $oFrameStyle.Name(), __LOWriter_ParStyleNameToggle($oFrameStyle.ParentStyle(), True), _
 					$oFrameStyle.IsAutoUpdate())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
@@ -3010,6 +3034,7 @@ Func _LOWriter_FrameStyleSet(ByRef $oDoc, ByRef $oFrameObj, $sFrameStyle)
 	If Not IsString($sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_FrameStyleExists($oDoc, $sFrameStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$oFrameObj.FrameStyleName = $sFrameStyle
+
 	Return ($oFrameObj.FrameStyleName() = $sFrameStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_FrameStyleSet
 
@@ -3061,6 +3086,7 @@ Func _LOWriter_FrameStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnl
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, UBound($aStyles), $aStyles)
 	EndIf
 
@@ -3135,6 +3161,7 @@ Func _LOWriter_FrameStyleShadow(ByRef $oFrameStyle, $iWidth = Null, $iColor = Nu
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -3289,12 +3316,14 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrameStyle.FillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -3523,6 +3552,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 		__LOWriter_ArrayFill($avPosition, $oFrameStyle.HoriOrient(), $oFrameStyle.HoriOrientPosition(), $oFrameStyle.HoriOrientRelation(), _
 				$oFrameStyle.PageToggle(), $oFrameStyle.VertOrient(), $oFrameStyle.VertOrientPosition(), $oFrameStyle.VertOrientRelation(), _
 				$oFrameStyle.IsFollowingTextFlow(), $oFrameStyle.AnchorType())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
@@ -3728,6 +3758,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 					$oFrameStyle.RelativeHeight(), ($oFrameStyle.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrameStyle.IsSyncHeightToWidth() And $oFrameStyle.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
@@ -3950,6 +3981,7 @@ Func _LOWriter_FrameStyleWrapOptions(ByRef $oFrameStyle, $bFirstPar = Null, $bIn
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrameStyle.SurroundAnchorOnly(), (($oFrameStyle.Opaque()) ? (False) : (True)), _
 				$oFrameStyle.AllowOverlap()) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
@@ -4088,12 +4120,14 @@ Func _LOWriter_FrameTransparencyGradient(ByRef $oDoc, ByRef $oFrame, $iType = Nu
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
 				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oFrame.FillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -4320,6 +4354,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 		__LOWriter_ArrayFill($avPosition, $oFrame.HoriOrient(), $oFrame.HoriOrientPosition(), $oFrame.HoriOrientRelation(), _
 				$oFrame.PageToggle(), $oFrame.VertOrient(), $oFrame.VertOrientPosition(), $oFrame.VertOrientRelation(), _
 				$oFrame.IsFollowingTextFlow(), $oFrame.AnchorType())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left,Right, Center, and "None" = "From Left"
@@ -4522,6 +4557,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 					$oFrame.RelativeHeight(), ($oFrame.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrame.IsSyncHeightToWidth() And $oFrame.IsSyncWidthToHeight()) ? (True) : (False)))
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
@@ -4742,6 +4778,7 @@ Func _LOWriter_FrameWrapOptions(ByRef $oFrame, $bFirstPar = Null, $bInBackground
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oFrame.SurroundAnchorOnly(), (($oFrame.Opaque()) ? (False) : (True)), $oFrame.AllowOverlap())
 		; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 

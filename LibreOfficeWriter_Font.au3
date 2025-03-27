@@ -148,6 +148,7 @@ Func _LOWriter_FontDescEdit(ByRef $mFontDesc, $sFontName = Null, $iWeight = Null
 	If __LOWriter_VarsAreNull($sFontName, $iWeight, $iSlant, $nSize, $iColor, $iUnderlineStyle, $iUnderlineColor, $iStrikelineStyle, $bIndividualWords, $iRelief) Then
 		__LOWriter_ArrayFill($avFont, $mFontDesc.CharFontName, $mFontDesc.CharWeight, $mFontDesc.CharPosture, $mFontDesc.CharHeight, $mFontDesc.CharColor, $mFontDesc.CharUnderline, _
 				$mFontDesc.CharUnderlineColor, $mFontDesc.CharStrikeout, $mFontDesc.CharWordMode, $mFontDesc.CharRelief)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFont)
 	EndIf
 
@@ -257,6 +258,7 @@ Func _LOWriter_FontExists($sFontName)
 	For $i = 0 To UBound($atFonts) - 1
 		If $atFonts[$i].Name() = $sFontName Then
 			$oDoc.Close(True)
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, True)
 		EndIf
 

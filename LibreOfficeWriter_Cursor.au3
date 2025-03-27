@@ -135,19 +135,23 @@ Func _LOWriter_CursorGetStatus(ByRef $oCursor, $iFlag)
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_COLLAPSED, $LOW_CURSOR_STAT_IS_END_OF_PAR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
+
 			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			If Not ($iFlag = $LOW_CURSOR_STAT_GET_RANGE_NAME) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
+
 			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			If Not __LOWriter_IntIsBetween($iFlag, $LOW_CURSOR_STAT_IS_START_OF_LINE, $LOW_CURSOR_STAT_GET_PAGE, "", $LOW_CURSOR_STAT_IS_COLLAPSED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 			$vReturn = Execute("$oCursor" & $aiCommands[$iFlag])
+
 			Return (@error > 0) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, $vReturn))
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown cursor data type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorGetStatus
@@ -331,17 +335,21 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 	Switch $iCursorType
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			$bMoved = __LOWriter_TextCursorMove($oCursor, $iMove, $iCount, $bSelect)
+
 			Return SetError(@error, @extended, $bMoved)
 
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			$bMoved = __LOWriter_TableCursorMove($oCursor, $iMove, $iCount, $bSelect)
+
 			Return SetError(@error, @extended, $bMoved)
 
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
+
 			Return SetError(@error, @extended, $bMoved)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_CursorMove

@@ -130,6 +130,7 @@ Func _LOWriter_DirFrmtCharBorderColor(ByRef $oSelection, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharBorderColor
 
@@ -195,6 +196,7 @@ Func _LOWriter_DirFrmtCharBorderPadding(ByRef $oSelection, $iAll = Null, $iTop =
 	EndIf
 
 	$vReturn = __LOWriter_CharBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharBorderPadding
 
@@ -267,6 +269,7 @@ Func _LOWriter_DirFrmtCharBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharBorderStyle
 
@@ -334,6 +337,7 @@ Func _LOWriter_DirFrmtCharBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharBorderWidth
 
@@ -419,6 +423,7 @@ Func _LOWriter_DirFrmtCharEffect(ByRef $oSelection, $iRelief = Null, $iCase = Nu
 	EndIf
 
 	$vReturn = __LOWriter_CharEffect($oSelection, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharEffect
 
@@ -556,10 +561,12 @@ Func _LOWriter_DirFrmtCharRotateScale(ByRef $oSelection, $iRotation = Null, $iSc
 	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		$vReturn = __LOWriter_CharRotateScale($oSelection, $iRotation, $iScaleWidth, $bRotateFitLine)
 		__LOWriter_AddTo1DArray($vReturn, $oSelection.CharRotationIsFitToLine())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 	EndIf
 
 	$vReturn = __LOWriter_CharRotateScale($oSelection, $iRotation, $iScaleWidth, $bRotateFitLine)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharRotateScale
 
@@ -626,6 +633,7 @@ Func _LOWriter_DirFrmtCharShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nu
 	EndIf
 
 	$vReturn = __LOWriter_CharShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharShadow
 
@@ -690,6 +698,7 @@ Func _LOWriter_DirFrmtCharSpacing(ByRef $oSelection, $bAutoKerning = Null, $nKer
 	EndIf
 
 	$vReturn = __LOWriter_CharSpacing($oSelection, $bAutoKerning, $nKerning)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtCharSpacing
 
@@ -854,6 +863,7 @@ Func _LOWriter_DirFrmtFont(ByRef $oSelection, $sFontName = Null, $nFontSize = Nu
 	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOWriter_CharFont($oSelection, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtFont
 
@@ -929,6 +939,7 @@ Func _LOWriter_DirFrmtFontColor(ByRef $oSelection, $iFontColor = Null, $iTranspa
 	EndIf
 
 	$vReturn = __LOWriter_CharFontColor($oSelection, $iFontColor, $iTransparency, $iHighlight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtFontColor
 
@@ -1141,6 +1152,7 @@ Func _LOWriter_DirFrmtParAlignment(ByRef $oSelection, $iHorAlign = Null, $iVertA
 	EndIf
 
 	$vReturn = __LOWriter_ParAlignment($oSelection, $iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParAlignment
 
@@ -1193,6 +1205,7 @@ Func _LOWriter_DirFrmtParBackColor(ByRef $oSelection, $iBackColor = Null, $bBack
 	EndIf
 
 	$vReturn = __LOWriter_ParBackColor($oSelection, $iBackColor, $bBackTransparent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParBackColor
 
@@ -1265,6 +1278,7 @@ Func _LOWriter_DirFrmtParBorderColor(ByRef $oSelection, $iTop = Null, $iBottom =
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParBorderColor
 
@@ -1326,6 +1340,7 @@ Func _LOWriter_DirFrmtParBorderPadding(ByRef $oSelection, $iAll = Null, $iTop = 
 	EndIf
 
 	$vReturn = __LOWriter_ParBorderPadding($oSelection, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParBorderPadding
 
@@ -1398,6 +1413,7 @@ Func _LOWriter_DirFrmtParBorderStyle(ByRef $oSelection, $iTop = Null, $iBottom =
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oSelection, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParBorderStyle
 
@@ -1478,6 +1494,7 @@ Func _LOWriter_DirFrmtParBorderWidth(ByRef $oSelection, $iTop = Null, $iBottom =
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
 		$vReturn = __LOWriter_Border($oSelection, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		__LOWriter_AddTo1DArray($vReturn, $oSelection.ParaIsConnectBorder())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
 
 	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
@@ -1558,6 +1575,7 @@ Func _LOWriter_DirFrmtParDropCaps(ByRef $oDoc, ByRef $oSelection, $iNumChar = Nu
 	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParDropCaps($oSelection, $iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParDropCaps
 
@@ -1622,6 +1640,7 @@ Func _LOWriter_DirFrmtParHyphenation(ByRef $oSelection, $bAutoHyphen = Null, $bH
 	EndIf
 
 	$vReturn = __LOWriter_ParHyphenation($oSelection, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParHyphenation
 
@@ -1684,6 +1703,7 @@ Func _LOWriter_DirFrmtParIndent(ByRef $oSelection, $iBeforeTxt = Null, $iAfterTx
 	EndIf
 
 	$vReturn = __LOWriter_ParIndent($oSelection, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParIndent
 
@@ -1769,6 +1789,7 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParOutLineAndList($oSelection, $iOutline, $sNumStyle, $bParLineCount, $iLineCountVal)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParOutLineAndList
 
@@ -1838,6 +1859,7 @@ Func _LOWriter_DirFrmtParPageBreak(ByRef $oDoc, ByRef $oSelection, $iBreakType =
 	If ($sPageStyle <> Null) And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParPageBreak($oSelection, $iBreakType, $sPageStyle, $iPgNumOffSet)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParPageBreak
 
@@ -1900,6 +1922,7 @@ Func _LOWriter_DirFrmtParShadow(ByRef $oSelection, $iWidth = Null, $iColor = Nul
 	EndIf
 
 	$vReturn = __LOWriter_ParShadow($oSelection, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParShadow
 
@@ -2005,6 +2028,7 @@ Func _LOWriter_DirFrmtParSpace(ByRef $oSelection, $iAbovePar = Null, $iBelowPar 
 	EndIf
 
 	$vReturn = __LOWriter_ParSpace($oSelection, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParSpace
 
@@ -2062,6 +2086,7 @@ Func _LOWriter_DirFrmtParTabStopCreate(ByRef $oSelection, $iPosition, $iFillChar
 	If __LOWriter_ParHasTabStop($oSelection, $iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iPosition = __LOWriter_ParTabStopCreate($oSelection, $iPosition, $iAlignment, $iFillChar, $iDecChar)
+
 	Return SetError(@error, @extended, $iPosition)
 EndFunc   ;==>_LOWriter_DirFrmtParTabStopCreate
 
@@ -2104,6 +2129,7 @@ Func _LOWriter_DirFrmtParTabStopDelete(ByRef $oDoc, ByRef $oSelection, $iTabStop
 	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_ParTabStopDelete($oSelection, $oDoc, $iTabStop)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParTabStopDelete
 
@@ -2202,6 +2228,7 @@ Func _LOWriter_DirFrmtParTabStopMod(ByRef $oSelection, $iTabStop, $iPosition = N
 
 	If ($iTabStop = Default) Then
 		$oSelection.setPropertyToDefault("ParaTabStops")
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 3)
 	EndIf
 
@@ -2209,6 +2236,7 @@ Func _LOWriter_DirFrmtParTabStopMod(ByRef $oSelection, $iTabStop, $iPosition = N
 	If Not __LOWriter_ParHasTabStop($oSelection, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParTabStopMod($oSelection, $iTabStop, $iPosition, $iFillChar, $iAlignment, $iDecChar)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParTabStopMod
 
@@ -2287,6 +2315,7 @@ Func _LOWriter_DirFrmtParTxtFlowOpt(ByRef $oSelection, $bParSplit = Null, $bKeep
 	EndIf
 
 	$vReturn = __LOWriter_ParTxtFlowOpt($oSelection, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtParTxtFlowOpt
 
@@ -2357,6 +2386,7 @@ Func _LOWriter_DirFrmtStrikeOut(ByRef $oSelection, $bWordOnly = Null, $bStrikeOu
 	EndIf
 
 	$vReturn = __LOWriter_CharStrikeOut($oSelection, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DirFrmtStrikeOut
 

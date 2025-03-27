@@ -229,6 +229,7 @@ Func _LOWriter_FieldAuthorModify(ByRef $oAuthField, $bIsFixed = Null, $sAuthor =
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor, $bFullName) Then
 		__LOWriter_ArrayFill($avAuth, $oAuthField.IsFIxed(), $oAuthField.Content(), $oAuthField.FullName())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avAuth)
 	EndIf
 
@@ -354,6 +355,7 @@ Func _LOWriter_FieldChapterModify(ByRef $oChapField, $iChapFrmt = Null, $iLevel 
 
 	If __LOWriter_VarsAreNull($iChapFrmt, $iLevel) Then
 		__LOWriter_ArrayFill($aiChap, $oChapField.ChapterFormat(), ($oChapField.Level() + 1)) ; Level is 0 Based -- Add 1 to make it like L.O. UI
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiChap)
 	EndIf
 
@@ -636,6 +638,7 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 		Else
 			__LOWriter_ArrayFill($avAnnot, $oCommentField.Content(), $oCommentField.Author(), $oCommentField.DateTimeValue(), $oCommentField.Resolved())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avAnnot)
 	EndIf
 
@@ -797,6 +800,7 @@ Func _LOWriter_FieldCondTextModify(ByRef $oCondTextField, $sCondition = Null, $s
 	If __LOWriter_VarsAreNull($sCondition, $sThen, $sElse) Then
 		__LOWriter_ArrayFill($avCond, $oCondTextField.Condition(), $oCondTextField.TrueContent(), $oCondTextField.FalseContent(), _
 				($oCondTextField.IsConditionTrue()) ? (False) : (True)) ; IsConditionTrue is Backwards.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avCond)
 	EndIf
 
@@ -1011,6 +1015,7 @@ Func _LOWriter_FieldDateTimeModify(ByRef $oDoc, ByRef $oDateTimeField, $bIsFixed
 				($oDateTimeField.IsDate() = True) ? (Int(($oDateTimeField.Adjust() / 1440))) : ($oDateTimeField.Adjust()), $iNumberFormat)
 		; If IsDate = True, Then Calculate number of minutes in a day (1440) divided by number of days of off set. Otherwise
 		; return Number of minutes.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDateTime)
 	EndIf
 
@@ -1108,6 +1113,7 @@ Func _LOWriter_FieldDelete(ByRef $oField, $bDeleteMaster = False)
 		EndIf
 
 		$oFieldMaster.dispose()
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndIf
 
@@ -1219,6 +1225,7 @@ Func _LOWriter_FieldDocInfoCommentsModify(ByRef $oDocInfoComment, $bIsFixed = Nu
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sComments) Then
 		__LOWriter_ArrayFill($avDocInfoCom, $oDocInfoComment.IsFixed(), $oDocInfoComment.Content())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoCom)
 	EndIf
 
@@ -1342,6 +1349,7 @@ Func _LOWriter_FieldDocInfoCreateAuthModify(ByRef $oDocInfoCreateAuth, $bIsFixed
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
 		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoCreateAuth.IsFixed(), $oDocInfoCreateAuth.Author())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
@@ -1473,6 +1481,7 @@ Func _LOWriter_FieldDocInfoCreateDateTimeModify(ByRef $oDoc, ByRef $oDocInfoCrea
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avDocInfoCrtDate, $oDocInfoCreateDtTm.IsFixed(), $iNumberFormat)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoCrtDate)
 	EndIf
 
@@ -1602,6 +1611,7 @@ Func _LOWriter_FieldDocInfoEditTimeModify(ByRef $oDocInfoEditTime, $bIsFixed = N
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avDocInfoEditTm, $oDocInfoEditTime.IsFixed(), $iNumberFormat)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoEditTm)
 	EndIf
 
@@ -1726,6 +1736,7 @@ Func _LOWriter_FieldDocInfoKeywordsModify(ByRef $oDocInfoKeyword, $bIsFixed = Nu
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sKeywords) Then
 		__LOWriter_ArrayFill($avDocInfoKyWrd, $oDocInfoKeyword.IsFixed(), $oDocInfoKeyword.Content())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoKyWrd)
 	EndIf
 
@@ -1849,6 +1860,7 @@ Func _LOWriter_FieldDocInfoModAuthModify(ByRef $oDocInfoModAuth, $bIsFixed = Nul
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
 		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoModAuth.IsFixed(), $oDocInfoModAuth.Author())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
@@ -1980,6 +1992,7 @@ Func _LOWriter_FieldDocInfoModDateTimeModify(ByRef $oDoc, ByRef $oDocInfoModDtTm
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avDocInfoModDate, $oDocInfoModDtTm.IsFixed(), $iNumberFormat)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModDate)
 	EndIf
 
@@ -2104,6 +2117,7 @@ Func _LOWriter_FieldDocInfoPrintAuthModify(ByRef $oDocInfoPrintAuth, $bIsFixed =
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sAuthor) Then
 		__LOWriter_ArrayFill($avDocInfoModAuth, $oDocInfoPrintAuth.IsFixed(), $oDocInfoPrintAuth.Author())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoModAuth)
 	EndIf
 
@@ -2235,6 +2249,7 @@ Func _LOWriter_FieldDocInfoPrintDateTimeModify(ByRef $oDoc, ByRef $oDocInfoPrint
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avDocInfoPrntDate, $oDocInfoPrintDtTm.IsFixed(), $iNumberFormat)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoPrntDate)
 	EndIf
 
@@ -2359,6 +2374,7 @@ Func _LOWriter_FieldDocInfoRevNumModify(ByRef $oDocInfoRevNum, $bIsFixed = Null,
 
 	If __LOWriter_VarsAreNull($bIsFixed, $iRevNum) Then
 		__LOWriter_ArrayFill($avDocInfoRev, $oDocInfoRevNum.IsFixed(), $oDocInfoRevNum.Revision())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoRev)
 	EndIf
 
@@ -2482,6 +2498,7 @@ Func _LOWriter_FieldDocInfoSubjectModify(ByRef $oDocInfoSub, $bIsFixed = Null, $
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sSubject) Then
 		__LOWriter_ArrayFill($avDocInfoSub, $oDocInfoSub.IsFixed(), $oDocInfoSub.Content())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoSub)
 	EndIf
 
@@ -2605,6 +2622,7 @@ Func _LOWriter_FieldDocInfoTitleModify(ByRef $oDocInfoTitle, $bIsFixed = Null, $
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sTitle) Then
 		__LOWriter_ArrayFill($avDocInfoTitle, $oDocInfoTitle.IsFixed(), $oDocInfoTitle.Content())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDocInfoTitle)
 	EndIf
 
@@ -2726,6 +2744,7 @@ Func _LOWriter_FieldFileNameModify(ByRef $oFileNameField, $bIsFixed = Null, $iFo
 
 	If __LOWriter_VarsAreNull($iFormat, $bIsFixed) Then
 		__LOWriter_ArrayFill($avFileName, $oFileNameField.IsFixed(), $oFileNameField.FileFormat())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFileName)
 	EndIf
 
@@ -2835,6 +2854,7 @@ Func _LOWriter_FieldFuncHiddenParModify(ByRef $oHidParField, $sCondition = Null)
 
 	If __LOWriter_VarsAreNull($sCondition) Then
 		__LOWriter_ArrayFill($avHidPar, $oHidParField.Condition(), ($oHidParField.IsHidden()) ? (False) : (True)) ; "IsHidden" Is Backwards
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avHidPar)
 	EndIf
 
@@ -2948,6 +2968,7 @@ Func _LOWriter_FieldFuncHiddenTextModify(ByRef $oHidTxtField, $sCondition = Null
 
 	If __LOWriter_VarsAreNull($sCondition, $sText) Then
 		__LOWriter_ArrayFill($avHidPar, $oHidTxtField.Condition(), $oHidTxtField.Content(), ($oHidTxtField.IsHidden()) ? (False) : (True)) ; "IsHidden" Is Backwards
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avHidPar)
 	EndIf
 
@@ -3067,6 +3088,7 @@ Func _LOWriter_FieldFuncInputModify(ByRef $oInputField, $sReference = Null, $sTe
 
 	If __LOWriter_VarsAreNull($sReference, $sText) Then
 		__LOWriter_ArrayFill($asInput, $oInputField.Hint(), $oInputField.Content())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asInput)
 	EndIf
 
@@ -3196,6 +3218,7 @@ Func _LOWriter_FieldFuncPlaceholderModify(ByRef $oPHolderField, $iPHolderType = 
 
 	If __LOWriter_VarsAreNull($iPHolderType, $sPHolderName, $sReference) Then
 		__LOWriter_ArrayFill($asPHolder, $oPHolderField.PlaceHolderType(), $oPHolderField.PlaceHolder(), $oPHolderField.Hint())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asPHolder)
 	EndIf
 
@@ -3365,6 +3388,7 @@ Func _LOWriter_FieldInputListModify(ByRef $oInputField, $asItems = Null, $sName 
 
 	If __LOWriter_VarsAreNull($asItems, $sName, $sSelectedItem) Then
 		__LOWriter_ArrayFill($avDropDwn, $oInputField.Items(), $oInputField.Name(), $oInputField.SelectedItem())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDropDwn)
 	EndIf
 
@@ -3529,6 +3553,7 @@ Func _LOWriter_FieldPageNumberModify(ByRef $oDoc, ByRef $oPageNumField, $iNumFor
 
 	If __LOWriter_VarsAreNull($iNumFormat, $iOffset, $iPageNumType, $sUserText) Then
 		__LOWriter_ArrayFill($avField, $oPageNumField.NumberingType(), $oPageNumField.Offset(), $oPageNumField.SubType(), $oPageNumField.UserText())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avField)
 	EndIf
 
@@ -3683,6 +3708,7 @@ Func _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField, $sB
 
 	If __LOWriter_VarsAreNull($sBookmarkName, $iRefUsing) Then
 		__LOWriter_ArrayFill($avBook, $oBookmarkRefField.SourceName(), $oBookmarkRefField.ReferenceFieldPart())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBook)
 	EndIf
 
@@ -3815,11 +3841,13 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 			For $i = 0 To $oDoc.Endnotes.Count() - 1 ; Locate referenced Endnote.
 				If ($oDoc.Endnotes.getByIndex($i).ReferenceId() = $iSourceSeq) Then
 					__LOWriter_ArrayFill($avFoot, $oDoc.Endnotes.getByIndex($i), $oEndNoteRefField.ReferenceFieldPart())
+
 					Return SetError($__LO_STATUS_SUCCESS, 1, $avFoot)
 				EndIf
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 		EndIf
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving EndNote Obj
 	EndIf
 
@@ -3952,11 +3980,13 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 			For $i = 0 To $oDoc.Footnotes.Count() - 1 ; Locate referenced Footnote.
 				If ($oDoc.Footnotes.getByIndex($i).ReferenceId() = $iSourceSeq) Then
 					__LOWriter_ArrayFill($avFoot, $oDoc.Footnotes.getByIndex($i), $oFootNoteRefField.ReferenceFieldPart())
+
 					Return SetError($__LO_STATUS_SUCCESS, 1, $avFoot)
 				EndIf
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
 		EndIf
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FndNote Obj
 	EndIf
 
@@ -4306,6 +4336,7 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 
 	If __LOWriter_VarsAreNull($sRefMarkName, $iRefUsing) Then
 		__LOWriter_ArrayFill($avRef, $oRefField.SourceName(), $oRefField.ReferenceFieldPart())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avRef)
 	EndIf
 
@@ -4553,6 +4584,7 @@ Func _LOWriter_FieldSenderModify(ByRef $oSenderField, $bIsFixed = Null, $sConten
 
 	If __LOWriter_VarsAreNull($bIsFixed, $sContent, $iDataType) Then
 		__LOWriter_ArrayFill($avExtUser, $oSenderField.IsFixed(), $oSenderField.Content(), $oSenderField.UserDataType())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avExtUser)
 	EndIf
 
@@ -4996,6 +5028,7 @@ Func _LOWriter_FieldSetVarModify(ByRef $oDoc, ByRef $oSetVarField, $sValue = Nul
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avSetVar, $oSetVarField.Content(), $iNumberFormat, $oSetVarField.IsVisible(), $oSetVarField.VariableName())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSetVar)
 	EndIf
 
@@ -5202,6 +5235,7 @@ Func _LOWriter_FieldShowVarModify(ByRef $oDoc, ByRef $oShowVarField, $sSetVarNam
 		$iNumberFormat = ($iNumberFormat >= 10000) ? ($iNumberFormat - 10000) : ($iNumberFormat)
 
 		__LOWriter_ArrayFill($avShowVar, $oShowVarField.Content(), $iNumberFormat, $oShowVarField.IsShowFormula())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShowVar)
 	EndIf
 
@@ -5345,6 +5379,7 @@ Func _LOWriter_FieldStatCountModify(ByRef $oDoc, ByRef $oCountField, $iCountType
 	If __LOWriter_VarsAreNull($iCountType, $iNumFormat) Then
 		__LOWriter_ArrayFill($avCountField, __LOWriter_FieldCountType($oCountField), $oCountField.NumberingType())
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avCountField)
 	EndIf
 
@@ -5524,6 +5559,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 			If ($oField.IsFixed() = True) And ($bForceUpdate = False) Then Return SetError($__LO_STATUS_SUCCESS, 1, 1) ; Updating a fixed field, causes its content to be removed.
 		EndIf
 		$oField.Update()
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndIf
 
@@ -5657,6 +5693,7 @@ Func _LOWriter_FieldVarSetPageModify(ByRef $oPageVarSetField, $bRefOn = Null, $i
 
 	If __LOWriter_VarsAreNull($bRefOn, $iOffset) Then
 		__LOWriter_ArrayFill($avPage, $oPageVarSetField.On(), $oPageVarSetField.Offset())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPage)
 	EndIf
 

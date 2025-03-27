@@ -178,6 +178,7 @@ Func _LOWriter_TableBorderPadding(ByRef $oTable, $iTop = Null, $iBottom = Null, 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oTable.TableBorderDistances.TopDistance(), $oTable.TableBorderDistances.BottomDistance(), _
 				$oTable.TableBorderDistances.LeftDistance(), $oTable.TableBorderDistances.RightDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -280,6 +281,7 @@ Func _LOWriter_TableBorderStyle(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Table not in document.
 
 	$vReturn = __LOWriter_TableBorder($oTable, False, True, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_TableBorderStyle
 
@@ -339,6 +341,7 @@ Func _LOWriter_TableBorderWidth(ByRef $oTable, $iTop = Null, $iBottom = Null, $i
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Table not in document.
 
 	$vReturn = __LOWriter_TableBorder($oTable, True, False, False, $iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_TableBorderWidth
 
@@ -390,6 +393,7 @@ Func _LOWriter_TableBreak(ByRef $oDoc, ByRef $oTable, $iBreakType = Null, $sPage
 
 	If __LOWriter_VarsAreNull($iBreakType, $sPageStyle, $iPgNumOffSet) Then
 		__LOWriter_ArrayFill($avBreaks, $oTable.BreakType(), $oTable.PageDescName(), $oTable.PageNumberOffset())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBreaks)
 	EndIf
 
@@ -444,6 +448,7 @@ Func _LOWriter_TableCellsGetNames(ByRef $oTable)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Not an Object.
 	$asCellNames = $oTable.getCellNames()
 	If Not IsArray($asCellNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; failed to get array of names.
+
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asCellNames), $asCellNames)
 EndFunc   ;==>_LOWriter_TableCellsGetNames
 
@@ -486,6 +491,7 @@ Func _LOWriter_TableColor(ByRef $oTable, $iBackColor = Null, $bBackTransparent =
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oTable.BackColor(), $oTable.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -546,6 +552,7 @@ Func _LOWriter_TableColumnDelete(ByRef $oTable, $iColumn, $iCount = 1)
 	$iCount = ($iCount > ($iColumnCount - $iColumn)) ? ($iColumnCount - $iColumn) : ($iCount)
 	$iReturn = ($iCount > ($iColumnCount - $iColumn)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getColumns.removeByIndex($iColumn, $iCount)
+
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $iReturn)
 EndFunc   ;==>_LOWriter_TableColumnDelete
 
@@ -580,6 +587,7 @@ Func _LOWriter_TableColumnGetCount(ByRef $oTable)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
 	$iColumnSize = $oTable.getColumns.getCount()
 	If ($iColumnSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve column count.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iColumnSize)
 EndFunc   ;==>_LOWriter_TableColumnGetCount
 
@@ -625,6 +633,7 @@ Func _LOWriter_TableColumnInsert(ByRef $oTable, $iCount, $iColumn = -1)
 	If ($iColumnCount < $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested column out of bounds.
 	$iColumn = ($iColumn <= -1) ? ($iColumnCount) : ($iColumn)
 	$oTable.getColumns.insertByIndex($iColumn, $iCount)
+
 	Return ($oTable.getColumns.getCount() = ($iColumnCount + $iCount)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_TableColumnInsert
 
@@ -745,6 +754,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 				$sCellName = ($sCellName = "") ? ($oCursor.Cell.CellName) : ($sCellName)
 
 			Case Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Wrong Cursor Data Type
 		EndSwitch
 	EndIf
@@ -757,6 +767,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 
 	$oTableCursor = $oTable.createCursorByCellName($sCellName)
 	If Not IsObj($oTableCursor) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oTableCursor)
 EndFunc   ;==>_LOWriter_TableCreateCursor
 
@@ -860,6 +871,7 @@ Func _LOWriter_TableDelete(ByRef $oDoc, ByRef $oTable)
 	If Not ($oDoc.TextTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document doesn't contain Table named this yet.
 	$oTable.dispose()
 	If ($oDoc.TextTables.hasByName($sTableName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Document still contains Table named the same.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_TableDelete
 
@@ -967,6 +979,7 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 			EndIf
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Unknown cursor type.
 	EndSwitch
 
@@ -1024,6 +1037,7 @@ Func _LOWriter_TableGetCellObjByName(ByRef $oTable, $sCellName, $sToCellName = $
 
 	$oCell = ($sCellName = $sToCellName) ? ($oTable.getCellByName($sCellName)) : ($oTable.getCellRangeByName($sCellName & ":" & $sToCellName))
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oCell)
 EndFunc   ;==>_LOWriter_TableGetCellObjByName
 
@@ -1171,6 +1185,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
 		$iExtended = 4 ; Set Extended to 4 if retrieving a specific cell of Data
 	EndIf
+
 	Return SetError($__LO_STATUS_SUCCESS, $iExtended, $avTableDataReturn)
 EndFunc   ;==>_LOWriter_TableGetData
 
@@ -1295,12 +1310,14 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 
 		Switch $iCursorDataType
 			Case $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unable to insert tables in footnotes/ EndNotes
 
 			Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL, $LOW_CURDATA_FRAME, $LOW_CURDATA_HEADER_FOOTER
 				$oInsertPoint = $oCursor
 
 			Case Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown Cursor type
 		EndSwitch
 
@@ -1384,6 +1401,7 @@ Func _LOWriter_TableMargin(ByRef $oTable, $iTopMargin = Null, $iBottomMargin = N
 
 	If __LOWriter_VarsAreNull($iTopMargin, $iBottomMargin, $iLeftMargin, $iRightMargin) Then
 		__LOWriter_ArrayFill($aiMargins, $oTable.TopMargin(), $oTable.BottomMargin(), $oTable.LeftMargin(), $oTable.RightMargin())
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $aiMargins)
 	EndIf
 
@@ -1476,10 +1494,12 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 		If (__LOWriter_IsTableInDoc($oTable) = True) Then
 			__LOWriter_ArrayFill($avProperties, $oTable.HoriOrient(), $oTable.KeepTogether(), $oTable.getName(), $oTable.Split(), _
 					__LOWriter_TableRowSplitToggle($oTable), $oTable.RepeatHeadline(), $oTable.HeaderRowCount())
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $avProperties)
 
 		Else
 			__LOWriter_ArrayFill($avProperties, $oTable.HoriOrient(), $oTable.KeepTogether(), $oTable.getName(), $oTable.Split())
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $avProperties)
 		EndIf
 	EndIf
@@ -1583,6 +1603,7 @@ Func _LOWriter_TableRowColor(ByRef $oTable, $iRow, $iBackColor = Null, $bBackTra
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oRow.BackColor(), $oRow.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $avColor)
 	EndIf
 
@@ -1644,6 +1665,7 @@ Func _LOWriter_TableRowDelete(ByRef $oTable, $iRow, $iCount = 1)
 	$iCount = ($iCount > ($iRowCount - $iRow)) ? ($iRowCount - $iRow) : ($iCount)
 	$iReturn = ($iCount > ($iRowCount - $iRow)) ? (2) : (1) ; Return 1 if full amount deleted else 2 if only partial.
 	$oTable.getRows.removeByIndex($iRow, $iCount)
+
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $iReturn)
 EndFunc   ;==>_LOWriter_TableRowDelete
 
@@ -1678,6 +1700,7 @@ Func _LOWriter_TableRowGetCount(ByRef $oTable)
 	If Not __LOWriter_IsTableInDoc($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; can't get columns/rows if Table not in doc.
 	$iRowSize = $oTable.getRows.getCount()
 	If ($iRowSize = 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Failed to retrieve Row count.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, $iRowSize)
 EndFunc   ;==>_LOWriter_TableRowGetCount
 
@@ -1724,6 +1747,7 @@ Func _LOWriter_TableRowInsert(ByRef $oTable, $iCount, $iRow = -1)
 	If ($iRowCount < $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row out of bounds.
 	$iRow = ($iRow <= -1) ? ($iRowCount) : ($iRow)
 	$oTable.getRows.insertByIndex($iRow, $iCount)
+
 	Return ($oTable.getRows.getCount() = ($iRowCount + $iCount)) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_TableRowInsert
 
@@ -1783,6 +1807,7 @@ Func _LOWriter_TableRowProperty(ByRef $oTable, $iRow, $iHeight = Null, $bIsAutoH
 
 	If __LOWriter_VarsAreNull($iHeight, $bIsAutoHeight, $bIsSplitAllowed) Then
 		__LOWriter_ArrayFill($avProperties, $oRow.Height(), $oRow.IsAutoHeight(), $oRow.IsSplitAllowed())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avProperties)
 	EndIf
 
@@ -1850,6 +1875,7 @@ Func _LOWriter_TableSetData(ByRef $oTable, ByRef $avData)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	$oTable.setDataArray($avData)
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_TableSetData
 
@@ -1948,6 +1974,7 @@ Func _LOWriter_TableShadow(ByRef $oTable, $iWidth = Null, $iColor = Null, $bTran
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -2027,6 +2054,7 @@ Func _LOWriter_TableWidth(ByRef $oTable, $iWidth = Null, $iRelativeWidth = Null)
 
 	If __LOWriter_VarsAreNull($iWidth, $iRelativeWidth) Then
 		__LOWriter_ArrayFill($avWidthProps, $oTable.Width(), $oTable.RelativeWidth(), $oTable.IsWidthRelative())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avWidthProps)
 	EndIf
 

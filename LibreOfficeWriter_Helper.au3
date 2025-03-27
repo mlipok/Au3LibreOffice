@@ -110,6 +110,7 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 
 	If $vUserFunction = Default Then
 		; just return stored static User Function variable
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $vUserFunction_Static)
 
 	ElseIf IsFunc($vUserFunction) Then
@@ -125,15 +126,18 @@ Func _LOWriter_ComError_UserFunction($vUserFunction = Default, $vParam1 = Null, 
 		Else
 			$vUserFunction_Static = $vUserFunction
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 
 	ElseIf $vUserFunction = Null Then
 		; Clear User Function.
 		$vUserFunction_Static = Default
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 
 	Else
 		; return error as an incorrect parameter was passed to this function
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	EndIf
 EndFunc   ;==>_LOWriter_ComError_UserFunction
@@ -178,6 +182,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$nBlue = BitAND($iHex, 0xff)
 
 			$dHex = Hex($nRed, 2) & Hex($nGreen, 2) & Hex($nBlue, 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $dHex)
 
 		Case IsInt($iRGB) ; Long to RGB
@@ -189,6 +194,7 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$aiReturn[0] = $nRed
 			$aiReturn[1] = $nGreen
 			$aiReturn[2] = $nBlue
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiReturn)
 
 		Case IsInt($iHSB) ; Long TO HSB
@@ -274,9 +280,11 @@ Func _LOWriter_ConvertColorFromLong($iHex = Null, $iRGB = Null, $iHSB = Null, $i
 			$aiReturn[1] = $nMagenta
 			$aiReturn[2] = $nYellow
 			$aiReturn[3] = $nBlack
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, $aiReturn)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; no parameters set to an integer
 	EndSelect
 EndFunc   ;==>_LOWriter_ConvertColorFromLong
@@ -340,9 +348,11 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				$iBlue = BitAND("0x" & $dHex, 0xFF)
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 1, $iLong) ; Long from Hex
 
 			Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
 			EndIf
 
@@ -354,6 +364,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 
 				; RGB to Long
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 2, $iLong) ; Long from RGB
 
 			ElseIf IsString($vVal1) And IsString($vVal2) And IsString($vVal3) Then ; Hue Saturation and Brightness (HSB)
@@ -415,9 +426,11 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				$iBlue = Round(($iBlue * 255))
 
 				$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 				Return SetError($__LO_STATUS_SUCCESS, 3, $iLong) ; Return Long from HSB
 
 			Else
+
 				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
 
@@ -435,9 +448,11 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 			$iBlue = Round((255 * (1 - $nBlack) * (1 - $nYellow)))
 
 			$iLong = BitShift($iRed, -16) + BitShift($iGreen, -8) + $iBlue
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, $iLong) ; Long from CMYK
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; wrong number of Parameters
 	EndSwitch
 EndFunc   ;==>_LOWriter_ConvertColorToLong
@@ -484,6 +499,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 		If Not IsNumber($nInchOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nInchOut, $__LOCONST_CONVERT_UM_INCH)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
 	EndIf
 
@@ -491,6 +507,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 		If Not IsNumber($nCentimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nCentimeterOut, $__LOCONST_CONVERT_UM_CM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
 	EndIf
 
@@ -498,6 +515,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 		If Not IsNumber($nMillimeterOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nMillimeterOut, $__LOCONST_CONVERT_UM_MM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
 	EndIf
 
@@ -505,6 +523,7 @@ Func _LOWriter_ConvertFromMicrometer($nInchOut = Null, $nCentimeterOut = Null, $
 		If Not IsNumber($nPointsOut) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nPointsOut, $__LOCONST_CONVERT_UM_PT)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
@@ -552,6 +571,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 		If Not IsNumber($nInchIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nInchIn, $__LOCONST_CONVERT_INCH_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nReturnValue)
 	EndIf
 
@@ -559,6 +579,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 		If Not IsNumber($nCentimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nCentimeterIn, $__LOCONST_CONVERT_CM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, $nReturnValue)
 	EndIf
 
@@ -566,6 +587,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 		If Not IsNumber($nMillimeterIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nMillimeterIn, $__LOCONST_CONVERT_MM_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, $nReturnValue)
 	EndIf
 
@@ -573,6 +595,7 @@ Func _LOWriter_ConvertToMicrometer($nInchIn = Null, $nCentimeterIn = Null, $nMil
 		If Not IsNumber($nPointsIn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$nReturnValue = __LOWriter_UnitConvert($nPointsIn, $__LOCONST_CONVERT_PT_UM)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 4, $nReturnValue)
 	EndIf
 
@@ -703,6 +726,7 @@ Func _LOWriter_DateFormatKeyExists(ByRef $oDoc, $iFormatKey)
 	If Not IsInt($iFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = _LOWriter_FormatKeyExists($oDoc, $iFormatKey, $LOW_FORMAT_KEYS_DATE_TIME)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_DateFormatKeyExists
 
@@ -2579,6 +2603,7 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][0], $asURLReplace[$i][1])
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sFilePath)
 
 		Case $LOW_PATHCONV_PCPATH_RETURN
@@ -2589,6 +2614,7 @@ Func _LOWriter_PathConvert($sFilePath, $iReturnMode = $LOW_PATHCONV_AUTO_RETURN)
 				$sFilePath = StringReplace($sFilePath, $asURLReplace[$i][1], $asURLReplace[$i][0])
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $sFilePath)
 	EndSwitch
 EndFunc   ;==>_LOWriter_PathConvert
@@ -2704,6 +2730,7 @@ Func _LOWriter_SearchDescriptorModify(ByRef $oSrchDescript, $bBackwards = Null, 
 	If __LOWriter_VarsAreNull($bBackwards, $bMatchCase, $bWholeWord, $bRegExp, $bStyles, $bSearchPropValues) Then
 		__LOWriter_ArrayFill($avSrchDescript, $oSrchDescript.SearchBackwards(), $oSrchDescript.SearchCaseSensitive(), $oSrchDescript.SearchWords(), _
 				$oSrchDescript.SearchRegularExpression(), $oSrchDescript.SearchStyles(), $oSrchDescript.getValueSearch())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
 	EndIf
 
@@ -2787,6 +2814,7 @@ Func _LOWriter_SearchDescriptorSimilarityModify(ByRef $oSrchDescript, $bSimilari
 	If __LOWriter_VarsAreNull($bSimilarity, $bCombine, $iRemove, $iAdd, $iExchange) Then
 		__LOWriter_ArrayFill($avSrchDescript, $oSrchDescript.SearchSimilarity(), $oSrchDescript.SearchSimilarityRelax(), _
 				$oSrchDescript.SearchSimilarityRemove(), $oSrchDescript.SearchSimilarityAdd(), $oSrchDescript.SearchSimilarityExchange())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSrchDescript)
 	EndIf
 

@@ -222,6 +222,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 				$oShape.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -237,6 +238,7 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oShape.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oShape.FillGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -609,35 +611,43 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 
 		Case "com.sun.star.drawing.EllipseShape"
 			If ($oShape.CircleKind() = $iCircleKind_CUT) Then ; Circle Segment = CircleKind_CUT(2), Arc = CircleKind_ARC(3)
+
 				Return SetError($__LO_STATUS_SUCCESS, 2, $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT)
 
 			ElseIf ($oShape.CircleKind() = $iCircleKind_ARC) Then
+
 				Return SetError($__LO_STATUS_SUCCESS, 2, $LOW_SHAPE_TYPE_BASIC_ARC)
 
 			Else
+
 				Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 			EndIf
 
 		Case "com.sun.star.drawing.OpenBezierShape"
 ;~ $LOW_SHAPE_TYPE_LINE_CURVE ; No way to differentiate between these??
 ;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE
+
 			Return SetError($__LO_STATUS_SUCCESS, 3, $LOW_SHAPE_TYPE_LINE_CURVE)
 
 		Case "com.sun.star.drawing.ClosedBezierShape"
 ;~ $LOW_SHAPE_TYPE_LINE_CURVE_FILLED ; No way to differentiate between these??
 ;~ $LOW_SHAPE_TYPE_LINE_FREEFORM_LINE_FILLED
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, $LOW_SHAPE_TYPE_LINE_CURVE_FILLED)
 
 		Case "com.sun.star.drawing.LineShape"
+
 			Return SetError($__LO_STATUS_SUCCESS, 5, $LOW_SHAPE_TYPE_LINE_LINE)
 
 		Case "com.sun.star.drawing.PolyPolygonShape"
+
 			Return SetError($__LO_STATUS_SUCCESS, 6, $LOW_SHAPE_TYPE_LINE_POLYGON)
 ;~ $LOW_SHAPE_TYPE_LINE_POLYGON ; No way to differentiate between these??
 ;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45
 ;~ $LOW_SHAPE_TYPE_LINE_POLYGON_45_FILLED
 
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; Unknown shape type.
 	EndSwitch
 EndFunc   ;==>_LOWriter_ShapeGetType
@@ -853,6 +863,7 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 		__LOWriter_ArrayFill($avArrow, __LOWriter_ShapeArrowStyleName(Null, $oShape.LineStartName()), $oShape.LineStartWidth(), $oShape.LineStartCenter(), _
 				((($oShape.LineStartName() = $oShape.LineEndName()) And ($oShape.LineStartWidth() = $oShape.LineEndWidth()) And ($oShape.LineStartCenter() = $oShape.LineEndCenter())) ? (True) : (False)), _ ; See if Start and End are the same.
 				__LOWriter_ShapeArrowStyleName(Null, $oShape.LineEndName()), $oShape.LineEndWidth(), $oShape.LineEndCenter())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avArrow)
 	EndIf
 
@@ -999,6 +1010,7 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 		EndSwitch
 
 		__LOWriter_ArrayFill($avLine, $vReturn, $oShape.LineColor(), $oShape.LineWidth(), $oShape.LineTransparence(), $oShape.LineJoint(), $oShape.LineCap())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avLine)
 	EndIf
 
@@ -2128,6 +2140,7 @@ Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos
 
 	If __LOWriter_VarsAreNull($iX, $iY, $bProtectPos) Then
 		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oShape.MoveProtect())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 
@@ -2200,6 +2213,7 @@ Func _LOWriter_ShapeRotateSlant(ByRef $oShape, $nRotate = Null, $nSlant = Null)
 
 	If __LOWriter_VarsAreNull($nRotate, $nSlant) Then
 		__LOWriter_ArrayFill($aiShape, ($oShape.RotateAngle()) / 100, ($oShape.ShearAngle()) / 100) ; Divide by 100 to match L.O. values.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiShape)
 	EndIf
 
@@ -2312,6 +2326,7 @@ Func _LOWriter_ShapeTextBox(ByRef $oShape, $bTextBox = Null, $sContent = Null)
 
 	If __LOWriter_VarsAreNull($bTextBox, $sContent) Then
 		__LOWriter_ArrayFill($avTextBox, $oShape.TextBox(), $oShape.String())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avTextBox)
 	EndIf
 
@@ -2444,12 +2459,14 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 		__LOWriter_ArrayFill($aiTransparent, $tGradient.Style(), $tGradient.XOffset(), $tGradient.YOffset(), _
 				($tGradient.Angle() / 10), $tGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oShape.FillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -2667,6 +2684,7 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 		__LOWriter_ArrayFill($avPosition, $oShape.HoriOrient(), $oShape.HoriOrientPosition(), $oShape.HoriOrientRelation(), _
 				$oShape.PageToggle(), $oShape.VertOrient(), $oShape.VertOrientPosition(), $oShape.VertOrientRelation(), _
 				$oShape.IsFollowingTextFlow(), $oShape.AnchorType())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
@@ -2839,6 +2857,7 @@ Func _LOWriter_ShapeTypeSize(ByRef $oShape, $iWidth = Null, $iHeight = Null, $bP
 
 	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
 		__LOWriter_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oShape.SizeProtect())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
@@ -3016,6 +3035,7 @@ Func _LOWriter_ShapeWrapOptions(ByRef $oShape, $bFirstPar = Null, $bInBackground
 	If __LOWriter_VarsAreNull($bFirstPar, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oShape.SurroundAnchorOnly(), (($oShape.Opaque()) ? (False) : (True)), $oShape.AllowOverlap())
 		; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 

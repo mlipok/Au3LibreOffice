@@ -207,6 +207,7 @@ Func _LOWriter_FormControlCheckBoxData(ByRef $oCheckBox, $sDataField = Null, $bI
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oCheckBox.Control.DataField(), $oCheckBox.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -338,6 +339,7 @@ Func _LOWriter_FormControlCheckBoxGeneral(ByRef $oCheckBox, $sName = Null, $sLab
 				$oCheckBox.Control.DefaultState(), __LOWriter_ControlSetGetFontDesc($oCheckBox), $oCheckBox.Control.VisualEffect(), $oCheckBox.Control.Align(), $oCheckBox.Control.VerticalAlign(), _
 				$oCheckBox.Control.BackgroundColor(), $oCheckBox.Control.MultiLine(), $oCheckBox.Control.Graphic(), $oCheckBox.Control.ImagePosition(), $oCheckBox.Control.TriState(), _
 				$oCheckBox.Control.Tag(), $oCheckBox.Control.HelpText(), $oCheckBox.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -660,6 +662,7 @@ Func _LOWriter_FormControlComboBoxData(ByRef $oComboBox, $sDataField = Null, $bE
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $iType, $sListContent) Then
 		__LOWriter_ArrayFill($avControl, $oComboBox.Control.DataField(), $oComboBox.Control.ConvertEmptyToNull(), $oComboBox.Control.InputRequired(), _
 				$oComboBox.Control.ListSourceType(), $oComboBox.Control.ListSource())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -819,6 +822,7 @@ Func _LOWriter_FormControlComboBoxGeneral(ByRef $oComboBox, $sName = Null, $oLab
 				$oComboBox.Control.Align(), $oComboBox.Control.BackgroundColor(), $oComboBox.Control.Border(), $oComboBox.Control.BorderColor(), $oComboBox.Control.Dropdown(), _
 				$oComboBox.Control.LineCount(), $oComboBox.Control.Autocomplete(), $oComboBox.Control.HideInactiveSelection(), $oComboBox.Control.Tag(), $oComboBox.Control.HelpText(), _
 				$oComboBox.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -1100,6 +1104,7 @@ Func _LOWriter_FormControlComboBoxValue(ByRef $oComboBox, $sValue = Null)
 	If __LOWriter_VarsAreNull($sValue) Then
 		$sCurValue = $oComboBox.Control.CurrentValue()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
@@ -1161,6 +1166,7 @@ Func _LOWriter_FormControlCurrencyFieldData(ByRef $oCurrencyField, $sDataField =
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oCurrencyField.Control.DataField(), $oCurrencyField.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -1326,6 +1332,7 @@ Func _LOWriter_FormControlCurrencyFieldGeneral(ByRef $oCurrencyField, $sName = N
 				__LOWriter_ControlSetGetFontDesc($oCurrencyField), $oCurrencyField.Control.Align(), $oCurrencyField.Control.VerticalAlign(), $oCurrencyField.Control.BackgroundColor(), _
 				$oCurrencyField.Control.Border(), $oCurrencyField.Control.BorderColor(), $oCurrencyField.Control.HideInactiveSelection(), $oCurrencyField.Control.Tag(), _
 				$oCurrencyField.Control.HelpText(), $oCurrencyField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -1664,6 +1671,7 @@ Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Nu
 
 	If __LOWriter_VarsAreNull($nValue) Then
 		$nCurVal = $oCurrencyField.Control.Value() ; Value is Null when not set.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
 
@@ -1726,6 +1734,7 @@ Func _LOWriter_FormControlDateFieldData(ByRef $oDateField, $sDataField = Null, $
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oDateField.Control.DataField(), $oDateField.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -1917,6 +1926,7 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 				$oDateField.Control.Repeat(), $oDateField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oDateField), $oDateField.Control.Align(), $oDateField.Control.VerticalAlign(), _
 				$oDateField.Control.BackgroundColor(), $oDateField.Control.Border(), $oDateField.Control.BorderColor(), $oDateField.Control.Dropdown(), _
 				$oDateField.Control.HideInactiveSelection(), $oDateField.Control.Tag(), $oDateField.Control.HelpText(), $oDateField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -2433,6 +2443,7 @@ Func _LOWriter_FormControlFileSelFieldGeneral(ByRef $oFileSel, $sName = Null, $i
 				$oFileSel.Control.ReadOnly(), $oFileSel.Control.Printable(), $oFileSel.Control.Tabstop(), $oFileSel.Control.TabIndex(), $oFileSel.Control.DefaultText(), _
 				__LOWriter_ControlSetGetFontDesc($oFileSel), $oFileSel.Control.Align(), $oFileSel.Control.VerticalAlign(), $oFileSel.Control.BackgroundColor(), $oFileSel.Control.Border(), _
 				$oFileSel.Control.BorderColor(), $oFileSel.Control.HideInactiveSelection(), $oFileSel.Control.Tag(), $oFileSel.Control.HelpText(), $oFileSel.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -2655,6 +2666,7 @@ Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 	If __LOWriter_VarsAreNull($sValue) Then
 		$sCurValue = $oFileSel.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
@@ -2724,6 +2736,7 @@ Func _LOWriter_FormControlFormattedFieldData(ByRef $oFormatField, $sDataField = 
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
 		__LOWriter_ArrayFill($avControl, $oFormatField.Control.DataField(), $oFormatField.Control.ConvertEmptyToNull(), $oFormatField.Control.InputRequired(), _
 				$oFormatField.Control.UseFilterValueProposal())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -2888,6 +2901,7 @@ Func _LOWriter_FormControlFormattedFieldGeneral(ByRef $oFormatField, $sName = Nu
 				$oFormatField.Control.Repeat(), $oFormatField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oFormatField), $oFormatField.Control.Align(), _
 				$oFormatField.Control.VerticalAlign(), $oFormatField.Control.BackgroundColor(), $oFormatField.Control.Border(), $oFormatField.Control.BorderColor(), _
 				$oFormatField.Control.HideInactiveSelection(), $oFormatField.Control.Tag(), $oFormatField.Control.HelpText(), $oFormatField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -3256,6 +3270,7 @@ Func _LOWriter_FormControlGetParent(ByRef $oControl)
 		If Not IsObj($oOldParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	Else
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	EndIf
 
@@ -3335,6 +3350,7 @@ Func _LOWriter_FormControlGroupBoxGeneral(ByRef $oGroupBox, $sName = Null, $sLab
 		__LOWriter_ArrayFill($avControl, $oGroupBox.Control.Name(), $oGroupBox.Control.Label(), $oGroupBox.Control.WritingMode(), $oGroupBox.Control.Enabled(), _
 				$oGroupBox.Control.EnableVisible(), $oGroupBox.Control.Printable(), __LOWriter_ControlSetGetFontDesc($oGroupBox), $oGroupBox.Control.Tag(), _
 				$oGroupBox.Control.HelpText(), $oGroupBox.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -3591,6 +3607,7 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 				$oImageButton.Control.Printable(), $oImageButton.Control.Tabstop(), $oImageButton.Control.TabIndex(), $oImageButton.Control.BackgroundColor(), _
 				$oImageButton.Control.Border(), $oImageButton.Control.BorderColor(), $iBtnAction, $oImageButton.Control.TargetURL(), $oImageButton.Control.TargetFrame(), _
 				$oImageButton.Control.Graphic(), $oImageButton.Control.ScaleMode(), $oImageButton.Control.Tag(), $oImageButton.Control.HelpText(), $oImageButton.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -3850,6 +3867,7 @@ Func _LOWriter_FormControlImageControlData(ByRef $oImageControl, $sDataField = N
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oImageControl.Control.DataField(), $oImageControl.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -3964,6 +3982,7 @@ Func _LOWriter_FormControlImageControlGeneral(ByRef $oImageControl, $sName = Nul
 				$oImageControl.Control.EnableVisible(), $oImageControl.Control.ReadOnly(), $oImageControl.Control.Printable(), $oImageControl.Control.Tabstop(), _
 				$oImageControl.Control.TabIndex(), $oImageControl.Control.BackgroundColor(), $oImageControl.Control.Border(), $oImageControl.Control.BorderColor(), _
 				$oImageControl.Control.Graphic(), $oImageControl.Control.ScaleMode(), $oImageControl.Control.Tag(), $oImageControl.Control.HelpText(), $oImageControl.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -4389,6 +4408,7 @@ Func _LOWriter_FormControlLabelGeneral(ByRef $oLabel, $sName = Null, $sLabel = N
 		__LOWriter_ArrayFill($avControl, $oLabel.Control.Name(), $oLabel.Control.Label(), $oLabel.Control.WritingMode(), $oLabel.Control.Enabled(), $oLabel.Control.EnableVisible(), _
 				$oLabel.Control.Printable(), __LOWriter_ControlSetGetFontDesc($oLabel), $oLabel.Control.Align(), $oLabel.Control.VerticalAlign(), $oLabel.Control.BackgroundColor(), _
 				$oLabel.Control.Border(), $oLabel.Control.BorderColor(), $oLabel.Control.MultiLine(), $oLabel.Control.Tag(), $oLabel.Control.HelpText(), $oLabel.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -4600,6 +4620,7 @@ Func _LOWriter_FormControlListBoxData(ByRef $oListBox, $sDataField = Null, $bInp
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired, $iType, $asListContent, $iBoundField) Then
 		__LOWriter_ArrayFill($avControl, $oListBox.Control.DataField(), $oListBox.Control.InputRequired(), $oListBox.Control.ListSourceType(), _
 				$oListBox.Control.ListSource(), $oListBox.Control.BoundColumn())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -4757,6 +4778,7 @@ Func _LOWriter_FormControlListBoxGeneral(ByRef $oListBox, $sName = Null, $oLabel
 				$oListBox.Control.TabIndex(), $oListBox.Control.StringItemList(), __LOWriter_ControlSetGetFontDesc($oListBox), $oListBox.Control.Align(), $oListBox.Control.BackgroundColor(), _
 				$oListBox.Control.Border(), $oListBox.Control.BorderColor(), $oListBox.Control.Dropdown(), $oListBox.Control.LineCount(), $oListBox.Control.MultiSelection(), _
 				$oListBox.Control.DefaultSelection(), $oListBox.Control.Tag(), $oListBox.Control.HelpText(), $oListBox.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -5072,11 +5094,13 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 		If $bReturnValue Then
 			$avCurSel = $oListBox.Control.SelectedValues()
 			If Not IsArray($avCurSel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $avCurSel)
 
 		Else
 			$aiCurSel = $oListBox.Control.SelectedItems()
 			If Not IsArray($aiCurSel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiCurSel)
 		EndIf
 	EndIf
@@ -5199,6 +5223,7 @@ Func _LOWriter_FormControlNavBarGeneral(ByRef $oNavBar, $sName = Null, $iTxtDir 
 				$oNavBar.Control.Border(), (($oNavBar.Control.IconSize() = $__LOW_FORM_CONTROL_ICON_SMALL) ? (True) : (False)), _ ; Icon size.
 				$oNavBar.Control.ShowPosition(), $oNavBar.Control.ShowNavigation(), $oNavBar.Control.ShowRecordActions(), $oNavBar.Control.ShowFilterSort(), _
 				$oNavBar.Control.Tag(), $oNavBar.Control.HelpText(), $oNavBar.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -5414,6 +5439,7 @@ Func _LOWriter_FormControlNumericFieldData(ByRef $oNumericField, $sDataField = N
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oNumericField.Control.DataField(), $oNumericField.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -5577,6 +5603,7 @@ Func _LOWriter_FormControlNumericFieldGeneral(ByRef $oNumericField, $sName = Nul
 				__LOWriter_ControlSetGetFontDesc($oNumericField), $oNumericField.Control.Align(), $oNumericField.Control.VerticalAlign(), $oNumericField.Control.BackgroundColor(), _
 				$oNumericField.Control.Border(), $oNumericField.Control.BorderColor(), $oNumericField.Control.HideInactiveSelection(), $oNumericField.Control.Tag(), _
 				$oNumericField.Control.HelpText(), $oNumericField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -5897,6 +5924,7 @@ Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null
 
 	If __LOWriter_VarsAreNull($nValue) Then
 		$nCurVal = $oNumericField.Control.Value() ; Value is Null when not set.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
 
@@ -5960,6 +5988,7 @@ Func _LOWriter_FormControlOptionButtonData(ByRef $oOptionButton, $sDataField = N
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oOptionButton.Control.DataField(), $oOptionButton.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -6091,6 +6120,7 @@ Func _LOWriter_FormControlOptionButtonGeneral(ByRef $oOptionButton, $sName = Nul
 				$oOptionButton.Control.VisualEffect(), $oOptionButton.Control.Align(), $oOptionButton.Control.VerticalAlign(), $oOptionButton.Control.BackgroundColor(), _
 				$oOptionButton.Control.MultiLine(), $oOptionButton.Control.Graphic(), $oOptionButton.Control.ImagePosition(), $oOptionButton.Control.Tag(), _
 				$oOptionButton.Control.HelpText(), $oOptionButton.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -6410,6 +6440,7 @@ Func _LOWriter_FormControlPatternFieldData(ByRef $oPatternField, $sDataField = N
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
 		__LOWriter_ArrayFill($avControl, $oPatternField.Control.DataField(), $oPatternField.Control.ConvertEmptyToNull(), $oPatternField.Control.InputRequired(), _
 				$oPatternField.Control.UseFilterValueProposal())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -6563,6 +6594,7 @@ Func _LOWriter_FormControlPatternFieldGeneral(ByRef $oPatternField, $sName = Nul
 				__LOWriter_ControlSetGetFontDesc($oPatternField), $oPatternField.Control.Align(), $oPatternField.Control.VerticalAlign(), $oPatternField.Control.BackgroundColor(), _
 				$oPatternField.Control.Border(), $oPatternField.Control.BorderColor(), $oPatternField.Control.HideInactiveSelection(), $oPatternField.Control.Tag(), _
 				$oPatternField.Control.HelpText(), $oPatternField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -6840,6 +6872,7 @@ Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null
 	If __LOWriter_VarsAreNull($sValue) Then
 		$sCurValue = $oPatternField.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
 	EndIf
 
@@ -6906,6 +6939,7 @@ Func _LOWriter_FormControlPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAn
 
 	If __LOWriter_VarsAreNull($iX, $iY, $iAnchor, $bProtectPos) Then
 		__LOWriter_ArrayFill($avPosition, $tPos.X(), $tPos.Y(), $oControl.AnchorType(), $oControl.MoveProtect())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 
@@ -7132,6 +7166,7 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 				$oPushButton.Control.BackgroundColor(), $oPushButton.Control.MultiLine(), $iBtnAction, $oPushButton.Control.TargetURL(), $oPushButton.Control.TargetFrame(), _
 				$oPushButton.Control.DefaultButton(), $oPushButton.Control.Graphic(), $oPushButton.Control.ImagePosition(), $oPushButton.Control.Tag(), _
 				$oPushButton.Control.HelpText(), $oPushButton.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -7668,6 +7703,7 @@ Func _LOWriter_FormControlSize(ByRef $oControl, $iWidth = Null, $iHeight = Null,
 
 	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bProtectSize) Then
 		__LOWriter_ArrayFill($avSize, $tSize.Width(), $tSize.Height(), $oControl.SizeProtect())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
@@ -7790,6 +7826,7 @@ Func _LOWriter_FormControlTableConGeneral(ByRef $oTableCon, $sName = Null, $iTxt
 				$oTableCon.Control.Printable(), $oTableCon.Control.Tabstop(), $oTableCon.Control.TabIndex(), __LOWriter_ControlSetGetFontDesc($oTableCon), $oTableCon.Control.RowHeight(), _
 				$oTableCon.Control.BackgroundColor(), $oTableCon.Control.Border(), $oTableCon.Control.HasNavigationBar(), _
 				$oTableCon.Control.HasRecordMarker(), $oTableCon.Control.Tag(), $oTableCon.Control.HelpText(), $oTableCon.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -8034,6 +8071,7 @@ Func _LOWriter_FormControlTextBoxData(ByRef $oTextBox, $sDataField = Null, $bEmp
 	If __LOWriter_VarsAreNull($sDataField, $bEmptyIsNull, $bInputRequired, $bFilter) Then
 		__LOWriter_ArrayFill($avControl, $oTextBox.Control.DataField(), $oTextBox.Control.ConvertEmptyToNull(), $oTextBox.Control.InputRequired(), _
 				$oTextBox.Control.UseFilterValueProposal())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -8192,6 +8230,7 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 				(($oTextBox.Control.HScroll() = True) And ($oTextBox.Control.VScroll() = False)) ? ($LOW_FORM_CONTROL_SCROLL_HORI) : _ ; Scrollbar mode.
 				((($oTextBox.Control.HScroll() = False) And ($oTextBox.Control.VScroll() = True)) ? ($LOW_FORM_CONTROL_SCROLL_VERT) : ($LOW_FORM_CONTROL_SCROLL_BOTH))), _ ; Scrollbar mode.
 				$oTextBox.Control.EchoChar(), $oTextBox.Control.HideInactiveSelection(), $oTextBox.Control.Tag(), $oTextBox.Control.HelpText(), $oTextBox.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -8518,6 +8557,7 @@ Func _LOWriter_FormControlTimeFieldData(ByRef $oTimeField, $sDataField = Null, $
 
 	If __LOWriter_VarsAreNull($sDataField, $bInputRequired) Then
 		__LOWriter_ArrayFill($avControl, $oTimeField.Control.DataField(), $oTimeField.Control.InputRequired())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -8712,6 +8752,7 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 				$oTimeField.Control.Repeat(), $oTimeField.Control.RepeatDelay(), __LOWriter_ControlSetGetFontDesc($oTimeField), $oTimeField.Control.Align(), $oTimeField.Control.VerticalAlign(), _
 				$oTimeField.Control.BackgroundColor(), $oTimeField.Control.Border(), $oTimeField.Control.BorderColor(), $oTimeField.Control.HideInactiveSelection(), _
 				$oTimeField.Control.Tag(), $oTimeField.Control.HelpText(), $oTimeField.Control.HelpURL())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avControl)
 	EndIf
 
@@ -9261,9 +9302,11 @@ Func _LOWriter_FormParent(ByRef $oForm, $oParent = Null)
 
 	If __LOWriter_VarsAreNull($oParent) Then
 		If $oOldParent.supportsService("com.sun.star.text.TextDocument") Then ; Parent is a Document.
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, $oOldParent)
 
 		Else ; Parent is a Form.
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, $oOldParent)
 		EndIf
 	EndIf
@@ -9408,6 +9451,7 @@ Func _LOWriter_FormPropertiesData(ByRef $oForm, $sSource = Null, $iContentType =
 
 		__LOWriter_ArrayFill($avForm, $sSourceName, $oForm.CommandType(), $oForm.Command(), $oForm.EscapeProcessing(), $oForm.Filter(), $oForm.Order(), _
 				$oForm.MasterFields(), $oForm.DetailFields(), $oForm.AllowInserts(), $oForm.AllowUpdates(), $oForm.AllowDeletes(), $oForm.IgnoreResult(), $oForm.NavigationBarMode(), $oForm.Cycle())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avForm)
 	EndIf
 
@@ -9561,6 +9605,7 @@ Func _LOWriter_FormPropertiesGeneral(ByRef $oForm, $sName = Null, $sURL = Null, 
 
 	If __LOWriter_VarsAreNull($sName, $sURL, $sFrame, $iEncoding, $iSubType) Then
 		__LOWriter_ArrayFill($avForm, $oForm.Name(), $oForm.URL(), $oForm.TargetFrame(), $oForm.SubmitEncoding(), $oForm.SubmitMethod())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avForm)
 	EndIf
 

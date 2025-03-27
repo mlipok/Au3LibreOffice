@@ -76,6 +76,7 @@ Func _LOWriter_CellBackColor(ByRef $oCell, $iBackColor = Null, $bBackTransparent
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oCell.BackColor(), $oCell.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $avColor)
 	EndIf
 
@@ -196,6 +197,7 @@ Func _LOWriter_CellBorderPadding(ByRef $oCell, $iTop = Null, $iBottom = Null, $i
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oCell.TopBorderDistance(), $oCell.BottomBorderDistance(), $oCell.LeftBorderDistance(), $oCell.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -278,6 +280,7 @@ Func _LOWriter_CellBorderStyle(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLe
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oCell, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CellBorderStyle
 
@@ -328,6 +331,7 @@ Func _LOWriter_CellBorderWidth(ByRef $oCell, $iTop = Null, $iBottom = Null, $iLe
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_Border($oCell, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CellBorderWidth
 

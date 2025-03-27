@@ -771,6 +771,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 			$aStyles[$i] = $oStyles.getByIndex($i).Name() ; -- Can't use Display name due to special characters.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
