@@ -326,7 +326,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 
 	If (@NumParams = 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	Switch @NumParams
-		Case 1 ;Hex
+		Case 1 ; Hex
 			If Not IsString($vVal1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; not a string
 			$vVal1 = StringStripWS($vVal1, $STR_STRIPALL)
 			$dHex = $vVal1
@@ -346,7 +346,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0) ; Wrong length of string.
 			EndIf
 
-		Case 3 ;RGB and HSB; HSB is all strings, RGB all Integers.
+		Case 3 ; RGB and HSB; HSB is all strings, RGB all Integers.
 			If (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3)) Then ; RGB
 				$iRed = $vVal1
 				$iGreen = $vVal2
@@ -421,7 +421,7 @@ Func _LOWriter_ConvertColorToLong($vVal1 = Null, $vVal2 = Null, $vVal3 = Null, $
 				Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0) ; Wrong parameters
 			EndIf
 
-		Case 4 ;CMYK
+		Case 4 ; CMYK
 			If Not (IsInt($vVal1) And IsInt($vVal2) And IsInt($vVal3) And IsInt($vVal4)) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; CMYK not integers.
 
 			; CMYK to RGB
@@ -1496,7 +1496,7 @@ Func _LOWriter_FindFormatModifyIndent(ByRef $atFormat, $iBeforeText = Null, $iAf
 
 	If Not IsArray($atFormat) Or (UBound($atFormat, $UBOUND_COLUMNS) > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	; Min: -9998989;Max: 17094
+	; Min: -9998989; Max: 17094
 	If ($iBeforeText <> Null) Then
 		If ($iBeforeText = Default) Then
 			__LOWriter_FindFormatDeleteSetting($atFormat, "ParaLeftMargin")
@@ -1834,7 +1834,7 @@ Func _LOWriter_FindFormatModifyRotateScaleSpace(ByRef $atFormat, $iRotation = Nu
 
 		Else
 			If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
+			$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc), so times by 10.
 			__LOWriter_FindFormatAddSetting($atFormat, __LOWriter_SetPropertyValue("CharRotation", $iRotation))
 		EndIf
 	EndIf
@@ -1971,13 +1971,13 @@ Func _LOWriter_FindFormatModifySpacing(ByRef $atFormat, $iAbovePar = Null, $iBel
 			If ($iLineSpcHeight <> Default) And ($iLineSpcHeight <> Null) Then
 				If Not IsInt($iLineSpcHeight) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 				Switch $tLine.Mode()
-					Case $LOW_LINE_SPC_MODE_PROP ;Proportional
+					Case $LOW_LINE_SPC_MODE_PROP ; Proportional
 						If Not __LOWriter_IntIsBetween($iLineSpcHeight, 6, 65535) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0) ; Min setting on Proportional is 6%
 
-					Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ;Minimum and Leading Modes
+					Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ; Minimum and Leading Modes
 						If Not __LOWriter_IntIsBetween($iLineSpcHeight, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 
-					Case $LOW_LINE_SPC_MODE_FIX ;Fixed Line Spacing Mode
+					Case $LOW_LINE_SPC_MODE_FIX ; Fixed Line Spacing Mode
 						If Not __LOWriter_IntIsBetween($iLineSpcHeight, 51, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; Min spacing is 51 when Fixed Mode
 				EndSwitch
 				$tLine.Height = $iLineSpcHeight

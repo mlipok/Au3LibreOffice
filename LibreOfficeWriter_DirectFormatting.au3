@@ -1748,7 +1748,7 @@ Func _LOWriter_DirFrmtParOutLineAndList(ByRef $oDoc, ByRef $oSelection, $iOutlin
 		EndIf
 
 		If ($sNumStyle = Default) Then
-			$oSelection.NumberingStyleName = "" ;set to no numbering style first in order to reset successfully.
+			$oSelection.NumberingStyleName = "" ; Set to no numbering style first in order to reset successfully.
 			$oSelection.setPropertyToDefault("NumberingStyleName")
 			$sNumStyle = Null
 		EndIf

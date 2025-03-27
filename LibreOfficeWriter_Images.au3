@@ -239,7 +239,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 		__LOWriter_ArrayFill($avGradient, $oImage.FillGradientName(), $tStyleGradient.Style(), _
 				$oImage.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
-				$tStyleGradient.EndIntensity()) ;Angle is set in thousands
+				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -252,7 +252,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oImage.FillStyle = $LOW_AREA_FILL_STYLE_OFF
 			$oImage.FillGradientName = ""
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
@@ -357,7 +357,7 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 
 	$oImage.FillGradient = $tStyleGradient
 
-	;Error checking
+	; Error checking
 	$iError = ($iType = Null) ? ($iError) : (($oImage.FillGradient.Style() = $iType) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iXCenter = Null) ? ($iError) : (($oImage.FillGradient.XOffset() = $iXCenter) ? ($iError) : (BitOR($iError, 8)))
 	$iError = ($iYCenter = Null) ? ($iError) : (($oImage.FillGradient.YOffset() = $iYCenter) ? ($iError) : (BitOR($iError, 16)))
@@ -407,7 +407,7 @@ Func _LOWriter_ImageAreaTransparency(ByRef $oImage, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oImage.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oImage.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
+	$oImage.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
 	$oImage.FillTransparence = $iTransparency
 	$iError = ($oImage.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -484,12 +484,12 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 	If __LOWriter_VarsAreNull($iType, $iXCenter, $iYCenter, $iAngle, $iTransitionStart, $iStart, $iEnd) Then
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
-				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ;Angle is set in thousands
+				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
-		If ($iType = $LOW_GRAD_TYPE_OFF) Then ;Turn Off Gradient
+		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oImage.FillTransparenceGradientName = ""
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
@@ -510,7 +510,7 @@ Func _LOWriter_ImageAreaTransparencyGradient(ByRef $oDoc, ByRef $oImage, $iType 
 
 	If ($iAngle <> Null) Then
 		If Not __LOWriter_IntIsBetween($iAngle, 0, 359) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		$tStyleGradient.Angle = ($iAngle * 10) ;Angle is set in thousands
+		$tStyleGradient.Angle = ($iAngle * 10) ; Angle is set in thousands
 	EndIf
 
 	If ($iTransitionStart <> Null) Then
@@ -1050,7 +1050,7 @@ Func _LOWriter_ImageCrop(ByRef $oImage, $iLeft = Null, $iRight = Null, $iTop = N
 
 	If ($bKeepScaleInternal = True) Then $oImage.Size = $tSize
 
-	;Error checking
+	; Error checking
 	$iError = ($iLeft = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Left(), $iLeft - 1, $iLeft + 1)) ? ($iError) : (BitOR($iError, 1)))
 	$iError = ($iRight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Right(), $iRight - 1, $iRight + 1)) ? ($iError) : (BitOR($iError, 2)))
 	$iError = ($iTop = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.GraphicCrop.Top(), $iTop - 1, $iTop + 1)) ? ($iError) : (BitOR($iError, 4)))
@@ -1091,7 +1091,7 @@ Func _LOWriter_ImageDelete(ByRef $oDoc, ByRef $oImage)
 	If Not IsObj($oImage) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	$sImageName = $oImage.getName()
 	$oImage.dispose()
-	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ;Document still contains Image named the same.
+	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Document still contains Image named the same.
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_ImageDelete
 
@@ -1124,7 +1124,7 @@ Func _LOWriter_ImageExists(ByRef $oDoc, $sImageName)
 
 	If ($oDoc.GraphicObjects().hasByName($sImageName)) Then Return SetError($__LO_STATUS_SUCCESS, 1, True)
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_ImageExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -1456,7 +1456,7 @@ Func _LOWriter_ImageModify(ByRef $oImage, $bFlipVert = Null, $bFlipHoriOnRight =
 
 	If ($nAngle <> Null) Then
 		If Not __LOWriter_NumIsBetween($nAngle, 0, 360) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$oImage.GraphicRotation = ($nAngle * 10) ;X10 to match L.O. Values
+		$oImage.GraphicRotation = ($nAngle * 10) ; x10 to match L.O. Values
 		$iError = ($oImage.GraphicRotation() = ($nAngle * 10)) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
@@ -1683,7 +1683,7 @@ Func _LOWriter_ImagesGetNames(ByRef $oDoc)
 	ReDim $asImages[$oImages.getCount()]
 	For $i = 0 To $oImages.getCount() - 1
 		$asImages[$i] = ($oImages.getByIndex($i).Name)
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ;Sleep every x cycles.
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ; Sleep every x cycles.
 	Next
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asImages), $asImages)
@@ -1765,7 +1765,7 @@ Func _LOWriter_ImageShadow(ByRef $oImage, $iWidth = Null, $iColor = Null, $bTran
 	EndIf
 
 	$oImage.ShadowFormat = $tShdwFrmt
-	;Error Checking
+	; Error Checking
 	$tShdwFrmt = $oImage.ShadowFormat
 	If Not IsObj($tShdwFrmt) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -1838,27 +1838,27 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 	If __LOWriter_VarsAreNull($iScaleWidth, $iScaleHeight, $iWidth, $iHeight, $bOriginalSize) Then
 		__LOWriter_ArrayFill($avImage, Round(($tSize.Width() / $tOrigSize.Width()) * 100), _
 				Round(($tSize.Height() / $tOrigSize.Height()) * 100), $tSize.Width(), $tSize.Height(), _
-				((($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? (True) : (False))) ;If image is set to its original size, return true.
+				((($oImage.Size.Width() = $tOrigSize.Width()) And $oImage.Size.Height() = $tOrigSize.Height()) ? (True) : (False))) ; If image is set to its original size, return true.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avImage)
 	EndIf
 
 	If ($iScaleWidth <> Null) Or ($iScaleHeight <> Null) Then
 		If ($iScaleWidth <> Null) Then
-			If Not __LOWriter_IntIsBetween($iScaleWidth, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ;Min is 1%, no max
-			$tSize.Width = Int(($tOrigSize.Width() * ($iScaleWidth / 100))) ;Times original Width by scale percentage
+			If Not __LOWriter_IntIsBetween($iScaleWidth, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; Min is 1%, no max
+			$tSize.Width = Int(($tOrigSize.Width() * ($iScaleWidth / 100))) ; Times original Width by scale percentage
 		EndIf
 
 		If ($iScaleHeight <> Null) Then
-			If Not __LOWriter_IntIsBetween($iScaleHeight, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ;Min 1%, no max
-			$tSize.Height = Int(($tOrigSize.Height() * ($iScaleHeight / 100))) ;Times original Height by scale percentage
+			If Not __LOWriter_IntIsBetween($iScaleHeight, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; Min 1%, no max
+			$tSize.Height = Int(($tOrigSize.Height() * ($iScaleHeight / 100))) ; Times original Height by scale percentage
 		EndIf
 
 		$oImage.Size = $tSize
 
-		$tSize = $oImage.Size() ;Retrieve the size Struct again.
+		$tSize = $oImage.Size() ; Retrieve the size Struct again.
 		If Not IsObj($tSize) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		;Error checking
+		; Error checking
 		$iError = ($iScaleWidth = Null) ? ($iError) : ((Round(($tSize.Width() / $tOrigSize.Width()) * 100) = $iScaleWidth) ? ($iError) : (BitOR($iError, 1)))
 		$iError = ($iScaleHeight = Null) ? ($iError) : ((Round(($tSize.Height() / $tOrigSize.Height()) * 100) = $iScaleHeight) ? ($iError) : (BitOR($iError, 2)))
 	EndIf
@@ -1876,7 +1876,7 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 
 		$oImage.Size = $tSize
 
-		;Error checking
+		; Error checking
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4)))
 		$iError = ($iHeight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8)))
 	EndIf
@@ -2043,8 +2043,8 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 				$oImage.IsFollowingTextFlow(), $oImage.AnchorType())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
-	;Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
-	If ($iHorAlign <> Null) Then ;Cant be set if Anchor is set to "As Char"
+	; Accepts HoriOrient Left, Right, Center, and "None" = "From Left"
+	If ($iHorAlign <> Null) Then ; Cant be set if Anchor is set to "As Char"
 		If Not __LOWriter_IntIsBetween($iHorAlign, $LOW_ORIENT_HORI_NONE, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 		$oImage.HoriOrient = $iHorAlign
 		$iError = ($oImage.HoriOrient() = $iHorAlign) ? ($iError) : (BitOR($iError, 1))
@@ -2068,7 +2068,7 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 		$iError = ($oImage.PageToggle() = $bMirror) ? ($iError) : (BitOR($iError, 8))
 	EndIf
 
-	;Accepts Orient Top, Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
+	; Accepts Orient Top, Bottom, Center, and "None" = "From Top"/From Bottom, plus Row and Char.
 	If ($iVertAlign <> Null) Then
 		If Not __LOWriter_IntIsBetween($iVertAlign, $LOW_ORIENT_VERT_NONE, $LOW_ORIENT_VERT_LINE_BOTTOM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oImage.VertOrient = $iVertAlign
@@ -2085,15 +2085,15 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 		If Not __LOWriter_IntIsBetween($iVertRelation, $LOW_RELATIVE_ROW, $LOW_RELATIVE_TEXT_LINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$iCurrentAnchor = (($iAnchorPos <> Null) ? ($iAnchorPos) : ($oImage.AnchorType()))
 
-		;Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
-		;for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or "$LOW_RELATIVE_PARAGRAPH",
-		;For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the L.O. UI the furthest left
-		;drop down box) is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1), $LOW_ORIENT_VERT_CHAR_CENTER(2),
-		;$LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and Center, or "From Bottom"/
-		;"From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set to "As Character", I need
-		;to first determine the desired user setting, $LOW_RELATIVE_ROW(-1), $LOW_RELATIVE_PARAGRAPH(0), or
-		;$LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and then manually set the value to the
-		;correct setting. Such as Line_Top, Line_Bottom etc.
+		; Libre Office is a bit complex in this anchor setting; When set to "As Character", there aren't specific setting values
+		; for "Baseline, "Character" and "Row", But For Baseline the VertOrientRelation value is 0, or "$LOW_RELATIVE_PARAGRAPH",
+		; For "Character", The VertOrientRelation value is still 0, and the "VertOrient" value (In the L.O. UI the furthest left
+		; drop down box) is modified, which can be either $LOW_ORIENT_VERT_CHAR_TOP(1), $LOW_ORIENT_VERT_CHAR_CENTER(2),
+		; $LOW_ORIENT_VERT_CHAR_BOTTOM(3), depending on the current value of Top, Bottom and Center, or "From Bottom"/
+		; "From Top", of "VertOrient". The same is true For "Row", which means when the anchor is set to "As Character", I need
+		; to first determine the desired user setting, $LOW_RELATIVE_ROW(-1), $LOW_RELATIVE_PARAGRAPH(0), or
+		; $LOW_RELATIVE_CHARACTER(2), and then determine the current "VertOrient" setting, and then manually set the value to the
+		; correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
 			If ($iVertRelation = $LOW_RELATIVE_ROW) Then
@@ -2117,8 +2117,8 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_BOTTOM)) ? ($iError) : (BitOR($iError, 64))
 				EndSwitch
 
-			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ;Paragraph = Baseline setting in L.O. UI
-				$oImage.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
+			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
+				$oImage.VertOrientRelation = $iVertRelation ; Paragraph = Baseline in this case
 				$iError = (($oImage.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
@@ -2236,7 +2236,7 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSize)
 	EndIf
 
-	If ($iWidth <> Null) Then ;Min 51
+	If ($iWidth <> Null) Then ; Min 51
 		If Not __LOWriter_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		$oImage.Width = $iWidth
 		$iError = (__LOWriter_IntIsBetween($oImage.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 1))
@@ -2247,7 +2247,7 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		$oImage.RelativeWidth = $iRelativeWidth
 		$iError = ($oImage.RelativeWidth() = $iRelativeWidth) ? ($iError) : (BitOR($iError, 2))
 
-		If ($iRelativeWidth <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, True) ;If Relative Width isn't being turned off, then set Width Value.
+		If ($iRelativeWidth <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, True) ; If Relative Width isn't being turned off, then set Width Value.
 	EndIf
 
 	If ($iWidthRelativeTo <> Null) Then
@@ -2268,7 +2268,7 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 		$oImage.RelativeHeight = $iRelativeHeight
 		$iError = ($oImage.RelativeHeight() = $iRelativeHeight) ? ($iError) : (BitOR($iError, 16))
 
-		If ($iRelativeHeight <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, False, True) ;If Relative Height isn't being turned off, then set Height Value.
+		If ($iRelativeHeight <> 0) Then __LOWriter_ObjRelativeSize($oDoc, $oImage, False, True) ; If Relative Height isn't being turned off, then set Height Value.
 	EndIf
 
 	If ($iHeightRelativeTo <> Null) Then
@@ -2340,7 +2340,7 @@ Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRigh
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
-		If $oPropInfo.hasPropertyByName("Surround") Then ;Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
+		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oImage.Surround(), $oImage.LeftMargin(), $oImage.RightMargin(), $oImage.TopMargin(), _
 					$oImage.BottomMargin())
 
@@ -2440,7 +2440,7 @@ Func _LOWriter_ImageWrapOptions(ByRef $oImage, $bFirstPar = Null, $bContour = Nu
 
 	If __LOWriter_VarsAreNull($bFirstPar, $bContour, $bOutsideOnly, $bInBackground, $bAllowOverlap) Then
 		__LOWriter_ArrayFill($abWrapOptions, $oImage.SurroundAnchorOnly(), $oImage.SurroundContour(), $oImage.ContourOutside(), _
-				(($oImage.Opaque()) ? (False) : (True)), $oImage.AllowOverlap()) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+				(($oImage.Opaque()) ? (False) : (True)), $oImage.AllowOverlap()) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $abWrapOptions)
 	EndIf
 
@@ -2465,7 +2465,7 @@ Func _LOWriter_ImageWrapOptions(ByRef $oImage, $bFirstPar = Null, $bContour = Nu
 	If ($bInBackground <> Null) Then
 		If Not IsBool($bInBackground) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oImage.Opaque = (($bInBackground) ? False : True)
-		$iError = ($oImage.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 8)) ;Opaque/Background is False when InBackground is checked, so switch Boolean values around.
+		$iError = ($oImage.Opaque() = (($bInBackground) ? False : True)) ? ($iError) : (BitOR($iError, 8)) ; Opaque/Background is False when InBackground is checked, so switch Boolean values around.
 	EndIf
 
 	If ($bAllowOverlap <> Null) Then

@@ -717,7 +717,7 @@ Func _LOWriter_NumStyleSetLevel(ByRef $oObj, $iLevel = Null)
 
 	If ($iLevel = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ; Plus one to compensate for Levels being 0 Based.
 
-	$iLevel -= 1 ;Level is 0 Based, minus one to compensate.
+	$iLevel -= 1 ; Level is 0 Based, minus one to compensate.
 
 	$oObj.NumberingLevel = $iLevel
 

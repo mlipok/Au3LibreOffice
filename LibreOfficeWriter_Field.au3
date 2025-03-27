@@ -533,7 +533,7 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 		$oCommentField.Content = $sContent
 
 	Else
-		$oCommentField.Content = " " ;If Content is Blank, Comment/Annotation will disappear.
+		$oCommentField.Content = " " ; If Content is Blank, Comment/Annotation will disappear.
 	EndIf
 
 	If ($sAuthor <> Null) Then
@@ -3463,7 +3463,7 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 		EndIf
 
 	Else
-		$oPageField.SubType = $LOW_PAGE_NUM_TYPE_CURRENT ;If not set, page number Sub Type is auto set to Prev. Instead of current.
+		$oPageField.SubType = $LOW_PAGE_NUM_TYPE_CURRENT ; If not set, page number Sub Type is auto set to Prev. Instead of current.
 	EndIf
 
 	If ($sUserText <> Null) Then
@@ -3690,7 +3690,7 @@ Func _LOWriter_FieldRefBookMarkModify(ByRef $oDoc, ByRef $oBookmarkRefField, $sB
 		If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If Not _LOWriter_DocBookmarkExists($oDoc, $sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oBookmarkRefField.SourceName = $sBookmarkName
-		$oBookmarkRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_BOOKMARK ;Set Type to Bookmark in case input field Obj is a diff type.
+		$oBookmarkRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_BOOKMARK ; Set Type to Bookmark in case input field Obj is a diff type.
 		$iError = ($oBookmarkRefField.SourceName = $sBookmarkName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
@@ -3812,7 +3812,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 		If Not ($oEndNoteRefField.ReferenceFieldSource() = $LOW_FIELD_REF_TYPE_ENDNOTE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If $oDoc.Endnotes.hasElements() Then
 			$iSourceSeq = $oEndNoteRefField.SequenceNumber()
-			For $i = 0 To $oDoc.Endnotes.Count() - 1 ;Locate referenced Endnote.
+			For $i = 0 To $oDoc.Endnotes.Count() - 1 ; Locate referenced Endnote.
 				If ($oDoc.Endnotes.getByIndex($i).ReferenceId() = $iSourceSeq) Then
 					__LOWriter_ArrayFill($avFoot, $oDoc.Endnotes.getByIndex($i), $oEndNoteRefField.ReferenceFieldPart())
 					Return SetError($__LO_STATUS_SUCCESS, 1, $avFoot)
@@ -3827,7 +3827,7 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 		If Not IsObj($oEndNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oEndNoteRefField.SourceName = ""
 		$oEndNoteRefField.SequenceNumber = $oEndNote.ReferenceId()
-		$oEndNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_ENDNOTE ;Set Type to Endnote in case input field Obj is a diff type.
+		$oEndNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_ENDNOTE ; Set Type to Endnote in case input field Obj is a diff type.
 		$iError = ($oEndNoteRefField.SequenceNumber = $oEndNote.ReferenceId()) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
@@ -3949,7 +3949,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 		If Not ($oFootNoteRefField.ReferenceFieldSource() = $LOW_FIELD_REF_TYPE_FOOTNOTE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		If $oDoc.Footnotes.hasElements() Then
 			$iSourceSeq = $oFootNoteRefField.SequenceNumber()
-			For $i = 0 To $oDoc.Footnotes.Count() - 1 ;Locate referenced Footnote.
+			For $i = 0 To $oDoc.Footnotes.Count() - 1 ; Locate referenced Footnote.
 				If ($oDoc.Footnotes.getByIndex($i).ReferenceId() = $iSourceSeq) Then
 					__LOWriter_ArrayFill($avFoot, $oDoc.Footnotes.getByIndex($i), $oFootNoteRefField.ReferenceFieldPart())
 					Return SetError($__LO_STATUS_SUCCESS, 1, $avFoot)
@@ -3964,7 +3964,7 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 		If Not IsObj($oFootNote) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oFootNoteRefField.SourceName = ""
 		$oFootNoteRefField.SequenceNumber = $oFootNote.ReferenceId()
-		$oFootNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_FOOTNOTE ;Set Type to Footnote in case input field Obj is a diff type.
+		$oFootNoteRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_FOOTNOTE ; Set Type to Footnote in case input field Obj is a diff type.
 		$iError = ($oFootNoteRefField.SequenceNumber = $oFootNote.ReferenceId()) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
@@ -4315,7 +4315,7 @@ Func _LOWriter_FieldRefModify(ByRef $oDoc, ByRef $oRefField, $sRefMarkName = Nul
 		If Not IsObj($oRefMarks) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 		If Not $oRefMarks.hasByName($sRefMarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oRefField.SourceName = $sRefMarkName
-		$oRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_REF_MARK ;Set Type to RefMark in case input field Obj is a diff type.
+		$oRefField.ReferenceFieldSource = $LOW_FIELD_REF_TYPE_REF_MARK ; Set Type to RefMark in case input field Obj is a diff type.
 		$iError = ($oRefField.SourceName = $sRefMarkName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
@@ -4633,7 +4633,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 
 	If _LOWriter_FieldSetVarMasterExists($oDoc, $sName) Then
 		$oSetVarMaster = _LOWriter_FieldSetVarMasterGetObj($oDoc, $sName)
-		$iExtended = 1 ;1 = Master already existed.
+		$iExtended = 1 ; 1 = Master already existed.
 
 	Else
 		$oSetVarMaster = _LOWriter_FieldSetVarMasterCreate($oDoc, $sName)
@@ -5539,7 +5539,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 				If ($oTextField.IsFixed() = False) Then
 					$oTextField.Update()
 					$iUpdated += 1
-				EndIf ;Updating a fixed field, causes its content to be removed.
+				EndIf ; Updating a fixed field, causes its content to be removed.
 
 			Else
 				$oTextField.Update()

@@ -435,7 +435,7 @@ Func _LOWriter_ShapeExists(ByRef $oDoc, $sShapeName)
 		Next
 	EndIf
 
-	Return SetError($__LO_STATUS_SUCCESS, 0, False) ;No matches
+	Return SetError($__LO_STATUS_SUCCESS, 0, False) ; No matches
 EndFunc   ;==>_LOWriter_ShapeExists
 
 ; #FUNCTION# ====================================================================================================================
@@ -515,7 +515,7 @@ Func _LOWriter_ShapeGetObjByName(ByRef $oDoc, $sShapeName)
 		Next
 	EndIf
 
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ;Shape not found
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Shape not found
 EndFunc   ;==>_LOWriter_ShapeGetObjByName
 
 ; #FUNCTION# ====================================================================================================================
@@ -1310,7 +1310,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the existing Control point.
 			EndIf
 
-			;Pick the lowest X value difference between previous point and New point and Next point and New Point.
+			; Pick the lowest X value difference between previous point and New point and Next point and New Point.
 			$iSymmetricalPointXValue = ((($iX - $atPoints[$iArrayElement].X()) * .5) < (($atPoints[$iNextArrayElement].X() - $iX) * .5)) ? Int((($iX - $atPoints[$iArrayElement].X()) * .5)) : Int(($atPoints[$iNextArrayElement].X() - $iX) * .5)
 			$iSymmetricalPointYValue = (((($iY - $atPoints[$iArrayElement].Y()) * .5)) < (($atPoints[$iNextArrayElement].Y() - $iY) * .5)) ? Int((($iY - $atPoints[$iArrayElement].Y()) * .5)) : Int((($atPoints[$iNextArrayElement].Y() - $iY) * .5))
 
@@ -1431,7 +1431,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				$iForOffset = 0
 				$iReDimCount = 1 ; Add one element to the array for the new point,
 
-				;If I have created 4 control points add 4 to the Redim Count, else add two if either one or the other set have been created.
+				; If I have created 4 control points add 4 to the Redim Count, else add two if either one or the other set have been created.
 				If (IsObj($tControlPoint1) And IsObj($tControlPoint3)) Then
 					$iReDimCount += 4
 
@@ -2366,7 +2366,7 @@ Func _LOWriter_ShapeTransparency(ByRef $oShape, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oShape.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oShape.FillTransparenceGradientName = "" ;Turn of Gradient if it is on, else settings wont be applied.
+	$oShape.FillTransparenceGradientName = "" ; Turn of Gradient if it is on, else settings wont be applied.
 	$oShape.FillTransparence = $iTransparency
 	$iError = ($oShape.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -2744,7 +2744,7 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 				EndSwitch
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
-				$oShape.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
+				$oShape.VertOrientRelation = $iVertRelation ; Paragraph = Baseline in this case
 				$iError = (($oShape.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then

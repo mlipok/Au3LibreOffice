@@ -1156,7 +1156,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 
 	If (UBound($avTableData) <= $iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Requested Row higher than number of contained Rows.
 	$avTableDataReturn = ($iRow > -1) ? ($avTableData[$iRow]) : ($avTableData)
-	$iExtended = ($iRow > -1) ? (2) : (1) ;set Extended to 1 If retrieving the full Table Data, else 2 if getting a specific row.
+	$iExtended = ($iRow > -1) ? (2) : (1) ; Set Extended to 1 If retrieving the full Table Data, else 2 if getting a specific row.
 
 	If ($iRow = -1) And ($iColumn <> -1) Then ;  getting only a specific column of Data
 		If (UBound($avTableData[0]) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
@@ -1164,12 +1164,12 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 		For $i = 0 To UBound($avTableData) - 1
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
 		Next
-		$iExtended = 3 ;set extended to 3 if retrieving a Specific column
+		$iExtended = 3 ; Set extended to 3 if retrieving a Specific column
 
 	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
 		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
-		$iExtended = 4 ; set Extended to 4 if retrieving a specific cell of Data
+		$iExtended = 4 ; Set Extended to 4 if retrieving a specific cell of Data
 	EndIf
 	Return SetError($__LO_STATUS_SUCCESS, $iExtended, $avTableDataReturn)
 EndFunc   ;==>_LOWriter_TableGetData
@@ -1499,7 +1499,7 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 	If ($sTableName <> Null) Then
 		If Not IsString($sTableName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oTable.setName($sTableName)
-		$iError = (($oComError.Number = -2147352567)) ? (BitOR($iError, 4)) : ($iError) ;Table with same name already present.
+		$iError = (($oComError.Number = -2147352567)) ? (BitOR($iError, 4)) : ($iError) ; Table with same name already present.
 	EndIf
 
 	If ($bSplit <> Null) Then

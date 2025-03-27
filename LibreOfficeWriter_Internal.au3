@@ -1057,7 +1057,7 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 
 	If ($iRotation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
+		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc)so times by 10.
 		$oObj.CharRotation = $iRotation
 		$iError = ($oObj.CharRotation() = $iRotation) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -2565,12 +2565,12 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 
-			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ;If no matches, exit loop with current name.
+			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ; If no matches, exit loop with current name.
 		Next
 
 	Else
 
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ;If Doc has no shapes, just return the name with a "1" appended.
+		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ; If Doc has no shapes, just return the name with a "1" appended.
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $sShapeName & $i)
@@ -3295,7 +3295,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				EndIf
 			EndWith
 
-		Case Else ;Custom Gradient Name
+		Case Else ; Custom Gradient Name
 			__LOWriter_GradientNameInsert($oDoc, $tGradient, $sGradientName)
 			If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -3498,18 +3498,18 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 	If Not IsObj($oGraphic) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	;Retrieve the Current Page Style's height minus top/bottom margins
+	; Retrieve the Current Page Style's height minus top/bottom margins
 	$iMaxH = Int($oPageStyle.Height() - $oPageStyle.LeftMargin() - $oPageStyle.RightMargin())
 	If ($iMaxH = 0) Then $iMaxH = 9.5 * 2540 ; If error or is equal to 0, then set to 9.5 Inches in Micrometers
 
-	;Retrieve the Current Page Style's width minus left/right margins
+	; Retrieve the Current Page Style's width minus left/right margins
 	$iMaxW = Int($oPageStyle.Width() - $oPageStyle.TopMargin() - $oPageStyle.BottomMargin())
 	If ($iMaxW = 0) Then $iMaxW = 6.75 * 2540 ; If error or is equal to 0, then set to 6.75 Inches in Micrometers.
 
 	$oSize = $oGraphic.Size100thMM()
 
 	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then
-		;2540 Micrometers per Inch, 1440 TWIPS per inch
+		; 2540 Micrometers per Inch, 1440 TWIPS per inch
 		$oSize.Height = $oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440
 		$oSize.Width = $oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440
 	EndIf
@@ -4050,7 +4050,7 @@ Func __LOWriter_NumStyleInitiateDocument()
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iMacroExecMode_ALWAYS_EXECUTE_NO_WARN = 4, $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iMacroExecMode_ALWAYS_EXECUTE_NO_WARN = 4, $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $iError = 0
 	Local $oNumStyleDoc, $oServiceManager, $oDesktop
 	Local $atProperties[3]
@@ -4128,7 +4128,7 @@ Func __LOWriter_NumStyleListFormat(ByRef $atNumLevel, $iLevel, $iSubLevels, $sPr
 	$sPrefix = ($sPrefix = Null) ? ($atNumLevel[$mNumLevel["Prefix"]].Value()) : ($sPrefix)    ; If I'm modifying a specific level, retrieve its prefix/Suffix
 	$sSuffix = ($sSuffix = Null) ? ($atNumLevel[$mNumLevel["Suffix"]].Value()) : ($sSuffix)
 
-	For $i = $iLevel To $iEndLevel Step -1     ;Cycle Through the levels if any Sub levels are set.
+	For $i = $iLevel To $iEndLevel Step -1     ; Cycle Through the levels if any Sub levels are set.
 		If ($i = $iEndLevel) Then $sSeperator = ""
 		$sListFormat = $sSeperator & "%" & ($i + 1) & "%" & $sListFormat
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
@@ -4191,7 +4191,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $atNumLev
 		$bNumDocOpen = True
 	EndIf
 
-	; $oNumRules.replaceByIndex($iGetLevel, $atNumLevel);This should work but doesn't -- It would seem that the Array passed by
+	; $oNumRules.replaceByIndex($iGetLevel, $atNumLevel); This should work but doesn't -- It would seem that the Array passed by
 	; AutoIt is not recognized as an appropriate array(or Sequence) by LibreOffice, or perhaps as variable type "Any", which is
 	; what LibreOffice replace by index is expecting, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error.
 
@@ -4844,7 +4844,7 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avIndent)
 	EndIf
 
-	; Min: -9998989;Max: 17094
+	; Min: -9998989; Max: 17094
 	If ($iBeforeTxt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBeforeTxt, -9998989, 17094) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaLeftMargin = $iBeforeTxt
@@ -5212,13 +5212,13 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		Switch $tLine.Mode()
-			Case $LOW_LINE_SPC_MODE_PROP ;Proportional
+			Case $LOW_LINE_SPC_MODE_PROP ; Proportional
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 6, 65535) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; Min setting on Proportional is 6%
 
-			Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ;Minimum and Leading Modes
+			Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ; Minimum and Leading Modes
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 
-			Case $LOW_LINE_SPC_MODE_FIX ;Fixed Line Spacing Mode
+			Case $LOW_LINE_SPC_MODE_FIX ; Fixed Line Spacing Mode
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 51, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Min spacing is 51 when Fixed Mode
 		EndSwitch
 		$tLine.Height = $iLineSpcHeight
@@ -5355,7 +5355,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 
 	If ($atTabStops[0].Alignment() = $LOW_TAB_ALIGN_DEFAULT) And (UBound($atTabStops) = 1) Then ; if inserting a  Tabstop for the first time, overwrite the "Default blank TabStop.
 		$atTabStops[0] = $tTabStruct
-		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
+		$oObj.ParaTabStops = $atTabStops ; Insert the new TabStop
 		$atNewTabStops = $oObj.ParaTabStops()
 		$tFoundTabStop = $atNewTabStops[0]
 		$iNewPosition = $tFoundTabStop.Position()
@@ -5367,9 +5367,9 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
-		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
+		$oObj.ParaTabStops = $atTabStops ; Insert the new TabStop
 
-		$atNewTabStops = $oObj.ParaTabStops() ; now retrieve a new list to find the final Tab Stop position.
+		$atNewTabStops = $oObj.ParaTabStops() ; Now retrieve a new list to find the final Tab Stop position.
 		For $i = 0 To UBound($atNewTabStops) - 1
 			If ($atNewTabStops[$i].Position()) <> $aiTabList[$i] Then
 				$iNewPosition = $atNewTabStops[$i].Position()
@@ -5379,7 +5379,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 			EndIf
 		Next
 
-		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; didn't find the new TabStop
+		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Didn't find the new TabStop
 	EndIf
 
 	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? ($iError) : (BitOR($iError, 1))
@@ -5436,8 +5436,8 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 		$tTabStruct = $atOldTabStops[0]
 		$tTabStruct.Alignment = $LOW_TAB_ALIGN_DEFAULT
 		$tTabStruct.Position = $oDefaults.TabStopDistance()
-		$tTabStruct.FillChar = 32 ;Space
-		$tTabStruct.DecimalChar = 46 ;Period
+		$tTabStruct.FillChar = 32 ; Space
+		$tTabStruct.DecimalChar = 46 ; Period
 		$atNewTabStops[0] = $tTabStruct
 		$bDeleted = True
 
@@ -5906,7 +5906,7 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN
 			$tProp.Value = "up-right-down-arrow" ; "mso-spt100"
 
-			$tProp2 = __LOWriter_SetPropertyValue("MirroredX", True) ;Shape is an up and left arrow without this Property.
+			$tProp2 = __LOWriter_SetPropertyValue("MirroredX", True) ; Shape is an up and left arrow without this Property.
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			ReDim $atCusShapeGeo[2]
@@ -6050,7 +6050,7 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "paper"
 
 		Case $LOW_SHAPE_TYPE_BASIC_FRAME
-			$tProp.Value = "frame" ;Not working
+			$tProp.Value = "frame" ; Not working
 
 		Case $LOW_SHAPE_TYPE_BASIC_HEXAGON
 			$tProp.Value = "hexagon"
@@ -7047,7 +7047,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "paper"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER)
 
-		Case "frame" ;Not working
+		Case "frame" ; Not working
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FRAME)
 
 		Case "hexagon"
@@ -7640,7 +7640,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 			If ($aiFlags[$iArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Converting point from Normal to a curve.
 
-				;Pick the lowest X and Y value difference between previous point and current point and Next point and current Point.
+				; Pick the lowest X and Y value difference between previous point and current point and Next point and current Point.
 				$iSymmetricalPointXValue = ((($atPoints[$iArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5) < (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)) ? Int((($atPoints[$iArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)) : Int((($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5))
 				$iSymmetricalPointYValue = ((($atPoints[$iArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5) < (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)) ? Int((($atPoints[$iArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)) : Int((($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5))
 
@@ -7744,7 +7744,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				$iArrayElement += ($aiFlags[$iArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (0) : (1) ; If the point I am modifying has a control point before it, don't add one to array element, because I didn't have to create and insert a new control point.
 				$iArrayElement += (($iArrayElement - 2 > $iPreviousArrayElement) And ($aiFlags[$iArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (0) : (1) ; If the point I am modifying has two control points before it, don't add one to array element, because I didn't have to create and insert a new control point.
 
@@ -7773,7 +7773,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					EndIf
 
 				Else ; Previous point is not a normal point.
-					;Copy Control Points present.
+					; Copy Control Points present.
 
 					If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
@@ -7867,7 +7867,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				$iArrayElement -= (IsObj($tControlPoint1)) ? (0) : (1) ; If ControlPoint 1 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 				$iArrayElement -= (IsObj($tControlPoint2)) ? (0) : (1) ; If ControlPoint 2 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 
@@ -7876,7 +7876,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 			Else ; Point being modified is a normal point already.
 
-				;Do nothing?
+				; Do nothing?
 			EndIf
 		EndIf
 	EndIf
@@ -8080,7 +8080,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				If ($iPreviousArrayElement <> -1) Then $iArrayElement -= ((IsObj($tControlPoint2) And ($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL))) ? (0) : (1) ; If ControlPoint 2 is a object, it means I copied it, meaining I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 				If ($iPreviousArrayElement <> -1) Then $iArrayElement -= ((IsObj($tControlPoint1) And ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL))) ? (0) : (1) ; If ControlPoint 1 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 
@@ -8454,7 +8454,7 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		Next
 		Return SetError($__LO_STATUS_SUCCESS, 1, $bSplitRowTest) ; All Table Rows are set the same as the first Row, return that setting.
 
-	Else ;Set Split Rows Setting
+	Else ; Set Split Rows Setting
 		If Not IsBool($bSplitRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To $iRows - 1
@@ -8727,52 +8727,52 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
-		Case $__LOCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
+		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			; 1 Inch = 2.54 CM
 			$iCM = Round(Round($iInch * 2.54, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
 
-		Case $__LOCONST_CONVERT_TWIPS_INCH ;TWIPS to Inch
+		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $__LOCONST_CONVERT_MM_UM ;Millimeter to Micrometer
+		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
 			$iUM = ($nValue * 100)
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
 
-		Case $__LOCONST_CONVERT_UM_MM ;Micrometer to Millimeter
+		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $__LOCONST_CONVERT_CM_UM ;Centimeter to Micrometer
+		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
 			$iUM = ($nValue * 1000)
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_CM ;Micrometer to Centimeter
+		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $__LOCONST_CONVERT_INCH_UM ;Inch to Micrometer
+		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iUM = ($nValue * 2.54) * 1000 ; + .0055
 			$iUM = Round(Round($iUM, 1))
 			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_INCH ;Micrometer to Inch
+		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54 ; + .0055
 			$iInch = Round(Round($iInch, 3), 2)
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to MicroMeter
+		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to MicroMeter
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)

@@ -858,7 +858,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
+	$iColumn = $iColumn - 1 ; Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
@@ -885,7 +885,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 				$oFrame.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
 
-			Else ;If False
+			Else ; If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
 				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
@@ -2495,7 +2495,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
+	$iColumn = $iColumn - 1 ; Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
@@ -2522,7 +2522,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 				$oFrameStyle.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
 
-			Else ;If False
+			Else ; If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
 				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
@@ -3209,7 +3209,7 @@ Func _LOWriter_FrameStyleTransparency(ByRef $oFrameStyle, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrameStyle.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	$oFrameStyle.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
+	$oFrameStyle.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
 	$oFrameStyle.FillTransparence = $iTransparency
 	$iError = ($oFrameStyle.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -3600,7 +3600,7 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 				EndSwitch
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
-				$oFrameStyle.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
+				$oFrameStyle.VertOrientRelation = $iVertRelation ; Paragraph = Baseline in this case
 				$iError = (($oFrameStyle.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
@@ -4010,7 +4010,7 @@ Func _LOWriter_FrameTransparency(ByRef $oFrame, $iTransparency = Null)
 	If __LOWriter_VarsAreNull($iTransparency) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oFrame.FillTransparence())
 
 	If Not __LOWriter_IntIsBetween($iTransparency, 0, 100) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	$oFrame.FillTransparenceGradientName = "" ;Turn off Gradient if it is on, else settings wont be applied.
+	$oFrame.FillTransparenceGradientName = "" ; Turn off Gradient if it is on, else settings wont be applied.
 	$oFrame.FillTransparence = $iTransparency
 	$iError = ($oFrame.FillTransparence() = $iTransparency) ? ($iError) : (BitOR($iError, 1))
 
@@ -4397,7 +4397,7 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 				EndSwitch
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
-				$oFrame.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
+				$oFrame.VertOrientRelation = $iVertRelation ; Paragraph = Baseline in this case
 				$iError = (($oFrame.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
 
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then

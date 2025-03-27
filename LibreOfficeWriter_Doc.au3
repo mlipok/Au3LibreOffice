@@ -756,7 +756,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	; Store all current Table Names.
 	For $i = 0 To $oTables.getCount() - 1
 		$asTables[$i] = $oTables.getByIndex($i).Name()
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ;Sleep every x cycles.
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))     ; Sleep every x cycles.
 	Next
 
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
@@ -850,7 +850,7 @@ Func _LOWriter_DocCreate($bForceNew = True, $bHidden = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $aArgs[1]
 	Local $iError = 0
 	Local $oServiceManager, $oDesktop, $oDoc, $oEnumDoc
@@ -1445,7 +1445,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") And $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
 				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
-					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
+					$oResultRegion = $oResult ; If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRangeAnchor
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
@@ -1453,7 +1453,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
-					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
+					$oResultRegion = $oResult ; If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRangeAnchor
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that Foot/Endnote as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
@@ -1539,7 +1539,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginning or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oRange.Start()) : ($oRange.End())
 
-	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
+	Else ; If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
 		If Not IsObj($oLastFind) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not ($oLastFind.supportsService("com.sun.star.text.TextCursor")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
 		; If Search Backwards is False, then retrieve the end of the last result's range, else get the Start.
@@ -1574,8 +1574,8 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 			EndIf
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") And $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
-				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
-					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
+				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ; If both Range and Result are in a Text Frame, test if they are in the same one.
+					$oResultRegion = $oResult ; If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRange
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
@@ -1583,7 +1583,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
-					$oResultRegion = $oResult ;If They are, then compare the regions of that text frame.
+					$oResultRegion = $oResult ; If They are, then compare the regions of that text frame.
 					$oRangeRegion = $oRange
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that Foot/Endnote as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
@@ -1591,14 +1591,14 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 			If ($oText.compareRegionEnds($oResultRegion, $oRangeRegion) = -1) Then ; If Compare = -1, result is past range.
 				If ($bExhaustive = False) Then
-					$oResult = Null ;If Result is past the selection set Result to Null, but only if not doing an exhaustive search.
+					$oResult = Null ; If Result is past the selection set Result to Null, but only if not doing an exhaustive search.
 					ExitLoop
 
-				Else ;If $bExhaustive is True, then update the find range.
+				Else ; If $bExhaustive is True, then update the find range.
 					$oFindRange = $oResult.End()
 				EndIf
 
-			Else ;If Result is within range, exit While loop.
+			Else ; If Result is within range, exit While loop.
 				ExitLoop
 			EndIf
 		EndIf
@@ -2889,7 +2889,7 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $iError = 0
 	Local $oDoc, $oServiceManager, $oDesktop
 	Local $aoProperties[0]
@@ -3972,7 +3972,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 
-		Else ;No Replacement formatting, use UNO Execute method instead.
+		Else ; No Replacement formatting, use UNO Execute method instead.
 
 			$oViewCursor = $oDoc.CurrentController.getViewCursor()
 			If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)

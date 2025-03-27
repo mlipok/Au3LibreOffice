@@ -868,7 +868,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
+	$iColumn = $iColumn - 1 ; Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
@@ -897,7 +897,7 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 				$oPageStyle.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
 
-			Else ;If False
+			Else ; If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
 				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
@@ -2256,7 +2256,7 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 
 	If __LOWriter_VarsAreNull($iPosition, $iStyle, $nThickness, $iColor, $iLength, $iSpacing) Then
 		__LOWriter_ArrayFill($avFootnoteLine, $oPageStyle.FootnoteLineAdjust(), $oPageStyle.FootnoteLineStyle(), _
-				__LOWriter_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ;Convert Thickness from uM to Point.
+				__LOWriter_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ; Convert Thickness from uM to Point.
 				$oPageStyle.FootnoteLineColor(), $oPageStyle.FootnoteLineRelativeWidth(), $oPageStyle.FootnoteLineDistance())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFootnoteLine)
 	EndIf

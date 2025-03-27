@@ -235,7 +235,7 @@ Func _LOWriter_FontExists($sFontName)
 	#forceref $oCOM_ErrorHandler
 
 	Local $atFonts
-	Local Const $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $oServiceManager, $oDesktop, $oDoc
 	Local $atProperties[1]
 
