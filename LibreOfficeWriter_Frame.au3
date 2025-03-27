@@ -371,7 +371,6 @@ Func _LOWriter_FrameAreaGradient(ByRef $oDoc, ByRef $oFrame, $sGradientName = Nu
 	EndIf
 
 	If ($oFrame.FillGradientName() = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -862,10 +861,10 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
-
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
+
 		Else
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
@@ -878,7 +877,6 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then
-
 			If ($bAutoWidth = True) Then
 				; retrieve both outside column inner margin settings to add together for determining AutoWidth value.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($atColumns[0].RightMargin() + $atColumns[UBound($atColumns) - 1].LeftMargin()) : ($iGlobalSpacing)
@@ -886,6 +884,7 @@ Func _LOWriter_FrameColumnSize(ByRef $oFrame, $iColumn, $bAutoWidth = Null, $iGl
 				$oTextColumns.ColumnCount = $oTextColumns.ColumnCount()
 				$oFrame.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
+
 			Else ;If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
@@ -1606,9 +1605,7 @@ Func _LOWriter_FramesGetNames(ByRef $oDoc, $bSearchShapes = False)
 				$asFrameNames[$iEndofArray] = $asShapes[$i]
 				$iEndofArray += 1
 			Next
-
 		EndIf
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, UBound($asFrameNames), $asFrameNames)
@@ -1998,7 +1995,6 @@ Func _LOWriter_FrameStyleAreaGradient(ByRef $oDoc, ByRef $oFrameStyle, $sGradien
 	EndIf
 
 	If ($oFrameStyle.FillGradientName() = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -2503,10 +2499,10 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
-
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
+
 		Else
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
@@ -2519,7 +2515,6 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 		If Not IsBool($bAutoWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 		If ($bAutoWidth <> $oTextColumns.IsAutomatic()) Then
-
 			If ($bAutoWidth = True) Then
 				; retrieve both outside column inner margin settings to add together for determining AutoWidth value.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($atColumns[0].RightMargin() + $atColumns[UBound($atColumns) - 1].LeftMargin()) : ($iGlobalSpacing)
@@ -2527,6 +2522,7 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 				$oTextColumns.ColumnCount = $oTextColumns.ColumnCount()
 				$oFrameStyle.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
+
 			Else ;If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
@@ -2547,7 +2543,6 @@ Func _LOWriter_FrameStyleColumnSize(ByRef $oFrameStyle, $iColumn, $bAutoWidth = 
 				$iError = (__LOWriter_IntIsBetween($oFrameStyle.TextColumns.AutomaticDistance(), $iGlobalSpacing - 2, $iGlobalSpacing + 2)) ? ($iError) : (BitOR($iError, 2))
 			EndIf
 		EndIf
-
 	EndIf
 
 	If ($iSpacing <> Null) Then
@@ -2939,6 +2934,7 @@ Func _LOWriter_FrameStyleOrganizer(ByRef $oDoc, $oFrameStyle, $sNewFrameStyleNam
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avOrganizer, $oFrameStyle.Name(), __LOWriter_ParStyleNameToggle($oFrameStyle.ParentStyle(), True), _
 					$oFrameStyle.IsAutoUpdate(), $oFrameStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oFrameStyle.Name(), __LOWriter_ParStyleNameToggle($oFrameStyle.ParentStyle(), True), _
 					$oFrameStyle.IsAutoUpdate())
@@ -3332,7 +3328,6 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 		$tStyleGradient.StartColor = __LOWriter_TransparencyGradientConvert($iStart)
 
 		If __LOWriter_VersionCheck(7.6) Then
-
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -3352,7 +3347,6 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 
 			$tStyleGradient.ColorStops = $atColorStop
 		EndIf
-
 	EndIf
 
 	If ($iEnd <> Null) Then
@@ -3360,7 +3354,6 @@ Func _LOWriter_FrameStyleTransparencyGradient(ByRef $oDoc, ByRef $oFrameStyle, $
 		$tStyleGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
 		If __LOWriter_VersionCheck(7.6) Then
-
 			$atColorStop = $tStyleGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -3586,19 +3579,21 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 		; correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
-
 			If ($iVertRelation = $LOW_RELATIVE_ROW) Then
 				Switch $oFrameStyle.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Row not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_LINE_TOP
 						$iError = (($oFrameStyle.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrameStyle.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_LINE_CENTER
 						$iError = (($oFrameStyle.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrameStyle.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_LINE_BOTTOM
@@ -3608,18 +3603,22 @@ Func _LOWriter_FrameStyleTypePosition(ByRef $oFrameStyle, $iHorAlign = Null, $iH
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
 				$oFrameStyle.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oFrameStyle.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
+
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
 				Switch $oFrameStyle.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Character not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_CHAR_TOP
 						$iError = (($oFrameStyle.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrameStyle.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_CHAR_CENTER
 						$iError = (($oFrameStyle.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrameStyle.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oFrameStyle.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrameStyle.VertOrient = $LOW_ORIENT_VERT_CHAR_BOTTOM
@@ -3723,6 +3722,7 @@ Func _LOWriter_FrameStyleTypeSize(ByRef $oDoc, ByRef $oFrameStyle, $iWidth = Nul
 					($oFrameStyle.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrameStyle.Height(), $oFrameStyle.RelativeHeight(), _
 					$oFrameStyle.RelativeHeightRelation(), ($oFrameStyle.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrameStyle.IsSyncHeightToWidth() And $oFrameStyle.IsSyncWidthToHeight()) ? (True) : (False)))
+
 		Else
 			__LOWriter_ArrayFill($avSize, $oFrameStyle.Width(), $oFrameStyle.RelativeWidth(), _
 					($oFrameStyle.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrameStyle.Height(), _
@@ -3854,10 +3854,10 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
-
 		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oFrameStyle.Surround(), $oFrameStyle.LeftMargin(), $oFrameStyle.RightMargin(), $oFrameStyle.TopMargin(), _
 					$oFrameStyle.BottomMargin())
+
 		Else
 			__LOWriter_ArrayFill($avWrap, $oFrameStyle.TextWrap(), $oFrameStyle.LeftMargin(), $oFrameStyle.RightMargin(), $oFrameStyle.TopMargin(), _
 					$oFrameStyle.BottomMargin())
@@ -3872,6 +3872,7 @@ Func _LOWriter_FrameStyleWrap(ByRef $oFrameStyle, $iWrapType = Null, $iLeft = Nu
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oFrameStyle.TextWrap = $iWrapType
 		If $oPropInfo.hasPropertyByName("Surround") Then
 			$iError = ($oFrameStyle.Surround() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			$iError = ($oFrameStyle.TextWrap() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		EndIf
@@ -4375,19 +4376,21 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 		; then manually set the value to the correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
-
 			If ($iVertRelation = $LOW_RELATIVE_ROW) Then
 				Switch $oFrame.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Row not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_LINE_TOP
 						$iError = (($oFrame.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrame.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_LINE_CENTER
 						$iError = (($oFrame.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrame.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_LINE_BOTTOM
@@ -4397,18 +4400,22 @@ Func _LOWriter_FrameTypePosition(ByRef $oFrame, $iHorAlign = Null, $iHorPos = Nu
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
 				$oFrame.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oFrame.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
+
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
 				Switch $oFrame.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Character not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_CHAR_TOP
 						$iError = (($oFrame.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrame.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_CHAR_CENTER
 						$iError = (($oFrame.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oFrame.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oFrame.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oFrame.VertOrient = $LOW_ORIENT_VERT_CHAR_BOTTOM
@@ -4509,6 +4516,7 @@ Func _LOWriter_FrameTypeSize(ByRef $oDoc, ByRef $oFrame, $iWidth = Null, $iRelat
 					($oFrame.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrame.Height(), $oFrame.RelativeHeight(), _
 					$oFrame.RelativeHeightRelation(), ($oFrame.SizeType() = $iCONST_AutoHW_ON) ? (True) : (False), _
 					(($oFrame.IsSyncHeightToWidth() And $oFrame.IsSyncWidthToHeight()) ? (True) : (False)))
+
 		Else
 			__LOWriter_ArrayFill($avSize, $oFrame.Width(), $oFrame.RelativeWidth(), _
 					($oFrame.WidthType() = $iCONST_AutoHW_ON) ? (True) : (False), $oFrame.Height(), _
@@ -4638,10 +4646,10 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
-
 		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oFrame.Surround(), $oFrame.LeftMargin(), $oFrame.RightMargin(), $oFrame.TopMargin(), _
 					$oFrame.BottomMargin())
+
 		Else
 			__LOWriter_ArrayFill($avWrap, $oFrame.TextWrap(), $oFrame.LeftMargin(), $oFrame.RightMargin(), $oFrame.TopMargin(), _
 					$oFrame.BottomMargin())
@@ -4657,10 +4665,10 @@ Func _LOWriter_FrameWrap(ByRef $oFrame, $iWrapType = Null, $iLeft = Null, $iRigh
 
 		If $oPropInfo.hasPropertyByName("Surround") Then
 			$iError = ($oFrame.Surround() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			$iError = ($oFrame.TextWrap() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		EndIf
-
 	EndIf
 
 	If ($iLeft <> Null) Then

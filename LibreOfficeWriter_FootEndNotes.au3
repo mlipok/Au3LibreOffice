@@ -178,9 +178,9 @@ Func _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
-
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
 			Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
+
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oEndNote = $oDoc.createInstance("com.sun.star.text.Endnote")
 			If Not IsObj($oEndNote) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -237,7 +237,6 @@ Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
 
 		; Else return the Label.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oEndNote.Label())
-
 	EndIf
 
 	If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -599,9 +598,9 @@ Func _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, 
 	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
-
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
 			Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
+
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oFootNote = $oDoc.createInstance("com.sun.star.text.Footnote")
 			If Not IsObj($oFootNote) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)

@@ -531,6 +531,7 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 	If ($sContent <> Null) Then
 		If Not IsString($sContent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oCommentField.Content = $sContent
+
 	Else
 		$oCommentField.Content = " " ;If Content is Blank, Comment/Annotation will disappear.
 	EndIf
@@ -543,6 +544,7 @@ Func _LOWriter_FieldCommentInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fal
 	If ($tDateStruct <> Null) Then
 		If Not IsObj($tDateStruct) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oCommentField.DateTimeValue = $tDateStruct
+
 	Else
 		$oCommentField.DateTimeValue = _LOWriter_DateStructCreate()
 	EndIf
@@ -630,6 +632,7 @@ Func _LOWriter_FieldCommentModify(ByRef $oDoc, ByRef $oCommentField, $sContent =
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avAnnot, $oCommentField.Content(), $oCommentField.Author(), $oCommentField.DateTimeValue(), $oCommentField.Initials(), _
 					$oCommentField.Name(), $oCommentField.Resolved())
+
 		Else
 			__LOWriter_ArrayFill($avAnnot, $oCommentField.Content(), $oCommentField.Author(), $oCommentField.DateTimeValue(), $oCommentField.Resolved())
 		EndIf
@@ -850,6 +853,7 @@ Func _LOWriter_FieldCurrentDisplayGet(ByRef $oField)
 	If ($oField.supportsService("com.sun.star.text.textfield.ConditionalText")) Then ; Conditional Text Fields don't update "CurrentPresentation" setting,
 		; so acquire the current display based on whether the condition is true or not.
 		$sPresentation = ($oField.IsConditionTrue() = False) ? ($oField.TrueContent()) : ($oField.FalseContent())
+
 	Else
 		$sPresentation = $oField.CurrentPresentation()
 	EndIf
@@ -3437,6 +3441,7 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPageField.NumberingType = $iNumFormat
+
 	Else
 		$oPageField.NumberingType = $LOW_NUM_STYLE_PAGE_DESCRIPTOR
 	EndIf
@@ -3452,9 +3457,11 @@ Func _LOWriter_FieldPageNumberInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = 
 
 		If ($iPageNumType = $LOW_PAGE_NUM_TYPE_PREV) Then
 			$oPageField.Offset = ($oPageField.Offset() - 1) ; If SubType is Set to Prev. Set offset to minus 1 of current value
+
 		ElseIf ($iPageNumType = $LOW_PAGE_NUM_TYPE_NEXT) Then
 			$oPageField.Offset = ($oPageField.Offset() + 1) ; If SubType is Set to Next. Set offset to plus 1 of current value
 		EndIf
+
 	Else
 		$oPageField.SubType = $LOW_PAGE_NUM_TYPE_CURRENT ;If not set, page number Sub Type is auto set to Prev. Instead of current.
 	EndIf
@@ -3812,7 +3819,6 @@ Func _LOWriter_FieldRefEndnoteModify(ByRef $oDoc, ByRef $oEndNoteRefField, $oEnd
 				EndIf
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
-
 		EndIf
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving EndNote Obj
 	EndIf
@@ -3950,7 +3956,6 @@ Func _LOWriter_FieldRefFootnoteModify(ByRef $oDoc, ByRef $oFootNoteRefField, $oF
 				EndIf
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 			Next
-
 		EndIf
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; Error retrieving FndNote Obj
 	EndIf
@@ -4629,6 +4634,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 	If _LOWriter_FieldSetVarMasterExists($oDoc, $sName) Then
 		$oSetVarMaster = _LOWriter_FieldSetVarMasterGetObj($oDoc, $sName)
 		$iExtended = 1 ;1 = Master already existed.
+
 	Else
 		$oSetVarMaster = _LOWriter_FieldSetVarMasterCreate($oDoc, $sName)
 	EndIf
@@ -4641,6 +4647,7 @@ Func _LOWriter_FieldSetVarInsert(ByRef $oDoc, ByRef $oCursor, $sName, $sValue, $
 		If Not IsInt($iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		If ($iNumFormatKey <> -1) And Not _LOWriter_FormatKeyExists($oDoc, $iNumFormatKey) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oSetVarField.NumberFormat = $iNumFormatKey
+
 	Else
 		$oSetVarField.NumberFormat = 0 ; If No Input, set to General
 	EndIf
@@ -4750,6 +4757,7 @@ Func _LOWriter_FieldSetVarMasterDelete(ByRef $oDoc, $vMasterField)
 	If IsObj($vMasterField) Then
 		$sFullFieldName = $sField & "." & $vMasterField.Name()
 		$oMasterfield = $vMasterField
+
 	Else
 		$sFullFieldName = $sField & "." & $vMasterField
 		If Not $oMasterFields.hasByName($sFullFieldName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -5275,6 +5283,7 @@ Func _LOWriter_FieldStatCountInsert(ByRef $oDoc, ByRef $oCursor, $iCountType, $b
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oCountField.NumberingType = $iNumFormat
+
 	Else
 		$oCountField.NumberingType = $LOW_NUM_STYLE_PAGE_DESCRIPTOR
 	EndIf
@@ -5531,6 +5540,7 @@ Func _LOWriter_FieldUpdate(ByRef $oDoc, $oField = Null, $bForceUpdate = False)
 					$oTextField.Update()
 					$iUpdated += 1
 				EndIf ;Updating a fixed field, causes its content to be removed.
+
 			Else
 				$oTextField.Update()
 				$iUpdated += 1
@@ -5711,6 +5721,7 @@ Func _LOWriter_FieldVarShowPageInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite =
 	If ($iNumFormat <> Null) Then
 		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oPageShowField.NumberingType = $iNumFormat
+
 	Else
 		$oPageShowField.NumberingType = $LOW_NUM_STYLE_PAGE_DESCRIPTOR
 	EndIf

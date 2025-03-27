@@ -88,6 +88,7 @@ Func _LOWriter_ShapeAreaColor(ByRef $oShape, $iColor = Null)
 	If Not __LOWriter_IntIsBetween($iColor, $LOW_COLOR_OFF, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If ($iColor = $LOW_COLOR_OFF) Then
 		$oShape.FillStyle = $LOW_AREA_FILL_STYLE_OFF
+
 	Else
 		$iOldTransparency = $oShape.FillTransparence()
 		If Not IsInt($iOldTransparency) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -329,7 +330,6 @@ Func _LOWriter_ShapeAreaGradient(ByRef $oDoc, ByRef $oShape, $sGradientName = Nu
 	EndIf
 
 	If ($oShape.FillGradientName() = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -588,7 +588,6 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	Switch $oShape.ShapeType()
-
 		Case "com.sun.star.drawing.CustomShape"
 			$atCusShapeGeo = $oShape.CustomShapeGeometry()
 			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -618,7 +617,6 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 
 			Else
 				Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
 			EndIf
 
 		Case "com.sun.star.drawing.OpenBezierShape"
@@ -642,7 +640,6 @@ Func _LOWriter_ShapeGetType(ByRef $oShape)
 
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; Unknown shape type.
-
 	EndSwitch
 
 EndFunc   ;==>_LOWriter_ShapeGetType
@@ -712,7 +709,6 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 	If ($iCursorType = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY To $LOW_SHAPE_TYPE_ARROWS_PENTAGON ; Create an Arrow Shape.
 			$oShape = __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -763,7 +759,6 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 			$atCusShapeGeo = $oShape.CustomShapeGeometry() ; Backup the CustomShapeGeometry property, as it is generally lost upon insertion.
 			If Not IsArray($atCusShapeGeo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	EndSwitch
 
 	$tPos = $oShape.Position() ; Backup the position, as it is generally lost upon insertion.
@@ -778,13 +773,11 @@ Func _LOWriter_ShapeInsert(ByRef $oDoc, ByRef $oCursor, $iShapeType, $iWidth, $i
 
 	ElseIf IsArray($atCusShapeGeo) Then
 		$oShape.CustomShapeGeometry = $atCusShapeGeo ; If shape used the CustomSHapeGeometry property, re-Set it after insertion.
-
 	EndIf
 
 	$oShape.Position = $tPos ; re-Set the position after insertion.
 
 	If ($oShape.ShapeType() = "com.sun.star.drawing.CustomShape") Then
-
 		; Settings for TextBox use.
 		$oShape.TextMinimumFrameWidth = $iWidth
 		$oShape.TextMinimumFrameHeight = $iHeight
@@ -871,6 +864,7 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 			If Not __LOWriter_IntIsBetween($vStartStyle, $LOW_SHAPE_LINE_ARROW_TYPE_NONE, $LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 			$sStartStyle = __LOWriter_ShapeArrowStyleName($vStartStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Else
 			$sStartStyle = $vStartStyle
 		EndIf
@@ -901,7 +895,6 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 					($oShape.LineStartWidth() = $oShape.LineEndWidth()) And _
 					($oShape.LineStartCenter() = $oShape.LineEndCenter())) ? ($iError) : (BitOR($iError, 8))
 		EndIf
-
 	EndIf
 
 	If ($vEndStyle <> Null) Then
@@ -910,6 +903,7 @@ Func _LOWriter_ShapeLineArrowStyles(ByRef $oShape, $vStartStyle = Null, $iStartW
 			If Not __LOWriter_IntIsBetween($vEndStyle, $LOW_SHAPE_LINE_ARROW_TYPE_NONE, $LOW_SHAPE_LINE_ARROW_TYPE_CF_ZERO_MANY) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 			$sEndStyle = __LOWriter_ShapeArrowStyleName($vEndStyle)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 		Else
 			$sEndStyle = $vEndStyle
 		EndIf
@@ -991,9 +985,7 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 	If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($vStyle, $iColor, $iWidth, $iTransparency, $iCornerStyle, $iCapStyle) Then
-
 		Switch $oShape.LineStyle()
-
 			Case $__LOW_SHAPE_LINE_STYLE_NONE
 
 				$vReturn = $LOW_SHAPE_LINE_STYLE_NONE
@@ -1019,7 +1011,6 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 			If Not __LOWriter_IntIsBetween($vStyle, $LOW_SHAPE_LINE_STYLE_NONE, $LOW_SHAPE_LINE_STYLE_LINE_WITH_FINE_DOTS) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 			Switch $vStyle
-
 				Case $LOW_SHAPE_LINE_STYLE_NONE
 
 					$oShape.LineStyle = $__LOW_SHAPE_LINE_STYLE_NONE
@@ -1044,9 +1035,7 @@ Func _LOWriter_ShapeLineProperties(ByRef $oShape, $vStyle = Null, $iColor = Null
 			$sStyle = $vStyle
 			$oShape.LineDashName = $sStyle
 			$iError = ($oShape.LineDashName() = $sStyle) ? ($iError) : (BitOR($iError, 1))
-
 		EndIf
-
 	EndIf
 
 	If ($iColor <> Null) Then
@@ -1222,7 +1211,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
-
 	EndIf
 
 	If Not IsInt($iArrayElement) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -1279,7 +1267,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 			$atPoints = $avArray
 			$aiFlags = $avArray2
-
 		EndIf
 
 	ElseIf ($iArrayElement = (UBound($aiFlags) - 1)) Then ; Insertion will be at the end of the Points.
@@ -1308,7 +1295,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
 
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iNextArrayElement = $i
 				ExitLoop
 			EndIf
@@ -1323,14 +1309,12 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 			; Check if the point I am placing the new point after is a normal point or not. If the Point Type after this point is a Control point,
 			; the point I am inserting after is not a regular point.
 			If ($aiFlags[$iArrayElement + 1] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$tControlPoint1 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X(), $atPoints[$iArrayElement].Y()) ; If the point I am inserting after is normal, the control point has the same coordinates.
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 			Else
 
 				$tControlPoint1 = $atPoints[$iArrayElement + 1] ; Copy the existing Control point.
-
 			EndIf
 
 			;Pick the lowest X value difference between previous point and New point and Next point and New Point.
@@ -1354,7 +1338,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 				; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus $iSymmetricalPointXValue and $iSymmetricalPointYValue
 				$tControlPoint4 = __LOWriter_CreatePoint(($atPoints[$iNextArrayElement].X() - $iSymmetricalPointXValue), ($atPoints[$iNextArrayElement].Y() - $iSymmetricalPointYValue))
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
-
 			EndIf
 
 			$iOffset = 0
@@ -1397,7 +1380,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 					$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0) ; If the point I am inserting after has two control points after it, I need to skip them in the PointsArray.
 
 					$iForOffset += 5 ; Add to $i to skip the elements I manually added.
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1419,7 +1401,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 					; Make the Second control Point's Coordinates the New Point's Coordintes, minus half the difference between this new point and the previous point, which will be in the $iArrayElement of the Points array.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($iX - (($iX - $atPoints[$iArrayElement].X()) * .5)), Int($iY - (($iY - $atPoints[$iArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
 				EndIf
 
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If next Point after the one I am inserting is not a normal Point, modify the control points accordingly.
@@ -1438,7 +1419,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
 					EndIf
-
 				EndIf
 
 				If ($bIsCurve = True) Then ; If the New Point is a Curved Normal point then either modify the third Control Point or create two new ones.
@@ -1452,9 +1432,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 						; Make the Fourth control Point's Coordinates the Next Point's Coordinates, minus half the difference between this new point and the next point, which will be in the $iNextArrayElement of the Points array.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $iX) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $iY) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 5, 0)
-
 					EndIf
-
 				EndIf
 
 				$iOffset = 0
@@ -1467,7 +1445,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				ElseIf (IsObj($tControlPoint1) And IsObj($tControlPoint2)) Or (IsObj($tControlPoint3) And IsObj($tControlPoint4)) Then
 					$iReDimCount += 2
-
 				EndIf
 
 				; If both or either point after the point I am inserting the new point after is a control point, remove one from my Redim Count variable, as the element will be replaced.
@@ -1484,6 +1461,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the point's types to the array.
+
 					Else
 						$iOffset -= 1 ; minus 1 from offset per round so I don't go over array limits
 						$iForOffset -= 1 ; Minus 1 from ForOffset as I am skipping one For cycle.
@@ -1507,7 +1485,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 							$avArray[$i + 1] = $tPoint
 							$avArray2[$i + 1] = $iPointType
 							$iForOffset += 1
-
 						EndIf
 
 						If IsObj($tControlPoint3) Then ; If ControlPoint3 is an Object, that means both 3 and 4 need inserted.
@@ -1522,7 +1499,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 								$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And $aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0) ; If the point I am inserting after has two control points after it, I need to skip them in the PointsArray.
 							EndIf
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1544,7 +1520,6 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 					$iReDimCount += 2 ; Add 2 elements in the Array because I had to create two control points.
-
 				EndIf
 
 				$iForOffset = 0
@@ -1575,9 +1550,7 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 							$avArray[$i + 1] = $tPoint
 							$avArray2[$i + 1] = $iPointType
 							$iForOffset += 1
-
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1585,11 +1558,8 @@ Func _LOWriter_ShapePointsAdd(ByRef $oShape, $iPoint, $iX, $iY, $iPointType = $L
 
 				$atPoints = $avArray
 				$aiFlags = $avArray2
-
 			EndIf
-
 		EndIf
-
 	EndIf
 
 	$tPolyCoords = $oShape.PolyPolygonBezier()
@@ -1863,7 +1833,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
 
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iNextArrayElement = $i
 				ExitLoop
 			EndIf
@@ -1875,7 +1844,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 	Else
 		$iNextArrayElement = -1
-
 	EndIf
 
 	If ($iPoint > 1) Then ; If Point requested is not the first point, find the previous Point's position.
@@ -1883,7 +1851,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
 
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iPreviousArrayElement = $i
 				ExitLoop
 			EndIf
@@ -1910,6 +1877,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 			If ($i >= $iNextArrayElement) Then
 				$avArray[$i - $iSkip] = $atPoints[$i]
 				$avArray2[$i - $iSkip] = $aiFlags[$i]
+
 			Else
 				$iSkip += 1
 			EndIf
@@ -1953,14 +1921,12 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 					; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 					$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
 				EndIf
 
 			Else ; Previous Point is a normal point.
 
 				; If the X and Y Coordinate of the previous point, and the control point after it do not match, the previous point is a "Curve".
 				If ($atPoints[$iPreviousArrayElement].X() <> $atPoints[$iPreviousArrayElement + 1].X()) And ($atPoints[$iPreviousArrayElement].Y() <> $atPoints[$iPreviousArrayElement + 1].Y()) Then
-
 					$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1] ; Copy the first control point after the previous point.
 
 					If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement - 1) > $iArrayElement) Then ; Point before the next Point is a control point, copy it.
@@ -1970,11 +1936,8 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 						; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 						$tControlPoint2 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
-
 					EndIf
-
 				EndIf
-
 			EndIf
 
 			$iOffset = 0
@@ -2003,7 +1966,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				Else
 					$iSkip -= 1
 					$iOffset -= 1
-
 				EndIf
 
 				If ($i = $iPreviousArrayElement) Then
@@ -2023,7 +1985,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 					$iSkip += (($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iPreviousArrayElement + 2) < $iArrayElement)) ? (1) : (0)
 					$iSkip += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0)
 					$iSkip += (($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iArrayElement + 2) < $iNextArrayElement)) ? (1) : (0)
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -2041,7 +2002,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				; Make the New control Point's Coordinates the Next Point's Coordinates, minus half the difference between the next point and the previous point.
 				$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)))
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
-
 			EndIf
 
 			If ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iNextArrayElement = 2) > $iArrayElement) Then
@@ -2051,7 +2011,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				; Make the New control Point's Coordinates the same as the previous point.
 				$tControlPoint3 = __LOWriter_CreatePoint($atPoints[$iPreviousArrayElement].X(), $atPoints[$iPreviousArrayElement].Y())
 				If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 			EndIf
 
 			$iOffset = 0
@@ -2090,7 +2049,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 					$iSkip += ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (1) : (0)
 					$iSkip += (($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) And (($iArrayElement + 2) < $iNextArrayElement)) ? (1) : (0)
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -2112,7 +2070,6 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 				Else
 					$avArray[$i + $iOffset] = $atPoints[$i]
 					$avArray2[$i + $iOffset] = $aiFlags[$i]
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -2120,9 +2077,7 @@ Func _LOWriter_ShapePointsRemove(ByRef $oShape, $iPoint)
 
 			$atPoints = $avArray
 			$aiFlags = $avArray2
-
 		EndIf
-
 	EndIf
 
 	$tPolyCoords = $oShape.PolyPolygonBezier()
@@ -2197,7 +2152,6 @@ Func _LOWriter_ShapePosition(ByRef $oShape, $iX = Null, $iY = Null, $bProtectPos
 	EndIf
 
 	If ($iX <> Null) Or ($iY <> Null) Then
-
 		If ($iX <> Null) Then
 			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 			$tPos.X = $iX
@@ -2574,7 +2528,6 @@ Func _LOWriter_ShapeTransparencyGradient(ByRef $oDoc, ByRef $oShape, $iType = Nu
 		$tGradient.EndColor = __LOWriter_TransparencyGradientConvert($iEnd)
 
 		If __LOWriter_VersionCheck(7.6) Then
-
 			$atColorStop = $tGradient.ColorStops()
 			If Not IsArray($atColorStop) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
@@ -2789,19 +2742,21 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 		; then manually set the value to the correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
-
 			If ($iVertRelation = $LOW_RELATIVE_ROW) Then
 				Switch $oShape.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Row not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_LINE_TOP
 						$iError = (($oShape.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oShape.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_LINE_CENTER
 						$iError = (($oShape.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oShape.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_LINE_BOTTOM
@@ -2811,18 +2766,22 @@ Func _LOWriter_ShapeTypePosition(ByRef $oShape, $iHorAlign = Null, $iHorPos = Nu
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ; Paragraph = Baseline setting in L.O. UI
 				$oShape.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oShape.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
+
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
 				Switch $oShape.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Character not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_CHAR_TOP
 						$iError = (($oShape.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oShape.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_CHAR_CENTER
 						$iError = (($oShape.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oShape.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oShape.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oShape.VertOrient = $LOW_ORIENT_VERT_CHAR_BOTTOM
@@ -2904,7 +2863,6 @@ Func _LOWriter_ShapeTypeSize(ByRef $oShape, $iWidth = Null, $iHeight = Null, $bP
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
-
 		If ($iWidth <> Null) Then ; Min 51
 			If Not __LOWriter_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 			$tSize.Width = $iWidth
@@ -2982,10 +2940,10 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
-
 		If $oPropInfo.hasPropertyByName("Surround") Then ; Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oShape.Surround(), $oShape.LeftMargin(), $oShape.RightMargin(), $oShape.TopMargin(), _
 					$oShape.BottomMargin())
+
 		Else
 			__LOWriter_ArrayFill($avWrap, $oShape.TextWrap(), $oShape.LeftMargin(), $oShape.RightMargin(), $oShape.TopMargin(), _
 					$oShape.BottomMargin())
@@ -3001,10 +2959,10 @@ Func _LOWriter_ShapeWrap(ByRef $oShape, $iWrapType = Null, $iLeft = Null, $iRigh
 
 		If $oPropInfo.hasPropertyByName("Surround") Then
 			$iError = ($oShape.Surround() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			$iError = ($oShape.TextWrap() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		EndIf
-
 	EndIf
 
 	If ($iLeft <> Null) Then

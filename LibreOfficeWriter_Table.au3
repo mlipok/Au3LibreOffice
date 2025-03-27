@@ -743,6 +743,7 @@ Func _LOWriter_TableCreateCursor(ByRef $oDoc, ByRef $oTable, $sCellName = "", $o
 				$oTable = $oDoc.TextTables.getByName($oCursor.TextTable.Name)
 				If Not IsObj($oTable) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 				$sCellName = ($sCellName = "") ? ($oCursor.Cell.CellName) : ($sCellName)
+
 			Case Else
 				Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Wrong Cursor Data Type
 		EndSwitch
@@ -945,23 +946,26 @@ Func _LOWriter_TableGetCellObjByCursor(ByRef $oDoc, ByRef $oTable, ByRef $oCurso
 	$iCursorType = __LOWriter_Internal_CursorGetType($oCursor)
 
 	Switch $iCursorType
-
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			$sCellRange = $oCursor.getRangeName()
 			$oCell = (StringInStr($sCellRange, ":")) ? ($oTable.getCellRangeByName($sCellRange)) : ($oTable.getCellByName($sCellRange))
+
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 			If Not ($iCursorDataType = $LOW_CURDATA_CELL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Cursor not in a Table cell.
 			$oCell = $oTable.getCellByName($oCursor.Cell.CellName)
+
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			$oSelection = $oDoc.CurrentSelection()
 			If ($oSelection.ImplementationName() = "SwXTextTableCursor") Then
 				$oCell = $oTable.getCellRangeByName($oSelection.getRangeName())
+
 			Else
 				$iCursorDataType = __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
 				If Not ($iCursorDataType = $LOW_CURDATA_CELL) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Cursor not in a Table cell.
 				$oCell = $oTable.getCellByName($oCursor.Cell.CellName)
 			EndIf
+
 		Case Else
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Unknown cursor type.
 	EndSwitch
@@ -1161,6 +1165,7 @@ Func _LOWriter_TableGetData(ByRef $oTable, $iRow = -1, $iColumn = -1)
 			$avTableDataReturn[$i] = ($avTableData[$i])[$iColumn]
 		Next
 		$iExtended = 3 ;set extended to 3 if retrieving a Specific column
+
 	ElseIf ($iRow <> -1) And ($iColumn <> -1) Then ;
 		If (UBound($avTableDataReturn) <= $iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Requested Column higher than number of contained columns.
 		$avTableDataReturn = $avTableDataReturn[$iColumn]
@@ -1291,11 +1296,14 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 		Switch $iCursorDataType
 			Case $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE
 				Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unable to insert tables in footnotes/ EndNotes
+
 			Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL, $LOW_CURDATA_FRAME, $LOW_CURDATA_HEADER_FOOTER
 				$oInsertPoint = $oCursor
+
 			Case Else
 				Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; unknown Cursor type
 		EndSwitch
+
 	Else
 		$oInsertPoint = $oDoc.Text.getEnd()
 		$oText = $oInsertPoint.getText()
@@ -1312,6 +1320,7 @@ Func _LOWriter_TableInsert(ByRef $oDoc, $oCursor, ByRef $oTable, $bHeading = Fal
 			_LOWriter_ParStyleSet($oDoc, $oTextCursor, "Table Heading")
 			If @error Then Return SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0)
 		Next
+
 	ElseIf Not $bHeading Then
 		For $i = 0 To $oTable.getColumns.getCount() - 1
 			$oTextCursor = $oTable.getCellByPosition($i, 0).Text.createTextCursor()
@@ -1464,16 +1473,15 @@ Func _LOWriter_TableProperties(ByRef $oTable, $iTableAlign = Null, $bKeepTogethe
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iTableAlign, $bKeepTogether, $sTableName, $bSplit, $bSplitRows, $bRepeatHeading, $iHeaderRows) Then
-
 		If (__LOWriter_IsTableInDoc($oTable) = True) Then
 			__LOWriter_ArrayFill($avProperties, $oTable.HoriOrient(), $oTable.KeepTogether(), $oTable.getName(), $oTable.Split(), _
 					__LOWriter_TableRowSplitToggle($oTable), $oTable.RepeatHeadline(), $oTable.HeaderRowCount())
 			Return SetError($__LO_STATUS_SUCCESS, 1, $avProperties)
+
 		Else
 			__LOWriter_ArrayFill($avProperties, $oTable.HoriOrient(), $oTable.KeepTogether(), $oTable.getName(), $oTable.Split())
 			Return SetError($__LO_STATUS_SUCCESS, 2, $avProperties)
 		EndIf
-
 	EndIf
 
 	If ($iTableAlign <> Null) Then

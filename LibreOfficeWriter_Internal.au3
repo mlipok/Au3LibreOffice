@@ -349,9 +349,11 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.LineWidth(), $oObj.BottomBorder.LineWidth(), $oObj.LeftBorder.LineWidth(), _
 					$oObj.RightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.LineStyle(), $oObj.BottomBorder.LineStyle(), $oObj.LeftBorder.LineStyle(), _
 					$oObj.RightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.Color(), $oObj.BottomBorder.Color(), $oObj.LeftBorder.Color(), $oObj.RightBorder.Color())
 		EndIf
@@ -448,13 +450,14 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
-
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.LineWidth(), $oObj.CharBottomBorder.LineWidth(), $oObj.CharLeftBorder.LineWidth(), _
 					$oObj.CharRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.LineStyle(), $oObj.CharBottomBorder.LineStyle(), $oObj.CharLeftBorder.LineStyle(), _
 					$oObj.CharRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.Color(), $oObj.CharBottomBorder.Color(), $oObj.CharLeftBorder.Color(), _
 					$oObj.CharRightBorder.Color())
@@ -796,6 +799,7 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then
 		If __LOWriter_VersionCheck(7.0) Then
 			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharTransparence(), $oObj.CharBackColor())
+
 		Else
 			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharBackColor())
 		EndIf
@@ -981,7 +985,6 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 		; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
-
 	EndIf
 
 	If ($iSuperScript <> Null) Then
@@ -1325,6 +1328,7 @@ Func __LOWriter_CharStyleNameToggle($sCharStyle, $bReverse = False)
 		$sCharStyle = ($sCharStyle = "Quotation") ? ("Citation") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "No Character Style") ? ("Standard") : ($sCharStyle)
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sCharStyle)
+
 	Else
 		$sCharStyle = ($sCharStyle = "Footnote Symbol") ? ("Footnote Characters") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Bullet Symbols") ? ("Bullets") : ($sCharStyle)
@@ -1657,10 +1661,12 @@ Func __LOWriter_CursorGetText(ByRef $oDoc, ByRef $oCursor)
 			$oText = $oReturnedObj.getText()
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
+
 		Case $LOW_CURDATA_CELL
 			$oText = $oReturnedObj.getCellByName($oCursor.Cell.CellName)
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndSwitch
@@ -1796,7 +1802,6 @@ Func __LOWriter_FieldCountType($vInput)
 	$asFieldTypes[$LOW_FIELD_COUNT_TYPE_WORDS] = "com.sun.star.text.TextField.WordCount"
 
 	If IsObj($vInput) Then
-
 		For $i = 0 To UBound($asFieldTypes) - 1
 			If $vInput.supportsService($asFieldTypes[$i]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $i)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1806,6 +1811,7 @@ Func __LOWriter_FieldCountType($vInput)
 	ElseIf IsInt($vInput) Then
 		If Not __LOWriter_IntIsBetween($vInput, 0, UBound($asFieldTypes) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asFieldTypes[$vInput])
+
 	Else
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Wrong VarType
 	EndIf
@@ -1878,13 +1884,13 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 		For $i = 0 To UBound($avFieldTypes) - 1
 
 			If $oTextField.supportsService($avFieldTypes[$i][1]) Then
-
 				If ($iColumns = 1) Then
 					$avTextFields[$iCount] = $oTextField
 
 					$iCount += 1
 					If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2]
 					ExitLoop
+
 				Else
 
 					$avTextFields[$iCount][0] = $oTextField
@@ -1905,6 +1911,7 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 
 	If ($iColumns = 1) Then
 		ReDim $avTextFields[$iCount]
+
 	Else
 		ReDim $avTextFields[$iCount][$iColumns]
 	EndIf
@@ -2073,10 +2080,12 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 		$iSlashLocation = StringInStr($sDocSavePath, "/", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, ($iLength - $iDotLocation) + 1)
+
 	ElseIf StringInStr($sDocSavePath, "\") Then ;  Else if PC Path Then
 		$iSlashLocation = StringInStr($sDocSavePath, "\", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, $iLength - $iDotLocation + 1)
+
 	Else
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
@@ -2084,6 +2093,7 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 	If $sFileExtension = $sDocSavePath Then ;  If no file extension identified, append .odt extension and return.
 		$sDocSavePath = $sDocSavePath & ".odt"
 		Return SetError($__LO_STATUS_SUCCESS, 3, "writer8")
+
 	Else
 		$sFileExtension = StringLower(StringStripWS($sFileExtension, $STR_STRIPALL))
 	EndIf
@@ -2278,9 +2288,11 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 		If $bWid Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.LineWidth(), $oObj.FooterBottomBorder.LineWidth(), _
 					$oObj.FooterLeftBorder.LineWidth(), $oObj.FooterRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.LineStyle(), $oObj.FooterBottomBorder.LineStyle(), _
 					$oObj.FooterLeftBorder.LineStyle(), $oObj.FooterRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.Color(), $oObj.FooterBottomBorder.Color(), $oObj.FooterLeftBorder.Color(), _
 					$oObj.FooterRightBorder.Color())
@@ -2404,6 +2416,7 @@ Func __LOWriter_FormControlGetObj($oControl, $iControlType)
 			EndIf
 			Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
 		Next
+
 	Else
 
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -2471,7 +2484,6 @@ Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
 			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][0])
 
 		Next
-
 	EndIf
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
@@ -2550,7 +2562,6 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
-
 		For $i = 1 To $oShapes.getCount() - 1
 
 			For $j = 0 To $oShapes.getCount() - 1
@@ -3406,9 +3417,11 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 		If $bWid Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.LineWidth(), $oObj.HeaderBottomBorder.LineWidth(), _
 					$oObj.HeaderLeftBorder.LineWidth(), $oObj.HeaderRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.LineStyle(), $oObj.HeaderBottomBorder.LineStyle(), _
 					$oObj.HeaderLeftBorder.LineStyle(), $oObj.HeaderRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.Color(), $oObj.HeaderBottomBorder.Color(), $oObj.HeaderLeftBorder.Color(), _
 					$oObj.HeaderRightBorder.Color())
@@ -3567,10 +3580,12 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 		Case "SwXBodyText"
 			$oReturnObject = $oDoc
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_BODY_TEXT, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_BODY_TEXT))
+
 		Case "SwXTextFrame"
 			$oReturnObject = $oDoc.TextFrames.getByName($oCursor.TextFrame.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_FRAME, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_FRAME))
+
 		Case "SwXCell"
 			$oReturnObject = $oDoc.TextTables.getByName($oCursor.TextTable.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
@@ -3634,14 +3649,19 @@ Func __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 	Switch $oCursor.getImplementationName()
 		Case "SwXTextViewCursor"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_VIEW_CURSOR)
+
 		Case "SwXTextTableCursor"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TABLE_CURSOR)
+
 		Case "SwXTextCursor", "SvxUnoTextCursor" ; SvxUnoTextCursor is a Text Cursor created in a TextBox Form Control.
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_CURSOR)
+
 		Case "SwXParagraph"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_PARAGRAPH)
+
 		Case "SwXTextPortion"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_PORTION)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; unknown Cursor type.
 	EndSwitch
@@ -3671,6 +3691,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 		For $i = 1 To UBound($avUserFunction) - 1
 			$avUserParams[$i + 1] = $avUserFunction[$i]
 		Next
+
 	Else
 		$vUserFunction = $avUserFunction
 	EndIf
@@ -3687,6 +3708,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline & @CRLF & _
 						"!--COM-Error-End--" & @CRLF)
+
 			Case MsgBox
 				MsgBox(0, "COM Error", "Number: 0x" & Hex($oComError.number, 8) & @CRLF & _
 						"WinDescription: " & $oComError.windescription & @CRLF & _
@@ -3696,6 +3718,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 						"HelpContext: " & $oComError.helpcontext & @CRLF & _
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline)
+
 			Case Else
 				Call($vUserFunction, $avUserParams)
 		EndSwitch
@@ -3728,7 +3751,6 @@ Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
-
 		Case 2
 			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
@@ -3742,7 +3764,6 @@ Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
 
 			ElseIf IsInt($vNot) Then
 				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-
 			EndIf
 
 			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
@@ -3856,6 +3877,7 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 			For $i = 1 To $anNot[0]
 				If ($anNot[$i] = $nTest) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 			Next
+
 		Else
 			If ($nTest = $snNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 		EndIf
@@ -3869,6 +3891,7 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 			$bMatch = ($anIncl[$j] = $nTest) ? (True) : (False)
 			If $bMatch Then ExitLoop
 		Next
+
 	ElseIf IsNumber($snIncl) Then
 		$bMatch = ($nTest = $snIncl) ? (True) : (False)
 	EndIf
@@ -4187,6 +4210,7 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $atNumLev
 
 	If ($bNumDocOpen = True) Then
 		$oNumStyleDoc.Close(True)
+
 	Else
 		__LOWriter_NumStyleDeleteScript($oDoc)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -4240,6 +4264,7 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 
 	If ($oObj.supportsService("com.sun.star.text.TextFrame")) Or ($oObj.supportsService("com.sun.star.text.TextGraphicObject")) Then
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oObj.Anchor.PageStyleName())
+
 	Else
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
 	EndIf
@@ -4254,7 +4279,6 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
 
 		$oObj.Width = $iObjWidth
-
 	EndIf
 
 	If ($bRelativeHeight = True) Then
@@ -4298,6 +4322,7 @@ Func __LOWriter_PageStyleNameToggle($sPageStyle, $bReverse = False)
 	If ($bReverse = False) Then
 		$sPageStyle = ($sPageStyle = "Default Page Style") ? ("Standard") : ($sPageStyle)
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sPageStyle)
+
 	Else
 		$sPageStyle = ($sPageStyle = "Standard") ? ("Default Page Style") : ($sPageStyle)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sPageStyle)
@@ -4734,6 +4759,7 @@ Func __LOWriter_ParHyphenation(ByRef $oObj, $bAutoHyphen, $bHyphenNoCaps, $iMaxH
 		If __LOWriter_VersionCheck(6.4) Then
 			__LOWriter_ArrayFill($avHyphenation, $oObj.ParaIsHyphenation(), $oObj.ParaHyphenationNoCaps(), $oObj.ParaHyphenationMaxHyphens(), _
 					$oObj.ParaHyphenationMaxLeadingChars(), $oObj.ParaHyphenationMaxTrailingChars())
+
 		Else
 			__LOWriter_ArrayFill($avHyphenation, $oObj.ParaIsHyphenation(), $oObj.ParaHyphenationMaxHyphens(), _
 					$oObj.ParaHyphenationMaxLeadingChars(), $oObj.ParaHyphenationMaxTrailingChars())
@@ -5148,10 +5174,10 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then
-
 		If __LOWriter_VersionCheck(3.6) Then
 			__LOWriter_ArrayFill($avSpacing, $oObj.ParaTopMargin(), $oObj.ParaBottomMargin(), $oObj.ParaContextMargin(), _
 					$oObj.ParaLineSpacing.Mode(), $oObj.ParaLineSpacing.Height(), $oObj.ParaRegisterModeActive())
+
 		Else
 			__LOWriter_ArrayFill($avSpacing, $oObj.ParaTopMargin(), $oObj.ParaBottomMargin(), $oObj.ParaLineSpacing.Mode(), $oObj.ParaLineSpacing.Height(), _
 					$oObj.ParaRegisterModeActive())
@@ -5195,8 +5221,10 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 		Switch $tLine.Mode()
 			Case $LOW_LINE_SPC_MODE_PROP ;Proportional
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 6, 65535) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; Min setting on Proportional is 6%
+
 			Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ;Minimum and Leading Modes
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
+
 			Case $LOW_LINE_SPC_MODE_FIX ;Fixed Line Spacing Mode
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 51, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Min spacing is 51 when Fixed Mode
 		EndSwitch
@@ -5243,6 +5271,7 @@ Func __LOWriter_ParStyleNameToggle($sParStyle, $bReverse = False)
 		$sParStyle = ($sParStyle = "Default Paragraph Style") ? ("Standard") : ($sParStyle)
 		$sParStyle = ($sParStyle = "Complimentary Close") ? ("Salutation") : ($sParStyle)
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sParStyle)
+
 	Else
 		$sParStyle = ($sParStyle = "Standard") ? ("Default Paragraph Style") : ($sParStyle)
 		$sParStyle = ($sParStyle = "Salutation") ? ("Complimentary Close") : ($sParStyle)
@@ -5337,6 +5366,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		$atNewTabStops = $oObj.ParaTabStops()
 		$tFoundTabStop = $atNewTabStops[0]
 		$iNewPosition = $tFoundTabStop.Position()
+
 	Else
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
@@ -5417,10 +5447,12 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 		$tTabStruct.DecimalChar = 46 ;Period
 		$atNewTabStops[0] = $tTabStruct
 		$bDeleted = True
+
 	Else
 		For $i = 0 To UBound($atOldTabStops) - 1
 			If ($atOldTabStops[$i].Position() = $iTabStop) Then
 				$bDeleted = True
+
 			Else
 				$atNewTabStops[$iCount] = $atOldTabStops[$i]
 				$iCount += 1
@@ -5809,7 +5841,6 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY
 			$tProp.Value = "quad-arrow"
 
@@ -5893,7 +5924,6 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_ARROWS_PENTAGON
 			$tProp.Value = "pentagon-right"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -5984,7 +6014,6 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 	EndIf
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_BASIC_ARC
 			$oShape.FillColor = $LOW_COLOR_OFF
 
@@ -6059,7 +6088,6 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT
 			$tProp.Value = "right-triangle"
-
 	EndSwitch
 
 	If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then
@@ -6137,7 +6165,6 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_CALLOUT_CLOUD
 			$tProp.Value = "cloud-callout"
 
@@ -6158,7 +6185,6 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_CALLOUT_ROUND
 			$tProp.Value = "round-callout"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6237,7 +6263,6 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_FLOWCHART_CARD
 			$tProp.Value = "flowchart-card"
 
@@ -6321,7 +6346,6 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR
 			$tProp.Value = "flowchart-terminator"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6399,7 +6423,6 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_LINE_CURVE
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -6594,7 +6617,6 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 			$oShape.FillColor = 7512015 ; Light blue
-
 	EndSwitch
 
 	$tSize = $oShape.Size()
@@ -6676,7 +6698,6 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_STARS_4_POINT
 			$tProp.Value = "star4"
 
@@ -6712,7 +6733,6 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_STARS_SIGNET
 			$tProp.Value = "signet" ; "non-primitive"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6794,7 +6814,6 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
 			$tProp.Value = "col-502ad400"
 
@@ -6857,7 +6876,6 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_PUZZLE
 			$tProp.Value = "puzzle"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6933,7 +6951,6 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 	If Not IsString($sCusShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	Switch $sCusShapeType
-
 		Case "quad-arrow"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY)
 
@@ -7033,6 +7050,7 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "ellipse"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE)
 ;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
+
 		Case "paper"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER)
 
@@ -7051,9 +7069,11 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 		Case "rectangle"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE)
 ;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
+
 		Case "round-rectangle"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED)
 ;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
+
 		Case "pentagon"
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON)
 
@@ -7269,7 +7289,6 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 
 		Case Else
 			Return SetError($__LO_STATUS_SUCCESS, 0, -1)
-
 	EndSwitch
 
 EndFunc   ;==>__LOWriter_Shape_GetCustomType
@@ -7353,7 +7372,6 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 
 	Else
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
-
 	EndIf
 EndFunc   ;==>__LOWriter_ShapeArrowStyleName
 
@@ -7436,7 +7454,6 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 
 	Else
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
-
 	EndIf
 EndFunc   ;==>__LOWriter_ShapeLineStyleName
 
@@ -7497,7 +7514,6 @@ Func __LOWriter_ShapePointGetSettings(ByRef $avArray, ByRef $aiFlags, ByRef $atP
 	$avArray[2] = $iPointType
 
 	If ($iPointType = $LOW_SHAPE_POINT_TYPE_NORMAL) Then
-
 		If ($iArrayElement <> (UBound($atPoints) - 1)) Then ; Requested point is not at the end of the array of points.
 
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after requested point is a Control Point.
@@ -7506,17 +7522,14 @@ Func __LOWriter_ShapePointGetSettings(ByRef $avArray, ByRef $aiFlags, ByRef $atP
 
 			Else ; Next point after requested point is not a control type point.
 				$bIsCurve = False
-
 			EndIf
 
 		Else ; Point is the last point, cant be a curve.
 			$bIsCurve = False
-
 		EndIf
 
 	Else ; Point is a Smooth, or Symmetrical Point type, point is a curve regardless.
 		$bIsCurve = True
-
 	EndIf
 
 	If Not IsBool($bIsCurve) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -7581,7 +7594,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
 
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iNextArrayElement = $i
 				ExitLoop
 			EndIf
@@ -7593,7 +7605,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 	Else
 		$iNextArrayElement = -1
-
 	EndIf
 
 	If ($iArrayElement > 0) Then ; If Point requested is not the first point, find the previous Point's position.
@@ -7601,7 +7612,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
 
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iPreviousArrayElement = $i
 				ExitLoop
 			EndIf
@@ -7616,37 +7626,28 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 	EndIf
 
 	If ($iX <> Null) Then
-
 		If ($iArrayElement < UBound($atPoints) - 1) And ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Next point is a control point, check if this point is a curve.
 
 			If ($atPoints[$iArrayElement].X() = $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() = $atPoints[$iArrayElement + 1].Y()) Then ; Update the coordinates, because the point is not a curve.
 				$atPoints[$iArrayElement + 1].X = $iX
-
 			EndIf
-
 		EndIf
 
 		$atPoints[$iArrayElement].X = $iX
-
 	EndIf
 
 	If ($iY <> Null) Then
-
 		If ($iArrayElement < UBound($atPoints) - 1) And ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Next point is a control point, check if this point is a curve.
 
 			If ($atPoints[$iArrayElement].X() = $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() = $atPoints[$iArrayElement + 1].Y()) Then ; Update the coordinates, because the point is not a curve.
 				$atPoints[$iArrayElement + 1].Y = $iY
-
 			EndIf
-
 		EndIf
 
 		$atPoints[$iArrayElement].Y = $iY
-
 	EndIf
 
 	If ($iPointType <> Null) Then
-
 		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; New point type is a curve.
 
 			If ($aiFlags[$iArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Converting point from Normal to a curve.
@@ -7669,7 +7670,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 						$tControlPoint2 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X() - $iSymmetricalPointXValue, $atPoints[$iArrayElement].Y() - $iSymmetricalPointYValue)
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 					EndIf
 
 				Else ; Previous point is a normal point, need to create new control points.
@@ -7752,7 +7752,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0) ; If the point I am modifying has two control points after it, I need to skip them in the PointsArray.
 
 						$iForOffset += 5 ; Add to $i to skip the elements I manually added.
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7767,7 +7766,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 			Else ; Point is already a curve.
 				; Do nothing?
-
 			EndIf
 
 		Else ; New Point is a Normal Point.
@@ -7784,7 +7782,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 							$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 							If ($iPreviousArrayElement + 2 < $iArrayElement) And ($atPoints[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2] ; If two control points are present, copy them.
-
 						EndIf
 					EndIf
 
@@ -7794,7 +7791,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 					If ($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2] ; If two control points are present, copy them.
-
 				EndIf
 
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then
@@ -7803,7 +7799,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint4 = $atPoints[$iNextArrayElement - 1]
 
 					If ($iNextArrayElement - 2 > $iArrayElement) And ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint3 = $atPoints[$iNextArrayElement - 2] ; If two control points are present, copy them.
-
 				EndIf
 
 				$iOffset = 0
@@ -7881,7 +7876,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iNextArrayElement - 2 > $iArrayElement) And ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7897,15 +7891,11 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			Else ; Point being modified is a normal point already.
 
 				;Do nothing?
-
 			EndIf
-
 		EndIf
-
 	EndIf
 
 	If ($bIsCurve <> Null) Then
-
 		If ($aiFlags[$iArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If Point to modify is a normal point, then proceed, else point is a curve already.
 
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after point to modify is a control point, just modify it.
@@ -7921,7 +7911,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					Else ; Create a new control point.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
-
 					EndIf
 
 				ElseIf ($bIsCurve = False) And ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Next point is a curve, so just modify the control point.
@@ -7932,7 +7921,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 				Else ; IsCurve = False, and next point is normal. delete control points.
 					$tControlPoint3 = Null
-
 				EndIf
 
 			Else ; Need to create new control points if IsCurve = True.
@@ -7943,9 +7931,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 					$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
-
 				EndIf
-
 			EndIf
 
 			$iOffset = 0
@@ -7965,7 +7951,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			For $i = 0 To UBound($atPoints) - 1
 
 				If ($iOffset = 0) Then
-
 					$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 					$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
 
@@ -7999,7 +7984,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 						If (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 					EndIf
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -8015,7 +7999,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Next point is a curve, need to keep the control points.
 					If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint3 = $atPoints[$iArrayElement + 1]
 					If ($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint4 = $atPoints[$iArrayElement + 2]
-
 				EndIf
 
 				If ($iPreviousArrayElement <> -1) And ($aiFlags[$iPreviousArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; There is a previous point, and it is a curve, I need to keep the control points.
@@ -8031,9 +8014,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 						If ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2]
-
 					EndIf
-
 				EndIf
 
 				$iOffset = 0
@@ -8061,7 +8042,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					EndIf
 
 					If ($i = $iPreviousArrayElement) Then
-
 						If IsObj($tControlPoint1) Then
 							$iForOffset += 1
 							$iOffset += 1
@@ -8111,7 +8091,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -8123,11 +8102,8 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 				$atPoints = $avArray
 				$aiFlags = $avArray2
-
 			EndIf
-
 		EndIf
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -8188,15 +8164,16 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori) Then
-
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.LineWidth(), $oTable.TableBorder2.BottomLine.LineWidth(), _
 					$oTable.TableBorder2.LeftLine.LineWidth(), $oTable.TableBorder2.RightLine.LineWidth(), $oTable.TableBorder2.VerticalLine.LineWidth(), _
 					$oTable.TableBorder2.HorizontalLine.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.LineStyle(), $oTable.TableBorder2.BottomLine.LineStyle(), _
 					$oTable.TableBorder2.LeftLine.LineStyle(), $oTable.TableBorder2.RightLine.LineStyle(), $oTable.TableBorder2.VerticalLine.LineStyle(), _
 					$oTable.TableBorder2.HorizontalLine.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.Color(), $oTable.TableBorder2.BottomLine.Color(), _
 					$oTable.TableBorder2.LeftLine.Color(), $oTable.TableBorder2.RightLine.Color(), $oTable.TableBorder2.VerticalLine.Color(), _
@@ -8336,6 +8313,7 @@ Func __LOWriter_TableCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = Fals
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
 			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
@@ -8615,6 +8593,7 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
@@ -8647,10 +8626,12 @@ Func __LOWriter_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPerc
 		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOWriter_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
+
 	ElseIf ($iLongToPercent <> Null) Then
 		$iReturn = _LOWriter_ConvertColorFromLong(Null, $iLongToPercent)
 		$iReturn = Int((($iReturn[0] / 255) * 100) + .50) ; All return color values will be the same, so use only one. Add . 50 to round up if applicable.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
+
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
 	EndIf
@@ -8765,7 +8746,6 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
-
 		Case $__LOCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
@@ -9080,6 +9060,7 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 			$iCounted = ($bMoved) ? (1) : (0)
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch

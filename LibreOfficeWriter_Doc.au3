@@ -295,6 +295,7 @@ Func _LOWriter_DocBookmarkInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = Fals
 		If Not IsString($sBookmarkName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		If StringRegExp($sBookmarkName, '[/\@:*?";,.#]') Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Invalid Characters in Name.
 		$oBookmark.Name = $sBookmarkName
+
 	Else
 		$oBookmark.Name = "Bookmark "
 	EndIf
@@ -443,22 +444,20 @@ Func _LOWriter_DocClose(ByRef $oDoc, $bSaveChanges = True, $sSaveName = "", $bDe
 
 		$aArgs[0] = __LOWriter_SetPropertyValue("FilterName", $sFilterName)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
 	EndIf
 
 	If ($bSaveChanges = True) Then
-
 		If $oDoc.hasLocation() Then
 			$oDoc.store()
 			$sDocPath = _LOWriter_PathConvert($oDoc.getURL(), $LOW_PATHCONV_PCPATH_RETURN)
 			$oDoc.Close($bDeliverOwnership)
 			Return SetError($__LO_STATUS_SUCCESS, 2, $sDocPath)
+
 		Else
 			$oDoc.storeAsURL($sSavePath, $aArgs)
 			$oDoc.Close($bDeliverOwnership)
 			Return SetError($__LO_STATUS_SUCCESS, 1, _LOWriter_PathConvert($sSavePath, $LOW_PATHCONV_PCPATH_RETURN))
 		EndIf
-
 	EndIf
 
 	If $oDoc.hasLocation() Then $sDocPath = _LOWriter_PathConvert($oDoc.getURL(), $LOW_PATHCONV_PCPATH_RETURN)
@@ -537,7 +536,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 	EndIf
 
 	If $bConnectAll Then
-
 		ReDim $aoConnectAll[1][3]
 		$iCount = 0
 		While $oEnumDoc.hasMoreElements()
@@ -553,7 +551,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 			Sleep(10)
 		WEnd
 		Return SetError($__LO_STATUS_SUCCESS, 2, $aoConnectAll)
-
 	EndIf
 
 	$sFile = StringStripWS($sFile, $STR_STRIPLEADING)
@@ -591,6 +588,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 					$aoPartNameSearch[$iCount][2] = _LOWriter_PathConvert($oDoc.getURL, $LOW_PATHCONV_PCPATH_RETURN)
 					$iCount += 1
 				EndIf
+
 			Else
 				If StringInStr($oDoc.Title, $sFile) Then
 					ReDim $aoPartNameSearch[$iCount + 1][3]
@@ -605,6 +603,7 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then
 				Return SetError($__LO_STATUS_SUCCESS, 5, $aoPartNameSearch[0][0]) ; matches
+
 			Else
 				Return SetError($__LO_STATUS_SUCCESS, 6, $aoPartNameSearch) ; matches
 			EndIf
@@ -612,7 +611,6 @@ Func _LOWriter_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False
 		Else
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0) ; no match
 		EndIf
-
 	EndIf
 
 EndFunc   ;==>_LOWriter_DocConnect
@@ -783,7 +781,6 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 	$atArgs[4] = __LOWriter_SetPropertyValue("DontSplitTable", $bDontSplitTable)
 
 	If ($iCursorType = $LOW_CURTYPE_TEXT_CURSOR) Then
-
 		; Retrieve the ViewCursor.
 		$oViewCursor = $oDoc.CurrentController.getViewCursor()
 		If Not IsObj($oViewCursor) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -798,6 +795,7 @@ Func _LOWriter_DocConvertTextToTable(ByRef $oDoc, ByRef $oCursor, $sDelimiter = 
 
 		; Restore the ViewCursor to its previous location.
 		$oViewCursor.gotoRange($oViewCursorBackup, False)
+
 	Else
 
 		$oDispatcher.executeDispatch($oDoc.CurrentController(), ".uno:ConvertTextToTable", "", 0, $atArgs)
@@ -942,6 +940,7 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 
 		If __LOWriter_IntIsBetween($iCursorType, $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_HEADER_FOOTER) Then
 			$oCursor = $oText.createTextCursorByRange($oViewCursor)
+
 		Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; ViewCursor in unknown data type.
 		EndIf
@@ -954,6 +953,7 @@ Func _LOWriter_DocCreateTextCursor(ByRef $oDoc, $bCreateAtEnd = True, $bCreateAt
 
 		If ($bCreateAtEnd = True) Then
 			$oCursor.gotoEnd(False)
+
 		Else
 			$oCursor.gotoStart(False)
 		EndIf
@@ -1047,7 +1047,6 @@ Func _LOWriter_DocDescription(ByRef $oDoc, $sTitle = Null, $sSubject = Null, $as
 
 		Else
 			__LOWriter_ArrayFill($avDescription, $oDocProp.Title(), $oDocProp.Subject(), $oDocProp.Keywords(), $oDocProp.Description())
-
 		EndIf
 
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDescription)
@@ -1269,6 +1268,7 @@ Func _LOWriter_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterNa
 			If StringInStr($sFilePath, "\") Then $sFilePath = _LOWriter_PathConvert($sFilePath, $LOW_PATHCONV_OFFICE_RETURN) ; Convert to L.O. URL
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 			$sFilePath = $sOriginalPath & $sFilePath ; combine the path with the new name.
+
 		Else
 			Return SetError($__LO_STATUS_DOC_ERROR, 1, 0)
 		EndIf
@@ -1422,6 +1422,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 
 	If $oRange.Text.supportsService("com.sun.star.text.TextFrame") Then
 		$oRangeAnchor = $oRange.TextFrame.getAnchor() ; If Range is in a TextFrame, convert its position to a range in the document
+
 	ElseIf $oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 		$oRangeAnchor = $oRange.Text.Anchor()
 	EndIf
@@ -1440,6 +1441,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 
 			If $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
 				$oResultRegion = $oResult.TextFrame.getAnchor() ; If Result is in a TextFrame, convert its position to a range in the document
+
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oResultRegion = $oResult.Text.Anchor()
 			EndIf
@@ -1450,6 +1452,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 					$oRangeRegion = $oRangeAnchor
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
+
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeAnchor) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
@@ -1462,6 +1465,7 @@ Func _LOWriter_DocFindAllInRange(ByRef $oDoc, ByRef $oSrchDescript, $sSearchStri
 			If ($oText.compareRegionEnds($oResultRegion, $oRangeRegion) >= 0) And ($oText.compareRegionStarts($oRangeRegion, $oResultRegion) >= 0) Then
 				$aoResults[$iCount] = $oResult
 				$iCount += 1
+
 			Else
 				$oResult = Null
 			EndIf
@@ -1537,6 +1541,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 	If ($oLastFind = Null) Then ; If Last find is not set, then set FindRange to Range beginning or end, depending on SearchBackwards value.
 		$oFindRange = ($oSrchDescript.SearchBackwards() = False) ? ($oRange.Start()) : ($oRange.End())
+
 	Else ;If Last find is set, set search start for beginning or end of last result, depending SearchBackwards value.
 		If Not IsObj($oLastFind) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not ($oLastFind.supportsService("com.sun.star.text.TextCursor")) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
@@ -1560,12 +1565,14 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 
 			If $oRange.Text.supportsService("com.sun.star.text.TextFrame") Then
 				$oRangeRegion = $oRange.TextFrame.getAnchor() ; If Range is in a TextFrame, convert its position to a range in the document
+
 			ElseIf $oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oRangeRegion = $oRange.Text.Anchor()
 			EndIf
 
 			If $oResult.Text.supportsService("com.sun.star.text.TextFrame") Then
 				$oResultRegion = $oResult.TextFrame.getAnchor() ; If Result is in a TextFrame, convert its position to a range in the document
+
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") Then
 				$oResultRegion = $oResult.Text.Anchor()
 			EndIf
@@ -1576,6 +1583,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 					$oRangeRegion = $oRange
 					$oText = $oRange.Text() ; Must use the corresponding Text Object for that TextFrame as Region Compare can only compare regions contained in the same Text Object region.
 				EndIf
+
 			ElseIf $oResult.Text.supportsService("com.sun.star.text.Footnote") Or $oResult.Text.supportsService("com.sun.star.text.Endnote") And _
 					$oRange.Text.supportsService("com.sun.star.text.Footnote") Or $oRange.Text.supportsService("com.sun.star.text.Endnote") Then
 				If ($oDoc.Text.compareRegionEnds($oResultRegion, $oRangeRegion) = 0) Then ;  If both Range and Result are in a Text Frame, test if they are in the same one.
@@ -1589,6 +1597,7 @@ Func _LOWriter_DocFindNext(ByRef $oDoc, ByRef $oSrchDescript, $sSearchString, By
 				If ($bExhaustive = False) Then
 					$oResult = Null ;If Result is past the selection set Result to Null, but only if not doing an exhaustive search.
 					ExitLoop
+
 				Else ;If $bExhaustive is True, then update the find range.
 					$oFindRange = $oResult.End()
 				EndIf
@@ -2332,6 +2341,7 @@ Func _LOWriter_DocGetPath(ByRef $oDoc, $bReturnLibreURL = False)
 
 	If ($bReturnLibreURL = True) Then
 		$sPath = $oDoc.URL()
+
 	Else
 		$sPath = $oDoc.URL()
 		$sPath = _LOWriter_PathConvert($sPath, $LOW_PATHCONV_PCPATH_RETURN)
@@ -2567,6 +2577,7 @@ Func _LOWriter_DocHyperlinkInsert(ByRef $oDoc, ByRef $oCursor, $sLinkText, $sLin
 		$oText = __LOWriter_CursorGetText($oDoc, $oTextCursor)
 		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 	Else
 		$oText = $oDoc.getText
 		If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
@@ -2900,7 +2911,6 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 	If Not IsObj($oDesktop) Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	If Not __LOWriter_VarsAreNull($bHidden, $bReadOnly, $sPassword, $bLoadAsTemplate, $sFilterName) Then
-
 		If ($bHidden <> Null) Then
 			If Not IsBool($bHidden) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$vProperty = __LOWriter_SetPropertyValue("Hidden", $bHidden)
@@ -2935,7 +2945,6 @@ Func _LOWriter_DocOpen($sFilePath, $bConnectIfOpen = True, $bHidden = Null, $bRe
 			If @error Then $iError = BitOR($iError, 16)
 			If Not BitAND($iError, 16) Then __LOWriter_AddTo1DArray($aoProperties, $vProperty)
 		EndIf
-
 	EndIf
 
 	If $bConnectIfOpen Then $oDoc = _LOWriter_DocConnect($sFilePath)
@@ -3421,6 +3430,7 @@ Func _LOWriter_DocPrintMiscSettings(ByRef $oDoc, $iPaperOrient = Null, $sPrinter
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperOrientation", $iPaperOrient)
 			$oDoc.setPrinter($aoSetting)
 			$iError = (__LOWriter_GetPrinterSetting($oDoc, "PaperOrientation") = $iPaperOrient) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
 		EndIf
@@ -3623,6 +3633,7 @@ Func _LOWriter_DocPrintSizeSettings(ByRef $oDoc, $iPaperFormat = Null, $iPaperWi
 			$aoSetting[0] = __LOWriter_SetPropertyValue("PaperFormat", $iPaperFormat)
 			$oDoc.setPrinter($aoSetting)
 			$iError = (__LOWriter_GetPrinterSetting($oDoc, "PaperFormat") = $iPaperFormat) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			Return SetError($__LO_STATUS_PRINTER_RELATED_ERROR, 1, 0)
 		EndIf
@@ -3681,6 +3692,7 @@ Func _LOWriter_DocRedo(ByRef $oDoc)
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		$oDoc.UndoManager.Redo()
 		Return SetError($__LO_STATUS_SUCCESS, 1, 0)
+
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
@@ -3742,6 +3754,7 @@ Func _LOWriter_DocRedoCurActionTitle(ByRef $oDoc)
 
 	If ($oDoc.UndoManager.isRedoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentRedoActionTitle())
+
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentRedoActionTitle())
 	EndIf
@@ -3952,9 +3965,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 	If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; Error performing search
 
 	If ($oSrchDescript.SearchRegularExpression() = True) Then
-
 		If ($bFormat = True) Then
-
 			For $i = 0 To $iResults - 1
 				$aoResults[$i].setString(StringRegExpReplace($aoResults[$i].getString(), $sSearchString, $sReplaceString))
 				If ($bFormat = True) Then
@@ -3996,7 +4007,6 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 
 			; Restore the ViewCursor to its previous location.
 			$oViewCursor.gotoRange($oViewCursorBackup, False)
-
 		EndIf
 
 	ElseIf ($oSrchDescript.SearchStyles() = True) And ((UBound($atFindFormat) = 0) And (UBound($atReplaceFormat) = 0)) Then ; If Style Search is active and no formatting is set, then search and replace Paragraph style.
@@ -4006,6 +4016,7 @@ Func _LOWriter_DocReplaceAllInRange(ByRef $oDoc, ByRef $oSrchDescript, ByRef $oR
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 	Else
 		For $i = 0 To $iResults - 1
 			$aoResults[$i].setString(StringReplace($aoResults[$i].getString(), $sSearchString, $sReplaceString))
@@ -4168,7 +4179,6 @@ Func _LOWriter_DocSelectionGet(ByRef $oDoc)
 	If Not IsObj($oSelection) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oSelection.supportsService("com.sun.star.text.TextTableCursor") Then
-
 		Return SetError($__LO_STATUS_SUCCESS, -4, $oSelection)
 
 	ElseIf $oSelection.supportsService("com.sun.star.text.TextFrame") Then
@@ -4310,6 +4320,7 @@ Func _LOWriter_DocUndo(ByRef $oDoc)
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		$oDoc.UndoManager.Undo()
 		Return SetError($__LO_STATUS_SUCCESS, 0, 1)
+
 	Else
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
@@ -4434,6 +4445,7 @@ Func _LOWriter_DocUndoCurActionTitle(ByRef $oDoc)
 
 	If ($oDoc.UndoManager.isUndoPossible()) Then
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.UndoManager.getCurrentUndoActionTitle())
+
 	Else
 		Return SetError($__LO_STATUS_SUCCESS, 0, $oDoc.UndoManager.getCurrentUndoActionTitle())
 	EndIf

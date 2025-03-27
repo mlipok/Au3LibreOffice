@@ -478,6 +478,7 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 	If __LOWriter_VarsAreNull($sNewNumStyleName, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avOrganizer, $oNumStyle.Name(), $oNumStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oNumStyle.Name())
 		EndIf

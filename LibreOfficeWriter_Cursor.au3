@@ -333,12 +333,15 @@ Func _LOWriter_CursorMove(ByRef $oCursor, $iMove, $iCount = 1, $bSelect = False)
 		Case $LOW_CURTYPE_TEXT_CURSOR
 			$bMoved = __LOWriter_TextCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
+
 		Case $LOW_CURTYPE_TABLE_CURSOR
 			$bMoved = __LOWriter_TableCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
+
 		Case $LOW_CURTYPE_VIEW_CURSOR
 			$bMoved = __LOWriter_ViewCursorMove($oCursor, $iMove, $iCount, $bSelect)
 			Return SetError(@error, @extended, $bMoved)
+
 		Case Else
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; unknown cursor type.
 	EndSwitch

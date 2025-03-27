@@ -153,7 +153,6 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 		$oPar = $oEnum.nextElement()
 
 		If ($bTableCheck = True) Then
-
 			If UBound($aoParagraphs) <= ($iCount) Then ReDim $aoParagraphs[UBound($aoParagraphs) * 2][2]
 			$aoParagraphs[$iCount][0] = $oPar
 			$aoParagraphs[$iCount][1] = ($oPar.supportsService("com.sun.star.text.TextTable"))
@@ -170,9 +169,9 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 
 	If ($bTableCheck = True) Then
 		ReDim $aoParagraphs[$iCount][2]
+
 	Else
 		ReDim $aoParagraphs[$iCount]
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoParagraphs)
@@ -207,7 +206,6 @@ Func _LOWriter_ParObjDelete(ByRef $oParObj)
 
 	Else
 		$oParObj.Text.removeTextContent($oParObj)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -343,7 +341,6 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 	$oDoc.CurrentController.Select($oObj)
 
 	If ($oObj.supportsService("com.sun.star.text.TextTable")) Then
-
 		$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -352,7 +349,6 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 
 		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of Table
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -688,6 +684,7 @@ Func _LOWriter_ParStyleBorderWidth(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		__LOWriter_AddTo1DArray($vReturn, $oParStyle.ParaIsConnectBorder())
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
+
 	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		If @error Then Return SetError(@error, @extended, $vReturn)
@@ -1262,6 +1259,7 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 			__LOWriter_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
 					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), _
 					$oParStyle.IsAutoUpdate(), $oParStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
 					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), $oParStyle.IsAutoUpdate())

@@ -135,6 +135,7 @@ Func _LOWriter_FormAdd(ByRef $oObj, $sName)
 	ElseIf $oObj.supportsService("com.sun.star.text.TextDocument") Then
 		$oDoc = $oObj
 		$oInsertObj = $oObj.DrawPage.Forms()
+
 	Else
 
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; wrong type of input item.
@@ -1662,7 +1663,6 @@ Func _LOWriter_FormControlCurrencyFieldValue(ByRef $oCurrencyField, $nValue = Nu
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
-
 		$nCurVal = $oCurrencyField.Control.Value() ; Value is Null when not set.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
@@ -1900,13 +1900,13 @@ Func _LOWriter_FormControlDateFieldGeneral(ByRef $oDateField, $sName = Null, $oL
 
 		$tDate = $oDateField.Control.DefaultDate() ; Default date is Null when not set.
 		If IsObj($tDate) Then
-
 			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDefault.Year = $tDate.Year()
 			$tCurDefault.Month = $tDate.Month()
 			$tCurDefault.Day = $tDate.Day()
+
 		Else
 			$tCurDefault = $tDate
 		EndIf
@@ -2254,16 +2254,15 @@ Func _LOWriter_FormControlDateFieldValue(ByRef $oDateField, $tDateValue = Null)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tDateValue) Then
-
 		$tDate = $oDateField.Control.Date() ; Date is Null when not set.
 		If IsObj($tDate) Then
-
 			$tCurDate = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDate) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 			$tCurDate.Year = $tDate.Year()
 			$tCurDate.Month = $tDate.Month()
 			$tCurDate.Day = $tDate.Day()
+
 		Else
 			$tCurDate = $tDate
 		EndIf
@@ -2654,7 +2653,6 @@ Func _LOWriter_FormControlFileSelFieldValue(ByRef $oFileSel, $sValue = Null)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
-
 		$sCurValue = $oFileSel.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
@@ -3260,7 +3258,6 @@ Func _LOWriter_FormControlGetParent(ByRef $oControl)
 
 	Else
 		Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $oOldParent)
@@ -3546,7 +3543,6 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
 
 	Switch $oImageButton.Control.ButtonType()
-
 		Case $__LOW_PUSH_BTN_CMND_PUSH
 			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NONE
 
@@ -3587,7 +3583,6 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 
 					Case ".uno:FormController/refreshForm"
 						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
-
 				EndSwitch
 			EndIf
 	EndSwitch
@@ -3695,7 +3690,6 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 		$oImageButton.Control.setPropertyToDefault("ButtonType")
 
 		Switch $iBtnAction
-
 			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
 				$oImageButton.Control.setPropertyToDefault("TargetURL")
 
@@ -3711,7 +3705,6 @@ Func _LOWriter_FormControlImageButtonGeneral(ByRef $oImageButton, $sName = Null,
 		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
 
 		Switch $iAction
-
 			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE
 				$oImageButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_PUSH
 				$sURL = $asActions[$iAction]
@@ -4231,7 +4224,6 @@ Func _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidt
 	$oControl.Name = $sName
 
 	Switch $iControl
-
 		Case $LOW_FORM_CONTROL_TYPE_CHECK_BOX
 			$oControl.Label = "Check Box"
 
@@ -4246,7 +4238,6 @@ Func _LOWriter_FormControlInsert(ByRef $oParentForm, $iControl, $iX, $iY, $iWidt
 
 		Case $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON
 			$oControl.Label = "Push Button"
-
 	EndSwitch
 
 	$tSize = $oShape.Size()
@@ -5080,7 +5071,6 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 
 	If __LOWriter_VarsAreNull($aiSelection) Then
 		If $bReturnValue Then
-
 			$avCurSel = $oListBox.Control.SelectedValues()
 			If Not IsArray($avCurSel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 			Return SetError($__LO_STATUS_SUCCESS, 1, $avCurSel)
@@ -5090,7 +5080,6 @@ Func _LOWriter_FormControlListBoxSelection(ByRef $oListBox, $aiSelection = Null,
 			If Not IsArray($aiCurSel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 			Return SetError($__LO_STATUS_SUCCESS, 2, $aiCurSel)
 		EndIf
-
 	EndIf
 
 	If ($aiSelection = Default) Then
@@ -5908,7 +5897,6 @@ Func _LOWriter_FormControlNumericFieldValue(ByRef $oNumericField, $nValue = Null
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($nValue) Then
-
 		$nCurVal = $oNumericField.Control.Value() ; Value is Null when not set.
 		Return SetError($__LO_STATUS_SUCCESS, 1, $nCurVal)
 	EndIf
@@ -6851,7 +6839,6 @@ Func _LOWriter_FormControlPatternFieldValue(ByRef $oPatternField, $sValue = Null
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($sValue) Then
-
 		$sCurValue = $oPatternField.Control.Text()
 		If Not IsString($sCurValue) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCurValue)
@@ -6924,7 +6911,6 @@ Func _LOWriter_FormControlPosition(ByRef $oControl, $iX = Null, $iY = Null, $iAn
 	EndIf
 
 	If ($iX <> Null) Or ($iY <> Null) Then
-
 		If ($iX <> Null) Then
 			If Not IsInt($iX) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 			$tPos.X = $iX
@@ -7095,7 +7081,6 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 	$asActions[$LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM] = ".uno:FormController/refreshForm"
 
 	Switch $oPushButton.Control.ButtonType()
-
 		Case $__LOW_PUSH_BTN_CMND_PUSH
 			$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_NONE
 
@@ -7136,7 +7121,6 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 
 					Case ".uno:FormController/refreshForm"
 						$iBtnAction = $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM
-
 				EndSwitch
 			EndIf
 	EndSwitch
@@ -7319,7 +7303,6 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 		$oPushButton.Control.setPropertyToDefault("ButtonType")
 
 		Switch $iBtnAction
-
 			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_SUBMIT_FORM, $LOW_FORM_CONTROL_PUSH_CMD_RESET_FORM
 				$oPushButton.Control.setPropertyToDefault("TargetURL")
 
@@ -7335,7 +7318,6 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 		If Not __LOWriter_IntIsBetween($iAction, $LOW_FORM_CONTROL_PUSH_CMD_NONE, $LOW_FORM_CONTROL_PUSH_CMD_REFRESH_FORM) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iAction
-
 			Case $LOW_FORM_CONTROL_PUSH_CMD_NONE
 				$oPushButton.Control.ButtonType = $__LOW_PUSH_BTN_CMND_PUSH
 				$sURL = $asActions[$iAction]
@@ -7363,7 +7345,6 @@ Func _LOWriter_FormControlPushButtonGeneral(ByRef $oPushButton, $sName = Null, $
 				$sURL = $asActions[$iAction]
 				$iError = (($oPushButton.Control.ButtonType() = $__LOW_PUSH_BTN_CMND_URL)) ? ($iError) : (BitOR($iError, 262144))
 		EndSwitch
-
 	EndIf
 
 	If ($sURL = Default) Then
@@ -7582,7 +7563,6 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 
 					$iCount += 1
 				EndIf
-
 			EndIf
 			Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
 		Next
@@ -7626,7 +7606,6 @@ Func _LOWriter_FormControlsGetList(ByRef $oObj, $iType = $LOW_FORM_CONTROL_TYPE_
 					If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 					$iCount += 1
 				EndIf
-
 			EndIf
 			Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
 		Next
@@ -7694,7 +7673,6 @@ Func _LOWriter_FormControlSize(ByRef $oControl, $iWidth = Null, $iHeight = Null,
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
-
 		If ($iWidth <> Null) Then ; Min 51
 			If Not __LOWriter_IntIsBetween($iWidth, 51) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 			$tSize.Width = $iWidth
@@ -8381,12 +8359,12 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		If Not __LOWriter_IntIsBetween($iTextType, $LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE, $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE_FORMATTED) Then Return SetError($__LO_STATUS_INPUT_ERROR, 21, 0)
 
 		Switch $iTextType
-
 			Case $LOW_FORM_CONTROL_TXT_TYPE_SINGLE_LINE
 				$oTextBox.Control.MultiLine = False
 				$oTextBox.Control.RichText = False
 
 				$iError = (($oTextBox.Control.MultiLine = False) And ($oTextBox.Control.RichText = False)) ? ($iError) : (BitOR($iError, 131072))
+
 			Case $LOW_FORM_CONTROL_TXT_TYPE_MULTI_LINE
 				$oTextBox.Control.MultiLine = True
 				$oTextBox.Control.RichText = False
@@ -8398,7 +8376,6 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 				$oTextBox.Control.RichText = True
 
 				$iError = (($oTextBox.Control.MultiLine = True) And ($oTextBox.Control.RichText = True)) ? ($iError) : (BitOR($iError, 131072))
-
 		EndSwitch
 	EndIf
 
@@ -8415,7 +8392,6 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 		Else
 			$oTextBox.Control.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_CRLF
 			$iError = ($oTextBox.Control.LineEndFormat = $__LOW_FORM_CONTROL_LINE_END_CRLF) ? ($iError) : (BitOR($iError, 262144))
-
 		EndIf
 	EndIf
 
@@ -8446,7 +8422,6 @@ Func _LOWriter_FormControlTextBoxGeneral(ByRef $oTextBox, $sName = Null, $oLabel
 				$oTextBox.Control.HScroll = True
 				$oTextBox.Control.VScroll = True
 				$iError = (($oTextBox.Control.HScroll = True) And ($oTextBox.Control.VScroll = True)) ? ($iError) : (BitOR($iError, 524288))
-
 		EndSwitch
 	EndIf
 
@@ -8719,7 +8694,6 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 
 		$tTime = $oTimeField.Control.DefaultTime() ; Default time is Null when not set.
 		If IsObj($tTime) Then
-
 			$tCurDefault = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurDefault) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -8728,9 +8702,9 @@ Func _LOWriter_FormControlTimeFieldGeneral(ByRef $oTimeField, $sName = Null, $oL
 			$tCurDefault.Seconds = $tTime.Seconds()
 			$tCurDefault.NanoSeconds = $tTime.NanoSeconds()
 			If __LOWriter_VersionCheck(4.1) Then $tCurDefault.IsUTC = $tTime.IsUTC()
+
 		Else
 			$tCurDefault = $tTime
-
 		EndIf
 
 		__LOWriter_ArrayFill($avControl, $oTimeField.Control.Name(), __LOWriter_FormControlGetObj($oTimeField.Control.LabelControl(), $LOW_FORM_CONTROL_TYPE_LABEL), $oTimeField.Control.WritingMode(), $oTimeField.Control.StrictFormat(), _
@@ -9073,10 +9047,8 @@ Func _LOWriter_FormControlTimeFieldValue(ByRef $oTimeField, $tTimeValue = Null)
 	If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($tTimeValue) Then
-
 		$tTime = $oTimeField.Control.Time() ; Time is Null when not set.
 		If IsObj($tTime) Then
-
 			$tCurTime = __LOWriter_CreateStruct("com.sun.star.util.DateTime")
 			If Not IsObj($tCurTime) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
@@ -9295,7 +9267,6 @@ Func _LOWriter_FormParent(ByRef $oForm, $oParent = Null)
 
 		Else ; Parent is a Form.
 			Return SetError($__LO_STATUS_SUCCESS, 2, $oOldParent)
-
 		EndIf
 	EndIf
 

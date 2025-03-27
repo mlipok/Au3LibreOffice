@@ -348,7 +348,6 @@ Func _LOWriter_ImageAreaGradient(ByRef $oDoc, ByRef $oImage, $sGradientName = Nu
 	EndIf
 
 	If ($oImage.FillGradientName() = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -1844,7 +1843,6 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 	EndIf
 
 	If ($iScaleWidth <> Null) Or ($iScaleHeight <> Null) Then
-
 		If ($iScaleWidth <> Null) Then
 			If Not __LOWriter_IntIsBetween($iScaleWidth, 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ;Min is 1%, no max
 			$tSize.Width = Int(($tOrigSize.Width() * ($iScaleWidth / 100))) ;Times original Width by scale percentage
@@ -1866,7 +1864,6 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 	EndIf
 
 	If ($iWidth <> Null) Or ($iHeight <> Null) Then
-
 		If ($iWidth <> Null) Then
 			If Not IsInt($iWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 			$tSize.Width = $iWidth
@@ -1882,7 +1879,6 @@ Func _LOWriter_ImageSize(ByRef $oImage, $iScaleWidth = Null, $iScaleHeight = Nul
 		;Error checking
 		$iError = ($iWidth = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Width(), $iWidth - 1, $iWidth + 1)) ? ($iError) : (BitOR($iError, 4)))
 		$iError = ($iHeight = Null) ? ($iError) : ((__LOWriter_IntIsBetween($oImage.Size.Height(), $iHeight - 1, $iHeight + 1)) ? ($iError) : (BitOR($iError, 8)))
-
 	EndIf
 
 	If ($bOriginalSize = True) Then
@@ -2100,19 +2096,21 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 		;correct setting. Such as Line_Top, Line_Bottom etc.
 
 		If ($iCurrentAnchor = $LOW_ANCHOR_AS_CHARACTER) Then
-
 			If ($iVertRelation = $LOW_RELATIVE_ROW) Then
 				Switch $oImage.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Row not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_TOP
 						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_CENTER
 						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_LINE_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_LINE_BOTTOM
@@ -2122,18 +2120,22 @@ Func _LOWriter_ImageTypePosition(ByRef $oImage, $iHorAlign = Null, $iHorPos = Nu
 			ElseIf ($iVertRelation = $LOW_RELATIVE_PARAGRAPH) Then ;Paragraph = Baseline setting in L.O. UI
 				$oImage.VertOrientRelation = $iVertRelation ;Paragraph = Baseline in this case
 				$iError = (($oImage.VertOrientRelation() = $iVertRelation)) ? ($iError) : (BitOR($iError, 64))
+
 			ElseIf ($iVertRelation = $LOW_RELATIVE_CHARACTER) Then
 				Switch $oImage.VertOrient()
 					Case $LOW_ORIENT_VERT_NONE ; None = "From Bottom or From Top in L.O. UI
 						$iError = BitOR($iError, 64) ; -- Character not accepted with this VertOrient Setting.
+
 					Case $LOW_ORIENT_VERT_TOP, $LOW_ORIENT_VERT_CHAR_TOP, $LOW_ORIENT_VERT_LINE_TOP
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_TOP
 						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_TOP)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_CENTER, $LOW_ORIENT_VERT_CHAR_CENTER, $LOW_ORIENT_VERT_LINE_CENTER
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_CENTER
 						$iError = (($oImage.VertOrientRelation() = $LOW_RELATIVE_PARAGRAPH) And ($oImage.VertOrient() = $LOW_ORIENT_VERT_CHAR_CENTER)) ? ($iError) : (BitOR($iError, 64))
+
 					Case $LOW_ORIENT_VERT_BOTTOM, $LOW_ORIENT_VERT_CHAR_BOTTOM, $LOW_ORIENT_VERT_LINE_BOTTOM
 						$oImage.VertOrientRelation = $LOW_RELATIVE_PARAGRAPH
 						$oImage.VertOrient = $LOW_ORIENT_VERT_CHAR_BOTTOM
@@ -2226,6 +2228,7 @@ Func _LOWriter_ImageTypeSize(ByRef $oDoc, ByRef $oImage, $iWidth = Null, $iRelat
 			__LOWriter_ArrayFill($avSize, $oImage.Width(), $oImage.RelativeWidth(), $oImage.RelativeWidthRelation(), _
 					$oImage.Height(), $oImage.RelativeHeight(), $oImage.RelativeHeightRelation(), _
 					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? (True) : (False)))
+
 		Else
 			__LOWriter_ArrayFill($avSize, $oImage.Width(), $oImage.RelativeWidth(), $oImage.Height(), $oImage.RelativeHeight(), _
 					(($oImage.IsSyncHeightToWidth() And $oImage.IsSyncWidthToHeight()) ? (True) : (False)))
@@ -2337,10 +2340,10 @@ Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRigh
 	If Not IsObj($oPropInfo) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iWrapType, $iLeft, $iRight, $iTop, $iBottom) Then
-
 		If $oPropInfo.hasPropertyByName("Surround") Then ;Surround is marked as deprecated, but there is no indication of what version of L.O. this occurred. So Test for its existence.
 			__LOWriter_ArrayFill($avWrap, $oImage.Surround(), $oImage.LeftMargin(), $oImage.RightMargin(), $oImage.TopMargin(), _
 					$oImage.BottomMargin())
+
 		Else
 			__LOWriter_ArrayFill($avWrap, $oImage.TextWrap(), $oImage.LeftMargin(), $oImage.RightMargin(), $oImage.TopMargin(), _
 					$oImage.BottomMargin())
@@ -2355,6 +2358,7 @@ Func _LOWriter_ImageWrap(ByRef $oImage, $iWrapType = Null, $iLeft = Null, $iRigh
 		If $oPropInfo.hasPropertyByName("TextWrap") Then $oImage.TextWrap = $iWrapType
 		If $oPropInfo.hasPropertyByName("Surround") Then
 			$iError = ($oImage.Surround() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
+
 		Else
 			$iError = ($oImage.TextWrap() = $iWrapType) ? ($iError) : (BitOR($iError, 1))
 		EndIf
