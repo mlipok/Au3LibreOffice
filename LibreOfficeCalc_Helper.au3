@@ -1213,7 +1213,6 @@ Func _LOCalc_FormatKeyList(ByRef $oDoc, $bIsUser = False, $bUserOnly = False, $i
 	ReDim $avFormats[UBound($aiFormatKeys)][$iColumns]
 
 	For $i = 0 To UBound($aiFormatKeys) - 1
-
 		If ($bUserOnly = True) Then
 			If ($oFormats.getbykey($aiFormatKeys[$i]).UserDefined() = True) Then
 				$avFormats[$iCount][0] = $aiFormatKeys[$i]

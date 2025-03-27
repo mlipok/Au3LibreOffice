@@ -5157,7 +5157,6 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 	EndIf
 
 	For $i = 0 To UBound($avSortDesc) - 1
-
 		Switch $avSortDesc[$i].Name()
 			Case "IsSortColumns"
 				$avSortDesc[$i].Value = $bSortColumns
@@ -5177,7 +5176,6 @@ Func _LOCalc_RangeSort(ByRef $oDoc, ByRef $oRange, ByRef $tSortField, $bSortColu
 			Case "OutputPosition"
 				If ($bCopyOutput = True) Then $avSortDesc[$i].Value = $tCellAddr
 		EndSwitch
-
 	Next
 
 ;~ $oRange.Sort($avSortDesc); This doesn't sort properly, thus a work around method is required.

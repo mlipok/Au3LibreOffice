@@ -133,7 +133,6 @@ Func _LOCalc_SheetAdd(ByRef $oDoc, $sName = Null, $iPosition = Null)
 			While $oSheets.hasByName($sName)
 				$iCount += 1
 				$sName = "Sheet" & $iCount
-
 			WEnd
 		EndIf
 	EndIf
@@ -207,7 +206,6 @@ Func _LOCalc_SheetCopy(ByRef $oDoc, ByRef $oSheet, $sNewName = Null, $iPosition 
 			While $oSheets.hasByName($sNewName)
 				$iCount += 1
 				$sNewName = $sName & "_" & $iCount
-
 			WEnd
 		EndIf
 	EndIf
@@ -811,7 +809,6 @@ Func _LOCalc_SheetLink(ByRef $oSourceDoc, ByRef $oDestDoc, $sSheetName, $iLinkMo
 			While $oDestDoc.Sheets.hasByName($sName)
 				$iCount += 1
 				$sName = $sSheetName & "_" & $iCount
-
 			WEnd
 		EndIf
 
@@ -1476,7 +1473,6 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc, $bLinkedOnly = False)
 		ReDim $asNames[$iLinkedSheetCount]
 
 		For $i = 0 To $iLinkedSheetCount - 1
-
 			$oLinkedSheet = $oSheetLinks.getByIndex($i)
 			If Not IsObj($oLinkedSheet) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 
@@ -1490,7 +1486,6 @@ Func _LOCalc_SheetsGetNames(ByRef $oDoc, $bLinkedOnly = False)
 				EndIf
 				Sleep((IsInt($k / $__LOCCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
-
 		Next
 
 	Else

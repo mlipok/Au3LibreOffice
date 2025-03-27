@@ -353,7 +353,6 @@ Func _LOCalc_DocConnect($sFile, $bConnectCurrent = False, $bConnectAll = False)
 					$iCount += 1
 				EndIf
 			EndIf
-
 		WEnd
 		If IsString($aoPartNameSearch[0][1]) Then
 			If (UBound($aoPartNameSearch) = 1) Then

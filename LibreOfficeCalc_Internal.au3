@@ -1850,7 +1850,6 @@ Func __LOCalc_CommentArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To UBound($asArrowStyles) - 1
-
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
 
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
@@ -1989,7 +1988,6 @@ Func __LOCalc_CommentLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To UBound($asLineStyles) - 1
-
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
 
 			Sleep((IsInt($i / $__LOCCONST_SLEEP_DIV)) ? (10) : (0))
@@ -2114,7 +2112,6 @@ Func __LOCalc_FieldGetObj(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL)
 
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
-
 					If $oTextField.supportsService($avFieldTypes[$i][1]) And ($oInternalCursor.compareRegionEnds($oInternalCursor, $oTextField.Anchor.End()) = 0) Then
 						$oField = $oFields.getByIndex($iTotalFound)
 						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -2129,7 +2126,6 @@ Func __LOCalc_FieldGetObj(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL)
 				$iTotalFound += 1
 			EndIf
 		WEnd
-
 	WEnd
 
 	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)

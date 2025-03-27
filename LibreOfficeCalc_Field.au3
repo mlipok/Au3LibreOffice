@@ -573,7 +573,6 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 
 				If ($iTotalFound >= $iTotalFields) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
 				For $i = 0 To UBound($avFieldTypes) - 1
-
 					If $oTextField.supportsService($avFieldTypes[$i][1]) Then
 						$oField = $oFields.getByIndex($iTotalFound)
 						If Not IsObj($oField) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
@@ -602,7 +601,6 @@ Func _LOCalc_FieldsGetList(ByRef $oTextCursor, $iType = $LOC_FIELD_TYPE_ALL, $bF
 				$iTotalFound += 1
 			EndIf
 		WEnd
-
 	WEnd
 
 	If $bFieldTypeNum Then
