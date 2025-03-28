@@ -1372,7 +1372,7 @@ EndFunc   ;==>_LOCalc_RangeFill
 ;                  Any values in the range will be overwritten.
 ; Related .......:
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _LOCalc_RangeFillRandom(ByRef $oRange, $nMin = 0.0000, $nMax = 1.0000, $iDecPlc = 15, $nSeed = Null, $bFillByRows = True)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)

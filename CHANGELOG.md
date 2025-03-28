@@ -272,6 +272,7 @@ Go to [legend](#legend---types-of-changes) for further information about the typ
 	- _LOCalc_DocConnect
 	- _LOCalc_DocCreate
 	- _LOCalc_DocExport
+	- _LOCalc_DocFormulaBarHeight
 	- _LOCalc_DocGetName
 	- _LOCalc_DocGetPath
 	- _LOCalc_DocHasPath

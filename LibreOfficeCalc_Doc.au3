@@ -27,6 +27,7 @@
 ; _LOCalc_DocConnect
 ; _LOCalc_DocCreate
 ; _LOCalc_DocExport
+; _LOCalc_DocFormulaBarHeight
 ; _LOCalc_DocGetName
 ; _LOCalc_DocGetPath
 ; _LOCalc_DocHasPath
@@ -541,6 +542,51 @@ Func _LOCalc_DocExport(ByRef $oDoc, $sFilePath, $bSamePath = False, $sFilterName
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $sSavePath)
 EndFunc   ;==>_LOCalc_DocExport
+
+; #FUNCTION# ====================================================================================================================
+; Name ..........: _LOCalc_DocFormulaBarHeight
+; Description ...: Set or Retrieve the current Formula Bar Height. L.O. 7.4+
+; Syntax ........: _LOCalc_DocFormulaBarHeight(ByRef $oDoc[, $iHeight = Null])
+; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOCalc_DocOpen, _LOCalc_DocConnect, or _LOCalc_DocCreate function.
+;                  $iHeight             - [optional] an integer value (1-25). Default is Null. The number of lines to display in the formula bar.
+; Return values .: Success: 1 or Integer.
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iHeight not an Integer, less than 1 or greater than 25.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting $iHeight
+;                  --Version Related Errors--
+;                  @Error 7 @Extended 1 Return 0 = Current Libre Office version less than 7.4.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Integer = Success. All optional parameters were set to Null, returning current Formula Bar Height as an Integer.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _LOCalc_DocFormulaBarHeight(ByRef $oDoc, $iHeight = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOCalc_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+
+	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOCalc_VersionCheck(7.4) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
+
+	If __LOCalc_VarsAreNull($iHeight) Then Return SetError($__LO_STATUS_SUCCESS, 1, $oDoc.CurrentController.FormulaBarHeight())
+
+	If Not __LOCalc_IntIsBetween($iHeight, 1, 25) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oDoc.CurrentController.FormulaBarHeight = $iHeight
+	$iError = ($oDoc.CurrentController.FormulaBarHeight() = $iHeight) ? ($iError) : (BitOR($iError, 1))
+
+	Return ($iError = 0) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0))
+EndFunc   ;==>_LOCalc_DocFormulaBarHeight
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOCalc_DocGetName
