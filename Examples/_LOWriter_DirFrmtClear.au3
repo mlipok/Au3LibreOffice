@@ -70,7 +70,7 @@ Func Example()
 
 	; Set the selected text's Font to "Arial", Font size to 18, Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
 	; to $LOW_WEIGHT_BOLD
-	_LOWriter_DirFrmtFont($oDoc, $oViewCursor, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
+	_LOWriter_DirFrmtFont($oViewCursor, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Move the cursor to the start again
