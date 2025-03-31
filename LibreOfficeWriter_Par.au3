@@ -1,6 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
-;~ #Tidy_Parameters=/sf
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -153,7 +153,6 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 		$oPar = $oEnum.nextElement()
 
 		If ($bTableCheck = True) Then
-
 			If UBound($aoParagraphs) <= ($iCount) Then ReDim $aoParagraphs[UBound($aoParagraphs) * 2][2]
 			$aoParagraphs[$iCount][0] = $oPar
 			$aoParagraphs[$iCount][1] = ($oPar.supportsService("com.sun.star.text.TextTable"))
@@ -170,9 +169,9 @@ Func _LOWriter_ParObjCreateList(ByRef $oCursor, $bTableCheck = False)
 
 	If ($bTableCheck = True) Then
 		ReDim $aoParagraphs[$iCount][2]
+
 	Else
 		ReDim $aoParagraphs[$iCount]
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoParagraphs)
@@ -207,7 +206,6 @@ Func _LOWriter_ParObjDelete(ByRef $oParObj)
 
 	Else
 		$oParObj.Text.removeTextContent($oParObj)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -305,6 +303,7 @@ Func _LOWriter_ParObjSectionsGet(ByRef $oParagraph)
 		Sleep((IsInt($iCount / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	WEnd
 	ReDim $aoSections[$iCount][2]
+
 	Return SetError($__LO_STATUS_SUCCESS, $iCount, $aoSections)
 EndFunc   ;==>_LOWriter_ParObjSectionsGet
 
@@ -343,7 +342,6 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 	$oDoc.CurrentController.Select($oObj)
 
 	If ($oObj.supportsService("com.sun.star.text.TextTable")) Then
-
 		$oViewCursor = _LOWriter_DocGetViewCursor($oDoc)
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -352,7 +350,6 @@ Func _LOWriter_ParObjSelect(ByRef $oDoc, ByRef $oObj)
 
 		_LOWriter_CursorMove($oViewCursor, $LOW_VIEWCUR_GOTO_END, 1, True) ; Move and select to End of Table
 		If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -412,6 +409,7 @@ Func _LOWriter_ParStyleAlignment(ByRef $oParStyle, $iHorAlign = Null, $iVertAlig
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParAlignment($oParStyle, $iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleAlignment
 
@@ -455,6 +453,7 @@ Func _LOWriter_ParStyleBackColor(ByRef $oParStyle, $iBackColor = Null, $bBackTra
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParBackColor($oParStyle, $iBackColor, $bBackTransparent)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleBackColor
 
@@ -515,6 +514,7 @@ Func _LOWriter_ParStyleBorderColor(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oParStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleBorderColor
 
@@ -567,6 +567,7 @@ Func _LOWriter_ParStyleBorderPadding(ByRef $oParStyle, $iAll = Null, $iTop = Nul
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParBorderPadding($oParStyle, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleBorderPadding
 
@@ -627,6 +628,7 @@ Func _LOWriter_ParStyleBorderStyle(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oParStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleBorderStyle
 
@@ -687,7 +689,9 @@ Func _LOWriter_ParStyleBorderWidth(ByRef $oParStyle, $iTop = Null, $iBottom = Nu
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $bConnectBorder) Then
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		__LOWriter_AddTo1DArray($vReturn, $oParStyle.ParaIsConnectBorder())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $vReturn)
+
 	ElseIf Not __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
 		$vReturn = __LOWriter_Border($oParStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
 		If @error Then Return SetError(@error, @extended, $vReturn)
@@ -806,6 +810,7 @@ Func _LOWriter_ParStyleDelete(ByRef $oDoc, ByRef $oParStyle, $bForceDelete = Fal
 	; If Parent style is blank set it to "Default Paragraph Style", Or if not but User has called a specific style set it to that.
 
 	$oParStyles.removeByName($sParStyle)
+
 	Return ($oParStyles.hasByName($sParStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_ParStyleDelete
 
@@ -867,6 +872,7 @@ Func _LOWriter_ParStyleDropCaps(ByRef $oDoc, ByRef $oParStyle, $iNumChar = Null,
 	If ($sCharStyle <> Null) And Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParDropCaps($oParStyle, $iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleDropCaps
 
@@ -919,8 +925,8 @@ Func _LOWriter_ParStyleEffect(ByRef $oParStyle, $iRelief = Null, $iCase = Null, 
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharEffect($oParStyle, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
-	Return SetError(@error, @extended, $vReturn)
 
+	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleEffect
 
 ; #FUNCTION# ====================================================================================================================
@@ -957,9 +963,8 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_ParStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Paragraph Style.
-; Syntax ........: _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
+; Syntax ........: _LOWriter_ParStyleFont(ByRef $oParStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
+; Parameters ....: $oParStyle           - [in/out] an object. A Paragraph Style object returned by a previous _LOWriter_ParStyleCreate, or _LOWriter_ParStyleGetObj function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The new Font size.
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. The Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
@@ -967,15 +972,14 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oParStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oParStyle not a Paragraph Object.
-;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not available in current document.
-;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
+;                  @Error 1 @Extended 1 Return 0 = $oParStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oParStyle not a Paragraph Object.
+;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not available in current document.
+;                  @Error 1 @Extended 4 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sFontName
@@ -995,19 +999,19 @@ EndFunc   ;==>_LOWriter_ParStyleExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_ParStyleFont(ByRef $oDoc, ByRef $oParStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
+Func _LOWriter_ParStyleFont(ByRef $oParStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+	If Not IsObj($oParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOWriter_CharFont($oParStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleFont
 
@@ -1058,6 +1062,7 @@ Func _LOWriter_ParStyleFontColor(ByRef $oParStyle, $iFontColor = Null, $iTranspa
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharFontColor($oParStyle, $iFontColor, $iTransparency, $iHighlight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleFontColor
 
@@ -1151,6 +1156,7 @@ Func _LOWriter_ParStyleHyphenation(ByRef $oParStyle, $bAutoHyphen = Null, $bHyph
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParHyphenation($oParStyle, $bAutoHyphen, $bHyphenNoCaps, $iMaxHyphens, $iMinLeadingChar, $iMinTrailingChar)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleHyphenation
 
@@ -1201,6 +1207,7 @@ Func _LOWriter_ParStyleIndent(ByRef $oParStyle, $iBeforeTxt = Null, $iAfterTxt =
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParIndent($oParStyle, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleIndent
 
@@ -1265,10 +1272,12 @@ Func _LOWriter_ParStyleOrganizer(ByRef $oDoc, ByRef $oParStyle, $sNewParStyleNam
 			__LOWriter_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
 					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), _
 					$oParStyle.IsAutoUpdate(), $oParStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oParStyle.Name(), __LOWriter_ParStyleNameToggle($oParStyle.getPropertyValue("FollowStyle"), True), _
 					__LOWriter_ParStyleNameToggle($oParStyle.ParentStyle(), True), $oParStyle.IsAutoUpdate())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
@@ -1364,6 +1373,7 @@ Func _LOWriter_ParStyleOutLineAndList(ByRef $oDoc, ByRef $oParStyle, $iOutline =
 	If ($sNumStyle <> Null) And ($sNumStyle <> "") And Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParOutLineAndList($oParStyle, $iOutline, $sNumStyle, $bParLineCount, $iLineCountVal)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleOutLineAndList
 
@@ -1415,6 +1425,7 @@ Func _LOWriter_ParStyleOverLine(ByRef $oParStyle, $bWordOnly = Null, $iOverLineS
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharOverLine($oParStyle, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleOverLine
 
@@ -1469,6 +1480,7 @@ Func _LOWriter_ParStylePageBreak(ByRef $oDoc, ByRef $oParStyle, $iBreakType = Nu
 	If ($sPageStyle <> Null) And ($sPageStyle <> "") And Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParPageBreak($oParStyle, $iBreakType, $sPageStyle, $iPgNumOffSet)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStylePageBreak
 
@@ -1524,6 +1536,7 @@ Func _LOWriter_ParStylePosition(ByRef $oParStyle, $bAutoSuper = Null, $iSuperScr
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharPosition($oParStyle, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStylePosition
 
@@ -1567,6 +1580,7 @@ Func _LOWriter_ParStyleRotateScale(ByRef $oParStyle, $iRotation = Null, $iScaleW
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharRotateScale($oParStyle, $iRotation, $iScaleWidth)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleRotateScale
 
@@ -1607,6 +1621,7 @@ Func _LOWriter_ParStyleSet(ByRef $oDoc, ByRef $oObj, $sParStyle)
 	If Not _LOWriter_ParStyleExists($oDoc, $sParStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$sParStyle = __LOWriter_ParStyleNameToggle($sParStyle)
 	$oObj.ParaStyleName = $sParStyle
+
 	Return ($oObj.ParaStyleName() = $sParStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_ParStyleSet
 
@@ -1660,6 +1675,7 @@ Func _LOWriter_ParStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName()
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
@@ -1729,6 +1745,7 @@ Func _LOWriter_ParStyleShadow(ByRef $oParStyle, $iWidth = Null, $iColor = Null, 
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParShadow($oParStyle, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleShadow
 
@@ -1796,6 +1813,7 @@ Func _LOWriter_ParStyleSpace(ByRef $oParStyle, $iAbovePar = Null, $iBelowPar = N
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParSpace($oParStyle, $iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleSpace
 
@@ -1845,6 +1863,7 @@ Func _LOWriter_ParStyleSpacing(ByRef $oParStyle, $bAutoKerning = Null, $nKerning
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharSpacing($oParStyle, $bAutoKerning, $nKerning)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleSpacing
 
@@ -1892,6 +1911,7 @@ Func _LOWriter_ParStyleStrikeOut(ByRef $oParStyle, $bWordOnly = Null, $bStrikeOu
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharStrikeOut($oParStyle, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleStrikeOut
 
@@ -1950,6 +1970,7 @@ Func _LOWriter_ParStyleTabStopCreate(ByRef $oParStyle, $iPosition, $iFillChar = 
 	If __LOWriter_ParHasTabStop($oParStyle, $iPosition) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$iPosition = __LOWriter_ParTabStopCreate($oParStyle, $iPosition, $iAlignment, $iFillChar, $iDecChar)
+
 	Return SetError(@error, @extended, $iPosition)
 EndFunc   ;==>_LOWriter_ParStyleTabStopCreate
 
@@ -1996,6 +2017,7 @@ Func _LOWriter_ParStyleTabStopDelete(ByRef $oDoc, ByRef $oParStyle, $iTabStop)
 	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 
 	$vReturn = __LOWriter_ParTabStopDelete($oParStyle, $oDoc, $iTabStop)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleTabStopDelete
 
@@ -2096,6 +2118,7 @@ Func _LOWriter_ParStyleTabStopMod(ByRef $oParStyle, $iTabStop, $iPosition = Null
 	If Not __LOWriter_ParHasTabStop($oParStyle, $iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$vReturn = __LOWriter_ParTabStopMod($oParStyle, $iTabStop, $iPosition, $iFillChar, $iAlignment, $iDecChar)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleTabStopMod
 
@@ -2146,6 +2169,7 @@ Func _LOWriter_ParStyleTxtFlowOpt(ByRef $oParStyle, $bParSplit = Null, $bKeepTog
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_ParTxtFlowOpt($oParStyle, $bParSplit, $bKeepTogether, $iParOrphans, $iParWidows)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleTxtFlowOpt
 
@@ -2196,5 +2220,6 @@ Func _LOWriter_ParStyleUnderLine(ByRef $oParStyle, $bWordOnly = Null, $iUnderLin
 	If Not $oParStyle.supportsService("com.sun.star.style.ParagraphStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharUnderLine($oParStyle, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_ParStyleUnderLine

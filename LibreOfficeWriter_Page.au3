@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -115,6 +116,7 @@ Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackT
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.BackColor()), $oPageStyle.BackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -136,7 +138,6 @@ Func _LOWriter_PageStyleAreaColor(ByRef $oPageStyle, $iBackColor = Null, $bBackT
 	EndIf
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
-
 EndFunc   ;==>_LOWriter_PageStyleAreaColor
 
 ; #FUNCTION# ====================================================================================================================
@@ -261,6 +262,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 				$oPageStyle.FillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -275,6 +277,7 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FillStyle = $LOW_AREA_FILL_STYLE_OFF
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -368,7 +371,6 @@ Func _LOWriter_PageStyleAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGradientN
 	EndIf
 
 	If ($oPageStyle.FillGradientName() = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
@@ -448,6 +450,7 @@ Func _LOWriter_PageStyleBorderColor(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleBorderColor
 
@@ -502,6 +505,7 @@ Func _LOWriter_PageStyleBorderPadding(ByRef $oPageStyle, $iAll = Null, $iTop = N
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.BorderDistance(), $oPageStyle.TopBorderDistance(), _
 				$oPageStyle.BottomBorderDistance(), $oPageStyle.LeftBorderDistance(), $oPageStyle.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -594,6 +598,7 @@ Func _LOWriter_PageStyleBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleBorderStyle
 
@@ -648,6 +653,7 @@ Func _LOWriter_PageStyleBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_Border($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleBorderWidth
 
@@ -710,6 +716,7 @@ Func _LOWriter_PageStyleColumnSeparator(ByRef $oPageStyle, $bSeparatorOn = Null,
 	If __LOWriter_VarsAreNull($bSeparatorOn, $iStyle, $iWidth, $iColor, $iHeight, $iPosition) Then
 		__LOWriter_ArrayFill($avColumnLine, $oTextColumns.SeparatorLineIsOn(), $oTextColumns.SeparatorLineStyle(), $oTextColumns.SeparatorLineWidth(), _
 				$oTextColumns.SeparatorLineColor(), $oTextColumns.SeparatorLineRelativeHeight(), $oTextColumns.SeparatorLineVerticalAlignment())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColumnLine)
 	EndIf
 
@@ -869,13 +876,13 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 	If ($oTextColumns.ColumnCount() <= 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	If ($iColumn > UBound($atColumns)) Or ($iColumn < 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
-	$iColumn = $iColumn - 1 ;Libre Columns Array is 0 based -- Minus one to compensate
+	$iColumn = $iColumn - 1 ; Libre Columns Array is 0 based -- Minus one to compensate
 
 	If __LOWriter_VarsAreNull($bAutoWidth, $iGlobalSpacing, $iSpacing, $iWidth) Then
-
 		If ($iColumn = (UBound($atColumns) - 1)) Then ; If last column is called, there is no spacing value, so return the outer margin, which will be 0.
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin(), $atColumns[$iColumn].Width())
+
 		Else
 			__LOWriter_ArrayFill($avColumnSize, $oTextColumns.IsAutomatic, $oTextColumns.AutomaticDistance(), _
 					$atColumns[$iColumn].RightMargin() + $atColumns[$iColumn + 1].LeftMargin(), $atColumns[$iColumn].Width())
@@ -898,11 +905,10 @@ Func _LOWriter_PageStyleColumnSize(ByRef $oPageStyle, $iColumn, $bAutoWidth = Nu
 				$oPageStyle.TextColumns = $oTextColumns
 				; Setting the number of columns activates the AutoWidth option, so set it to the same number of columns.
 
-			Else ;If False
+			Else ; If False
 				; If GlobalSpacing isn't set, then set it myself to the current automatic distance.
 				$iGlobalSpacing = ($iGlobalSpacing = Null) ? ($oTextColumns.AutomaticDistance()) : ($iGlobalSpacing)
 				$oTextColumns.setColumns($atColumns) ; Inserting the Column Array(Sequence) again, even without changes, deactivates AutoWidth.
-
 			EndIf
 		EndIf
 
@@ -1170,6 +1176,7 @@ Func _LOWriter_PageStyleFooter(ByRef $oPageStyle, $bFooterOn = Null, $bSameLeftR
 			__LOWriter_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterDynamicSpacing(), $oPageStyle.FooterHeight(), _
 					$oPageStyle.FooterIsDynamicHeight())
+
 		Else
 			__LOWriter_ArrayFill($avFooter, $oPageStyle.FooterIsOn(), $oPageStyle.FooterIsShared(), $oPageStyle.FooterLeftMargin(), _
 					$oPageStyle.FooterRightMargin(), $oPageStyle.FooterBodyDistance(), $oPageStyle.FooterDynamicSpacing(), $oPageStyle.FooterHeight(), _
@@ -1282,6 +1289,7 @@ Func _LOWriter_PageStyleFooterAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.FooterBackColor()), $oPageStyle.FooterBackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -1429,6 +1437,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 				$oPageStyle.FooterFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -1443,6 +1452,7 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FooterFillStyle = $LOW_AREA_FILL_STYLE_OFF
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -1536,7 +1546,6 @@ Func _LOWriter_PageStyleFooterAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($oPageStyle.FooterFillGradientName = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -1616,6 +1625,7 @@ Func _LOWriter_PageStyleFooterBorderColor(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleFooterBorderColor
 
@@ -1673,6 +1683,7 @@ Func _LOWriter_PageStyleFooterBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.FooterBorderDistance(), $oPageStyle.FooterTopBorderDistance(), _
 				$oPageStyle.FooterBottomBorderDistance(), $oPageStyle.FooterLeftBorderDistance(), $oPageStyle.FooterRightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -1765,6 +1776,7 @@ Func _LOWriter_PageStyleFooterBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleFooterBorderStyle
 
@@ -1819,6 +1831,7 @@ Func _LOWriter_PageStyleFooterBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_FooterBorder($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleFooterBorderWidth
 
@@ -1879,6 +1892,7 @@ Func _LOWriter_PageStyleFooterShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -2038,12 +2052,14 @@ Func _LOWriter_PageStyleFooterTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FooterFillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -2185,6 +2201,7 @@ Func _LOWriter_PageStyleFootnoteArea(ByRef $oPageStyle, $iFootnoteHeight = Null,
 
 	If __LOWriter_VarsAreNull($iFootnoteHeight, $iSpaceToText) Then
 		__LOWriter_ArrayFill($aiFootnote, $oPageStyle.FootnoteHeight(), $oPageStyle.FootnoteLineTextDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiFootnote)
 	EndIf
 
@@ -2258,8 +2275,9 @@ Func _LOWriter_PageStyleFootnoteLine(ByRef $oPageStyle, $iPosition = Null, $iSty
 
 	If __LOWriter_VarsAreNull($iPosition, $iStyle, $nThickness, $iColor, $iLength, $iSpacing) Then
 		__LOWriter_ArrayFill($avFootnoteLine, $oPageStyle.FootnoteLineAdjust(), $oPageStyle.FootnoteLineStyle(), _
-				__LOWriter_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ;Convert Thickness from uM to Point.
+				__LOWriter_UnitConvert($oPageStyle.FootnoteLineWeight(), $__LOCONST_CONVERT_UM_PT), _ ; Convert Thickness from uM to Point.
 				$oPageStyle.FootnoteLineColor(), $oPageStyle.FootnoteLineRelativeWidth(), $oPageStyle.FootnoteLineDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFootnoteLine)
 	EndIf
 
@@ -2410,6 +2428,7 @@ Func _LOWriter_PageStyleHeader(ByRef $oPageStyle, $bHeaderOn = Null, $bSameLeftR
 			__LOWriter_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.FirstIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderDynamicSpacing(), $oPageStyle.HeaderHeight(), _
 					$oPageStyle.HeaderIsDynamicHeight())
+
 		Else
 			__LOWriter_ArrayFill($avHeader, $oPageStyle.HeaderIsOn(), $oPageStyle.HeaderIsShared(), $oPageStyle.HeaderLeftMargin(), _
 					$oPageStyle.HeaderRightMargin(), $oPageStyle.HeaderBodyDistance(), $oPageStyle.HeaderDynamicSpacing(), $oPageStyle.HeaderHeight(), _
@@ -2522,6 +2541,7 @@ Func _LOWriter_PageStyleHeaderAreaColor(ByRef $oPageStyle, $iBackColor = Null, $
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oPageStyle.HeaderBackColor()), $oPageStyle.HeaderBackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -2669,6 +2689,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 				$oPageStyle.HeaderFillGradientStepCount(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), ($tStyleGradient.Angle() / 10), _
 				$tStyleGradient.Border(), $tStyleGradient.StartColor(), $tStyleGradient.EndColor(), $tStyleGradient.StartIntensity(), _
 				$tStyleGradient.EndIntensity()) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avGradient)
 	EndIf
 
@@ -2683,6 +2704,7 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.HeaderFillStyle = $LOW_AREA_FILL_STYLE_OFF
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -2776,7 +2798,6 @@ Func _LOWriter_PageStyleHeaderAreaGradient(ByRef $oDoc, ByRef $oPageStyle, $sGra
 	EndIf
 
 	If ($oPageStyle.HeaderFillGradientName = "") Then
-
 		$sGradName = __LOWriter_GradientNameInsert($oDoc, $tStyleGradient)
 		If @error > 0 Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
@@ -2856,6 +2877,7 @@ Func _LOWriter_PageStyleHeaderBorderColor(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleHeaderBorderColor
 
@@ -2913,6 +2935,7 @@ Func _LOWriter_PageStyleHeaderBorderPadding(ByRef $oPageStyle, $iAll = Null, $iT
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oPageStyle.HeaderBorderDistance(), $oPageStyle.HeaderTopBorderDistance(), _
 				$oPageStyle.HeaderBottomBorderDistance(), $oPageStyle.HeaderLeftBorderDistance(), $oPageStyle.HeaderRightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -3005,6 +3028,7 @@ Func _LOWriter_PageStyleHeaderBorderStyle(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleHeaderBorderStyle
 
@@ -3059,6 +3083,7 @@ Func _LOWriter_PageStyleHeaderBorderWidth(ByRef $oPageStyle, $iTop = Null, $iBot
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_HeaderBorder($oPageStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_PageStyleHeaderBorderWidth
 
@@ -3118,6 +3143,7 @@ Func _LOWriter_PageStyleHeaderShadow(ByRef $oPageStyle, $iWidth = Null, $iColor 
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -3277,12 +3303,14 @@ Func _LOWriter_PageStyleHeaderTransparencyGradient(ByRef $oDoc, ByRef $oPageStyl
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.HeaderFillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 
@@ -3456,6 +3484,7 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 					__LOWriter_ParStyleNameToggle($oPageStyle.RegisterParagraphStyle(), True), _
 					$oPageStyle.RtlGutter(), $oSettings.getPropertyValue("GutterAtTop"), $oPageStyle.BackgroundFullSize(), _
 					$oPageStyle.PrinterPaperTray())
+
 		Else
 			__LOWriter_ArrayFill($avLayout, $oPageStyle.PageStyleLayout(), $oPageStyle.NumberingType(), _
 					__LOWriter_ParStyleNameToggle($oPageStyle.RegisterParagraphStyle(), True), $oPageStyle.PrinterPaperTray())
@@ -3496,7 +3525,6 @@ Func _LOWriter_PageStyleLayout(ByRef $oDoc, ByRef $oPageStyle, $iLayout = Null, 
 	EndIf
 
 	If ($bGutterAtTop <> Null) Then
-
 		If Not IsBool($bGutterAtTop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
 		If Not __LOWriter_VersionCheck(7.2) Then Return SetError($__LO_STATUS_VER_ERROR, 1, 0)
 
@@ -3576,9 +3604,11 @@ Func _LOWriter_PageStyleMargins(ByRef $oPageStyle, $iLeft = Null, $iRight = Null
 		If __LOWriter_VersionCheck(7.2) Then
 			__LOWriter_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin(), _
 					$oPageStyle.GutterMargin())
+
 		Else
 			__LOWriter_ArrayFill($aiMargins, $oPageStyle.LeftMargin(), $oPageStyle.RightMargin(), $oPageStyle.TopMargin(), $oPageStyle.BottomMargin())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiMargins)
 	EndIf
 
@@ -3668,9 +3698,11 @@ Func _LOWriter_PageStyleOrganizer(ByRef $oDoc, ByRef $oPageStyle, $sNewPageStyle
 	If __LOWriter_VarsAreNull($sNewPageStyleName, $bHidden, $sFollowStyle) Then
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avOrganizer, $oPageStyle.Name(), $oPageStyle.Hidden(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oPageStyle.Name(), __LOWriter_PageStyleNameToggle($oPageStyle.FollowStyle(), True))
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOrganizer)
 	EndIf
 
@@ -3743,6 +3775,7 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 
 	If __LOWriter_VarsAreNull($iWidth, $iHeight, $bLandscape) Then
 		__LOWriter_ArrayFill($avFormat, $oPageStyle.Width(), $oPageStyle.Height(), $oPageStyle.IsLandscape())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFormat)
 	EndIf
 
@@ -3763,6 +3796,7 @@ Func _LOWriter_PageStylePaperFormat(ByRef $oPageStyle, $iWidth = Null, $iHeight 
 
 		If ($oPageStyle.IsLandscape() = $bLandscape) Then
 			; If $bLandscape called setting is the same as the current setting, do nothing.
+
 		Else
 			; Retrieve current settings.
 			$iHeight = $oPageStyle.Height()
@@ -3817,8 +3851,8 @@ Func _LOWriter_PageStyleSet(ByRef $oDoc, ByRef $oObj, $sPageStyle)
 	If Not _LOWriter_PageStyleExists($oDoc, $sPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$sPageStyle = __LOWriter_PageStyleNameToggle($sPageStyle)
 	$oObj.PageDescName = $sPageStyle
-	Return ($oObj.PageStyleName() = $sPageStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 
+	Return ($oObj.PageStyleName() = $sPageStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_PageStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -3870,6 +3904,7 @@ Func _LOWriter_PageStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
@@ -3943,6 +3978,7 @@ Func _LOWriter_PageStyleShadow(ByRef $oPageStyle, $iWidth = Null, $iColor = Null
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -4097,12 +4133,14 @@ Func _LOWriter_PageStyleTransparencyGradient(ByRef $oDoc, ByRef $oPageStyle, $iT
 		__LOWriter_ArrayFill($aiTransparent, $tStyleGradient.Style(), $tStyleGradient.XOffset(), $tStyleGradient.YOffset(), _
 				($tStyleGradient.Angle() / 10), $tStyleGradient.Border(), __LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.StartColor()), _
 				__LOWriter_TransparencyGradientConvert(Null, $tStyleGradient.EndColor())) ; Angle is set in thousands
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTransparent)
 	EndIf
 
 	If ($iType <> Null) Then
 		If ($iType = $LOW_GRAD_TYPE_OFF) Then ; Turn Off Gradient
 			$oPageStyle.FillTransparenceGradientName = ""
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 2)
 		EndIf
 

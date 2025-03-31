@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -121,11 +122,13 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  @Error 1 @Extended 14 Return 0 = $bConsecutiveNum not a Boolean.
 ;                  @Error 1 @Extended 15 Return 0 = $sBulletFont not a string.
 ;                  @Error 1 @Extended 16 Return 0 = Font style called in $sBulletFont not found in document.
-;                  @Error 1 @Extended 17 Return 0 = $iCharDecimal not an Integer.
+;                  @Error 1 @Extended 17 Return 0 = $sBulletFont is set and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
+;                  @Error 1 @Extended 18 Return 0 = $iCharDecimal not an Integer.
+;                  @Error 1 @Extended 19 Return 0 = $iCharDecimal is set and Number Format not set to $LOW_NUM_STYLE_CHAR_SPECIAL.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving NumberingRules Object for error checking.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Rules Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Rule Array for level.
+;                  @Error 3 @Extended 3 Return 0 = Error mapping setting values.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iNumFormat
@@ -140,10 +143,12 @@ EndFunc   ;==>_LOWriter_NumStyleCreate
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested Properties.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 7 or 9 Element Array with values in order of function parameters. See remarks.
+;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were set to Null, returning a 10 Element Array containing arrays of settings for each Numbering level corresponding to their position in the array. Each array will be as described above. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, see __LOWriter_NumStyleInitiateDocument which is then called with the necessary parameters to set.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can only request setting values for one numbering level at a time, you aren't able to call $iLevel with 0 to retrieve all at once. If Current numbering type is set to Bullet, the returned array will contain 9 elements, in the order of parameters, if the current numbering type is other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can request setting values for one numbering level at a time, or all at once (see below). If Current numbering type is set to Bullet, the returned array will contain 9 elements, in the order of parameters, if the current numbering type is other than bullet style, a 7 element array will be returned, with the last two parameters excluded.
+;                  If you retrieve the current settings for all levels (by calling $iLevel with 0), the return will be a 10 element array containing an array of settings for each Numbering Level.
 ;                  Call any optional parameter with Null keyword to skip it.
 ;                  When a lot of settings are set, especially for all levels, this function can be a bit slow.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj
@@ -156,9 +161,9 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 
 	Local $oNumRules
 	Local $iError = 0
-	Local $aNumSettings[9][2]
-	Local $iRowCount = 0
-	Local $avCustomize[7]
+	Local $avCustomize[7], $aaAllLevels[10]
+	Local $atNumLevel[0]
+	Local $mNumLevel[]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -170,126 +175,137 @@ Func _LOWriter_NumStyleCustomize(ByRef $oDoc, $oNumStyle, $iLevel, $iNumFormat =
 	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iNumFormat, $iStartAt, $sCharStyle, $iSubLevels, $sSepBefore, $sSepAfter, $bConsecutiveNum, $sBulletFont, $iCharDecimal) Then
-		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; can only get settings for one level at a time.
+		For $i = (($iLevel = -1) ? (0) : ($iLevel)) To (($iLevel = -1) ? (9) : ($iLevel)) ; Determine if I'm retrieving settings for all levels or just one.
+			$atNumLevel = $oNumRules.getByIndex($i)
+			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		If (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $LOW_NUM_STYLE_CHAR_SPECIAL) Then
-			__LOWriter_ArrayFill($avCustomize, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ParentNumbering"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix"), _
-					$oNumStyle.NumberingRules.IsContinuousNumbering(), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletFont").Name(), _
-					Asc(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletChar")))
+			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-		Else ; If not set for Bullet style, return only these settings.
-			__LOWriter_ArrayFill($avCustomize, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ParentNumbering"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix"), _
-					__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix"), _
-					$oNumStyle.NumberingRules.IsContinuousNumbering())
+			If MapExists($mNumLevel, "BulletFont") Then
+				__LOWriter_ArrayFill($avCustomize, $atNumLevel[$mNumLevel["NumberingType"]].Value(), _
+						$atNumLevel[$mNumLevel["StartWith"]].Value(), _
+						$atNumLevel[$mNumLevel["CharStyleName"]].Value(), _
+						$atNumLevel[$mNumLevel["ParentNumbering"]].Value(), _
+						$atNumLevel[$mNumLevel["Prefix"]].Value(), _
+						$atNumLevel[$mNumLevel["Suffix"]].Value(), _
+						$oNumRules.IsContinuousNumbering(), _
+						$atNumLevel[$mNumLevel["BulletFont"]].Value(), _
+						Asc($atNumLevel[$mNumLevel["BulletChar"]].Value()))
+
+			Else ; If not set for Bullet style, return only these settings as the rest don't exist.
+				__LOWriter_ArrayFill($avCustomize, $atNumLevel[$mNumLevel["NumberingType"]].Value(), _
+						$atNumLevel[$mNumLevel["StartWith"]].Value(), _
+						$atNumLevel[$mNumLevel["CharStyleName"]].Value(), _
+						$atNumLevel[$mNumLevel["ParentNumbering"]].Value(), _
+						$atNumLevel[$mNumLevel["Prefix"]].Value(), _
+						$atNumLevel[$mNumLevel["Suffix"]].Value(), _
+						$oNumRules.IsContinuousNumbering())
+			EndIf
+
+			If ($iLevel = -1) Then $aaAllLevels[$i] = $avCustomize
+		Next
+
+		Return ($iLevel = -1) ? (SetError($__LO_STATUS_SUCCESS, 2, $aaAllLevels)) : (SetError($__LO_STATUS_SUCCESS, 1, $avCustomize))
+	EndIf
+
+	For $i = (($iLevel = -1) ? (0) : ($iLevel)) To (($iLevel = -1) ? (9) : ($iLevel)) ; Determine if I am setting settings for all levels or just one.
+		$atNumLevel = $oNumRules.getByIndex($i)
+		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel) ; Map what elements each setting is located at.
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		If ($iNumFormat <> Null) Then
+			If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$atNumLevel[$mNumLevel["NumberingType"]].Value = $iNumFormat
+
+			__LOWriter_NumStyleModify($oDoc, $oNumRules, $i, $atNumLevel) ; Modify the Setting in case it is switching from/to a bullet type.
+
+			$atNumLevel = $oNumRules.getByIndex($i)
+			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 		EndIf
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avCustomize)
-	EndIf
-
-	If ($iNumFormat <> Null) Then
-		If Not __LOWriter_IntIsBetween($iNumFormat, $LOW_NUM_STYLE_CHARS_UPPER_LETTER, $LOW_NUM_STYLE_NUMBER_LEGAL_KO) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$aNumSettings[$iRowCount][0] = "NumberingType"
-		$aNumSettings[$iRowCount][1] = $iNumFormat
-		$iRowCount += 1
-	EndIf
-
-	If ($iStartAt <> Null) Then
-		If Not IsInt($iStartAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		$aNumSettings[$iRowCount][0] = "StartWith"
-		$aNumSettings[$iRowCount][1] = $iStartAt
-		$iRowCount += 1
-	EndIf
-
-	If ($sCharStyle <> Null) Then
-		If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-		If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		$aNumSettings[$iRowCount][0] = "CharStyleName"
-		$aNumSettings[$iRowCount][1] = $sCharStyle
-		$iRowCount += 1
-	EndIf
-
-	If ($iSubLevels <> Null) Then
-		If Not __LOWriter_IntIsBetween($iSubLevels, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-		If ($iLevel = -1) And ($iSubLevels > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; -1 for $iLevel = 0 = Modify all Numbering Style levels.
-		If ($iLevel <> -1) And ($iLevel < $iSubLevels) Then SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Sub-level higher than requested level
-		$aNumSettings[$iRowCount][0] = "ParentNumbering"
-		$aNumSettings[$iRowCount][1] = $iSubLevels
-		$iRowCount += 1
-
-		; If Document has "ListFormat" setting (Libre 7.2 +), Sub Levels ("ParentNumbering") wont accept a setting without
-		; also setting "List format", which means combining the corresponding "ListFormat"  number values + Prefix & Suffix.
-		__LOWriter_NumStyleRetrieve($oNumRules, 9, "ListFormat") ; Test if "ListFormat" exists in the Numbering Rules.
-		If (@error = 0) Then ;  If List Format does exist, modify it.
-			$aNumSettings[$iRowCount][0] = "ListFormat"
-			$aNumSettings[$iRowCount][1] = __LOWriter_NumStyleListFormat($oNumRules, $iLevel, $iSubLevels)
-			If (@error = 0) Then $iRowCount += 1 ;If No errors count up, else just let it be overwritten.
+		If ($iStartAt <> Null) Then
+			If Not IsInt($iStartAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$atNumLevel[$mNumLevel["StartWith"]].Value = $iStartAt
 		EndIf
-	EndIf
 
-	If ($sSepBefore <> Null) Then
-		If Not IsString($sSepBefore) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
-		$aNumSettings[$iRowCount][0] = "Prefix"
-		$aNumSettings[$iRowCount][1] = $sSepBefore
-		$iRowCount += 1
-	EndIf
+		If ($sCharStyle <> Null) Then
+			If Not IsString($sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			If Not _LOWriter_CharStyleExists($oDoc, $sCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$atNumLevel[$mNumLevel["CharStyleName"]].Value = $sCharStyle
+		EndIf
 
-	If ($sSepAfter <> Null) Then
-		If Not IsString($sSepAfter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
-		$aNumSettings[$iRowCount][0] = "Suffix"
-		$aNumSettings[$iRowCount][1] = $sSepAfter
-		$iRowCount += 1
-	EndIf
+		If ($iSubLevels <> Null) Then
+			If Not __LOWriter_IntIsBetween($iSubLevels, 1, 10) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			If ($iLevel = -1) And ($iSubLevels > 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0) ; -1 for $iLevel = 0 = Modify all Numbering Style levels.
+			If ($iLevel <> -1) And ($iLevel < $iSubLevels) Then SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Sub-level higher than requested level
+			$atNumLevel[$mNumLevel["ParentNumbering"]].Value = $iSubLevels
 
-	If ($bConsecutiveNum <> Null) Then
-		If Not IsBool($bConsecutiveNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
-		$oNumRules.IsContinuousNumbering = $bConsecutiveNum
-	EndIf
+			; If Document has "ListFormat" setting (Libre 7.2 +), Sub Levels ("ParentNumbering") wont accept a setting without also setting "List format", which means combining the corresponding "ListFormat"  number values + Prefix & Suffix.
+			If MapExists($mNumLevel, "ListFormat") Then ; Test if "ListFormat" exists in the Numbering Rules.
+				$atNumLevel[$mNumLevel["ListFormat"]].Value = __LOWriter_NumStyleListFormat($atNumLevel, $i, $iSubLevels)
+			EndIf
+		EndIf
 
-	If ($sBulletFont <> Null) Then
-		If Not IsString($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
-		If Not _LOWriter_FontExists($oDoc, $sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
-		$aNumSettings[$iRowCount][0] = "BulletFontName"
-		$aNumSettings[$iRowCount][1] = $sBulletFont
-		$iRowCount += 1
-	EndIf
+		If ($sSepBefore <> Null) Then
+			If Not IsString($sSepBefore) Then Return SetError($__LO_STATUS_INPUT_ERROR, 12, 0)
+			$atNumLevel[$mNumLevel["Prefix"]].Value = $sSepBefore
+			If MapExists($mNumLevel, "ListFormat") Then
+				$atNumLevel[$mNumLevel["ListFormat"]].Value = __LOWriter_NumStyleListFormat($atNumLevel, $i, $atNumLevel[$mNumLevel["ParentNumbering"]].Value(), $sSepBefore, Null) ; Add prefix to ListFormat
+			EndIf
+		EndIf
 
-	If ($iCharDecimal <> Null) Then
-		If Not IsInt($iCharDecimal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
-		$aNumSettings[$iRowCount][0] = "BulletChar"
-		$aNumSettings[$iRowCount][1] = Chr($iCharDecimal)
-		$iRowCount += 1
-	EndIf
+		If ($sSepAfter <> Null) Then
+			If Not IsString($sSepAfter) Then Return SetError($__LO_STATUS_INPUT_ERROR, 13, 0)
+			$atNumLevel[$mNumLevel["Suffix"]].Value = $sSepAfter
+			If MapExists($mNumLevel, "ListFormat") Then
+				$atNumLevel[$mNumLevel["ListFormat"]].Value = __LOWriter_NumStyleListFormat($atNumLevel, $i, $atNumLevel[$mNumLevel["ParentNumbering"]].Value(), Null, $sSepAfter) ; Add suffix to ListFormat
+			EndIf
+		EndIf
 
-	ReDim $aNumSettings[$iRowCount][2]
+		If ($bConsecutiveNum <> Null) Then
+			If Not IsBool($bConsecutiveNum) Then Return SetError($__LO_STATUS_INPUT_ERROR, 14, 0)
+			$oNumRules.IsContinuousNumbering = $bConsecutiveNum
+		EndIf
 
-	__LOWriter_NumStyleModify($oDoc, $oNumRules, $iLevel, $aNumSettings)
+		If ($sBulletFont <> Null) Then
+			If Not IsString($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 15, 0)
+			If Not _LOWriter_FontExists($sBulletFont) Then Return SetError($__LO_STATUS_INPUT_ERROR, 16, 0)
+			If Not MapExists($mNumLevel, "BulletFontName") Then Return SetError($__LO_STATUS_INPUT_ERROR, 17, 0)
+			$atNumLevel[$mNumLevel["BulletFontName"]].Value = $sBulletFont
+		EndIf
 
-	$oNumStyle.NumberingRules = $oNumRules
+		If ($iCharDecimal <> Null) Then
+			If Not IsInt($iCharDecimal) Then Return SetError($__LO_STATUS_INPUT_ERROR, 18, 0)
+			If Not MapExists($mNumLevel, "BulletChar") Then Return SetError($__LO_STATUS_INPUT_ERROR, 19, 0)
+			$atNumLevel[$mNumLevel["BulletChar"]].Value = Chr($iCharDecimal)
+		EndIf
 
-	$oNumRules = $oNumStyle.NumberingRules() ; Retrieve Numbering Rules a second time for error checking.
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
+		__LOWriter_NumStyleModify($oDoc, $oNumRules, $i, $atNumLevel)
+		$oNumStyle.NumberingRules = $oNumRules
 
-	; Error Checking
-	$iError = ($iNumFormat = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "NumberingType") = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iStartAt = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "StartWith") = $iStartAt) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($sCharStyle = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "CharStyleName") = $sCharStyle) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iSubLevels = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ParentNumbering") = $iSubLevels) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($sSepBefore = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix") = $sSepBefore) ? ($iError) : (BitOR($iError, 16)))
-	$iError = ($sSepAfter = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix") = $sSepAfter) ? ($iError) : (BitOR($iError, 32)))
-	$iError = ($bConsecutiveNum = Null) ? ($iError) : (($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? ($iError) : (BitOR($iError, 64)))
-	$iError = ($sBulletFont = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletFont").Name() = $sBulletFont) ? ($iError) : (BitOR($iError, 128)))
-	$iError = ($iCharDecimal = Null) ? ($iError) : ((Asc(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "BulletChar")) = $iCharDecimal) ? ($iError) : (BitOR($iError, 256)))
+		$atNumLevel = $oNumStyle.NumberingRules.getByIndex($i)
+		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
+		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		; Error Checking
+		$iError = ($iNumFormat = Null) ? ($iError) : (($atNumLevel[$mNumLevel["NumberingType"]].Value() = $iNumFormat) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iStartAt = Null) ? ($iError) : (($atNumLevel[$mNumLevel["StartWith"]].Value() = $iStartAt) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($sCharStyle = Null) ? ($iError) : (($atNumLevel[$mNumLevel["CharStyleName"]].Value() = $sCharStyle) ? ($iError) : (BitOR($iError, 4)))
+		$iError = ($iSubLevels = Null) ? ($iError) : (($atNumLevel[$mNumLevel["ParentNumbering"]].Value() = $iSubLevels) ? ($iError) : (BitOR($iError, 8)))
+		$iError = ($sSepBefore = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Prefix"]].Value() = $sSepBefore) ? ($iError) : (BitOR($iError, 16)))
+		$iError = ($sSepAfter = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Suffix"]].Value() = $sSepAfter) ? ($iError) : (BitOR($iError, 32)))
+		$iError = ($bConsecutiveNum = Null) ? ($iError) : (($oNumStyle.NumberingRules.IsContinuousNumbering = $bConsecutiveNum) ? ($iError) : (BitOR($iError, 64)))
+		$iError = ($sBulletFont = Null) ? ($iError) : (($atNumLevel[$mNumLevel["BulletFont"]].Value.Name() = $sBulletFont) ? ($iError) : (BitOR($iError, 128)))
+		$iError = ($iCharDecimal = Null) ? ($iError) : ((Asc($atNumLevel[$mNumLevel["BulletChar"]].Value()) = $iCharDecimal) ? ($iError) : (BitOR($iError, 256)))
+	Next
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStyleCustomize
@@ -462,6 +478,7 @@ Func _LOWriter_NumStyleOrganizer(ByRef $oDoc, $oNumStyle, $sNewNumStyleName = Nu
 	If __LOWriter_VarsAreNull($sNewNumStyleName, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avOrganizer, $oNumStyle.Name(), $oNumStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oNumStyle.Name())
 		EndIf
@@ -511,9 +528,9 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  @Error 1 @Extended 8 Return 0 = $iTabstop not an Integer.
 ;                  @Error 1 @Extended 9 Return 0 = $iIndent not an Integer.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving NumberingRules Object.
-;                  @Error 3 @Extended 2 Return 0 = Error retrieving current settings, $iLevel set to 0, cannot retrieve settings for more than one level at a time.
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving NumberingRules Object for error checking.
+;                  @Error 3 @Extended 1 Return 0 = Error retrieving Numbering Rules Object.
+;                  @Error 3 @Extended 2 Return 0 = Error retrieving Numbering Rule Array for level.
+;                  @Error 3 @Extended 3 Return 0 = Error mapping setting values.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $iAlignedAt
@@ -524,10 +541,12 @@ EndFunc   ;==>_LOWriter_NumStyleOrganizer
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested Properties.
 ;                  @Error 0 @Extended 1 Return Array = Success. All optional parameters were set to Null, returning current settings in a 5 Element Array with values in order of function parameters.
+;                  @Error 0 @Extended 2 Return Array = Success. All optional parameters were set to Null, returning a 10 Element Array containing arrays of settings for each Numbering level corresponding to their position in the array. Each array will be as described above. See remarks.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......: This function should work just fine as the others do for modifying styles, but for setting Numbering Style settings, it would seem that the Array of Setting Objects passed by AutoIt is not recognized as an appropriate array/Sequence by LibreOffice, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error. See __LOWriter_NumStyleModify function for a more detailed explanation. This function can still be used to set and retrieve, setting values, however now, this function either inserts a temporary macro into $oDoc for performing the needed procedure, or if that fails, it invisibly opens an .odt Libre document and inserts a macro, (see __LOWriter_NumStyleInitiateDocument), which is then called with the necessary parameters to set.
-;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can only request setting values for one numbering level at a time, you aren't able to call $iLevel with 0 to retrieve all at once.
+;                  Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings. You can request setting values for one numbering level at a time, or all at once (see below).
+;                  If you retrieve the current settings for all levels (by calling $iLevel with 0), the return will be a 10 element array containing an array of settings for each Numbering Level.
 ;                  Call any optional parameter with Null keyword to skip it.
 ; Related .......: _LOWriter_NumStyleCreate, _LOWriter_NumStyleGetObj, _LOWriter_ConvertFromMicrometer, _LOWriter_ConvertToMicrometer
 ; Link ..........:
@@ -539,9 +558,9 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 
 	Local $oNumRules
 	Local $iError = 0
-	Local $aNumSettings[5][2]
-	Local $iRowCount = 0
-	Local $avPosition[5]
+	Local $avPosition[5], $aaAllLevels[10]
+	Local $atNumLevel[0]
+	Local $mNumLevel[]
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -553,67 +572,74 @@ Func _LOWriter_NumStylePosition(ByRef $oDoc, $oNumStyle, $iLevel, $iAlignedAt = 
 	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iAlignedAt, $iNumAlign, $iFollowedBy, $iTabStop, $iIndent) Then
-		If ($iLevel = -1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0) ; only get settings for one level at a time.
-		__LOWriter_ArrayFill($avPosition, __LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), _
-				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Adjust"), _
-				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "LabelFollowedBy"), _
-				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ListtabStopPosition"), _
-				__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "IndentAt"))
+		For $i = (($iLevel = -1) ? (0) : ($iLevel)) To (($iLevel = -1) ? (9) : ($iLevel)) ; Determine if I'm retrieving settings for all levels or just one.
+			$atNumLevel = $oNumRules.getByIndex($i)
+			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
+			$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+			If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+			__LOWriter_ArrayFill($avPosition, $atNumLevel[$mNumLevel["FirstLineIndent"]].Value(), _
+					$atNumLevel[$mNumLevel["Adjust"]].Value(), _
+					$atNumLevel[$mNumLevel["LabelFollowedBy"]].Value(), _
+					$atNumLevel[$mNumLevel["ListtabStopPosition"]].Value(), _
+					$atNumLevel[$mNumLevel["IndentAt"]].Value())
+
+			If ($iLevel = -1) Then $aaAllLevels[$i] = $avPosition
+		Next
+
+		Return ($iLevel = -1) ? (SetError($__LO_STATUS_SUCCESS, 2, $aaAllLevels)) : (SetError($__LO_STATUS_SUCCESS, 1, $avPosition))
 	EndIf
 
-	If ($iAlignedAt <> Null) Then
-		If Not IsInt($iAlignedAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
-		$aNumSettings[$iRowCount][0] = "FirstLineIndent"
-		$aNumSettings[$iRowCount][1] = $iAlignedAt
-		$iRowCount += 1
-	EndIf
+	For $i = (($iLevel = -1) ? (0) : ($iLevel)) To (($iLevel = -1) ? (9) : ($iLevel)) ; Determine if I am setting settings for all levels or just one.
+		$atNumLevel = $oNumRules.getByIndex($i)
+		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	If ($iNumAlign <> Null) Then
-		If Not __LOWriter_IntIsBetween($iNumAlign, $LOW_ORIENT_HORI_RIGHT, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
-		$aNumSettings[$iRowCount][0] = "Adjust"
-		$aNumSettings[$iRowCount][1] = $iNumAlign
-		$iRowCount += 1
-	EndIf
+		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel) ; Map what elements each setting is located at.
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 
-	If ($iFollowedBy <> Null) Then
-		If Not __LOWriter_IntIsBetween($iFollowedBy, $LOW_FOLLOW_BY_TABSTOP, $LOW_FOLLOW_BY_NEWLINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
-		$aNumSettings[$iRowCount][0] = "LabelFollowedBy"
-		$aNumSettings[$iRowCount][1] = $iFollowedBy
-		$iRowCount += 1
-	EndIf
+		If ($iAlignedAt <> Null) Then
+			If Not IsInt($iAlignedAt) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+			$atNumLevel[$mNumLevel["FirstLineIndent"]].Value = $iAlignedAt
+		EndIf
 
-	If ($iTabStop <> Null) Then
-		If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
-		$aNumSettings[$iRowCount][0] = "ListtabStopPosition"
-		$aNumSettings[$iRowCount][1] = $iTabStop
-		$iRowCount += 1
-	EndIf
+		If ($iNumAlign <> Null) Then
+			If Not __LOWriter_IntIsBetween($iNumAlign, $LOW_ORIENT_HORI_RIGHT, $LOW_ORIENT_HORI_LEFT) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+			$atNumLevel[$mNumLevel["Adjust"]].Value = $iNumAlign
+		EndIf
 
-	If ($iIndent <> Null) Then
-		If Not IsInt($iIndent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
-		$aNumSettings[$iRowCount][0] = "IndentAt"
-		$aNumSettings[$iRowCount][1] = $iIndent
-		$iRowCount += 1
-	EndIf
+		If ($iFollowedBy <> Null) Then
+			If Not __LOWriter_IntIsBetween($iFollowedBy, $LOW_FOLLOW_BY_TABSTOP, $LOW_FOLLOW_BY_NEWLINE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+			$atNumLevel[$mNumLevel["LabelFollowedBy"]].Value = $iFollowedBy
+		EndIf
 
-	ReDim $aNumSettings[$iRowCount][2]
+		If ($iTabStop <> Null) Then
+			If Not IsInt($iTabStop) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+			$atNumLevel[$mNumLevel["ListtabStopPosition"]].Value = $iTabStop
+		EndIf
 
-	__LOWriter_NumStyleModify($oDoc, $oNumRules, $iLevel, $aNumSettings)
+		If ($iIndent <> Null) Then
+			If Not IsInt($iIndent) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+			$atNumLevel[$mNumLevel["IndentAt"]].Value = $iIndent
+		EndIf
 
-	$oNumStyle.NumberingRules = $oNumRules
+		__LOWriter_NumStyleModify($oDoc, $oNumRules, $i, $atNumLevel)
+		$oNumStyle.NumberingRules = $oNumRules
 
-	; Error Checking:
-	$oNumRules = $oNumStyle.NumberingRules()
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-	$iLevel = ($iLevel = -1) ? (9) : ($iLevel) ;If Level is set to -1 (modify all), set to last level to check the settings.
+		$atNumLevel = $oNumStyle.NumberingRules.getByIndex($i)
+		If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$iError = ($iAlignedAt = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "FirstLineIndent"), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
-	$iError = ($iNumAlign = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Adjust") = $iNumAlign) ? ($iError) : (BitOR($iError, 2)))
-	$iError = ($iFollowedBy = Null) ? ($iError) : ((__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "LabelFollowedBy") = $iFollowedBy) ? ($iError) : (BitOR($iError, 4)))
-	$iError = ($iTabStop = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "ListtabStopPosition"), $iTabStop - 1, $iTabStop + 1)) ? ($iError) : (BitOR($iError, 8)))
-	$iError = ($iIndent = Null) ? ($iError) : ((__LOWriter_IntIsBetween(__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "IndentAt"), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 16)))
+		$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+		If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		; Error Checking:
+
+		$iError = ($iAlignedAt = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atNumLevel[$mNumLevel["FirstLineIndent"]].Value(), $iAlignedAt - 1, $iAlignedAt + 1)) ? ($iError) : (BitOR($iError, 1)))
+		$iError = ($iNumAlign = Null) ? ($iError) : (($atNumLevel[$mNumLevel["Adjust"]].Value() = $iNumAlign) ? ($iError) : (BitOR($iError, 2)))
+		$iError = ($iFollowedBy = Null) ? ($iError) : (($atNumLevel[$mNumLevel["LabelFollowedBy"]].Value() = $iFollowedBy) ? ($iError) : (BitOR($iError, 4)))
+		$iError = ($iTabStop = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atNumLevel[$mNumLevel["ListtabStopPosition"]].Value(), $iTabStop - 1, $iTabStop + 1)) ? ($iError) : (BitOR($iError, 8)))
+		$iError = ($iIndent = Null) ? ($iError) : ((__LOWriter_IntIsBetween($atNumLevel[$mNumLevel["IndentAt"]].Value(), $iIndent - 1, $iIndent + 1)) ? ($iError) : (BitOR($iError, 16)))
+	Next
 
 	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_NumStylePosition
@@ -654,8 +680,8 @@ Func _LOWriter_NumStyleSet(ByRef $oDoc, ByRef $oObj, $sNumStyle)
 	If Not IsString($sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	If Not _LOWriter_NumStyleExists($oDoc, $sNumStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 	$oObj.NumberingStyleName = $sNumStyle
-	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 
+	Return ($oObj.NumberingStyleName() = $sNumStyle) ? (SetError($__LO_STATUS_SUCCESS, 0, 1)) : (SetError($__LO_STATUS_PROP_SETTING_ERROR, 1, 0))
 EndFunc   ;==>_LOWriter_NumStyleSet
 
 ; #FUNCTION# ====================================================================================================================
@@ -691,7 +717,7 @@ Func _LOWriter_NumStyleSetLevel(ByRef $oObj, $iLevel = Null)
 
 	If ($iLevel = Null) Then Return SetError($__LO_STATUS_SUCCESS, 1, ($oObj.NumberingLevel() + 1)) ; Plus one to compensate for Levels being 0 Based.
 
-	$iLevel -= 1 ;Level is 0 Based, minus one to compensate.
+	$iLevel -= 1 ; Level is 0 Based, minus one to compensate.
 
 	$oObj.NumberingLevel = $iLevel
 
@@ -745,6 +771,7 @@ Func _LOWriter_NumStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly 
 			$aStyles[$i] = $oStyles.getByIndex($i).Name() ; -- Can't use Display name due to special characters.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 

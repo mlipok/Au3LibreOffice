@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -104,6 +105,7 @@ Func _LOWriter_CharStyleBorderColor(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_COLOR_BLACK, $LOW_COLOR_WHITE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, False, True, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleBorderColor
 
@@ -159,6 +161,7 @@ Func _LOWriter_CharStyleBorderPadding(ByRef $oCharStyle, $iAll = Null, $iTop = N
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharBorderPadding($oCharStyle, $iAll, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleBorderPadding
 
@@ -219,6 +222,7 @@ Func _LOWriter_CharStyleBorderStyle(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, $LOW_BORDERSTYLE_SOLID, $LOW_BORDERSTYLE_DASH_DOT_DOT, "", $LOW_BORDERSTYLE_NONE) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, False, True, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleBorderStyle
 
@@ -275,6 +279,7 @@ Func _LOWriter_CharStyleBorderWidth(ByRef $oCharStyle, $iTop = Null, $iBottom = 
 	If ($iRight <> Null) And Not __LOWriter_IntIsBetween($iRight, 0) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 
 	$vReturn = __LOWriter_CharBorder($oCharStyle, True, False, False, $iTop, $iBottom, $iLeft, $iRight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleBorderWidth
 
@@ -387,6 +392,7 @@ Func _LOWriter_CharStyleDelete(ByRef $oDoc, ByRef $oCharStyle, $bForceDelete = F
 	; If User has called a specific style to replace this style, set it to that.
 
 	$oCharStyles.removeByName($sCharStyle)
+
 	Return ($oCharStyles.hasByName($sCharStyle)) ? (SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
 EndFunc   ;==>_LOWriter_CharStyleDelete
 
@@ -439,6 +445,7 @@ Func _LOWriter_CharStyleEffect(ByRef $oCharStyle, $iRelief = Null, $iCase = Null
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharEffect($oCharStyle, $iRelief, $iCase, $bHidden, $bOutline, $bShadow)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleEffect
 
@@ -477,9 +484,8 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_CharStyleFont
 ; Description ...: Set and Retrieve the Font Settings for a Character Style.
-; Syntax ........: _LOWriter_CharStyleFont(ByRef $oDoc, $oCharStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
-; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function.
-;                  $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
+; Syntax ........: _LOWriter_CharStyleFont(ByRef $oCharStyle[, $sFontName = Null[, $nFontSize = Null[, $iPosture = Null[, $iWeight = Null]]]])
+; Parameters ....: $oCharStyle          - [in/out] an object. A Character Style object returned by a previous _LOWriter_CharStyleCreate, or _LOWriter_CharStyleGetObj, function.
 ;                  $sFontName           - [optional] a string value. Default is Null. The Font Name to use.
 ;                  $nFontSize           - [optional] a general number value. Default is Null. The Font size.
 ;                  $iPosture            - [optional] an integer value (0-5). Default is Null. Font Italic setting. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3. Also see remarks.
@@ -487,15 +493,14 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oDoc parameter not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not an Object.
-;                  @Error 1 @Extended 3 Return 0 = $oCharStyle not a Character Style Object.
-;                  @Error 1 @Extended 4 Return 0 = Font called in $sFontName not available in current document.
-;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 1 Return 0 = $oCharStyle not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $oCharStyle not a Character Style Object.
+;                  @Error 1 @Extended 3 Return 0 = Font called in $sFontName not available in current document.
+;                  @Error 1 @Extended 4 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0 or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sFontName
@@ -515,18 +520,18 @@ EndFunc   ;==>_LOWriter_CharStyleExists
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _LOWriter_CharStyleFont(ByRef $oDoc, ByRef $oCharStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
+Func _LOWriter_CharStyleFont(ByRef $oCharStyle, $sFontName = Null, $nFontSize = Null, $iPosture = Null, $iWeight = Null)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	Local $vReturn
 
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If ($sFontName <> Null) And Not _LOWriter_FontExists($oDoc, $sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
+	If Not IsObj($oCharStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+	If ($sFontName <> Null) And Not _LOWriter_FontExists($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	$vReturn = __LOWriter_CharFont($oCharStyle, $sFontName, $nFontSize, $iPosture, $iWeight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleFont
 
@@ -577,6 +582,7 @@ Func _LOWriter_CharStyleFontColor(ByRef $oCharStyle, $iFontColor = Null, $iTrans
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharFontColor($oCharStyle, $iFontColor, $iTransparency, $iHighlight)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleFontColor
 
@@ -670,6 +676,7 @@ Func _LOWriter_CharStyleOrganizer(ByRef $oDoc, ByRef $oCharStyle, $sNewCharStyle
 	If __LOWriter_VarsAreNull($sNewCharStyleName, $sParentStyle, $bHidden) Then
 		If __LOWriter_VersionCheck(4.0) Then
 			__LOWriter_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True), $oCharStyle.Hidden())
+
 		Else
 			__LOWriter_ArrayFill($avOrganizer, $oCharStyle.Name(), __LOWriter_CharStyleNameToggle($oCharStyle.ParentStyle(), True))
 		EndIf
@@ -752,6 +759,7 @@ Func _LOWriter_CharStyleOverLine(ByRef $oCharStyle, $bWordOnly = Null, $iOverLin
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharOverLine($oCharStyle, $bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleOverLine
 
@@ -808,6 +816,7 @@ Func _LOWriter_CharStylePosition(ByRef $oCharStyle, $bAutoSuper = Null, $iSuperS
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharPosition($oCharStyle, $bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStylePosition
 
@@ -851,6 +860,7 @@ Func _LOWriter_CharStyleRotateScale(ByRef $oCharStyle, $iRotation = Null, $iScal
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharRotateScale($oCharStyle, $iRotation, $iScaleWidth)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleRotateScale
 
@@ -950,6 +960,7 @@ Func _LOWriter_CharStylesGetNames(ByRef $oDoc, $bUserOnly = False, $bAppliedOnly
 			$aStyles[$i] = $oStyles.getByIndex($i).DisplayName
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, $i, $aStyles)
 	EndIf
 
@@ -1023,6 +1034,7 @@ Func _LOWriter_CharStyleShadow(ByRef $oCharStyle, $iWidth = Null, $iColor = Null
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharShadow($oCharStyle, $iWidth, $iColor, $bTransparent, $iLocation)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleShadow
 
@@ -1070,6 +1082,7 @@ Func _LOWriter_CharStyleSpacing(ByRef $oCharStyle, $bAutoKerning = Null, $nKerni
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharSpacing($oCharStyle, $bAutoKerning, $nKerning)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleSpacing
 
@@ -1117,6 +1130,7 @@ Func _LOWriter_CharStyleStrikeOut(ByRef $oCharStyle, $bWordOnly = Null, $bStrike
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharStrikeOut($oCharStyle, $bWordOnly, $bStrikeOut, $iStrikeLineStyle)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleStrikeOut
 
@@ -1167,5 +1181,6 @@ Func _LOWriter_CharStyleUnderLine(ByRef $oCharStyle, $bWordOnly = Null, $iUnderL
 	If Not $oCharStyle.supportsService("com.sun.star.style.CharacterStyle") Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	$vReturn = __LOWriter_CharUnderLine($oCharStyle, $bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor)
+
 	Return SetError(@error, @extended, $vReturn)
 EndFunc   ;==>_LOWriter_CharStyleUnderLine

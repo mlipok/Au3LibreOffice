@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -41,6 +42,7 @@
 ; __LOWriter_CharStyleNameToggle
 ; __LOWriter_CharUnderLine
 ; __LOWriter_ColorRemoveAlpha
+; __LOWriter_ControlSetGetFontDesc
 ; __LOWriter_CreatePoint
 ; __LOWriter_CreateStruct
 ; __LOWriter_CursorGetText
@@ -54,6 +56,8 @@
 ; __LOWriter_FindFormatDeleteSetting
 ; __LOWriter_FindFormatRetrieveSetting
 ; __LOWriter_FooterBorder
+; __LOWriter_FormControlGetObj
+; __LOWriter_FormControlIdentify
 ; __LOWriter_GetPrinterSetting
 ; __LOWriter_GetShapeName
 ; __LOWriter_GradientNameInsert
@@ -67,12 +71,12 @@
 ; __LOWriter_IsCellRange
 ; __LOWriter_IsTableInDoc
 ; __LOWriter_NumIsBetween
+; __LOWriter_NumRuleCreateMap
 ; __LOWriter_NumStyleCreateScript
 ; __LOWriter_NumStyleDeleteScript
 ; __LOWriter_NumStyleInitiateDocument
 ; __LOWriter_NumStyleListFormat
 ; __LOWriter_NumStyleModify
-; __LOWriter_NumStyleRetrieve
 ; __LOWriter_ObjRelativeSize
 ; __LOWriter_PageStyleNameToggle
 ; __LOWriter_ParAlignment
@@ -161,6 +165,7 @@ Func __LOWriter_AddTo1DArray(ByRef $aArray, $vData, $bCountInFirst = False)
 	ReDim $aArray[UBound($aArray) + 1]
 	$aArray[UBound($aArray) - 1] = $vData
 	If $bCountInFirst Then $aArray[0] += 1
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_AddTo1DArray
 
@@ -205,6 +210,7 @@ Func __LOWriter_AddTo2DArray(ByRef $aArray, $vDataCol1, $vDataCol2, $bCountInFir
 	$aArray[UBound($aArray) - 1][0] = $vDataCol1
 	$aArray[UBound($aArray) - 1][1] = $vDataCol2
 	If $bCountInFirst Then $aArray[0][0] += 1
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_AddTo2DArray
 
@@ -235,13 +241,14 @@ Func __LOWriter_AnyAreDefault($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Nul
 	Local $bAnyDefault1, $bAnyDefault2
 	$bAnyDefault1 = (($vVar1 = Default) Or ($vVar2 = Default) Or ($vVar3 = Default) Or ($vVar4 = Default)) ? (True) : (False)
 	$bAnyDefault2 = (($vVar5 = Default) Or ($vVar6 = Default) Or ($vVar7 = Default) Or ($vVar8 = Default)) ? (True) : (False)
+
 	Return ($bAnyDefault1 Or $bAnyDefault2) ? (SetError($__LO_STATUS_SUCCESS, 0, True)) : (SetError($__LO_STATUS_SUCCESS, 0, False))
 EndFunc   ;==>__LOWriter_AnyAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ArrayFill
 ; Description ...: Fill an Array with data.
-; Syntax ........: __LOWriter_ArrayFill(ByRef $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null]]]]]]]]]]]]]]]]]])
+; Syntax ........: __LOWriter_ArrayFill(ByRef $aArrayToFill[, $vVar1 = Null[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null[, $vVar19 = Null[, $vVar20 = Null[, $vVar21 = Null[, $vVar22 = Null[, $vVar23 = Null[, $vVar24 = Null[, $vVar25 = Null[, $vVar26 = Null[, $vVar27 = Null[, $vVar28 = Null[, $vVar29 = Null[, $vVar30 = Null[, $vVar31 = Null[, $vVar32 = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
 ; Parameters ....: $aArrayToFill        - [in/out] an array of unknowns. The Array to Fill. Array will be directly modified.
 ;                  $vVar1               - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar2               - [optional] a variant value. Default is Null. The Data to add to the Array.
@@ -261,6 +268,20 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ;                  $vVar16              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar17              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ;                  $vVar18              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar19              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar20              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar21              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar22              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar23              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar24              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar25              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar26              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar27              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar28              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar29              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar30              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar31              - [optional] a variant value. Default is Null. The Data to add to the Array.
+;                  $vVar32              - [optional] a variant value. Default is Null. The Data to add to the Array.
 ; Return values .: None
 ; Author ........: donnyh13
 ; Modified ......:
@@ -269,8 +290,8 @@ EndFunc   ;==>__LOWriter_AnyAreDefault
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null)
-	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18
+Func __LOWriter_ArrayFill(ByRef $aArrayToFill, $vVar1 = Null, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null, $vVar19 = Null, $vVar20 = Null, $vVar21 = Null, $vVar22 = Null, $vVar23 = Null, $vVar24 = Null, $vVar25 = Null, $vVar26 = Null, $vVar27 = Null, $vVar28 = Null, $vVar29 = Null, $vVar30 = Null, $vVar31 = Null, $vVar32 = Null)
+	#forceref $vVar1, $vVar2, $vVar3, $vVar4, $vVar5, $vVar6, $vVar7, $vVar8, $vVar9, $vVar10, $vVar11, $vVar12, $vVar13, $vVar14, $vVar15, $vVar16, $vVar17, $vVar18, $vVar19, $vVar20, $vVar21, $vVar22, $vVar23, $vVar24, $vVar25, $vVar26, $vVar27, $vVar28, $vVar29, $vVar30, $vVar31, $vVar32
 
 	If UBound($aArrayToFill) < (@NumParams - 1) Then ReDim $aArrayToFill[@NumParams - 1]
 	For $i = 0 To @NumParams - 2
@@ -331,12 +352,15 @@ Func __LOWriter_Border(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $iLeft
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.LineWidth(), $oObj.BottomBorder.LineWidth(), $oObj.LeftBorder.LineWidth(), _
 					$oObj.RightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.LineStyle(), $oObj.BottomBorder.LineStyle(), $oObj.LeftBorder.LineStyle(), _
 					$oObj.RightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oObj.TopBorder.Color(), $oObj.BottomBorder.Color(), $oObj.LeftBorder.Color(), $oObj.RightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -430,17 +454,19 @@ Func __LOWriter_CharBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, $i
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; If more than one Boolean is true = error
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight) Then
-
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.LineWidth(), $oObj.CharBottomBorder.LineWidth(), $oObj.CharLeftBorder.LineWidth(), _
 					$oObj.CharRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.LineStyle(), $oObj.CharBottomBorder.LineStyle(), $oObj.CharLeftBorder.LineStyle(), _
 					$oObj.CharRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oObj.CharTopBorder.Color(), $oObj.CharBottomBorder.Color(), $oObj.CharLeftBorder.Color(), _
 					$oObj.CharRightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -535,6 +561,7 @@ Func __LOWriter_CharBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oObj.CharBorderDistance(), $oObj.CharTopBorderDistance(), $oObj.CharBottomBorderDistance(), _
 				$oObj.CharLeftBorderDistance(), $oObj.CharRightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -619,6 +646,7 @@ Func __LOWriter_CharEffect(ByRef $oObj, $iRelief, $iCase, $bHidden, $bOutline, $
 
 	If __LOWriter_VarsAreNull($iRelief, $iCase, $bHidden, $bOutline, $bShadow) Then
 		__LOWriter_ArrayFill($avEffect, $oObj.CharRelief(), $oObj.CharCaseMap(), $oObj.CharHidden(), $oObj.CharContoured(), $oObj.CharShadowed())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avEffect)
 	EndIf
 
@@ -667,11 +695,11 @@ EndFunc   ;==>__LOWriter_CharEffect
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
-;                  @Error 1 @Extended 5 Return 0 = Passed Object for internal function not an Object.
-;                  @Error 1 @Extended 6 Return 0 = $sFontName not a String.
-;                  @Error 1 @Extended 7 Return 0 = $nFontSize not a Number.
-;                  @Error 1 @Extended 8 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
-;                  @Error 1 @Extended 9 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 4 Return 0 = Passed Object for internal function not an Object.
+;                  @Error 1 @Extended 5 Return 0 = $sFontName not a String.
+;                  @Error 1 @Extended 6 Return 0 = $nFontSize not a Number.
+;                  @Error 1 @Extended 7 Return 0 = $iPosture not an Integer, less than 0, or greater than 5. See Constants, $LOW_POSTURE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  @Error 1 @Extended 8 Return 0 = $iWeight less than 50 and not 0, or more than 200. See Constants, $LOW_WEIGHT_* as defined in LibreOfficeWriter_Constants.au3.
 ;                  --Property Setting Errors--
 ;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for the following values:
 ;                  |                               1 = Error setting $sFontName
@@ -698,33 +726,34 @@ Func __LOWriter_CharFont(ByRef $oObj, $sFontName, $nFontSize, $iPosture, $iWeigh
 	Local $iError = 0
 	Local $avFont[4]
 
-	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
+	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	If __LOWriter_VarsAreNull($sFontName, $nFontSize, $iPosture, $iWeight) Then
 		__LOWriter_ArrayFill($avFont, $oObj.CharFontName(), $oObj.CharHeight(), $oObj.CharPosture(), $oObj.CharWeight())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFont)
 	EndIf
 
 	If ($sFontName <> Null) Then
-		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
+		If Not IsString($sFontName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0)
 		$oObj.CharFontName = $sFontName
 		$iError = ($oObj.CharFontName() = $sFontName) ? ($iError) : (BitOR($iError, 1))
 	EndIf
 
 	If ($nFontSize <> Null) Then
-		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
+		If Not IsNumber($nFontSize) Then Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0)
 		$oObj.CharHeight = $nFontSize
 		$iError = ($oObj.CharHeight() = $nFontSize) ? ($iError) : (BitOR($iError, 2))
 	EndIf
 
 	If ($iPosture <> Null) Then
-		If Not __LOWriter_IntIsBetween($iPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
+		If Not __LOWriter_IntIsBetween($iPosture, $LOW_POSTURE_NONE, $LOW_POSTURE_ITALIC) Then Return SetError($__LO_STATUS_INPUT_ERROR, 7, 0)
 		$oObj.CharPosture = $iPosture
 		$iError = ($oObj.CharPosture() = $iPosture) ? ($iError) : (BitOR($iError, 4))
 	EndIf
 
 	If ($iWeight <> Null) Then
-		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0)
+		If Not __LOWriter_IntIsBetween($iWeight, $LOW_WEIGHT_THIN, $LOW_WEIGHT_BLACK, "", $LOW_WEIGHT_DONT_KNOW) Then Return SetError($__LO_STATUS_INPUT_ERROR, 8, 0)
 		$oObj.CharWeight = $iWeight
 		$iError = ($oObj.CharWeight() = $iWeight) ? ($iError) : (BitOR($iError, 8))
 	EndIf
@@ -737,9 +766,9 @@ EndFunc   ;==>__LOWriter_CharFont
 ; Description ...: Set or retrieve the font color, transparency and highlighting values.
 ; Syntax ........: __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighlight)
 ; Parameters ....: $oObj                - [in/out] an object. An Object that supports "com.sun.star.text.Paragraph" Or "com.sun.star.text.TextPortion" services, such as a Cursor with data selected or paragraph section.
-;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
+;                  $iFontColor          - an integer value (-1-16777215). The desired font Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for Auto color.
 ;                  $iTransparency       - an integer value (0-100). Transparency percentage. 0 is visible, 100 is invisible. Available for Libre Office 7.0 and up.
-;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
+;                  $iHighlight          - an integer value (-1-16777215). The highlight Color value in Long Integer format, can be a custom value, or one of the constants, $LOW_COLOR_* as defined in LibreOfficeWriter_Constants.au3. Set to $LOW_COLOR_OFF(-1) for No color.
 ; Return values .: Success: 1 or Array.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -778,9 +807,11 @@ Func __LOWriter_CharFontColor(ByRef $oObj, $iFontColor, $iTransparency, $iHighli
 	If __LOWriter_VarsAreNull($iFontColor, $iTransparency, $iHighlight) Then
 		If __LOWriter_VersionCheck(7.0) Then
 			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharTransparence(), $oObj.CharBackColor())
+
 		Else
 			__LOWriter_ArrayFill($avColor, __LOWriter_ColorRemoveAlpha($oObj.CharColor()), $oObj.CharBackColor())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -865,6 +896,7 @@ Func __LOWriter_CharOverLine(ByRef $oObj, $bWordOnly, $iOverLineStyle, $bOLHasCo
 
 	If __LOWriter_VarsAreNull($bWordOnly, $iOverLineStyle, $bOLHasColor, $iOLColor) Then
 		__LOWriter_ArrayFill($avOverLine, $oObj.CharWordMode(), $oObj.CharOverline(), $oObj.CharOverlineHasColor(), $oObj.CharOverlineColor())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOverLine)
 	EndIf
 
@@ -947,6 +979,7 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 	If __LOWriter_VarsAreNull($bAutoSuper, $iSuperScript, $bAutoSub, $iSubScript, $iRelativeSize) Then
 		__LOWriter_ArrayFill($avPosition, ($oObj.CharEscapement() = 14000) ? (True) : (False), ($oObj.CharEscapement() > 0) ? ($oObj.CharEscapement()) : (0), _
 				($oObj.CharEscapement() = -14000) ? (True) : (False), ($oObj.CharEscapement() < 0) ? ($oObj.CharEscapement()) : (0), $oObj.CharEscapementHeight())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPosition)
 	EndIf
 
@@ -963,7 +996,6 @@ Func __LOWriter_CharPosition(ByRef $oObj, $bAutoSuper, $iSuperScript, $bAutoSub,
 		; If $bAutoSub = True set it to -14000 (automatic Subscript) else if $iSubScript is set, let that overwrite
 		;	the current setting, else if superscript is true or set to an integer, it will overwrite the setting.
 		$iSubScript = ($bAutoSub) ? (-14000) : ((IsInt($iSubScript)) ? ($iSubScript) : ((IsInt($iSuperScript)) ? ($iSubScript) : (1)))
-
 	EndIf
 
 	If ($iSuperScript <> Null) Then
@@ -1031,12 +1063,13 @@ Func __LOWriter_CharRotateScale(ByRef $oObj, $iRotation, $iScaleWidth, $bRotateF
 	If __LOWriter_VarsAreNull($iRotation, $iScaleWidth, $bRotateFitLine) Then
 		; rotation set in hundredths (90 deg = 900 etc)so divide by 10.
 		__LOWriter_ArrayFill($avRotation, ($oObj.CharRotation() / 10), $oObj.CharScaleWidth())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avRotation)
 	EndIf
 
 	If ($iRotation <> Null) Then
 		If Not __LOWriter_IntIsBetween($iRotation, 0, 0, "", "90:270") Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ;rotation set in hundredths (90 deg = 900 etc)so times by 10.
+		$iRotation = ($iRotation > 0) ? ($iRotation * 10) : ($iRotation) ; Rotation set in hundredths (90 deg = 900 etc)so times by 10.
 		$oObj.CharRotation = $iRotation
 		$iError = ($oObj.CharRotation() = $iRotation) ? ($iError) : (BitOR($iError, 1))
 	EndIf
@@ -1109,6 +1142,7 @@ Func __LOWriter_CharShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocat
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -1188,6 +1222,7 @@ Func __LOWriter_CharSpacing(ByRef $oObj, $bAutoKerning, $nKerning)
 	If __LOWriter_VarsAreNull($bAutoKerning, $nKerning) Then
 		$nKerning = __LOWriter_UnitConvert($oObj.CharKerning(), $__LOCONST_CONVERT_UM_PT)
 		__LOWriter_ArrayFill($avKerning, $oObj.CharAutoKerning(), (($nKerning > 928.8) ? (1000) : ($nKerning)))
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avKerning)
 	EndIf
 
@@ -1251,6 +1286,7 @@ Func __LOWriter_CharStrikeOut(ByRef $oObj, $bWordOnly, $bStrikeOut, $iStrikeLine
 
 	If __LOWriter_VarsAreNull($bWordOnly, $bStrikeOut, $iStrikeLineStyle) Then
 		__LOWriter_ArrayFill($avStrikeOut, $oObj.CharWordMode(), $oObj.CharCrossedOut(), $oObj.CharStrikeout())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avStrikeOut)
 	EndIf
 
@@ -1306,13 +1342,16 @@ Func __LOWriter_CharStyleNameToggle($sCharStyle, $bReverse = False)
 		$sCharStyle = ($sCharStyle = "Endnote Characters") ? ("Endnote Symbol") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Quotation") ? ("Citation") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "No Character Style") ? ("Standard") : ($sCharStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sCharStyle)
+
 	Else
 		$sCharStyle = ($sCharStyle = "Footnote Symbol") ? ("Footnote Characters") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Bullet Symbols") ? ("Bullets") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Endnote Symbol") ? ("Endnote Characters") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Citation") ? ("Quotation") : ($sCharStyle)
 		$sCharStyle = ($sCharStyle = "Standard") ? ("No Character Style") : ($sCharStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sCharStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_CharStyleNameToggle
@@ -1362,6 +1401,7 @@ Func __LOWriter_CharUnderLine(ByRef $oObj, $bWordOnly, $iUnderLineStyle, $bULHas
 
 	If __LOWriter_VarsAreNull($bWordOnly, $iUnderLineStyle, $bULHasColor, $iULColor) Then
 		__LOWriter_ArrayFill($avUnderLine, $oObj.CharWordMode(), $oObj.CharUnderline(), $oObj.CharUnderlineHasColor(), $oObj.CharUnderlineColor())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avUnderLine)
 	EndIf
 
@@ -1426,6 +1466,98 @@ Func __LOWriter_ColorRemoveAlpha($iColor)
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $iLong)
 EndFunc   ;==>__LOWriter_ColorRemoveAlpha
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_ControlSetGetFontDesc
+; Description ...: Set or Retrieve a Control's Font values.
+; Syntax ........: __LOWriter_ControlSetGetFontDesc(ByRef $oControl[, $mFontDesc = Null])
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $mFontDesc           - [optional] a map. Default is Null. A Font descriptor Map returned by a previous _LOWriter_FontDescCreate or _LOWriter_FontDescEdit function.
+; Return values .: Success: 1 or Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $mFontDesc not a Map.
+;                  --Property Setting Errors--
+;                  @Error 4 @Extended ? Return 0 = Some settings were not successfully set. Use BitAND to test @Extended for following values:
+;                  |                               1 = Error setting Font Name.
+;                  |                               2 = Error setting Font Weight.
+;                  |                               4 = Error setting Font Posture.
+;                  |                               8 = Error setting Font Size.
+;                  |                               16 = Error setting Font Color.
+;                  |                               32 = Error setting Font Underline Style.
+;                  |                               64 = Error setting Font Underline Color.
+;                  |                               128 = Error setting Font Strikeout Style.
+;                  |                               256 = Error setting Individual Word mode.
+;                  |                               512 = Error setting Font Relief.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return 1 = Success. Settings were successfully set.
+;                  @Error 0 @Extended 1 Return Map = Success. All optional parameters were set to Null, returning current settings as a Map.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: Call this function with only the required parameters (or with all other parameters set to Null keyword), to get the current settings.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_ControlSetGetFontDesc(ByRef $oControl, $mFontDesc = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $iError = 0
+	Local $mControlFontDesc[]
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If __LOWriter_VarsAreNull($mFontDesc) Then
+		$mControlFontDesc.CharFontName = $oControl.CharFontName()
+		$mControlFontDesc.CharWeight = $oControl.CharWeight()
+		$mControlFontDesc.CharPosture = $oControl.CharPosture()
+		$mControlFontDesc.CharHeight = $oControl.CharHeight()
+		$mControlFontDesc.CharColor = $oControl.CharColor()
+		$mControlFontDesc.CharUnderline = $oControl.CharUnderline()
+		$mControlFontDesc.CharUnderlineColor = $oControl.CharUnderlineColor()
+		$mControlFontDesc.CharStrikeout = $oControl.CharStrikeout()
+		$mControlFontDesc.CharWordMode = $oControl.CharWordMode()
+		$mControlFontDesc.CharRelief = $oControl.CharRelief()
+
+		Return SetError($__LO_STATUS_SUCCESS, 1, $mControlFontDesc)
+	EndIf
+
+	If Not IsMap($mFontDesc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oControl.CharFontName() = $mFontDesc.CharFontName
+	$iError = ($oControl.CharFontName() = $mFontDesc.CharFontName) ? ($iError) : (BitOR($iError, 1))
+
+	$oControl.CharWeight() = $mFontDesc.CharWeight
+	$iError = (__LOWriter_IntIsBetween($oControl.CharWeight(), $mFontDesc.CharWeight - 50, $mFontDesc.CharWeight + 50)) ? ($iError) : (BitOR($iError, 2))
+
+	$oControl.CharPosture() = $mFontDesc.CharPosture
+	$iError = ($oControl.CharPosture() = $mFontDesc.CharPosture) ? ($iError) : (BitOR($iError, 4))
+
+	$oControl.CharHeight() = $mFontDesc.CharHeight
+	$iError = ($oControl.CharHeight() = $mFontDesc.CharHeight) ? ($iError) : (BitOR($iError, 8))
+
+	$oControl.CharColor() = $mFontDesc.CharColor
+	$iError = ($oControl.CharColor() = $mFontDesc.CharColor) ? ($iError) : (BitOR($iError, 16))
+
+	$oControl.CharUnderline() = $mFontDesc.CharUnderline
+	$iError = ($oControl.CharUnderline() = $mFontDesc.CharUnderline) ? ($iError) : (BitOR($iError, 32))
+
+	$oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor
+	$iError = ($oControl.CharUnderlineColor() = $mFontDesc.CharUnderlineColor) ? ($iError) : (BitOR($iError, 64))
+
+	$oControl.CharStrikeout() = $mFontDesc.CharStrikeout
+	$iError = ($oControl.CharStrikeout() = $mFontDesc.CharStrikeout) ? ($iError) : (BitOR($iError, 128))
+
+	$oControl.CharWordMode() = $mFontDesc.CharWordMode
+	$iError = ($oControl.CharWordMode() = $mFontDesc.CharWordMode) ? ($iError) : (BitOR($iError, 256))
+
+	$oControl.CharRelief() = $mFontDesc.CharRelief
+	$iError = ($oControl.CharRelief() = $mFontDesc.CharRelief) ? ($iError) : (BitOR($iError, 512))
+
+	Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, 0, 1))
+EndFunc   ;==>__LOWriter_ControlSetGetFontDesc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_CreatePoint
@@ -1547,12 +1679,17 @@ Func __LOWriter_CursorGetText(ByRef $oDoc, ByRef $oCursor)
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
 			$oText = $oReturnedObj.getText()
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
+
 		Case $LOW_CURDATA_CELL
 			$oText = $oReturnedObj.getCellByName($oCursor.Cell.CellName)
 			If Not IsObj($oText) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCursorDataType, $oText)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_CursorGetText
@@ -1560,9 +1697,11 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_DateStructCompare
 ; Description ...: Compare two date Structures to see if they are the same Date, Time, etc.
-; Syntax ........: __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
+; Syntax ........: __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2[, $bIsDate = False[, $bIsTime = False]])
 ; Parameters ....: $tDateStruct1        - a dll struct value. The First Date Structure.
 ;                  $tDateStruct2        - a dll struct value. The Second Date Structure.
+;                  $bIsDate             - [optional] a boolean value. Default is False. If True, the comparison is two Date Structures.
+;                  $bIsTime             - [optional] a boolean value. Default is False. If True, the comparison is two Time Structures.
 ; Return values .: Success: Boolean
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
@@ -1572,27 +1711,45 @@ EndFunc   ;==>__LOWriter_CursorGetText
 ;                  @Error 0 @Extended 0 Return Boolean = Success. If the Dates/Times in $tDateStruct1 and $tDateStruct2 are the same, True is returned. Else False.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: If both $bIsDate and $bIsTime are False, the comparison is two Date and Time Structures
 ; Related .......:
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2)
+Func __LOWriter_DateStructCompare($tDateStruct1, $tDateStruct2, $bIsDate = False, $bIsTime = False)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($tDateStruct1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 	If Not IsObj($tDateStruct2) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, False)
+	If Not IsBool($bIsDate) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, False)
+	If Not IsBool($bIsTime) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, False)
 
-	If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
-	If __LOWriter_VersionCheck(4.1) Then
-		If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+	If $bIsDate Then
+		If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+
+	ElseIf $bIsTime Then
+		If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If __LOWriter_VersionCheck(4.1) Then
+			If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		EndIf
+
+	Else
+		If $tDateStruct1.Year() <> $tDateStruct2.Year() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Month() <> $tDateStruct2.Month() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Day() <> $tDateStruct2.Day() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Hours() <> $tDateStruct2.Hours() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Minutes() <> $tDateStruct2.Minutes() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.Seconds() <> $tDateStruct2.Seconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If $tDateStruct1.NanoSeconds() <> $tDateStruct2.NanoSeconds() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		If __LOWriter_VersionCheck(4.1) Then
+			If $tDateStruct1.IsUTC() <> $tDateStruct2.IsUTC() Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
+		EndIf
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, True)
@@ -1627,8 +1784,10 @@ Func __LOWriter_DirFrmtCheck(ByRef $oSelection, $bCheckSelection = False)
 	If $oSelection.supportsService("com.sun.star.text.TextCursor") Or _
 			$oSelection.supportsService("com.sun.star.text.TextViewCursor") Then
 		If $bCheckSelection Then Return SetError($__LO_STATUS_SUCCESS, 0, ($oSelection.IsCollapsed()) ? (False) : (True)) ; If collapsed return false meaning fail.
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, True)
 	EndIf
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, False)
 EndFunc   ;==>__LOWriter_DirFrmtCheck
 
@@ -1667,17 +1826,20 @@ Func __LOWriter_FieldCountType($vInput)
 	$asFieldTypes[$LOW_FIELD_COUNT_TYPE_WORDS] = "com.sun.star.text.TextField.WordCount"
 
 	If IsObj($vInput) Then
-
 		For $i = 0 To UBound($asFieldTypes) - 1
 			If $vInput.supportsService($asFieldTypes[$i]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $i)
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0) ; No Hits
 
 	ElseIf IsInt($vInput) Then
 		If Not __LOWriter_IntIsBetween($vInput, 0, UBound($asFieldTypes) - 1) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asFieldTypes[$vInput])
+
 	Else
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0) ; Wrong VarType
 	EndIf
 EndFunc   ;==>__LOWriter_FieldCountType
@@ -1747,15 +1909,14 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 		$oTextField = $oTextFields.nextElement()
 
 		For $i = 0 To UBound($avFieldTypes) - 1
-
 			If $oTextField.supportsService($avFieldTypes[$i][1]) Then
-
 				If ($iColumns = 1) Then
 					$avTextFields[$iCount] = $oTextField
 
 					$iCount += 1
 					If ($iCount = UBound($avTextFields)) Then ReDim $avTextFields[$iCount * 2]
 					ExitLoop
+
 				Else
 
 					$avTextFields[$iCount][0] = $oTextField
@@ -1771,11 +1932,11 @@ Func __LOWriter_FieldsGetList(ByRef $oDoc, $bSupportedServices, $bFieldType, $bF
 			EndIf
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
-
 	WEnd
 
 	If ($iColumns = 1) Then
 		ReDim $avTextFields[$iCount]
+
 	Else
 		ReDim $avTextFields[$iCount][$iColumns]
 	EndIf
@@ -1862,6 +2023,7 @@ Func __LOWriter_FieldTypeServices($iFieldType, $bAdvancedServices = False, $bDoc
 		$avSearch = $avFieldDocInfoTypes
 
 	Else
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 	EndIf
 
@@ -1944,17 +2106,22 @@ Func __LOWriter_FilterNameGet(ByRef $sDocSavePath, $bExportFilters = False)
 		$iSlashLocation = StringInStr($sDocSavePath, "/", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, ($iLength - $iDotLocation) + 1)
+
 	ElseIf StringInStr($sDocSavePath, "\") Then ;  Else if PC Path Then
 		$iSlashLocation = StringInStr($sDocSavePath, "\", $STR_NOCASESENSE, -1)
 		$iDotLocation = StringInStr($sDocSavePath, ".", $STR_NOCASESENSE, -1, $iLength, $iLength - $iSlashLocation)
 		$sFileExtension = StringRight($sDocSavePath, $iLength - $iDotLocation + 1)
+
 	Else
+
 		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndIf
 
 	If $sFileExtension = $sDocSavePath Then ;  If no file extension identified, append .odt extension and return.
 		$sDocSavePath = $sDocSavePath & ".odt"
+
 		Return SetError($__LO_STATUS_SUCCESS, 3, "writer8")
+
 	Else
 		$sFileExtension = StringLower(StringStripWS($sFileExtension, $STR_STRIPALL))
 	EndIf
@@ -2060,6 +2227,7 @@ Func __LOWriter_FindFormatDeleteSetting(ByRef $atArray, $sSettingName)
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
 	ReDim $atArray[$iCount]
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_FindFormatDeleteSetting
 
@@ -2149,13 +2317,16 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 		If $bWid Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.LineWidth(), $oObj.FooterBottomBorder.LineWidth(), _
 					$oObj.FooterLeftBorder.LineWidth(), $oObj.FooterRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.LineStyle(), $oObj.FooterBottomBorder.LineStyle(), _
 					$oObj.FooterLeftBorder.LineStyle(), $oObj.FooterRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.FooterTopBorder.Color(), $oObj.FooterBottomBorder.Color(), $oObj.FooterLeftBorder.Color(), _
 					$oObj.FooterRightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBorder)
 	EndIf
 
@@ -2200,6 +2371,151 @@ Func __LOWriter_FooterBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_FooterBorder
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_FormControlGetObj
+; Description ...: Returns the Shape Object for a Control.
+; Syntax ........: __LOWriter_FormControlGetObj($oControl, $iControlType)
+; Parameters ....: $oControl            - an object. A Control Object rather than the Shape Object.
+;                  $iControlType        - an integer value. The Shape type being called and looked for. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+; Return values .: Success: Object
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
+;                  @Error 1 @Extended 2 Return 0 = $iControlType not an Integer, less than 0 or greater than 18. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Parent of Control.
+;                  @Error 3 @Extended 2 Return 0 = Failed to identify parent Document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Document Draw Page.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve shape object.
+;                  @Error 3 @Extended 5 Return 0 = Failed to identify control type.
+;                  @Error 3 @Extended 6 Return 0 = Failed to identify control's parent Form.
+;                  @Error 3 @Extended 7 Return 0 = Failed to identify control's shape container.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Object = Success. Returning Shape container for called Control.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......: In This UDF I have provided Shape Objects for the Controls as some properties are found only in the Shape container, rather than the Control Object. In Some cases I need to Identify the Shape container from a Control Object.
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_FormControlGetObj($oControl, $iControlType)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $oParent, $oShapes, $oShape, $oDoc
+	Local $aoControls[0][2]
+	Local $iCount = 0
+
+	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	If Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
+
+	$oParent = $oControl.Parent()
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
+	If $oParent.supportsService("com.sun.star.form.component.Form") Then ; Get only controls in the form.
+
+		$oDoc = $oParent ; Identify the parent document.
+		Do
+			$oDoc = $oDoc.getParent()
+			If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+		Until $oDoc.supportsService("com.sun.star.text.TextDocument")
+
+		$oShapes = $oDoc.DrawPage()
+		If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
+
+		ReDim $aoControls[$oShapes.Count()][2]
+
+		For $i = 0 To $oShapes.Count() - 1
+			$oShape = $oShapes.getByIndex($i)
+			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+
+			If $oShape.supportsService("com.sun.star.drawing.ControlShape") And ($oShape.Control.Parent() = $oParent) Then ; If shape is a single control, and is contained in the form.
+
+				$aoControls[$iCount][0] = $oShape
+				$aoControls[$iCount][1] = __LOWriter_FormControlIdentify($oShape)
+				If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0)
+				$iCount += 1
+
+			ElseIf $oShape.supportsService("com.sun.star.drawing.GroupShape") And ($oShape.getByIndex(0).Control.Parent() = $oParent) Then ; If shape is a group control, and the first control contained in it is contained in the form.
+				$aoControls[$iCount][0] = $oShape
+				$aoControls[$iCount][1] = $LOW_FORM_CONTROL_TYPE_GROUP_BOX
+
+				$iCount += 1
+			EndIf
+			Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
+		Next
+
+	Else
+
+		Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)
+	EndIf
+
+	ReDim $aoControls[$iCount][2]
+
+	For $i = 0 To UBound($aoControls) - 1
+		If ($aoControls[$i][1] = $iControlType) And ($aoControls[$i][0].Control() = $oControl) Then Return SetError($__LO_STATUS_SUCCESS, 0, $aoControls[$i][0])
+		Sleep((IsInt(($i / $__LOWCONST_SLEEP_DIV))) ? (10) : (0))
+	Next
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 7, 0)
+EndFunc   ;==>__LOWriter_FormControlGetObj
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_FormControlIdentify
+; Description ...: Identify the type of Control being called, or return the Service name of a control type.
+; Syntax ........: __LOWriter_FormControlIdentify($oShape[, $iControlType = Null])
+; Parameters ....: $oShape              - an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
+;                  $iControlType        - [optional] an integer value (1-524288). Default is Null. The Control Type Constant. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+; Return values .: Success: Integer or String
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $oShape not an Object, and $iControlType not an Integer, less than 0 or greater than 524288. See Constants $LOW_FORM_CONTROL_TYPE_* as defined in LibreOfficeWriter_Constants.au3.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 = Failed to identify Control, or return requested Service name.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Integer = Success. Returning Constant value for Control type.
+;                  @Error 0 @Extended 1 Return String = Success. Returning requested Control type's service name.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_FormControlIdentify($oShape, $iControlType = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $avControls[20][2] = [["com.sun.star.form.component.CheckBox", $LOW_FORM_CONTROL_TYPE_CHECK_BOX], ["com.sun.star.form.component.ComboBox", $LOW_FORM_CONTROL_TYPE_COMBO_BOX], _
+			["com.sun.star.form.component.CurrencyField", $LOW_FORM_CONTROL_TYPE_CURRENCY_FIELD], ["com.sun.star.form.component.DateField", $LOW_FORM_CONTROL_TYPE_DATE_FIELD], _
+			["com.sun.star.form.component.FileControl", $LOW_FORM_CONTROL_TYPE_FILE_SELECTION], ["com.sun.star.form.component.FormattedField", $LOW_FORM_CONTROL_TYPE_FORMATTED_FIELD], _
+			["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUP_BOX], ["com.sun.star.form.component.GroupBox", $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL], _ ; This will never match as the previous group box will be tested first. This is added here for completeness of the constants and for creating a grouped control. com.sun.star.drawing.GroupShape
+			["com.sun.star.form.component.ImageButton", $LOW_FORM_CONTROL_TYPE_IMAGE_BUTTON], ["com.sun.star.form.component.DatabaseImageControl", $LOW_FORM_CONTROL_TYPE_IMAGE_CONTROL], _ ; This seems to be used instead of this--> "com.sun.star.form.control.ImageControl"
+			["com.sun.star.form.component.FixedText", $LOW_FORM_CONTROL_TYPE_LABEL], ["com.sun.star.form.component.ListBox", $LOW_FORM_CONTROL_TYPE_LIST_BOX], _
+			["com.sun.star.form.component.NavigationToolBar", $LOW_FORM_CONTROL_TYPE_NAV_BAR], ["com.sun.star.form.component.NumericField", $LOW_FORM_CONTROL_TYPE_NUMERIC_FIELD], _
+			["com.sun.star.form.component.RadioButton", $LOW_FORM_CONTROL_TYPE_OPTION_BUTTON], ["com.sun.star.form.component.PatternField", $LOW_FORM_CONTROL_TYPE_PATTERN_FIELD], _
+			["com.sun.star.form.component.CommandButton", $LOW_FORM_CONTROL_TYPE_PUSH_BUTTON], ["com.sun.star.form.component.GridControl", $LOW_FORM_CONTROL_TYPE_TABLE_CONTROL], _
+			["com.sun.star.form.component.TextField", $LOW_FORM_CONTROL_TYPE_TEXT_BOX], ["com.sun.star.form.component.TimeField", $LOW_FORM_CONTROL_TYPE_TIME_FIELD]]
+
+	If Not IsObj($oShape) And Not __LOWriter_IntIsBetween($iControlType, $LOW_FORM_CONTROL_TYPE_CHECK_BOX, $LOW_FORM_CONTROL_TYPE_TIME_FIELD) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	If IsObj($oShape) Then
+		If $oShape.supportsService("com.sun.star.drawing.GroupShape") Then Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_FORM_CONTROL_TYPE_GROUPED_CONTROL) ; If a Group shape, it is a Grouped control.
+
+		For $i = 0 To UBound($avControls) - 1
+			If $oShape.Control.supportsService($avControls[$i][0]) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][1])
+		Next
+
+	ElseIf IsInt($iControlType) Then
+		For $i = 0 To UBound($avControls) - 1
+			If ($avControls[$i][1] = $iControlType) Then Return SetError($__LO_STATUS_SUCCESS, 0, $avControls[$i][0])
+		Next
+	EndIf
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+EndFunc   ;==>__LOWriter_FormControlIdentify
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_GetPrinterSetting
@@ -2274,21 +2590,19 @@ Func __LOWriter_GetShapeName(ByRef $oDoc, $sShapeName)
 	If Not IsObj($oShapes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If $oShapes.hasElements() Then
-
 		For $i = 1 To $oShapes.getCount() - 1
-
 			For $j = 0 To $oShapes.getCount() - 1
 				If ($oShapes.getByIndex($j).Name() = $sShapeName & $i) Then ExitLoop
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Next
 
-			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ;If no matches, exit loop with current name.
+			If ($oShapes.getByIndex($j).Name() <> $sShapeName & $i) Then ExitLoop ; If no matches, exit loop with current name.
 		Next
 
 	Else
 
-		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ;If Doc has no shapes, just return the name with a "1" appended.
+		Return SetError($__LO_STATUS_SUCCESS, 0, $sShapeName & "1") ; If Doc has no shapes, just return the name with a "1" appended.
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 1, $sShapeName & $i)
@@ -3013,7 +3327,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 				EndIf
 			EndWith
 
-		Case Else ;Custom Gradient Name
+		Case Else ; Custom Gradient Name
 			__LOWriter_GradientNameInsert($oDoc, $tGradient, $sGradientName)
 			If (@error > 0) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
@@ -3026,6 +3340,7 @@ Func __LOWriter_GradientPresets(ByRef $oDoc, ByRef $oObject, ByRef $tGradient, $
 			Else
 				$oObject.FillGradientName = $sGradientName
 			EndIf
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 	EndSwitch
 
@@ -3130,13 +3445,16 @@ Func __LOWriter_HeaderBorder(ByRef $oObj, $bWid, $bSty, $bCol, $iTop, $iBottom, 
 		If $bWid Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.LineWidth(), $oObj.HeaderBottomBorder.LineWidth(), _
 					$oObj.HeaderLeftBorder.LineWidth(), $oObj.HeaderRightBorder.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.LineStyle(), $oObj.HeaderBottomBorder.LineStyle(), _
 					$oObj.HeaderLeftBorder.LineStyle(), $oObj.HeaderRightBorder.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($aiBorder, $oObj.HeaderTopBorder.Color(), $oObj.HeaderBottomBorder.Color(), $oObj.HeaderLeftBorder.Color(), _
 					$oObj.HeaderRightBorder.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBorder)
 	EndIf
 
@@ -3214,18 +3532,18 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 	If Not IsObj($oGraphic) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oPageStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	;Retrieve the Current Page Style's height minus top/bottom margins
+	; Retrieve the Current Page Style's height minus top/bottom margins
 	$iMaxH = Int($oPageStyle.Height() - $oPageStyle.LeftMargin() - $oPageStyle.RightMargin())
 	If ($iMaxH = 0) Then $iMaxH = 9.5 * 2540 ; If error or is equal to 0, then set to 9.5 Inches in Micrometers
 
-	;Retrieve the Current Page Style's width minus left/right margins
+	; Retrieve the Current Page Style's width minus left/right margins
 	$iMaxW = Int($oPageStyle.Width() - $oPageStyle.TopMargin() - $oPageStyle.BottomMargin())
 	If ($iMaxW = 0) Then $iMaxW = 6.75 * 2540 ; If error or is equal to 0, then set to 6.75 Inches in Micrometers.
 
 	$oSize = $oGraphic.Size100thMM()
 
 	If ($oSize.Height = 0) Or ($oSize.Width = 0) Then
-		;2540 Micrometers per Inch, 1440 TWIPS per inch
+		; 2540 Micrometers per Inch, 1440 TWIPS per inch
 		$oSize.Height = $oGraphic.SizePixel.Height * 2540 * _WinAPI_TwipsPerPixelY() / 1440
 		$oSize.Width = $oGraphic.SizePixel.Width * 2540 * _WinAPI_TwipsPerPixelX() / 1440
 	EndIf
@@ -3242,7 +3560,7 @@ Func __LOWriter_ImageGetSuggestedSize($oGraphic, $oPageStyle)
 		$oSize.Height = $iMaxH
 	EndIf
 
-	Return $oSize
+	Return SetError($__LO_STATUS_SUCCESS, 0, $oSize)
 EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3262,9 +3580,9 @@ EndFunc   ;==>__LOWriter_ImageGetSuggestedSize
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error retrieving TextFrame Object.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving TextCell Object.
-;                  @Error 3 @Extended 3 Return 0 = Unable to identify Foot/EndNote.
-;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Footnotes Object for document.
-;                  @Error 3 @Extended 5 Return 0 = Failed to retrieve Endnotes Object for document.
+;                  @Error 3 @Extended 3 Return 0 = Failed to retrieve Footnotes Object for document.
+;                  @Error 3 @Extended 4 Return 0 = Failed to retrieve Endnotes Object for document.
+;                  @Error 3 @Extended 5 Return 0 = Unable to identify Foot/EndNote.
 ;                  @Error 3 @Extended 6 Return 0 = Cursor in unknown DataType
 ;                  --Success--
 ;                  @Error 0 @Extended ? Return Object = Success, If $bReturnObject is True, returns an object used for creating a Text Object, @Extended is set to one of the constants, $LOW_CURDATA_* as defined in LibreOfficeWriter_Constants.au3.
@@ -3280,10 +3598,7 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oEndNotes, $oFootNotes, $oFootEndNote, $oReturnObject
-	Local $iLWFootEndNote = 0
-	Local $bFound = False
-	Local $sNoteRefID
+	Local $oEndNotes, $oFootNotes, $oReturnObject
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oCursor) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -3293,70 +3608,47 @@ Func __LOWriter_Internal_CursorGetDataType(ByRef $oDoc, ByRef $oCursor, $bReturn
 	Switch $oCursor.Text.getImplementationName()
 		Case "SwXBodyText"
 			$oReturnObject = $oDoc
+
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_BODY_TEXT, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_BODY_TEXT))
+
 		Case "SwXTextFrame"
 			$oReturnObject = $oDoc.TextFrames.getByName($oCursor.TextFrame.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_FRAME, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_FRAME))
+
 		Case "SwXCell"
 			$oReturnObject = $oDoc.TextTables.getByName($oCursor.TextTable.Name)
 			If Not IsObj($oReturnObject) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
+
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_CELL, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_CELL))
 
 		Case "SwXHeadFootText"
 			$oReturnObject = $oCursor
+
 			Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_HEADER_FOOTER, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_HEADER_FOOTER))
 
 		Case "SwXFootnote"
 			$oFootNotes = $oDoc.getFootnotes()
 			If Not IsObj($oFootNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-			$sNoteRefID = $oCursor.Text.ReferenceId()
 
-			If $oFootNotes.hasElements() Then
-				For $i = 0 To $oFootNotes.getCount() - 1
-					$oFootEndNote = $oFootNotes.getByIndex($i)
+			For $i = 0 To $oFootNotes.getCount() - 1
+				If ($oFootNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
+						($oFootNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_FOOTNOTE, $oFootNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_FOOTNOTE))
+			Next
 
-					If ($oFootEndNote.ReferenceId() = $sNoteRefID) Then
+			$oEndNotes = $oDoc.getEndnotes()     ; Not found in Footnotes, check Endnotes.
+			If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
 
-						If ($oFootEndNote.Anchor.String() = $oCursor.Text.Anchor.String()) And _
-								(($oDoc.Text.compareRegionEnds($oCursor.Text.Anchor, $oFootEndNote.Text.Anchor)) = 0) Then
-							$bFound = True
-							$iLWFootEndNote = $LOW_CURDATA_FOOTNOTE
-							ExitLoop
-						EndIf
-					EndIf
-				Next
-			EndIf
+			For $i = 0 To $oEndNotes.getCount() - 1
+				If ($oEndNotes.getByIndex($i).ReferenceId() = $oCursor.Text.ReferenceId()) And _
+						($oEndNotes.getByIndex($i).Text() = $oCursor.Text()) Then Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $LOW_CURDATA_ENDNOTE, $oEndNotes.getByIndex($i))) : (SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURDATA_ENDNOTE))
+			Next
 
-			If ($bFound = False) Then
-				$oEndNotes = $oDoc.getEndnotes()
-				If Not IsObj($oEndNotes) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
-
-				If $oEndNotes.hasElements() Then
-					For $i = 0 To $oEndNotes.getCount() - 1
-						$oFootEndNote = $oEndNotes.getByIndex($i)
-
-						If ($oFootEndNote.ReferenceId() = $sNoteRefID) Then
-
-							If ($oFootEndNote.Anchor.String() = $oCursor.Text.Anchor.String()) And _
-									(($oDoc.Text.compareRegionEnds($oCursor.Text.Anchor, $oFootEndNote.Text.Anchor)) = 0) Then
-								$bFound = True
-								$iLWFootEndNote = $LOW_CURDATA_ENDNOTE
-								ExitLoop
-							EndIf
-						EndIf
-					Next
-				EndIf
-			EndIf
-
-			If ($bFound = True) And ($iLWFootEndNote <> 0) Then
-				$oReturnObject = $oFootEndNote
-				Return ($bReturnObject) ? (SetError($__LO_STATUS_SUCCESS, $iLWFootEndNote, $oReturnObject)) : (SetError($__LO_STATUS_SUCCESS, 0, $iLWFootEndNote))
-			EndIf
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 5, 0) ; no matches
-		Case Else
-			Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0) ; unknown data type.
 	EndSwitch
+
+	Return SetError($__LO_STATUS_PROCESSING_ERROR, 6, 0)         ; unknown data type.
 EndFunc   ;==>__LOWriter_Internal_CursorGetDataType
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3387,16 +3679,27 @@ Func __LOWriter_Internal_CursorGetType(ByRef $oCursor)
 
 	Switch $oCursor.getImplementationName()
 		Case "SwXTextViewCursor"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_VIEW_CURSOR)
+
 		Case "SwXTextTableCursor"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TABLE_CURSOR)
-		Case "SwXTextCursor"
+
+		Case "SwXTextCursor", "SvxUnoTextCursor" ; SvxUnoTextCursor is a Text Cursor created in a TextBox Form Control.
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_CURSOR)
+
 		Case "SwXParagraph"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_PARAGRAPH)
+
 		Case "SwXTextPortion"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_CURTYPE_TEXT_PORTION)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0) ; unknown Cursor type.
 	EndSwitch
 EndFunc   ;==>__LOWriter_Internal_CursorGetType
@@ -3425,6 +3728,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 		For $i = 1 To UBound($avUserFunction) - 1
 			$avUserParams[$i + 1] = $avUserFunction[$i]
 		Next
+
 	Else
 		$vUserFunction = $avUserFunction
 	EndIf
@@ -3441,6 +3745,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline & @CRLF & _
 						"!--COM-Error-End--" & @CRLF)
+
 			Case MsgBox
 				MsgBox(0, "COM Error", "Number: 0x" & Hex($oComError.number, 8) & @CRLF & _
 						"WinDescription: " & $oComError.windescription & @CRLF & _
@@ -3450,6 +3755,7 @@ Func __LOWriter_InternalComErrorHandler(ByRef $oComError)
 						"HelpContext: " & $oComError.helpcontext & @CRLF & _
 						"LastDLLError: " & $oComError.lastdllerror & @CRLF & _
 						"At line: " & $oComError.scriptline)
+
 			Case Else
 				Call($vUserFunction, $avUserParams)
 		EndSwitch
@@ -3466,7 +3772,9 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ;                  $vNot                - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers inside the min/max range that are not allowed.
 ;                  $vIncl               - [optional] a variant value. Default is "". Can be a single number, or a String of numbers separated by ":". Defines numbers Outside the min/max range that are allowed.
 ; Return values .: Success: Boolean
-;                  Failure: False
+;                  Failure: False and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return Boolean = $iTest not an Integer.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return Boolean = If the input is between Min and Max or is an allowed number, and not one of the disallowed numbers, True is returned. Else False.
 ; Author ........: donnyh13
@@ -3477,43 +3785,42 @@ EndFunc   ;==>__LOWriter_InternalComErrorHandler
 ; Example .......: No
 ; ===============================================================================================================================
 Func __LOWriter_IntIsBetween($iTest, $iMin, $iMax = 0, $vNot = "", $vIncl = "")
-	If Not IsInt($iTest) Then Return False
+	If Not IsInt($iTest) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, False)
 
 	Switch @NumParams
-
 		Case 2
-			Return ($iTest < $iMin) ? (False) : (True)
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, ($iTest < $iMin) ? (False) : (True))
 
 		Case 3
-			Return (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True)
+
+			Return SetError($__LO_STATUS_SUCCESS, 0, (($iTest < $iMin) Or ($iTest > $iMax)) ? (False) : (True))
 
 		Case 4, 5
 
 			If IsString($vNot) Then
-				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return False
+				If StringInStr(":" & $vNot & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 			ElseIf IsInt($vNot) Then
-				If ($iTest = $vNot) Then Return False
-
+				If ($iTest = $vNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 			EndIf
 
-			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return True
+			If (($iTest >= $iMin) And ($iTest <= $iMax)) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			If @NumParams = 5 Then ContinueCase
 
-			Return False
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 
 		Case Else
 			If IsString($vIncl) Then
-				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return True
+				If StringInStr(":" & $vIncl & ":", ":" & $iTest & ":") Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 
 			ElseIf IsInt($vIncl) Then
 
-				If ($iTest = $vIncl) Then Return True
+				If ($iTest = $vIncl) Then Return SetError($__LO_STATUS_SUCCESS, 0, True)
 			EndIf
 
-			Return False
-
+			Return SetError($__LO_STATUS_SUCCESS, 0, False)
 	EndSwitch
 EndFunc   ;==>__LOWriter_IntIsBetween
 
@@ -3540,6 +3847,7 @@ Func __LOWriter_IsCellRange(ByRef $oCell)
 	#forceref $oCOM_ErrorHandler
 
 	If Not IsObj($oCell) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
 	Return ($oCell.supportsService("com.sun.star.text.CellRange")) ? (SetError($__LO_STATUS_SUCCESS, 0, True)) : (SetError($__LO_STATUS_SUCCESS, 0, False))
 EndFunc   ;==>__LOWriter_IsCellRange
 
@@ -3573,7 +3881,7 @@ Func __LOWriter_IsTableInDoc(ByRef $oTable)
 	$aTableNames = $oTable.getCellNames()
 	If Not IsArray($aTableNames) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Return (UBound($aTableNames)) ? (True) : (False) ; If 0 elements = False = not in doc.
+	Return SetError($__LO_STATUS_SUCCESS, 0, (UBound($aTableNames)) ? (True) : (False)) ; If 0 elements = False = not in doc.
 EndFunc   ;==>__LOWriter_IsTableInDoc
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -3609,6 +3917,7 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 			For $i = 1 To $anNot[0]
 				If ($anNot[$i] = $nTest) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 			Next
+
 		Else
 			If ($nTest = $snNot) Then Return SetError($__LO_STATUS_SUCCESS, 0, False)
 		EndIf
@@ -3622,12 +3931,47 @@ Func __LOWriter_NumIsBetween($nTest, $nMin, $nMax, $snNot = "", $snIncl = Defaul
 			$bMatch = ($anIncl[$j] = $nTest) ? (True) : (False)
 			If $bMatch Then ExitLoop
 		Next
+
 	ElseIf IsNumber($snIncl) Then
 		$bMatch = ($nTest = $snIncl) ? (True) : (False)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, $bMatch)
 EndFunc   ;==>__LOWriter_NumIsBetween
+
+; #INTERNAL_USE_ONLY# ===========================================================================================================
+; Name ..........: __LOWriter_NumRuleCreateMap
+; Description ...: Creates a map with values for each setting location in the Array.
+; Syntax ........: __LOWriter_NumRuleCreateMap(ByRef $atNumLevel)
+; Parameters ....: $atNumLevel          - [in/out] an array of dll structs. An Array of Property Structures for a Numbering Rule.
+; Return values .: Success: Map
+;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
+;                  --Input Errors--
+;                  @Error 1 @Extended 1 Return 0 = $atNumLevel not an Array.
+;                  --Success--
+;                  @Error 0 @Extended 0 Return Map = Success. Returning a Map containing the location in the array for each setting.
+; Author ........: donnyh13
+; Modified ......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func __LOWriter_NumRuleCreateMap(ByRef $atNumLevel)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
+
+	Local $mNumLevel[]
+
+	If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+
+	For $i = 0 To UBound($atNumLevel) - 1
+		$mNumLevel[$atNumLevel[$i].Name()] = $i
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, $mNumLevel)
+EndFunc   ;==>__LOWriter_NumRuleCreateMap
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_NumStyleCreateScript
@@ -3753,7 +4097,7 @@ Func __LOWriter_NumStyleInitiateDocument()
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local Const $iMacroExecMode_ALWAYS_EXECUTE_NO_WARN = 4, $iURLFrameCreate = 8 ;frame will be created if not found
+	Local Const $iMacroExecMode_ALWAYS_EXECUTE_NO_WARN = 4, $iURLFrameCreate = 8 ; Frame will be created if not found
 	Local $iError = 0
 	Local $oNumStyleDoc, $oServiceManager, $oDesktop
 	Local $atProperties[3]
@@ -3787,22 +4131,23 @@ EndFunc   ;==>__LOWriter_NumStyleInitiateDocument
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_NumStyleListFormat
-; Description ...: Creates a string or Array for modifying List Format Number Style setting.
-; Syntax ........: __LOWriter_NumStyleListFormat(ByRef $oNumRules, $iLevel, $iSubLevels[, $sPrefix = Null[, $sSuffix = Null]])
-; Parameters ....: $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
+; Description ...: Creates a string for modifying List Format Number Style setting.
+; Syntax ........: __LOWriter_NumStyleListFormat(ByRef $atNumLevel, $iLevel, $iSubLevels[, $sPrefix = Null[, $sSuffix = Null]])
+; Parameters ....: $atNumLevel          - [in/out] an array of dll structs. An array of Numbering Rule settings retrieved from a Numbering Style.
 ;                  $iLevel              - an integer value. The Level to create the ListFormat string for
 ;                  $iSubLevels          - an integer value. The number of levels to go up from $iLevel.
 ;                  $sPrefix             - [optional] a string value. Default is Null. If Null, retrieves the current Prefix, else use the input Prefix.
 ;                  $sSuffix             - [optional] a string value. Default is Null. If Null, retrieves the current Suffix, else use the input Suffix.
-; Return values .: Success: Array or String.
+; Return values .: Success: String.
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oNumRules not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $iLevel not an Integer.
 ;                  @Error 1 @Extended 3 Return 0 = $iSubLevels not an Integer.
+;                  --Processing Errors--
+;                  @Error 3 @Extended 1 Return 0 =  Error mapping setting values.
 ;                  --Success--
-;                  @Error 0 @Extended 0 Return String = Success. A String used for modifying ListFormat Numbering Style setting.
-;                  @Error 0 @Extended 1 Return Array = Success. An Array of List format strings used for modifying all levels of ListFormat Numbering Style setting.
+;                  @Error 0 @Extended 1 Return String = Success. A String used for modifying ListFormat Numbering Style setting.
 ; Author ........: donnyh13
 ; Modified ......:
 ; Remarks .......:
@@ -3810,64 +4155,56 @@ EndFunc   ;==>__LOWriter_NumStyleInitiateDocument
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_NumStyleListFormat(ByRef $oNumRules, $iLevel, $iSubLevels, $sPrefix = Null, $sSuffix = Null)
-	Local $sListFormat = "", $sSeperator = "."
-	Local $iBeginLevel, $iEndLevel
-	Local $aListFormats[10]
+Func __LOWriter_NumStyleListFormat(ByRef $atNumLevel, $iLevel, $iSubLevels, $sPrefix = Null, $sSuffix = Null)
+	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
+	#forceref $oCOM_ErrorHandler
 
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
+	Local $sListFormat = "", $sSeperator = "."
+	Local $iEndLevel
+	Local $mNumLevel[]
+
+	If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iLevel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsInt($iSubLevels) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
-	$iBeginLevel = ($iLevel = -1) ? (9) : ($iLevel) ; If Level = -1 (all levels) then set the begin level at 9 (the last level), else at the called level.
-	$iEndLevel = ($iLevel = -1) ? (0) : ($iLevel - $iSubLevels + 1) ; If Level = -1 (all levels) then set the end level at 0 (the first level), else
-	; at the called level - any Sub-levels.
+	$mNumLevel = __LOWriter_NumRuleCreateMap($atNumLevel)
+	If Not IsMap($mNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	If ($iLevel = -1) Then ;  If Level = -1 (all levels) cycle through them all, Applying their respective Prefix/Suffix
-		For $i = $iBeginLevel To $iEndLevel Step -1
-			$sPrefix = ($sPrefix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $i, "Prefix")) : ($sPrefix)
-			$sSuffix = ($sSuffix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $i, "Suffix")) : ($sSuffix)
-			$aListFormats[$i] = $sPrefix & "%" & ($i + 1) & "%" & $sSuffix
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
+	$iEndLevel = ($iLevel - $iSubLevels + 1) ; Start at the called level minus any Sub-levels.
 
-	Else ;Else if I'm modifying a specific level, retrieve its prefix/Suffix
-		$sPrefix = ($sPrefix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Prefix")) : ($sPrefix)
-		$sSuffix = ($sSuffix = Null) ? (__LOWriter_NumStyleRetrieve($oNumRules, $iLevel, "Suffix")) : ($sSuffix)
+	$sPrefix = ($sPrefix = Null) ? ($atNumLevel[$mNumLevel["Prefix"]].Value()) : ($sPrefix)    ; If I'm modifying a specific level, retrieve its prefix/Suffix
+	$sSuffix = ($sSuffix = Null) ? ($atNumLevel[$mNumLevel["Suffix"]].Value()) : ($sSuffix)
 
-		For $i = $iBeginLevel To $iEndLevel Step -1 ;Cycle Through the levels if any Sub levels are set.
-			If ($i = $iEndLevel) Then $sSeperator = ""
-			$sListFormat = $sSeperator & "%" & ($i + 1) & "%" & $sListFormat
-			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-		Next
-		$sListFormat = $sPrefix & $sListFormat & $sSuffix
+	For $i = $iLevel To $iEndLevel Step -1     ; Cycle Through the levels if any Sub levels are set.
+		If ($i = $iEndLevel) Then $sSeperator = ""
+		$sListFormat = $sSeperator & "%" & ($i + 1) & "%" & $sListFormat
+		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
+	Next
 
-	EndIf
+	$sListFormat = $sPrefix & $sListFormat & $sSuffix
 
-	Return ($iLevel = -1) ? (SetError($__LO_STATUS_SUCCESS, 0, $aListFormats)) : (SetError($__LO_STATUS_SUCCESS, 1, $sListFormat))
-
+	Return SetError($__LO_STATUS_SUCCESS, 1, $sListFormat)
 EndFunc   ;==>__LOWriter_NumStyleListFormat
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_NumStyleModify
 ; Description ...: Internal function for modifying Numbering Style settings.
-; Syntax ........: __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettings)
+; Syntax ........: __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $atNumLevel)
 ; Parameters ....: $oDoc                - [in/out] an object. A Document object returned by a previous _LOWriter_DocOpen, _LOWriter_DocConnect, or _LOWriter_DocCreate function, to modify NumberingRules for.
 ;                  $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
 ;                  $iLevel              - an integer value (-1-9). The Numbering Style level to modify. -1 = all levels.
-;                  $avSettings          - an array of variants. Array containing Numbering Style settings to set.
+;                  $atNumLevel          - an array of dll structs. An array of Numbering Rule settings retrieved from a Numbering Style.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oDoc not an Object.
 ;                  @Error 1 @Extended 2 Return 0 = $oNumRules not an Object.
 ;                  @Error 1 @Extended 3 Return 0 = $iLevel not between -1 and 9 to indicate correct level.
-;                  @Error 1 @Extended 4 Return 0 = $avSettings not an array.
+;                  @Error 1 @Extended 4 Return 0 = $atNumLevel not an array.
 ;                  --Processing Errors--
 ;                  @Error 3 @Extended 1 Return 0 = Error opening new document, and inserting ReplaceByIndex Script.
 ;                  @Error 3 @Extended 2 Return 0 = Error retrieving "Standard.AU3LibreOffice_UDF_Macros.ReplaceByIndex" Macro in new document.
-;                  @Error 3 @Extended 3 Return 0 = Error retrieving Numbering Rules level.
-;                  @Error 3 @Extended 4 Return 0 = Error deleting ReplaceByIndex Macro from Document.
+;                  @Error 3 @Extended 3 Return 0 = Error deleting ReplaceByIndex Macro from Document.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Successfully set the requested settings.
 ; Author ........: donnyh13
@@ -3878,24 +4215,18 @@ EndFunc   ;==>__LOWriter_NumStyleListFormat
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettings)
+Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $atNumLevel)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $atNumLevel
-	Local $iGetLevel, $iParentNumber, $iListFormatIndex, $iEndLevel
 	Local $oNumStyleDoc, $oScript
 	Local $aDummyArray[0], $avParamArray[3]
-	Local $sSettingName, $sListFormat
-	Local $vSettingValue
 	Local $bNumDocOpen = False
 
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not __LOWriter_IntIsBetween($iLevel, -1, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-	If Not IsArray($avSettings) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
-
-	$iEndLevel = ($iLevel = -1) ? (9) : (0) ;  replace setting value for all levels at once or for one level
+	If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	$oScript = __LOWriter_NumStyleCreateScript($oDoc) ; Create my modification Script.
 
@@ -3907,125 +4238,26 @@ Func __LOWriter_NumStyleModify(ByRef $oDoc, ByRef $oNumRules, $iLevel, $avSettin
 		$bNumDocOpen = True
 	EndIf
 
-	For $k = 0 To UBound($avSettings) - 1 ;Cycle through the settings to be set.
-		$sSettingName = $avSettings[$k][0]
-		$vSettingValue = $avSettings[$k][1]
+	; $oNumRules.replaceByIndex($iGetLevel, $atNumLevel); This should work but doesn't -- It would seem that the Array passed by
+	; AutoIt is not recognized as an appropriate array(or Sequence) by LibreOffice, or perhaps as variable type "Any", which is
+	; what LibreOffice replace by index is expecting, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error.
 
-		$iGetLevel = ($iLevel = -1) ? (0) : ($iLevel)
+	$avParamArray[0] = $oNumRules
+	$avParamArray[1] = $iLevel
+	$avParamArray[2] = $atNumLevel
 
-		For $j = 0 To $iEndLevel ;Set the settings for each level.
-			$atNumLevel = $oNumRules.getByIndex($iGetLevel)
-			If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
-
-			For $i = 0 To UBound($atNumLevel) - 1 ;Cycle through Array of Numbering Style settings and modify the settings.
-				If ($atNumLevel[$i].Name() = $sSettingName) Then
-
-					Switch $sSettingName
-						Case "ListFormat"
-							$atNumLevel[$i].Value = ($iLevel = -1) ? ($vSettingValue[$j]) : ($vSettingValue)
-
-						Case "Prefix"
-							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ; Test is ListFormat exists, if so modify prefix/Suffix via new method.
-							If (@error = 0) Then
-								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
-								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
-								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
-								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, $vSettingValue, Null) ; Add prefix to ListFormat
-								$atNumLevel[$iListFormatIndex].Value = $sListFormat
-							EndIf
-							$atNumLevel[$i].Value = $vSettingValue ;Set Literal Prefix Value, which wont work if "ListFormat" is present.
-
-						Case "Suffix"
-							__LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ListFormat") ; Test is ListFormat exists, if so modify prefix/Suffix via new method.
-							If (@error = 0) Then
-								$iListFormatIndex = @extended ;Record Index location of "ListFormat"
-								; Get number of Sublevels (ParentNumbering) for formatting ListFormat.
-								$iParentNumber = __LOWriter_NumStyleRetrieve($oNumRules, $iGetLevel, "ParentNumbering")
-								$sListFormat = __LOWriter_NumStyleListFormat($oNumRules, $iGetLevel, $iParentNumber, Null, $vSettingValue) ; Add suffix to ListFormat
-								$atNumLevel[$iListFormatIndex].Value = $sListFormat
-							EndIf
-							$atNumLevel[$i].Value = $vSettingValue ;Set Literal Suffix Value, which wont work if "ListFormat" is present.
-
-						Case Else
-							$atNumLevel[$i].Value = $vSettingValue
-					EndSwitch
-
-					; $oNumRules.replaceByIndex($iGetLevel, $atNumLevel);This should work but doesn't -- It would seem that the Array passed by
-					; AutoIt is not recognized as an appropriate array(or Sequence) by LibreOffice, or perhaps as variable type "Any", which is
-					; what LibreOffice replace by index is expecting, and consequently causes a com.sun.star.lang.IllegalArgumentException COM error.
-
-					$avParamArray[0] = $oNumRules
-					$avParamArray[1] = $iGetLevel
-					$avParamArray[2] = $atNumLevel
-
-					$oNumRules = $oScript.Invoke($avParamArray, $aDummyArray, $aDummyArray)
-					ExitLoop
-				EndIf
-
-				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-			Next
-
-			$iGetLevel += 1
-
-		Next
-
-	Next
+	$oNumRules = $oScript.Invoke($avParamArray, $aDummyArray, $aDummyArray)
 
 	If ($bNumDocOpen = True) Then
 		$oNumStyleDoc.Close(True)
+
 	Else
 		__LOWriter_NumStyleDeleteScript($oDoc)
-		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
+		If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0)
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_NumStyleModify
-
-; #INTERNAL_USE_ONLY# ===========================================================================================================
-; Name ..........: __LOWriter_NumStyleRetrieve
-; Description ...: Internal function for Retrieving Numbering Style settings.
-; Syntax ........: __LOWriter_NumStyleRetrieve(ByRef $oNumRules, $iLevel, $sSettingName)
-; Parameters ....: $oNumRules           - [in/out] an object. The Numbering Rules object retrieved from a Numbering Style.
-;                  $iLevel              - an integer value (0-9). The Numbering Style level to modify.
-;                  $sSettingName        - a string value. The Numbering Style Setting name to modify.
-; Return values .: Success: Variable
-;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
-;                  --Input Errors--
-;                  @Error 1 @Extended 1 Return 0 = $oNumRules not an Object.
-;                  @Error 1 @Extended 2 Return 0 = $iLevel not between 0 and 9 to indicate correct level.
-;                  @Error 1 @Extended 3 Return 0 = $sSettingName not a String.
-;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Error retrieving specified Numbering Level.
-;                  @Error 3 @Extended 2 Return 0 = Requested setting not found.
-;                  --Success--
-;                  @Error 0 @Extended ? Return Variable = Success. Successfully retrieved requested Setting Value, returning value in Return value, and index location in @Extended.
-; Author ........: donnyh13
-; Modified ......:
-; Remarks .......:
-; Related .......:
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func __LOWriter_NumStyleRetrieve(ByRef $oNumRules, $iLevel, $sSettingName)
-	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
-	#forceref $oCOM_ErrorHandler
-
-	Local $atNumLevel
-	Local $iGetLevel = $iLevel
-
-	If Not IsObj($oNumRules) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
-	If Not __LOWriter_IntIsBetween($iLevel, 0, 9) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
-	If Not IsString($sSettingName) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
-
-	$atNumLevel = $oNumRules.getByIndex($iGetLevel)
-	If Not IsArray($atNumLevel) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
-
-	For $i = 0 To UBound($atNumLevel) - 1
-		If ($atNumLevel[$i].Name() = $sSettingName) Then Return SetError($__LO_STATUS_SUCCESS, $i, $atNumLevel[$i].Value())
-		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
-	Next
-	Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-EndFunc   ;==>__LOWriter_NumStyleRetrieve
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_ObjRelativeSize
@@ -4064,8 +4296,6 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 	Local $iPageWidth, $iPageHeight, $iObjWidth, $iObjHeight
 	Local $oPageStyle
 
-
-
 	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 	If Not IsBool($bRelativeWidth) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
@@ -4074,6 +4304,7 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 
 	If ($oObj.supportsService("com.sun.star.text.TextFrame")) Or ($oObj.supportsService("com.sun.star.text.TextGraphicObject")) Then
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oObj.Anchor.PageStyleName())
+
 	Else
 		$oPageStyle = $oDoc.StyleFamilies().getByName("PageStyles").getByName($oDoc.CurrentController.getViewCursor().PageStyleName())
 	EndIf
@@ -4088,7 +4319,6 @@ Func __LOWriter_ObjRelativeSize(ByRef $oDoc, ByRef $oObj, $bRelativeWidth = Fals
 		$iObjWidth = $iPageWidth * ($oObj.RelativeWidth() / 100) ; Times Page width minus margins by relative width percentage.
 
 		$oObj.Width = $iObjWidth
-
 	EndIf
 
 	If ($bRelativeHeight = True) Then
@@ -4131,9 +4361,12 @@ Func __LOWriter_PageStyleNameToggle($sPageStyle, $bReverse = False)
 
 	If ($bReverse = False) Then
 		$sPageStyle = ($sPageStyle = "Default Page Style") ? ("Standard") : ($sPageStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sPageStyle)
+
 	Else
 		$sPageStyle = ($sPageStyle = "Standard") ? ("Default Page Style") : ($sPageStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sPageStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_PageStyleNameToggle
@@ -4192,6 +4425,7 @@ Func __LOWriter_ParAlignment(ByRef $oObj, $iHorAlign, $iVertAlign, $iLastLineAli
 	If __LOWriter_VarsAreNull($iHorAlign, $iVertAlign, $iLastLineAlign, $bExpandSingleWord, $bSnapToGrid, $iTxtDirection) Then
 		__LOWriter_ArrayFill($avAlignment, $oObj.ParaAdjust(), $oObj.ParaVertAlignment(), $oObj.ParaLastLineAdjust(), $oObj.ParaExpandSingleWord(), _
 				$oObj.SnapToGrid(), $oObj.WritingMode())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avAlignment)
 	EndIf
 
@@ -4273,6 +4507,7 @@ Func __LOWriter_ParBackColor(ByRef $oObj, $iBackColor, $bBackTransparent)
 
 	If __LOWriter_VarsAreNull($iBackColor, $bBackTransparent) Then
 		__LOWriter_ArrayFill($avColor, $oObj.ParaBackColor(), $oObj.ParaBackTransparent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avColor)
 	EndIf
 
@@ -4340,6 +4575,7 @@ Func __LOWriter_ParBorderPadding(ByRef $oObj, $iAll, $iTop, $iBottom, $iLeft, $i
 	If __LOWriter_VarsAreNull($iAll, $iTop, $iBottom, $iLeft, $iRight) Then
 		__LOWriter_ArrayFill($aiBPadding, $oObj.BorderDistance(), $oObj.TopBorderDistance(), $oObj.BottomBorderDistance(), _
 				$oObj.LeftBorderDistance(), $oObj.RightBorderDistance())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiBPadding)
 	EndIf
 
@@ -4432,6 +4668,7 @@ Func __LOWriter_ParDropCaps(ByRef $oObj, $iNumChar, $iLines, $iSpcTxt, $bWholeWo
 	If __LOWriter_VarsAreNull($iNumChar, $iLines, $iSpcTxt, $bWholeWord, $sCharStyle) Then
 		__LOWriter_ArrayFill($avDropCaps, $tDCFrmt.Count(), $tDCFrmt.Lines(), $tDCFrmt.Distance(), $oObj.DropCapWholeWord(), _
 				__LOWriter_CharStyleNameToggle($oObj.DropCapCharStyleName(), True))
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avDropCaps)
 	EndIf
 
@@ -4568,6 +4805,7 @@ Func __LOWriter_ParHyphenation(ByRef $oObj, $bAutoHyphen, $bHyphenNoCaps, $iMaxH
 		If __LOWriter_VersionCheck(6.4) Then
 			__LOWriter_ArrayFill($avHyphenation, $oObj.ParaIsHyphenation(), $oObj.ParaHyphenationNoCaps(), $oObj.ParaHyphenationMaxHyphens(), _
 					$oObj.ParaHyphenationMaxLeadingChars(), $oObj.ParaHyphenationMaxTrailingChars())
+
 		Else
 			__LOWriter_ArrayFill($avHyphenation, $oObj.ParaIsHyphenation(), $oObj.ParaHyphenationMaxHyphens(), _
 					$oObj.ParaHyphenationMaxLeadingChars(), $oObj.ParaHyphenationMaxTrailingChars())
@@ -4656,10 +4894,11 @@ Func __LOWriter_ParIndent(ByRef $oObj, $iBeforeTxt, $iAfterTxt, $iFirstLine, $bA
 
 	If __LOWriter_VarsAreNull($iBeforeTxt, $iAfterTxt, $iFirstLine, $bAutoFirstLine) Then
 		__LOWriter_ArrayFill($avIndent, $oObj.ParaLeftMargin(), $oObj.ParaRightMargin(), $oObj.ParaFirstLineIndent(), $oObj.ParaIsAutoFirstLineIndent())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avIndent)
 	EndIf
 
-	; Min: -9998989;Max: 17094
+	; Min: -9998989; Max: 17094
 	If ($iBeforeTxt <> Null) Then
 		If Not __LOWriter_IntIsBetween($iBeforeTxt, -9998989, 17094) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 		$oObj.ParaLeftMargin = $iBeforeTxt
@@ -4734,6 +4973,7 @@ Func __LOWriter_ParOutLineAndList(ByRef $oObj, $iOutline, $sNumStyle, $bParLineC
 	If __LOWriter_VarsAreNull($iOutline, $sNumStyle, $bParLineCount, $iLineCountVal) Then
 		__LOWriter_ArrayFill($avOutlineNList, $oObj.OutlineLevel(), $oObj.NumberingStyleName(), $oObj.ParaLineNumberCount(), _
 				$oObj.ParaLineNumberStartValue())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avOutlineNList)
 	EndIf
 
@@ -4808,6 +5048,7 @@ Func __LOWriter_ParPageBreak(ByRef $oObj, $iBreakType, $sPageStyle, $iPgNumOffSe
 
 	If __LOWriter_VarsAreNull($iBreakType, $sPageStyle, $iPgNumOffSet) Then
 		__LOWriter_ArrayFill($avPageBreak, $oObj.BreakType(), $oObj.PageDescName(), $oObj.PageNumberOffset())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avPageBreak)
 	EndIf
 
@@ -4884,6 +5125,7 @@ Func __LOWriter_ParShadow(ByRef $oObj, $iWidth, $iColor, $bTransparent, $iLocati
 
 	If __LOWriter_VarsAreNull($iWidth, $iColor, $bTransparent, $iLocation) Then
 		__LOWriter_ArrayFill($avShadow, $tShdwFrmt.ShadowWidth(), $tShdwFrmt.Color(), $tShdwFrmt.IsTransparent(), $tShdwFrmt.Location())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avShadow)
 	EndIf
 
@@ -4982,14 +5224,15 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 	If Not IsObj($oObj) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 
 	If __LOWriter_VarsAreNull($iAbovePar, $iBelowPar, $bAddSpace, $iLineSpcMode, $iLineSpcHeight, $bPageLineSpc) Then
-
 		If __LOWriter_VersionCheck(3.6) Then
 			__LOWriter_ArrayFill($avSpacing, $oObj.ParaTopMargin(), $oObj.ParaBottomMargin(), $oObj.ParaContextMargin(), _
 					$oObj.ParaLineSpacing.Mode(), $oObj.ParaLineSpacing.Height(), $oObj.ParaRegisterModeActive())
+
 		Else
 			__LOWriter_ArrayFill($avSpacing, $oObj.ParaTopMargin(), $oObj.ParaBottomMargin(), $oObj.ParaLineSpacing.Mode(), $oObj.ParaLineSpacing.Height(), _
 					$oObj.ParaRegisterModeActive())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avSpacing)
 	EndIf
 
@@ -5027,11 +5270,13 @@ Func __LOWriter_ParSpace(ByRef $oObj, $iAbovePar, $iBelowPar, $bAddSpace, $iLine
 		If Not IsObj($tLine) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 		Switch $tLine.Mode()
-			Case $LOW_LINE_SPC_MODE_PROP ;Proportional
+			Case $LOW_LINE_SPC_MODE_PROP ; Proportional
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 6, 65535) Then Return SetError($__LO_STATUS_INPUT_ERROR, 9, 0) ; Min setting on Proportional is 6%
-			Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ;Minimum and Leading Modes
+
+			Case $LOW_LINE_SPC_MODE_MIN, $LOW_LINE_SPC_MODE_LEADING ; Minimum and Leading Modes
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 0, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 10, 0)
-			Case $LOW_LINE_SPC_MODE_FIX ;Fixed Line Spacing Mode
+
+			Case $LOW_LINE_SPC_MODE_FIX ; Fixed Line Spacing Mode
 				If Not __LOWriter_IntIsBetween($iLineSpcHeight, 51, 10008) Then Return SetError($__LO_STATUS_INPUT_ERROR, 11, 0) ; Min spacing is 51 when Fixed Mode
 		EndSwitch
 		$tLine.Height = $iLineSpcHeight
@@ -5076,10 +5321,13 @@ Func __LOWriter_ParStyleNameToggle($sParStyle, $bReverse = False)
 	If ($bReverse = False) Then
 		$sParStyle = ($sParStyle = "Default Paragraph Style") ? ("Standard") : ($sParStyle)
 		$sParStyle = ($sParStyle = "Complimentary Close") ? ("Salutation") : ($sParStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $sParStyle)
+
 	Else
 		$sParStyle = ($sParStyle = "Standard") ? ("Default Paragraph Style") : ($sParStyle)
 		$sParStyle = ($sParStyle = "Salutation") ? ("Complimentary Close") : ($sParStyle)
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $sParStyle)
 	EndIf
 EndFunc   ;==>__LOWriter_ParStyleNameToggle
@@ -5167,10 +5415,11 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 
 	If ($atTabStops[0].Alignment() = $LOW_TAB_ALIGN_DEFAULT) And (UBound($atTabStops) = 1) Then ; if inserting a  Tabstop for the first time, overwrite the "Default blank TabStop.
 		$atTabStops[0] = $tTabStruct
-		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
+		$oObj.ParaTabStops = $atTabStops ; Insert the new TabStop
 		$atNewTabStops = $oObj.ParaTabStops()
 		$tFoundTabStop = $atNewTabStops[0]
 		$iNewPosition = $tFoundTabStop.Position()
+
 	Else
 		__LOWriter_AddTo1DArray($atTabStops, $tTabStruct)
 
@@ -5178,9 +5427,9 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 		If Not IsArray($aiTabList) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 		__LOWriter_AddTo1DArray($aiTabList, 0) ; Add a dummy to make Array sizes equal.
 
-		$oObj.ParaTabStops = $atTabStops ;insert the new TabStop
+		$oObj.ParaTabStops = $atTabStops ; Insert the new TabStop
 
-		$atNewTabStops = $oObj.ParaTabStops() ; now retrieve a new list to find the final Tab Stop position.
+		$atNewTabStops = $oObj.ParaTabStops() ; Now retrieve a new list to find the final Tab Stop position.
 		For $i = 0 To UBound($atNewTabStops) - 1
 			If ($atNewTabStops[$i].Position()) <> $aiTabList[$i] Then
 				$iNewPosition = $atNewTabStops[$i].Position()
@@ -5190,7 +5439,7 @@ Func __LOWriter_ParTabStopCreate(ByRef $oObj, $iPosition, $iAlignment, $iFillCha
 			EndIf
 		Next
 
-		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; didn't find the new TabStop
+		If Not $bFound Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 3, 0) ; Didn't find the new TabStop
 	EndIf
 
 	$iError = (__LOWriter_NumIsBetween(($tFoundTabStop.Position()), ($iPosition - 1), ($iPosition + 1))) ? ($iError) : (BitOR($iError, 1))
@@ -5247,14 +5496,16 @@ Func __LOWriter_ParTabStopDelete(ByRef $oObj, ByRef $oDoc, $iTabStop)
 		$tTabStruct = $atOldTabStops[0]
 		$tTabStruct.Alignment = $LOW_TAB_ALIGN_DEFAULT
 		$tTabStruct.Position = $oDefaults.TabStopDistance()
-		$tTabStruct.FillChar = 32 ;Space
-		$tTabStruct.DecimalChar = 46 ;Period
+		$tTabStruct.FillChar = 32 ; Space
+		$tTabStruct.DecimalChar = 46 ; Period
 		$atNewTabStops[0] = $tTabStruct
 		$bDeleted = True
+
 	Else
 		For $i = 0 To UBound($atOldTabStops) - 1
 			If ($atOldTabStops[$i].Position() = $iTabStop) Then
 				$bDeleted = True
+
 			Else
 				$atNewTabStops[$iCount] = $atOldTabStops[$i]
 				$iCount += 1
@@ -5306,6 +5557,7 @@ Func __LOWriter_ParTabStopList(ByRef $oObj)
 		$aiTabList[$i] = $atTabStops[$i].Position()
 		Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 	Next
+
 	Return SetError($__LO_STATUS_SUCCESS, $i, $aiTabList)
 EndFunc   ;==>__LOWriter_ParTabStopList
 
@@ -5378,6 +5630,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 
 	If __LOWriter_VarsAreNull($iPosition, $iFillChar, $iAlignment, $iDecChar) Then
 		__LOWriter_ArrayFill($aiTabSettings, $tTabStruct.Position(), $tTabStruct.FillChar(), $tTabStruct.Alignment(), $tTabStruct.DecimalChar())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $aiTabSettings)
 	EndIf
 
@@ -5426,6 +5679,7 @@ Func __LOWriter_ParTabStopMod(ByRef $oObj, $iTabStop, $iPosition, $iFillChar, $i
 			EndIf
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 		Next
+
 		Return ($iError > 0) ? (SetError($__LO_STATUS_PROP_SETTING_ERROR, $iError, 0)) : (SetError($__LO_STATUS_SUCCESS, $iNewPosition, 2))
 	EndIf
 
@@ -5478,6 +5732,7 @@ Func __LOWriter_ParTxtFlowOpt(ByRef $oObj, $bParSplit, $bKeepTogether, $iParOrph
 
 	If __LOWriter_VarsAreNull($bParSplit, $bKeepTogether, $iParOrphans, $iParWidows) Then
 		__LOWriter_ArrayFill($avTxtFlowOpt, $oObj.ParaSplit(), $oObj.ParaKeepTogether(), $oObj.ParaOrphans(), $oObj.ParaWidows())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avTxtFlowOpt)
 	EndIf
 
@@ -5550,6 +5805,7 @@ Func __LOWriter_RegExpConvert(ByRef $sRegExpString)
 	If ($iReplacements > 0) Then $sRegExpStringTemp = StringReplace($sRegExpStringTemp, $sBackSlashFlag, "\\") ; Replace the Flag with literal double Backslashes.
 
 	$sRegExpString = $sRegExpStringTemp ; Update the Replacement String.
+
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>__LOWriter_RegExpConvert
 
@@ -5643,7 +5899,6 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY
 			$tProp.Value = "quad-arrow"
 
@@ -5716,7 +5971,7 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 		Case $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN
 			$tProp.Value = "up-right-down-arrow" ; "mso-spt100"
 
-			$tProp2 = __LOWriter_SetPropertyValue("MirroredX", True) ;Shape is an up and left arrow without this Property.
+			$tProp2 = __LOWriter_SetPropertyValue("MirroredX", True) ; Shape is an up and left arrow without this Property.
 			If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 			ReDim $atCusShapeGeo[2]
@@ -5727,7 +5982,6 @@ Func __LOWriter_Shape_CreateArrow($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_ARROWS_PENTAGON
 			$tProp.Value = "pentagon-right"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -5818,7 +6072,6 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 	EndIf
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_BASIC_ARC
 			$oShape.FillColor = $LOW_COLOR_OFF
 
@@ -5862,7 +6115,7 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 			$tProp.Value = "paper"
 
 		Case $LOW_SHAPE_TYPE_BASIC_FRAME
-			$tProp.Value = "frame" ;Not working
+			$tProp.Value = "frame" ; Not working
 
 		Case $LOW_SHAPE_TYPE_BASIC_HEXAGON
 			$tProp.Value = "hexagon"
@@ -5893,7 +6146,6 @@ Func __LOWriter_Shape_CreateBasic($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT
 			$tProp.Value = "right-triangle"
-
 	EndSwitch
 
 	If ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_CIRCLE_SEGMENT) And ($iShapeType <> $LOW_SHAPE_TYPE_BASIC_ARC) Then
@@ -5971,7 +6223,6 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_CALLOUT_CLOUD
 			$tProp.Value = "cloud-callout"
 
@@ -5992,7 +6243,6 @@ Func __LOWriter_Shape_CreateCallout($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_CALLOUT_ROUND
 			$tProp.Value = "round-callout"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6071,7 +6321,6 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_FLOWCHART_CARD
 			$tProp.Value = "flowchart-card"
 
@@ -6155,7 +6404,6 @@ Func __LOWriter_Shape_CreateFlowchart($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR
 			$tProp.Value = "flowchart-terminator"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6233,7 +6481,6 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 3, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_LINE_CURVE
 			$oShape = $oDoc.createInstance("com.sun.star.drawing.OpenBezierShape")
 			If Not IsObj($oShape) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
@@ -6428,7 +6675,6 @@ Func __LOWriter_Shape_CreateLine($oDoc, $iWidth, $iHeight, $iShapeType)
 			If @error Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 			$oShape.FillColor = 7512015 ; Light blue
-
 	EndSwitch
 
 	$tSize = $oShape.Size()
@@ -6510,7 +6756,6 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_STARS_4_POINT
 			$tProp.Value = "star4"
 
@@ -6546,7 +6791,6 @@ Func __LOWriter_Shape_CreateStars($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_STARS_SIGNET
 			$tProp.Value = "signet" ; "non-primitive"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6628,7 +6872,6 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 	If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
 
 	Switch $iShapeType
-
 		Case $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND
 			$tProp.Value = "col-502ad400"
 
@@ -6691,7 +6934,6 @@ Func __LOWriter_Shape_CreateSymbol($oDoc, $iWidth, $iHeight, $iShapeType)
 
 		Case $LOW_SHAPE_TYPE_SYMBOL_PUZZLE
 			$tProp.Value = "puzzle"
-
 	EndSwitch
 
 	$atCusShapeGeo[0] = $tProp
@@ -6767,345 +7009,455 @@ Func __LOWriter_Shape_GetCustomType($sCusShapeType)
 	If Not IsString($sCusShapeType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
 	Switch $sCusShapeType
-
 		Case "quad-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_4_WAY)
 
 		Case "quad-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_4_WAY)
 
 		Case "down-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_DOWN)
 
 		Case "left-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT)
 
 		Case "left-right-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_LEFT_RIGHT)
 
 		Case "right-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_RIGHT)
 
 		Case "up-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP)
 
 		Case "up-down-arrow-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_DOWN)
 
 ;~ 	Case "mso-spt100" ; Can't include this one as other shapes return mso-spt100 also
 ;~ Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CALLOUT_UP_RIGHT)
 
 		Case "circular-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CIRCULAR)
 
 		Case "corner-right-arrow" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_CORNER_RIGHT)
 
 		Case "down-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_DOWN)
 
 		Case "left-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT)
 
 		Case "left-right-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_LEFT_RIGHT)
 
 		Case "notched-right-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_NOTCHED_RIGHT)
 
 		Case "right-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT)
 
 		Case "split-arrow" ; "non-primitive"??
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_RIGHT_OR_LEFT)
 
 		Case "s-sharped-arrow" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_S_SHAPED)
 
 		Case "split-arrow" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_SPLIT)
 
 		Case "striped-right-arrow" ; "mso-spt100"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_STRIPED_RIGHT)
 
 		Case "up-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP)
 
 		Case "up-down-arrow"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_DOWN)
 
 		Case "up-right-arrow-callout", "mso-spt89" ; "mso-spt89"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT)
 
 		Case "up-right-down-arrow" ; "mso-spt100"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_ARROW_UP_RIGHT_DOWN)
 
 		Case "chevron"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_CHEVRON)
 
 		Case "pentagon-right"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_ARROWS_PENTAGON)
 
 		Case "block-arc"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_ARC_BLOCK)
 
 		Case "circle-pie" ; "mso-spt100"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE_PIE)
 
 		Case "cross"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CROSS)
 
 		Case "cube"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CUBE)
 
 		Case "can"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CYLINDER)
 
 		Case "diamond"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_DIAMOND)
 
 		Case "ellipse"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_CIRCLE)
 ;~ $LOW_SHAPE_TYPE_BASIC_ELLIPSE
+
 		Case "paper"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FOLDED_CORNER)
 
-		Case "frame" ;Not working
+		Case "frame" ; Not working
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_FRAME)
 
 		Case "hexagon"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_HEXAGON)
 
 		Case "octagon"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_OCTAGON)
 
 		Case "parallelogram"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_PARALLELOGRAM)
 
 		Case "rectangle"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE)
 ;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE
+
 		Case "round-rectangle"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_SQUARE_ROUNDED)
 ;~ $LOW_SHAPE_TYPE_BASIC_RECTANGLE_ROUNDED
+
 		Case "pentagon"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_REGULAR_PENTAGON)
 
 		Case "ring"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_RING)
 
 		Case "trapezoid"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRAPEZOID)
 
 		Case "isosceles-triangle"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRIANGLE_ISOSCELES)
 
 		Case "right-triangle"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_BASIC_TRIANGLE_RIGHT)
 
 		Case "cloud-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_CLOUD)
 
 		Case "line-callout-1"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_1)
 
 		Case "line-callout-2"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_2)
 
 		Case "line-callout-3"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_LINE_3)
 
 		Case "rectangular-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR)
 
 		Case "round-rectangular-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_RECTANGULAR_ROUNDED)
 
 		Case "round-callout"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_CALLOUT_ROUND)
 
 		Case "flowchart-card"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CARD)
 
 		Case "flowchart-collate"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_COLLATE)
 
 		Case "flowchart-connector"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR)
 
 		Case "flowchart-off-page-connector"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_CONNECTOR_OFF_PAGE)
 
 		Case "flowchart-data"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DATA)
 
 		Case "flowchart-decision"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DECISION)
 
 		Case "flowchart-delay"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DELAY)
 
 		Case "flowchart-direct-access-storage"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DIRECT_ACCESS_STORAGE)
 
 		Case "flowchart-display"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DISPLAY)
 
 		Case "flowchart-document"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_DOCUMENT)
 
 		Case "flowchart-extract"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_EXTRACT)
 
 		Case "flowchart-internal-storage"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_INTERNAL_STORAGE)
 
 		Case "flowchart-magnetic-disk"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MAGNETIC_DISC)
 
 		Case "flowchart-manual-input"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_INPUT)
 
 		Case "flowchart-manual-operation"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MANUAL_OPERATION)
 
 		Case "flowchart-merge"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MERGE)
 
 		Case "flowchart-multidocument"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_MULTIDOCUMENT)
 
 		Case "flowchart-or"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_OR)
 
 		Case "flowchart-preparation"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PREPARATION)
 
 		Case "flowchart-process"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS)
 
 		Case "flowchart-alternate-process"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_ALTERNATE)
 
 		Case "flowchart-predefined-process"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PROCESS_PREDEFINED)
 
 		Case "flowchart-punched-tape"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_PUNCHED_TAPE)
 
 		Case "flowchart-sequential-access"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SEQUENTIAL_ACCESS)
 
 		Case "flowchart-sort"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SORT)
 
 		Case "flowchart-stored-data"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_STORED_DATA)
 
 		Case "flowchart-summing-junction"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_SUMMING_JUNCTION)
 
 		Case "flowchart-terminator"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_FLOWCHART_TERMINATOR)
 
 		Case "star4"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_4_POINT)
 
 		Case "star5"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_5_POINT)
 
 		Case "star6" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_6_POINT)
 
 		Case "concave-star6" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_6_POINT_CONCAVE)
 
 		Case "star8"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_8_POINT)
 
 		Case "star12" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_12_POINT)
 
 		Case "star24"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_24_POINT)
 
 		Case "mso-spt21", "doorplate" ; "doorplate"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_DOORPLATE)
 
 		Case "bang"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_EXPLOSION)
 
 		Case "horizontal-scroll"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SCROLL_HORIZONTAL)
 
 		Case "vertical-scroll"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SCROLL_VERTICAL)
 
 		Case "signet" ; "non-primitive"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_STARS_SIGNET)
 
 		Case "col-502ad400"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_DIAMOND)
 
 		Case "col-60da8460"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_OCTAGON)
 
 		Case "quad-bevel"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BEVEL_SQUARE)
 
 		Case "brace-pair"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_DOUBLE)
 
 		Case "left-brace"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_LEFT)
 
 		Case "right-brace"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACE_RIGHT)
 
 		Case "bracket-pair"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_DOUBLE)
 
 		Case "left-bracket"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_LEFT)
 
 		Case "right-bracket"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_BRACKET_RIGHT)
 
 		Case "cloud"
 ;~ Custom Shape Geometry Type = "non-primitive" ???? Try "cloud"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_CLOUD)
 
 		Case "flower"
 ;~ Custom Shape Geometry Type = "non-primitive" ???? Try "flower"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_FLOWER)
 
 		Case "heart"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_HEART)
 
 		Case "lightning"
 ;~ Custom Shape Geometry Type = "non-primitive" ???? Try "lightning"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_LIGHTNING)
 
 		Case "moon"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_MOON)
 
 		Case "smiley"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_SMILEY)
 
 		Case "sun"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_SUN)
 
 		Case "forbidden"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_PROHIBITED)
 
 		Case "puzzle"
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, $LOW_SHAPE_TYPE_SYMBOL_PUZZLE)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_SUCCESS, 0, -1)
-
 	EndSwitch
-
 EndFunc   ;==>__LOWriter_Shape_GetCustomType
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -7176,9 +7528,7 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 	ElseIf ($sArrowStyle <> Null) Then
 		If Not IsString($sArrowStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asArrowStyles) - 1
-
 			If ($asArrowStyles[$i] = $sArrowStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Arrow Style was found.
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7187,8 +7537,8 @@ Func __LOWriter_ShapeArrowStyleName($iArrowStyle = Null, $sArrowStyle = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, $sArrowStyle) ; If no matches, just return the name, as it could be a custom value.
 
 	Else
-		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 	EndIf
 EndFunc   ;==>__LOWriter_ShapeArrowStyleName
 
@@ -7260,9 +7610,7 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 	ElseIf ($sLineStyle <> Null) Then
 		If Not IsString($sLineStyle) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-
 		For $i = 0 To UBound($asLineStyles) - 1
-
 			If ($asLineStyles[$i] = $sLineStyle) Then Return SetError($__LO_STATUS_SUCCESS, 1, $i) ; Return the array element where the matching Line Style was found.
 
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7271,8 +7619,8 @@ Func __LOWriter_ShapeLineStyleName($iLineStyle = Null, $sLineStyle = Null)
 		Return SetError($__LO_STATUS_SUCCESS, 2, $sLineStyle) ; If no matches, just return the name, as it could be a custom value.
 
 	Else
-		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 
+		Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0) ; No values called.
 	EndIf
 EndFunc   ;==>__LOWriter_ShapeLineStyleName
 
@@ -7333,7 +7681,6 @@ Func __LOWriter_ShapePointGetSettings(ByRef $avArray, ByRef $aiFlags, ByRef $atP
 	$avArray[2] = $iPointType
 
 	If ($iPointType = $LOW_SHAPE_POINT_TYPE_NORMAL) Then
-
 		If ($iArrayElement <> (UBound($atPoints) - 1)) Then ; Requested point is not at the end of the array of points.
 
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after requested point is a Control Point.
@@ -7342,17 +7689,14 @@ Func __LOWriter_ShapePointGetSettings(ByRef $avArray, ByRef $aiFlags, ByRef $atP
 
 			Else ; Next point after requested point is not a control type point.
 				$bIsCurve = False
-
 			EndIf
 
 		Else ; Point is the last point, cant be a curve.
 			$bIsCurve = False
-
 		EndIf
 
 	Else ; Point is a Smooth, or Symmetrical Point type, point is a curve regardless.
 		$bIsCurve = True
-
 	EndIf
 
 	If Not IsBool($bIsCurve) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 4, 0)
@@ -7415,9 +7759,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 	If ($iArrayElement <> UBound($atPoints) - 1) Then ; If The requested point to be modified is not at the end of the Array of points, find the next regular point.
 
 		For $i = ($iArrayElement + 1) To UBound($aiFlags) - 1 ; Locate the next non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iNextArrayElement = $i
 				ExitLoop
 			EndIf
@@ -7429,15 +7771,12 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 	Else
 		$iNextArrayElement = -1
-
 	EndIf
 
 	If ($iArrayElement > 0) Then ; If Point requested is not the first point, find the previous Point's position.
 
 		For $i = ($iArrayElement - 1) To 0 Step -1 ; Locate the previous non-Control Point in the Array for later use.
-
 			If ($aiFlags[$i] <> $LOW_SHAPE_POINT_TYPE_CONTROL) Then
-
 				$iPreviousArrayElement = $i
 				ExitLoop
 			EndIf
@@ -7452,42 +7791,33 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 	EndIf
 
 	If ($iX <> Null) Then
-
 		If ($iArrayElement < UBound($atPoints) - 1) And ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Next point is a control point, check if this point is a curve.
 
 			If ($atPoints[$iArrayElement].X() = $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() = $atPoints[$iArrayElement + 1].Y()) Then ; Update the coordinates, because the point is not a curve.
 				$atPoints[$iArrayElement + 1].X = $iX
-
 			EndIf
-
 		EndIf
 
 		$atPoints[$iArrayElement].X = $iX
-
 	EndIf
 
 	If ($iY <> Null) Then
-
 		If ($iArrayElement < UBound($atPoints) - 1) And ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Next point is a control point, check if this point is a curve.
 
 			If ($atPoints[$iArrayElement].X() = $atPoints[$iArrayElement + 1].X()) And ($atPoints[$iArrayElement].Y() = $atPoints[$iArrayElement + 1].Y()) Then ; Update the coordinates, because the point is not a curve.
 				$atPoints[$iArrayElement + 1].Y = $iY
-
 			EndIf
-
 		EndIf
 
 		$atPoints[$iArrayElement].Y = $iY
-
 	EndIf
 
 	If ($iPointType <> Null) Then
-
 		If ($iPointType <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; New point type is a curve.
 
 			If ($aiFlags[$iArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Converting point from Normal to a curve.
 
-				;Pick the lowest X and Y value difference between previous point and current point and Next point and current Point.
+				; Pick the lowest X and Y value difference between previous point and current point and Next point and current Point.
 				$iSymmetricalPointXValue = ((($atPoints[$iArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5) < (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)) ? Int((($atPoints[$iArrayElement].X() - $atPoints[$iPreviousArrayElement].X()) * .5)) : Int((($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5))
 				$iSymmetricalPointYValue = ((($atPoints[$iArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5) < (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)) ? Int((($atPoints[$iArrayElement].Y() - $atPoints[$iPreviousArrayElement].Y()) * .5)) : Int((($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5))
 
@@ -7505,7 +7835,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 						$tControlPoint2 = __LOWriter_CreatePoint($atPoints[$iArrayElement].X() - $iSymmetricalPointXValue, $atPoints[$iArrayElement].Y() - $iSymmetricalPointYValue)
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 2, 0)
-
 					EndIf
 
 				Else ; Previous point is a normal point, need to create new control points.
@@ -7558,7 +7887,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
@@ -7588,13 +7916,12 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$iOffset += (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (1) : (0) ; If the point I am modifying has two control points after it, I need to skip them in the PointsArray.
 
 						$iForOffset += 5 ; Add to $i to skip the elements I manually added.
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				$iArrayElement += ($aiFlags[$iArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) ? (0) : (1) ; If the point I am modifying has a control point before it, don't add one to array element, because I didn't have to create and insert a new control point.
 				$iArrayElement += (($iArrayElement - 2 > $iPreviousArrayElement) And ($aiFlags[$iArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) ? (0) : (1) ; If the point I am modifying has two control points before it, don't add one to array element, because I didn't have to create and insert a new control point.
 
@@ -7603,7 +7930,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 			Else ; Point is already a curve.
 				; Do nothing?
-
 			EndIf
 
 		Else ; New Point is a Normal Point.
@@ -7620,17 +7946,15 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 							$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 							If ($iPreviousArrayElement + 2 < $iArrayElement) And ($atPoints[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2] ; If two control points are present, copy them.
-
 						EndIf
 					EndIf
 
 				Else ; Previous point is not a normal point.
-					;Copy Control Points present.
+					; Copy Control Points present.
 
 					If ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 					If ($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2] ; If two control points are present, copy them.
-
 				EndIf
 
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then
@@ -7639,7 +7963,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					If ($aiFlags[$iNextArrayElement - 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint4 = $atPoints[$iNextArrayElement - 1]
 
 					If ($iNextArrayElement - 2 > $iArrayElement) And ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint3 = $atPoints[$iNextArrayElement - 2] ; If two control points are present, copy them.
-
 				EndIf
 
 				$iOffset = 0
@@ -7656,7 +7979,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i + $iOffset] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i + $iOffset] ; Add the rest of the points to the array.
@@ -7696,7 +8018,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$avArray[$i + $iForOffset] = $atPoints[$iArrayElement]
 						$avArray2[$i + $iForOffset] = $iPointType
 
-
 						If IsObj($tControlPoint3) Then
 							$iForOffset += 1
 							$iOffset += 1
@@ -7718,13 +8039,12 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iNextArrayElement - 2 > $iArrayElement) And ($aiFlags[$iNextArrayElement - 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				$iArrayElement -= (IsObj($tControlPoint1)) ? (0) : (1) ; If ControlPoint 1 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 				$iArrayElement -= (IsObj($tControlPoint2)) ? (0) : (1) ; If ControlPoint 2 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 
@@ -7733,16 +8053,12 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 			Else ; Point being modified is a normal point already.
 
-				;Do nothing?
-
+				; Do nothing?
 			EndIf
-
 		EndIf
-
 	EndIf
 
 	If ($bIsCurve <> Null) Then
-
 		If ($aiFlags[$iArrayElement] = $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; If Point to modify is a normal point, then proceed, else point is a curve already.
 
 			If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then ; Point after point to modify is a control point, just modify it.
@@ -7758,7 +8074,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					Else ; Create a new control point.
 						$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
 						If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
-
 					EndIf
 
 				ElseIf ($bIsCurve = False) And ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Next point is a curve, so just modify the control point.
@@ -7769,7 +8084,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 				Else ; IsCurve = False, and next point is normal. delete control points.
 					$tControlPoint3 = Null
-
 				EndIf
 
 			Else ; Need to create new control points if IsCurve = True.
@@ -7780,9 +8094,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 					$tControlPoint4 = __LOWriter_CreatePoint(Int($atPoints[$iNextArrayElement].X() - (($atPoints[$iNextArrayElement].X() - $atPoints[$iArrayElement].X()) * .5)), Int($atPoints[$iNextArrayElement].Y() - (($atPoints[$iNextArrayElement].Y() - $atPoints[$iArrayElement].Y()) * .5)))
 					If @error Then Return SetError($__LO_STATUS_INIT_ERROR, 4, 0)
-
 				EndIf
-
 			EndIf
 
 			$iOffset = 0
@@ -7800,9 +8112,7 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 			$iReDimCount = 0
 
 			For $i = 0 To UBound($atPoints) - 1
-
 				If ($iOffset = 0) Then
-
 					$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 					$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
 
@@ -7810,7 +8120,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					$iOffset -= 1 ; minus 1 from offset per round so I don't go over array limits
 					$iForOffset -= 1 ; Minus 1 from ForOffset as I am skipping one For cycle.
 				EndIf
-
 
 				If ($i = $iArrayElement) Then ; Insert the new or modified control points.
 
@@ -7837,7 +8146,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 
 						If (($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 					EndIf
-
 				EndIf
 
 				Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
@@ -7853,7 +8161,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				If ($aiFlags[$iNextArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; Next point is a curve, need to keep the control points.
 					If ($aiFlags[$iArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint3 = $atPoints[$iArrayElement + 1]
 					If ($iArrayElement + 2 < $iNextArrayElement) And ($aiFlags[$iArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint4 = $atPoints[$iArrayElement + 2]
-
 				EndIf
 
 				If ($iPreviousArrayElement <> -1) And ($aiFlags[$iPreviousArrayElement] <> $LOW_SHAPE_POINT_TYPE_NORMAL) Then ; There is a previous point, and it is a curve, I need to keep the control points.
@@ -7869,11 +8176,8 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						$tControlPoint1 = $atPoints[$iPreviousArrayElement + 1]
 
 						If ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL) Then $tControlPoint2 = $atPoints[$iPreviousArrayElement + 2]
-
 					EndIf
-
 				EndIf
-
 
 				$iOffset = 0
 				$iForOffset = 0
@@ -7889,7 +8193,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 				$iReDimCount = 0
 
 				For $i = 0 To UBound($atPoints) - 1
-
 					If ($iOffset = 0) Then
 						$avArray[$i + $iForOffset] = $atPoints[$i] ; Add the rest of the points to the array.
 						$avArray2[$i + $iForOffset] = $aiFlags[$i] ; Add the rest of the points to the array.
@@ -7900,8 +8203,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 					EndIf
 
 					If ($i = $iPreviousArrayElement) Then
-
-
 						If IsObj($tControlPoint1) Then
 							$iForOffset += 1
 							$iOffset += 1
@@ -7924,7 +8225,6 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
-
 
 					ElseIf ($i = $iArrayElement) Then ; Insert or skip Control Points as necessary.
 						$avArray[$i] = $atPoints[$iArrayElement]
@@ -7952,23 +8252,19 @@ Func __LOWriter_ShapePointModify(ByRef $aiFlags, ByRef $atPoints, ByRef $iArrayE
 						Else
 							If (($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL)) Then $iOffset += 1 ; If there is a control point present, I need to skip it.
 						EndIf
-
 					EndIf
 
 					Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 				Next
 
-				;Update the ArrayElement value to its new position.
+				; Update the ArrayElement value to its new position.
 				If ($iPreviousArrayElement <> -1) Then $iArrayElement -= ((IsObj($tControlPoint2) And ($iPreviousArrayElement + 2 < $iArrayElement) And ($aiFlags[$iPreviousArrayElement + 2] = $LOW_SHAPE_POINT_TYPE_CONTROL))) ? (0) : (1) ; If ControlPoint 2 is a object, it means I copied it, meaining I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 				If ($iPreviousArrayElement <> -1) Then $iArrayElement -= ((IsObj($tControlPoint1) And ($aiFlags[$iPreviousArrayElement + 1] = $LOW_SHAPE_POINT_TYPE_CONTROL))) ? (0) : (1) ; If ControlPoint 1 is a object, it means I copied it, meaning I didn't remove that point, so Array element will be in the same position. Else I need to remove from from ArrayElement.
 
 				$atPoints = $avArray
 				$aiFlags = $avArray2
-
 			EndIf
-
 		EndIf
-
 	EndIf
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
@@ -8029,20 +8325,22 @@ Func __LOWriter_TableBorder(ByRef $oTable, $bWid, $bSty, $bCol, $iTop, $iBottom,
 	If (($bWid + $bSty + $bCol) <> 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
 	If __LOWriter_VarsAreNull($iTop, $iBottom, $iLeft, $iRight, $iVert, $iHori) Then
-
 		If $bWid Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.LineWidth(), $oTable.TableBorder2.BottomLine.LineWidth(), _
 					$oTable.TableBorder2.LeftLine.LineWidth(), $oTable.TableBorder2.RightLine.LineWidth(), $oTable.TableBorder2.VerticalLine.LineWidth(), _
 					$oTable.TableBorder2.HorizontalLine.LineWidth())
+
 		ElseIf $bSty Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.LineStyle(), $oTable.TableBorder2.BottomLine.LineStyle(), _
 					$oTable.TableBorder2.LeftLine.LineStyle(), $oTable.TableBorder2.RightLine.LineStyle(), $oTable.TableBorder2.VerticalLine.LineStyle(), _
 					$oTable.TableBorder2.HorizontalLine.LineStyle())
+
 		ElseIf $bCol Then
 			__LOWriter_ArrayFill($avBorder, $oTable.TableBorder2.TopLine.Color(), $oTable.TableBorder2.BottomLine.Color(), _
 					$oTable.TableBorder2.LeftLine.Color(), $oTable.TableBorder2.RightLine.Color(), $oTable.TableBorder2.VerticalLine.Color(), _
 					$oTable.TableBorder2.HorizontalLine.Color())
 		EndIf
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avBorder)
 	EndIf
 
@@ -8171,13 +8469,17 @@ Func __LOWriter_TableCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = Fals
 		Case $LOW_TABLECUR_GO_LEFT, $LOW_TABLECUR_GO_RIGHT, $LOW_TABLECUR_GO_UP, $LOW_TABLECUR_GO_DOWN
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
 			$iCounted = ($bMoved) ? ($iCount) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TABLECUR_GOTO_START, $LOW_TABLECUR_GOTO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_TableCursorMove
@@ -8251,7 +8553,7 @@ Func __LOWriter_TableHasColumnRange(ByRef $oTable, ByRef $iColumn)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iColumn) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($iColumn <= ($oTable.getColumns.getCount() - 1)) ? (True) : (False))
 EndFunc   ;==>__LOWriter_TableHasColumnRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8281,7 +8583,7 @@ Func __LOWriter_TableHasRowRange(ByRef $oTable, ByRef $iRow)
 	If Not IsObj($oTable) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 	If Not IsInt($iRow) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
-	Return ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False)
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($iRow <= ($oTable.getRows.getCount() - 1)) ? (True) : (False))
 EndFunc   ;==>__LOWriter_TableHasRowRange
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8328,22 +8630,22 @@ Func __LOWriter_TableRowSplitToggle(ByRef $oTable, $bSplitRows = Null)
 		If Not IsBool($bSplitRowTest) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
 		For $i = 1 To $iRows - 1
-
 			If $bSplitRowTest <> ($oTable.getRows.getByIndex($i).IsSplitAllowed()) Then Return SetError($__LO_STATUS_SUCCESS, 0, 0) ; Table Rows have mixed settings, return 0.
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $bSplitRowTest) ; All Table Rows are set the same as the first Row, return that setting.
 
-	Else ;Set Split Rows Setting
+	Else ; Set Split Rows Setting
 		If Not IsBool($bSplitRows) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 		For $i = 0 To $iRows - 1
 			$oTable.getRows.getByIndex($i).IsSplitAllowed = $bSplitRows
 			Sleep((IsInt($i / $__LOWCONST_SLEEP_DIV)) ? (10) : (0))
 		Next
+
 		Return SetError($__LO_STATUS_SUCCESS, 2, 1)
 	EndIf
-
 EndFunc   ;==>__LOWriter_TableRowSplitToggle
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8434,6 +8736,7 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 		Case $LOW_TEXTCUR_GO_LEFT, $LOW_TEXTCUR_GO_RIGHT
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
 			$iCounted = ($bMoved) ? ($iCount) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TEXTCUR_GOTO_NEXT_WORD, $LOW_TEXTCUR_GOTO_PREV_WORD, $LOW_TEXTCUR_GOTO_NEXT_SENTENCE, $LOW_TEXTCUR_GOTO_PREV_SENTENCE, _
@@ -8443,6 +8746,7 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 				$iCounted += ($bMoved) ? (1) : (0)
 				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Until ($iCounted >= $iCount) Or ($bMoved = False)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TEXTCUR_GOTO_START, $LOW_TEXTCUR_GOTO_END, $LOW_TEXTCUR_GOTO_END_OF_WORD, $LOW_TEXTCUR_GOTO_START_OF_WORD, _
@@ -8450,13 +8754,17 @@ Func __LOWriter_TextCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 				$LOW_TEXTCUR_GOTO_START_OF_PARAGRAPH
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_TEXTCUR_COLLAPSE_TO_START, $LOW_TEXTCUR_COLLAPSE_TO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_TextCursorMove
@@ -8487,15 +8795,19 @@ Func __LOWriter_TransparencyGradientConvert($iPercentToLong = Null, $iLongToPerc
 	If ($iPercentToLong <> Null) Then
 		$iReturn = ((255 * ($iPercentToLong / 100)) + .50) ; Change percentage to decimal and times by White color (255 RGB) Add . 50 to round up if applicable.
 		$iReturn = _LOWriter_ConvertColorToLong(Int($iReturn), Int($iReturn), Int($iReturn))
+
 		Return SetError($__LO_STATUS_SUCCESS, 0, $iReturn)
+
 	ElseIf ($iLongToPercent <> Null) Then
 		$iReturn = _LOWriter_ConvertColorFromLong(Null, $iLongToPercent)
 		$iReturn = Int((($iReturn[0] / 255) * 100) + .50) ; All return color values will be the same, so use only one. Add . 50 to round up if applicable.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $iReturn)
+
 	Else
+
 		Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, Null)
 	EndIf
-
 EndFunc   ;==>__LOWriter_TransparencyGradientConvert
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8606,68 +8918,79 @@ Func __LOWriter_UnitConvert($nValue, $iReturnType)
 	If Not IsInt($iReturnType) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
 
 	Switch $iReturnType
-
-		Case $__LOCONST_CONVERT_TWIPS_CM ;TWIPS TO CM
+		Case $__LOCONST_CONVERT_TWIPS_CM ; TWIPS TO CM
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			; 1 Inch = 2.54 CM
 			$iCM = Round(Round($iInch * 2.54, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 1, Number($iCM))
 
-		Case $__LOCONST_CONVERT_TWIPS_INCH ;TWIPS to Inch
+		Case $__LOCONST_CONVERT_TWIPS_INCH ; TWIPS to Inch
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = ($nValue / 20 / 72)
 			$iInch = Round(Round($iInch, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 2, Number($iInch))
 
-		Case $__LOCONST_CONVERT_MM_UM ;Millimeter to Micrometer
+		Case $__LOCONST_CONVERT_MM_UM ; Millimeter to Micrometer
 			$iUM = ($nValue * 100)
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 3, Number($iUM))
 
-		Case $__LOCONST_CONVERT_UM_MM ;Micrometer to Millimeter
+		Case $__LOCONST_CONVERT_UM_MM ; Micrometer to Millimeter
 			$iMM = ($nValue / 100)
 			$iMM = Round(Round($iMM, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 4, Number($iMM))
 
-		Case $__LOCONST_CONVERT_CM_UM ;Centimeter to Micrometer
+		Case $__LOCONST_CONVERT_CM_UM ; Centimeter to Micrometer
 			$iUM = ($nValue * 1000)
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 5, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_CM ;Micrometer to Centimeter
+		Case $__LOCONST_CONVERT_UM_CM ; Micrometer to Centimeter
 			$iCM = ($nValue / 1000)
 			$iCM = Round(Round($iCM, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 6, Number($iCM))
 
-		Case $__LOCONST_CONVERT_INCH_UM ;Inch to Micrometer
+		Case $__LOCONST_CONVERT_INCH_UM ; Inch to Micrometer
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iUM = ($nValue * 2.54) * 1000 ; + .0055
 			$iUM = Round(Round($iUM, 1))
+
 			Return SetError($__LO_STATUS_SUCCESS, 7, Int($iUM))
 
-		Case $__LOCONST_CONVERT_UM_INCH ;Micrometer to Inch
+		Case $__LOCONST_CONVERT_UM_INCH ; Micrometer to Inch
 			; 1 Inch - 2.54 Cm; Micrometer = 1/1000 CM
 			$iInch = ($nValue / 1000) / 2.54 ; + .0055
 			$iInch = Round(Round($iInch, 3), 2)
+
 			Return SetError($__LO_STATUS_SUCCESS, 8, $iInch)
 
-		Case $__LOCONST_CONVERT_TWIPS_UM ;TWIPS to MicroMeter
+		Case $__LOCONST_CONVERT_TWIPS_UM ; TWIPS to MicroMeter
 			; 1 TWIP = 1/20 of a point, 1 Point = 1/72 of an Inch.
 			$iInch = (($nValue / 20) / 72)
 			$iInch = Round(Round($iInch, 3), 2)
 			; 1 Inch - 25.4 MM; Micrometer = 1/100 MM
 			$iUM = Round($iInch * 25.4 * 100)
+
 			Return SetError($__LO_STATUS_SUCCESS, 9, Int($iUM))
 
 		Case $__LOCONST_CONVERT_PT_UM
 			; 1 pt = 35 uM
+
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 10, 0)) : (SetError($__LO_STATUS_SUCCESS, 10, Round(($nValue * 35.2778))))
 
 		Case $__LOCONST_CONVERT_UM_PT
+
 			Return ($nValue = 0) ? (SetError($__LO_STATUS_SUCCESS, 11, 0)) : (SetError($__LO_STATUS_SUCCESS, 11, Round(($nValue / 35.2778), 2)))
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_UnitConvert
@@ -8697,15 +9020,17 @@ EndFunc   ;==>__LOWriter_UnitConvert
 ; ===============================================================================================================================
 Func __LOWriter_VarsAreDefault($vVar1, $vVar2 = Default, $vVar3 = Default, $vVar4 = Default, $vVar5 = Default, $vVar6 = Default, $vVar7 = Default, $vVar8 = Default)
 	Local $bAllDefault1, $bAllDefault2
+
 	$bAllDefault1 = (($vVar1 = Default) And ($vVar2 = Default) And ($vVar3 = Default) And ($vVar4 = Default)) ? (True) : (False)
 	$bAllDefault2 = (($vVar5 = Default) And ($vVar6 = Default) And ($vVar7 = Default) And ($vVar8 = Default)) ? (True) : (False)
-	Return ($bAllDefault1 And $bAllDefault2) ? (True) : (False)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllDefault1 And $bAllDefault2) ? (True) : (False))
 EndFunc   ;==>__LOWriter_VarsAreDefault
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; Name ..........: __LOWriter_VarsAreNull
 ; Description ...: Tests whether all input parameters are equal to Null keyword.
-; Syntax ........: __LOWriter_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null]]]]]]]]]]])
+; Syntax ........: __LOWriter_VarsAreNull($vVar1[, $vVar2 = Null[, $vVar3 = Null[, $vVar4 = Null[, $vVar5 = Null[, $vVar6 = Null[, $vVar7 = Null[, $vVar8 = Null[, $vVar9 = Null[, $vVar10 = Null[, $vVar11 = Null[, $vVar12 = Null[, $vVar13 = Null[, $vVar14 = Null[, $vVar15 = Null[, $vVar16 = Null[, $vVar17 = Null[, $vVar18 = Null[, $vVar19 = Null[, $vVar20 = Null[, $vVar21 = Null[, $vVar22 = Null[, $vVar23 = Null[, $vVar24 = Null[, $vVar25 = Null[, $vVar26 = Null[, $vVar27 = Null[, $vVar28 = Null[, $vVar29 = Null[, $vVar30 = Null[, $vVar31 = Null[, $vVar32 = Null]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]])
 ; Parameters ....: $vVar1               - a variant value.
 ;                  $vVar2               - [optional] a variant value. Default is Null.
 ;                  $vVar3               - [optional] a variant value. Default is Null.
@@ -8718,6 +9043,26 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ;                  $vVar10              - [optional] a variant value. Default is Null.
 ;                  $vVar11              - [optional] a variant value. Default is Null.
 ;                  $vVar12              - [optional] a variant value. Default is Null.
+;                  $vVar13              - [optional] a variant value. Default is Null.
+;                  $vVar14              - [optional] a variant value. Default is Null.
+;                  $vVar15              - [optional] a variant value. Default is Null.
+;                  $vVar16              - [optional] a variant value. Default is Null.
+;                  $vVar17              - [optional] a variant value. Default is Null.
+;                  $vVar18              - [optional] a variant value. Default is Null.
+;                  $vVar19              - [optional] a variant value. Default is Null.
+;                  $vVar20              - [optional] a variant value. Default is Null.
+;                  $vVar21              - [optional] a variant value. Default is Null.
+;                  $vVar22              - [optional] a variant value. Default is Null.
+;                  $vVar23              - [optional] a variant value. Default is Null.
+;                  $vVar24              - [optional] a variant value. Default is Null.
+;                  $vVar25              - [optional] a variant value. Default is Null.
+;                  $vVar26              - [optional] a variant value. Default is Null.
+;                  $vVar27              - [optional] a variant value. Default is Null.
+;                  $vVar28              - [optional] a variant value. Default is Null.
+;                  $vVar29              - [optional] a variant value. Default is Null.
+;                  $vVar30              - [optional] a variant value. Default is Null.
+;                  $vVar31              - [optional] a variant value. Default is Null.
+;                  $vVar32              - [optional] a variant value. Default is Null.
 ; Return values .: Success: Boolean
 ;                  Failure: False
 ;                  --Success--
@@ -8729,14 +9074,32 @@ EndFunc   ;==>__LOWriter_VarsAreDefault
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null)
-	Local $bAllNull1, $bAllNull2, $bAllNull3
+Func __LOWriter_VarsAreNull($vVar1, $vVar2 = Null, $vVar3 = Null, $vVar4 = Null, $vVar5 = Null, $vVar6 = Null, $vVar7 = Null, $vVar8 = Null, $vVar9 = Null, $vVar10 = Null, $vVar11 = Null, $vVar12 = Null, $vVar13 = Null, $vVar14 = Null, $vVar15 = Null, $vVar16 = Null, $vVar17 = Null, $vVar18 = Null, $vVar19 = Null, $vVar20 = Null, $vVar21 = Null, $vVar22 = Null, $vVar23 = Null, $vVar24 = Null, $vVar25 = Null, $vVar26 = Null, $vVar27 = Null, $vVar28 = Null, $vVar29 = Null, $vVar30 = Null, $vVar31 = Null, $vVar32 = Null)
+	Local $bAllNull1, $bAllNull2, $bAllNull3, $bAllNull4, $bAllNull5, $bAllNull6, $bAllNull7, $bAllNull8
 	$bAllNull1 = (($vVar1 = Null) And ($vVar2 = Null) And ($vVar3 = Null) And ($vVar4 = Null)) ? (True) : (False)
-	If (@NumParams <= 4) Then Return ($bAllNull1) ? (True) : (False)
+	If (@NumParams <= 4) Then Return SetError($__LO_STATUS_SUCCESS, 0, ($bAllNull1) ? (True) : (False))
+
 	$bAllNull2 = (($vVar5 = Null) And ($vVar6 = Null) And ($vVar7 = Null) And ($vVar8 = Null)) ? (True) : (False)
-	If (@NumParams <= 8) Then Return ($bAllNull1 And $bAllNull2) ? (True) : (False)
+	If (@NumParams <= 8) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2)) ? (True) : (False))
+
 	$bAllNull3 = (($vVar9 = Null) And ($vVar10 = Null) And ($vVar11 = Null) And ($vVar12 = Null)) ? (True) : (False)
-	Return ($bAllNull1 And $bAllNull2 And $bAllNull3) ? (True) : (False)
+	If (@NumParams <= 12) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3)) ? (True) : (False))
+
+	$bAllNull4 = (($vVar13 = Null) And ($vVar14 = Null) And ($vVar15 = Null) And ($vVar16 = Null)) ? (True) : (False)
+	If (@NumParams <= 16) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4)) ? (True) : (False))
+
+	$bAllNull5 = (($vVar17 = Null) And ($vVar18 = Null) And ($vVar19 = Null) And ($vVar20 = Null)) ? (True) : (False)
+	If (@NumParams <= 20) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5)) ? (True) : (False))
+
+	$bAllNull6 = (($vVar21 = Null) And ($vVar22 = Null) And ($vVar23 = Null) And ($vVar24 = Null)) ? (True) : (False)
+	If (@NumParams <= 24) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6)) ? (True) : (False))
+
+	$bAllNull7 = (($vVar25 = Null) And ($vVar26 = Null) And ($vVar27 = Null) And ($vVar28 = Null)) ? (True) : (False)
+	If (@NumParams <= 28) Then Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7)) ? (True) : (False))
+
+	$bAllNull8 = (($vVar29 = Null) And ($vVar30 = Null) And ($vVar31 = Null) And ($vVar32 = Null)) ? (True) : (False)
+
+	Return SetError($__LO_STATUS_SUCCESS, 0, (($bAllNull1) And ($bAllNull2) And ($bAllNull3) And ($bAllNull4) And ($bAllNull5) And ($bAllNull6) And ($bAllNull7) And ($bAllNull8)) ? (True) : (False))
 EndFunc   ;==>__LOWriter_VarsAreNull
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -8857,15 +9220,18 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 		Case $LOW_VIEWCUR_GO_DOWN, $LOW_VIEWCUR_GO_UP, $LOW_VIEWCUR_GO_LEFT, $LOW_VIEWCUR_GO_RIGHT
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & "," & $bSelect & ")")
 			$iCounted = ($bMoved) ? ($iCount) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_GOTO_END_OF_LINE, $LOW_VIEWCUR_GOTO_START_OF_LINE, $LOW_VIEWCUR_GOTO_START, $LOW_VIEWCUR_GOTO_END
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $bSelect & ")")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_PAGE
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "(" & $iCount & ")")
+
 			Return SetError($__LO_STATUS_SUCCESS, $oCursor.getPage(), $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_NEXT_PAGE, $LOW_VIEWCUR_JUMP_TO_PREV_PAGE, $LOW_VIEWCUR_SCREEN_DOWN, $LOW_VIEWCUR_SCREEN_UP
@@ -8874,14 +9240,18 @@ Func __LOWriter_ViewCursorMove(ByRef $oCursor, $iMove, $iCount, $bSelect = False
 				$iCounted += ($bMoved) ? (1) : (0)
 				Sleep((IsInt($iCounted / $__LOWCONST_SLEEP_DIV) ? (10) : (0)))
 			Until ($iCounted >= $iCount) Or ($bMoved = False)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
 
 		Case $LOW_VIEWCUR_JUMP_TO_FIRST_PAGE, $LOW_VIEWCUR_JUMP_TO_LAST_PAGE, $LOW_VIEWCUR_JUMP_TO_END_OF_PAGE, _
 				$LOW_VIEWCUR_JUMP_TO_START_OF_PAGE
 			$bMoved = Execute("$oCursor." & $asMoves[$iMove] & "()")
 			$iCounted = ($bMoved) ? (1) : (0)
+
 			Return SetError($__LO_STATUS_SUCCESS, $iCounted, $bMoved)
+
 		Case Else
+
 			Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 	EndSwitch
 EndFunc   ;==>__LOWriter_ViewCursorMove
