@@ -2302,21 +2302,21 @@ EndFunc   ;==>_LOWriter_FormControlDateFieldValue
 
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _LOWriter_FormControlDelete
-; Description ...: Delete a Form Control.
+; Description ...: Delete a Form Control or Control from a Group.
 ; Syntax ........: _LOWriter_FormControlDelete(ByRef $oControl)
-; Parameters ....: $oControl            - [in/out] an object.
+; Parameters ....: $oControl            - [in/out] an object. A Control object returned by a previous _LOWriter_FormControlInsert or _LOWriter_FormControlsGetList function.
 ; Return values .: Success: 1
 ;                  Failure: 0 and sets the @Error and @Extended flags to non-zero.
 ;                  --Input Errors--
 ;                  @Error 1 @Extended 1 Return 0 = $oControl not an Object.
 ;                  --Processing Errors--
-;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control's parent form.
-;                  @Error 3 @Extended 2 Return 0 = Failed to retrieve parent document.
+;                  @Error 3 @Extended 1 Return 0 = Failed to retrieve Control's parent Object.
+;                  @Error 3 @Extended 2 Return 0 = Cannot delete the last control in a Grouped control.
 ;                  --Success--
 ;                  @Error 0 @Extended 0 Return 1 = Success. Control was successfully deleted.
 ; Author ........: donnyh13
 ; Modified ......:
-; Remarks .......:
+; Remarks .......: You cannot delete the last control contained in a Grouped Control.
 ; Related .......: _LOWriter_FormControlInsert, _LOWriter_FormControlsGetList
 ; Link ..........:
 ; Example .......: Yes
@@ -2325,19 +2325,16 @@ Func _LOWriter_FormControlDelete(ByRef $oControl)
 	Local $oCOM_ErrorHandler = ObjEvent("AutoIt.Error", __LOWriter_InternalComErrorHandler)
 	#forceref $oCOM_ErrorHandler
 
-	Local $oDoc
+	Local $oParent
 
 	If Not IsObj($oControl) Then Return SetError($__LO_STATUS_INPUT_ERROR, 1, 0)
 
-	$oDoc = $oControl.Control.Parent() ; Identify the parent document.
-	If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
+	$oParent = $oControl.Parent() ; Retrieve the parent.
+	If Not IsObj($oParent) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 1, 0)
 
-	Do
-		$oDoc = $oDoc.getParent()
-		If Not IsObj($oDoc) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
-	Until $oDoc.supportsService("com.sun.star.text.TextDocument")
+	If ($oParent.supportsService("com.sun.star.drawing.GroupShape") And ($oParent.Count() = 1) Then Return SetError($__LO_STATUS_PROCESSING_ERROR, 2, 0)
 
-	$oDoc.getDrawPage().remove($oControl)
+	$oParent.remove($oControl)
 
 	Return SetError($__LO_STATUS_SUCCESS, 0, 1)
 EndFunc   ;==>_LOWriter_FormControlDelete
