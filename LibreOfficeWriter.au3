@@ -15,6 +15,7 @@
 #include "LibreOfficeWriter_Field.au3"
 #include "LibreOfficeWriter_Font.au3"
 #include "LibreOfficeWriter_FootEndNotes.au3"
+#include "LibreOfficeWriter_Form.au3"
 #include "LibreOfficeWriter_Frame.au3"
 #include "LibreOfficeWriter_Images.au3"
 #include "LibreOfficeWriter_Num.au3"

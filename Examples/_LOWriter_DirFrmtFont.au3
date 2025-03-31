@@ -34,11 +34,11 @@ Func Example()
 
 	; Set the selected text's Font to "Arial", Font size to 18, Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
 	; to $LOW_WEIGHT_BOLD
-	_LOWriter_DirFrmtFont($oDoc, $oViewCursor, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
+	_LOWriter_DirFrmtFont($oViewCursor, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avSettings = _LOWriter_DirFrmtFont($oDoc, $oViewCursor)
+	$avSettings = _LOWriter_DirFrmtFont($oViewCursor)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the selected text's settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The selected text's current Font settings are as follows: " & @CRLF & _
@@ -49,7 +49,7 @@ Func Example()
 			"Press ok to remove direct formatting.")
 
 	; Remove Direct formatting.
-	_LOWriter_DirFrmtFont($oDoc, $oViewCursor, Default, Default, Default, Default)
+	_LOWriter_DirFrmtFont($oViewCursor, Default, Default, Default, Default)
 	If @error Then _ERROR($oDoc, "Failed to clear the selected text's direct formatting settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "Press ok to close the document.")

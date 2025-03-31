@@ -1,5 +1,6 @@
 #AutoIt3Wrapper_Au3Check_Parameters=-d -w 1 -w 2 -w 3 -w 4 -w 5 -w 6 -w 7
 
+;~ #Tidy_Parameters=/sf /reel
 #include-once
 
 ; Main LibreOffice Includes
@@ -177,14 +178,16 @@ Func _LOWriter_EndnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, $
 	If Not IsBool($bOverwrite) Then Return SetError($__LO_STATUS_INPUT_ERROR, 3, 0)
 	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
-
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
+
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oEndNote = $oDoc.createInstance("com.sun.star.text.Endnote")
 			If Not IsObj($oEndNote) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Unknown Cursor type.
 	EndSwitch
 
@@ -235,8 +238,8 @@ Func _LOWriter_EndnoteModifyAnchor(ByRef $oEndNote, $sLabel = Null)
 		If ($oEndNote.Label() = "") Then Return SetError($__LO_STATUS_SUCCESS, 2, $oEndNote.Anchor.String())
 
 		; Else return the Label.
-		Return SetError($__LO_STATUS_SUCCESS, 1, $oEndNote.Label())
 
+		Return SetError($__LO_STATUS_SUCCESS, 1, $oEndNote.Label())
 	EndIf
 
 	If Not IsString($sLabel) Then Return SetError($__LO_STATUS_INPUT_ERROR, 2, 0)
@@ -291,6 +294,7 @@ Func _LOWriter_EndnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iStar
 	If __LOWriter_VarsAreNull($iNumFormat, $iStartAt, $sBefore, $sAfter) Then
 		__LOWriter_ArrayFill($avENSettings, $oDoc.EndnoteSettings.NumberingType(), ($oDoc.EndnoteSettings.StartAt() + 1), _
 				$oDoc.EndnoteSettings.Prefix(), $oDoc.EndnoteSettings.Suffix())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avENSettings)
 	EndIf
 
@@ -374,6 +378,7 @@ Func _LOWriter_EndnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = N
 				__LOWriter_PageStyleNameToggle($oDoc.EndnoteSettings.PageStyleName(), True), _
 				__LOWriter_CharStyleNameToggle($oDoc.EndnoteSettings.AnchorCharStyleName(), True), _
 				__LOWriter_CharStyleNameToggle($oDoc.EndnoteSettings.CharStyleName(), True))
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asENSettings)
 	EndIf
 
@@ -598,14 +603,16 @@ Func _LOWriter_FootnoteInsert(ByRef $oDoc, ByRef $oCursor, $bOverwrite = False, 
 	If (__LOWriter_Internal_CursorGetType($oCursor) = $LOW_CURTYPE_TABLE_CURSOR) Then Return SetError($__LO_STATUS_INPUT_ERROR, 4, 0)
 
 	Switch __LOWriter_Internal_CursorGetDataType($oDoc, $oCursor)
-
 		Case $LOW_CURDATA_FRAME, $LOW_CURDATA_FOOTNOTE, $LOW_CURDATA_ENDNOTE, $LOW_CURDATA_HEADER_FOOTER
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 5, 0) ; Unsupported cursor type.
+
 		Case $LOW_CURDATA_BODY_TEXT, $LOW_CURDATA_CELL
 			$oFootNote = $oDoc.createInstance("com.sun.star.text.Footnote")
 			If Not IsObj($oFootNote) Then Return SetError($__LO_STATUS_INIT_ERROR, 1, 0)
 
 		Case Else
+
 			Return SetError($__LO_STATUS_INPUT_ERROR, 6, 0) ; Unknown Cursor type.
 	EndSwitch
 
@@ -656,6 +663,7 @@ Func _LOWriter_FootnoteModifyAnchor(ByRef $oFootNote, $sLabel = Null)
 		If ($oFootNote.Label() = "") Then Return SetError($__LO_STATUS_SUCCESS, 2, $oFootNote.Anchor.String())
 
 		; Else return the Label.
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $oFootNote.Label())
 	EndIf
 
@@ -719,6 +727,7 @@ Func _LOWriter_FootnoteSettingsAutoNumber(ByRef $oDoc, $iNumFormat = Null, $iSta
 		__LOWriter_ArrayFill($avFNSettings, $oDoc.FootnoteSettings.NumberingType(), ($oDoc.FootnoteSettings.StartAt + 1), _
 				$oDoc.FootnoteSettings.Prefix(), $oDoc.FootnoteSettings.Suffix(), $oDoc.FootnoteSettings.FootnoteCounting(), _
 				$oDoc.FootnoteSettings.PositionEndOfDoc())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFNSettings)
 	EndIf
 
@@ -801,6 +810,7 @@ Func _LOWriter_FootnoteSettingsContinuation(ByRef $oDoc, $sEnd = Null, $sBegin =
 
 	If __LOWriter_VarsAreNull($sEnd, $sBegin) Then
 		__LOWriter_ArrayFill($asFNSettings, $oDoc.FootnoteSettings.EndNotice(), $oDoc.FootnoteSettings.BeginNotice())
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $asFNSettings)
 	EndIf
 
@@ -871,6 +881,7 @@ Func _LOWriter_FootnoteSettingsStyles(ByRef $oDoc, $sParagraph = Null, $sPage = 
 				__LOWriter_PageStyleNameToggle($oDoc.FootnoteSettings.PageStyleName(), True), _
 				__LOWriter_CharStyleNameToggle($oDoc.FootnoteSettings.AnchorCharStyleName(), True), _
 				__LOWriter_CharStyleNameToggle($oDoc.FootnoteSettings.CharStyleName(), True))
+
 		Return SetError($__LO_STATUS_SUCCESS, 1, $avFNSettings)
 	EndIf
 

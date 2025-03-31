@@ -42,11 +42,11 @@ Func Example()
 
 	; Set "Example" Character style Font to "Arial", Font size to 18, Posture (Italic) to $LOW_POSTURE_ITALIC, and weight (Bold)
 	; to $LOW_WEIGHT_BOLD
-	_LOWriter_CharStyleFont($oDoc, $oCharStyle, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
+	_LOWriter_CharStyleFont($oCharStyle, "Arial", 18, $LOW_POSTURE_ITALIC, $LOW_WEIGHT_BOLD)
 	If @error Then _ERROR($oDoc, "Failed to set the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	; Retrieve the current settings. Return will be an array with element values in order of function parameters.
-	$avCharStyleSettings = _LOWriter_CharStyleFont($oDoc, $oCharStyle)
+	$avCharStyleSettings = _LOWriter_CharStyleFont($oCharStyle)
 	If @error Then _ERROR($oDoc, "Failed to retrieve the Character style settings. Error:" & @error & " Extended:" & @extended & " On Line: " & @ScriptLineNumber)
 
 	MsgBox($MB_OK + $MB_TOPMOST, Default, "The Character style's current Font settings are as follows: " & @CRLF & _
